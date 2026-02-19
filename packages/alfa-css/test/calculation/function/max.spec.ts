@@ -1,14 +1,15 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Math } from "../../dist/index.js";
-import { Length } from "../../dist/calculation/numeric/index.js";
-import { parser, parserUnsafe, serializer } from "../common/parse.js";
+import { Math } from "../../../dist/index.js";
+import { parser, parserUnsafe, serializer } from "../../common/parse.js";
+
+import { resolver } from "../common.js";
 
 const parseErr = parser(Math.parse);
 const parse = parserUnsafe(Math.parse);
 const serialize = serializer(Math.parse);
 
-test(".parse() parses a max of one or more numbers or calculation", (t) => {
+test(".parse() parses a max of one or more numbers or calculations", (t) => {
   for (const [list, value] of [
     ["1", 1],
     ["1,2", 2],
@@ -90,19 +91,7 @@ test(".parse() does not reduce relative dimensions", (t) => {
     },
   });
 
-  const reduced = calculation.reduce({
-    length: (length) => {
-      switch (length.unit) {
-        case "em":
-          return Length.of(length.value * 16, "px");
-        case "vh":
-          return Length.of(length.value * 1024, "px");
-        default:
-          return Length.of(0, "px");
-      }
-    },
-    percentage: (percent) => Length.of(percent.value * 16, "px"),
-  });
+  const reduced = calculation.reduce(resolver);
 
   t.deepEqual(reduced.toJSON(), {
     type: "math expression",
@@ -130,10 +119,7 @@ test(".parse() does not resolve percentages", (t) => {
 
 test("parse() accept mixed max if they can combine", (t) => {
   for (const list of ["1px, 10%", "10%, 1px"]) {
-    const calculation = parse(`max(${list})`).reduce({
-      length: () => Length.of(0, "px"),
-      percentage: (percent) => Length.of(percent.value * 16, "px"),
-    });
+    const calculation = parse(`max(${list})`).reduce(resolver);
 
     t.deepEqual(calculation.toJSON(), {
       type: "math expression",
@@ -143,54 +129,4 @@ test("parse() accept mixed max if they can combine", (t) => {
       },
     });
   }
-});
-
-test("parse() parses division of dimensions", (t) => {
-  const calculation = parse("calc(2em / 1rem)");
-
-  t.deepEqual(calculation.toJSON(), {
-    type: "math expression",
-    expression: {
-      type: "calculation",
-      arguments: [
-        {
-          type: "product",
-          operands: [
-            {
-              type: "value",
-              value: { value: 2, type: "length", unit: "em" },
-            },
-            {
-              type: "invert",
-              operands: [
-                {
-                  type: "value",
-                  value: { value: 1, type: "length", unit: "rem" },
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const reduced = calculation.reduce({
-    length: (length) => {
-      switch (length.unit) {
-        case "em":
-          return Length.of(length.value * 16, "px");
-        case "rem":
-          return Length.of(length.value * 32, "px");
-        default:
-          return Length.of(0, "px");
-      }
-    },
-    percentage: (percent) => Length.of(percent.value * 16, "px"),
-  });
-
-  t.deepEqual(reduced.toJSON(), {
-    type: "math expression",
-    expression: { type: "value", value: { value: 1, type: "number" } },
-  });
 });

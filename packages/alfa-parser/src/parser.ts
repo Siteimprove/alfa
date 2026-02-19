@@ -283,6 +283,25 @@ export namespace Parser {
     };
   }
 
+  /**
+   * Select a parser based on the peeked value.
+   *
+   * @remarks
+   * This is more efficient than a long chain of `either` since it does not try
+   * to re-parse the input multiple times after the first parser failed, if the
+   * peeked value is enough to differentiate the input.
+   *
+   * The parser will receive the full input, no matter how much the peeker looks
+   * at or tries to consume. The peeked tokens will be looked at twice, so the
+   * peeker should only be looking at a small number of tokens.
+   */
+  export function exclusive<I, T, U, E, A extends Array<unknown> = []>(
+    peeker: Parser<I, T, E, A>,
+    getParser: Mapper<T, Parser<I, U, E, A>>,
+  ): Parser<I, U, E, A> {
+    return flatMap(peek(peeker), getParser);
+  }
+
   export function pair<I, T, U, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
     right: Parser<I, U, E, A>,

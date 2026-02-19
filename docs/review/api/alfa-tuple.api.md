@@ -40,6 +40,10 @@ export namespace Tuple {
     // (undocumented)
     export function equals<T extends Tuple>(a: T, b: T): boolean;
     // (undocumented)
+    export function every<T extends Tuple, U extends Item<T>>(tuple: T, refinement: Refinement<Item<T>, U, [index: number]>): tuple is {
+        [K in keyof T]: U extends T[K] ? U : never;
+    };
+    // (undocumented)
     export function every<T extends Tuple>(tuple: T, predicate: Predicate<Item<T>, [index: number]>): boolean;
     // (undocumented)
     export type Filter<T extends Tuple, U extends Item<T>> = T extends readonly [
@@ -93,7 +97,9 @@ export namespace Tuple {
     // (undocumented)
     export function last<T extends Tuple>(tuple: T): Option<Last<T>>;
     // (undocumented)
-    export type Map<T extends Tuple, U> = T extends readonly [infer _, ...infer R] ? [U, ...Map<R, U>] : Empty;
+    export type Map<T extends Tuple, U> = {
+        [K in keyof T]: U;
+    };
     // (undocumented)
     export function map<T extends Tuple, U>(tuple: T, mapper: Mapper<Item<T>, U, [index: number]>): Map<T, U>;
     // (undocumented)

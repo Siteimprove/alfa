@@ -2489,6 +2489,12 @@ digraph "dependency-graph-Alfa" {
     lhead = "cluster_Type definitions";
     ltail = "cluster_Understanding the web";
   ];
+  "exit_Understanding the web" -> "name_Collections" [
+    style = "invis";
+    color = "#ff4600";
+    lhead = "cluster_Collections";
+    ltail = "cluster_Understanding the web";
+  ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
     color = "#ff4600";

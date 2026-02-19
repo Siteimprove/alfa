@@ -5,6 +5,6 @@
     "noEmit": true,
     "lib": ["DOM", "ESNext"]
   },
-  "files": ["./matrix.spec.ts", "./vector.spec.ts"],
+  "files": ["./matrix.spec.ts", "./real.spec.ts", "./vector.spec.ts"],
   "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

@@ -184,14 +184,16 @@ export namespace Token {
     return parseToken(and(isIdent, predicate));
   }
 
-  export class Function implements Equatable, Serializable<Function.JSON> {
-    public static of(value: string): Function {
+  export class Function<N extends string = string>
+    implements Equatable, Serializable<Function.JSON>
+  {
+    public static of<N extends string = string>(value: N): Function<N> {
       return new Function(value);
     }
 
-    private readonly _value: string;
+    private readonly _value: N;
 
-    protected constructor(value: string) {
+    protected constructor(value: N) {
       this._value = value;
     }
 
@@ -199,7 +201,7 @@ export namespace Token {
       return "function";
     }
 
-    public get value(): string {
+    public get value(): N {
       return this._value;
     }
 
@@ -211,7 +213,7 @@ export namespace Token {
       return value instanceof Function && value._value === this._value;
     }
 
-    public toJSON(): Function.JSON {
+    public toJSON(): Function.JSON<N> {
       return {
         type: "function",
         value: this._value,
@@ -224,10 +226,10 @@ export namespace Token {
   }
 
   export namespace Function {
-    export interface JSON {
+    export interface JSON<N extends string = string> {
       [key: string]: json.JSON;
       type: "function";
-      value: string;
+      value: N;
     }
     export function isFunction(value: unknown): value is Function {
       return value instanceof Function;
@@ -236,9 +238,17 @@ export namespace Token {
 
   export const { of: func, isFunction } = Function;
 
+  export function parseFunction<N extends string>(
+    query: N | ReadonlyArray<N> | Refinement<Function, Function<N>>,
+  ): CSSParser<Function<N>>;
+
   export function parseFunction(
-    query: string | Array<string> | Predicate<Function> = () => true,
-  ) {
+    query?: Predicate<Function>,
+  ): CSSParser<Function>;
+
+  export function parseFunction<N extends string>(
+    query: N | ReadonlyArray<N> | Predicate<Function> = () => true,
+  ): CSSParser<Function> {
     const predicate: Predicate<Function> =
       typeof query === "function"
         ? query

@@ -1,8 +1,19 @@
 digraph "dependency-graph-@siteimprove/alfa-css" {
   compound = true;
+  "src/calculation/math-expression/expression.ts";
+  "exit_src/calculation/math-expression/function";
+  "src/calculation/math-expression/function/function.ts";
+  "src/calculation/math-expression/kind.ts";
+  "src/calculation/math-expression/value.ts";
+  "src/calculation/numeric/index.ts";
+  "exit_src/calculation/math-expression";
+  "name_src/calculation/numeric";
   "src/syntax/index.ts";
-  "exit_src/value";
+  "exit_src/calculation";
   "name_src/syntax";
+  "src/unit/index.ts";
+  "name_src/unit";
+  "exit_src/value";
   "src/value/color/index.ts";
   "exit_src/value/image";
   "name_src/value/color";
@@ -10,15 +21,8 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   "name_src/value/numeric";
   "src/value/resolvable.ts";
   "src/value/value.ts";
-  "src/calculation/math-expression/expression.ts";
-  "src/calculation/math-expression/kind.ts";
-  "src/calculation/math-expression/value.ts";
-  "src/calculation/numeric/index.ts";
-  "exit_src/calculation/math-expression";
-  "name_src/calculation/numeric";
-  "src/unit/index.ts";
-  "exit_src/calculation";
-  "name_src/unit";
+  "src/calculation/math-expression/function/index.ts";
+  "name_src/calculation/math-expression/function";
   "exit_src/value/collection";
   "src/calculation/index.ts";
   "name_src/calculation";
@@ -77,6 +81,8 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   "src/value/color/current.ts";
   "src/value/color/system.ts";
   "exit_src/value/color";
+  "src/calculation/math-expression/function/calc.ts";
+  "src/calculation/math-expression/function/max.ts";
   "src/value/textual/custom-ident.ts";
   "src/value/textual/string.ts";
   "src/value/textual/url.ts";
@@ -97,7 +103,6 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   "src/value/numeric/integer.ts";
   "src/value/numeric/number.ts";
   "src/value/color/color.ts";
-  "src/calculation/math-expression/function.ts";
   "src/calculation/math-expression/operation.ts";
   "src/value/image/gradient/radial/circle.ts";
   "src/value/image/gradient/radial/ellipse.ts";
@@ -152,7 +157,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
       "name_src" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#33ff00";
+        color = "#00ff00";
         label = "src";
       ];
       "exit_src" [
@@ -160,16 +165,256 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
       ];
       "src/index.ts" [
         label = "index.ts";
-        color = "#33ff00";
+        color = "#00ff00";
         penwidth = 5;
       ];
+      subgraph "cluster_src/calculation" {
+        color = "#000000";
+        label = "";
+        "name_src/calculation" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0049";
+          label = "calculation";
+        ];
+        "exit_src/calculation" [
+          style = "invis";
+        ];
+        "src/calculation/index.ts" [
+          label = "index.ts";
+          color = "#ff0049";
+          penwidth = 5;
+        ];
+        subgraph "cluster_src/calculation/math-expression" {
+          color = "#000000";
+          label = "";
+          "name_src/calculation/math-expression" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#00ffdb";
+            label = "math-expression";
+          ];
+          "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "src/calculation/math-expression/operation.ts" [
+            label = "operation.ts";
+          ];
+          "src/calculation/math-expression/math.ts" [
+            label = "math.ts";
+          ];
+          "src/calculation/math-expression/index.ts" [
+            label = "index.ts";
+            color = "#00ffdb";
+            penwidth = 5;
+          ];
+          "src/calculation/math-expression/value.ts" [
+            label = "value.ts";
+          ];
+          "src/calculation/math-expression/kind.ts" [
+            label = "kind.ts";
+          ];
+          "src/calculation/math-expression/expression.ts" [
+            label = "expression.ts";
+          ];
+          subgraph "cluster_src/calculation/math-expression/function" {
+            color = "#000000";
+            label = "";
+            "name_src/calculation/math-expression/function" [
+              penwidth = 5;
+              shape = "rectangle";
+              color = "#49ff00";
+              label = "function";
+            ];
+            "exit_src/calculation/math-expression/function" [
+              style = "invis";
+            ];
+            "src/calculation/math-expression/function/max.ts" [
+              label = "max.ts";
+            ];
+            "src/calculation/math-expression/function/index.ts" [
+              label = "index.ts";
+              color = "#49ff00";
+              penwidth = 5;
+            ];
+            "src/calculation/math-expression/function/calc.ts" [
+              label = "calc.ts";
+            ];
+            "src/calculation/math-expression/function/function.ts" [
+              label = "function.ts";
+            ];
+            "src/calculation/math-expression/function/max.ts" -> "exit_src/calculation/math-expression/function" [
+              style = "invis";
+            ];
+            "src/calculation/math-expression/function/index.ts" -> "exit_src/calculation/math-expression/function" [
+              style = "invis";
+            ];
+            "src/calculation/math-expression/function/calc.ts" -> "exit_src/calculation/math-expression/function" [
+              style = "invis";
+            ];
+            "src/calculation/math-expression/function/function.ts" -> "exit_src/calculation/math-expression/function" [
+              style = "invis";
+            ];
+          }
+          "exit_src/calculation/math-expression/function" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "src/calculation/math-expression/operation.ts" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "exit_src/calculation/math-expression/function" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "exit_src/calculation/math-expression/function" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "src/calculation/math-expression/math.ts" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "src/calculation/math-expression/index.ts" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "exit_src/calculation/math-expression/function" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "src/calculation/math-expression/value.ts" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "src/calculation/math-expression/kind.ts" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "src/calculation/math-expression/expression.ts" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/calculation/numeric" {
+          color = "#000000";
+          label = "";
+          "name_src/calculation/numeric" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#00ff49";
+            label = "numeric";
+          ];
+          "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/numeric.ts" [
+            label = "numeric.ts";
+          ];
+          "src/calculation/numeric/angle.ts" [
+            label = "angle.ts";
+          ];
+          "src/calculation/numeric/length.ts" [
+            label = "length.ts";
+          ];
+          "src/calculation/numeric/index.ts" [
+            label = "index.ts";
+            color = "#00ff49";
+            penwidth = 5;
+          ];
+          "src/calculation/numeric/integer.ts" [
+            label = "integer.ts";
+          ];
+          "src/calculation/numeric/dimension.ts" [
+            label = "dimension.ts";
+          ];
+          "src/calculation/numeric/number.ts" [
+            label = "number.ts";
+          ];
+          "src/calculation/numeric/percentage.ts" [
+            label = "percentage.ts";
+          ];
+          "src/calculation/numeric/numeric.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/angle.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/length.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/index.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/integer.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/dimension.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/number.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/percentage.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+        }
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "src/calculation/index.ts" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+      }
       subgraph "cluster_src/value" {
         color = "#000000";
         label = "";
         "name_src/value" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#3300ff";
+          color = "#4900ff";
           label = "value";
         ];
         "exit_src/value" [
@@ -177,7 +422,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
         ];
         "src/value/index.ts" [
           label = "index.ts";
-          color = "#3300ff";
+          color = "#4900ff";
           penwidth = 5;
         ];
         "src/value/shadow.ts" [
@@ -198,7 +443,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           "name_src/value/image" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#0019ff";
+            color = "#0000ff";
             label = "image";
           ];
           "exit_src/value/image" [
@@ -206,7 +451,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           ];
           "src/value/image/index.ts" [
             label = "index.ts";
-            color = "#0019ff";
+            color = "#0000ff";
             penwidth = 5;
           ];
           "src/value/image/image.ts" [
@@ -218,7 +463,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
             "name_src/value/image/gradient" [
               penwidth = 5;
               shape = "rectangle";
-              color = "#0066ff";
+              color = "#0049ff";
               label = "gradient";
             ];
             "exit_src/value/image/gradient" [
@@ -229,7 +474,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
             ];
             "src/value/image/gradient/index.ts" [
               label = "index.ts";
-              color = "#0066ff";
+              color = "#0049ff";
               penwidth = 5;
             ];
             subgraph "cluster_src/value/image/gradient/item" {
@@ -238,7 +483,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
               "name_src/value/image/gradient/item" [
                 penwidth = 5;
                 shape = "rectangle";
-                color = "#8000ff";
+                color = "#9200ff";
                 label = "item";
               ];
               "exit_src/value/image/gradient/item" [
@@ -252,7 +497,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
               ];
               "src/value/image/gradient/item/index.ts" [
                 label = "index.ts";
-                color = "#8000ff";
+                color = "#9200ff";
                 penwidth = 5;
               ];
               "src/value/image/gradient/item/item.ts" [
@@ -277,7 +522,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
               "name_src/value/image/gradient/linear" [
                 penwidth = 5;
                 shape = "rectangle";
-                color = "#ffe600";
+                color = "#ffdb00";
                 label = "linear";
               ];
               "exit_src/value/image/gradient/linear" [
@@ -291,7 +536,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
               ];
               "src/value/image/gradient/linear/index.ts" [
                 label = "index.ts";
-                color = "#ffe600";
+                color = "#ffdb00";
                 penwidth = 5;
               ];
               "src/value/image/gradient/linear/position.ts" [
@@ -328,7 +573,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
               "name_src/value/image/gradient/radial" [
                 penwidth = 5;
                 shape = "rectangle";
-                color = "#ff4c00";
+                color = "#ff4900";
                 label = "radial";
               ];
               "exit_src/value/image/gradient/radial" [
@@ -351,7 +596,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
               ];
               "src/value/image/gradient/radial/index.ts" [
                 label = "index.ts";
-                color = "#ff4c00";
+                color = "#ff4900";
                 penwidth = 5;
               ];
               "src/value/image/gradient/radial/circle.ts" -> "exit_src/value/image/gradient/radial" [
@@ -528,7 +773,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           "name_src/value/numeric" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#ff0099";
+            color = "#ff0092";
             label = "numeric";
           ];
           "exit_src/value/numeric" [
@@ -563,7 +808,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           ];
           "src/value/numeric/index.ts" [
             label = "index.ts";
-            color = "#ff0099";
+            color = "#ff0092";
             penwidth = 5;
           ];
           "src/value/numeric/integer.ts" -> "exit_src/value/numeric" [
@@ -603,7 +848,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           "name_src/value/transform" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#80ff00";
+            color = "#92ff00";
             label = "transform";
           ];
           "exit_src/value/transform" [
@@ -614,7 +859,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           ];
           "src/value/transform/index.ts" [
             label = "index.ts";
-            color = "#80ff00";
+            color = "#92ff00";
             penwidth = 5;
           ];
           "src/value/transform/function.ts" [
@@ -672,7 +917,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           "name_src/value/shape" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#00ffff";
+            color = "#00dbff";
             label = "shape";
           ];
           "exit_src/value/shape" [
@@ -704,7 +949,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           ];
           "src/value/shape/index.ts" [
             label = "index.ts";
-            color = "#00ffff";
+            color = "#00dbff";
             penwidth = 5;
           ];
           "src/value/shape/inset.ts" [
@@ -747,7 +992,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           "name_src/value/textual" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#ccff00";
+            color = "#dbff00";
             label = "textual";
           ];
           "exit_src/value/textual" [
@@ -758,7 +1003,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           ];
           "src/value/textual/index.ts" [
             label = "index.ts";
-            color = "#ccff00";
+            color = "#dbff00";
             penwidth = 5;
           ];
           "src/value/textual/custom-ident.ts" [
@@ -798,7 +1043,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           "name_src/value/color" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#ff9900";
+            color = "#ff9200";
             label = "color";
           ];
           "exit_src/value/color" [
@@ -812,7 +1057,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           ];
           "src/value/color/index.ts" [
             label = "index.ts";
-            color = "#ff9900";
+            color = "#ff9200";
             penwidth = 5;
           ];
           "src/value/color/color-mix.ts" [
@@ -855,7 +1100,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           "name_src/value/position" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#ff00e6";
+            color = "#ff00db";
             label = "position";
           ];
           "exit_src/value/position" [
@@ -875,7 +1120,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           ];
           "src/value/position/index.ts" [
             label = "index.ts";
-            color = "#ff00e6";
+            color = "#ff00db";
             penwidth = 5;
           ];
           "src/value/position/position.ts" -> "exit_src/value/position" [
@@ -900,7 +1145,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           "name_src/value/flags" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#00ff66";
+            color = "#00ff92";
             label = "flags";
           ];
           "exit_src/value/flags" [
@@ -911,7 +1156,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           ];
           "src/value/flags/index.ts" [
             label = "index.ts";
-            color = "#00ff66";
+            color = "#00ff92";
             penwidth = 5;
           ];
           "src/value/flags/contain.ts" [
@@ -1162,199 +1407,13 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           style = "invis";
         ];
       }
-      subgraph "cluster_src/calculation" {
-        color = "#000000";
-        label = "";
-        "name_src/calculation" [
-          penwidth = 5;
-          shape = "rectangle";
-          color = "#ff004d";
-          label = "calculation";
-        ];
-        "exit_src/calculation" [
-          style = "invis";
-        ];
-        "src/calculation/index.ts" [
-          label = "index.ts";
-          color = "#ff004d";
-          penwidth = 5;
-        ];
-        subgraph "cluster_src/calculation/math-expression" {
-          color = "#000000";
-          label = "";
-          "name_src/calculation/math-expression" [
-            penwidth = 5;
-            shape = "rectangle";
-            color = "#00ffb3";
-            label = "math-expression";
-          ];
-          "exit_src/calculation/math-expression" [
-            style = "invis";
-          ];
-          "src/calculation/math-expression/operation.ts" [
-            label = "operation.ts";
-          ];
-          "src/calculation/math-expression/math.ts" [
-            label = "math.ts";
-          ];
-          "src/calculation/math-expression/index.ts" [
-            label = "index.ts";
-            color = "#00ffb3";
-            penwidth = 5;
-          ];
-          "src/calculation/math-expression/function.ts" [
-            label = "function.ts";
-          ];
-          "src/calculation/math-expression/value.ts" [
-            label = "value.ts";
-          ];
-          "src/calculation/math-expression/kind.ts" [
-            label = "kind.ts";
-          ];
-          "src/calculation/math-expression/expression.ts" [
-            label = "expression.ts";
-          ];
-          "src/calculation/math-expression/operation.ts" -> "exit_src/calculation/math-expression" [
-            style = "invis";
-          ];
-          "src/calculation/math-expression/math.ts" -> "exit_src/calculation/math-expression" [
-            style = "invis";
-          ];
-          "src/calculation/math-expression/index.ts" -> "exit_src/calculation/math-expression" [
-            style = "invis";
-          ];
-          "src/calculation/math-expression/function.ts" -> "exit_src/calculation/math-expression" [
-            style = "invis";
-          ];
-          "src/calculation/math-expression/value.ts" -> "exit_src/calculation/math-expression" [
-            style = "invis";
-          ];
-          "src/calculation/math-expression/kind.ts" -> "exit_src/calculation/math-expression" [
-            style = "invis";
-          ];
-          "src/calculation/math-expression/expression.ts" -> "exit_src/calculation/math-expression" [
-            style = "invis";
-          ];
-        }
-        subgraph "cluster_src/calculation/numeric" {
-          color = "#000000";
-          label = "";
-          "name_src/calculation/numeric" [
-            penwidth = 5;
-            shape = "rectangle";
-            color = "#00ff19";
-            label = "numeric";
-          ];
-          "exit_src/calculation/numeric" [
-            style = "invis";
-          ];
-          "src/calculation/numeric/numeric.ts" [
-            label = "numeric.ts";
-          ];
-          "src/calculation/numeric/angle.ts" [
-            label = "angle.ts";
-          ];
-          "src/calculation/numeric/length.ts" [
-            label = "length.ts";
-          ];
-          "src/calculation/numeric/index.ts" [
-            label = "index.ts";
-            color = "#00ff19";
-            penwidth = 5;
-          ];
-          "src/calculation/numeric/integer.ts" [
-            label = "integer.ts";
-          ];
-          "src/calculation/numeric/dimension.ts" [
-            label = "dimension.ts";
-          ];
-          "src/calculation/numeric/number.ts" [
-            label = "number.ts";
-          ];
-          "src/calculation/numeric/percentage.ts" [
-            label = "percentage.ts";
-          ];
-          "src/calculation/numeric/numeric.ts" -> "exit_src/calculation/numeric" [
-            style = "invis";
-          ];
-          "src/calculation/numeric/angle.ts" -> "exit_src/calculation/numeric" [
-            style = "invis";
-          ];
-          "src/calculation/numeric/length.ts" -> "exit_src/calculation/numeric" [
-            style = "invis";
-          ];
-          "src/calculation/numeric/index.ts" -> "exit_src/calculation/numeric" [
-            style = "invis";
-          ];
-          "src/calculation/numeric/integer.ts" -> "exit_src/calculation/numeric" [
-            style = "invis";
-          ];
-          "src/calculation/numeric/dimension.ts" -> "exit_src/calculation/numeric" [
-            style = "invis";
-          ];
-          "src/calculation/numeric/number.ts" -> "exit_src/calculation/numeric" [
-            style = "invis";
-          ];
-          "src/calculation/numeric/percentage.ts" -> "exit_src/calculation/numeric" [
-            style = "invis";
-          ];
-        }
-        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "exit_src/calculation/numeric" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "exit_src/calculation/numeric" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "exit_src/calculation/numeric" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "exit_src/calculation/numeric" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "exit_src/calculation/numeric" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "exit_src/calculation/numeric" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "exit_src/calculation/numeric" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "src/calculation/index.ts" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-        "exit_src/calculation/numeric" -> "exit_src/calculation" [
-          style = "invis";
-        ];
-      }
       subgraph "cluster_src/syntax" {
         color = "#000000";
         label = "";
         "name_src/syntax" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#cc00ff";
+          color = "#db00ff";
           label = "syntax";
         ];
         "exit_src/syntax" [
@@ -1383,7 +1442,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
         ];
         "src/syntax/index.ts" [
           label = "index.ts";
-          color = "#cc00ff";
+          color = "#db00ff";
           penwidth = 5;
         ];
         "src/syntax/lexer.ts" [
@@ -1435,7 +1494,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
         "name_src/unit" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00b2ff";
+          color = "#0092ff";
           label = "unit";
         ];
         "exit_src/unit" [
@@ -1443,7 +1502,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
         ];
         "src/unit/index.ts" [
           label = "index.ts";
-          color = "#00b2ff";
+          color = "#0092ff";
           penwidth = 5;
         ];
         "src/unit/unit.ts" [
@@ -1462,6 +1521,9 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           style = "invis";
         ];
       }
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
       "exit_src/value" -> "exit_src" [
         style = "invis";
       ];
@@ -1519,13 +1581,19 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
       "exit_src/value" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/value" -> "exit_src" [
+      "exit_src/calculation" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/value" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/syntax" -> "exit_src" [
@@ -1621,6 +1689,9 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
       "exit_src/value" -> "exit_src" [
         style = "invis";
       ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
       "exit_src/syntax" -> "exit_src" [
         style = "invis";
       ];
@@ -1637,9 +1708,6 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
         style = "invis";
       ];
       "exit_src/value" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/calculation" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/calculation" -> "exit_src" [
@@ -2111,22 +2179,80 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     "exit_src" -> "exit_src" [
       style = "invis";
     ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
   }
+  "src/calculation/math-expression/function/max.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/expression.ts" [
+    style = "solid";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
+  "src/calculation/math-expression/function/max.ts" -> "src/calculation/math-expression/function/function.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/function/max.ts" -> "src/calculation/math-expression/function/function.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/calculation/math-expression/function/max.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/kind.ts" [
+    style = "dotted";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
+  "src/calculation/math-expression/function/max.ts" -> "src/calculation/math-expression/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/value.ts" [
+    style = "solid";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
+  "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
+    style = "solid";
+    color = "#00ffdb";
+    lhead = "cluster_src/calculation/numeric";
+    ltail = "cluster_src/calculation/math-expression";
+  ];
+  "exit_src/calculation" -> "name_src/syntax" [
+    style = "solid";
+    color = "#ff0049";
+    lhead = "cluster_src/syntax";
+    ltail = "cluster_src/calculation";
+  ];
+  "exit_src/calculation" -> "name_src/unit" [
+    style = "solid";
+    color = "#ff0049";
+    lhead = "cluster_src/unit";
+    ltail = "cluster_src/calculation";
+  ];
   "exit_src/value" -> "name_src/syntax" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/image" -> "name_src/value/color" [
     style = "solid";
-    color = "#0019ff";
+    color = "#0000ff";
     lhead = "cluster_src/value/color";
     ltail = "cluster_src/value/image";
   ];
   "exit_src/value/image" -> "name_src/value/numeric" [
     style = "solid";
-    color = "#0019ff";
+    color = "#0000ff";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/image";
   ];
@@ -2135,7 +2261,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/resolvable.ts" [
     style = "dotted";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "src/value/image/gradient/item/stop.ts" -> "src/value/value.ts" [
@@ -2143,7 +2269,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/value.ts" [
     style = "solid";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "src/calculation/math-expression/operation.ts" -> "src/calculation/math-expression/expression.ts" [
@@ -2152,6 +2278,11 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   "src/calculation/math-expression/operation.ts" -> "src/calculation/math-expression/expression.ts" [
     style = "solid";
     color = "black";
+  ];
+  "src/calculation/math-expression/operation.ts" -> "name_src/calculation/math-expression/function" [
+    style = "solid";
+    color = "#00ffdb";
+    lhead = "cluster_src/calculation/math-expression/function";
   ];
   "src/calculation/math-expression/operation.ts" -> "src/calculation/math-expression/kind.ts" [
     style = "invis";
@@ -2168,20 +2299,26 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     color = "black";
   ];
   "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
-    style = "solid";
-    color = "#00ffb3";
+    style = "invis";
+    color = "#00ffdb";
     lhead = "cluster_src/calculation/numeric";
     ltail = "cluster_src/calculation/math-expression";
   ];
+  "exit_src/calculation" -> "name_src/syntax" [
+    style = "invis";
+    color = "#ff0049";
+    lhead = "cluster_src/syntax";
+    ltail = "cluster_src/calculation";
+  ];
   "exit_src/calculation" -> "name_src/unit" [
-    style = "solid";
-    color = "#ff004d";
+    style = "invis";
+    color = "#ff0049";
     lhead = "cluster_src/unit";
     ltail = "cluster_src/calculation";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -2203,19 +2340,19 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -2238,30 +2375,30 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/numeric" -> "src/value/resolvable.ts" [
     style = "dotted";
-    color = "#ff0099";
+    color = "#ff0092";
     ltail = "cluster_src/value/numeric";
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/unit" [
     style = "dotted";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/unit";
     ltail = "cluster_src/value";
   ];
@@ -2305,24 +2442,24 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/numeric" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ff0099";
+    color = "#ff0092";
     ltail = "cluster_src/value/numeric";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/transform" -> "name_src/value/collection" [
     style = "solid";
-    color = "#80ff00";
+    color = "#92ff00";
     lhead = "cluster_src/value/collection";
     ltail = "cluster_src/value/transform";
   ];
   "exit_src/value/transform" -> "name_src/value/numeric" [
     style = "solid";
-    color = "#80ff00";
+    color = "#92ff00";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/transform";
   ];
@@ -2331,7 +2468,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/transform" -> "src/value/resolvable.ts" [
     style = "dotted";
-    color = "#80ff00";
+    color = "#92ff00";
     ltail = "cluster_src/value/transform";
   ];
   "src/value/transform/rotate.ts" -> "src/value/transform/function.ts" [
@@ -2343,7 +2480,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -2359,7 +2496,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "src/value/image/gradient/linear/corner.ts" -> "src/value/value.ts" [
@@ -2367,7 +2504,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/value.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "src/syntax/function.ts" -> "src/syntax/component.ts" [
@@ -2400,32 +2537,32 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "src/value/index.ts" -> "name_src/value/collection" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/value/collection";
   ];
   "src/value/index.ts" -> "name_src/value/color" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/value/color";
   ];
   "src/value/index.ts" -> "name_src/value/flags" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/value/flags";
   ];
   "src/value/index.ts" -> "name_src/value/image" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/value/image";
   ];
   "src/value/index.ts" -> "name_src/value/numeric" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/value/numeric";
   ];
   "src/value/index.ts" -> "name_src/value/position" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/value/position";
   ];
   "src/value/index.ts" -> "src/value/resolvable.ts" [
@@ -2444,17 +2581,17 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "src/value/index.ts" -> "name_src/value/shape" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/value/shape";
   ];
   "src/value/index.ts" -> "name_src/value/textual" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/value/textual";
   ];
   "src/value/index.ts" -> "name_src/value/transform" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/value/transform";
   ];
   "src/value/index.ts" -> "src/value/value.ts" [
@@ -2466,13 +2603,13 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/shape" -> "name_src/value/numeric" [
     style = "solid";
-    color = "#00ffff";
+    color = "#00dbff";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/shape";
   ];
@@ -2481,7 +2618,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/resolvable.ts" [
     style = "dotted";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "src/value/shape/radius.ts" -> "src/value/shape/basic-shape.ts" [
@@ -2493,7 +2630,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "name_src/value/textual" [
     style = "solid";
-    color = "#00ffff";
+    color = "#00dbff";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/shape";
   ];
@@ -2502,29 +2639,29 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/value.ts" [
     style = "solid";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/unit" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/unit";
     ltail = "cluster_src/value";
   ];
   "src/value/shadow.ts" -> "name_src/value/color" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/value/color";
   ];
   "src/value/shadow.ts" -> "name_src/value/numeric" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/value/numeric";
   ];
   "src/value/shadow.ts" -> "src/value/resolvable.ts" [
@@ -2536,7 +2673,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "src/value/shadow.ts" -> "name_src/value/textual" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/value/textual";
   ];
   "src/value/shadow.ts" -> "src/value/value.ts" [
@@ -2576,13 +2713,13 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/image/gradient/linear" -> "name_src/value/image/gradient/item" [
     style = "solid";
-    color = "#ffe600";
+    color = "#ffdb00";
     lhead = "cluster_src/value/image/gradient/item";
     ltail = "cluster_src/value/image/gradient/linear";
   ];
@@ -2605,7 +2742,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "src/value/image/gradient/linear/linear.ts" -> "src/value/value.ts" [
@@ -2613,12 +2750,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/value.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "src/value/image/index.ts" -> "name_src/value/image/gradient" [
     style = "solid";
-    color = "#0019ff";
+    color = "#0000ff";
     lhead = "cluster_src/value/image/gradient";
   ];
   "src/value/image/index.ts" -> "src/value/image/image.ts" [
@@ -2630,13 +2767,13 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
@@ -2652,7 +2789,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/numeric" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ff0099";
+    color = "#ff0092";
     ltail = "cluster_src/value/numeric";
   ];
   "src/value/numeric/numeric.ts" -> "src/value/value.ts" [
@@ -2660,7 +2797,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/numeric" -> "src/value/value.ts" [
     style = "solid";
-    color = "#ff0099";
+    color = "#ff0092";
     ltail = "cluster_src/value/numeric";
   ];
   "src/value/transform/index.ts" -> "src/value/transform/matrix.ts" [
@@ -2714,7 +2851,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -2723,7 +2860,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/textual" -> "src/value/resolvable.ts" [
     style = "dotted";
-    color = "#ccff00";
+    color = "#dbff00";
     ltail = "cluster_src/value/textual";
   ];
   "src/value/textual/keyword.ts" -> "src/value/textual/ident.ts" [
@@ -2735,7 +2872,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -2769,25 +2906,53 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/color" -> "name_src/value/numeric" [
     style = "solid";
-    color = "#ff9900";
+    color = "#ff9200";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/color";
   ];
   "exit_src/value/color" -> "name_src/value/textual" [
     style = "solid";
-    color = "#ff9900";
+    color = "#ff9200";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/color";
   ];
+  "src/calculation/math-expression/function/index.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
+  "src/calculation/math-expression/function/index.ts" -> "src/calculation/math-expression/function/calc.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/function/index.ts" -> "src/calculation/math-expression/function/calc.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/calculation/math-expression/function/index.ts" -> "src/calculation/math-expression/function/max.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/function/index.ts" -> "src/calculation/math-expression/function/max.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "exit_src/calculation" -> "name_src/syntax" [
+    style = "invis";
+    color = "#ff0049";
+    lhead = "cluster_src/syntax";
+    ltail = "cluster_src/calculation";
+  ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/shape" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/shape";
   ];
@@ -2796,7 +2961,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "src/value/shape/rectangle.ts" -> "src/value/shape/basic-shape.ts" [
@@ -2808,7 +2973,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "name_src/value/textual" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/shape";
   ];
@@ -2817,7 +2982,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/value.ts" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "src/value/textual/index.ts" -> "src/value/textual/custom-ident.ts" [
@@ -2857,7 +3022,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -2866,7 +3031,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/textual" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ccff00";
+    color = "#dbff00";
     ltail = "cluster_src/value/textual";
   ];
   "src/value/textual/custom-ident.ts" -> "src/value/textual/ident.ts" [
@@ -2876,6 +3041,55 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     style = "solid";
     color = "black";
   ];
+  "src/calculation/math-expression/function/calc.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
+  "src/calculation/math-expression/function/calc.ts" -> "src/calculation/math-expression/function/function.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/function/calc.ts" -> "src/calculation/math-expression/function/function.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/calculation/math-expression/function/calc.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/kind.ts" [
+    style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
+  "src/calculation/math-expression/function/calc.ts" -> "src/calculation/math-expression/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/value.ts" [
+    style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
+  "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
+    style = "invis";
+    color = "#00ffdb";
+    lhead = "cluster_src/calculation/numeric";
+    ltail = "cluster_src/calculation/math-expression";
+  ];
+  "exit_src/calculation" -> "name_src/syntax" [
+    style = "invis";
+    color = "#ff0049";
+    lhead = "cluster_src/syntax";
+    ltail = "cluster_src/calculation";
+  ];
+  "exit_src/calculation" -> "name_src/unit" [
+    style = "invis";
+    color = "#ff0049";
+    lhead = "cluster_src/unit";
+    ltail = "cluster_src/calculation";
+  ];
   "src/syntax/nth.ts" -> "src/syntax/parser.ts" [
     style = "invis";
   ];
@@ -2892,25 +3106,25 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/color" -> "name_src/value/textual" [
     style = "invis";
-    color = "#ff9900";
+    color = "#ff9200";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/color";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/image" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/image";
   ];
@@ -2919,12 +3133,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "exit_src/value/image" -> "name_src/value/textual" [
     style = "solid";
-    color = "#0019ff";
+    color = "#0000ff";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/image";
   ];
@@ -2933,7 +3147,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/value.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "src/syntax/parser.ts" -> "src/syntax/token.ts" [
@@ -2952,19 +3166,19 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -2987,12 +3201,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/numeric" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ff0099";
+    color = "#ff0092";
     ltail = "cluster_src/value/numeric";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -3001,7 +3215,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/textual" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ccff00";
+    color = "#dbff00";
     ltail = "cluster_src/value/textual";
   ];
   "src/value/textual/string.ts" -> "src/value/value.ts" [
@@ -3009,18 +3223,18 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/textual" -> "src/value/value.ts" [
     style = "solid";
-    color = "#ccff00";
+    color = "#dbff00";
     ltail = "cluster_src/value/textual";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/shape" -> "name_src/value/position" [
     style = "solid";
-    color = "#00ffff";
+    color = "#00dbff";
     lhead = "cluster_src/value/position";
     ltail = "cluster_src/value/shape";
   ];
@@ -3029,7 +3243,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "src/value/shape/circle.ts" -> "src/value/shape/basic-shape.ts" [
@@ -3048,7 +3262,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "name_src/value/textual" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/shape";
   ];
@@ -3057,7 +3271,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/value.ts" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "src/unit/index.ts" -> "src/unit/converter.ts" [
@@ -3076,7 +3290,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -3085,7 +3299,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/box.ts" [
     style = "solid";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "src/value/shape/shape.ts" -> "src/value/resolvable.ts" [
@@ -3093,7 +3307,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "src/value/shape/shape.ts" -> "src/value/shape/circle.ts" [
@@ -3133,7 +3347,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "name_src/value/textual" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/shape";
   ];
@@ -3142,7 +3356,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/value.ts" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "src/calculation/numeric/angle.ts" -> "src/calculation/numeric/dimension.ts" [
@@ -3153,53 +3367,53 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     color = "black";
   ];
   "exit_src/calculation" -> "name_src/syntax" [
-    style = "solid";
-    color = "#ff004d";
+    style = "invis";
+    color = "#ff0049";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/calculation";
   ];
   "exit_src/calculation" -> "name_src/unit" [
     style = "invis";
-    color = "#ff004d";
+    color = "#ff0049";
     lhead = "cluster_src/unit";
     ltail = "cluster_src/calculation";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "src/value/image/gradient/gradient.ts" -> "name_src/value/image/gradient/item" [
     style = "solid";
-    color = "#0066ff";
+    color = "#0049ff";
     lhead = "cluster_src/value/image/gradient/item";
   ];
   "src/value/image/gradient/gradient.ts" -> "name_src/value/image/gradient/linear" [
     style = "solid";
-    color = "#0066ff";
+    color = "#0049ff";
     lhead = "cluster_src/value/image/gradient/linear";
   ];
   "src/value/image/gradient/gradient.ts" -> "name_src/value/image/gradient/radial" [
     style = "solid";
-    color = "#0066ff";
+    color = "#0049ff";
     lhead = "cluster_src/value/image/gradient/radial";
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -3243,18 +3457,18 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/numeric" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ff0099";
+    color = "#ff0092";
     ltail = "cluster_src/value/numeric";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/shape" -> "name_src/value/position" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     lhead = "cluster_src/value/position";
     ltail = "cluster_src/value/shape";
   ];
@@ -3263,7 +3477,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "src/value/shape/ellipse.ts" -> "src/value/shape/basic-shape.ts" [
@@ -3282,7 +3496,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "name_src/value/textual" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/shape";
   ];
@@ -3291,7 +3505,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/value.ts" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "src/value/color/index.ts" -> "src/value/color/color.ts" [
@@ -3331,13 +3545,13 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/calculation" -> "name_src/syntax" [
     style = "invis";
-    color = "#ff004d";
+    color = "#ff0049";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/calculation";
   ];
   "exit_src/calculation" -> "name_src/unit" [
     style = "invis";
-    color = "#ff004d";
+    color = "#ff0049";
     lhead = "cluster_src/unit";
     ltail = "cluster_src/calculation";
   ];
@@ -3355,12 +3569,10 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     style = "dotted";
     color = "black";
   ];
-  "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/function.ts" [
-    style = "invis";
-  ];
-  "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/function.ts" [
+  "src/calculation/math-expression/math.ts" -> "name_src/calculation/math-expression/function" [
     style = "solid";
-    color = "black";
+    color = "#00ffdb";
+    lhead = "cluster_src/calculation/math-expression/function";
   ];
   "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/kind.ts" [
     style = "invis";
@@ -3373,37 +3585,24 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     style = "invis";
   ];
   "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/operation.ts" [
-    style = "solid";
-    color = "black";
-  ];
-  "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/value.ts" [
-    style = "invis";
-  ];
-  "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/value.ts" [
     style = "solid";
     color = "black";
   ];
   "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
     style = "invis";
-    color = "#00ffb3";
+    color = "#00ffdb";
     lhead = "cluster_src/calculation/numeric";
     ltail = "cluster_src/calculation/math-expression";
   ];
-  "exit_src/calculation" -> "name_src/syntax" [
-    style = "invis";
-    color = "#ff004d";
-    lhead = "cluster_src/syntax";
-    ltail = "cluster_src/calculation";
-  ];
   "exit_src/calculation" -> "name_src/unit" [
     style = "invis";
-    color = "#ff004d";
+    color = "#ff0049";
     lhead = "cluster_src/unit";
     ltail = "cluster_src/calculation";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -3451,13 +3650,13 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/position" -> "name_src/value/numeric" [
     style = "dotted";
-    color = "#ff00e6";
+    color = "#ff00db";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/position";
   ];
@@ -3487,12 +3686,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/position" -> "src/value/resolvable.ts" [
     style = "dotted";
-    color = "#ff00e6";
+    color = "#ff00db";
     ltail = "cluster_src/value/position";
   ];
   "exit_src/value/position" -> "name_src/value/textual" [
     style = "solid";
-    color = "#ff00e6";
+    color = "#ff00db";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/position";
   ];
@@ -3501,12 +3700,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/position" -> "src/value/value.ts" [
     style = "solid";
-    color = "#ff00e6";
+    color = "#ff00db";
     ltail = "cluster_src/value/position";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -3515,12 +3714,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/flags" -> "src/value/resolvable.ts" [
     style = "dotted";
-    color = "#00ff66";
+    color = "#00ff92";
     ltail = "cluster_src/value/flags";
   ];
   "exit_src/value/flags" -> "name_src/value/textual" [
     style = "solid";
-    color = "#00ff66";
+    color = "#00ff92";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/flags";
   ];
@@ -3529,7 +3728,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/flags" -> "src/value/value.ts" [
     style = "solid";
-    color = "#00ff66";
+    color = "#00ff92";
     ltail = "cluster_src/value/flags";
   ];
   "src/calculation/math-expression/index.ts" -> "src/calculation/math-expression/expression.ts" [
@@ -3562,13 +3761,13 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/image" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/image";
   ];
@@ -3577,7 +3776,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "src/value/image/gradient/item/hint.ts" -> "src/value/value.ts" [
@@ -3585,18 +3784,18 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/value.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/shape" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/shape";
   ];
@@ -3605,7 +3804,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "src/value/shape/polygon.ts" -> "src/value/shape/basic-shape.ts" [
@@ -3617,7 +3816,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "name_src/value/textual" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/shape";
   ];
@@ -3626,24 +3825,24 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/value.ts" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/color" -> "name_src/value/collection" [
     style = "dotted";
-    color = "#ff9900";
+    color = "#ff9200";
     lhead = "cluster_src/value/collection";
     ltail = "cluster_src/value/color";
   ];
@@ -3684,7 +3883,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/color" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#ff9900";
+    color = "#ff9200";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/color";
   ];
@@ -3693,12 +3892,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/color" -> "src/value/resolvable.ts" [
     style = "dotted";
-    color = "#ff9900";
+    color = "#ff9200";
     ltail = "cluster_src/value/color";
   ];
   "exit_src/value/color" -> "name_src/value/textual" [
     style = "invis";
-    color = "#ff9900";
+    color = "#ff9200";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/color";
   ];
@@ -3707,12 +3906,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/color" -> "src/value/value.ts" [
     style = "solid";
-    color = "#ff9900";
+    color = "#ff9200";
     ltail = "cluster_src/value/color";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -3721,7 +3920,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/textual" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ccff00";
+    color = "#dbff00";
     ltail = "cluster_src/value/textual";
   ];
   "src/value/textual/url.ts" -> "src/value/value.ts" [
@@ -3729,7 +3928,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/textual" -> "src/value/value.ts" [
     style = "invis";
-    color = "#ccff00";
+    color = "#dbff00";
     ltail = "cluster_src/value/textual";
   ];
   "src/value/transform/function.ts" -> "src/value/value.ts" [
@@ -3737,18 +3936,18 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/transform" -> "src/value/value.ts" [
     style = "solid";
-    color = "#80ff00";
+    color = "#92ff00";
     ltail = "cluster_src/value/transform";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/image" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/image";
   ];
@@ -3757,12 +3956,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "exit_src/value/image" -> "name_src/value/textual" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/image";
   ];
@@ -3771,7 +3970,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/value.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "src/value/collection/tuple.ts" -> "src/value/resolvable.ts" [
@@ -3790,6 +3989,22 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     color = "#ff0000";
     ltail = "cluster_src/value/collection";
   ];
+  "src/calculation/math-expression/function/function.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
+  "src/calculation/math-expression/function/function.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/kind.ts" [
+    style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
   "src/syntax/index.ts" -> "src/syntax/block.ts" [
     style = "invis";
   ];
@@ -3855,25 +4070,25 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/color" -> "name_src/value/collection" [
     style = "invis";
-    color = "#ff9900";
+    color = "#ff9200";
     lhead = "cluster_src/value/collection";
     ltail = "cluster_src/value/color";
   ];
   "exit_src/value/color" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#ff9900";
+    color = "#ff9200";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/color";
   ];
@@ -3882,7 +4097,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/color" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ff9900";
+    color = "#ff9200";
     ltail = "cluster_src/value/color";
   ];
   "src/value/color/mix.ts" -> "src/value/value.ts" [
@@ -3890,7 +4105,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/color" -> "src/value/value.ts" [
     style = "invis";
-    color = "#ff9900";
+    color = "#ff9200";
     ltail = "cluster_src/value/color";
   ];
   "src/value/textual/ident.ts" -> "src/value/resolvable.ts" [
@@ -3898,7 +4113,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/textual" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ccff00";
+    color = "#dbff00";
     ltail = "cluster_src/value/textual";
   ];
   "src/value/textual/ident.ts" -> "src/value/value.ts" [
@@ -3906,18 +4121,18 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/textual" -> "src/value/value.ts" [
     style = "invis";
-    color = "#ccff00";
+    color = "#dbff00";
     ltail = "cluster_src/value/textual";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/color" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#ff9900";
+    color = "#ff9200";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/color";
   ];
@@ -3926,7 +4141,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/color" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ff9900";
+    color = "#ff9200";
     ltail = "cluster_src/value/color";
   ];
   "src/value/color/css4-color.ts" -> "src/value/value.ts" [
@@ -3934,18 +4149,18 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/color" -> "src/value/value.ts" [
     style = "invis";
-    color = "#ff9900";
+    color = "#ff9200";
     ltail = "cluster_src/value/color";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/position" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#ff00e6";
+    color = "#ff00db";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/position";
   ];
@@ -3965,7 +4180,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/position" -> "name_src/value/textual" [
     style = "invis";
-    color = "#ff00e6";
+    color = "#ff00db";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/position";
   ];
@@ -4025,42 +4240,9 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     style = "solid";
     color = "black";
   ];
-  "src/calculation/math-expression/function.ts" -> "src/calculation/math-expression/expression.ts" [
-    style = "invis";
-  ];
-  "src/calculation/math-expression/function.ts" -> "src/calculation/math-expression/expression.ts" [
-    style = "solid";
-    color = "black";
-  ];
-  "src/calculation/math-expression/function.ts" -> "src/calculation/math-expression/kind.ts" [
-    style = "invis";
-  ];
-  "src/calculation/math-expression/function.ts" -> "src/calculation/math-expression/kind.ts" [
-    style = "dotted";
-    color = "black";
-  ];
-  "src/calculation/math-expression/function.ts" -> "src/calculation/math-expression/value.ts" [
-    style = "invis";
-  ];
-  "src/calculation/math-expression/function.ts" -> "src/calculation/math-expression/value.ts" [
-    style = "solid";
-    color = "black";
-  ];
-  "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
-    style = "invis";
-    color = "#00ffb3";
-    lhead = "cluster_src/calculation/numeric";
-    ltail = "cluster_src/calculation/math-expression";
-  ];
-  "exit_src/calculation" -> "name_src/unit" [
-    style = "invis";
-    color = "#ff004d";
-    lhead = "cluster_src/unit";
-    ltail = "cluster_src/calculation";
-  ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -4073,24 +4255,24 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "src/value/box.ts" -> "name_src/value/textual" [
     style = "solid";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/value/textual";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/transform" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/transform";
   ];
@@ -4099,7 +4281,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/transform" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     ltail = "cluster_src/value/transform";
   ];
   "src/value/transform/perspective.ts" -> "src/value/transform/function.ts" [
@@ -4114,7 +4296,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/transform" -> "src/value/value.ts" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     ltail = "cluster_src/value/transform";
   ];
   "src/value/value.ts" -> "src/value/resolvable.ts" [
@@ -4126,25 +4308,25 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/unit" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/unit";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/transform" -> "name_src/value/collection" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     lhead = "cluster_src/value/collection";
     ltail = "cluster_src/value/transform";
   ];
   "exit_src/value/transform" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/transform";
   ];
@@ -4153,7 +4335,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/transform" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     ltail = "cluster_src/value/transform";
   ];
   "src/value/transform/translate.ts" -> "src/value/transform/function.ts" [
@@ -4168,38 +4350,38 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/transform" -> "src/value/value.ts" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     ltail = "cluster_src/value/transform";
   ];
   "src/index.ts" -> "name_src/calculation" [
     style = "solid";
-    color = "#33ff00";
+    color = "#00ff00";
     lhead = "cluster_src/calculation";
   ];
   "src/index.ts" -> "name_src/syntax" [
     style = "solid";
-    color = "#33ff00";
+    color = "#00ff00";
     lhead = "cluster_src/syntax";
   ];
   "src/index.ts" -> "name_src/unit" [
     style = "solid";
-    color = "#33ff00";
+    color = "#00ff00";
     lhead = "cluster_src/unit";
   ];
   "src/index.ts" -> "name_src/value" [
     style = "solid";
-    color = "#33ff00";
+    color = "#00ff00";
     lhead = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/image/gradient/radial" -> "name_src/value/image/gradient/item" [
     style = "solid";
-    color = "#ff4c00";
+    color = "#ff4900";
     lhead = "cluster_src/value/image/gradient/item";
     ltail = "cluster_src/value/image/gradient/radial";
   ];
@@ -4219,7 +4401,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "name_src/value/position" [
     style = "solid";
-    color = "#0019ff";
+    color = "#0000ff";
     lhead = "cluster_src/value/position";
     ltail = "cluster_src/value/image";
   ];
@@ -4228,12 +4410,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "exit_src/value/image" -> "name_src/value/textual" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/image";
   ];
@@ -4242,7 +4424,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/value.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "src/calculation/numeric/integer.ts" -> "src/calculation/numeric/numeric.ts" [
@@ -4254,31 +4436,31 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/calculation" -> "name_src/syntax" [
     style = "invis";
-    color = "#ff004d";
+    color = "#ff0049";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/calculation";
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/unit" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/unit";
     ltail = "cluster_src/value";
   ];
@@ -4315,18 +4497,18 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/numeric" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ff0099";
+    color = "#ff0092";
     ltail = "cluster_src/value/numeric";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/position" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#ff00e6";
+    color = "#ff00db";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/position";
   ];
@@ -4342,12 +4524,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/position" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ff00e6";
+    color = "#ff00db";
     ltail = "cluster_src/value/position";
   ];
   "exit_src/value/position" -> "name_src/value/textual" [
     style = "invis";
-    color = "#ff00e6";
+    color = "#ff00db";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/position";
   ];
@@ -4356,24 +4538,24 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/position" -> "src/value/value.ts" [
     style = "invis";
-    color = "#ff00e6";
+    color = "#ff00db";
     ltail = "cluster_src/value/position";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/transform" -> "name_src/value/collection" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     lhead = "cluster_src/value/collection";
     ltail = "cluster_src/value/transform";
   ];
   "exit_src/value/transform" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/transform";
   ];
@@ -4421,7 +4603,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/shape";
   ];
@@ -4430,12 +4612,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/value.ts" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -4455,13 +4637,13 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/image";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -4470,12 +4652,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "exit_src/value/image" -> "name_src/value/textual" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/image";
   ];
@@ -4484,24 +4666,24 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/value.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/transform" -> "name_src/value/collection" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     lhead = "cluster_src/value/collection";
     ltail = "cluster_src/value/transform";
   ];
   "exit_src/value/transform" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/transform";
   ];
@@ -4510,7 +4692,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/transform" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     ltail = "cluster_src/value/transform";
   ];
   "src/value/transform/scale.ts" -> "src/value/transform/function.ts" [
@@ -4526,6 +4708,11 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   "src/calculation/math-expression/value.ts" -> "src/calculation/math-expression/expression.ts" [
     style = "solid";
     color = "black";
+  ];
+  "src/calculation/math-expression/value.ts" -> "name_src/calculation/math-expression/function" [
+    style = "dotted";
+    color = "#00ffdb";
+    lhead = "cluster_src/calculation/math-expression/function";
   ];
   "src/calculation/math-expression/value.ts" -> "src/calculation/math-expression/kind.ts" [
     style = "invis";
@@ -4536,13 +4723,19 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
     style = "invis";
-    color = "#00ffb3";
+    color = "#00ffdb";
     lhead = "cluster_src/calculation/numeric";
     ltail = "cluster_src/calculation/math-expression";
   ];
+  "exit_src/calculation" -> "name_src/syntax" [
+    style = "invis";
+    color = "#ff0049";
+    lhead = "cluster_src/syntax";
+    ltail = "cluster_src/calculation";
+  ];
   "exit_src/calculation" -> "name_src/unit" [
     style = "invis";
-    color = "#ff004d";
+    color = "#ff0049";
     lhead = "cluster_src/unit";
     ltail = "cluster_src/calculation";
   ];
@@ -4555,7 +4748,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -4575,7 +4768,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
     style = "invis";
-    color = "#00ffb3";
+    color = "#00ffdb";
     lhead = "cluster_src/calculation/numeric";
     ltail = "cluster_src/calculation/math-expression";
   ];
@@ -4588,25 +4781,25 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
     style = "invis";
-    color = "#00ffb3";
+    color = "#00ffdb";
     lhead = "cluster_src/calculation/numeric";
     ltail = "cluster_src/calculation/math-expression";
   ];
   "exit_src/calculation" -> "name_src/unit" [
     style = "invis";
-    color = "#ff004d";
+    color = "#ff0049";
     lhead = "cluster_src/unit";
     ltail = "cluster_src/calculation";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "src/value/image/image.ts" -> "name_src/value/image/gradient" [
     style = "solid";
-    color = "#0019ff";
+    color = "#0000ff";
     lhead = "cluster_src/value/image/gradient";
   ];
   "src/value/image/image.ts" -> "src/value/resolvable.ts" [
@@ -4614,12 +4807,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "exit_src/value/image" -> "name_src/value/textual" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/image";
   ];
@@ -4628,24 +4821,24 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/value.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/transform" -> "name_src/value/collection" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     lhead = "cluster_src/value/collection";
     ltail = "cluster_src/value/transform";
   ];
   "exit_src/value/transform" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/transform";
   ];
@@ -4654,7 +4847,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/transform" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     ltail = "cluster_src/value/transform";
   ];
   "src/value/transform/skew.ts" -> "src/value/transform/function.ts" [
@@ -4673,7 +4866,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/calculation" -> "name_src/unit" [
     style = "invis";
-    color = "#ff004d";
+    color = "#ff0049";
     lhead = "cluster_src/unit";
     ltail = "cluster_src/calculation";
   ];
@@ -4682,12 +4875,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/value.ts" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -4703,7 +4896,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "src/value/image/gradient/linear/side.ts" -> "src/value/value.ts" [
@@ -4711,18 +4904,18 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/image" -> "src/value/value.ts" [
     style = "invis";
-    color = "#0019ff";
+    color = "#0000ff";
     ltail = "cluster_src/value/image";
   ];
   "exit_src/value/position" -> "name_src/value/textual" [
     style = "invis";
-    color = "#ff00e6";
+    color = "#ff00db";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/position";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -4731,12 +4924,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/flags" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#00ff66";
+    color = "#00ff92";
     ltail = "cluster_src/value/flags";
   ];
   "exit_src/value/flags" -> "name_src/value/textual" [
     style = "invis";
-    color = "#00ff66";
+    color = "#00ff92";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/flags";
   ];
@@ -4745,12 +4938,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/flags" -> "src/value/value.ts" [
     style = "invis";
-    color = "#00ff66";
+    color = "#00ff92";
     ltail = "cluster_src/value/flags";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
@@ -4763,7 +4956,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/color" -> "name_src/value/textual" [
     style = "invis";
-    color = "#ff9900";
+    color = "#ff9200";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/color";
   ];
@@ -4783,7 +4976,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/calculation" -> "name_src/syntax" [
     style = "invis";
-    color = "#ff004d";
+    color = "#ff0049";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/calculation";
   ];
@@ -4873,25 +5066,25 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/unit" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/unit";
     ltail = "cluster_src/value";
   ];
@@ -4921,18 +5114,18 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/numeric" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ff0099";
+    color = "#ff0092";
     ltail = "cluster_src/value/numeric";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/shape" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/shape";
   ];
@@ -4941,7 +5134,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "src/value/shape/inset.ts" -> "src/value/shape/basic-shape.ts" [
@@ -4960,7 +5153,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "name_src/value/textual" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     lhead = "cluster_src/value/textual";
     ltail = "cluster_src/value/shape";
   ];
@@ -4969,7 +5162,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/shape" -> "src/value/value.ts" [
     style = "invis";
-    color = "#00ffff";
+    color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
   "src/value/collection/index.ts" -> "src/value/collection/list.ts" [
@@ -4995,25 +5188,25 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/unit" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/unit";
     ltail = "cluster_src/value";
   ];
@@ -5036,18 +5229,18 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/numeric" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ff0099";
+    color = "#ff0092";
     ltail = "cluster_src/value/numeric";
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/calculation";
     ltail = "cluster_src/value";
   ];
   "exit_src/value" -> "name_src/unit" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/unit";
     ltail = "cluster_src/value";
   ];
@@ -5063,12 +5256,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/numeric" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#ff0099";
+    color = "#ff0092";
     ltail = "cluster_src/value/numeric";
   ];
   "src/calculation/index.ts" -> "name_src/calculation/math-expression" [
     style = "solid";
-    color = "#ff004d";
+    color = "#ff0049";
     lhead = "cluster_src/calculation/math-expression";
   ];
   "src/value/position/index.ts" -> "src/value/position/position.ts" [
@@ -5087,7 +5280,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/calculation" -> "name_src/syntax" [
     style = "invis";
-    color = "#ff004d";
+    color = "#ff0049";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/calculation";
   ];
@@ -5156,19 +5349,19 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
-    color = "#3300ff";
+    color = "#4900ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
   "exit_src/value/transform" -> "name_src/value/collection" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     lhead = "cluster_src/value/collection";
     ltail = "cluster_src/value/transform";
   ];
   "exit_src/value/transform" -> "name_src/value/numeric" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/transform";
   ];
@@ -5177,7 +5370,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   ];
   "exit_src/value/transform" -> "src/value/resolvable.ts" [
     style = "invis";
-    color = "#80ff00";
+    color = "#92ff00";
     ltail = "cluster_src/value/transform";
   ];
   "src/value/transform/matrix.ts" -> "src/value/transform/function.ts" [
