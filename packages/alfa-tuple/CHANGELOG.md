@@ -1,5 +1,11 @@
 # @siteimprove/alfa-tuple
 
+## 0.111.0
+
+### Patch Changes
+
+- **Added:** `Tuple.every` is now able to refine its input. ([#2000](https://github.com/Siteimprove/alfa/pull/2000))
+
 ## 0.110.0
 
 ## 0.109.0

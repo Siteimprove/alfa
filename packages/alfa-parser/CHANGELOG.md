@@ -1,5 +1,11 @@
 # @siteimprove/alfa-parser
 
+## 0.111.0
+
+### Minor Changes
+
+- **Added:** A `Parser.exclusive` combinator is now available; it will map the result of a peeker to the actual parser to run and totally skip other parsers. ([#2000](https://github.com/Siteimprove/alfa/pull/2000))
+
 ## 0.110.0
 
 ### Patch Changes
