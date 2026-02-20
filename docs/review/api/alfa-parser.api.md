@@ -29,6 +29,7 @@ export namespace Parser {
     export function either<I, T, E, A extends Array_2<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, T, E, A>, ...rest: Array_2<Parser<I, T, E, A>>): Parser<I, T, E, A>;
     // (undocumented)
     export function end<I extends Iterable<unknown>, E>(ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>): Parser<I, void, E, Array_2<any>>;
+    export function exclusive<I, T, U, E, A extends Array_2<unknown> = []>(peeker: Parser<I, T, E, A>, getParser: Mapper<T, Parser<I, U, E, A>>): Parser<I, U, E, A>;
     // (undocumented)
     export function filter<I, T, U extends T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, refinement: Refinement<T, U>, ifError: Mapper<T, E>): Parser<I, U, E, A>;
     // (undocumented)

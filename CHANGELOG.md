@@ -1,5 +1,21 @@
 # Alfa changelog
 
+## [0.111.0](../../compare/v0.110.0...v0.111.0) (2026-02-19)
+
+### Added
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01110): `Token.Function`, and the associated parsers, are now parametric in `N extends string`, typing the name of the function. ([#2000](https://github.com/Siteimprove/alfa/pull/2000))
+
+- [@siteimprove/alfa-tuple](packages/alfa-tuple/CHANGELOG.md#01110): `Tuple.every` is now able to refine its input. ([#2000](https://github.com/Siteimprove/alfa/pull/2000))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01110): The `clamp()` and `min()` CSS functions are now supported. ([#2000](https://github.com/Siteimprove/alfa/pull/2000))
+
+- [@siteimprove/alfa-parser](packages/alfa-parser/CHANGELOG.md#01110): A `Parser.exclusive` combinator is now available; it will map the result of a peeker to the actual parser to run and totally skip other parsers. ([#2000](https://github.com/Siteimprove/alfa/pull/2000))
+
+### Fixed
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01110): `Token.parseWhitespace` now accepts 0 whitespace. ([#2003](https://github.com/Siteimprove/alfa/pull/2003))
+
 ## [0.110.0](../../compare/v0.109.0...v0.110.0) (2026-02-05)
 
 ### Breaking

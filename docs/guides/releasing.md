@@ -1,7 +1,3 @@
 # Releasing
 
-Changesets takes care of the version bumping, according to [pre-registred changes](changeset.md).
-
-The full release flow, including generating the global changelog, publishing the npm packages, and generating the Github release is handled by the [release workflow](../../.github/workflows/release.yml). See the called workflow for details.
-
-The release workflow is triggered manually from the [Action tab](https://github.com/Siteimprove/alfa/actions/workflows/release.yml) in Github.
+Due to the inter-dependencies with other repositories, and the need to use the new release in Siteimprove products deployment process, the full release flow is a bit complicated. For Alfa only, it is handled by [the release workflow](https://github.com/Siteimprove/alfa/actions/workflows/release.yml), but check [How to release Alfa (Siteimprove internal document)](https://siteimprove-wgs.atlassian.net/wiki/spaces/CE/pages/6291161101/How+to+release+Alfa) to be sure to not skip any step.

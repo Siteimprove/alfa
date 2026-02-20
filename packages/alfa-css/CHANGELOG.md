@@ -1,5 +1,19 @@
 # @siteimprove/alfa-css
 
+## 0.111.0
+
+### Minor Changes
+
+- **Added:** The `clamp()` and `min()` CSS functions are now supported. ([#2000](https://github.com/Siteimprove/alfa/pull/2000))
+
+### Patch Changes
+
+- **Added:** `Token.Function`, and the associated parsers, are now parametric in `N extends string`, typing the name of the function. ([#2000](https://github.com/Siteimprove/alfa/pull/2000))
+
+- **Fixed:** `Token.parseWhitespace` now accepts 0 whitespace. ([#2003](https://github.com/Siteimprove/alfa/pull/2003))
+
+  This fixes a problem with `var()` function with no whitespace with surrounding tokens, that are accepted by CSS grammar.
+
 ## 0.110.0
 
 ### Minor Changes

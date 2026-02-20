@@ -51,15 +51,15 @@ export namespace Tuple {
     Array.forEach(tuple, callback);
   }
 
-  export type Map<T extends Tuple, U> = T extends readonly [infer _, ...infer R]
-    ? [U, ...Map<R, U>]
-    : Empty;
+  export type Map<T extends Tuple, U> = {
+    [K in keyof T]: U;
+  };
 
   export function map<T extends Tuple, U>(
     tuple: T,
     mapper: Mapper<Item<T>, U, [index: number]>,
   ): Map<T, U> {
-    return Array.map(tuple, mapper) as unknown as Map<T, U>;
+    return Array.map(tuple, mapper) as Map<T, U>;
   }
 
   export function reduce<T extends Tuple, U>(
@@ -201,6 +201,19 @@ export namespace Tuple {
   ): boolean {
     return Array.none(tuple, predicate);
   }
+
+  export function every<T extends Tuple, U extends Item<T>>(
+    tuple: T,
+    refinement: Refinement<Item<T>, U, [index: number]>,
+  ): // Even though we know that U extends Item<T> = T[number],
+  // TypeScript still needs to connect each to the keyed value in T,
+  // so we need the weird ?: in the mapped type.
+  tuple is { [K in keyof T]: U extends T[K] ? U : never };
+
+  export function every<T extends Tuple>(
+    tuple: T,
+    predicate: Predicate<Item<T>, [index: number]>,
+  ): boolean;
 
   export function every<T extends Tuple>(
     tuple: T,

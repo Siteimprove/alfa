@@ -10,7 +10,7 @@ import type { Slice } from "@siteimprove/alfa-slice";
 
 import type { Parser as CSSParser } from "./parser.js";
 
-const { map, oneOrMore } = Parser;
+const { map, zeroOrMore } = Parser;
 const { fromCharCode } = String;
 const { and } = Refinement;
 
@@ -184,14 +184,16 @@ export namespace Token {
     return parseToken(and(isIdent, predicate));
   }
 
-  export class Function implements Equatable, Serializable<Function.JSON> {
-    public static of(value: string): Function {
+  export class Function<N extends string = string>
+    implements Equatable, Serializable<Function.JSON>
+  {
+    public static of<N extends string = string>(value: N): Function<N> {
       return new Function(value);
     }
 
-    private readonly _value: string;
+    private readonly _value: N;
 
-    protected constructor(value: string) {
+    protected constructor(value: N) {
       this._value = value;
     }
 
@@ -199,7 +201,7 @@ export namespace Token {
       return "function";
     }
 
-    public get value(): string {
+    public get value(): N {
       return this._value;
     }
 
@@ -211,7 +213,7 @@ export namespace Token {
       return value instanceof Function && value._value === this._value;
     }
 
-    public toJSON(): Function.JSON {
+    public toJSON(): Function.JSON<N> {
       return {
         type: "function",
         value: this._value,
@@ -224,10 +226,10 @@ export namespace Token {
   }
 
   export namespace Function {
-    export interface JSON {
+    export interface JSON<N extends string = string> {
       [key: string]: json.JSON;
       type: "function";
-      value: string;
+      value: N;
     }
     export function isFunction(value: unknown): value is Function {
       return value instanceof Function;
@@ -236,9 +238,17 @@ export namespace Token {
 
   export const { of: func, isFunction } = Function;
 
+  export function parseFunction<N extends string>(
+    query: N | ReadonlyArray<N> | Refinement<Function, Function<N>>,
+  ): CSSParser<Function<N>>;
+
   export function parseFunction(
-    query: string | Array<string> | Predicate<Function> = () => true,
-  ) {
+    query?: Predicate<Function>,
+  ): CSSParser<Function>;
+
+  export function parseFunction<N extends string>(
+    query: N | ReadonlyArray<N> | Predicate<Function> = () => true,
+  ): CSSParser<Function> {
     const predicate: Predicate<Function> =
       typeof query === "function"
         ? query
@@ -867,9 +877,32 @@ export namespace Token {
 
   export const { of: whitespace, isWhitespace } = Whitespace;
 
+  /**
+   * Parses whitespace.
+   *
+   * @remarks
+   * This accepts more than one whitespace because our tokenization does not
+   * group them, but CSS grammar doesn't care how many there are.
+   *
+   * This accepts zero whitespace to handle Arbitrary Substitution Functions
+   * (essentially `var()`).
+   * {@link https://drafts.csswg.org/css-values-5/#arbitrary-substitution-function}
+   * When a substitution function is substituted, its value replaces the entire
+   * function, but they do not "merge" with previous or following tokens.
+   * That is, `var(--foo)var(--bar)` resolves as `[Ident("foo"), Ident("bar")]`
+   * and not `[Ident("foobar")]`, and there is no way to obtain the former through
+   * pure lexing of a string. This means that a value that accepts two idents
+   * would accept `var(--foo)var(--bar)` as a valid value, even if it doesn't
+   * accept `foobar`.
+   *
+   * It is clearer to accept 0 or more whitespace here and have the value parser
+   * require whitespace (`separated(parseFoo, parseWhitespace, parseBar`) than
+   * using `optional(parseWhitespace)` everywhere. Notably reading the parsers
+   * make it more obvious that we are talking about separated tokens.
+   */
   export const parseWhitespace = map(
-    oneOrMore(parseToken(isWhitespace)),
-    ([first]) => first,
+    zeroOrMore(parseToken(isWhitespace)),
+    Whitespace.of,
   );
 
   export class Colon implements Equatable, Serializable<Colon.JSON> {

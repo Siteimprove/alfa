@@ -1,5 +1,9 @@
 import { Array } from "@siteimprove/alfa-array";
-import type { Result } from "@siteimprove/alfa-result";
+import { Parser } from "@siteimprove/alfa-parser";
+import { Result } from "@siteimprove/alfa-result";
+import type { Slice } from "@siteimprove/alfa-slice";
+
+import { Token, type Parser as CSSParser } from "../../syntax/index.js";
 
 import { Unit } from "../../unit/index.js";
 
@@ -13,6 +17,7 @@ import {
 } from "../numeric/index.js";
 
 import { Expression } from "./expression.js";
+import { Function } from "./function/index.js";
 import type { Kind } from "./kind.js";
 import { Value } from "./value.js";
 
@@ -21,6 +26,8 @@ const { isDimension } = Dimension;
 const { isLength } = Length;
 const { isNumber } = Number;
 const { isPercentage } = Percentage;
+
+const { delimited, either, map, mapResult, option, pair, zeroOrMore } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-values/#calculation-tree-operator-nodes}
@@ -155,9 +162,46 @@ export namespace Operation {
     }
   }
 
-  export function isSumExpression(value: unknown): value is Sum {
-    return value instanceof Sum;
+  export namespace Sum {
+    export function isSumExpression(value: unknown): value is Sum {
+      return value instanceof Sum;
+    }
+
+    /**
+     * {@link https://drafts.csswg.org/css-values/#typedef-calc-sum}
+     */
+    export function parse(input: Slice<Token>) {
+      return mapResult(
+        pair(
+          Product.parse(parse),
+          zeroOrMore(
+            pair(
+              delimited(
+                Token.parseWhitespace,
+                either(
+                  map(Token.parseDelim("+"), () => false),
+                  map(Token.parseDelim("-"), () => true),
+                ),
+              ),
+              Product.parse(parse),
+            ),
+          ),
+        ),
+        ([left, result]) =>
+          result
+            .map(([invert, right]) =>
+              invert ? Operation.Negate.of(right) : right,
+            )
+            .reduce(
+              (left: Result<Expression, string>, right: Expression) =>
+                left.flatMap((left) => Operation.Sum.of(left, right)),
+              Result.of(left),
+            ),
+      )(input);
+    }
   }
+
+  export const { isSumExpression } = Sum;
 
   export class Negate extends Unary<"negate"> {
     public static of(operand: Expression): Negate {
@@ -276,9 +320,47 @@ export namespace Operation {
     }
   }
 
-  export function isProductExpression(value: unknown): value is Product {
-    return value instanceof Product;
+  export namespace Product {
+    export function isProductExpression(value: unknown): value is Product {
+      return value instanceof Product;
+    }
+    /**
+     * {@link https://drafts.csswg.org/css-values/#typedef-calc-product}
+     */
+    export function parse(
+      parseSum: CSSParser<Expression>,
+    ): CSSParser<Expression> {
+      return mapResult(
+        pair(
+          Value.parse(Function.parse, parseSum),
+          zeroOrMore(
+            pair(
+              delimited(
+                option(Token.parseWhitespace),
+                either(
+                  map(Token.parseDelim("*"), () => false),
+                  map(Token.parseDelim("/"), () => true),
+                ),
+              ),
+              Value.parse(Function.parse, parseSum),
+            ),
+          ),
+        ),
+        ([left, result]) =>
+          result
+            .map(([invert, right]) =>
+              invert ? Operation.Invert.of(right) : right,
+            )
+            .reduce(
+              (left: Result<Expression, string>, right: Expression) =>
+                left.flatMap((left) => Operation.Product.of(left, right)),
+              Result.of(left),
+            ),
+      );
+    }
   }
+
+  export const { isProductExpression } = Product;
 
   export class Invert extends Unary<"invert"> {
     public static of(operand: Expression): Invert {

@@ -1,5 +1,7 @@
 # @siteimprove/alfa-aria
 
+## 0.111.0
+
 ## 0.110.0
 
 ### Patch Changes
