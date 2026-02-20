@@ -10,7 +10,7 @@ import type { Functor } from '@siteimprove/alfa-functor';
 import type { Mapper } from '@siteimprove/alfa-mapper';
 import type { Monad } from '@siteimprove/alfa-monad';
 import { Serializable } from '@siteimprove/alfa-json';
-import type { Thunk } from '@siteimprove/alfa-thunk';
+import { Thunk } from '@siteimprove/alfa-thunk';
 import { Trampoline } from '@siteimprove/alfa-trampoline';
 
 // @public (undocumented)
@@ -36,7 +36,6 @@ export class Lazy<T> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<T
     iterator(): Iterator<T>;
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Lazy<U>;
-    // (undocumented)
     static of<T>(thunk: Thunk<T>): Lazy<T>;
     // (undocumented)
     toJSON(options?: Serializable.Options): Lazy.JSON<T>;

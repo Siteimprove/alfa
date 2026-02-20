@@ -99,3 +99,39 @@ test(".suspend() can construct a stack-safe recursive computation", (t) => {
 
   t.equal(n.run(), 100000);
 });
+
+test("Trampolined thunks are not frozen", (t) => {
+  let called = 0;
+  // Everytime the trampoline is run, the thunk is called and the counter is incremented
+  const trampoline = Trampoline.delay(() => ++called);
+
+  t.equal(called, 0);
+
+  t.equal(trampoline.run(), 1);
+  t.equal(called, 1);
+
+  t.equal(trampoline.run(), 2);
+  t.equal(called, 2);
+});
+
+test("Trampolined thunks share state between maps", (t) => {
+  let called = 0;
+  // The thunk is duplicated between the trampoline and the mapped trampoline,
+  // sharing and incrementing the same counter whenever one is called.
+  const trampoline = Trampoline.delay(() => ++called);
+  const mapped = trampoline.map((n) => n * -1);
+
+  t.equal(called, 0);
+
+  t.equal(trampoline.run(), 1);
+  t.equal(called, 1);
+
+  t.equal(mapped.run(), -2);
+  t.equal(called, 2);
+
+  t.equal(trampoline.run(), 3);
+  t.equal(called, 3);
+
+  t.equal(mapped.run(), -4);
+  t.equal(called, 4);
+});
