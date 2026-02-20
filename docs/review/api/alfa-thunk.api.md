@@ -14,6 +14,7 @@ export type Thunk<T = void> = () => T;
 export namespace Thunk {
     // (undocumented)
     export function flatMap<T, U>(thunk: Thunk<T>, mapper: Mapper<T, Thunk<U>>): Thunk<U>;
+    export function freeze<T>(thunk: Thunk<T>): Thunk<T>;
     // (undocumented)
     export function map<T, U>(thunk: Thunk<T>, mapper: Mapper<T, U>): Thunk<U>;
     // (undocumented)
