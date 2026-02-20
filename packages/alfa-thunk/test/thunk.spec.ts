@@ -51,7 +51,7 @@ test(".freeze() freezes a thunk value", (t) => {
   t.equal(frozen(), 1);
 });
 
-test(".freeze() only take effect after evaluating the frozen thunk once", (t) => {
+test(".freeze() only takes effect after evaluating the frozen thunk once", (t) => {
   let called = 0;
 
   const thunk: Thunk<number> = () => ++called;

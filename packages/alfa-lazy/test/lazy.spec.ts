@@ -62,7 +62,7 @@ test("#map() does not cause the original lazy to impact the mapped one", (t) => 
   const lazy = Lazy.of(() => ++count);
   const mapped = lazy.map((n) => n * 2);
 
-  // First `#force()` on the mapped, evaluate both.
+  // First `#force()` on the lazy, evaluate both.
   t.equal(lazy.force(), 1);
 
   // The mapped should be unaffected by the original lazy being evaluated.

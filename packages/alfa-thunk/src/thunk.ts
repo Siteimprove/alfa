@@ -39,10 +39,10 @@ export namespace Thunk {
    *
    * @remarks
    * While this may be desirable in contexts where immutability is required,
-   * it can also break badly Thunks that rely on side effect to maintain an
+   * it can also break badly thunks that rely on side effect to maintain an
    * internal state.
    *
-   * Frozen thanks store their result internally, thus consuming memory. At the
+   * Frozen thunks store their result internally, thus consuming memory. At the
    * same time, they ensure that repeated calls are fast. Because the result are
    * stored internally, they will be destroyed at the same time the thunk is.
    */
