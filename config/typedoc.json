@@ -1,7 +1,8 @@
 {
   "$schema": "https://typedoc.org/schema.json",
   "entryPointStrategy": "packages",
-  "entryPoints": ["packages/alfa-*"],
+  // entryPoints is relative to this file.
+  "entryPoints": ["../packages/alfa-*"],
   "packageOptions": {
     "entryPoints": ["src/index.ts"],
     "includeVersion": true
