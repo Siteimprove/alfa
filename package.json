@@ -24,7 +24,7 @@
     "depgraph:self": "yarn generate-dependency-graphs $(pwd) $(echo ${INIT_CWD} | sed \"s+$(pwd)/packages/++\")",
     "document": "api-documenter generate -i docs/data/api -o docs/api",
     "knip": "knip --config config/knip.ts --no-config-hints",
-    "typedoc": "typedoc --options config/typedoc.json"
+    "typedoc": "typedoc --options config/typedoc.mjs"
   },
   "engines": {
     "node": ">=20.0.0"
