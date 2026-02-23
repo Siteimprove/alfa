@@ -32,7 +32,7 @@ export class Declaration implements Equatable, Serializable {
    * @remarks
    * If the declaration is in a style attribute on an element, point to it
    *
-   * "owner" use the same vocabulary as attribute's owner
+   * "owner" uses the same vocabulary as attribute's owner
    *
    * Only one of _parent and _owner should be Some.
    */
