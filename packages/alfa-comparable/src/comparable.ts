@@ -111,7 +111,7 @@ export namespace Comparable {
   /**
    * @remarks
    * This should only be used in cases where branch mispredictions caused by the
-   * more general {@link Comparable:namespace).(compare:1)} are undesired.
+   * more general {@link compare:0} are undesired.
    */
   export function compareString(a: string, b: string): Comparison {
     return comparePrimitive(a, b);
@@ -120,7 +120,7 @@ export namespace Comparable {
   /**
    * @remarks
    * This should only be used in cases where branch mispredictions caused by the
-   * more general {@link (Comparable:namespace).(compare:2)} are undesired.
+   * more general {@link compare:1} are undesired.
    */
   export function compareNumber(a: number, b: number): Comparison {
     return comparePrimitive(a, b);
@@ -129,7 +129,7 @@ export namespace Comparable {
   /**
    * @remarks
    * This should only be used in cases where branch mispredictions caused by the
-   * more general {@link (Comparable:namespace).(compare:3)} are undesired.
+   * more general {@link compare:2} are undesired.
    */
   export function compareBigInt(a: bigint, b: bigint): Comparison {
     return comparePrimitive(a, b);
@@ -138,7 +138,7 @@ export namespace Comparable {
   /**
    * @remarks
    * This should only be used in cases where branch mispredictions caused by the
-   * more general {@link (Comparable:namespace).(compare:4)} are undesired.
+   * more general {@link compare:3} are undesired.
    */
   export function compareBoolean(a: boolean, b: boolean): Comparison {
     return comparePrimitive(a, b);
@@ -147,7 +147,7 @@ export namespace Comparable {
   /**
    * @remarks
    * This should only be used in cases where branch mispredictions caused by the
-   * more general {@link (Comparable:namespace).(compare:5)} are undesired.
+   * more general {@link compare:4} are undesired.
    */
   export function compareComparable<T extends Comparable<U>, U = T>(
     a: T,

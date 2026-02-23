@@ -43,7 +43,7 @@ export interface Equatable {
 
 /**
  * This namespace provides additional types and functions for the
- * {@link (Equatable:interface)} interface.
+ * {@link Equatable:interface} interface.
  *
  * @public
  */
@@ -61,7 +61,7 @@ export namespace Equatable {
   }
 
   /**
-   * Check if an unknown value implements the {@link (Equatable:interface)}
+   * Check if an unknown value implements the {@link Equatable:interface}
    * interface.
    */
   export function isEquatable(value: unknown): value is Equatable {
@@ -72,7 +72,7 @@ export namespace Equatable {
    * Check if two unknown values are equal.
    *
    * @remarks
-   * If either of the given values implement the {@link (Equatable:interface)}
+   * If either of the given values implement the {@link Equatable:interface}
    * interface, the equivalence constraints of the value will be used. If not,
    * strict equality will be used with the additional constraint that `NaN` is
    * equal to itself.
