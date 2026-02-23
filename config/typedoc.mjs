@@ -8,7 +8,7 @@ const config = {
   packageOptions: {
     entryPoints: ["src/index.ts"],
     includeVersion: true,
-    excludeInternals: true,
+    excludeInternal: true,
   },
   outputs: [
     {
@@ -25,12 +25,8 @@ const config = {
     },
   ],
   router: "structure-dir",
-  plugin: [
-    "typedoc-plugin-markdown",
-    "typedoc-plugin-coverage",
-    "typedoc-plugin-missing-exports",
-  ],
-  highlightLanguages: ["markdown, ...OptionDefaults.highlightLanguages"],
+  plugin: ["typedoc-plugin-markdown", "typedoc-plugin-coverage"],
+  highlightLanguages: ["markdown", ...OptionDefaults.highlightLanguages],
 };
 
 export default config;
