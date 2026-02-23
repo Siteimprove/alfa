@@ -32,10 +32,8 @@ export class Declaration implements Equatable, Serializable {
    * @remarks
    * If the declaration is in a style attribute on an element, point to it
    *
-   * @remarks
    * "owner" use the same vocabulary as attribute's owner
    *
-   * @remarks
    * Only one of _parent and _owner should be Some.
    */
   private _owner: Option<Element> = None;
