@@ -22,7 +22,7 @@ The individual changelog contains the full changeset. The global changelog conta
 
 ## Validation
 
-The package provides a bunch of low-level validation structure of the project. These checks can be toggled via [`./config/validate-structure.json`](config/validate-structure.json).
+The package provides a bunch of low-level validation structure of the project. These checks can be toggled via [``config/validate-structure.json`](../../config/validate-structure.json).
 
 - Check that each changeset matches the structure described above.
 - Check that each workspace has an API extractor config.
