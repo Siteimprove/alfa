@@ -70,7 +70,7 @@
     "json-stringify-pretty-compact": "^4.0.0",
     "madge": "^8.0.0",
     "resolve-from": "^5.0.0",
-    "simple-git": "^3.31.1",
+    "simple-git": "^3.32.2",
     "ts-graphviz": "^3.0.7"
   },
   "devDependencies": {
