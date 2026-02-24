@@ -9,6 +9,7 @@ const config = {
     entryPoints: ["src/index.ts"],
     includeVersion: true,
     excludeInternal: true,
+    useTsLinkResolution: false,
   },
   outputs: [
     {
@@ -24,7 +25,7 @@ const config = {
       path: "../docs/typedoc/markdown",
     },
   ],
-  router: "structure-dir",
+  router: "structure",
   plugin: ["typedoc-plugin-markdown", "typedoc-plugin-coverage"],
   highlightLanguages: ["markdown", ...OptionDefaults.highlightLanguages],
 };
