@@ -1,5 +1,11 @@
 # @siteimprove/alfa-sequence
 
+## 0.112.0
+
+### Patch Changes
+
+- **Fixed:** Sequences that are built from an iterator or an array can now be mapped correctly without the original and copy racing to consume items from the input. ([#2005](https://github.com/Siteimprove/alfa/pull/2005))
+
 ## 0.111.0
 
 ## 0.110.0

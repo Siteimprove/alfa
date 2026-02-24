@@ -51,6 +51,22 @@ test("#map() does not cause the original lazy value to be evaluated more than on
   // Second `#map()` and `#force()`, reuse. If not reused, result would have
   // been 4.
   t.equal(lazy.map((n) => n * 2).force(), 2);
+
+  // The original lazy has only been evaluated once.
+  t.equal(lazy.force(), 1);
+});
+
+test("#map() does not cause the original lazy to impact the mapped one", (t) => {
+  let count = 0;
+
+  const lazy = Lazy.of(() => ++count);
+  const mapped = lazy.map((n) => n * 2);
+
+  // First `#force()` on the lazy, evaluate both.
+  t.equal(lazy.force(), 1);
+
+  // The mapped should be unaffected by the original lazy being evaluated.
+  t.equal(mapped.force(), 2);
 });
 
 test("#flatMap() applies a function to a lazy value and flattens the result", (t) => {

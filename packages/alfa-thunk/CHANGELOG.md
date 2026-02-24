@@ -1,5 +1,11 @@
 # @siteimprove/alfa-thunk
 
+## 0.112.0
+
+### Minor Changes
+
+- **Added:** A `Thunk.freeze` helper is now available to freeze a thunk, making it independent of changes in the global state after its first evaluation. ([#2005](https://github.com/Siteimprove/alfa/pull/2005))
+
 ## 0.111.0
 
 ## 0.110.0

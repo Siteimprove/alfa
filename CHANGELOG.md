@@ -1,5 +1,17 @@
 # Alfa changelog
 
+## [0.112.0](../../compare/v0.111.0...v0.112.0) (2026-02-24)
+
+### Added
+
+- [@siteimprove/alfa-thunk](packages/alfa-thunk/CHANGELOG.md#01120): A `Thunk.freeze` helper is now available to freeze a thunk, making it independent of changes in the global state after its first evaluation. ([#2005](https://github.com/Siteimprove/alfa/pull/2005))
+
+### Fixed
+
+- [@siteimprove/alfa-lazy](packages/alfa-lazy/CHANGELOG.md#01120): `Lazy` whose underlying `Thunk` is stateful now correctly freeze their value upon evaluation, even across copies (e.g. mapped version of the `Lazy`). ([#2005](https://github.com/Siteimprove/alfa/pull/2005))
+
+- [@siteimprove/alfa-sequence](packages/alfa-sequence/CHANGELOG.md#01120): Sequences that are built from an iterator or an array can now be mapped correctly without the original and copy racing to consume items from the input. ([#2005](https://github.com/Siteimprove/alfa/pull/2005))
+
 ## [0.111.0](../../compare/v0.110.0...v0.111.0) (2026-02-19)
 
 ### Added

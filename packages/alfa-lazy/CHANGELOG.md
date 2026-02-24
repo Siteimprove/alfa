@@ -1,5 +1,11 @@
 # @siteimprove/alfa-lazy
 
+## 0.112.0
+
+### Patch Changes
+
+- **Fixed:** `Lazy` whose underlying `Thunk` is stateful now correctly freeze their value upon evaluation, even across copies (e.g. mapped version of the `Lazy`). ([#2005](https://github.com/Siteimprove/alfa/pull/2005))
+
 ## 0.111.0
 
 ## 0.110.0
