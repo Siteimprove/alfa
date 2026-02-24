@@ -1,5 +1,7 @@
 # @siteimprove/alfa-parser
 
+## 0.112.0
+
 ## 0.111.0
 
 ### Minor Changes
