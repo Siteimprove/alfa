@@ -4,7 +4,7 @@ import type { Functor } from "@siteimprove/alfa-functor";
 import { Serializable } from "@siteimprove/alfa-json";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import type { Monad } from "@siteimprove/alfa-monad";
-import type { Thunk } from "@siteimprove/alfa-thunk";
+import { Thunk } from "@siteimprove/alfa-thunk";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 /**
@@ -19,8 +19,13 @@ export class Lazy<T>
     Equatable,
     Serializable<Lazy.JSON<T>>
 {
+  /**
+   * Create a new lazy value from a thunk.
+   * The Lazy will contain a frozen copy of the Thunk, ensuring it always produces
+   * the same value and thus can indeed be lazily evaluated.
+   */
   public static of<T>(thunk: Thunk<T>): Lazy<T> {
-    return new Lazy(Trampoline.delay(thunk));
+    return new Lazy(Trampoline.delay(Thunk.freeze(thunk)));
   }
 
   public static force<T>(value: T): Lazy<T> {
@@ -34,11 +39,13 @@ export class Lazy<T>
   }
 
   public force(): T {
+    const value = this._value.run();
+
     if (this._value.isSuspended()) {
-      this._value = Trampoline.done(this._value.run());
+      this._value = Trampoline.done(value);
     }
 
-    return this._value.run();
+    return value;
   }
 
   public map<U>(mapper: Mapper<T, U>): Lazy<U> {
