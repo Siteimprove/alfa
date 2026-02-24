@@ -59,23 +59,21 @@ test("#map() does not force the tail of a sequence", (t) => {
 });
 
 test("#map creates an independent copy, even when the original source is read-once", (t) => {
-  function makeGenerator(): () => Generator<number> {
-    return function* generator() {
-      yield 1;
-      yield 2;
-    };
+  function* generator(): Generator<number> {
+    yield 1;
+    yield 2;
   }
 
   // Forcing either the original or the (mapped) copy does not consume item from
   // the other. This stays true whichever is forced first.
-  for (const iterator of [[1, 2], makeGenerator()()]) {
+  for (const iterator of [[1, 2], generator()]) {
     let sequence = Sequence.from(iterator);
     const mapped = sequence.map((n) => n * 2);
 
     t.deepEqual([...sequence], [1, 2]);
     t.deepEqual([...mapped], [2, 4]);
   }
-  for (const iterator of [[1, 2], makeGenerator()()]) {
+  for (const iterator of [[1, 2], generator()]) {
     let sequence = Sequence.from(iterator);
     const mapped = sequence.map((n) => n * 2);
 
