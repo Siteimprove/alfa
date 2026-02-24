@@ -122,9 +122,9 @@ export namespace Language {
    * {@link https://tools.ietf.org/html/bcp47#section-3.1.2}
    */
   export abstract class Subtag<
-      T extends string = string,
-      N extends string = string,
-    >
+    T extends string = string,
+    N extends string = string,
+  >
     implements Equatable, Serializable<Subtag.JSON<T, N>>
   {
     protected readonly _name: N;
@@ -438,12 +438,7 @@ export namespace Language {
   }
 
   export const { of: variant, isVariant, isName: isVariantName } = Variant;
-}
 
-/**
- * @public
- */
-export namespace Language {
   export function parse(input: string): Result<Language, string> {
     let parts = Slice.of(input.toLowerCase().split("-"));
 

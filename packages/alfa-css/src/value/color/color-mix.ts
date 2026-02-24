@@ -308,7 +308,7 @@ export namespace ColorMix {
   /**
    * Calculates the result of a color-mix, given that all colors are already
    * resolved to CSS4Color.
-   * {@see https://drafts.csswg.org/css-color-5/#color-mix-result}
+   * {@link https://drafts.csswg.org/css-color-5/#color-mix-result}
    *
    * @internal
    */
