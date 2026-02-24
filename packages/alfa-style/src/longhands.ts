@@ -172,7 +172,6 @@ export namespace Longhands {
    * must not include the defaulting keywords as these are handled globally
    * rather than individually.
    *
-   * @remarks
    * The parsed type doesn't really exist in CSS. It is an artefact on how we
    * handle the default keywords.
    */

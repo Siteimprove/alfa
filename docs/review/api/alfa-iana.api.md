@@ -83,6 +83,8 @@ export namespace Language {
         variants: Array<Variant.JSON>;
     }
     // (undocumented)
+    export function parse(input: string): Result<Language, string>;
+    // (undocumented)
     export class Primary extends Subtag<"primary", Primary.Name> {
         protected constructor(name: Primary.Name);
         // (undocumented)
@@ -114,6 +116,10 @@ export namespace Language {
         // (undocumented)
         export type Name = keyof Languages["primary"];
     }
+    const // (undocumented)
+    primary: typeof Primary.of, // (undocumented)
+    isPrimary: typeof Primary.isPrimary, // (undocumented)
+    isPrimaryName: typeof Primary.isName;
     // (undocumented)
     export class Region extends Subtag<"region", Region.Name> {
         protected constructor(name: Region.Name);
@@ -128,10 +134,6 @@ export namespace Language {
         // (undocumented)
         get type(): "region";
     }
-    const // (undocumented)
-    primary: typeof Primary.of, // (undocumented)
-    isPrimary: typeof Primary.isPrimary, // (undocumented)
-    isPrimaryName: typeof Primary.isName;
     // (undocumented)
     export namespace Region {
         // (undocumented)
@@ -144,12 +146,12 @@ export namespace Language {
         // (undocumented)
         export type Name = keyof Languages["region"];
     }
-    // (undocumented)
-    export type Scope = Exclude<Languages["primary"][Primary.Name]["scope"], null>;
     const // (undocumented)
     extended: typeof Extended.of, // (undocumented)
     isExtended: typeof Extended.isExtended, // (undocumented)
     isExtendedName: typeof Extended.isName;
+    // (undocumented)
+    export type Scope = Exclude<Languages["primary"][Primary.Name]["scope"], null>;
     // (undocumented)
     export class Script extends Subtag<"script", Script.Name> {
         protected constructor(name: Script.Name);
@@ -164,6 +166,10 @@ export namespace Language {
         // (undocumented)
         get type(): "script";
     }
+    const // (undocumented)
+    script: typeof Script.of, // (undocumented)
+    isScript: typeof Script.isScript, // (undocumented)
+    isScriptName: typeof Script.isName;
     // (undocumented)
     export namespace Script {
         // (undocumented)
@@ -176,10 +182,6 @@ export namespace Language {
         // (undocumented)
         export type Name = keyof Languages["script"];
     }
-    const // (undocumented)
-    script: typeof Script.of, // (undocumented)
-    isScript: typeof Script.isScript, // (undocumented)
-    isScriptName: typeof Script.isName;
     // (undocumented)
     export abstract class Subtag<T extends string = string, N extends string = string> implements Equatable, Serializable<Subtag.JSON<T, N>> {
         protected constructor(name: N);
@@ -198,6 +200,10 @@ export namespace Language {
         // (undocumented)
         abstract get type(): T;
     }
+    const // (undocumented)
+    region: typeof Region.of, // (undocumented)
+    isRegion: typeof Region.isRegion, // (undocumented)
+    isRegionName: typeof Region.isName;
     // (undocumented)
     export namespace Subtag {
         // (undocumented)
@@ -210,10 +216,6 @@ export namespace Language {
             type: T;
         }
     }
-    const // (undocumented)
-    region: typeof Region.of, // (undocumented)
-    isRegion: typeof Region.isRegion, // (undocumented)
-    isRegionName: typeof Region.isName;
     // (undocumented)
     export class Variant extends Subtag<"variant", Variant.Name> {
         protected constructor(name: Variant.Name);
@@ -230,6 +232,10 @@ export namespace Language {
         // (undocumented)
         get type(): "variant";
     }
+    const // (undocumented)
+    variant: typeof Variant.of, // (undocumented)
+    isVariant: typeof Variant.isVariant, // (undocumented)
+    isVariantName: typeof Variant.isName;
     // (undocumented)
     export namespace Variant {
         // (undocumented)
@@ -244,16 +250,6 @@ export namespace Language {
         // (undocumented)
         export type Name = keyof Languages["variant"];
     }
-    const // (undocumented)
-    variant: typeof Variant.of, // (undocumented)
-    isVariant: typeof Variant.isVariant, // (undocumented)
-    isVariantName: typeof Variant.isName;
-}
-
-// @public (undocumented)
-export namespace Language {
-    // (undocumented)
-    export function parse(input: string): Result<Language, string>;
 }
 
 // (No @packageDocumentation comment for this package)

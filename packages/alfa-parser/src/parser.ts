@@ -451,7 +451,7 @@ export namespace Parser {
    * {@link https://drafts.csswg.org/css-values-4/#comb-any}
    * Turns `[Parser<A>, Parser<B>, Parser<C>]` into `Parser<A || B || C>`
    *
-   * @Remarks
+   * @remarks
    * This parser never fails and will return an array of `undefined` if none
    * of the individual parsers succeed. It is nonetheless easier to not define
    * it as Infallible since call sites usually expect Parser and combinators.

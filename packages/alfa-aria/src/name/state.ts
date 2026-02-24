@@ -123,7 +123,6 @@ export class State implements Equatable, Serializable<State.JSON> {
    * This set both _referrer and _referred, so that they will always be
    * either both Some or both None.
    *
-   * @remarks
    * We currently have no way to clear references since we currently have no
    * use for it.
    */
