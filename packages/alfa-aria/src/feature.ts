@@ -383,31 +383,41 @@ const Features: Features = {
     input: html(
       (element): Role.Name | None => {
         switch ((element as Element<"input">).inputType()) {
-          case "button":
-          case "image":
-          case "reset":
-          case "submit":
+          case "button": // https://www.w3.org/TR/html-aam-1.0/#el-input-button
+          case "image": // https://www.w3.org/TR/html-aam-1.0/#el-input-image
+          case "reset": // https://www.w3.org/TR/html-aam-1.0/#el-input-reset
+          case "submit": // https://www.w3.org/TR/html-aam-1.0/#el-input-submit
             return "button";
-          case "checkbox":
+          case "checkbox": // https://www.w3.org/TR/html-aam-1.0/#el-input-checkbox
             return "checkbox";
-          case "number":
+          case "number": // https://www.w3.org/TR/html-aam-1.0/#el-input-number
             return "spinbutton";
-          case "radio":
+          case "radio": // https://www.w3.org/TR/html-aam-1.0/#el-input-radio
             return "radio";
-          case "range":
+          case "range": // https://www.w3.org/TR/html-aam-1.0/#el-input-range
             return "slider";
-          case "search":
+          case "search": // https://www.w3.org/TR/html-aam-1.0/#el-input-search
+            // https://www.w3.org/TR/html-aam-1.0/#el-input-textetc-autocomplete
             return element.attribute("list").isSome()
               ? "combobox"
               : "searchbox";
-          // Note: The specification for email has changed, it now has role textbox. We should look into this if it becomes an issue.
-          case "email":
-          case "tel":
-          case "text":
-          case "url":
+          case "email": // https://www.w3.org/TR/html-aam-1.0/#el-input-email
+          case "tel": // https://www.w3.org/TR/html-aam-1.0/#el-input-tel
+          case "text": // https://www.w3.org/TR/html-aam-1.0/#el-input-text
+          case "url": // https://www.w3.org/TR/html-aam-1.0/#el-input-url
+            // https://www.w3.org/TR/html-aam-1.0/#el-input-textetc-autocomplete
             return element.attribute("list").isSome() ? "combobox" : "textbox";
         }
 
+        // "color" https://www.w3.org/TR/html-aam-1.0/#el-input-color
+        // "date" https://www.w3.org/TR/html-aam-1.0/#el-input-date
+        // "datetime-local" https://www.w3.org/TR/html-aam-1.0/#el-input-datetime-local
+        // "file" https://www.w3.org/TR/html-aam-1.0/#el-input-file
+        // "hidden" https://www.w3.org/TR/html-aam-1.0/#el-input-hidden
+        // "month" https://www.w3.org/TR/html-aam-1.0/#el-input-month
+        // "password" https://www.w3.org/TR/html-aam-1.0/#el-input-password
+        // "time" https://www.w3.org/TR/html-aam-1.0/#el-input-time
+        // "week" https://www.w3.org/TR/html-aam-1.0/#el-input-week
         return None;
       },
       function* (element) {
@@ -466,63 +476,60 @@ const Features: Features = {
       (element, device, state) => {
         if (
           test(
-            hasInputType("text", "password", "search", "tel", "email", "url"),
+            hasInputType(
+              "text",
+              "password",
+              "number",
+              "search",
+              "tel",
+              "email",
+              "url",
+            ),
             element,
           )
         ) {
           /**
-           * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-text-input-type-password-input-type-search-input-type-tel-input-type-url-and-textarea-element}
+           * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-text-input-type-password-input-type-number-input-type-search-input-type-tel-input-type-email-input-type-url-and-textarea-elements-accessible-name-computation}
            */
           return Name.fromSteps(
             () => nameFromLabel(element, device, state),
             // The title attribute has poor and varying support, but
             // the specs give it precedence over placeholder.
             // This could be a browser-branched value.
-            () => nameFromAttribute(element, "title", "placeholder"),
+            () =>
+              nameFromAttribute(
+                element,
+                "title",
+                "placeholder",
+                "aria-placeholder",
+              ),
           );
         }
 
-        if (test(hasInputType("button"), element)) {
+        if (test(hasInputType("button", "submit", "reset"), element)) {
           /**
-           * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-button-input-type-submit-and-input-type-reset}
+           * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-button-input-type-submit-and-input-type-reset-elements-accessible-name-computation}
            */
           return Name.fromSteps(
-            // {@link https://github.com/w3c/html-aam/pull/423}
             () => nameFromLabel(element, device, state),
             () => nameFromAttribute(element, "value"),
-          );
-        }
-
-        if (test(hasInputType("submit"), element)) {
-          /**
-           * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-button-input-type-submit-and-input-type-reset}
-           */
-          return Name.fromSteps(
-            // {@link https://github.com/w3c/html-aam/pull/423}
-            () => nameFromLabel(element, device, state),
-            () => nameFromAttribute(element, "value"),
-            () => Option.of(Name.of("Submit")),
-          );
-        }
-
-        if (test(hasInputType("reset"), element)) {
-          /**
-           * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-button-input-type-submit-and-input-type-reset}
-           */
-          return Name.fromSteps(
-            // {@link https://github.com/w3c/html-aam/pull/423}
-            () => nameFromLabel(element, device, state),
-            () => nameFromAttribute(element, "value"),
-            () => Option.of(Name.of("Reset")),
+            () =>
+              test(hasInputType("submit"), element)
+                ? Option.of(Name.of("Submit"))
+                : None,
+            () =>
+              test(hasInputType("reset"), element)
+                ? Option.of(Name.of("Reset"))
+                : None,
+            () => nameFromAttribute(element, "title"),
           );
         }
 
         if (test(hasInputType("image"), element)) {
           /**
-           * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-image}
+           * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-image-element-accessible-name-computation}
            */
           return Name.fromSteps(
-            // {@link https://github.com/w3c/html-aam/pull/423}
             () => nameFromLabel(element, device, state),
             // The title attribute has poor and varying support, but the specs
             // use it.

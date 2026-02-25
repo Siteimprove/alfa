@@ -1014,6 +1014,107 @@ test(`.from() determines the name of an <input> element with a placeholder
     spaces: no,
     sources: [{ type: "label", attribute: "/input[1]/@placeholder" }],
   });
+
+  for (const type of [
+    "text",
+    "password",
+    "number",
+    "search",
+    "tel",
+    "email",
+    "url",
+    "invalid",
+  ]) {
+    const input = <input type={type} placeholder="Hello world" />;
+
+    t.deepEqual(getName(input), {
+      value: "Hello world",
+      spaces: no,
+      sources: [{ type: "label", attribute: "/input[1]/@placeholder" }],
+    });
+  }
+
+  // Types with a default name but placeholder ignored
+  for (const type of ["submit", "reset", "image"]) {
+    const input = <input type={type} placeholder="Hello world" />;
+
+    t.notEqual(getName(input).value, "Hello world");
+  }
+
+  for (const type of [
+    "button",
+    "checkbox",
+    "color",
+    "date",
+    "datetime-local",
+    "file",
+    "hidden",
+    "month",
+    "radio",
+    "range",
+    "time",
+    "week",
+  ]) {
+    const input = <input type={type} placeholder="Hello world" />;
+
+    t.deepEqual(Name.from(input, device), None);
+  }
+});
+
+test(`.from() determines the name of an <input> element with an aria-placeholder
+      attribute`, (t) => {
+  const input = <input aria-placeholder="Hello world" />;
+
+  t.deepEqual(getName(input), {
+    value: "Hello world",
+    spaces: no,
+    sources: [{ type: "label", attribute: "/input[1]/@aria-placeholder" }],
+  });
+
+  for (const type of [
+    "text",
+    "password",
+    "number",
+    "search",
+    "tel",
+    "email",
+    "url",
+    "invalid",
+  ]) {
+    const input = <input type={type} aria-placeholder="Hello world" />;
+
+    t.deepEqual(getName(input), {
+      value: "Hello world",
+      spaces: no,
+      sources: [{ type: "label", attribute: "/input[1]/@aria-placeholder" }],
+    });
+  }
+
+  // Types with a default name but aria-placeholder ignored
+  for (const type of ["submit", "reset", "image"]) {
+    const input = <input type={type} aria-placeholder="Hello world" />;
+
+    t.notEqual(getName(input).value, "Hello world");
+  }
+
+  for (const type of [
+    "button",
+    "checkbox",
+    "color",
+    "date",
+    "datetime-local",
+    "file",
+    "hidden",
+    "month",
+    "radio",
+    "range",
+    "time",
+    "week",
+  ]) {
+    const input = <input type={type} aria-placeholder="Hello world" />;
+
+    t.deepEqual(Name.from(input, device), None);
+  }
 });
 
 test(`.from() determines the name of an <input> element with a placeholder
@@ -1025,6 +1126,65 @@ test(`.from() determines the name of an <input> element with a placeholder
     spaces: no,
     sources: [{ type: "label", attribute: "/input[1]/@title" }],
   });
+
+  for (const type of [
+    "text",
+    "password",
+    "number",
+    "search",
+    "tel",
+    "email",
+    "url",
+    "invalid",
+  ]) {
+    const input = (
+      <input type={type} title="Hello title" placeholder="Hello placeholder" />
+    );
+
+    t.deepEqual(getName(input), {
+      value: "Hello title",
+      spaces: no,
+      sources: [{ type: "label", attribute: "/input[1]/@title" }],
+    });
+  }
+});
+
+test(`.from() determines the name of an <input> element with a placeholder
+      and an aria-placeholder attribute, with the placeholder attribute taking precedence`, (t) => {
+  const input = (
+    <input aria-placeholder="Hello ARIA" placeholder="Hello placeholder" />
+  );
+
+  t.deepEqual(getName(input), {
+    value: "Hello placeholder",
+    spaces: no,
+    sources: [{ type: "label", attribute: "/input[1]/@placeholder" }],
+  });
+
+  for (const type of [
+    "text",
+    "password",
+    "number",
+    "search",
+    "tel",
+    "email",
+    "url",
+    "invalid",
+  ]) {
+    const input = (
+      <input
+        type={type}
+        aria-placeholder="Hello ARIA"
+        placeholder="Hello placeholder"
+      />
+    );
+
+    t.deepEqual(getName(input), {
+      value: "Hello placeholder",
+      spaces: no,
+      sources: [{ type: "label", attribute: "/input[1]/@placeholder" }],
+    });
+  }
 });
 
 test(`.from() determines the name of an \`<input type="image">\` with a
@@ -1038,59 +1198,48 @@ test(`.from() determines the name of an \`<input type="image">\` with a
   });
 });
 
-test(`.from() determines the name of an <input type="button"> element with a
+test(`.from() determines the name of an <input> element with a
       value attribute`, (t) => {
-  const input = <input type="button" value="Hello world" />;
+  for (const type of ["button", "submit", "reset"]) {
+    const input = <input type={type} value="Hello world" />;
 
-  t.deepEqual(getName(input), {
-    value: "Hello world",
-    spaces: no,
-    sources: [{ type: "label", attribute: "/input[1]/@value" }],
-  });
+    t.deepEqual(getName(input), {
+      value: "Hello world",
+      spaces: no,
+      sources: [{ type: "label", attribute: "/input[1]/@value" }],
+    });
+  }
+
+  for (const type of [
+    "checkbox",
+    "color",
+    "date",
+    "datetime-local",
+    "file",
+    "hidden",
+    "month",
+    "radio",
+    "range",
+    "textbox",
+    "time",
+    "week",
+  ]) {
+    const input = <input type={type} value="Hello world" />;
+
+    t.deepEqual(Name.from(input, device), None);
+  }
 });
 
-test(`.from() determines the name of an <input type="submit"> element`, (t) => {
-  const input = <input type="submit" />;
+test(`.from() determines the name of an <input> element with default name`, (t) => {
+  for (const [type, value] of [
+    ["submit", "Submit"],
+    ["reset", "Reset"],
+    ["image", "Submit Query"],
+  ]) {
+    const input = <input type={type} />;
 
-  t.deepEqual(getName(input), { value: "Submit", spaces: no, sources: [] });
-});
-
-test(`.from() determines the name of an <input type="submit"> element with a
-      value attribute`, (t) => {
-  const input = <input type="submit" value="Hello world" />;
-
-  t.deepEqual(getName(input), {
-    value: "Hello world",
-    spaces: no,
-    sources: [{ type: "label", attribute: "/input[1]/@value" }],
-  });
-});
-
-test(`.from() determines the name of an <input type="reset"> element`, (t) => {
-  const input = <input type="reset" />;
-
-  t.deepEqual(getName(input), { value: "Reset", spaces: no, sources: [] });
-});
-
-test(`.from() determines the name of an <input type="reset"> element with a
-      value attribute`, (t) => {
-  const input = <input type="reset" value="Hello world" />;
-
-  t.deepEqual(getName(input), {
-    value: "Hello world",
-    spaces: no,
-    sources: [{ type: "label", attribute: "/input[1]/@value" }],
-  });
-});
-
-test(`.from() determines the name of an <input type="image"> element`, (t) => {
-  const input = <input type="image" />;
-
-  t.deepEqual(getName(input), {
-    value: "Submit Query",
-    spaces: no,
-    sources: [],
-  });
+    t.deepEqual(getName(input), { value, spaces: no, sources: [] });
+  }
 });
 
 test(`.from() determines the name of an <input type="image"> element with an
