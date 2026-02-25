@@ -101,6 +101,7 @@ export namespace Native {
     const {
       withCrossOrigin = false,
       enforceAnonymousCrossOrigin = withCrossOrigin,
+      injectDataAlfaId = false,
     } = options ?? {};
     const range = globalThis.document.createRange(); // Used by toText - the same instance can be reused for each text node.
 
@@ -137,7 +138,7 @@ export namespace Native {
         | globalThis.HTMLIFrameElement
         | globalThis.SVGElement,
     ): Promise<Element.JSON> {
-      return {
+      const result: Element.JSON = {
         type: "element",
         namespace: element.namespaceURI,
         prefix: element.prefix,
@@ -155,6 +156,25 @@ export namespace Native {
             : null,
         box: toRectangle(element.getBoundingClientRect()),
       };
+
+      if (injectDataAlfaId) {
+        const internalId = globalThis.crypto.randomUUID();
+
+        // Add the internal ID to the result.
+        result.internalId = internalId;
+        // Add the data-alfa-id attribute to the result.
+        result.attributes.push({
+          type: "attribute",
+          namespace: null,
+          prefix: null,
+          name: "data-alfa-id",
+          value: internalId,
+        });
+        // Add the data-alfa-id attribute to the element in the page.
+        element.setAttribute("data-alfa-id", internalId);
+      }
+
+      return result;
     }
 
     function toAttribute(attribute: globalThis.Attr): Attribute.JSON {
@@ -670,15 +690,24 @@ export namespace Native {
 
   export interface Options {
     /**
-     * Deprecated, use enforceAnonymousCrossOrigin instead
+     * Deprecated, use enforceAnonymousCrossOrigin instead.
      *
      * @deprecated
      */
     withCrossOrigin?: boolean;
 
     /**
-     * Whether to enforce anonymous crossorigin attribute on <link> missing one
+     * Whether to enforce anonymous crossorigin attribute on <link> missing one.
+     *
+     * @defaultValue false
      */
     enforceAnonymousCrossOrigin?: boolean;
+
+    /**
+     * Whether to inject data-alfa-id attributes on elements of the page.
+     *
+     * @defaultValue false
+     */
+    injectDataAlfaId?: boolean;
   }
 }

@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { JSDOM } from "jsdom";
 
-import { type Document, h, Node } from "@siteimprove/alfa-dom";
+import { type Document, h, Node, Query } from "@siteimprove/alfa-dom";
 import { Native } from "@siteimprove/alfa-dom/native.js";
 
 /**
@@ -178,6 +178,29 @@ test("Native.fromNode() adds crossorigin to <link> without one, when asked", asy
       ])
       .toJSON(),
   );
+});
+
+test("Native.fromNode)() adds data-alfa-id if asked to", async (t) => {
+  const html = "<div id='hello' class='foo'>Hello</div>";
+  const jsdom = new JSDOM(html);
+  globalThis.document = jsdom.window.document;
+
+  const alfaNode = Node.from(
+    await Native.fromNode(document, {
+      injectDataAlfaId: true,
+    }),
+  );
+
+  const alfaElt = Query.getElementIdMap(alfaNode).get("hello").getUnsafe();
+  const alfaId = alfaElt.internalId;
+  const alfaIdAttr = alfaElt.attribute("data-alfa-id").getUnsafe().value;
+
+  const jsdomId = jsdom.window.document
+    .getElementById("hello")!
+    .getAttribute("data-alfa-id");
+
+  t.equal(alfaId, jsdomId);
+  t.equal(alfaId, alfaIdAttr);
 });
 
 test("Native.fromNode() handles variables in shorthands", async (t) => {
