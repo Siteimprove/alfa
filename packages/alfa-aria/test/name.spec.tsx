@@ -1061,6 +1061,62 @@ test(`.from() determines the name of an <input> element with a placeholder
   }
 });
 
+test(`.from() determines the name of an <input> element with an aria-placeholder
+      attribute`, (t) => {
+  const input = <input aria-placeholder="Hello world" />;
+
+  t.deepEqual(getName(input), {
+    value: "Hello world",
+    spaces: no,
+    sources: [{ type: "label", attribute: "/input[1]/@aria-placeholder" }],
+  });
+
+  for (const type of [
+    "text",
+    "password",
+    "number",
+    "search",
+    "tel",
+    "email",
+    "url",
+    "invalid",
+  ]) {
+    const input = <input type={type} aria-placeholder="Hello world" />;
+
+    t.deepEqual(getName(input), {
+      value: "Hello world",
+      spaces: no,
+      sources: [{ type: "label", attribute: "/input[1]/@aria-placeholder" }],
+    });
+  }
+
+  // Types with a default name but aria-placeholder ignored
+  for (const type of ["submit", "reset", "image"]) {
+    const input = <input type={type} aria-placeholder="Hello world" />;
+
+    t.notEqual(getName(input).value, "Hello world");
+  }
+
+  for (const type of [
+    "button",
+    "checkbox",
+    "color",
+    "date",
+    "datetime-local",
+    "file",
+    "hidden",
+    "month",
+    "radio",
+    "range",
+    "time",
+    "week",
+  ]) {
+    const input = <input type={type} aria-placeholder="Hello world" />;
+
+    t.deepEqual(Name.from(input, device), None);
+  }
+});
+
 test(`.from() determines the name of an <input> element with a placeholder
       and a title attribute, with the title attribute taking precedence`, (t) => {
   const input = <input title="Hello title" placeholder="Hello placeholder" />;
@@ -1089,6 +1145,38 @@ test(`.from() determines the name of an <input> element with a placeholder
       value: "Hello title",
       spaces: no,
       sources: [{ type: "label", attribute: "/input[1]/@title" }],
+    });
+  }
+});
+
+test(`.from() determines the name of an <input> element with a placeholder
+      and an aria-placeholder attribute, with the placeholder attribute taking precedence`, (t) => {
+  const input = <input aria-placeholder="Hello ARIA" placeholder="Hello placeholder" />;
+
+  t.deepEqual(getName(input), {
+    value: "Hello placeholder",
+    spaces: no,
+    sources: [{ type: "label", attribute: "/input[1]/@placeholder" }],
+  });
+
+  for (const type of [
+    "text",
+    "password",
+    "number",
+    "search",
+    "tel",
+    "email",
+    "url",
+    "invalid",
+  ]) {
+    const input = (
+      <input type={type} aria-placeholder="Hello ARIA" placeholder="Hello placeholder" />
+    );
+
+    t.deepEqual(getName(input), {
+      value: "Hello placeholder",
+      spaces: no,
+      sources: [{ type: "label", attribute: "/input[1]/@placeholder" }],
     });
   }
 });
