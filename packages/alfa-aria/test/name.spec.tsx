@@ -1151,7 +1151,9 @@ test(`.from() determines the name of an <input> element with a placeholder
 
 test(`.from() determines the name of an <input> element with a placeholder
       and an aria-placeholder attribute, with the placeholder attribute taking precedence`, (t) => {
-  const input = <input aria-placeholder="Hello ARIA" placeholder="Hello placeholder" />;
+  const input = (
+    <input aria-placeholder="Hello ARIA" placeholder="Hello placeholder" />
+  );
 
   t.deepEqual(getName(input), {
     value: "Hello placeholder",
@@ -1170,7 +1172,11 @@ test(`.from() determines the name of an <input> element with a placeholder
     "invalid",
   ]) {
     const input = (
-      <input type={type} aria-placeholder="Hello ARIA" placeholder="Hello placeholder" />
+      <input
+        type={type}
+        aria-placeholder="Hello ARIA"
+        placeholder="Hello placeholder"
+      />
     );
 
     t.deepEqual(getName(input), {
