@@ -1818,6 +1818,8 @@ __metadata:
 "@siteimprove/alfa-encoding@workspace:^, @siteimprove/alfa-encoding@workspace:packages/alfa-encoding":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-encoding@workspace:packages/alfa-encoding"
+  dependencies:
+    "@siteimprove/alfa-test": "workspace:^"
   languageName: unknown
   linkType: soft
 
