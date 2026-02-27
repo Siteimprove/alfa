@@ -1,4 +1,4 @@
-# Copilot Instructions for Alfa
+0# Copilot Instructions for Alfa
 
 This document provides guidance for GitHub Copilot coding agents working on the Alfa repository. Alfa is a suite of open and standards-based tools for performing reliable accessibility conformance testing at scale.
 
@@ -8,22 +8,22 @@ This document provides guidance for GitHub Copilot coding agents working on the 
 
 **Key Features**:
 - Implements DOM and CSSOM interfaces for static analysis
-- Contains 160+ accessibility rules (in `packages/alfa-rules`)
+- Contains 110+ accessibility rules (in `packages/alfa-rules`)
 - Modular architecture with 80+ packages in a monorepo
 - Used by Siteimprove for accessibility testing
 
 ## Technology Stack
 
 ### Core Technologies
-- **Language**: TypeScript 5.9.3 with strict mode enabled
+- **Language**: TypeScript >= 5.9.3 with strict mode enabled
 - **Runtime**: Node.js >= 20.0.0 (tested on Node 20, 22, 24)
-- **Package Manager**: Yarn 4.12.0 (Berry)
+- **Package Manager**: Yarn >= 4.12.0 (Berry)
 - **Module System**: ES Modules (ESM) with `"type": "module"`
 - **Target**: ES2022 with lib es2022
 
 ### Build & Development Tools
 - **Build System**: Custom TypeScript solution builder (in `scripts/build.mjs`)
-- **Testing**: Vitest 4.0.18 with type checking support
+- **Testing**: Vitest >= 4.0.0 with type checking support
 - **Coverage**: @vitest/coverage-v8 with thresholds (lines: 75%, branches: 80%)
 - **API Documentation**: @microsoft/api-extractor and api-documenter
 - **Dependency Analysis**: knip for unused code detection
@@ -50,7 +50,7 @@ This document provides guidance for GitHub Copilot coding agents working on the 
 │   └── validate-structure.json
 ├── docs/                 # Documentation
 │   ├── architecture/     # Architecture Decision Reports (ADRs)
-│   │   └── decisions/   # ADR-001 through ADR-019
+│   │   └── decisions/   # ADR-001 through ADR-019+
 │   ├── guides/          # Development guides
 │   │   ├── changeset.md
 │   │   ├── debugging.md
@@ -63,7 +63,7 @@ This document provides guidance for GitHub Copilot coding agents working on the 
 │   ├── alfa-aria/       # ARIA support
 │   ├── alfa-css/        # CSS parsing and evaluation
 │   ├── alfa-dom/        # DOM and CSSOM node types
-│   ├── alfa-rules/      # 160+ accessibility rules
+│   ├── alfa-rules/      # 110+ accessibility rules
 │   ├── alfa-test/       # Testing utilities
 │   └── ...              # Many more packages
 ├── scratches/           # Scratch files for experimentation (gitignored)
@@ -118,7 +118,10 @@ yarn watch
 # Build just packages (not scratches)
 yarn build packages
 
-# Clean build artifacts
+# Build single package (and its dependencies)
+yarn build packages/alfa-<name>
+
+# Clean build artifacts (do not use this after successful tasks)
 yarn clean
 ```
 
@@ -135,7 +138,7 @@ yarn test packages/alfa-array
 yarn coverage
 
 # Run coverage for single package (must build first)
-yarn workspace @siteimprove/alfa-foo coverage:package
+yarn workspace @siteimprove/alfa-<name>> coverage:package
 ```
 
 **Test Configuration**:
@@ -154,15 +157,15 @@ yarn knip
 yarn extract
 
 # For specific package
-yarn extract:self  # Run from package directory
+yarn workspace @siteimprove/alfa-<name> extract:self
 
-# Generate API documentation
+# Generate API documentation (this happens automatically at published time and should not be part of individual PRs).
 yarn document
 
 # Validate project structure (run from repository root)
 yarn validate-structure .
 
-# Check for duplicate dependencies
+# Check for duplicate dependencies (this should happen automatically on install)
 yarn dedupe --check
 ```
 
@@ -205,20 +208,18 @@ node scratches/foo.js
 ### Import Conventions
 - Use ES module imports: `import { foo } from "..."`
 - Use `.js` extensions in imports (even for `.ts` files): `import { X } from "./x.js"`
+- Use type imports where possible: `import type { Foo } from "..."` or `import { bar, type Foo } from "..."`.
 - Workspace dependencies: `"workspace:^"` in package.json
 - Import from `dist/` in tests: `import { Array } from "../dist/array.js"`
 
 ### Testing Patterns
 ```typescript
 import { test } from "@siteimprove/alfa-test";
-import { describe } from "vitest";
 
-describe("Feature name", () => {
-  test("does something", (t) => {
-    t.equal(actual, expected);
-    t.deepEqual(actual, expected);
-    t(condition); // Assert truthy
-  });
+test("Feature does something", (t) => {
+  t.equal(actual, expected);
+  t.deepEqual(actual, expected);
+  t(condition); // Assert truthy
 });
 ```
 
@@ -240,6 +241,8 @@ describe("Feature name", () => {
 - **Registry**: GitHub Packages (https://npm.pkg.github.com/)
 - **Access**: Public
 - **Scope**: `@siteimprove`
+
+Package publication happens only when humans trigger the workflow. Coding agents working on this project must never publish it.
 
 ### Adding Dependencies
 ```bash
@@ -306,22 +309,22 @@ See `docs/architecture.md` for the required format:
 
 ### Workflows
 - **integrate.yml**: Runs on push/PR - builds, tests, coverage, validation, API extraction, knip
-- **release.yml**: Publishes packages on main branch
-- **coverage.yml**: Reports test coverage
+- **release.yml**: Publishes packages on main branch - Coding agents must never run this workflow.
+- **coverage.yml**: Reports test coverage - This happens automatically at publish time and doesn't need to be run by coding agents.
 - **codeql.yml**: Security analysis
 
 ### CI Environment
 - **OS**: Ubuntu-latest and Windows-latest
 - **Node versions**: 20, 22, 24
 - **Build**: Uses `--quiet` flag
-- **Coverage threshold**: 75% line coverage required
+- **Coverage threshold**: 75% line coverage required, aim for at least 90% when working on new code; no need to add tests for existing code when working on unrelated tasks.
 
 ### GitHub Actions
 Reusable actions in `.github/actions/`:
 - `setup`: Sets up Alfa (install, build toolchain, configure git)
-- `publish`: Publishes packages to GitHub Packages
-- `coverage`: Handles coverage reporting
-- `documentation`: Generates and uploads docs
+- `publish`: Publishes packages to GitHub Packages - Coding agents must never use this action.
+- `coverage`: Handles coverage reporting - This happens automatically at publish time and doesn't need to be run by coding agents.
+- `documentation`: Generates and uploads docs - This happens automatically at publish time and doesn't need to be run by coding agents.
 - `dependency-graphs`: Generates dependency graphs
 
 ## Common Issues and Troubleshooting
@@ -360,7 +363,7 @@ yarn build && yarn test
 **Issue**: Type check tests fail
 ```bash
 # Type check tests are in *.spec-d.ts files
-# Make sure TypeScript version matches (5.9.3)
+# Make sure TypeScript version matches
 ```
 
 ### Dependency Issues
@@ -402,18 +405,18 @@ The `packages/alfa-rules` package contains all accessibility rules.
 - Test for each rule in `packages/alfa-rules/test/<rule-id>/`
 
 ### Rule Implementation
-Rules implement the ACT Rules Format and return EARL-encoded results. See existing rules for patterns.
+Rules implement the ACT Rules Format. See existing rules for patterns.
 
 ## Key Packages to Know
 
 - `alfa-act`: ACT Rules Format implementation
 - `alfa-aria`: ARIA attribute and role handling
 - `alfa-cascade`: CSS cascade computation
-- `alfa-css`: CSS parsing and style computation
+- `alfa-css`: CSS parsing and value types definitions
+- `alfa-style`: Computing styles (CSS computed value of each property) for DOM nodes
 - `alfa-dom`: DOM and CSSOM implementations, JSX support
 - `alfa-parser`: Parser combinators library
 - `alfa-rules`: All accessibility rules
-- `alfa-scraper`: Web page scraping
 - `alfa-test`: Testing utilities
 - `alfa-toolchain`: Build and validation tools
 
@@ -449,25 +452,26 @@ yarn install --immutable
 yarn build                           # Build all
 yarn build --quiet                   # Build silently
 yarn build packages                  # Build packages only
-yarn watch                          # Watch mode
-yarn clean                          # Clean build artifacts
+yarn build packages/alfa-<name>      # Build specific package and its dependencies
+yarn watch                           # Watch mode
+yarn clean                           # Clean build artifacts
 
 # Testing
-yarn test                           # Run all tests
-yarn test packages/alfa-<name>      # Test specific package
-yarn coverage                       # Run with coverage
+yarn test                            # Run all tests
+yarn test packages/alfa-<name>       # Test specific package
+yarn coverage                        # Run with coverage
 
 # Quality
-yarn knip                           # Find unused code
-yarn extract                        # Extract API docs
-yarn dedupe --check                 # Check duplicates
+yarn knip                            # Find unused code
+yarn extract                         # Extract API docs
+yarn dedupe --check                  # Check duplicates
 
 # Changesets
-yarn changeset                      # Create changeset
+yarn changeset                       # Create changeset
 
 # Scratch files
-yarn build scratches                # Build experiments
-node scratches/foo.js              # Run experiment
+yarn build scratches                 # Build experiments
+node scratches/foo.js                # Run experiment
 ```
 
 ## Notes on Code Organization
