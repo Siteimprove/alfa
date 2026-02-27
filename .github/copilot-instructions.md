@@ -1,4 +1,4 @@
-0# Copilot Instructions for Alfa
+# Copilot Instructions for Alfa
 
 This document provides guidance for GitHub Copilot coding agents working on the Alfa repository. Alfa is a suite of open and standards-based tools for performing reliable accessibility conformance testing at scale.
 
