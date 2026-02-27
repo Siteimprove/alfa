@@ -38,7 +38,7 @@ This document provides guidance for GitHub Copilot coding agents working on the 
 ## Repository Structure
 
 ```
-/home/runner/work/alfa/alfa/
+. (repository root)
 ├── .github/              # GitHub workflows and actions
 │   ├── workflows/        # CI/CD workflows (integrate.yml, release.yml, etc.)
 │   ├── actions/          # Reusable GitHub actions (setup, publish, coverage, etc.)
@@ -159,8 +159,8 @@ yarn extract:self  # Run from package directory
 # Generate API documentation
 yarn document
 
-# Validate project structure
-yarn validate-structure ${{ github.workspace }}
+# Validate project structure (run from repository root)
+yarn validate-structure .
 
 # Check for duplicate dependencies
 yarn dedupe --check
@@ -432,9 +432,9 @@ Rules implement the ACT Rules Format and return EARL-encoded results. See existi
 
 ## Additional Resources
 
-- **Main README**: `/home/runner/work/alfa/alfa/README.md`
-- **Contributing Guide**: `/home/runner/work/alfa/alfa/docs/contributing.md` (external contributors only)
-- **Architecture Docs**: `/home/runner/work/alfa/alfa/docs/architecture/`
+- **Main README**: `README.md`
+- **Contributing Guide**: `docs/contributing.md` (external contributors only)
+- **Architecture Docs**: `docs/architecture/`
 - **Alfa Hub**: https://alfa.siteimprove.com (rule documentation)
 - **Examples Repo**: https://github.com/Siteimprove/alfa-examples
 - **Integrations Repo**: https://github.com/Siteimprove/alfa-integrations
