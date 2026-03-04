@@ -120,6 +120,11 @@ export class Style implements Serializable<Style.JSON> {
       declaration: Declaration,
       origin: Origin,
     ): void {
+      const unaliasedName = Longhands.propName(name);
+
+      // This should use `unaliasedName`, but `Longhands.get` already needs to
+      // do the conversion and, while it is idempotent, has a non-idempotent
+      // type :-/ It's just easier to keep it like that.
       const property = Longhands.get(name);
 
       // If the property has been reverted to User Agent origin,
@@ -129,17 +134,15 @@ export class Style implements Serializable<Style.JSON> {
       }
 
       // If the property is already set by a more specific declaration, skip.
-      if (properties.get(name).isNone()) {
+      if (properties.get(unaliasedName).isNone()) {
         // If the declaration comes from a shorthand, it is pre-parsed in a
         // Value. Otherwise, we only have the string and need to parse it
         // (avoid parsing everything before we know we'll need it).
 
-        value.either(
-          registerParsed(Longhands.propName(name), declaration),
-          (declared) =>
-            parseLonghand(property, declared, variables).forEach(
-              registerParsed(Longhands.propName(name), declaration),
-            ),
+        value.either(registerParsed(unaliasedName, declaration), (declared) =>
+          parseLonghand(property, declared, variables).forEach(
+            registerParsed(unaliasedName, declaration),
+          ),
         );
       }
     }
