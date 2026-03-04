@@ -85,7 +85,7 @@
     "./property/translate.spec.tsx",
     "./property/white-space.spec.tsx",
     "./property/will-change.spec.tsx",
-    "./property/word-wrap.tsx",
+    "./property/word-wrap.spec.tsx",
     "./property/z-index.spec.tsx",
     "./style.spec.tsx",
     "./text/predicate/has-hyphenation-opportunity.spec.tsx",
