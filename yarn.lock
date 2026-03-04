@@ -1654,7 +1654,6 @@ __metadata:
   resolution: "@siteimprove/alfa-continuation@workspace:packages/alfa-continuation"
   dependencies:
     "@siteimprove/alfa-callback": "workspace:^"
-    "@siteimprove/alfa-mapper": "workspace:^"
   languageName: unknown
   linkType: soft
 
