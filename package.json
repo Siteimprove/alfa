@@ -33,13 +33,13 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@changesets/cli": "^2.29.8",
+    "@changesets/cli": "^2.30.0",
     "@microsoft/api-documenter": "^7.29.6",
     "@microsoft/api-extractor": "^7.52.10",
     "@siteimprove/alfa-toolchain": "workspace:^0.112.0",
-    "@types/node": "^25.3.3",
+    "@types/node": "^25.3.5",
     "@vitest/coverage-v8": "^4.0.18",
-    "knip": "^5.85.0",
+    "knip": "^5.86.0",
     "minimist": "^1.2.6",
     "prettier": "^3.8.1",
     "typescript": "^5.9.3",
