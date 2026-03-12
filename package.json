@@ -33,11 +33,11 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@changesets/cli": "^2.29.8",
-    "@microsoft/api-documenter": "^7.29.6",
+    "@changesets/cli": "^2.30.0",
+    "@microsoft/api-documenter": "^7.29.7",
     "@microsoft/api-extractor": "^7.52.10",
     "@siteimprove/alfa-toolchain": "workspace:^0.112.0",
-    "@types/node": "^25.3.3",
+    "@types/node": "^25.4.0",
     "@vitest/coverage-v8": "^4.0.18",
     "knip": "^5.85.0",
     "minimist": "^1.2.6",
