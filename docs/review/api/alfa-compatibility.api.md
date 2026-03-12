@@ -8,10 +8,10 @@ import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import type * as json from '@siteimprove/alfa-json';
 import type { Serializable } from '@siteimprove/alfa-json';
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export type Browser<N extends Browser.Name = Browser.Name, V extends Browser.Version<N> = Browser.Version<N>> = Browser.Release<N, V>;
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export namespace Browser {
     // (undocumented)
     export function getDefaultScope(): Scope;
@@ -78,10 +78,10 @@ export namespace Browser {
     export type Version<N extends Name> = N extends Name ? keyof Browsers[N]["releases"] : never;
 }
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export type Feature<N extends Feature.Name = Feature.Name, I extends Feature.Implementer<N> = Feature.Implementer<N>> = Feature.Implementation<N, I>;
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export namespace Feature {
     // (undocumented)
     export function getScope<N extends Name>(feature: N, scope?: Browser.Scope): Browser.Scope<Implementer<N>>;
