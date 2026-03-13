@@ -12,11 +12,17 @@ import type { Question } from "./question.js";
 import type { Rule } from "./rule.js";
 
 /**
- * @public
+ * An Audit is built from an input (usually a page), a set of rules that apply
+ * to this kind of input, and optionally an oracle to answer questions arising
+ * during the audit. Aduit need to be explicitly evaluated to produce outcomes.
+ *
+ * @remarks
  * * I: type of Input for rules
  * * T: possible types of test targets
  * * Q: questions' metadata type
  * * S: possible types of questions' subject.
+ *
+ * @public
  */
 export class Audit<
   I,
