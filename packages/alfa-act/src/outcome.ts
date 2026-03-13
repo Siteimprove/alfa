@@ -24,12 +24,12 @@ import type { Rule } from "./rule.js";
  * V: type of outcome value
  */
 export abstract class Outcome<
-    I,
-    T extends Hashable,
-    Q extends Question.Metadata = {},
-    S = T,
-    V extends Outcome.Value = Outcome.Value,
-  >
+  I,
+  T extends Hashable,
+  Q extends Question.Metadata = {},
+  S = T,
+  V extends Outcome.Value = Outcome.Value,
+>
   implements
     Equatable,
     Hashable,
@@ -866,12 +866,12 @@ export namespace Outcome {
               id,
               // One expectation being a Some<Err<T>> is enough to take that branch,
               // even if others are None.
-              expectation.getOr(Err.of(Diagnostic.empty)),
+              expectation.getOr(Err.of(Diagnostic.empty())),
             ]),
           ),
           mode,
         ),
-      () => CantTell.of(rule, target, Diagnostic.empty, mode),
+      () => CantTell.of(rule, target, Diagnostic.empty(), mode),
       expectations.values(),
     );
   }
