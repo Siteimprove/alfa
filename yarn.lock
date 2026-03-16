@@ -799,10 +799,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdn/browser-compat-data@npm:^7.3.6":
-  version: 7.3.6
-  resolution: "@mdn/browser-compat-data@npm:7.3.6"
-  checksum: 10c0/67d134e197e2c266b75616d8c388e546013d432404523c54c4e5ec722f5e3e70ebe01496af313e42d58357ad18a0383297f198d8b18558c0e965c412001725a1
+"@mdn/browser-compat-data@npm:^7.3.7":
+  version: 7.3.7
+  resolution: "@mdn/browser-compat-data@npm:7.3.7"
+  checksum: 10c0/9b04e3a6484ae297f374085acca621551ad7476c8cb5fb70e4971503a6252e6d3c558b39e9e7aef9f002a27cee287775b4cd717a6d7e68cbf50386010b19c067
   languageName: node
   linkType: hard
 
@@ -1502,7 +1502,7 @@ __metadata:
     "@siteimprove/alfa-thunk": "workspace:^"
     "@siteimprove/alfa-tree": "workspace:^"
     prettier: "npm:^3.8.1"
-    puppeteer: "npm:^24.39.0"
+    puppeteer: "npm:^24.39.1"
   languageName: unknown
   linkType: soft
 
@@ -1640,7 +1640,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-compatibility@workspace:packages/alfa-compatibility"
   dependencies:
-    "@mdn/browser-compat-data": "npm:^7.3.6"
+    "@mdn/browser-compat-data": "npm:^7.3.7"
     "@siteimprove/alfa-iterable": "workspace:^"
     "@siteimprove/alfa-json": "workspace:^"
     browserslist: "npm:^4.28.1"
@@ -2499,7 +2499,7 @@ __metadata:
   resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
   dependencies:
     "@siteimprove/alfa-rng": "workspace:^"
-    "@types/node": "npm:^25.4.0"
+    "@types/node": "npm:^25.5.0"
     vitest: "npm:^4.0.18"
   languageName: unknown
   linkType: soft
@@ -2659,7 +2659,7 @@ __metadata:
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
     prettier: "npm:^3.8.1"
-    puppeteer: "npm:^24.39.0"
+    puppeteer: "npm:^24.39.1"
   languageName: unknown
   linkType: soft
 
@@ -2707,7 +2707,7 @@ __metadata:
     "@microsoft/api-documenter": "npm:^7.29.7"
     "@microsoft/api-extractor": "npm:^7.52.10"
     "@siteimprove/alfa-toolchain": "workspace:^0.112.0"
-    "@types/node": "npm:^25.4.0"
+    "@types/node": "npm:^25.5.0"
     "@vitest/coverage-v8": "npm:^4.0.18"
     knip: "npm:^5.85.0"
     minimist: "npm:^1.2.6"
@@ -2872,12 +2872,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^25.4.0":
-  version: 25.4.0
-  resolution: "@types/node@npm:25.4.0"
+"@types/node@npm:*, @types/node@npm:^25.5.0":
+  version: 25.5.0
+  resolution: "@types/node@npm:25.5.0"
   dependencies:
     undici-types: "npm:~7.18.0"
-  checksum: 10c0/da81e8b0a3a57964b1b5f85d134bfefc1b923fd67ed41756842348a049d7915b72e8773f5598d6929b9cb8119c2427993c55d364fd93bd572a3450e58b98a60e
+  checksum: 10c0/70c508165b6758c4f88d4f91abca526c3985eee1985503d4c2bd994dbaf588e52ac57e571160f18f117d76e963570ac82bd20e743c18987e82564312b3b62119
   languageName: node
   linkType: hard
 
@@ -6022,9 +6022,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer-core@npm:24.39.0":
-  version: 24.39.0
-  resolution: "puppeteer-core@npm:24.39.0"
+"puppeteer-core@npm:24.39.1":
+  version: 24.39.1
+  resolution: "puppeteer-core@npm:24.39.1"
   dependencies:
     "@puppeteer/browsers": "npm:2.13.0"
     chromium-bidi: "npm:14.0.0"
@@ -6033,23 +6033,23 @@ __metadata:
     typed-query-selector: "npm:^2.12.1"
     webdriver-bidi-protocol: "npm:0.4.1"
     ws: "npm:^8.19.0"
-  checksum: 10c0/03c32a87da832c455dced8fdb491e17e145be5a5962839835ecd19ed98fab3d00b425929b207744c35253a69b2abc55cbe908a6ed6371f86f0d52763b2830773
+  checksum: 10c0/747c6ca622351d07745201c7fa97f65301e270c1d2ef4e8ea739e5ddc358f6a5698022f688a9f4ac3c976b1a020a3a82b895b3ed68462715f570b794aa8d3b55
   languageName: node
   linkType: hard
 
-"puppeteer@npm:^24.39.0":
-  version: 24.39.0
-  resolution: "puppeteer@npm:24.39.0"
+"puppeteer@npm:^24.39.1":
+  version: 24.39.1
+  resolution: "puppeteer@npm:24.39.1"
   dependencies:
     "@puppeteer/browsers": "npm:2.13.0"
     chromium-bidi: "npm:14.0.0"
     cosmiconfig: "npm:^9.0.0"
     devtools-protocol: "npm:0.0.1581282"
-    puppeteer-core: "npm:24.39.0"
+    puppeteer-core: "npm:24.39.1"
     typed-query-selector: "npm:^2.12.1"
   bin:
     puppeteer: lib/cjs/puppeteer/node/cli.js
-  checksum: 10c0/ff65c34a38e2c69c34a0ab1e3f13dd0556ce238accb9cd794a1313ce987e94f9f212f83bce81ee0139316bf7028cfe25ecdeec41d5098651d5104b601edcb3ae
+  checksum: 10c0/718a09c27ed739eaf3a02c8ab3c155210fccefd0778096d50499825bd130160eea8421c466e50f5eec211263607a55649162892ad69e42fb9e207ca9e8cd978e
   languageName: node
   linkType: hard
 
