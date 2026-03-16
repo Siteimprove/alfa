@@ -9,6 +9,9 @@ import { Browsers } from "./browser/data.js";
 
 /**
  * @public
+ *
+ * @deprecated
+ * This package is not maintained anymore.
  */
 export type Browser<
   N extends Browser.Name = Browser.Name,
@@ -17,6 +20,9 @@ export type Browser<
 
 /**
  * @public
+ *
+ * @deprecated
+ * This package is not maintained anymore.
  */
 export namespace Browser {
   export type Name = keyof Browsers & string;
@@ -30,9 +36,10 @@ export namespace Browser {
     ? keyof Browsers[N]["releases"]
     : never;
 
-  export class Release<N extends Name = Name, V extends Version<N> = Version<N>>
-    implements Serializable
-  {
+  export class Release<
+    N extends Name = Name,
+    V extends Version<N> = Version<N>,
+  > implements Serializable {
     /**
      * @internal
      */
