@@ -20,14 +20,14 @@ import type { Rule } from "./rule.js";
 type Depths = [-1, 0, 1, 2];
 
 /**
- * @public
- *
  * An Interview is either a direct ANSWER; or a question who is ultimately going
  * to produce one, possibly through more questions (aka, an Interview).
  *
  * The QUESTION type maps questions' URI to the expected type of answer, both as
  * a JavaScript manipulable representation (T), and an actual type (A).
  * The SUBJECT and CONTEXT types are the subject and context of the question.
+ *
+ * @public
  */
 export type Interview<
   QUESTION extends Question.Metadata,
