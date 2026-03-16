@@ -2560,7 +2560,7 @@ __metadata:
     json-stringify-pretty-compact: "npm:^4.0.0"
     madge: "npm:^8.0.0"
     resolve-from: "npm:^5.0.0"
-    simple-git: "npm:^3.32.3"
+    simple-git: "npm:^3.33.0"
     ts-graphviz: "npm:^3.0.7"
   bin:
     alfa-changelog: dist/changeset/changelog-global.js
@@ -6407,14 +6407,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"simple-git@npm:^3.32.3":
-  version: 3.32.3
-  resolution: "simple-git@npm:3.32.3"
+"simple-git@npm:^3.33.0":
+  version: 3.33.0
+  resolution: "simple-git@npm:3.33.0"
   dependencies:
     "@kwsites/file-exists": "npm:^1.1.1"
     "@kwsites/promise-deferred": "npm:^1.1.1"
     debug: "npm:^4.4.0"
-  checksum: 10c0/b08ad0811b82d69a9b150109cbf29247bc13f8d5fb5380dcb834a5e0467124c3b5a41a2b9a5dd3c16f1edc9af7fae9add5182ac6476ef0d50e2341c7820fa0f0
+  checksum: 10c0/463e91f3ee04b7fc445284c64502a4ee3d607f626f18c8bcc036815a30fe178d2216976e683c6368edd7b3093801d6e534deeb8e700a4863a76ef23f881a0712
   languageName: node
   linkType: hard
 
