@@ -19,14 +19,10 @@ import * as json from "@siteimprove/alfa-json";
 import type * as sarif from "@siteimprove/alfa-sarif";
 
 import { Cache } from "./cache.js";
-import type { Diagnostic } from "./diagnostic.js";
-import { Finding } from "./finding.js";
-import { Interview } from "./interview.js";
-import type { Oracle } from "./oracle.js";
+import { Finding, Interview } from "./expectation/index.js";
+import type { Diagnostic, Oracle, Question } from "./expectation/index.js";
 import { Outcome } from "./outcome.js";
-import type { Question } from "./question.js";
-import { Requirement } from "./requirement.js";
-import { Tag } from "./tag.js";
+import { Requirement, Tag } from "./metadata/index.js";
 
 const { flatten, reduce } = Iterable;
 

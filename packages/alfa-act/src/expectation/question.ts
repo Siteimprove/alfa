@@ -9,6 +9,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Result } from "@siteimprove/alfa-result";
 
 import type * as json from "@siteimprove/alfa-json";
+
 import { Diagnostic } from "./diagnostic.js";
 
 const { isOption } = Option;

@@ -5,7 +5,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { Finding } from "./finding.js";
 import type { Oracle } from "./oracle.js";
 import { Question } from "./question.js";
-import type { Rule } from "./rule.js";
+import type { Rule } from "../rule.js";
 
 /**
  * As `Interview` is a recursive type that models nested chains of `Question`s,

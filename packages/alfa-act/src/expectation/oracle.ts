@@ -3,7 +3,7 @@ import type { Hashable } from "@siteimprove/alfa-hash";
 import type { Option } from "@siteimprove/alfa-option";
 
 import type { Question } from "./question.js";
-import type { Rule } from "./rule.js";
+import type { Rule } from "../rule.js";
 
 /**
  * @public

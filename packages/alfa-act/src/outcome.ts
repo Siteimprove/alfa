@@ -11,8 +11,7 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
-import { Diagnostic } from "./diagnostic.js";
-import type { Question } from "./question.js";
+import { Diagnostic, type Question } from "./expectation/index.js";
 import type { Rule } from "./rule.js";
 
 /**
