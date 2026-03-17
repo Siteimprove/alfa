@@ -7,11 +7,7 @@
 
 export * from "./audit.js";
 export * from "./cache.js";
-export * from "./diagnostic.js";
-export * from "./interview.js";
-export * from "./oracle.js";
+export * from "./expectation/index.js";
+export * from "./metadata/index.js";
 export * from "./outcome.js";
-export * from "./question.js";
-export * from "./requirement.js";
 export * from "./rule.js";
-export * from "./tag.js";

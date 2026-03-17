@@ -9,6 +9,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Result } from "@siteimprove/alfa-result";
 
 import type * as json from "@siteimprove/alfa-json";
+
 import { Diagnostic } from "./diagnostic.js";
 
 const { isOption } = Option;
@@ -30,13 +31,13 @@ const { isBoolean, isFunction } = Refinement;
  * * URI is a unique identifier for the question.
  */
 export class Question<
-    TYPE,
-    SUBJECT,
-    CONTEXT,
-    ANSWER,
-    T = ANSWER,
-    URI extends string = string,
-  >
+  TYPE,
+  SUBJECT,
+  CONTEXT,
+  ANSWER,
+  T = ANSWER,
+  URI extends string = string,
+>
   implements
     Functor<T>,
     Applicative<T>,
@@ -51,7 +52,7 @@ export class Question<
     context: CONTEXT,
     options: Question.Options<ANSWER> = {},
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI> {
-    const { fallback = None, diagnostic = Diagnostic.empty } = options;
+    const { fallback = None, diagnostic = Diagnostic.empty() } = options;
 
     return new Question(
       type,

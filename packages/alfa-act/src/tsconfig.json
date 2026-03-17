@@ -5,15 +5,18 @@
   "files": [
     "./audit.ts",
     "./cache.ts",
-    "./diagnostic.ts",
+    "./expectation/diagnostic.ts",
+    "./expectation/finding.ts",
+    "./expectation/index.ts",
+    "./expectation/interview.ts",
+    "./expectation/oracle.ts",
+    "./expectation/question.ts",
     "./index.ts",
-    "./interview.ts",
-    "./oracle.ts",
+    "./metadata/index.ts",
+    "./metadata/requirement.ts",
+    "./metadata/tag.ts",
     "./outcome.ts",
-    "./question.ts",
-    "./requirement.ts",
-    "./rule.ts",
-    "./tag.ts"
+    "./rule.ts"
   ],
   "references": [
     { "path": "../../alfa-applicative" },

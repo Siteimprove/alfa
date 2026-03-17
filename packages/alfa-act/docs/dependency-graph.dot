@@ -1,15 +1,21 @@
 digraph "dependency-graph-@siteimprove/alfa-act" {
   compound = true;
-  "src/diagnostic.ts";
+  "src/metadata/requirement.ts";
+  "src/metadata/tag.ts";
   "src/cache.ts";
-  "src/interview.ts";
-  "src/oracle.ts";
+  "src/expectation/index.ts";
+  "name_src/expectation";
+  "src/metadata/index.ts";
+  "name_src/metadata";
   "src/outcome.ts";
-  "src/question.ts";
-  "src/requirement.ts";
-  "src/tag.ts";
-  "src/rule.ts";
+  "src/expectation/diagnostic.ts";
+  "src/expectation/finding.ts";
+  "src/expectation/interview.ts";
+  "src/expectation/oracle.ts";
+  "src/expectation/question.ts";
   "src/audit.ts";
+  "src/rule.ts";
+  "exit_src/expectation";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
@@ -22,36 +28,18 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
       "name_src" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#ff0000";
+        color = "#00ff00";
         label = "src";
       ];
       "exit_src" [
         style = "invis";
       ];
-      "src/question.ts" [
-        label = "question.ts";
-      ];
-      "src/tag.ts" [
-        label = "tag.ts";
-      ];
       "src/rule.ts" [
         label = "rule.ts";
       ];
-      "src/oracle.ts" [
-        label = "oracle.ts";
-      ];
-      "src/diagnostic.ts" [
-        label = "diagnostic.ts";
-      ];
-      "src/interview.ts" [
-        label = "interview.ts";
-      ];
-      "src/requirement.ts" [
-        label = "requirement.ts";
-      ];
       "src/index.ts" [
         label = "index.ts";
-        color = "#ff0000";
+        color = "#00ff00";
         penwidth = 5;
       ];
       "src/outcome.ts" [
@@ -63,25 +51,112 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
       "src/audit.ts" [
         label = "audit.ts";
       ];
-      "src/question.ts" -> "exit_src" [
-        style = "invis";
-      ];
-      "src/tag.ts" -> "exit_src" [
+      subgraph "cluster_src/metadata" {
+        color = "#000000";
+        label = "";
+        "name_src/metadata" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0000";
+          label = "metadata";
+        ];
+        "exit_src/metadata" [
+          style = "invis";
+        ];
+        "src/metadata/index.ts" [
+          label = "index.ts";
+          color = "#ff0000";
+          penwidth = 5;
+        ];
+        "src/metadata/requirement.ts" [
+          label = "requirement.ts";
+        ];
+        "src/metadata/tag.ts" [
+          label = "tag.ts";
+        ];
+        "src/metadata/index.ts" -> "exit_src/metadata" [
+          style = "invis";
+        ];
+        "src/metadata/requirement.ts" -> "exit_src/metadata" [
+          style = "invis";
+        ];
+        "src/metadata/tag.ts" -> "exit_src/metadata" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/expectation" {
+        color = "#000000";
+        label = "";
+        "name_src/expectation" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#0000ff";
+          label = "expectation";
+        ];
+        "exit_src/expectation" [
+          style = "invis";
+        ];
+        "src/expectation/question.ts" [
+          label = "question.ts";
+        ];
+        "src/expectation/diagnostic.ts" [
+          label = "diagnostic.ts";
+        ];
+        "src/expectation/finding.ts" [
+          label = "finding.ts";
+        ];
+        "src/expectation/index.ts" [
+          label = "index.ts";
+          color = "#0000ff";
+          penwidth = 5;
+        ];
+        "src/expectation/interview.ts" [
+          label = "interview.ts";
+        ];
+        "src/expectation/oracle.ts" [
+          label = "oracle.ts";
+        ];
+        "src/expectation/question.ts" -> "exit_src/expectation" [
+          style = "invis";
+        ];
+        "src/expectation/diagnostic.ts" -> "exit_src/expectation" [
+          style = "invis";
+        ];
+        "src/expectation/finding.ts" -> "exit_src/expectation" [
+          style = "invis";
+        ];
+        "src/expectation/index.ts" -> "exit_src/expectation" [
+          style = "invis";
+        ];
+        "src/expectation/interview.ts" -> "exit_src/expectation" [
+          style = "invis";
+        ];
+        "src/expectation/oracle.ts" -> "exit_src/expectation" [
+          style = "invis";
+        ];
+      }
+      "exit_src/metadata" -> "exit_src" [
         style = "invis";
       ];
       "src/rule.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/oracle.ts" -> "exit_src" [
+      "exit_src/expectation" -> "exit_src" [
         style = "invis";
       ];
-      "src/diagnostic.ts" -> "exit_src" [
+      "exit_src/metadata" -> "exit_src" [
         style = "invis";
       ];
-      "src/interview.ts" -> "exit_src" [
+      "exit_src/expectation" -> "exit_src" [
         style = "invis";
       ];
-      "src/requirement.ts" -> "exit_src" [
+      "exit_src/expectation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/expectation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/metadata" -> "exit_src" [
         style = "invis";
       ];
       "src/index.ts" -> "exit_src" [
@@ -93,7 +168,13 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
       "src/cache.ts" -> "exit_src" [
         style = "invis";
       ];
+      "exit_src/expectation" -> "exit_src" [
+        style = "invis";
+      ];
       "src/audit.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/expectation" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -130,11 +211,27 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     "exit_src" -> "exit_src" [
       style = "invis";
     ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
   }
-  "src/question.ts" -> "src/diagnostic.ts" [
+  "src/metadata/index.ts" -> "src/metadata/requirement.ts" [
     style = "invis";
   ];
-  "src/question.ts" -> "src/diagnostic.ts" [
+  "src/metadata/index.ts" -> "src/metadata/requirement.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/metadata/index.ts" -> "src/metadata/tag.ts" [
+    style = "invis";
+  ];
+  "src/metadata/index.ts" -> "src/metadata/tag.ts" [
     style = "solid";
     color = "black";
   ];
@@ -145,26 +242,15 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     style = "solid";
     color = "black";
   ];
-  "src/rule.ts" -> "src/diagnostic.ts" [
-    style = "invis";
-  ];
-  "src/rule.ts" -> "src/diagnostic.ts" [
-    style = "dotted";
-    color = "black";
-  ];
-  "src/rule.ts" -> "src/interview.ts" [
-    style = "invis";
-  ];
-  "src/rule.ts" -> "src/interview.ts" [
+  "src/rule.ts" -> "name_src/expectation" [
     style = "solid";
-    color = "black";
+    color = "#00ff00";
+    lhead = "cluster_src/expectation";
   ];
-  "src/rule.ts" -> "src/oracle.ts" [
-    style = "invis";
-  ];
-  "src/rule.ts" -> "src/oracle.ts" [
-    style = "dotted";
-    color = "black";
+  "src/rule.ts" -> "name_src/metadata" [
+    style = "solid";
+    color = "#00ff00";
+    lhead = "cluster_src/metadata";
   ];
   "src/rule.ts" -> "src/outcome.ts" [
     style = "invis";
@@ -173,67 +259,53 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     style = "solid";
     color = "black";
   ];
-  "src/rule.ts" -> "src/question.ts" [
+  "src/expectation/question.ts" -> "src/expectation/diagnostic.ts" [
     style = "invis";
   ];
-  "src/rule.ts" -> "src/question.ts" [
-    style = "dotted";
-    color = "black";
-  ];
-  "src/rule.ts" -> "src/requirement.ts" [
-    style = "invis";
-  ];
-  "src/rule.ts" -> "src/requirement.ts" [
+  "src/expectation/question.ts" -> "src/expectation/diagnostic.ts" [
     style = "solid";
     color = "black";
   ];
-  "src/rule.ts" -> "src/tag.ts" [
+  "src/expectation/finding.ts" -> "src/expectation/diagnostic.ts" [
     style = "invis";
   ];
-  "src/rule.ts" -> "src/tag.ts" [
+  "src/expectation/finding.ts" -> "src/expectation/diagnostic.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "src/expectation/index.ts" -> "src/expectation/diagnostic.ts" [
+    style = "invis";
+  ];
+  "src/expectation/index.ts" -> "src/expectation/diagnostic.ts" [
     style = "solid";
     color = "black";
   ];
-  "src/oracle.ts" -> "src/question.ts" [
+  "src/expectation/index.ts" -> "src/expectation/finding.ts" [
     style = "invis";
   ];
-  "src/oracle.ts" -> "src/question.ts" [
-    style = "dotted";
-    color = "black";
-  ];
-  "src/oracle.ts" -> "src/rule.ts" [
-    style = "invis";
-  ];
-  "src/oracle.ts" -> "src/rule.ts" [
-    style = "dotted";
-    color = "black";
-  ];
-  "src/interview.ts" -> "src/diagnostic.ts" [
-    style = "invis";
-  ];
-  "src/interview.ts" -> "src/diagnostic.ts" [
-    style = "dotted";
-    color = "black";
-  ];
-  "src/interview.ts" -> "src/oracle.ts" [
-    style = "invis";
-  ];
-  "src/interview.ts" -> "src/oracle.ts" [
-    style = "dotted";
-    color = "black";
-  ];
-  "src/interview.ts" -> "src/question.ts" [
-    style = "invis";
-  ];
-  "src/interview.ts" -> "src/question.ts" [
+  "src/expectation/index.ts" -> "src/expectation/finding.ts" [
     style = "solid";
     color = "black";
   ];
-  "src/interview.ts" -> "src/rule.ts" [
+  "src/expectation/index.ts" -> "src/expectation/interview.ts" [
     style = "invis";
   ];
-  "src/interview.ts" -> "src/rule.ts" [
-    style = "dotted";
+  "src/expectation/index.ts" -> "src/expectation/interview.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/expectation/index.ts" -> "src/expectation/oracle.ts" [
+    style = "invis";
+  ];
+  "src/expectation/index.ts" -> "src/expectation/oracle.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/expectation/index.ts" -> "src/expectation/question.ts" [
+    style = "invis";
+  ];
+  "src/expectation/index.ts" -> "src/expectation/question.ts" [
+    style = "solid";
     color = "black";
   ];
   "src/index.ts" -> "src/audit.ts" [
@@ -250,45 +322,20 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     style = "solid";
     color = "black";
   ];
-  "src/index.ts" -> "src/diagnostic.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/diagnostic.ts" [
+  "src/index.ts" -> "name_src/expectation" [
     style = "solid";
-    color = "black";
+    color = "#00ff00";
+    lhead = "cluster_src/expectation";
   ];
-  "src/index.ts" -> "src/interview.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/interview.ts" [
+  "src/index.ts" -> "name_src/metadata" [
     style = "solid";
-    color = "black";
-  ];
-  "src/index.ts" -> "src/oracle.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/oracle.ts" [
-    style = "solid";
-    color = "black";
+    color = "#00ff00";
+    lhead = "cluster_src/metadata";
   ];
   "src/index.ts" -> "src/outcome.ts" [
     style = "invis";
   ];
   "src/index.ts" -> "src/outcome.ts" [
-    style = "solid";
-    color = "black";
-  ];
-  "src/index.ts" -> "src/question.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/question.ts" [
-    style = "solid";
-    color = "black";
-  ];
-  "src/index.ts" -> "src/requirement.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/requirement.ts" [
     style = "solid";
     color = "black";
   ];
@@ -299,26 +346,10 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     style = "solid";
     color = "black";
   ];
-  "src/index.ts" -> "src/tag.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/tag.ts" [
+  "src/outcome.ts" -> "name_src/expectation" [
     style = "solid";
-    color = "black";
-  ];
-  "src/outcome.ts" -> "src/diagnostic.ts" [
-    style = "invis";
-  ];
-  "src/outcome.ts" -> "src/diagnostic.ts" [
-    style = "solid";
-    color = "black";
-  ];
-  "src/outcome.ts" -> "src/question.ts" [
-    style = "invis";
-  ];
-  "src/outcome.ts" -> "src/question.ts" [
-    style = "dotted";
-    color = "black";
+    color = "#00ff00";
+    lhead = "cluster_src/expectation";
   ];
   "src/outcome.ts" -> "src/rule.ts" [
     style = "invis";
@@ -327,17 +358,15 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     style = "dotted";
     color = "black";
   ];
-  "src/cache.ts" -> "src/outcome.ts" [
-    style = "invis";
-  ];
-  "src/cache.ts" -> "src/outcome.ts" [
+  "src/cache.ts" -> "name_src/expectation" [
     style = "dotted";
-    color = "black";
+    color = "#00ff00";
+    lhead = "cluster_src/expectation";
   ];
-  "src/cache.ts" -> "src/question.ts" [
+  "src/cache.ts" -> "src/outcome.ts" [
     style = "invis";
   ];
-  "src/cache.ts" -> "src/question.ts" [
+  "src/cache.ts" -> "src/outcome.ts" [
     style = "dotted";
     color = "black";
   ];
@@ -348,6 +377,35 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     style = "dotted";
     color = "black";
   ];
+  "src/expectation/interview.ts" -> "src/expectation/finding.ts" [
+    style = "invis";
+  ];
+  "src/expectation/interview.ts" -> "src/expectation/finding.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/expectation/interview.ts" -> "src/expectation/oracle.ts" [
+    style = "invis";
+  ];
+  "src/expectation/interview.ts" -> "src/expectation/oracle.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "src/expectation/interview.ts" -> "src/expectation/question.ts" [
+    style = "invis";
+  ];
+  "src/expectation/interview.ts" -> "src/expectation/question.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/expectation/interview.ts" -> "src/rule.ts" [
+    style = "invis";
+  ];
+  "exit_src/expectation" -> "src/rule.ts" [
+    style = "dotted";
+    color = "#0000ff";
+    ltail = "cluster_src/expectation";
+  ];
   "src/audit.ts" -> "src/cache.ts" [
     style = "invis";
   ];
@@ -355,24 +413,15 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     style = "solid";
     color = "black";
   ];
-  "src/audit.ts" -> "src/oracle.ts" [
-    style = "invis";
-  ];
-  "src/audit.ts" -> "src/oracle.ts" [
+  "src/audit.ts" -> "name_src/expectation" [
     style = "dotted";
-    color = "black";
+    color = "#00ff00";
+    lhead = "cluster_src/expectation";
   ];
   "src/audit.ts" -> "src/outcome.ts" [
     style = "invis";
   ];
   "src/audit.ts" -> "src/outcome.ts" [
-    style = "dotted";
-    color = "black";
-  ];
-  "src/audit.ts" -> "src/question.ts" [
-    style = "invis";
-  ];
-  "src/audit.ts" -> "src/question.ts" [
     style = "dotted";
     color = "black";
   ];
@@ -382,5 +431,20 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
   "src/audit.ts" -> "src/rule.ts" [
     style = "dotted";
     color = "black";
+  ];
+  "src/expectation/oracle.ts" -> "src/expectation/question.ts" [
+    style = "invis";
+  ];
+  "src/expectation/oracle.ts" -> "src/expectation/question.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "src/expectation/oracle.ts" -> "src/rule.ts" [
+    style = "invis";
+  ];
+  "exit_src/expectation" -> "src/rule.ts" [
+    style = "invis";
+    color = "#0000ff";
+    ltail = "cluster_src/expectation";
   ];
 }
