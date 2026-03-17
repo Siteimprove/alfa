@@ -21,6 +21,7 @@ import type * as sarif from "@siteimprove/alfa-sarif";
 
 import { Cache } from "./cache.js";
 import type { Diagnostic } from "./diagnostic.js";
+import { Finding } from "./finding/index.js";
 import { Interview } from "./interview.js";
 import type { Oracle } from "./oracle.js";
 import { Outcome } from "./outcome.js";
@@ -38,11 +39,11 @@ const { flatten, reduce } = Iterable;
  * * S: possible types of questions' subject.
  */
 export abstract class Rule<
-    I,
-    T extends Hashable,
-    Q extends Question.Metadata = {},
-    S = T,
-  >
+  I,
+  T extends Hashable,
+  Q extends Question.Metadata = {},
+  S = T,
+>
   implements
     Equatable,
     Hashable,
@@ -301,7 +302,8 @@ export namespace Rule {
 
           return Future.traverse(applicability(), (interview) =>
             Interview.conduct(interview, this, oracle).map((target) =>
-              target.either<Tuple<[Option<T>, boolean]>>(
+              Finding.either(
+                target,
                 // We have a target, wrap it properly and return it.
                 ([target, oracleUsed]) =>
                   Tuple.of(Maybe.toOption(target), oracleUsed),
@@ -649,8 +651,7 @@ export namespace Rule {
     SUBJECT,
     TYPE extends Event.Type = Event.Type,
     NAME extends string = string,
-  > implements Serializable<Event.JSON<TYPE, NAME>>
-  {
+  > implements Serializable<Event.JSON<TYPE, NAME>> {
     public static of<
       INPUT,
       TARGET extends Hashable,
@@ -811,41 +812,55 @@ export namespace Rule {
   }
 }
 
-type Expectation<T> = Either<Tuple<[T, boolean]>, Tuple<[Diagnostic, boolean]>>;
-
-// Processes the expectations of the results of an interview.
-// When the result is Passed/Failed (Left), we accumulate the expectations that are later on passed to the Outcome.
-// When we encounter the first Diagnostic result of a cantTell (Right),
-// the processing stops and later it is passed to the cantTell Outcome.
-function processExpectation(
-  acc: Expectation<List<[string, Option<Result<Diagnostic>>]>>,
-  [id, expectation]: readonly [string, Expectation<Maybe<Result<Diagnostic>>>],
-): Expectation<List<[string, Option<Result<Diagnostic>>]>> {
-  return acc.either(
-    // The accumulator only contains true result, keep going.
+/**
+ * Processes the findings of the results of an interview, accumulate it to an
+ * existing finding list.
+ *
+ * If the existing list is already inconclusive, we stop immediately.
+ * Otherwise, we add the new finding to it, matching its conclusiveness.
+ **/
+function processFinding(
+  acc: Finding<List<[string, Option<Result<Diagnostic>>]>>,
+  [id, finding]: readonly [string, Finding<Maybe<Result<Diagnostic>>>],
+): Finding<List<[string, Option<Result<Diagnostic>>]>> {
+  return Finding.either(
+    acc,
+    // The accumulator is a conclusive finding, keep going.
     ([accumulator, oracleUsedAccumulator]) =>
-      expectation.either<
-        Expectation<List<[string, Option<Result<Diagnostic>>]>>
+      Finding.either<
+        Maybe<Result<Diagnostic>>,
+        Diagnostic,
+        Finding<List<[string, Option<Result<Diagnostic>>]>>
       >(
-        // The current result is defined, accumulate.
+        finding,
+        // The current result is conclusive, accumulate it.
         ([result, oracleUsed]) =>
-          Left.of(
-            Tuple.of(
-              accumulator.append([id, Maybe.toOption(result)]),
-              oracleUsedAccumulator || oracleUsed,
-            ),
+          Finding.conclusive(
+            accumulator.append([id, Maybe.toOption(result)]),
+            oracleUsedAccumulator || oracleUsed,
           ),
-        // The current result is cantTell, abort.
+        // The current result is inconclusive, abort.
         ([diagnostic, oracleUsed]) =>
-          Right.of(Tuple.of(diagnostic, oracleUsedAccumulator || oracleUsed)),
+          Finding.inconclusive(diagnostic, oracleUsedAccumulator || oracleUsed),
       ),
-    // The accumulator already contains cantTell, skip.
+    // The accumulator is already inconclusive, skip.
     // Note that we only keep the mode of the first Expectation that cannot tell,
     // which is likely OK.
     () => acc,
   );
 }
 
+/**
+ * Resolves the expectations of a rule.
+ *
+ * The rule has given us a bunch of unresolved expectations (i.e. interviews).
+ * We need to conduct each interview, then group them into a single Outcome.
+ * If the finding of each and every interview is Conclusive, then we can also
+ * have a Conclusive global finding, which is turned into either a Passed or
+ * Failed outcome (delegated to Outcome.from); as soon as we have an interview
+ * with an Inconclusive finding, we stop processing the list and return it as
+ * a CantTell outcome.
+ */
 function resolve<I, T extends Hashable, Q extends Question.Metadata, S>(
   target: T,
   expectations: Record<{
@@ -856,31 +871,43 @@ function resolve<I, T extends Hashable, Q extends Question.Metadata, S>(
   oracle: {} extends Q ? any : Oracle<I, T, Q, S>,
   oracleUsedInApplicability: boolean,
 ): Future<Outcome.Applicable<I, T, Q, S>> {
-  return Future.traverse(expectations, ([id, interview]) =>
-    Interview.conduct(interview, rule, oracle).map(
-      (expectation) => [id, expectation] as const,
-    ),
-  )
-    .map((expectations) =>
-      reduce(
-        expectations,
-        processExpectation,
-        Left.of(Tuple.of(List.empty(), oracleUsedInApplicability)),
+  return (
+    // First, conduct all interviews and get the findings.
+    Future.traverse(expectations, ([id, interview]) =>
+      Interview.conduct(interview, rule, oracle).map(
+        (finding): [string, Finding<Maybe<Result<Diagnostic>>>] => [
+          id,
+          finding,
+        ],
       ),
     )
-    .map((expectation) =>
-      expectation.either(
-        ([expectations, oracleUsed]) =>
-          Outcome.from(
-            rule,
-            target,
-            Record.from(expectations),
-            getMode(oracleUsed),
-          ),
-        ([diagnostic, oracleUsed]) =>
-          Outcome.CantTell.of(rule, target, diagnostic, getMode(oracleUsed)),
-      ),
-    );
+      // Next, we process the findings, turning a list of findings into a finding
+      // of a list.
+      .map((findings) =>
+        reduce(
+          findings,
+          processFinding,
+          Finding.conclusive(List.empty(), oracleUsedInApplicability),
+        ),
+      )
+      // Lastly, we turn the finding into an Outcome. If the finding is
+      // Conclusive, this will be a Passed/Failed outcome, otherwise we can
+      // create the CantTell one now.
+      .map((finding) =>
+        Finding.either(
+          finding,
+          ([expectations, oracleUsed]) =>
+            Outcome.from(
+              rule,
+              target,
+              Record.from(expectations),
+              getMode(oracleUsed),
+            ),
+          ([diagnostic, oracleUsed]) =>
+            Outcome.CantTell.of(rule, target, diagnostic, getMode(oracleUsed)),
+        ),
+      )
+  );
 }
 
 function getMode(oracleUsed: boolean): Outcome.Mode {

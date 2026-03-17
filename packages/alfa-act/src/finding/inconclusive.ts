@@ -6,8 +6,10 @@ import { Finding } from "./finding.js";
 /**
  * @public
  */
-export class Inconclusive<DIAGNOSTIC extends Diagnostic> extends Finding<"inconclusive"> {
-  public static of<DIAGNOSTIC extends Diagnostic>(
+export class Inconclusive<
+  DIAGNOSTIC extends Diagnostic = Diagnostic,
+> extends Finding<"inconclusive"> {
+  public static of<DIAGNOSTIC extends Diagnostic = Diagnostic>(
     diagnostic: DIAGNOSTIC,
     oracleUsed: boolean = false,
   ): Inconclusive<DIAGNOSTIC> {
@@ -68,14 +70,13 @@ export class Inconclusive<DIAGNOSTIC extends Diagnostic> extends Finding<"inconc
  * @public
  */
 export namespace Inconclusive {
-  export interface JSON<DIAGNOSTIC extends Diagnostic>
-    extends Finding.JSON<"inconclusive"> {
+  export interface JSON<
+    DIAGNOSTIC extends Diagnostic = Diagnostic,
+  > extends Finding.JSON<"inconclusive"> {
     diagnostic: json.Serializable.ToJSON<DIAGNOSTIC>;
   }
 
-  export function isInconclusive<DIAGNOSTIC extends Diagnostic>(
-    value: unknown,
-  ): value is Inconclusive<DIAGNOSTIC> {
+  export function isInconclusive(value: unknown): value is Inconclusive {
     return value instanceof Inconclusive;
   }
 }

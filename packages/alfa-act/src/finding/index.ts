@@ -1,3 +1,4 @@
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 import type { Diagnostic } from "../diagnostic.js";
@@ -29,4 +30,14 @@ export namespace Finding {
   export const { of: inconclusive, isInconclusive } = Inconclusive;
 
   export const isFinding = Refinement.or(isConclusive, isInconclusive);
+
+  export function either<ANSWER, DIAGNOSTIC extends Diagnostic, T>(
+    finding: Finding<ANSWER, DIAGNOSTIC>,
+    ifConclusive: Mapper<[ANSWER, boolean], T>,
+    ifInconclusive: Mapper<[DIAGNOSTIC, boolean], T>,
+  ): T {
+    return isConclusive(finding)
+      ? ifConclusive([finding.answer, finding.oracleUsed])
+      : ifInconclusive([finding.diagnostic, finding.oracleUsed]);
+  }
 }
