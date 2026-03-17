@@ -285,6 +285,13 @@ export namespace Outcome {
     const // (undocumented)
     failed: typeof Failed.of, // (undocumented)
     isFailed: typeof Failed.isFailed;
+    // (undocumented)
+    export function fromFinding<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, target: T): (finding: Finding<Iterable_2<[string, Option<Result<Diagnostic>>]>>) => Outcome.Applicable<I, T, Q, S>;
+    // (undocumented)
+    export function getMode(oracleUsed: boolean): Mode;
+    const // (undocumented)
+    cantTell: typeof CantTell.of, // (undocumented)
+    isCantTell: typeof CantTell.isCantTell;
     // Warning: (ae-incompatible-release-tags) The symbol "Inapplicable" is marked as @public, but its signature references "Outcome" which is marked as @internal
     //
     // (undocumented)
@@ -326,8 +333,7 @@ export namespace Outcome {
         }
     }
     const // (undocumented)
-    cantTell: typeof CantTell.of, // (undocumented)
-    isCantTell: typeof CantTell.isCantTell;
+    isApplicable: typeof Applicable.isApplicable;
     // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Outcome" which is marked as @internal
     //
     // (undocumented)
@@ -351,7 +357,8 @@ export namespace Outcome {
         SemiAuto = "semiAuto"
     }
     const // (undocumented)
-    isApplicable: typeof Applicable.isApplicable;
+    inapplicable: typeof Inapplicable.of, // (undocumented)
+    isInapplicable: typeof Inapplicable.isInapplicable;
     // Warning: (ae-incompatible-release-tags) The symbol "Passed" is marked as @public, but its signature references "Outcome" which is marked as @internal
     //
     // (undocumented)
@@ -412,9 +419,6 @@ export namespace Outcome {
             target: json.Serializable.ToJSON<T>;
         }
     }
-    const // (undocumented)
-    inapplicable: typeof Inapplicable.of, // (undocumented)
-    isInapplicable: typeof Inapplicable.isInapplicable;
     // @internal (undocumented)
     export enum Value {
         // (undocumented)

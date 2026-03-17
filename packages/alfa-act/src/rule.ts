@@ -5,6 +5,7 @@ import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import type { Option } from "@siteimprove/alfa-option";
 import { Maybe, None } from "@siteimprove/alfa-option";
 import type { Performance } from "@siteimprove/alfa-performance";
@@ -340,7 +341,7 @@ export namespace Rule {
             .flatMap<Iterable<Outcome<I, T, Q, S>>>(([targets, oracleUsed]) => {
               if (targets.isEmpty()) {
                 return Future.now([
-                  Outcome.Inapplicable.of(this, getMode(oracleUsed)),
+                  Outcome.Inapplicable.of(this, Outcome.getMode(oracleUsed)),
                 ]);
               }
 
@@ -528,7 +529,7 @@ export namespace Rule {
             .flatMap<Iterable<Outcome<I, T, Q, S>>>(([targets, oracleUsed]) => {
               if (targets.isEmpty()) {
                 return Future.now([
-                  Outcome.Inapplicable.of(this, getMode(oracleUsed)),
+                  Outcome.Inapplicable.of(this, Outcome.getMode(oracleUsed)),
                 ]);
               }
 
@@ -807,35 +808,43 @@ export namespace Rule {
 }
 
 /**
- * Processes the findings of the results of an interview, accumulate it to an
- * existing finding list.
+ * Reducer for going from a list of findings to a finding of a list.
  *
- * If the existing list is already inconclusive, we stop immediately.
- * Otherwise, we add the new finding to it, matching its conclusiveness.
+ * If the accumulator list is already inconclusive, we stop immediately.
+ * Otherwise, we add the current finding to it, matching its conclusiveness.
  **/
-function processFinding(
-  acc: Finding<List<[string, Option<Result<Diagnostic>>]>>,
-  [id, finding]: readonly [string, Finding<Maybe<Result<Diagnostic>>>],
-): Finding<List<[string, Option<Result<Diagnostic>>]>> {
-  return acc.either(
-    // The accumulator is a conclusive finding, keep going.
-    ([accumulator, oracleUsedAccumulator]) =>
-      finding.either(
-        // The current result is conclusive, accumulate it.
-        ([result, oracleUsed]) =>
-          Finding.conclusive(
-            accumulator.append([id, Maybe.toOption(result)]),
-            oracleUsedAccumulator || oracleUsed,
-          ),
-        // The current result is inconclusive, abort.
-        ([diagnostic, oracleUsed]) =>
-          Finding.inconclusive(diagnostic, oracleUsedAccumulator || oracleUsed),
-      ),
-    // The accumulator is already inconclusive, skip.
-    // Note that we only keep the mode of the first Expectation that cannot tell,
-    // which is likely OK.
-    () => acc,
-  );
+function processFindings<T, U>(
+  mapper: Mapper<T, U>,
+  oracleUsedInApplicability: boolean,
+): (findings: Iterable<[string, Finding<T>]>) => Finding<List<[string, U]>> {
+  return (findings) =>
+    reduce(
+      findings,
+      (acc, [id, finding]) =>
+        acc.either(
+          // The accumulator is a conclusive finding, keep going.
+          ([accumulator, oracleUsedAccumulator]) =>
+            finding.either(
+              // The current result is conclusive, accumulate it.
+              ([result, oracleUsed]) =>
+                Finding.conclusive(
+                  accumulator.append([id, mapper(result)]),
+                  oracleUsedAccumulator || oracleUsed,
+                ),
+              // The current result is inconclusive, abort.
+              ([diagnostic, oracleUsed]) =>
+                Finding.inconclusive(
+                  diagnostic,
+                  oracleUsedAccumulator || oracleUsed,
+                ),
+            ),
+          // The accumulator is already inconclusive, skip.
+          // Note that we only keep the mode of the first Expectation that cannot tell,
+          // which is likely OK.
+          () => acc,
+        ),
+      Finding.conclusive(List.empty(), oracleUsedInApplicability),
+    );
 }
 
 /**
@@ -861,42 +870,35 @@ function resolve<I, T extends Hashable, Q extends Question.Metadata, S>(
 ): Future<Outcome.Applicable<I, T, Q, S>> {
   return (
     // First, conduct all interviews and get the findings.
-    Future.traverse(expectations, ([id, interview]) =>
-      Interview.conduct(interview, rule, oracle).map(
-        (finding): [string, Finding<Maybe<Result<Diagnostic>>>] => [
-          id,
-          finding,
-        ],
-      ),
-    )
+    Future.traverse(expectations, conductInterview(rule, oracle))
       // Next, we process the findings, turning a list of findings into a finding
       // of a list.
-      .map((findings) =>
-        reduce(
-          findings,
-          processFinding,
-          Finding.conclusive(List.empty(), oracleUsedInApplicability),
-        ),
-      )
+      .map(processFindings(Maybe.toOption, oracleUsedInApplicability))
       // Lastly, we turn the finding into an Outcome. If the finding is
       // Conclusive, this will be a Passed/Failed outcome, otherwise we can
       // create the CantTell one now.
-      .map((finding) =>
-        finding.either(
-          ([expectations, oracleUsed]) =>
-            Outcome.from(
-              rule,
-              target,
-              Record.from(expectations),
-              getMode(oracleUsed),
-            ),
-          ([diagnostic, oracleUsed]) =>
-            Outcome.CantTell.of(rule, target, diagnostic, getMode(oracleUsed)),
-        ),
-      )
+      .map(Outcome.fromFinding(rule, target))
   );
 }
 
-function getMode(oracleUsed: boolean): Outcome.Mode {
-  return oracleUsed ? Outcome.Mode.SemiAuto : Outcome.Mode.Automatic;
+/**
+ * Conducts the interview for an expectation: (un)wrap the expectation `id`
+ * before and after conducting the actual interview.
+ */
+function conductInterview<
+  I,
+  T extends Hashable,
+  Q extends Question.Metadata,
+  S,
+>(
+  rule: Rule<I, T, Q, S>,
+  oracle: {} extends Q ? any : Oracle<I, T, Q, S>,
+): ([id, interview]: [
+  string,
+  Interview<Q, S, T, Maybe<Result<Diagnostic>>>,
+]) => Future<[string, Finding<Maybe<Result<Diagnostic>>>]> {
+  return ([id, interview]) =>
+    Interview.conduct(interview, rule, oracle).map(
+      (finding): [string, Finding<Maybe<Result<Diagnostic>>>] => [id, finding],
+    );
 }

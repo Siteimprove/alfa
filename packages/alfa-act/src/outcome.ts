@@ -11,7 +11,11 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
-import { Diagnostic, type Question } from "./expectation/index.js";
+import {
+  Diagnostic,
+  type Finding,
+  type Question,
+} from "./expectation/index.js";
 import type { Rule } from "./rule.js";
 
 /**
@@ -830,9 +834,7 @@ export namespace Outcome {
   export function from<I, T extends Hashable, Q extends Question.Metadata, S>(
     rule: Rule<I, T, Q, S>,
     target: T,
-    expectations: Record<{
-      [key: string]: Option<Result<Diagnostic>>;
-    }>,
+    expectations: Record<{ [key: string]: Option<Result<Diagnostic>> }>,
     mode: Mode,
   ): Outcome.Applicable<I, T, Q, S> {
     return Trilean.fold(
@@ -847,7 +849,7 @@ export namespace Outcome {
           rule,
           target,
           Record.from(
-            Iterable.map(expectations.entries(), ([id, expectation]) => [
+            Iterable.map(expectations, ([id, expectation]) => [
               id,
               // Due to the predicate in every, this branch is only taken if every
               // expectation is a Some<Ok<T>>.
@@ -861,7 +863,7 @@ export namespace Outcome {
           rule,
           target,
           Record.from(
-            Iterable.map(expectations.entries(), ([id, expectation]) => [
+            Iterable.map(expectations, ([id, expectation]) => [
               id,
               // One expectation being a Some<Err<T>> is enough to take that branch,
               // even if others are None.
@@ -873,5 +875,36 @@ export namespace Outcome {
       () => CantTell.of(rule, target, Diagnostic.empty(), mode),
       expectations.values(),
     );
+  }
+
+  export function fromFinding<
+    I,
+    T extends Hashable,
+    Q extends Question.Metadata,
+    S,
+  >(
+    rule: Rule<I, T, Q, S>,
+    target: T,
+  ): (
+    finding: Finding<Iterable<[string, Option<Result<Diagnostic>>]>>,
+  ) => Outcome.Applicable<I, T, Q, S> {
+    return (finding) =>
+      finding.either(
+        // If we have a conclusive finding, turn it into an outcome.
+        ([expectations, oracleUsed]) =>
+          Outcome.from(
+            rule,
+            target,
+            Record.from(expectations),
+            getMode(oracleUsed),
+          ),
+        // If it is inconclusive, return a CantTell outcome.
+        ([diagnostic, oracleUsed]) =>
+          Outcome.CantTell.of(rule, target, diagnostic, getMode(oracleUsed)),
+      );
+  }
+
+  export function getMode(oracleUsed: boolean): Mode {
+    return oracleUsed ? Mode.SemiAuto : Mode.Automatic;
   }
 }
