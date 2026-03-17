@@ -48,9 +48,6 @@
     "@siteimprove/alfa-trilean": "workspace:^",
     "@siteimprove/alfa-tuple": "workspace:^"
   },
-  "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^"
-  },
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com/"

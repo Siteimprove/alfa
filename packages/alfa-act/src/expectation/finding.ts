@@ -3,8 +3,8 @@ import { Either } from "@siteimprove/alfa-either";
 import type { Diagnostic } from "./diagnostic.js";
 
 /**
- * The result of an {@link Interview}: either a Conclusive finding (a final
- * answer was reached) or an Inconclusive one (more information is needed).
+ * The result of an Interview: either a Conclusive finding (a final answer was
+ * reached) or an Inconclusive one (more information is needed).
  *
  * @public
  */

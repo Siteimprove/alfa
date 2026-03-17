@@ -28,7 +28,6 @@ import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
 import type { Thunk } from '@siteimprove/alfa-thunk';
-import { Tuple } from '@siteimprove/alfa-tuple';
 
 // @public
 export class Audit<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> {
@@ -39,7 +38,7 @@ export class Audit<I, T extends Hashable, Q extends Question.Metadata = {}, S = 
     static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(input: I, rules: Iterable_2<Rule<I, T, Q, S>>, oracle?: Oracle<I, T, Q, S>): Audit<I, T, Q, S>;
 }
 
-// @public (undocumented)
+// @public
 export class Cache {
     protected constructor();
     // (undocumented)
@@ -48,9 +47,11 @@ export class Cache {
     get<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q, S>>>>): Future<Iterable<Outcome<I, T, Q, S>>>;
 }
 
-// @public (undocumented)
+// @public
 export class Diagnostic implements Equatable, Hashable, Serializable<Diagnostic.JSON> {
     protected constructor(message: string);
+    // (undocumented)
+    static empty(): Diagnostic;
     // (undocumented)
     equals(value: Diagnostic): boolean;
     // (undocumented)
@@ -78,8 +79,17 @@ export namespace Diagnostic {
         // (undocumented)
         message: string;
     }
-    const // (undocumented)
-    empty: Diagnostic;
+}
+
+// @public
+export type Finding<ANSWER, DIAGNOSTIC extends Diagnostic = Diagnostic> = Either<[ANSWER, boolean], [DIAGNOSTIC, boolean]>;
+
+// @public (undocumented)
+export namespace Finding {
+    // (undocumented)
+    export function conclusive<ANSWER>(answer: ANSWER, oracleUsed?: boolean): Finding<ANSWER>;
+    // (undocumented)
+    export function inconclusive<DIAGNOSTIC extends Diagnostic>(diagnostic: DIAGNOSTIC, oracleUsed?: boolean): Finding<never, DIAGNOSTIC>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Depths" needs to be exported by the entry point index.d.ts
@@ -91,7 +101,7 @@ export type Interview<QUESTION extends Question.Metadata, SUBJECT, CONTEXT, ANSW
 
 // @public (undocumented)
 export namespace Interview {
-    export function conduct<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>, oracleUsed?: boolean): Future<Either<Tuple<[ANSWER, boolean]>, Tuple<[Diagnostic, boolean]>>>;
+    export function conduct<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>, oracleUsed?: boolean): Future<Finding<ANSWER>>;
     // @internal (undocumented)
     export type MaxDepth = 3;
 }
