@@ -1,11 +1,8 @@
 import { Future } from "@siteimprove/alfa-future";
-import { Either } from "@siteimprove/alfa-either";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
-import { Tuple } from "@siteimprove/alfa-tuple";
 
-import type { Diagnostic } from "./diagnostic.js";
-import { Finding } from "./finding/index.js";
+import { Finding } from "./finding.js";
 import type { Oracle } from "./oracle.js";
 import { Question } from "./question.js";
 import type { Rule } from "./rule.js";

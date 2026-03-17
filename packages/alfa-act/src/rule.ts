@@ -1,5 +1,4 @@
 import { Array } from "@siteimprove/alfa-array";
-import { type Either, Left, Right } from "@siteimprove/alfa-either";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import type { Hash, Hashable } from "@siteimprove/alfa-hash";
@@ -21,7 +20,7 @@ import type * as sarif from "@siteimprove/alfa-sarif";
 
 import { Cache } from "./cache.js";
 import type { Diagnostic } from "./diagnostic.js";
-import { Finding } from "./finding/index.js";
+import { Finding } from "./finding.js";
 import { Interview } from "./interview.js";
 import type { Oracle } from "./oracle.js";
 import { Outcome } from "./outcome.js";
@@ -302,8 +301,7 @@ export namespace Rule {
 
           return Future.traverse(applicability(), (interview) =>
             Interview.conduct(interview, this, oracle).map((target) =>
-              Finding.either(
-                target,
+              target.either(
                 // We have a target, wrap it properly and return it.
                 ([target, oracleUsed]) =>
                   Tuple.of(Maybe.toOption(target), oracleUsed),
@@ -823,16 +821,10 @@ function processFinding(
   acc: Finding<List<[string, Option<Result<Diagnostic>>]>>,
   [id, finding]: readonly [string, Finding<Maybe<Result<Diagnostic>>>],
 ): Finding<List<[string, Option<Result<Diagnostic>>]>> {
-  return Finding.either(
-    acc,
+  return acc.either(
     // The accumulator is a conclusive finding, keep going.
     ([accumulator, oracleUsedAccumulator]) =>
-      Finding.either<
-        Maybe<Result<Diagnostic>>,
-        Diagnostic,
-        Finding<List<[string, Option<Result<Diagnostic>>]>>
-      >(
-        finding,
+      finding.either(
         // The current result is conclusive, accumulate it.
         ([result, oracleUsed]) =>
           Finding.conclusive(
@@ -894,8 +886,7 @@ function resolve<I, T extends Hashable, Q extends Question.Metadata, S>(
       // Conclusive, this will be a Passed/Failed outcome, otherwise we can
       // create the CantTell one now.
       .map((finding) =>
-        Finding.either(
-          finding,
+        finding.either(
           ([expectations, oracleUsed]) =>
             Outcome.from(
               rule,
