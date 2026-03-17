@@ -1445,6 +1445,7 @@ __metadata:
     "@siteimprove/alfa-sarif": "workspace:^"
     "@siteimprove/alfa-sequence": "workspace:^"
     "@siteimprove/alfa-string": "workspace:^"
+    "@siteimprove/alfa-test": "workspace:^"
     "@siteimprove/alfa-thunk": "workspace:^"
     "@siteimprove/alfa-trilean": "workspace:^"
     "@siteimprove/alfa-tuple": "workspace:^"
