@@ -5,6 +5,9 @@ import { Features } from "./feature/data.js";
 
 /**
  * @public
+ *
+ * @deprecated
+ * This package is not maintained anymore.
  */
 export type Feature<
   N extends Feature.Name = Feature.Name,
@@ -13,6 +16,9 @@ export type Feature<
 
 /**
  * @public
+ *
+ * @deprecated
+ * This package is not maintained anymore.
  */
 export namespace Feature {
   export type Name = keyof Features;
