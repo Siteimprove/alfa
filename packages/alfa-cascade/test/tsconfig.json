@@ -5,7 +5,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "@siteimprove/alfa-dom",
-    "lib": ["DOM", "ESNext"]
+    "lib": ["DOM", "ESNext"],
+    "allowImportingTsExtensions": true
   },
   "files": [
     "./ancestor-filter.spec.tsx",

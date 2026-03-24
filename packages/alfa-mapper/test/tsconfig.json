@@ -3,7 +3,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "noEmit": true,
-    "lib": ["DOM", "ESNext"]
+    "lib": ["DOM", "ESNext"],
+    "allowImportingTsExtensions": true
   },
   "files": ["./mapper.spec-d.ts"],
   "references": [{ "path": "../src" }]

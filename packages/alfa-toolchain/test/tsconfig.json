@@ -4,6 +4,7 @@
   "compilerOptions": {
     "noEmit": true,
     "lib": ["DOM", "ESNext"],
+    "allowImportingTsExtensions": true,
     "types": ["node"]
   },
   "files": [
