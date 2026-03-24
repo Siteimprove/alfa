@@ -42,7 +42,7 @@
     "knip": "^5.85.0",
     "minimist": "^1.2.6",
     "prettier": "^3.8.1",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "vitest": "^4.1.0"
   },
   "packageManager": "yarn@4.13.0"
