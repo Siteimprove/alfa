@@ -3,7 +3,7 @@ import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import { Node } from "../../node.js";
+import { Node } from "../node.js";
 import { Element } from "../element.js";
 import { Text } from "../text.js";
 

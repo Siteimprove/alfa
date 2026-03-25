@@ -3,7 +3,7 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "../node.js";
+import { Node } from "./node.js";
 
 /**
  * @public
@@ -125,23 +125,6 @@ export namespace Type {
         Option.from(json.systemId),
         json.externalId,
         json.internalId,
-      ),
-    );
-  }
-
-  /**
-   * @internal
-   */
-  export function cloneType<N extends string = string>(
-    type: Type<N>,
-  ): Trampoline<Type<N>> {
-    return Trampoline.done(
-      Type.of(
-        type.name,
-        type.publicId,
-        type.systemId,
-        type.externalId,
-        type.internalId,
       ),
     );
   }

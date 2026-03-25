@@ -2,20 +2,8 @@ export * from "./namespace.js";
 
 export * from "./style/index.js";
 
-export * from "./node.js";
-
-export * from "./node/slot.js";
-export * from "./node/slotable.js";
-
-export * from "./node/attribute.js";
-export * from "./node/comment.js";
-export * from "./node/document.js";
-export * from "./node/element.js";
+export * from "./node/index.js";
 import "./node/element/augment.js";
-export * from "./node/fragment.js";
-export * from "./node/shadow.js";
-export * from "./node/text.js";
-export * from "./node/type.js";
 
 export * from "./node/query/index.js";
 

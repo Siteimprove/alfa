@@ -1,6 +1,6 @@
 import type { Option } from "@siteimprove/alfa-option";
 
-import type { Node } from "../node.js";
+import type { Node } from "./node.js";
 import { Element } from "./element.js";
 import { Slot } from "./slot.js";
 import { Text } from "./text.js";
