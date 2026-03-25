@@ -3,7 +3,7 @@ import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Result } from "@siteimprove/alfa-result";
 
-import { Selector } from "../dist/index.js";
+import { Selector } from "../src/index.ts";
 
 const { final } = Parser;
 

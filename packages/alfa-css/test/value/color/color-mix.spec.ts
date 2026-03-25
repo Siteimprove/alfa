@@ -1,8 +1,8 @@
 import { RNG } from "@siteimprove/alfa-rng";
 import { test } from "@siteimprove/alfa-test";
 
-import { Color } from "../../../dist/value/color/color.js";
-import { ColorMix } from "../../../dist/value/color/color-mix.js";
+import { Color } from "../../../src/value/color/color.ts";
+import { ColorMix } from "../../../src/value/color/color-mix.ts";
 import { CSS4Color, List, Percentage } from "../../../src/index.js";
 import { MixItem } from "../../../src/value/color/mix.js";
 

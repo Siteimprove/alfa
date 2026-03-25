@@ -2,8 +2,8 @@ import { Array } from "@siteimprove/alfa-array";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { Block } from "../dist/block.js";
-import { Layer, Origin } from "../dist/index.js";
+import { Block } from "../src/block.ts";
+import { Layer, Origin } from "../src/index.ts";
 
 const noLayer = { normal: Layer.empty(), important: Layer.empty() };
 

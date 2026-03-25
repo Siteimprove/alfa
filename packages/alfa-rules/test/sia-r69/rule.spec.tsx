@@ -8,11 +8,11 @@ import { None } from "@siteimprove/alfa-option";
 import { Style } from "@siteimprove/alfa-style";
 import { test } from "@siteimprove/alfa-test";
 
-import { Contrast as Diagnostic } from "../../dist/common/diagnostic/contrast.js";
+import { Contrast as Diagnostic } from "../../src/common/diagnostic/contrast.ts";
 
-import { ColorError, ColorErrors } from "../../dist/common/dom/get-colors.js";
-import { Contrast as Outcomes } from "../../dist/common/outcome/contrast.js";
-import R69 from "../../dist/sia-r69/rule.js";
+import { ColorError, ColorErrors } from "../../src/common/dom/get-colors.ts";
+import { Contrast as Outcomes } from "../../src/common/outcome/contrast.ts";
+import R69 from "../../src/sia-r69/rule.ts";
 
 import { black, gray, rgb, white } from "../common/color.js";
 

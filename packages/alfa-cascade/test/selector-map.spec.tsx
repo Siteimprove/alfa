@@ -10,9 +10,9 @@ import {
 } from "@siteimprove/alfa-selector";
 import { test } from "@siteimprove/alfa-test";
 
-import { AncestorFilter } from "../dist/ancestor-filter.js";
-import { Layer, Origin } from "../dist/index.js";
-import { SelectorMap } from "../dist/selector-map.js";
+import { AncestorFilter } from "../src/ancestor-filter.ts";
+import { Layer, Origin } from "../src/index.ts";
+import { SelectorMap } from "../src/selector-map.ts";
 
 import { layer, ruleToBlockJSON } from "./common/common.js";
 import { parse } from "./common/parser.js";

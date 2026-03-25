@@ -2,14 +2,14 @@ import type { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 import { test } from "@siteimprove/alfa-test";
 
-import type { Token, Value } from "../../../dist/index.js";
+import type { Token, Value } from "../../../src/index.ts";
 import {
   Length,
   LengthPercentage,
   Lexer,
   List,
   Number,
-} from "../../../dist/index.js";
+} from "../../../src/index.ts";
 
 function parse<V extends Value>(
   str: string,

@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { None, Option } from "@siteimprove/alfa-option";
 
-import ER87, { Outcomes } from "../../dist/sia-er87/rule.js";
+import ER87, { Outcomes } from "../../src/sia-er87/rule.ts";
 
 import { evaluate } from "../common/evaluate.js";
 import { cantTell, passed, failed } from "../common/outcome.js";

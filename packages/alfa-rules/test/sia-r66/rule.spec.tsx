@@ -1,10 +1,10 @@
 import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-import { Contrast as Diagnostic } from "../../dist/common/diagnostic/contrast.js";
-import { Contrast as Outcomes } from "../../dist/common/outcome/contrast.js";
+import { Contrast as Diagnostic } from "../../src/common/diagnostic/contrast.ts";
+import { Contrast as Outcomes } from "../../src/common/outcome/contrast.ts";
 
-import R66 from "../../dist/sia-r66/rule.js";
+import R66 from "../../src/sia-r66/rule.ts";
 
 import { black, gray, white } from "../common/color.js";
 

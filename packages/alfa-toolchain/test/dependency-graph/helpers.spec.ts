@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import * as path from "node:path";
 
-import { GraphFactory } from "../../dist/dependency-graph/helpers.js";
+import { GraphFactory } from "../../src/dependency-graph/helpers.ts";
 
 const {
   getAllWorkspaceDependencies,

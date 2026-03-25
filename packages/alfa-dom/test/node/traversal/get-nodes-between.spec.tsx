@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { h } from "../../../dist/index.js";
-import { getNodesBetween } from "../../../dist/node/traversal/get-nodes-between.js";
+import { h } from "../../../src/index.ts";
+import { getNodesBetween } from "../../../src/node/traversal/get-nodes-between.ts";
 
 const hello = h.text("Hello");
 const spanHello = h.element("span", [], [hello]);

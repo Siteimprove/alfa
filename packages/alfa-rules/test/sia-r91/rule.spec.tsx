@@ -2,8 +2,8 @@ import { Length } from "@siteimprove/alfa-css";
 import { h, Namespace } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R91 from "../../dist/sia-r91/rule.js";
-import { Outcomes } from "../../dist/common/expectation/is-wide-enough.js";
+import R91 from "../../src/sia-r91/rule.ts";
+import { Outcomes } from "../../src/common/expectation/is-wide-enough.ts";
 
 import { evaluate } from "../common/evaluate.js";
 import { failed, inapplicable, passed } from "../common/outcome.js";

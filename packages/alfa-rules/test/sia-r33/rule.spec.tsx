@@ -4,8 +4,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Option, None } from "@siteimprove/alfa-option";
 
-import R33 from "../../dist/sia-r33/rule.js";
-import { Outcomes } from "../../dist/common/expectation/media-transcript.js";
+import R33 from "../../src/sia-r33/rule.ts";
+import { Outcomes } from "../../src/common/expectation/media-transcript.ts";
 
 import { evaluate } from "../common/evaluate.js";
 import { oracle } from "../common/oracle.js";

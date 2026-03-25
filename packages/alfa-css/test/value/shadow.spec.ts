@@ -1,7 +1,7 @@
 import type { Result } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
-import { Color, Length, Lexer, Shadow } from "../../dist/index.js";
+import { Color, Length, Lexer, Shadow } from "../../src/index.ts";
 
 import { color } from "../common/color.js";
 import { parser, parserUnsafe, serializer } from "../common/parse.js";

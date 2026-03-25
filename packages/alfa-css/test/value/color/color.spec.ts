@@ -1,7 +1,7 @@
 import { Selective } from "@siteimprove/alfa-selective";
 import { test } from "@siteimprove/alfa-test";
 
-import { Color } from "../../../dist/value/color/color.js";
+import { Color } from "../../../src/value/color/color.ts";
 
 import { color } from "../../common/color.js";
 import { parser } from "../../common/parse.js";

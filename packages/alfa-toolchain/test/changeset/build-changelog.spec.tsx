@@ -1,7 +1,7 @@
 import type { Package } from "@manypkg/get-packages";
 import { test } from "@siteimprove/alfa-test";
 
-import { Changelog } from "../../dist/changeset/build-changelog.js";
+import { Changelog } from "../../src/changeset/build-changelog.ts";
 
 function fakePackage(
   pkg: string,

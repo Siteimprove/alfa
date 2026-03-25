@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Maybe } from "../dist/maybe.js";
-import { None } from "../dist/none.js";
-import { Some } from "../dist/some.js";
+import { Maybe } from "../src/maybe.ts";
+import { None } from "../src/none.ts";
+import { Some } from "../src/some.ts";
 
 test("#toOption() of `None` returns the same instance", (t) => {
   const none = None;

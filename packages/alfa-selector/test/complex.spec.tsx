@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { Combinator } from "../dist/index.js";
+import { Combinator } from "../src/index.ts";
 import { parse, serialize } from "./parser.js";
 
 test(".parse() parses a single descendant selector", (t) => {

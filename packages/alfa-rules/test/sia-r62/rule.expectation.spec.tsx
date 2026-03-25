@@ -1,8 +1,8 @@
 import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
-import { ElementDistinguishable } from "../../dist/sia-r62/diagnostics.js";
-import R62, { Outcomes } from "../../dist/sia-r62/rule.js";
+import { ElementDistinguishable } from "../../src/sia-r62/diagnostics.ts";
+import R62, { Outcomes } from "../../src/sia-r62/rule.ts";
 import { evaluate } from "../common/evaluate.js";
 import { failed, passed } from "../common/outcome.js";
 import { Defaults, addCursor, addOutline } from "./common.js";

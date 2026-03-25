@@ -3,7 +3,7 @@ import { h } from "@siteimprove/alfa-dom/h";
 
 import type { Serializable } from "@siteimprove/alfa-json";
 
-import type * as Slice from "../../dist/property/border-image-slice.js";
+import type * as Slice from "../../src/property/border-image-slice.ts";
 
 import { cascaded } from "../common.js";
 

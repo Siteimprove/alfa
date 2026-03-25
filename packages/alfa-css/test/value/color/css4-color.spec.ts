@@ -8,8 +8,8 @@
 import { Real } from "@siteimprove/alfa-math";
 import { test } from "@siteimprove/alfa-test";
 
-import { CSS4Color } from "../../../dist/value/color/css4-color.js";
-import { Lexer } from "../../../dist/index.js";
+import { CSS4Color } from "../../../src/value/color/css4-color.ts";
+import { Lexer } from "../../../src/index.ts";
 
 import { color } from "../../common/color.js";
 import { parser, parserUnsafe } from "../../common/parse.js";

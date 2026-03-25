@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Gradient } from "../../../dist/index.js";
+import { Gradient } from "../../../src/index.ts";
 import { color } from "../../common/color.js";
 import { parser, serializer } from "../../common/parse.js";
 

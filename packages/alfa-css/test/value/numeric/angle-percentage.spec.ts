@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Angle, AnglePercentage, Length } from "../../../dist/index.js";
+import { Angle, AnglePercentage, Length } from "../../../src/index.ts";
 
 import { parser, parserUnsafe, serializer } from "../../common/parse.js";
 

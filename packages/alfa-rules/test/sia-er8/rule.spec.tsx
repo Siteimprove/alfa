@@ -1,7 +1,7 @@
 import { h, Element } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import ER8, { Outcomes } from "../../dist/sia-er8/rule.js";
+import ER8, { Outcomes } from "../../src/sia-er8/rule.ts";
 
 import { evaluate } from "../common/evaluate.js";
 import { passed, failed, inapplicable } from "../common/outcome.js";

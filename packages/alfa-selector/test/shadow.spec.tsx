@@ -1,11 +1,11 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-import type { Compound } from "../dist/index.js";
-import { Context } from "../dist/index.js";
+import type { Compound } from "../src/index.ts";
+import { Context } from "../src/index.ts";
 
-import type { Host } from "../dist/selector/pseudo/pseudo-class/host.js";
-import type { HostContext } from "../dist/selector/pseudo/pseudo-class/host-context.js";
-import { Slotted } from "../dist/selector/pseudo/pseudo-element/slotted.js";
+import type { Host } from "../src/selector/pseudo/pseudo-class/host.ts";
+import type { HostContext } from "../src/selector/pseudo/pseudo-class/host-context.ts";
+import { Slotted } from "../src/selector/pseudo/pseudo-element/slotted.ts";
 
 import { parse } from "./parser.js";
 

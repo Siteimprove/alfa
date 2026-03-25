@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 
-import * as predicate from "../../../dist/node/predicate/is-transparent.js";
+import * as predicate from "../../../src/node/predicate/is-transparent.ts";
 
 const isTransparent = predicate.isTransparent(Device.standard());
 

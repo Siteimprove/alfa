@@ -4,8 +4,8 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 
-import { TargetSize } from "../../dist/common/outcome/target-size.js";
-import R113 from "../../dist/sia-r113/rule.js";
+import { TargetSize } from "../../src/common/outcome/target-size.ts";
+import R113 from "../../src/sia-r113/rule.ts";
 import { evaluate } from "../common/evaluate.js";
 import { failed, inapplicable, passed } from "../common/outcome.js";
 

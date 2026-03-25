@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Math } from "../../dist/index.js";
+import { Math } from "../../src/index.ts";
 import { parser, parserUnsafe, serializer } from "../common/parse.js";
 import { resolver } from "./common.js";
 

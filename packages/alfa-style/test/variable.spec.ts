@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Declaration } from "@siteimprove/alfa-dom";
 
-import { Variable } from "../dist/variable.js";
+import { Variable } from "../src/variable.ts";
 
 const varFoo = (value: string, important: boolean = false) =>
   Declaration.of("--foo", value, important);

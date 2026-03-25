@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Language } from "../dist/language.js";
+import { Language } from "../src/language.ts";
 
 test(".parse() parses a primary language tag", (t) => {
   t.deepEqual(Language.parse("da").getUnsafe().toJSON(), {

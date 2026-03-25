@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { String } from "../dist/string.js";
+import { String } from "../src/string.ts";
 
 test(".hasSoftWrapOpportunity() accepts dashes", (t) => {
   t(String.hasSoftWrapOpportunity("foo-bar"));

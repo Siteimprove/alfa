@@ -42,12 +42,19 @@ export function getDescendants(
   predicate: Predicate<Node>,
 ): (node: Node, options?: Node.Traversal) => Sequence<Node> {
   return (node, options = Node.Traversal.empty) => {
+    console.log("Calling getDescendants");
+
     const optionsMap = _descendantsCache
       .get(predicate, Cache.empty)
       .get(node, () => []);
 
     if (optionsMap[options.value] === undefined) {
-      optionsMap[options.value] = node.descendants(options).filter(predicate);
+      console.log("Was empty")
+      let descendants = node.descendants(options);
+
+      console.log(descendants.toJSON())
+
+      optionsMap[options.value] = descendants.filter(predicate);
     }
 
     return optionsMap[options.value];

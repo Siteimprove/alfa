@@ -5,7 +5,7 @@ import {
   toTableRow,
   toHtmlTable,
   toHtml,
-} from "../../dist/coverage/transform-unit-test-coverage-data.js";
+} from "../../src/coverage/transform-unit-test-coverage-data.ts";
 
 test("toLink() returns correct anchor for package coverage", (t) => {
   const name = "pkg-name";

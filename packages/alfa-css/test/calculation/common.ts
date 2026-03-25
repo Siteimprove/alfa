@@ -1,5 +1,5 @@
-import type { Expression } from "../../dist/calculation/index.js";
-import { Length } from "../../dist/calculation/numeric/index.js";
+import type { Expression } from "../../src/calculation/index.ts";
+import { Length } from "../../src/calculation/numeric/index.ts";
 
 export const resolver: Expression.Resolver = {
   length: (length) => {

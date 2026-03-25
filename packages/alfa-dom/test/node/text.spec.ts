@@ -6,7 +6,7 @@ import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { String } from "@siteimprove/alfa-string";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Text } from "../../dist/index.js";
+import { Text } from "../../src/index.ts";
 
 const { not } = Predicate;
 

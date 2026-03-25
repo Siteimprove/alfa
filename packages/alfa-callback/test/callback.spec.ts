@@ -1,6 +1,6 @@
 import { describe, it } from "vitest";
 
-import { Callback } from "../dist/callback.js";
+import { Callback } from "../src/callback.ts";
 
 describe("contraMap", () => {
   it("converts a callback T -> R to a callback U -> R using a mapper U -> T", ({

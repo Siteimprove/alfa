@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R14, { Outcomes } from "../../dist/sia-r14/rule.js";
+import R14, { Outcomes } from "../../src/sia-r14/rule.ts";
 
 import { evaluate } from "../common/evaluate.js";
 import { passed, failed } from "../common/outcome.js";

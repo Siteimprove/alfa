@@ -2,7 +2,7 @@ import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R114, { Outcomes } from "../../dist/sia-r114/rule.js";
+import R114, { Outcomes } from "../../src/sia-r114/rule.ts";
 
 import { evaluate } from "../common/evaluate.js";
 import { oracle } from "../common/oracle.js";

@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Attribute } from "../dist/index.js";
+import { Attribute } from "../src/index.ts";
 import { serialize } from "./parser.js";
 
 test(".parse() parses a type selector", (t) => {

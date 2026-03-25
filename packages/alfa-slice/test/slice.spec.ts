@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Slice } from "../dist/slice.js";
+import { Slice } from "../src/slice.ts";
 
 const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 

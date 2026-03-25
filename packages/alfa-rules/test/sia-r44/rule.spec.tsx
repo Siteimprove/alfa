@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { expect, vitest } from "vitest";
 
-import R44, { Outcomes } from "../../dist/sia-r44/rule.js";
+import R44, { Outcomes } from "../../src/sia-r44/rule.ts";
 
 import { evaluate } from "../common/evaluate.js";
 import { failed, inapplicable, passed } from "../common/outcome.js";

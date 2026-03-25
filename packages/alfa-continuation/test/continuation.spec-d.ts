@@ -1,6 +1,6 @@
 import { describe, it, expectTypeOf } from "vitest";
 
-import type { Continuation } from "../dist/continuation.d.ts";
+import type { Continuation } from "../src/continuation.ts";
 
 describe("Continuation", () => {
   it("defaults to a callback of a callback with no extra parameter", () => {

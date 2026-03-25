@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Matrix } from "../../../dist/index.js";
+import { Matrix } from "../../../src/index.ts";
 
 import { parser, serializer } from "../../common/parse.js";
 

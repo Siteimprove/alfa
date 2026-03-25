@@ -9,7 +9,7 @@ import { test } from "@siteimprove/alfa-test";
 import {
   getBackground,
   getForeground,
-} from "../../../dist/common/dom/get-colors.js";
+} from "../../../src/common/dom/get-colors.ts";
 
 import { rgb } from "../color.js";
 

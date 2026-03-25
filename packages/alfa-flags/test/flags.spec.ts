@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Flags } from "../dist/flags.js";
+import { Flags } from "../src/flags.ts";
 
 class Example extends Flags<"example", Example.Flag> {
   public static of(...flags: Array<Example.Flag>): Example {

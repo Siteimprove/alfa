@@ -6,7 +6,7 @@ import { Device } from "@siteimprove/alfa-device";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Serializable } from "@siteimprove/alfa-json";
 
-import { PaintingOrder } from "../dist/painting-order.js";
+import { PaintingOrder } from "../src/painting-order.ts";
 
 const device = Device.standard();
 const options = { verbosity: Serializable.Verbosity.Low };

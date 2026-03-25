@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Hash } from "../dist/index.js";
+import { Hash } from "../src/index.ts";
 
 class SimpleHash extends Hash {
   private _hash = 0;

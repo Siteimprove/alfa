@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Context } from "../dist/index.js";
+import { Context } from "../src/index.ts";
 
 import { parse, parseErr, serialize } from "./parser.js";
 

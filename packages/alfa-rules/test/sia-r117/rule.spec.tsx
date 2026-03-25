@@ -2,8 +2,8 @@ import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R117, { Outcomes } from "../../dist/sia-r117/rule.js";
-import { WithName } from "../../dist/common/diagnostic.js";
+import R117, { Outcomes } from "../../src/sia-r117/rule.ts";
+import { WithName } from "../../src/common/diagnostic.ts";
 
 import { evaluate } from "../common/evaluate.js";
 import { oracle } from "../common/oracle.js";

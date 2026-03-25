@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
-import { h, type Element } from "../../../dist/index.js";
-import { isSuggestedFocusable } from "../../../dist/node/element/predicate/is-suggested-focusable.js";
+import { h, type Element } from "../../../src/index.ts";
+import { isSuggestedFocusable } from "../../../src/node/element/predicate/is-suggested-focusable.ts";
 
 test("isSuggestedFocusable() returns false for inert elements", (t) => {
   const div = <div inert>content</div>;

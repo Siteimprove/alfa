@@ -3,8 +3,8 @@ import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import R23 from "../../dist/sia-r23/rule.js";
-import { Outcomes } from "../../dist/common/expectation/media-transcript.js";
+import R23 from "../../src/sia-r23/rule.ts";
+import { Outcomes } from "../../src/common/expectation/media-transcript.ts";
 
 import { evaluate } from "../common/evaluate.js";
 import { passed, failed, inapplicable, cantTell } from "../common/outcome.js";

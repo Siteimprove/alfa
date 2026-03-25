@@ -5,7 +5,7 @@ import { Device } from "@siteimprove/alfa-device";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { WithBadElements } from "../../../dist/common/diagnostic/with-bad-elements.js";
+import { WithBadElements } from "../../../src/common/diagnostic/with-bad-elements.ts";
 
 test("toJSON() calls toJSON() on error elements", (t) => {
   const element = <div>Foo</div>;

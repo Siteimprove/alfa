@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Polygon } from "../../../dist/index.js";
+import { Polygon } from "../../../src/index.ts";
 import { parser, serializer } from "../../common/parse.js";
 
 const parseErr = parser(Polygon.parse);

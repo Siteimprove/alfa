@@ -1,7 +1,7 @@
 import { RNG } from "@siteimprove/alfa-rng";
 import { test } from "@siteimprove/alfa-test";
 
-import { Specificity } from "../dist/specificity.js";
+import { Specificity } from "../src/specificity.ts";
 import { parse } from "./parser.js";
 
 const controller = (seed?: number) => ({

@@ -5,9 +5,9 @@ import { type Simple } from "@siteimprove/alfa-selector";
 
 import { test } from "@siteimprove/alfa-test";
 
-import type { Precedence} from "../dist/index.js";
-import { Layer, Origin, RuleTree } from "../dist/index.js";
-import { Block } from "../dist/block.js";
+import type { Precedence} from "../src/index.ts";
+import { Layer, Origin, RuleTree } from "../src/index.ts";
+import { Block } from "../src/block.ts";
 
 import { parse } from "./common/parser.js";
 

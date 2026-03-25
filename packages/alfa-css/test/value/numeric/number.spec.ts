@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, Number } from "../../../dist/index.js";
+import { Length, Number } from "../../../src/index.ts";
 
 import { parser, serializer } from "../../common/parse.js";
 

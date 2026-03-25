@@ -1,6 +1,6 @@
 import { describe, it } from "vitest";
 
-import { Bits } from "../dist/bits.js";
+import { Bits } from "../src/bits.ts";
 
 describe("#bit()", () => {
   it("returns a number whose binary representation has a 1 in the ith position", ({

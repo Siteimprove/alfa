@@ -5,8 +5,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import { describe } from "vitest";
 
-import { Array } from "../dist/array.js";
-import * as Builtin from "../dist/builtin.js";
+import { Array } from "../src/array.ts";
+import * as Builtin from "../src/builtin.ts";
 
 describe("Basic constructors and predicates", () => {
   test(".of() creates an array", (t) => {

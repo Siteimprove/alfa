@@ -2,9 +2,9 @@ import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R39, { Outcomes } from "../../dist/sia-r39/rule.js";
+import R39, { Outcomes } from "../../src/sia-r39/rule.ts";
 
-import { WithName } from "../../dist/common/diagnostic.js";
+import { WithName } from "../../src/common/diagnostic.ts";
 import { evaluate } from "../common/evaluate.js";
 import { oracle } from "../common/oracle.js";
 import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";

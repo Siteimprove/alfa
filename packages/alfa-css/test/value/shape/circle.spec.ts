@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Circle } from "../../../dist/index.js";
+import { Circle } from "../../../src/index.ts";
 import { parser, serializer } from "../../common/parse.js";
 
 const parseErr = parser(Circle.parse);

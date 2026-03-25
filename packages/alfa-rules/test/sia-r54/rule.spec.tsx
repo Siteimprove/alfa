@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { h } from "@siteimprove/alfa-dom";
 
-import R54, { Outcomes } from "../../dist/sia-r54/rule.js";
+import R54, { Outcomes } from "../../src/sia-r54/rule.ts";
 
 import { evaluate } from "../common/evaluate.js";
 import { passed, failed, inapplicable } from "../common/outcome.js";

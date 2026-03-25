@@ -5,11 +5,11 @@ import { test } from "@siteimprove/alfa-test";
 import { Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-url";
 
-import R15, { Outcomes } from "../../dist/sia-r15/rule.js";
+import R15, { Outcomes } from "../../src/sia-r15/rule.ts";
 
-import { Group } from "../../dist/common/act/group.js";
+import { Group } from "../../src/common/act/group.ts";
 
-import { WithName } from "../../dist/common/diagnostic.js";
+import { WithName } from "../../src/common/diagnostic.ts";
 import { evaluate } from "../common/evaluate.js";
 import { oracle } from "../common/oracle.js";
 import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";

@@ -1,7 +1,7 @@
 import type { Simple } from "@siteimprove/alfa-selector";
 import { type Assertions, test } from "@siteimprove/alfa-test";
 
-import { AncestorFilter, Bucket } from "../dist/ancestor-filter.js";
+import { AncestorFilter, Bucket } from "../src/ancestor-filter.ts";
 
 import { parse } from "./common/parser.js";
 

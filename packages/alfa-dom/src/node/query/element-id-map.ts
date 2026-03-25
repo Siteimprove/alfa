@@ -19,7 +19,10 @@ const elementMapCache = Cache.empty<Document, Map<string, Element>>();
  * @public
  */
 export function getElementIdMap(node: Node): Map<string, Element> {
+  console.log("Calling getElementIdMap");
+
   if (Document.isDocument(node)) {
+    console.log("Is document")
     return elementMapCache.get(node, () => buildElementIdMap(node));
   }
 
@@ -27,12 +30,15 @@ export function getElementIdMap(node: Node): Map<string, Element> {
 }
 
 function buildElementIdMap(node: Node): Map<string, Element> {
+  console.log("Calling buildElementIdMap");
+
   // Build a map from ID -> element to allow fast resolution of ID references.
   // The collected references are added to the map in reverse order to ensure
   // that the first occurrence of a given ID is what ends up in the map in
   // event of duplicates.
   return Map.from(
     getElementDescendants(node)
+      .tee(seq => console.dir(seq.toJSON()))
       .collect((element) => element.id.map((id) => [id, element] as const))
       .reverse(),
   );

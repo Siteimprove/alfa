@@ -1,8 +1,8 @@
 import { CSS4Color, Color, Percentage } from "@siteimprove/alfa-css";
 import type { Result } from "@siteimprove/alfa-result";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Contrast } from "../../dist/common/diagnostic/contrast.js";
-import { ElementDistinguishable } from "../../dist/sia-r62/diagnostics.js";
+import { Contrast } from "../../src/common/diagnostic/contrast.ts";
+import { ElementDistinguishable } from "../../src/sia-r62/diagnostics.ts";
 
 export function addCursor(
   style: Result<ElementDistinguishable>,
