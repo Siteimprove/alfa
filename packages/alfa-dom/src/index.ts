@@ -2,7 +2,7 @@ export * from "./namespace.js";
 
 export * from "./style/block.js";
 export * from "./style/declaration.js";
-export * from "./style/rule.js";
+export * from "./style/rule/rule.js";
 
 export * from "./style/rule/grouping.js";
 export * from "./style/rule/condition.js";

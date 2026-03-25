@@ -3,7 +3,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Device } from "@siteimprove/alfa-device";
 import type { Rectangle } from "@siteimprove/alfa-rectangle";
-import type { Node, Rule } from "./index.js";
+import type { Node } from "./index.js";
+import type { Rule } from "./style/rule/index.js";
 import {
   Attribute,
   Block,

@@ -3,7 +3,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { Rule } from "../rule.js";
+import { Rule } from "./rule.js";
 import { GroupingRule } from "./grouping.js";
 
 /**
@@ -122,8 +122,11 @@ export namespace Layer {
       layer: string | null;
     }
 
-    export function fromLayerBlockRule(json: JSON): Trampoline<BlockRule> {
-      return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
+    export function fromLayerBlockRule(
+      json: JSON,
+      fromRule: (json: Rule.JSON) => Trampoline<Rule>,
+    ): Trampoline<BlockRule> {
+      return Trampoline.traverse(json.rules, fromRule).map((rules) =>
         BlockRule.of(rules, json.layer),
       );
     }

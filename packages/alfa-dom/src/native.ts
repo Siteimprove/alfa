@@ -29,7 +29,6 @@ import type {
   NamespaceRule,
   Node,
   PageRule,
-  Rule,
   Shadow,
   Sheet,
   StyleRule,
@@ -37,6 +36,7 @@ import type {
   Text,
   Type,
 } from "./index.js";
+import type { Rule } from "./style/rule/index.js";
 
 /**
  * The type of logs.

@@ -6,7 +6,7 @@ import type * as json from "@siteimprove/alfa-json";
 
 import type { Element } from "../node/element.js";
 
-import type { Rule } from "./rule.js";
+import type { Rule } from "./rule/rule.js";
 
 /**
  * @public

@@ -4,7 +4,7 @@ import type { Option } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { Rule } from "../rule.js";
+import type { Rule } from "./rule.js";
 import { ConditionRule } from "./condition.js";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Predicate } from "@siteimprove/alfa-predicate";
@@ -65,8 +65,11 @@ export namespace SupportsRule {
   /**
    * @internal
    */
-  export function fromSupportsRule(json: JSON): Trampoline<SupportsRule> {
-    return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
+  export function fromSupportsRule(
+    json: JSON,
+    fromRule: (json: Rule.JSON) => Trampoline<Rule>,
+  ): Trampoline<SupportsRule> {
+    return Trampoline.traverse(json.rules, fromRule).map((rules) =>
       SupportsRule.of(json.condition, rules),
     );
   }

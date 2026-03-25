@@ -4,7 +4,7 @@ import { Option, None } from "@siteimprove/alfa-option";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { Rule } from "./rule.js";
+import { Rule } from "./rule/index.js";
 
 /**
  * @public
@@ -55,7 +55,10 @@ export class Sheet implements Equatable, Serializable {
   public *descendants(): Iterable<Rule> {
     for (const child of this.children()) {
       yield child;
-      yield* child.descendants();
+      // child.descendants() is typed as the abstract class Rule, from which all
+      // others inherit, so TS is unhappy as it could be a subclass which has not
+      // been included in the union. We assert the type to be the union one.
+      yield* child.descendants() as Iterable<Rule>;
     }
   }
 
@@ -95,7 +98,7 @@ export namespace Sheet {
 
   export function from(json: JSON): Sheet {
     return Sheet.of(
-      json.rules.map(Rule.from),
+      json.rules.map((ruleJson) => Rule.from(ruleJson, Sheet.of)),
       json.disabled,
       Option.from(json.condition),
     );

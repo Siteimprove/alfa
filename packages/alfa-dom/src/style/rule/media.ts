@@ -6,7 +6,7 @@ import type { Predicate } from "@siteimprove/alfa-predicate";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { Rule } from "../rule.js";
+import type { Rule } from "./rule.js";
 import { ConditionRule } from "./condition.js";
 
 /**
@@ -61,8 +61,11 @@ export namespace MediaRule {
   /**
    * @internal
    */
-  export function fromMediaRule(json: JSON): Trampoline<MediaRule> {
-    return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
+  export function fromMediaRule(
+    json: JSON,
+    fromRule: (json: Rule.JSON) => Trampoline<Rule>,
+  ): Trampoline<MediaRule> {
+    return Trampoline.traverse(json.rules, fromRule).map((rules) =>
       MediaRule.of(json.condition, rules),
     );
   }

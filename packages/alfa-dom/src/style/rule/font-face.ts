@@ -3,7 +3,7 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Block } from "../block.js";
 import type { Declaration } from "../declaration.js";
-import { Rule } from "../rule.js";
+import { Rule } from "./rule.js";
 
 /**
  * @public

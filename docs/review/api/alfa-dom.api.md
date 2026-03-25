@@ -514,13 +514,13 @@ export namespace h {
         // (undocumented)
         export function keyframe(key: string, declarations: Array<Declaration> | Record<string, string>): KeyframeRule;
         // (undocumented)
-        export function keyframes(name: string, rules: Array<Rule>): KeyframesRule;
+        export function keyframes(name: string, rules: Array<Rule_2>): KeyframesRule;
         // (undocumented)
-        export function layerBlock(rules: Array<Rule>, layer?: string): Layer.BlockRule;
+        export function layerBlock(rules: Array<Rule_2>, layer?: string): Layer.BlockRule;
         // (undocumented)
         export function layerStatement(layers: Array<string>): Layer.StatementRule;
         // (undocumented)
-        export function media(condition: string, rules: Array<Rule>): MediaRule;
+        export function media(condition: string, rules: Array<Rule_2>): MediaRule;
         // (undocumented)
         export function namespace(namespace: string, prefix?: string): NamespaceRule;
         // (undocumented)
@@ -528,12 +528,14 @@ export namespace h {
         // (undocumented)
         export function style(selector: string, declarations: Array<Declaration> | Record<string, string>, hint?: boolean): StyleRule;
         // (undocumented)
-        export function supports(condition: string, rules: Array<Rule>): SupportsRule;
+        export function supports(condition: string, rules: Array<Rule_2>): SupportsRule;
     }
     // (undocumented)
     export function shadow(children: Array<Node_2 | string>, style?: Array<Sheet>, mode?: Shadow.Mode, externalId?: string, internalId?: string, extraData?: any): Shadow;
+    // Warning: (ae-forgotten-export) The symbol "Rule_2" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
-    export function sheet(rules: Array<Rule>, disabled?: boolean, condition?: string): Sheet;
+    export function sheet(rules: Array<Rule_2>, disabled?: boolean, condition?: string): Sheet;
     // (undocumented)
     export function text(data: string, box?: Rectangle, device?: Device, externalId?: string, internalId?: string, extraData?: any): Text_2;
     // (undocumented)
@@ -568,7 +570,7 @@ export class ImportRule extends ConditionRule<"import"> {
 // @public (undocumented)
 export namespace ImportRule {
     // @internal (undocumented)
-    export function fromImportRule(json: JSON): Trampoline<ImportRule>;
+    export function fromImportRule(json: JSON, fromRule: (json: Rule.JSON) => Trampoline<Rule>, sheetFactory: (rules: Iterable_2<Rule>) => Sheet): Trampoline<ImportRule>;
     // (undocumented)
     export function isImportRule(value: unknown): value is ImportRule;
     // (undocumented)
@@ -659,7 +661,7 @@ export class KeyframesRule extends GroupingRule<"keyframes"> {
 // @public (undocumented)
 export namespace KeyframesRule {
     // @internal (undocumented)
-    export function fromKeyframesRule(json: JSON): Trampoline<KeyframesRule>;
+    export function fromKeyframesRule(json: JSON, fromRule: (json: Rule.JSON) => Trampoline<Rule>): Trampoline<KeyframesRule>;
     // (undocumented)
     export function isKeyframesRule(value: unknown): value is KeyframesRule;
     // (undocumented)
@@ -688,7 +690,7 @@ export namespace Layer {
     // (undocumented)
     export namespace BlockRule {
         // (undocumented)
-        export function fromLayerBlockRule(json: JSON): Trampoline<BlockRule>;
+        export function fromLayerBlockRule(json: JSON, fromRule: (json: Rule.JSON) => Trampoline<Rule>): Trampoline<BlockRule>;
         // (undocumented)
         export function isLayerBlockRule(value: unknown): value is BlockRule;
         // (undocumented)
@@ -739,7 +741,7 @@ export class MediaRule extends ConditionRule<"media"> {
 // @public (undocumented)
 export namespace MediaRule {
     // @internal (undocumented)
-    export function fromMediaRule(json: JSON): Trampoline<MediaRule>;
+    export function fromMediaRule(json: JSON, fromRule: (json: Rule.JSON) => Trampoline<Rule>): Trampoline<MediaRule>;
     // (undocumented)
     export function isMediaRule(value: unknown): value is MediaRule;
     // (undocumented)
@@ -888,14 +890,14 @@ namespace Node_2 {
     function clone(node: Comment_2, options?: ElementReplacementOptions, device?: Device): Comment_2;
     const // (undocumented)
     Traversal: {
-        of: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => {
-            has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
-            isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
-            add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-            set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-            remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-            unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-            is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
+        of: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => {
+            has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
+            isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
+            add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+            set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+            remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+            unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+            is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
             equals(value: any): boolean;
             equals(value: unknown): value is any;
             toString(): string;
@@ -913,13 +915,13 @@ namespace Node_2 {
         };
         readonly none: 0;
         readonly empty: {
-            has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
-            isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
-            add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-            set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-            remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-            unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-            is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
+            has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
+            isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
+            add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+            set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+            remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+            unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+            is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
             equals(value: any): boolean;
             equals(value: unknown): value is any;
             toString(): string;
@@ -948,13 +950,13 @@ namespace Node_2 {
     function clone(node: Document_2, options?: ElementReplacementOptions, device?: Device): Document_2;
     function clone(node: Type, options?: ElementReplacementOptions, device?: Device): Document_2;
     const flatTree: {
-        has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
-        isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
-        add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-        set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-        remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-        unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-        is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
+        has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
+        isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
+        add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+        set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+        remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+        unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+        is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
         equals(value: any): boolean;
         equals(value: unknown): value is any;
         toString(): string;
@@ -971,13 +973,13 @@ namespace Node_2 {
         nested: boolean;
     };
     const fullTree: {
-        has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
-        isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
-        add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-        set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-        remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-        unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-        is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
+        has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
+        isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
+        add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+        set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+        remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+        unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+        is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
         equals(value: any): boolean;
         equals(value: unknown): value is any;
         toString(): string;
@@ -994,13 +996,13 @@ namespace Node_2 {
         nested: boolean;
     };
     const composedNested: {
-        has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
-        isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
-        add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-        set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-        remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-        unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-        is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
+        has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
+        isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
+        add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+        set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+        remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+        unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+        is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
         equals(value: any): boolean;
         equals(value: unknown): value is any;
         toString(): string;
@@ -1184,32 +1186,6 @@ export abstract class Rule<T extends string = string> implements Equatable, Seri
 // @public (undocumented)
 export namespace Rule {
     // (undocumented)
-    export function from(json: FontFaceRule.JSON): FontFaceRule;
-    // (undocumented)
-    export function from(json: ImportRule.JSON): ImportRule;
-    // (undocumented)
-    export function from(json: KeyframeRule.JSON): KeyframeRule;
-    // (undocumented)
-    export function from(json: KeyframesRule.JSON): KeyframesRule;
-    // (undocumented)
-    export function from(json: Layer.BlockRule.JSON): Layer.BlockRule;
-    // (undocumented)
-    export function from(json: Layer.StatementRule.JSON): Layer.StatementRule;
-    // (undocumented)
-    export function from(json: MediaRule.JSON): MediaRule;
-    // (undocumented)
-    export function from(json: NamespaceRule.JSON): NamespaceRule;
-    // (undocumented)
-    export function from(json: PageRule.JSON): PageRule;
-    // (undocumented)
-    export function from(json: StyleRule.JSON): StyleRule;
-    // (undocumented)
-    export function from(json: SupportsRule.JSON): SupportsRule;
-    // (undocumented)
-    export function from(json: JSON): Rule;
-    // @internal (undocumented)
-    export function fromRule(json: JSON): Trampoline<Rule>;
-    // (undocumented)
     export interface JSON<T extends string = string> {
         // (undocumented)
         [key: string]: json.JSON;
@@ -1280,13 +1256,13 @@ export namespace Shadow {
 
 // @public (undocumented)
 export class Sheet implements Equatable, Serializable {
-    protected constructor(rules: Array<Rule>, disabled: boolean, condition: Option_2<string>);
+    protected constructor(rules: Array<Rule_2>, disabled: boolean, condition: Option_2<string>);
     // (undocumented)
-    children(): Iterable<Rule>;
+    children(): Iterable<Rule_2>;
     // (undocumented)
     get condition(): Option_2<string>;
     // (undocumented)
-    descendants(): Iterable<Rule>;
+    descendants(): Iterable<Rule_2>;
     // (undocumented)
     get disabled(): boolean;
     // (undocumented)
@@ -1294,9 +1270,9 @@ export class Sheet implements Equatable, Serializable {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    static of(rules: Iterable<Rule>, disabled?: boolean, condition?: Option_2<string>): Sheet;
+    static of(rules: Iterable<Rule_2>, disabled?: boolean, condition?: Option_2<string>): Sheet;
     // (undocumented)
-    get rules(): Iterable<Rule>;
+    get rules(): Iterable<Rule_2>;
     // (undocumented)
     toJSON(): Sheet.JSON;
     // (undocumented)
@@ -1316,7 +1292,7 @@ export namespace Sheet {
         // (undocumented)
         disabled: boolean;
         // (undocumented)
-        rules: Array<Rule.JSON>;
+        rules: Array<Rule_2.JSON>;
     }
 }
 
@@ -1402,7 +1378,7 @@ export class SupportsRule extends ConditionRule<"supports"> {
 // @public (undocumented)
 export namespace SupportsRule {
     // @internal (undocumented)
-    export function fromSupportsRule(json: JSON): Trampoline<SupportsRule>;
+    export function fromSupportsRule(json: JSON, fromRule: (json: Rule.JSON) => Trampoline<Rule>): Trampoline<SupportsRule>;
     // (undocumented)
     export function isSupportsRule(value: unknown): value is SupportsRule;
     // (undocumented)

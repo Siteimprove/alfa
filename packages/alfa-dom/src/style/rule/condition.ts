@@ -1,4 +1,4 @@
-import type { Rule } from "../rule.js";
+import type { Rule } from "./rule.js";
 import { GroupingRule } from "./grouping.js";
 
 /**
@@ -31,8 +31,9 @@ export abstract class ConditionRule<
  * @public
  */
 export namespace ConditionRule {
-  export interface JSON<T extends string = string>
-    extends GroupingRule.JSON<T> {
+  export interface JSON<
+    T extends string = string,
+  > extends GroupingRule.JSON<T> {
     condition: string;
   }
 

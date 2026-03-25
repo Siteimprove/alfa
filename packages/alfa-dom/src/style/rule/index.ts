@@ -1,0 +1,183 @@
+import type { Trampoline } from "@siteimprove/alfa-trampoline";
+import type { Sheet } from "../sheet.js";
+
+import { FontFaceRule } from "./font-face.js";
+import { ImportRule } from "./import.js";
+import { KeyframeRule } from "./keyframe.js";
+import { KeyframesRule } from "./keyframes.js";
+import { Layer as LayerRules } from "./layer.js";
+import { MediaRule } from "./media.js";
+import { NamespaceRule } from "./namespace.js";
+import { PageRule } from "./page.js";
+import { StyleRule } from "./style.js";
+import { SupportsRule } from "./supports.js";
+
+import type { Rule as BaseRule } from "./rule.js";
+
+/**
+ * @public
+ */
+export type Rule =
+  | Rule.FontFace
+  | Rule.Import
+  | Rule.Keyframe
+  | Rule.Keyframes
+  | Rule.Layer.Block
+  | Rule.Layer.Statement
+  | Rule.Media
+  | Rule.Namespace
+  | Rule.Page
+  | Rule.Style
+  | Rule.Supports;
+
+/**
+ * @public
+ */
+export namespace Rule {
+  export import FontFace = FontFaceRule;
+  export import Import = ImportRule;
+  export import Keyframe = KeyframeRule;
+  export import Keyframes = KeyframesRule;
+  export namespace Layer {
+    export import Block = LayerRules.BlockRule;
+    export import Statement = LayerRules.StatementRule;
+  }
+  export import Media = MediaRule;
+  export import Namespace = NamespaceRule;
+  export import Page = PageRule;
+  export import Style = StyleRule;
+  export import Supports = SupportsRule;
+
+  export type JSON =
+    | FontFace.JSON
+    | ImportRule.JSON
+    | KeyframeRule.JSON
+    | KeyframesRule.JSON
+    | LayerRules.BlockRule.JSON
+    | LayerRules.StatementRule.JSON
+    | MediaRule.JSON
+    | NamespaceRule.JSON
+    | PageRule.JSON
+    | StyleRule.JSON
+    | SupportsRule.JSON;
+
+  export function from(
+    json: FontFace.JSON,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): FontFace;
+
+  export function from(
+    json: Import.JSON,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): Import;
+
+  export function from(
+    json: Keyframe.JSON,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): Keyframe;
+
+  export function from(
+    json: Keyframes.JSON,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): Keyframes;
+
+  export function from(
+    json: Layer.Block.JSON,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): Layer.Block;
+
+  export function from(
+    json: Layer.Statement.JSON,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): Layer.Statement;
+
+  export function from(
+    json: Media.JSON,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): Media;
+
+  export function from(
+    json: Namespace.JSON,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): Namespace;
+
+  export function from(
+    json: Page.JSON,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): Page;
+
+  export function from(
+    json: Style.JSON,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): Style;
+
+  export function from(
+    json: Supports.JSON,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): Supports;
+
+  export function from(
+    json: Rule.JSON,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): Rule;
+
+  export function from(
+    json: Rule.JSON,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): Rule {
+    return fromRule(sheetFactory)(json).run() as Rule;
+  }
+
+  /**
+   * @internal
+   */
+  export function fromRule(
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): (json: BaseRule.JSON) => Trampoline<BaseRule> {
+    return function from(json: BaseRule.JSON): Trampoline<BaseRule> {
+      switch (json.type) {
+        case "font-face":
+          return FontFace.fromFontFaceRule(json as FontFace.JSON);
+
+        case "import":
+          return Import.fromImportRule(
+            json as Import.JSON,
+            from,
+            sheetFactory as (rules: Iterable<BaseRule>) => Sheet,
+          );
+
+        case "keyframe":
+          return Keyframe.fromKeyframeRule(json as Keyframe.JSON);
+
+        case "keyframes":
+          return Keyframes.fromKeyframesRule(json as Keyframes.JSON, from);
+
+        case "layer-block":
+          return Layer.Block.fromLayerBlockRule(json as Layer.Block.JSON, from);
+
+        case "layer-statement":
+          return Layer.Statement.fromLayerStatementRule(
+            json as Layer.Statement.JSON,
+          );
+
+        case "media":
+          return Media.fromMediaRule(json as Media.JSON, from);
+
+        case "namespace":
+          return Namespace.fromNamespaceRule(json as Namespace.JSON);
+
+        case "page":
+          return Page.fromPageRule(json as Page.JSON);
+
+        case "style":
+          return Style.fromStyleRule(json as Style.JSON);
+
+        case "supports":
+          return Supports.fromSupportsRule(json as Supports.JSON, from);
+
+        default:
+          throw new Error(`Unexpected rule of type: ${json.type}`);
+      }
+    };
+  }
+}

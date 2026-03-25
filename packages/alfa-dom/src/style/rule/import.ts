@@ -6,8 +6,8 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { Rule } from "../rule.js";
-import { Sheet } from "../sheet.js";
+import type { Rule } from "./rule.js";
+import type { Sheet } from "../sheet.js";
 import { ConditionRule } from "./condition.js";
 
 const { and } = Predicate;
@@ -157,11 +157,15 @@ export namespace ImportRule {
   /**
    * @internal
    */
-  export function fromImportRule(json: JSON): Trampoline<ImportRule> {
-    return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
+  export function fromImportRule(
+    json: JSON,
+    fromRule: (json: Rule.JSON) => Trampoline<Rule>,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
+  ): Trampoline<ImportRule> {
+    return Trampoline.traverse(json.rules, fromRule).map((rules) =>
       ImportRule.of(
         json.href,
-        Sheet.of(rules),
+        sheetFactory(rules),
         Option.of(json.condition),
         Option.from(json.supportText),
         Option.from(json.layer),
