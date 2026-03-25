@@ -52,7 +52,7 @@
     "./node/text.ts",
     "./node/traversal/get-nodes-between.ts",
     "./node/traversal/lowest-common-ancestor.ts",
-    "./node/traversal.ts",
+    "./node/traversal/index.ts",
     "./node/type.ts",
     "./node/query/descendants.ts",
     "./node/query/element-id-map.ts",

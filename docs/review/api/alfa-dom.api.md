@@ -608,14 +608,14 @@ namespace Node_2 {
     function clone(node: Comment_2, options?: ElementReplacementOptions, device?: Device): Comment_2;
     const // (undocumented)
     Traversal: {
-        of: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => {
-            has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
-            isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
-            add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-            set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-            remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-            unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-            is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
+        of: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => {
+            has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
+            isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
+            add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
+            set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
+            remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
+            unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
+            is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
             equals(value: any): boolean;
             equals(value: unknown): value is any;
             toString(): string;
@@ -633,13 +633,13 @@ namespace Node_2 {
         };
         readonly none: 0;
         readonly empty: {
-            has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
-            isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
-            add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-            set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-            remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-            unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-            is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
+            has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
+            isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
+            add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
+            set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
+            remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
+            unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
+            is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
             equals(value: any): boolean;
             equals(value: unknown): value is any;
             toString(): string;
@@ -668,13 +668,13 @@ namespace Node_2 {
     function clone(node: Document_2, options?: ElementReplacementOptions, device?: Device): Document_2;
     function clone(node: Type, options?: ElementReplacementOptions, device?: Device): Document_2;
     const flatTree: {
-        has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
-        isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
-        add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-        set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-        remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-        unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-        is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
+        has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
+        isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
+        add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
+        set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
+        remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
+        unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
+        is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
         equals(value: any): boolean;
         equals(value: unknown): value is any;
         toString(): string;
@@ -691,13 +691,13 @@ namespace Node_2 {
         nested: boolean;
     };
     const fullTree: {
-        has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
-        isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
-        add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-        set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-        remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-        unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-        is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
+        has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
+        isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
+        add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
+        set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
+        remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
+        unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
+        is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
         equals(value: any): boolean;
         equals(value: unknown): value is any;
         toString(): string;
@@ -714,13 +714,13 @@ namespace Node_2 {
         nested: boolean;
     };
     const composedNested: {
-        has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
-        isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
-        add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-        set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-        remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-        unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-        is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
+        has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
+        isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
+        add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
+        set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
+        remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
+        unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
+        is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
         equals(value: any): boolean;
         equals(value: unknown): value is any;
         toString(): string;
@@ -802,10 +802,11 @@ namespace Node_2 {
     type Traversal = ReturnType<(typeof Traversal)["of"]>;
     // (undocumented)
     type TraversalFlags = (typeof Node_2.Traversal.allFlags)[number];
-    const // Warning: (ae-forgotten-export) The symbol "traversal" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    getNodesBetween: typeof traversal.getNodesBetween;
+    const // (undocumented)
+    getNodesBetween: (node1: Node_2, node2: Node_2, includeOptions?: {
+        includeFirst: boolean;
+        includeSecond: boolean;
+    }) => Sequence<Node_2>;
     const // Warning: (ae-forgotten-export) The symbol "predicate_2" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
@@ -858,6 +859,39 @@ export namespace Rule {
     import Supports = SupportsRule;
     // (undocumented)
     export function from(json: ImportRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): ImportRule;
+    const // (undocumented)
+    fontFace: typeof FontFaceRule.of, // (undocumented)
+    isFontFaceRule: typeof FontFaceRule.isFontFaceRule;
+    const // (undocumented)
+    importRule: typeof ImportRule.of, // (undocumented)
+    isImportRule: typeof ImportRule.isImportRule;
+    const // (undocumented)
+    keyframe: typeof KeyframeRule.of, // (undocumented)
+    isKeyframeRule: typeof KeyframeRule.isKeyframeRule;
+    const // (undocumented)
+    keyframes: typeof KeyframesRule.of, // (undocumented)
+    isKeyframesRule: typeof KeyframesRule.isKeyframesRule;
+    const // (undocumented)
+    layerBlock: typeof Layer.BlockRule.of, // (undocumented)
+    isLayerBlockRule: typeof Layer.BlockRule.isLayerBlockRule;
+    const // (undocumented)
+    layerStatement: typeof Layer.StatementRule.of, // (undocumented)
+    isLayerStatementRule: typeof Layer.StatementRule.isLayerStatementRule;
+    const // (undocumented)
+    media: typeof MediaRule.of, // (undocumented)
+    isMediaRule: typeof MediaRule.isMediaRule;
+    const // (undocumented)
+    namespace: typeof NamespaceRule.of, // (undocumented)
+    isNamespaceRule: typeof NamespaceRule.isNamespaceRule;
+    const // (undocumented)
+    page: typeof PageRule.of, // (undocumented)
+    isPageRule: typeof PageRule.isPageRule;
+    const // (undocumented)
+    style: typeof StyleRule.of, // (undocumented)
+    isStyleRule: typeof StyleRule.isStyleRule;
+    const // (undocumented)
+    supports: typeof SupportsRule.of, // (undocumented)
+    isSupportsRule: typeof SupportsRule.isSupportsRule;
     // (undocumented)
     export function from(json: KeyframeRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): KeyframeRule;
     // (undocumented)

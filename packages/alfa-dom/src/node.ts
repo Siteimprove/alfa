@@ -35,7 +35,7 @@ import {
 } from "./index.js";
 
 import * as predicate from "./node/predicate.js";
-import * as traversal from "./node/traversal.js";
+import * as traversal from "./node/traversal/index.js";
 
 /**
  * @public
@@ -642,7 +642,9 @@ export namespace Node {
       .get();
   }
 
-  export const { getNodesBetween } = traversal;
+  export const getNodesBetween = traversal.getNodesBetween(
+    Node.Traversal.empty,
+  );
 
   export const {
     hasBox,

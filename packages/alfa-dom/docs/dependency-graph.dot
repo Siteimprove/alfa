@@ -35,11 +35,12 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
   "src/node/element/predicate/is-replaced.ts";
   "src/style/rule/grouping.ts";
   "src/node/element/predicate/has-id.ts";
-  "src/index.ts";
+  "src/node/traversal/get-nodes-between.ts";
   "src/node/traversal/lowest-common-ancestor.ts";
   "src/node/query/descendants.ts";
   "src/node/query/element-id-map.ts";
   "src/node/element/predicate/has-namespace.ts";
+  "src/index.ts";
   "src/jsx.ts";
   "src/h.ts";
   "name_src/node";
@@ -67,9 +68,7 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
   "src/node/predicate/has-text-content.ts";
   "src/node/predicate/is-root.ts";
   "src/node/predicate.ts";
-  "src/node/traversal.ts";
-  "src/node/traversal/get-nodes-between.ts";
-  "name_src/node/traversal";
+  "src/node/traversal/index.ts";
   "src/node/element/predicate/has-attribute.ts";
   "name_src/node/element/predicate";
   "src/node/element/predicate/has-display-size.ts";
@@ -187,11 +186,6 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
         ];
         "src/node/predicate.ts" [
           label = "predicate.ts";
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
-        ];
-        "src/node/traversal.ts" [
-          label = "traversal.ts";
           fillcolor = "#ff6c60";
           style = "rounded,filled";
         ];
@@ -573,15 +567,19 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
           "exit_src/node/traversal" [
             style = "invis";
           ];
+          "src/node/traversal/index.ts" [
+            label = "index.ts";
+            color = "#e8ff00";
+            penwidth = 5;
+          ];
           "src/node/traversal/get-nodes-between.ts" [
             label = "get-nodes-between.ts";
-            fillcolor = "#ff6c60";
-            style = "rounded,filled";
           ];
           "src/node/traversal/lowest-common-ancestor.ts" [
             label = "lowest-common-ancestor.ts";
-            fillcolor = "#ff6c60";
-            style = "rounded,filled";
+          ];
+          "src/node/traversal/index.ts" -> "exit_src/node/traversal" [
+            style = "invis";
           ];
           "src/node/traversal/get-nodes-between.ts" -> "exit_src/node/traversal" [
             style = "invis";
@@ -653,6 +651,9 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
         "exit_src/node/traversal" -> "exit_src/node" [
           style = "invis";
         ];
+        "exit_src/node/traversal" -> "exit_src/node" [
+          style = "invis";
+        ];
         "exit_src/node/query" -> "exit_src/node" [
           style = "invis";
         ];
@@ -717,9 +718,6 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
           style = "invis";
         ];
         "exit_src/node/element" -> "exit_src/node" [
-          style = "invis";
-        ];
-        "src/node/traversal.ts" -> "exit_src/node" [
           style = "invis";
         ];
         "exit_src/node/element" -> "exit_src/node" [
@@ -993,6 +991,9 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
       "exit_src/node" -> "exit_src" [
         style = "invis";
       ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
       "exit_src/style" -> "exit_src" [
         style = "invis";
       ];
@@ -1105,9 +1106,6 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
         style = "invis";
       ];
       "src/node.ts" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/node" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/node" -> "exit_src" [
@@ -1789,6 +1787,13 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     style = "solid";
     color = "black";
   ];
+  "src/node/traversal/index.ts" -> "src/node/traversal/get-nodes-between.ts" [
+    style = "invis";
+  ];
+  "src/node/traversal/index.ts" -> "src/node/traversal/get-nodes-between.ts" [
+    style = "solid";
+    color = "black";
+  ];
   "src/style/rule/keyframes.ts" -> "src/style/rule/grouping.ts" [
     style = "invis";
   ];
@@ -1803,11 +1808,11 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     style = "dotted";
     color = "black";
   ];
-  "src/node/traversal/get-nodes-between.ts" -> "src/index.ts" [
+  "src/node/traversal/get-nodes-between.ts" -> "src/node.ts" [
     style = "invis";
   ];
-  "exit_src/node" -> "src/index.ts" [
-    style = "solid";
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
     color = "#00ffb9";
     ltail = "cluster_src/node";
   ];
@@ -2458,10 +2463,10 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     style = "solid";
     color = "black";
   ];
-  "src/node/traversal/lowest-common-ancestor.ts" -> "src/index.ts" [
+  "src/node/traversal/lowest-common-ancestor.ts" -> "src/node.ts" [
     style = "invis";
   ];
-  "exit_src/node" -> "src/index.ts" [
+  "exit_src/node" -> "src/node.ts" [
     style = "invis";
     color = "#00ffb9";
     ltail = "cluster_src/node";
@@ -2497,11 +2502,6 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     style = "invis";
     color = "#5dff00";
     ltail = "cluster_src/node/element";
-  ];
-  "src/node/traversal.ts" -> "name_src/node/traversal" [
-    style = "solid";
-    color = "#00ffb9";
-    lhead = "cluster_src/node/traversal";
   ];
   "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
     style = "solid";
