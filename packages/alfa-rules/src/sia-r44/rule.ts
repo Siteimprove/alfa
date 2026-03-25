@@ -7,11 +7,10 @@ import {
   type Declaration,
   Document,
   Element,
-  MediaRule,
   Node,
   Query,
+  Rule as StyleRule,
   Shadow,
-  StyleRule,
 } from "@siteimprove/alfa-dom";
 import { EAA } from "@siteimprove/alfa-eaa";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -86,7 +85,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         const rotationRulesDeclarations = orientationRules
           .flatMap((rule) => Sequence.from(rule.descendants()))
-          .filter(StyleRule.isStyleRule)
+          .filter(StyleRule.Style.isStyleRule)
           .collect((rule) =>
             rule.style.declaration((declaration) =>
               ["rotate", "transform"].includes(declaration.name),
@@ -166,7 +165,7 @@ function isOrientationConditional(declaration: Declaration): boolean {
   return some(
     declaration.ancestors(),
     (rule) =>
-      MediaRule.isMediaRule(rule) &&
+      StyleRule.Media.isMediaRule(rule) &&
       some(rule.queries.queries, (query) =>
         query.condition.some(hasOrientationCondition),
       ),
@@ -281,13 +280,13 @@ function getRelativeRotation(
   );
 }
 
-function getMediaRules(node: Node): Sequence<MediaRule> {
+function getMediaRules(node: Node): Sequence<StyleRule.Media> {
   return Sequence.from(
     flatMap(
       flatMap(roots(node), (document) => document.style),
       (sheet) => sheet.descendants(),
     ),
-  ).filter(MediaRule.isMediaRule);
+  ).filter(StyleRule.Media.isMediaRule);
 }
 
 function* roots(node: Node): Iterable<Document | Shadow> {

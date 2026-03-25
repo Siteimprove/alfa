@@ -9,10 +9,10 @@ import type { Rule as CSSRule } from "@siteimprove/alfa-dom";
 import {
   Document,
   Element,
-  MediaRule,
   Namespace,
   Node,
   Query,
+  Rule as StyleRule,
   Text,
 } from "@siteimprove/alfa-dom";
 import type { Hash } from "@siteimprove/alfa-hash";
@@ -608,18 +608,18 @@ namespace Media {
     return usesMediaRule(isFontRelativeMediaRule(predicate), device, context);
   }
 
-  const _mediaRulesCache = Cache.empty<CSSRule, Sequence<MediaRule>>();
-  function ancestorMediaRules(rule: CSSRule | null): Sequence<MediaRule> {
+  const _mediaRulesCache = Cache.empty<CSSRule, Sequence<StyleRule.Media>>();
+  function ancestorMediaRules(rule: CSSRule | null): Sequence<StyleRule.Media> {
     if (rule === null) {
       return Sequence.empty();
     }
 
     return _mediaRulesCache.get(rule, () => {
       const mediaRules = rule.parent
-        .map((parent) => ancestorMediaRules(parent))
-        .getOrElse<Sequence<MediaRule>>(Sequence.empty);
+        .map((parent) => ancestorMediaRules(parent as StyleRule))
+        .getOrElse<Sequence<StyleRule.Media>>(Sequence.empty);
 
-      return MediaRule.isMediaRule(rule)
+      return StyleRule.Media.isMediaRule(rule)
         ? mediaRules.prepend(rule)
         : mediaRules;
     });
@@ -636,7 +636,7 @@ namespace Media {
     element: Element,
     device: Device,
     context: Context = Context.empty(),
-  ): Sequence<MediaRule> {
+  ): Sequence<StyleRule.Media> {
     const root = element.root();
 
     if (!Document.isDocument(root)) {
@@ -651,7 +651,7 @@ namespace Media {
   }
 
   function usesMediaRule(
-    predicate: Predicate<MediaRule> = () => true,
+    predicate: Predicate<StyleRule.Media> = () => true,
     device: Device,
     context: Context = Context.empty(),
   ): Predicate<Element> {
@@ -670,7 +670,7 @@ namespace Media {
    */
   function isFontRelativeMediaRule(
     predicate: Predicate<Feature.Media.Feature>,
-  ): Predicate<MediaRule> {
+  ): Predicate<StyleRule.Media> {
     return (rule) =>
       Iterable.some(rule.queries.queries, (query) =>
         query.condition.some((condition) =>

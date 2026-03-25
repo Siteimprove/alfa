@@ -168,36 +168,14 @@ namespace Comment_2 {
 export { Comment_2 as Comment }
 
 // @public (undocumented)
-export abstract class ConditionRule<T extends string = string> extends GroupingRule<T> {
-    protected constructor(type: T, condition: string, rules: Array<Rule>);
-    // (undocumented)
-    get condition(): string;
-    // (undocumented)
-    protected readonly _condition: string;
-    // (undocumented)
-    toJSON(): ConditionRule.JSON<T>;
-}
-
-// @public (undocumented)
-export namespace ConditionRule {
-    // (undocumented)
-    export function isConditionRule(value: unknown): value is ConditionRule;
-    // (undocumented)
-    export interface JSON<T extends string = string> extends GroupingRule.JSON<T> {
-        // (undocumented)
-        condition: string;
-    }
-}
-
-// @public (undocumented)
 export class Declaration implements Equatable, Serializable {
     protected constructor(name: string, value: string, important: boolean);
     // (undocumented)
-    ancestors(): Iterable<Rule>;
+    ancestors(): Iterable<Rule_2>;
     // @internal (undocumented)
     _attachOwner(owner: Element_2): boolean;
     // @internal (undocumented)
-    _attachParent(parent: Rule): boolean;
+    _attachParent(parent: Rule_2): boolean;
     equals(value: unknown): value is this;
     // (undocumented)
     get important(): boolean;
@@ -207,8 +185,10 @@ export class Declaration implements Equatable, Serializable {
     static of(name: string, value: string, important?: boolean): Declaration;
     // (undocumented)
     get owner(): Option_2<Element_2>;
+    // Warning: (ae-forgotten-export) The symbol "Rule_2" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
-    get parent(): Option_2<Rule>;
+    get parent(): Option_2<Rule_2>;
     // (undocumented)
     toJSON(): Declaration.JSON;
     // (undocumented)
@@ -411,32 +391,6 @@ namespace Element {
 export { Element_2 as Element }
 
 // @public (undocumented)
-export class FontFaceRule extends Rule<"font-face"> {
-    protected constructor(declarations: Array<Declaration>);
-    // (undocumented)
-    static of(declarations: Iterable<Declaration>): FontFaceRule;
-    // (undocumented)
-    get style(): Block;
-    // (undocumented)
-    toJSON(): FontFaceRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace FontFaceRule {
-    // @internal (undocumented)
-    export function fromFontFaceRule(json: JSON): Trampoline<FontFaceRule>;
-    // (undocumented)
-    export function isFontFaceRule(value: unknown): value is FontFaceRule;
-    // (undocumented)
-    export interface JSON extends Rule.JSON<"font-face"> {
-        // (undocumented)
-        style: Block.JSON | string;
-    }
-}
-
-// @public (undocumented)
 export class Fragment extends Node_2<"fragment"> {
     protected constructor(children: Array<Node_2>, externalId?: string, internalId?: string, extraData?: any);
     // @internal (undocumented)
@@ -465,30 +419,6 @@ export namespace Fragment {
 }
 
 // @public (undocumented)
-export abstract class GroupingRule<T extends string = string> extends Rule<T> {
-    protected constructor(type: T, rules: Array_2<Rule>);
-    // (undocumented)
-    children(): Iterable<Rule>;
-    // (undocumented)
-    get rules(): Iterable<Rule>;
-    // (undocumented)
-    protected readonly _rules: Array_2<Rule>;
-    // (undocumented)
-    toJSON(): GroupingRule.JSON<T>;
-}
-
-// @public (undocumented)
-export namespace GroupingRule {
-    // (undocumented)
-    export function isGroupingRule(value: unknown): value is GroupingRule;
-    // (undocumented)
-    export interface JSON<T extends string = string> extends Rule.JSON<T> {
-        // (undocumented)
-        rules: Array_2<Rule.JSON>;
-    }
-}
-
-// @public (undocumented)
 export function h<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node_2 | string>, style?: Array<Declaration> | Record<string, string>, box?: Rectangle, device?: Device, externalId?: string, internalId?: string, extraData?: any): Element_2<N>;
 
 // @public (undocumented)
@@ -508,82 +438,36 @@ export namespace h {
     // (undocumented)
     export namespace rule {
         // (undocumented)
-        export function fontFace(declarations: Array<Declaration> | Record<string, string>): FontFaceRule;
+        export function fontFace(declarations: Array<Declaration> | Record<string, string>): Rule.FontFace;
         // (undocumented)
-        export function importRule(url: string, sheet: Sheet, mediaCondition?: string, supportCondition?: string, layer?: string): ImportRule;
+        export function importRule(url: string, sheet: Sheet, mediaCondition?: string, supportCondition?: string, layer?: string): Rule.Import;
         // (undocumented)
-        export function keyframe(key: string, declarations: Array<Declaration> | Record<string, string>): KeyframeRule;
+        export function keyframe(key: string, declarations: Array<Declaration> | Record<string, string>): Rule.Keyframe;
         // (undocumented)
-        export function keyframes(name: string, rules: Array<Rule_2>): KeyframesRule;
+        export function keyframes(name: string, rules: Array<Rule>): Rule.Keyframes;
         // (undocumented)
-        export function layerBlock(rules: Array<Rule_2>, layer?: string): Layer.BlockRule;
+        export function layerBlock(rules: Array<Rule>, layer?: string): Rule.Layer.Block;
         // (undocumented)
-        export function layerStatement(layers: Array<string>): Layer.StatementRule;
+        export function layerStatement(layers: Array<string>): Rule.Layer.Statement;
         // (undocumented)
-        export function media(condition: string, rules: Array<Rule_2>): MediaRule;
+        export function media(condition: string, rules: Array<Rule>): Rule.Media;
         // (undocumented)
-        export function namespace(namespace: string, prefix?: string): NamespaceRule;
+        export function namespace(namespace: string, prefix?: string): Rule.Namespace;
         // (undocumented)
-        export function page(selector: string, declarations: Array<Declaration> | Record<string, string>): PageRule;
+        export function page(selector: string, declarations: Array<Declaration> | Record<string, string>): Rule.Page;
         // (undocumented)
-        export function style(selector: string, declarations: Array<Declaration> | Record<string, string>, hint?: boolean): StyleRule;
+        export function style(selector: string, declarations: Array<Declaration> | Record<string, string>, hint?: boolean): Rule.Style;
         // (undocumented)
-        export function supports(condition: string, rules: Array<Rule_2>): SupportsRule;
+        export function supports(condition: string, rules: Array<Rule>): Rule.Supports;
     }
     // (undocumented)
     export function shadow(children: Array<Node_2 | string>, style?: Array<Sheet>, mode?: Shadow.Mode, externalId?: string, internalId?: string, extraData?: any): Shadow;
-    // Warning: (ae-forgotten-export) The symbol "Rule_2" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
-    export function sheet(rules: Array<Rule_2>, disabled?: boolean, condition?: string): Sheet;
+    export function sheet(rules: Array<Rule>, disabled?: boolean, condition?: string): Sheet;
     // (undocumented)
     export function text(data: string, box?: Rectangle, device?: Device, externalId?: string, internalId?: string, extraData?: any): Text_2;
     // (undocumented)
     export function type<N extends string = string>(name: N, publicId?: string, systemId?: string, externalId?: string, internalId?: string, extraData?: any): Type<N>;
-}
-
-// @public (undocumented)
-export class ImportRule extends ConditionRule<"import"> {
-    protected constructor(href: string, sheet: Sheet, mediaCondition: Option_2<string>, supportCondition: Option_2<string>, layer: Option_2<string>);
-    // (undocumented)
-    get href(): string;
-    // (undocumented)
-    get layer(): Option_2<string>;
-    // (undocumented)
-    get mediaQueries(): Feature.Media.List;
-    // (undocumented)
-    static of(href: string, sheet: Sheet, mediaCondition?: Option_2<string>, supportCondition?: Option_2<string>, layer?: Option_2<string>): ImportRule;
-    // (undocumented)
-    get rules(): Iterable_2<Rule>;
-    // (undocumented)
-    get sheet(): Sheet;
-    // (undocumented)
-    get supportCondition(): Option_2<string>;
-    // (undocumented)
-    get supportQuery(): Option_2<Option_2<Feature.Supports.Query>>;
-    // (undocumented)
-    toJSON(): ImportRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace ImportRule {
-    // @internal (undocumented)
-    export function fromImportRule(json: JSON, fromRule: (json: Rule.JSON) => Trampoline<Rule>, sheetFactory: (rules: Iterable_2<Rule>) => Sheet): Trampoline<ImportRule>;
-    // (undocumented)
-    export function isImportRule(value: unknown): value is ImportRule;
-    // (undocumented)
-    export interface JSON extends ConditionRule.JSON<"import"> {
-        // (undocumented)
-        href: string;
-        // (undocumented)
-        layer: string | null;
-        // (undocumented)
-        supportText: string | null;
-    }
-    // (undocumented)
-    export function matches(device: Device): Predicate<ImportRule>;
 }
 
 // @public (undocumented)
@@ -616,142 +500,6 @@ export namespace jsx {
 }
 
 // @public (undocumented)
-export class KeyframeRule extends Rule<"keyframe"> {
-    protected constructor(key: string, declarations: Array<Declaration>);
-    // (undocumented)
-    get key(): string;
-    // (undocumented)
-    static of(key: string, declarations: Iterable<Declaration>): KeyframeRule;
-    // (undocumented)
-    get style(): Block;
-    // (undocumented)
-    toJSON(): KeyframeRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace KeyframeRule {
-    // @internal (undocumented)
-    export function fromKeyframeRule(json: JSON): Trampoline<KeyframeRule>;
-    // (undocumented)
-    export function isKeyframeRule(value: unknown): value is KeyframeRule;
-    // (undocumented)
-    export interface JSON extends Rule.JSON<"keyframe"> {
-        // (undocumented)
-        key: string;
-        // (undocumented)
-        style: Block.JSON | string;
-    }
-}
-
-// @public (undocumented)
-export class KeyframesRule extends GroupingRule<"keyframes"> {
-    protected constructor(name: string, rules: Array<Rule>);
-    // (undocumented)
-    get name(): string;
-    // (undocumented)
-    static of(name: string, rules: Iterable<Rule>): KeyframesRule;
-    // (undocumented)
-    toJSON(): KeyframesRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace KeyframesRule {
-    // @internal (undocumented)
-    export function fromKeyframesRule(json: JSON, fromRule: (json: Rule.JSON) => Trampoline<Rule>): Trampoline<KeyframesRule>;
-    // (undocumented)
-    export function isKeyframesRule(value: unknown): value is KeyframesRule;
-    // (undocumented)
-    export interface JSON extends GroupingRule.JSON<"keyframes"> {
-        // (undocumented)
-        name: string;
-    }
-}
-
-// @public
-export namespace Layer {
-    // (undocumented)
-    export class BlockRule extends GroupingRule<"layer-block"> {
-        protected constructor(layer: Option_2<string>, rules: Array_2<Rule>);
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        get layer(): Option_2<string>;
-        // (undocumented)
-        static of(rules: Iterable<Rule>, layer?: string | null): BlockRule;
-        // (undocumented)
-        toJSON(): BlockRule.JSON;
-        // (undocumented)
-        toString(): string;
-    }
-    // (undocumented)
-    export namespace BlockRule {
-        // (undocumented)
-        export function fromLayerBlockRule(json: JSON, fromRule: (json: Rule.JSON) => Trampoline<Rule>): Trampoline<BlockRule>;
-        // (undocumented)
-        export function isLayerBlockRule(value: unknown): value is BlockRule;
-        // (undocumented)
-        export interface JSON extends GroupingRule.JSON<"layer-block"> {
-            // (undocumented)
-            layer: string | null;
-        }
-    }
-    // (undocumented)
-    export class StatementRule extends Rule<"layer-statement"> {
-        protected constructor(layers: Array_2<string>);
-        // (undocumented)
-        get layers(): Iterable<string>;
-        // (undocumented)
-        static of(layers: Iterable<string>): StatementRule;
-        // (undocumented)
-        toJSON(): StatementRule.JSON;
-        // (undocumented)
-        toString(): string;
-    }
-    // (undocumented)
-    export namespace StatementRule {
-        // (undocumented)
-        export function fromLayerStatementRule(json: JSON): Trampoline<StatementRule>;
-        // (undocumented)
-        export function isLayerStatementRule(value: unknown): value is StatementRule;
-        // (undocumented)
-        export interface JSON extends Rule.JSON<"layer-statement"> {
-            // (undocumented)
-            layers: Array_2<string>;
-        }
-    }
-}
-
-// @public (undocumented)
-export class MediaRule extends ConditionRule<"media"> {
-    protected constructor(condition: string, rules: Array<Rule>);
-    // (undocumented)
-    static of(condition: string, rules: Iterable_2<Rule>): MediaRule;
-    // (undocumented)
-    get queries(): Feature.Media.List;
-    // (undocumented)
-    toJSON(): MediaRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace MediaRule {
-    // @internal (undocumented)
-    export function fromMediaRule(json: JSON, fromRule: (json: Rule.JSON) => Trampoline<Rule>): Trampoline<MediaRule>;
-    // (undocumented)
-    export function isMediaRule(value: unknown): value is MediaRule;
-    // (undocumented)
-    export interface JSON extends ConditionRule.JSON<"media"> {
-    }
-    // (undocumented)
-    export function matches(device: Device): Predicate<MediaRule>;
-}
-
-// @public (undocumented)
 export enum Namespace {
     // (undocumented)
     HTML = "http://www.w3.org/1999/xhtml",
@@ -771,36 +519,6 @@ export enum Namespace {
 export namespace Namespace {
     // (undocumented)
     export function isNamespace(value: string): value is Namespace;
-}
-
-// @public (undocumented)
-export class NamespaceRule extends Rule<"namespace"> {
-    protected constructor(namespace: string, prefix: Option_2<string>);
-    // (undocumented)
-    get namespace(): string;
-    // (undocumented)
-    static of(namespace: string, prefix: Option_2<string>): NamespaceRule;
-    // (undocumented)
-    get prefix(): Option_2<string>;
-    // (undocumented)
-    toJSON(): NamespaceRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace NamespaceRule {
-    // @internal (undocumented)
-    export function fromNamespaceRule(json: JSON): Trampoline<NamespaceRule>;
-    // (undocumented)
-    export function isNamespaceRule(value: unknown): value is NamespaceRule;
-    // (undocumented)
-    export interface JSON extends Rule.JSON<"namespace"> {
-        // (undocumented)
-        namespace: string;
-        // (undocumented)
-        prefix: string | null;
-    }
 }
 
 // @public (undocumented)
@@ -1101,36 +819,6 @@ namespace Node_2 {
 export { Node_2 as Node }
 
 // @public (undocumented)
-export class PageRule extends Rule<"page"> {
-    protected constructor(selector: string, declarations: Array<Declaration>);
-    // (undocumented)
-    static of(selector: string, declarations: Iterable<Declaration>): PageRule;
-    // (undocumented)
-    get selector(): string;
-    // (undocumented)
-    get style(): Block;
-    // (undocumented)
-    toJSON(): PageRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace PageRule {
-    // @internal (undocumented)
-    export function fromPageRule(json: JSON): Trampoline<PageRule>;
-    // (undocumented)
-    export function isPageRule(value: unknown): value is PageRule;
-    // (undocumented)
-    export interface JSON extends Rule.JSON<"page"> {
-        // (undocumented)
-        selector: string;
-        // (undocumented)
-        style: Block.JSON | string;
-    }
-}
-
-// @public (undocumented)
 export namespace Query {
     const // Warning: (ae-forgotten-export) The symbol "descendants" needs to be exported by the entry point index.d.ts
     //
@@ -1153,44 +841,62 @@ export namespace Query {
 }
 
 // @public (undocumented)
-export abstract class Rule<T extends string = string> implements Equatable, Serializable {
-    protected constructor(type: T);
-    // (undocumented)
-    ancestors(): Iterable_2<Rule>;
-    // @internal (undocumented)
-    _attachOwner(owner: Sheet): boolean;
-    // @internal (undocumented)
-    _attachParent(parent: Rule): boolean;
-    // (undocumented)
-    children(): Iterable_2<Rule>;
-    // (undocumented)
-    descendants(): Iterable_2<Rule>;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    inclusiveAncestors(): Iterable_2<Rule>;
-    // (undocumented)
-    get owner(): Option_2<Sheet>;
-    // (undocumented)
-    protected _owner: Option_2<Sheet>;
-    // (undocumented)
-    get parent(): Option_2<Rule>;
-    // (undocumented)
-    protected _parent: Option_2<Rule>;
-    // (undocumented)
-    toJSON(): Rule.JSON<T>;
-    // (undocumented)
-    get type(): T;
-}
+export type Rule = Rule.FontFace | Rule.Import | Rule.Keyframe | Rule.Keyframes | Rule.Layer.Block | Rule.Layer.Statement | Rule.Media | Rule.Namespace | Rule.Page | Rule.Style | Rule.Supports;
 
 // @public (undocumented)
 export namespace Rule {
+    import FontFace = FontFaceRule;
+    import Import = ImportRule;
+    import Keyframe = KeyframeRule;
+    import Keyframes = KeyframesRule;
     // (undocumented)
-    export interface JSON<T extends string = string> {
-        // (undocumented)
-        [key: string]: json.JSON;
-        // (undocumented)
-        type: T;
+    export function from(json: FontFaceRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): FontFaceRule;
+    import Media = MediaRule;
+    import Namespace = NamespaceRule;
+    import Page = PageRule;
+    import Style = StyleRule;
+    import Supports = SupportsRule;
+    // (undocumented)
+    export function from(json: ImportRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): ImportRule;
+    // (undocumented)
+    export function from(json: KeyframeRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): KeyframeRule;
+    // (undocumented)
+    export function from(json: KeyframesRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): KeyframesRule;
+    // (undocumented)
+    export function from(json: Layer.Block.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Layer.Block;
+    // (undocumented)
+    export function from(json: Layer.Statement.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Layer.Statement;
+    // (undocumented)
+    export function from(json: MediaRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): MediaRule;
+    // (undocumented)
+    export function from(json: NamespaceRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): NamespaceRule;
+    // (undocumented)
+    export function from(json: PageRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): PageRule;
+    // (undocumented)
+    export function from(json: StyleRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): StyleRule;
+    // (undocumented)
+    export function from(json: SupportsRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): SupportsRule;
+    // (undocumented)
+    export function from(json: Rule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Rule;
+    // @internal (undocumented)
+    export function fromRule(sheetFactory: (rules: Iterable<Rule>) => Sheet): (json: Rule_2.JSON) => Trampoline<Rule_2>;
+    // Warning: (ae-forgotten-export) The symbol "FontFaceRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "ImportRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "KeyframeRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "KeyframesRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "Layer" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "MediaRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "NamespaceRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "PageRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "StyleRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "SupportsRule" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    export type JSON = FontFaceRule.JSON | ImportRule.JSON | KeyframeRule.JSON | KeyframesRule.JSON | Layer.BlockRule.JSON | Layer.StatementRule.JSON | MediaRule.JSON | NamespaceRule.JSON | PageRule.JSON | StyleRule.JSON | SupportsRule.JSON;
+    // (undocumented)
+    export namespace Layer {
+        import Block = LayerRules.BlockRule;
+        import Statement = LayerRules.StatementRule;
     }
 }
 
@@ -1256,13 +962,13 @@ export namespace Shadow {
 
 // @public (undocumented)
 export class Sheet implements Equatable, Serializable {
-    protected constructor(rules: Array<Rule_2>, disabled: boolean, condition: Option_2<string>);
+    protected constructor(rules: Array<Rule>, disabled: boolean, condition: Option_2<string>);
     // (undocumented)
-    children(): Iterable<Rule_2>;
+    children(): Iterable<Rule>;
     // (undocumented)
     get condition(): Option_2<string>;
     // (undocumented)
-    descendants(): Iterable<Rule_2>;
+    descendants(): Iterable<Rule>;
     // (undocumented)
     get disabled(): boolean;
     // (undocumented)
@@ -1270,9 +976,9 @@ export class Sheet implements Equatable, Serializable {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    static of(rules: Iterable<Rule_2>, disabled?: boolean, condition?: Option_2<string>): Sheet;
+    static of(rules: Iterable<Rule>, disabled?: boolean, condition?: Option_2<string>): Sheet;
     // (undocumented)
-    get rules(): Iterable<Rule_2>;
+    get rules(): Iterable<Rule>;
     // (undocumented)
     toJSON(): Sheet.JSON;
     // (undocumented)
@@ -1292,7 +998,7 @@ export namespace Sheet {
         // (undocumented)
         disabled: boolean;
         // (undocumented)
-        rules: Array<Rule_2.JSON>;
+        rules: Array<Rule.JSON>;
     }
 }
 
@@ -1326,66 +1032,6 @@ export namespace Slotable {
     export function isSlotable(value: unknown): value is Slotable;
     // (undocumented)
     export function name(slotable: Slotable): string;
-}
-
-// @public (undocumented)
-export class StyleRule extends Rule<"style"> {
-    protected constructor(selector: string, declarations: Array<Declaration>, hint: boolean);
-    // (undocumented)
-    get hint(): boolean;
-    // (undocumented)
-    static of(selector: string, declarations: Iterable<Declaration>, hint?: boolean): StyleRule;
-    // (undocumented)
-    get selector(): string;
-    // (undocumented)
-    get style(): Block;
-    // (undocumented)
-    toJSON(): StyleRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace StyleRule {
-    // @internal (undocumented)
-    export function fromStyleRule(json: JSON): Trampoline<StyleRule>;
-    // (undocumented)
-    export function isEmpty(rule: StyleRule): boolean;
-    // (undocumented)
-    export function isStyleRule(value: unknown): value is StyleRule;
-    // (undocumented)
-    export interface JSON extends Rule.JSON<"style"> {
-        // (undocumented)
-        selector: string;
-        // (undocumented)
-        style: Block.JSON | string;
-    }
-}
-
-// @public (undocumented)
-export class SupportsRule extends ConditionRule<"supports"> {
-    protected constructor(condition: string, rules: Array<Rule>);
-    // (undocumented)
-    static of(condition: string, rules: Iterable<Rule>): SupportsRule;
-    // (undocumented)
-    get query(): Option_2<Feature.Supports.Query>;
-    // (undocumented)
-    toJSON(): SupportsRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace SupportsRule {
-    // @internal (undocumented)
-    export function fromSupportsRule(json: JSON, fromRule: (json: Rule.JSON) => Trampoline<Rule>): Trampoline<SupportsRule>;
-    // (undocumented)
-    export function isSupportsRule(value: unknown): value is SupportsRule;
-    // (undocumented)
-    export interface JSON extends ConditionRule.JSON<"supports"> {
-    }
-    // (undocumented)
-    export function matches(device: Device): Predicate<SupportsRule>;
 }
 
 // @public (undocumented)

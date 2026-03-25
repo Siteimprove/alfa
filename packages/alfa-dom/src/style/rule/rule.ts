@@ -49,11 +49,6 @@ export abstract class Rule<T extends string = string>
     }
   }
 
-  public *inclusiveAncestors(): Iterable<Rule> {
-    yield this;
-    yield* this.ancestors();
-  }
-
   public equals(value: unknown): value is this {
     return value === this;
   }

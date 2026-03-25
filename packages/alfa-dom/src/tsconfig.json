@@ -59,6 +59,7 @@
     "./node/query/index.ts",
     "./style/block.ts",
     "./style/declaration.ts",
+    "./style/index.ts",
     "./style/rule/rule.ts",
     "./style/rule/condition.ts",
     "./style/rule/font-face.ts",
