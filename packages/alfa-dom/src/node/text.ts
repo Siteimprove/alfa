@@ -7,7 +7,7 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "./node.js";
+import { Node } from "../node.js";
 import type { Slot } from "./slot.js";
 import { Slotable } from "./slotable.js";
 
@@ -163,5 +163,22 @@ export namespace Text {
         json.internalId,
       ),
     );
+  }
+
+  /**
+   * @internal
+   */
+  export function cloneText(device?: Device): (text: Text) => Trampoline<Text> {
+    return (text) =>
+      Trampoline.done(
+        Text.of(
+          text.data,
+          Option.from(device).flatMap((d) => text.getBoundingBox(d)),
+          Option.from(device),
+          text.externalId,
+          text.extraData,
+          text.internalId,
+        ),
+      );
   }
 }

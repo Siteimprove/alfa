@@ -3,7 +3,7 @@ import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Node } from "./node.js";
+import { Node } from "../node.js";
 import { Element } from "./element.js";
 
 /**
@@ -75,11 +75,29 @@ export namespace Fragment {
    */
   export function fromFragment(
     json: JSON,
-    fromNode: (json: Node.JSON, device?: Device) => Trampoline<Node>,
     device?: Device,
   ): Trampoline<Fragment> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      fromNode(child, device),
+      Node.fromNode(child, device),
     ).map((children) => Fragment.of(children));
+  }
+
+  /**
+   * @internal
+   */
+  export function cloneFragment(
+    options: Node.ElementReplacementOptions,
+    device?: Device,
+  ): (fragment: Fragment) => Trampoline<Fragment> {
+    return (fragment) =>
+      Trampoline.traverse(fragment.children(), (child) => {
+        if (Element.isElement(child) && options.predicate(child)) {
+          return Trampoline.done(Array.from(options.newElements));
+        }
+
+        return Node.cloneNode(child, options, device).map((node) => [node]);
+      }).map((children) => {
+        return Fragment.of(Iterable.flatten(children), fragment.externalId);
+      });
   }
 }

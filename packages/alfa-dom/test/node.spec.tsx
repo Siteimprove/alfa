@@ -11,8 +11,6 @@ import { h } from "../dist/index.js";
 import type { Attribute, Document, Element, Shadow } from "../dist/index.js";
 import { Node } from "../dist/index.js";
 
-import type { Node as BaseNode } from "../dist/node/node.js";
-
 test("#tabOrder() returns the tab order of a node", (t) => {
   const a = <button />;
   const b = <button />;
@@ -109,6 +107,75 @@ test(`#tabOrder() correctly handles shadow roots with slotted elements after the
   t.deepEqual([...div.tabOrder()], [b, a]);
 });
 
+test(`Node.clone() creates new instance with same value`, (t) => {
+  const device = Device.standard();
+  const doc = h.document(
+    [
+      <p title="foo" box={{ device, x: 1, y: 2, width: 3, height: 4 }}>
+        hello
+      </p>,
+    ],
+    [h.sheet([h.rule.style("p", { background: "green" })])],
+    "bar",
+    "some id",
+    { extraStuff: "baz" },
+  );
+
+  const clonedDoc = Node.clone(doc);
+
+  t.notEqual(clonedDoc, doc);
+
+  t.deepEqual(clonedDoc.toJSON(), doc.toJSON());
+});
+
+test(`Node.clone() clones shadow`, (t) => {
+  const shadow = h.shadow([<div>foo</div>]);
+  const div = <div>{shadow}</div>;
+
+  const clonedDiv = Node.clone(div);
+
+  t.notEqual(clonedDiv.shadow.getUnsafe(), shadow);
+
+  t.deepEqual(
+    div.shadow.getUnsafe().toJSON(),
+    clonedDiv.shadow.getUnsafe().toJSON(),
+  );
+});
+
+test(`Node.clone() clones content`, (t) => {
+  const content = h.document([<div>foo</div>]);
+  const div = <div>{content}</div>;
+
+  const clonedDiv = Node.clone(div);
+
+  t.notEqual(clonedDiv.content.getUnsafe(), content);
+
+  t.deepEqual(div.toJSON(), clonedDiv.toJSON());
+});
+
+test(`Node.clone() correctly replaces elements based on predicate`, (t) => {
+  const foo = <div externalId="foo">Foo</div>;
+  const bar = <div externalId="bar">Bar</div>;
+
+  const doc = h.document([foo, bar]);
+
+  const newElements = [
+    <p externalId="foo1">Foo1</p>,
+    <span externalId="foo2">Foo2</span>,
+  ];
+
+  const cloned = Node.clone(doc, {
+    predicate: (element) => element.externalId === "foo",
+    newElements,
+  });
+
+  t.deepEqual(cloned.toJSON(), {
+    style: [],
+    type: "document",
+    children: [...newElements.map((e) => e.toJSON()), bar.toJSON()],
+  });
+});
+
 test(`#toJSON() serializes boxes of all descendants when device is passed in`, (t) => {
   const device = Device.standard();
 
@@ -121,7 +188,7 @@ test(`#toJSON() serializes boxes of all descendants when device is passed in`, (
 
   const boxes: Array<json.JSON> = [];
 
-  function visit(node: BaseNode.JSON) {
+  function visit(node: Node.JSON) {
     if (node.type === "element" && node.box !== undefined) {
       boxes.push(node.box);
     }
@@ -160,7 +227,7 @@ test(`#toJSON() serializes box of descendant inside shadow DOM`, (t) => {
 
   const boxes: Array<json.JSON> = [];
 
-  function visit(node: BaseNode.JSON) {
+  function visit(node: Node.JSON) {
     if (node.type === "element") {
       const element = node as Element.JSON;
       if (element.box !== undefined) {
@@ -209,7 +276,7 @@ test(`#toJSON() serializes box of descendant inside content`, (t) => {
 
   const boxes: Array<json.JSON> = [];
 
-  function visit(node: BaseNode.JSON) {
+  function visit(node: Node.JSON) {
     if (node.type === "element") {
       const element = node as Element.JSON;
       if (element.box !== undefined) {

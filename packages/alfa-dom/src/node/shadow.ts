@@ -6,7 +6,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "./node.js";
+import { Node } from "../node.js";
 import { Sheet } from "../style/sheet.js";
 import { Element } from "./element.js";
 
@@ -179,13 +179,9 @@ export namespace Shadow {
   /**
    * @internal
    */
-  export function fromShadow(
-    json: JSON,
-    fromNode: (json: Node.JSON, device?: Device) => Trampoline<Node>,
-    device?: Device,
-  ): Trampoline<Shadow> {
+  export function fromShadow(json: JSON, device?: Device): Trampoline<Shadow> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      fromNode(child, device),
+      Node.fromNode(child, device),
     ).map((children) =>
       Shadow.of(
         children,
@@ -195,5 +191,31 @@ export namespace Shadow {
         json.internalId,
       ),
     );
+  }
+
+  /**
+   * @internal
+   */
+  export function cloneShadow(
+    options: Node.ElementReplacementOptions,
+    device?: Device,
+  ): (shadow: Shadow) => Trampoline<Shadow> {
+    return (shadow) =>
+      Trampoline.traverse(shadow.children(), (child) => {
+        if (Element.isElement(child) && options.predicate(child)) {
+          return Trampoline.done(Array.from(options.newElements));
+        }
+
+        return Node.cloneNode(child, options, device).map((node) => [node]);
+      }).map((children) => {
+        return Shadow.of(
+          Iterable.flatten(children),
+          shadow.style,
+          shadow.mode,
+          shadow.externalId,
+          shadow.extraData,
+          shadow.internalId,
+        );
+      });
   }
 }

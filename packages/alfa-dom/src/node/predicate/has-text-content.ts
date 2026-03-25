@@ -1,7 +1,7 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import type { Node } from "../node.js";
+import type { Node } from "../../node.js";
 
 const { isEmpty } = Iterable;
 const { not } = Predicate;

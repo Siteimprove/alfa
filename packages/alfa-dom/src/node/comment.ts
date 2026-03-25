@@ -2,7 +2,7 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "./node.js";
+import { Node } from "../node.js";
 
 /**
  * @public
@@ -107,6 +107,20 @@ export namespace Comment {
   export function fromComment(json: JSON): Trampoline<Comment> {
     return Trampoline.done(
       Comment.of(json.data, json.externalId, json.internalId),
+    );
+  }
+
+  /**
+   * @internal
+   */
+  export function cloneComment(comment: Comment): Trampoline<Comment> {
+    return Trampoline.done(
+      Comment.of(
+        comment.data,
+        comment.externalId,
+        comment.internalId,
+        comment.extraData,
+      ),
     );
   }
 }

@@ -7,7 +7,7 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "./node.js";
+import { Node } from "../node.js";
 import { Sheet } from "../style/sheet.js";
 import { Element } from "./element.js";
 
@@ -154,11 +154,10 @@ export namespace Document {
    */
   export function fromDocument(
     json: JSON,
-    fromNode: (json: Node.JSON, device?: Device) => Trampoline<Node>,
     device?: Device,
   ): Trampoline<Document> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      fromNode(child, device),
+      Node.fromNode(child, device),
     ).map((children) =>
       Document.of(
         children,
@@ -167,5 +166,30 @@ export namespace Document {
         json.internalId,
       ),
     );
+  }
+
+  /**
+   * @internal
+   */
+  export function cloneDocument(
+    options: Node.ElementReplacementOptions,
+    device?: Device,
+  ): (document: Document) => Trampoline<Document> {
+    return (document) =>
+      Trampoline.traverse(document.children(), (child) => {
+        if (Element.isElement(child) && options.predicate(child)) {
+          return Trampoline.done(Array.from(options.newElements));
+        }
+
+        return Node.cloneNode(child, options, device).map((node) => [node]);
+      }).map((children) => {
+        return Document.of(
+          Iterable.flatten(children),
+          document.style,
+          document.externalId,
+          document.internalId,
+          document.extraData,
+        );
+      });
   }
 }

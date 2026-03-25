@@ -1,7 +1,7 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Map } from "@siteimprove/alfa-map";
 
-import type { Node } from "../node.js";
+import type { Node } from "../../node.js";
 import { Document } from "../document.js";
 import type { Element } from "../element.js";
 
