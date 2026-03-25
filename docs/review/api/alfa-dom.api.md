@@ -811,11 +811,15 @@ namespace Node_2 {
     //
     // (undocumented)
     hasBox: typeof predicate_2.hasBox, // (undocumented)
-    hasChild: typeof predicate_2.hasChild, // (undocumented)
-    hasDescendant: typeof predicate_2.hasDescendant, // (undocumented)
-    hasInclusiveDescendant: typeof predicate_2.hasInclusiveDescendant, // (undocumented)
-    hasTextContent: typeof predicate_2.hasTextContent, // (undocumented)
     isRoot: typeof predicate_2.isRoot;
+    const // (undocumented)
+    hasChild: (predicate: Predicate<Node_2>, options?: Node_2.Traversal) => Predicate<Node_2>;
+    const // (undocumented)
+    hasDescendant: (predicate: Predicate<Node_2>, options?: Node_2.Traversal) => Predicate<Node_2>;
+    const // (undocumented)
+    hasInclusiveDescendant: (predicate: Predicate<Node_2>, options?: Node_2.Traversal) => Predicate<Node_2>;
+    const // (undocumented)
+    hasTextContent: (predicate?: Predicate<string>, options?: Node_2.Traversal) => Predicate<Node_2>;
 }
 export { Node_2 as Node }
 

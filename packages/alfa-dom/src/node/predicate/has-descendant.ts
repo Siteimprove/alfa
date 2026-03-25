@@ -1,13 +1,14 @@
 import type { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Node } from "../../node.js";
+import type { Node } from "../../node.js";
 
 /**
  * @public
  */
 export function hasDescendant(
-  predicate: Predicate<Node>,
-  options: Node.Traversal = Node.Traversal.empty,
-): Predicate<Node> {
-  return (node) => node.descendants(options).some(predicate);
+  defaultTraversal: Node.Traversal,
+): (predicate: Predicate<Node>, options?: Node.Traversal) => Predicate<Node> {
+  return (predicate, options = defaultTraversal) =>
+    (node) =>
+      node.descendants(options).some(predicate);
 }

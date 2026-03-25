@@ -34,7 +34,7 @@ import {
   Type,
 } from "./index.js";
 
-import * as predicate from "./node/predicate.js";
+import * as predicate from "./node/predicate/index.js";
 import * as traversal from "./node/traversal/index.js";
 
 /**
@@ -646,12 +646,12 @@ export namespace Node {
     Node.Traversal.empty,
   );
 
-  export const {
-    hasBox,
-    hasChild,
-    hasDescendant,
-    hasInclusiveDescendant,
-    hasTextContent,
-    isRoot,
-  } = predicate;
+  export const { hasBox, isRoot } = predicate;
+
+  export const hasChild = predicate.hasChild(Node.Traversal.empty);
+  export const hasDescendant = predicate.hasDescendant(Node.Traversal.empty);
+  export const hasInclusiveDescendant = predicate.hasInclusiveDescendant(
+    Node.Traversal.empty,
+  );
+  export const hasTextContent = predicate.hasTextContent(Node.Traversal.empty);
 }
