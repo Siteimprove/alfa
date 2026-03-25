@@ -619,7 +619,7 @@ namespace Media {
         .map((parent) => ancestorMediaRules(parent as StyleRule))
         .getOrElse<Sequence<StyleRule.Media>>(Sequence.empty);
 
-      return StyleRule.Media.isMediaRule(rule)
+      return StyleRule.isMediaRule(rule)
         ? mediaRules.prepend(rule)
         : mediaRules;
     });

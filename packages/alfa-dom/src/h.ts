@@ -276,7 +276,7 @@ export namespace h {
     export function fontFace(
       declarations: Array<Declaration> | Record<string, string>,
     ): Rule.FontFace {
-      return Rule.FontFace.of(block(declarations));
+      return Rule.fontFace(block(declarations));
     }
 
     export function importRule(
@@ -287,7 +287,7 @@ export namespace h {
       // Use "" for anonymous layer.
       layer?: string,
     ): Rule.Import {
-      return Rule.Import.of(
+      return Rule.importRule(
         url,
         sheet,
         Option.from(mediaCondition),
@@ -299,45 +299,45 @@ export namespace h {
       key: string,
       declarations: Array<Declaration> | Record<string, string>,
     ): Rule.Keyframe {
-      return Rule.Keyframe.of(key, block(declarations));
+      return Rule.keyframe(key, block(declarations));
     }
 
     export function keyframes(
       name: string,
       rules: Array<Rule>,
     ): Rule.Keyframes {
-      return Rule.Keyframes.of(name, rules);
+      return Rule.keyframes(name, rules);
     }
 
     export function layerBlock(
       rules: Array<Rule>,
       layer?: string,
     ): Rule.Layer.Block {
-      return Rule.Layer.Block.of(rules, layer);
+      return Rule.layerBlock(rules, layer);
     }
 
     export function layerStatement(
       layers: Array<string>,
     ): Rule.Layer.Statement {
-      return Rule.Layer.Statement.of(layers);
+      return Rule.layerStatement(layers);
     }
 
     export function media(condition: string, rules: Array<Rule>): Rule.Media {
-      return Rule.Media.of(condition, rules);
+      return Rule.media(condition, rules);
     }
 
     export function namespace(
       namespace: string,
       prefix?: string,
     ): Rule.Namespace {
-      return Rule.Namespace.of(namespace, Option.from(prefix));
+      return Rule.namespace(namespace, Option.from(prefix));
     }
 
     export function page(
       selector: string,
       declarations: Array<Declaration> | Record<string, string>,
     ): Rule.Page {
-      return Rule.Page.of(selector, block(declarations));
+      return Rule.page(selector, block(declarations));
     }
 
     export function style(
@@ -345,14 +345,14 @@ export namespace h {
       declarations: Array<Declaration> | Record<string, string>,
       hint?: boolean,
     ): Rule.Style {
-      return Rule.Style.of(selector, block(declarations), hint);
+      return Rule.style(selector, block(declarations), hint);
     }
 
     export function supports(
       condition: string,
       rules: Array<Rule>,
     ): Rule.Supports {
-      return Rule.Supports.of(condition, rules);
+      return Rule.supports(condition, rules);
     }
   }
 }

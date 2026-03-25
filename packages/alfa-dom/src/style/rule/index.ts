@@ -61,6 +61,18 @@ export namespace Rule {
     | StyleRule.JSON
     | SupportsRule.JSON;
 
+  export const { of: fontFace, isFontFaceRule } = FontFace;
+  export const { of: importRule, isImportRule } = Import;
+  export const { of: keyframe, isKeyframeRule } = Keyframe;
+  export const { of: keyframes, isKeyframesRule } = Keyframes;
+  export const { of: layerBlock, isLayerBlockRule } = Layer.Block;
+  export const { of: layerStatement, isLayerStatementRule } = Layer.Statement;
+  export const { of: media, isMediaRule } = Media;
+  export const { of: namespace, isNamespaceRule } = Namespace;
+  export const { of: page, isPageRule } = Page;
+  export const { of: style, isStyleRule } = Style;
+  export const { of: supports, isSupportsRule } = Supports;
+
   export function from(
     json: FontFace.JSON,
     sheetFactory: (rules: Iterable<Rule>) => Sheet,

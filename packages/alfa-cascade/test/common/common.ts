@@ -45,7 +45,7 @@ export function getBlock(
 }
 
 const UA_MAX_RULES = [...UserAgent.descendants()].filter(
-  Rule.Style.isStyleRule,
+  Rule.isStyleRule,
 ).length;
 
 /**

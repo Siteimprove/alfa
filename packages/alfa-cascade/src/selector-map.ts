@@ -31,12 +31,14 @@ const isDescendantSelector = and(
   ),
 );
 
-const { isImportRule } = Rule.Import;
-const { isLayerBlockRule } = Rule.Layer.Block;
-const { isLayerStatementRule } = Rule.Layer.Statement;
-const { isMediaRule } = Rule.Media;
-const { isStyleRule } = Rule.Style;
-const { isSupportsRule } = Rule.Supports;
+const {
+  isImportRule,
+  isLayerBlockRule,
+  isLayerStatementRule,
+  isMediaRule,
+  isStyleRule,
+  isSupportsRule,
+} = Rule;
 
 /**
  * The selector map is a data structure used for providing indexed access to

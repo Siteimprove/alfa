@@ -165,7 +165,7 @@ function isOrientationConditional(declaration: Declaration): boolean {
   return some(
     declaration.ancestors(),
     (rule) =>
-      StyleRule.Media.isMediaRule(rule) &&
+      StyleRule.isMediaRule(rule) &&
       some(rule.queries.queries, (query) =>
         query.condition.some(hasOrientationCondition),
       ),
@@ -286,7 +286,7 @@ function getMediaRules(node: Node): Sequence<StyleRule.Media> {
       flatMap(roots(node), (document) => document.style),
       (sheet) => sheet.descendants(),
     ),
-  ).filter(StyleRule.Media.isMediaRule);
+  ).filter(StyleRule.isMediaRule);
 }
 
 function* roots(node: Node): Iterable<Document | Shadow> {
