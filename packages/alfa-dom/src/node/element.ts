@@ -13,8 +13,7 @@ import * as json from "@siteimprove/alfa-json";
 import type { Namespace } from "../namespace.js";
 import { Node } from "../node.js";
 
-import { Block } from "../style/block.js";
-import { Declaration } from "../style/declaration.js";
+import { Block, Declaration } from "../style/index.js";
 
 import { Attribute } from "./attribute.js";
 import { Document } from "./document.js";
@@ -23,7 +22,7 @@ import { Slot } from "./slot.js";
 import { Slotable } from "./slotable.js";
 
 import type * as helpers from "./element/input-type.js";
-import * as predicate from "./element/predicate.js";
+import * as predicate from "./element/predicate/index.js";
 
 const { isEmpty } = Iterable;
 const { and, not, or, test } = Predicate;
@@ -609,18 +608,19 @@ export namespace Element {
     hasName,
     hasNamespace,
     hasTabIndex,
-    hasUniqueId,
     isBrowsingContextContainer,
-    isContent,
-    isActuallyDisabled,
-    isDocumentElement,
     isDraggable,
     isEditingHost,
-    isFallback,
-    isScopedTo,
     isSuggestedFocusable,
     isReplaced,
   } = predicate;
+
+  export const hasUniqueId = predicate.hasUniqueId(isElement);
+  export const isActuallyDisabled = predicate.isActuallyDisabled(isElement);
+  export const isContent = predicate.isContent(isElement, Node.Traversal.empty);
+  export const isDocumentElement = predicate.isDocumentElement(isElement);
+  export const isFallback = predicate.isFallback(isElement);
+  export const isScopedTo = predicate.isScopedTo(isElement);
 
   export type InputType = helpers.InputType;
 }

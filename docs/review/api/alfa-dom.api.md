@@ -17,7 +17,7 @@ import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Option as Option_2 } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Rectangle } from '@siteimprove/alfa-rectangle';
-import type { Refinement } from '@siteimprove/alfa-refinement';
+import { Refinement } from '@siteimprove/alfa-refinement';
 import type * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
@@ -373,17 +373,23 @@ namespace Element {
     hasName: typeof predicate.hasName, // (undocumented)
     hasNamespace: typeof predicate.hasNamespace, // (undocumented)
     hasTabIndex: typeof predicate.hasTabIndex, // (undocumented)
-    hasUniqueId: Predicate<Element<string>>, // (undocumented)
     isBrowsingContextContainer: typeof predicate.isBrowsingContextContainer, // (undocumented)
-    isContent: typeof predicate.isContent, // (undocumented)
-    isActuallyDisabled: typeof predicate.isActuallyDisabled, // (undocumented)
-    isDocumentElement: typeof predicate.isDocumentElement, // (undocumented)
     isDraggable: typeof predicate.isDraggable, // (undocumented)
     isEditingHost: typeof predicate.isEditingHost, // (undocumented)
-    isFallback: typeof predicate.isFallback, // (undocumented)
-    isScopedTo: typeof predicate.isScopedTo, // (undocumented)
     isSuggestedFocusable: typeof predicate.isSuggestedFocusable, // (undocumented)
     isReplaced: typeof predicate.isReplaced;
+    const // (undocumented)
+    hasUniqueId: Predicate<Element<string>>;
+    const // (undocumented)
+    isActuallyDisabled: Predicate<Element<string>>;
+    const // (undocumented)
+    isContent: (options?: Node_2.Traversal) => Predicate<Node_2>;
+    const // (undocumented)
+    isDocumentElement: Refinement<unknown, Element<"html">>;
+    const // (undocumented)
+    isFallback: Predicate<Node_2<string>>;
+    const // (undocumented)
+    isScopedTo: (name: string, ...rest: Array<string>) => Predicate<Element>;
     // (undocumented)
     interface MinimalJSON extends Node_2.JSON<"element"> {
     }

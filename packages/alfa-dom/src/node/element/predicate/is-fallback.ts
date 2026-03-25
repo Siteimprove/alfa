@@ -1,12 +1,12 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Element } from "../../element.js";
+import type { Element } from "../../element.js";
 import type { Node } from "../../../node.js";
 
 import { hasName } from "./has-name.js";
 
-const { not, or, test } = Predicate;
+const { not, or } = Predicate;
 const { and } = Refinement;
 
 /**
@@ -21,23 +21,26 @@ const { and } = Refinement;
  *
  * @public
  */
-export function isFallback(node: Node): boolean {
-  return test(
-    or(
-      hasParentName("iframe"),
-      and(
-        hasParentName("audio", "video"),
-        not(and(Element.isElement, hasName("track", "source"))),
-      ),
+export function isFallback(
+  isElement: Refinement<unknown, Element>,
+): Predicate<Node> {
+  return or(
+    hasParentName(isElement, "iframe"),
+    and(
+      hasParentName(isElement, "audio", "video"),
+      not(and(isElement, hasName("track", "source"))),
     ),
-    node,
   );
 }
 
-function hasParentName(name: string, ...names: Array<string>): Predicate<Node> {
+function hasParentName(
+  isElement: Refinement<unknown, Element>,
+  name: string,
+  ...names: Array<string>
+): Predicate<Node> {
   return (node) =>
     node
       .parent()
-      .filter(Element.isElement)
+      .filter(isElement)
       .some(hasName(name, ...names));
 }

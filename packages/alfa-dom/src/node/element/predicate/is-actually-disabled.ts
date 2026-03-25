@@ -1,6 +1,9 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Element } from "../../element.js";
+import type { Element } from "../../element.js";
+
+import { hasName } from "./has-name.js";
 
 const { equals } = Predicate;
 
@@ -9,47 +12,48 @@ const { equals } = Predicate;
  *
  * @public
  */
-export function isActuallyDisabled(element: Element): boolean {
-  switch (element.name) {
-    // https://html.spec.whatwg.org/multipage#concept-fe-disabled
-    case "button":
-    case "input":
-    case "select":
-    case "textarea":
-    // https://html.spec.whatwg.org/#attr-optgroup-disabled
-    case "optgroup":
-      return element.attribute("disabled").isSome();
-    // https://html.spec.whatwg.org/multipage#concept-fieldset-disabled
-    case "fieldset":
-      if (element.attribute("disabled").isSome()) {
-        return true;
-      }
+export function isActuallyDisabled(
+  isElement: Refinement<unknown, Element>,
+): Predicate<Element> {
+  return function isActuallyDisabled(element): boolean {
+    switch (element.name) {
+      // https://html.spec.whatwg.org/multipage#concept-fe-disabled
+      case "button":
+      case "input":
+      case "select":
+      case "textarea":
+      // https://html.spec.whatwg.org/#attr-optgroup-disabled
+      case "optgroup":
+        return element.attribute("disabled").isSome();
+      // https://html.spec.whatwg.org/multipage#concept-fieldset-disabled
+      case "fieldset":
+        if (element.attribute("disabled").isSome()) {
+          return true;
+        }
 
-      return element
-        .ancestors()
-        .filter(Element.isElement)
-        .find(Element.hasName("fieldset"))
-        .reject(isActuallyDisabled)
-        .flatMap((fieldset) =>
-          fieldset
-            .descendants()
-            .filter(Element.isElement)
-            .find(Element.hasName("legend")),
-        )
-        .some((legend) => legend.descendants().some(equals(element)));
+        return element
+          .ancestors()
+          .filter(isElement)
+          .find(hasName("fieldset"))
+          .reject(isActuallyDisabled)
+          .flatMap((fieldset) =>
+            fieldset.descendants().filter(isElement).find(hasName("legend")),
+          )
+          .some((legend) => legend.descendants().some(equals(element)));
 
-    // https://html.spec.whatwg.org/multipage#concept-option-disabled
-    case "option":
-      if (element.attribute("disabled").isSome()) {
-        return true;
-      }
+      // https://html.spec.whatwg.org/multipage#concept-option-disabled
+      case "option":
+        if (element.attribute("disabled").isSome()) {
+          return true;
+        }
 
-      return element
-        .inclusiveAncestors()
-        .filter(Element.isElement)
-        .find(Element.hasName("optgroup"))
-        .some(isActuallyDisabled);
-  }
+        return element
+          .inclusiveAncestors()
+          .filter(isElement)
+          .find(hasName("optgroup"))
+          .some(isActuallyDisabled);
+    }
 
-  return false;
+    return false;
+  };
 }

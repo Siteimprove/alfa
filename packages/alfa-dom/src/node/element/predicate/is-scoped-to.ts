@@ -1,17 +1,20 @@
 import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Element } from "../../element.js";
+import type { Element } from "../../element.js";
+
+import { hasName } from "./has-name.js";
 
 /**
  * @public
  */
 export function isScopedTo(
-  name: string,
-  ...rest: Array<string>
-): Predicate<Element> {
-  return (element) =>
-    element
-      .ancestors()
-      .filter(Element.isElement)
-      .some(Element.hasName(name, ...rest));
+  isElement: Refinement<unknown, Element>,
+): (name: string, ...rest: Array<string>) => Predicate<Element> {
+  return (name, ...rest) =>
+    (element) =>
+      element
+        .ancestors()
+        .filter(isElement)
+        .some(hasName(name, ...rest));
 }
