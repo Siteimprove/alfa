@@ -13,7 +13,7 @@ import type { Rule } from "./rule.js";
 /**
  * An Audit is built from an input (usually a page), a set of rules that apply
  * to this kind of input, and optionally an oracle to answer questions arising
- * during the audit. Aduit need to be explicitly evaluated to produce outcomes.
+ * during the audit. Audits need to be explicitly evaluated to produce outcomes.
  *
  * @remarks
  * * I: type of Input for rules
