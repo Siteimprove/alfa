@@ -51,7 +51,7 @@ export function inapplicable<
 export function cantTell<T extends Hashable, Q extends Question.Metadata, S>(
   rule: Rule<Page, T, Q, S>,
   target: T,
-  diagnostic: Diagnostic = Diagnostic.empty,
+  diagnostic: Diagnostic = Diagnostic.empty(),
   mode: Outcome.Mode = Outcome.Mode.Automatic,
 ): Outcome.CantTell.JSON<T> {
   return Outcome.CantTell.of(rule, target, diagnostic, mode).toJSON();
