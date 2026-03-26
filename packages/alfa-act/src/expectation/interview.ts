@@ -1,13 +1,11 @@
 import { Future } from "@siteimprove/alfa-future";
-import { Either } from "@siteimprove/alfa-either";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
-import { Tuple } from "@siteimprove/alfa-tuple";
 
-import type { Diagnostic } from "./diagnostic.js";
+import { Finding } from "./finding.js";
 import type { Oracle } from "./oracle.js";
 import { Question } from "./question.js";
-import type { Rule } from "./rule.js";
+import type { Rule } from "../rule.js";
 
 /**
  * As `Interview` is a recursive type that models nested chains of `Question`s,
@@ -20,14 +18,14 @@ import type { Rule } from "./rule.js";
 type Depths = [-1, 0, 1, 2];
 
 /**
- * @public
- *
  * An Interview is either a direct ANSWER; or a question who is ultimately going
  * to produce one, possibly through more questions (aka, an Interview).
  *
  * The QUESTION type maps questions' URI to the expected type of answer, both as
  * a JavaScript manipulable representation (T), and an actual type (A).
  * The SUBJECT and CONTEXT types are the subject and context of the question.
+ *
+ * @public
  */
 export type Interview<
   QUESTION extends Question.Metadata,
@@ -69,13 +67,15 @@ export namespace Interview {
    *
    *  Oracles must return Options, to have the possibility to not answer a given
    *  question (by returning None).
-   *  Oracles must return Futures, because the full interview process is essentially
-   *  async (e.g., asking through a CLI).
+   *  Oracles must return Futures, because the full interview process is
+   *  essentially  async (e.g., asking through a CLI).
    *
-   *  The final result of the interview is either a final answer (Left), or
-   *  a diagnostic (Right) explaining why a final answer couldn't be found.
-   *  Final answer will be turned into Passed/Failed outcomes, and diagnostic
-   *  into Can't tell; the diagnostic is provided by the last unanswered question.
+   *  The final result of the interview is either a conclusive finding with an
+   *  answer, or  an inconclusive finding with a diagnostic explaining why an
+   *  answer couldn't be found.
+   *  Conclusive findings will be turned into Passed/Failed outcomes, and
+   *  inconclusive ones  into Can't tell; the diagnostic is provided by the last
+   *  unanswered question.
    *
    *  In both cases, we also record whether the oracle was actually used;
    *  this is useful to record the mode (auto/semi-auto) of the outcome.
@@ -93,7 +93,7 @@ export namespace Interview {
     rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
     oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>,
     oracleUsed: boolean = false,
-  ): Future<Either<Tuple<[ANSWER, boolean]>, Tuple<[Diagnostic, boolean]>>> {
+  ): Future<Finding<ANSWER>> {
     if (interview instanceof Question) {
       let answer: Future<Option<Interview<QUESTION, SUBJECT, TARGET, ANSWER>>>;
 
@@ -115,16 +115,15 @@ export namespace Interview {
         answer
           // Recursively conduct an interview
           .map((answer) => conduct(answer, rule, oracle, oracleUsed))
-          // If we still don't have a final answer, return the last diagnostic.
+          // If we still don't have a final answer, the finding is inconclusive,
+          // return the last diagnostic.
           .getOrElse(() =>
-            Future.now(
-              Either.right(Tuple.of(interview.diagnostic, oracleUsed)),
-            ),
+            Future.now(Finding.inconclusive(interview.diagnostic, oracleUsed)),
           ),
       );
     }
 
-    // The interview is not a question, so it is a final answer.
-    return Future.now(Either.left(Tuple.of(interview, oracleUsed)));
+    // The interview is not a question, so it is a conclusive finding.
+    return Future.now(Finding.conclusive(interview, oracleUsed));
   }
 }
