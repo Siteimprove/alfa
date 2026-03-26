@@ -164,21 +164,4 @@ export namespace Text {
       ),
     );
   }
-
-  /**
-   * @internal
-   */
-  export function cloneText(device?: Device): (text: Text) => Trampoline<Text> {
-    return (text) =>
-      Trampoline.done(
-        Text.of(
-          text.data,
-          Option.from(device).flatMap((d) => text.getBoundingBox(d)),
-          Option.from(device),
-          text.externalId,
-          text.extraData,
-          text.internalId,
-        ),
-      );
-  }
 }

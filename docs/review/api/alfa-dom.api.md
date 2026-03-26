@@ -67,8 +67,6 @@ export class Attribute<N extends string = string> extends Node_2<"attribute"> {
 
 // @public (undocumented)
 export namespace Attribute {
-    // @internal (undocumented)
-    export function cloneAttribute<N extends string = string>(attribute: Attribute<N>): Trampoline<Attribute<N | Lowercase<N>>>;
     // @internal
     export function foldCase<N extends string = string>(name: N, owner: Option_2<Element_2>): N | Lowercase<N>;
     // @internal (undocumented)
@@ -151,8 +149,6 @@ class Comment_2 extends Node_2<"comment"> {
 // @public (undocumented)
 namespace Comment_2 {
     // @internal (undocumented)
-    function cloneComment(comment: Comment_2): Trampoline<Comment_2>;
-    // @internal (undocumented)
     function fromComment(json: JSON): Trampoline<Comment_2>;
     // (undocumented)
     function isComment(value: unknown): value is Comment_2;
@@ -171,11 +167,11 @@ export { Comment_2 as Comment }
 export class Declaration implements Equatable, Serializable {
     protected constructor(name: string, value: string, important: boolean);
     // (undocumented)
-    ancestors(): Iterable<BaseRule>;
+    ancestors(): Iterable<Rule>;
     // @internal (undocumented)
     _attachOwner(owner: Element_2): boolean;
     // @internal (undocumented)
-    _attachParent(parent: BaseRule): boolean;
+    _attachParent(parent: Rule): boolean;
     equals(value: unknown): value is this;
     // (undocumented)
     get important(): boolean;
@@ -185,10 +181,8 @@ export class Declaration implements Equatable, Serializable {
     static of(name: string, value: string, important?: boolean): Declaration;
     // (undocumented)
     get owner(): Option_2<Element_2>;
-    // Warning: (ae-forgotten-export) The symbol "BaseRule" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
-    get parent(): Option_2<BaseRule>;
+    get parent(): Option_2<Rule>;
     // (undocumented)
     toJSON(): Declaration.JSON;
     // (undocumented)
@@ -245,8 +239,6 @@ class Document_2 extends Node_2<"document"> {
 
 // @public (undocumented)
 namespace Document_2 {
-    // @internal (undocumented)
-    function cloneDocument(options: Node_2.ElementReplacementOptions, device?: Device): (document: Document_2) => Trampoline<Document_2>;
     // @internal (undocumented)
     function fromDocument(json: JSON, device?: Device): Trampoline<Document_2>;
     // (undocumented)
@@ -337,8 +329,6 @@ class Element<N extends string = string> extends Node_2<"element"> implements Sl
 // @public (undocumented)
 namespace Element {
     // @internal (undocumented)
-    function cloneElement(options: Node_2.ElementReplacementOptions, device?: Device): (element: Element) => Trampoline<Element>;
-    // @internal (undocumented)
     function fromElement<N extends string = string>(json: JSON<N>, device?: Device): Trampoline<Element<N>>;
     // (undocumented)
     type InputType = helpers.InputType;
@@ -413,8 +403,6 @@ export class Fragment extends Node_2<"fragment"> {
 
 // @public (undocumented)
 export namespace Fragment {
-    // @internal (undocumented)
-    export function cloneFragment(options: Node_2.ElementReplacementOptions, device?: Device): (fragment: Fragment) => Trampoline<Fragment>;
     // @internal (undocumented)
     export function fromFragment(json: JSON, device?: Device): Trampoline<Fragment>;
     // (undocumented)
@@ -608,20 +596,42 @@ interface Node_2 {
 
 // @public (undocumented)
 namespace Node_2 {
-    function clone(node: Element_2, options?: ElementReplacementOptions, device?: Device): Element_2;
-    function clone(node: Attribute, options?: ElementReplacementOptions, device?: Device): Attribute;
-    function clone(node: Text_2, options?: ElementReplacementOptions, device?: Device): Text_2;
-    function clone(node: Comment_2, options?: ElementReplacementOptions, device?: Device): Comment_2;
+    // (undocumented)
+    interface EARL extends earl.EARL {
+        // (undocumented)
+        "@context": {
+            ptr: "http://www.w3.org/2009/pointers#";
+        };
+        // (undocumented)
+        "@type": [
+        "ptr:Pointer",
+        "ptr:SinglePointer",
+        "ptr:ExpressionPointer",
+        "ptr:XPathPointer"
+        ];
+        // (undocumented)
+        "ptr:expression": string;
+        // (undocumented)
+        "ptr:reference"?: {
+            "@id": string;
+        };
+    }
+    // (undocumented)
+    function from(json: Element_2.JSON, device?: Device): Element_2;
+    // (undocumented)
+    function from(json: Attribute.JSON, device?: Device): Attribute;
+    // (undocumented)
+    function from(json: Text_2.JSON, device?: Device): Text_2;
     const // (undocumented)
     Traversal: {
-        of: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => {
-            has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
-            isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
-            add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-            set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-            remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-            unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-            is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
+        of: (...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>) => {
+            has(flag: 0 | 1 | "composed" | "flattened" | 2 | "nested" | 4): boolean;
+            isSet: (flag: 0 | 1 | "composed" | "flattened" | 2 | "nested" | 4) => boolean;
+            add(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): any;
+            set: (...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>) => any;
+            remove(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): any;
+            unset: (...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>) => any;
+            is(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): boolean;
             equals(value: any): boolean;
             equals(value: unknown): value is any;
             toString(): string;
@@ -639,13 +649,13 @@ namespace Node_2 {
         };
         readonly none: 0;
         readonly empty: {
-            has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
-            isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
-            add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-            set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-            remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-            unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-            is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
+            has(flag: 0 | 1 | "composed" | "flattened" | 2 | "nested" | 4): boolean;
+            isSet: (flag: 0 | 1 | "composed" | "flattened" | 2 | "nested" | 4) => boolean;
+            add(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): any;
+            set: (...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>) => any;
+            remove(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): any;
+            unset: (...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>) => any;
+            is(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): boolean;
             equals(value: any): boolean;
             equals(value: unknown): value is any;
             toString(): string;
@@ -671,16 +681,18 @@ namespace Node_2 {
         flattened: 1 | 2 | 4;
         nested: 1 | 2 | 4;
     };
-    function clone(node: Document_2, options?: ElementReplacementOptions, device?: Device): Document_2;
-    function clone(node: Type, options?: ElementReplacementOptions, device?: Device): Document_2;
+    // (undocumented)
+    function from(json: Comment_2.JSON, device?: Device): Comment_2;
+    // (undocumented)
+    function from(json: Document_2.JSON, device?: Device): Document_2;
     const flatTree: {
-        has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
-        isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
-        add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-        set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-        remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-        unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-        is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
+        has(flag: 0 | 1 | "composed" | "flattened" | 2 | "nested" | 4): boolean;
+        isSet: (flag: 0 | 1 | "composed" | "flattened" | 2 | "nested" | 4) => boolean;
+        add(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): any;
+        set: (...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>) => any;
+        remove(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): any;
+        unset: (...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>) => any;
+        is(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): boolean;
         equals(value: any): boolean;
         equals(value: unknown): value is any;
         toString(): string;
@@ -697,13 +709,13 @@ namespace Node_2 {
         nested: boolean;
     };
     const fullTree: {
-        has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
-        isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
-        add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-        set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-        remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-        unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-        is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
+        has(flag: 0 | 1 | "composed" | "flattened" | 2 | "nested" | 4): boolean;
+        isSet: (flag: 0 | 1 | "composed" | "flattened" | 2 | "nested" | 4) => boolean;
+        add(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): any;
+        set: (...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>) => any;
+        remove(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): any;
+        unset: (...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>) => any;
+        is(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): boolean;
         equals(value: any): boolean;
         equals(value: unknown): value is any;
         toString(): string;
@@ -720,13 +732,13 @@ namespace Node_2 {
         nested: boolean;
     };
     const composedNested: {
-        has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
-        isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
-        add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-        set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-        remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
-        unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
-        is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
+        has(flag: 0 | 1 | "composed" | "flattened" | 2 | "nested" | 4): boolean;
+        isSet: (flag: 0 | 1 | "composed" | "flattened" | 2 | "nested" | 4) => boolean;
+        add(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): any;
+        set: (...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>) => any;
+        remove(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): any;
+        unset: (...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>) => any;
+        is(...flags: Array_2<0 | 1 | "composed" | "flattened" | 2 | "nested" | 4>): boolean;
         equals(value: any): boolean;
         equals(value: unknown): value is any;
         toString(): string;
@@ -742,48 +754,6 @@ namespace Node_2 {
         flattened: boolean;
         nested: boolean;
     };
-    function clone(node: Fragment, options?: ElementReplacementOptions, device?: Device): Fragment;
-    function clone(node: Shadow, options?: ElementReplacementOptions, device?: Device): Shadow;
-    function clone(node: Node_2, options?: ElementReplacementOptions, device?: Device): Node_2;
-    // @internal (undocumented)
-    function cloneNode(node: Node_2, options?: ElementReplacementOptions, device?: Device): Trampoline<Node_2>;
-    // (undocumented)
-    interface EARL extends earl.EARL {
-        // (undocumented)
-        "@context": {
-            ptr: "http://www.w3.org/2009/pointers#";
-        };
-        // (undocumented)
-        "@type": [
-        "ptr:Pointer",
-        "ptr:SinglePointer",
-        "ptr:ExpressionPointer",
-        "ptr:XPathPointer"
-        ];
-        // (undocumented)
-        "ptr:expression": string;
-        // (undocumented)
-        "ptr:reference"?: {
-            "@id": string;
-        };
-    }
-    // (undocumented)
-    interface ElementReplacementOptions {
-        // (undocumented)
-        newElements: Iterable<Element_2>;
-        // (undocumented)
-        predicate: Predicate<Element_2>;
-    }
-    // (undocumented)
-    function from(json: Element_2.JSON, device?: Device): Element_2;
-    // (undocumented)
-    function from(json: Attribute.JSON, device?: Device): Attribute;
-    // (undocumented)
-    function from(json: Text_2.JSON, device?: Device): Text_2;
-    // (undocumented)
-    function from(json: Comment_2.JSON, device?: Device): Comment_2;
-    // (undocumented)
-    function from(json: Document_2.JSON, device?: Device): Document_2;
     // (undocumented)
     function from(json: Type.JSON, device?: Device): Document_2;
     // (undocumented)
@@ -981,8 +951,6 @@ export class Shadow extends Node_2<"shadow"> {
 // @public (undocumented)
 export namespace Shadow {
     // @internal (undocumented)
-    export function cloneShadow(options: Node_2.ElementReplacementOptions, device?: Device): (shadow: Shadow) => Trampoline<Shadow>;
-    // @internal (undocumented)
     export function fromShadow(json: JSON, device?: Device): Trampoline<Shadow>;
     // (undocumented)
     export function isShadow(value: unknown): value is Shadow;
@@ -1111,8 +1079,6 @@ class Text_2 extends Node_2<"text"> implements Slotable {
 // @public (undocumented)
 namespace Text_2 {
     // @internal (undocumented)
-    function cloneText(device?: Device): (text: Text_2) => Trampoline<Text_2>;
-    // @internal (undocumented)
     function fromText(json: JSON, device?: Device): Trampoline<Text_2>;
     // (undocumented)
     function is(predicate: Predicate<string>): Predicate<Text_2>;
@@ -1156,8 +1122,6 @@ export class Type<N extends string = string> extends Node_2<"type"> {
 
 // @public (undocumented)
 export namespace Type {
-    // @internal (undocumented)
-    export function cloneType<N extends string = string>(type: Type<N>): Trampoline<Type<N>>;
     // @internal (undocumented)
     export function fromType<N extends string = string>(json: JSON<N>): Trampoline<Type<N>>;
     // (undocumented)

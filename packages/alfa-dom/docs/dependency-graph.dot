@@ -2109,13 +2109,6 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     color = "#00ffb9";
     ltail = "cluster_src/node";
   ];
-  "src/node/fragment.ts" -> "src/node/element.ts" [
-    style = "invis";
-  ];
-  "src/node/fragment.ts" -> "src/node/element.ts" [
-    style = "solid";
-    color = "black";
-  ];
   "src/style/rule/style.ts" -> "src/style/block.ts" [
     style = "invis";
   ];
