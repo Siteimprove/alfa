@@ -179,13 +179,9 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
         ];
         "src/node/document.ts" [
           label = "document.ts";
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
         ];
         "src/node/shadow.ts" [
           label = "shadow.ts";
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
         ];
         subgraph "cluster_src/node/predicate" {
           color = "#000000";
@@ -2381,7 +2377,7 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     style = "invis";
   ];
   "src/node/document.ts" -> "src/node/element.ts" [
-    style = "solid";
+    style = "dotted";
     color = "black";
   ];
   "exit_src/node" -> "name_src/style" [
@@ -2692,7 +2688,7 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     style = "invis";
   ];
   "src/node/shadow.ts" -> "src/node/element.ts" [
-    style = "solid";
+    style = "dotted";
     color = "black";
   ];
   "exit_src/node" -> "name_src/style" [
