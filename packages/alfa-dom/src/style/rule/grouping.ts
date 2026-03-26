@@ -1,23 +1,25 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Rule } from "./rule.js";
+import { BaseRule } from "./rule.js";
 
 /**
  * @public
  */
-export abstract class GroupingRule<T extends string = string> extends Rule<T> {
-  protected readonly _rules: Array<Rule>;
+export abstract class GroupingRule<
+  T extends string = string,
+> extends BaseRule<T> {
+  protected readonly _rules: Array<BaseRule>;
 
-  protected constructor(type: T, rules: Array<Rule>) {
+  protected constructor(type: T, rules: Array<BaseRule>) {
     super(type);
 
     this._rules = rules.filter((rule) => rule._attachParent(this));
   }
 
-  public get rules(): Iterable<Rule> {
+  public get rules(): Iterable<BaseRule> {
     return this._rules;
   }
 
-  public *children(): Iterable<Rule> {
+  public *children(): Iterable<BaseRule> {
     yield* this._rules;
   }
 
@@ -33,8 +35,8 @@ export abstract class GroupingRule<T extends string = string> extends Rule<T> {
  * @public
  */
 export namespace GroupingRule {
-  export interface JSON<T extends string = string> extends Rule.JSON<T> {
-    rules: Array<Rule.JSON>;
+  export interface JSON<T extends string = string> extends BaseRule.JSON<T> {
+    rules: Array<BaseRule.JSON>;
   }
 
   export function isGroupingRule(value: unknown): value is GroupingRule {

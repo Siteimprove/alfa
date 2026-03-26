@@ -171,11 +171,11 @@ export { Comment_2 as Comment }
 export class Declaration implements Equatable, Serializable {
     protected constructor(name: string, value: string, important: boolean);
     // (undocumented)
-    ancestors(): Iterable<Rule_2>;
+    ancestors(): Iterable<BaseRule>;
     // @internal (undocumented)
     _attachOwner(owner: Element_2): boolean;
     // @internal (undocumented)
-    _attachParent(parent: Rule_2): boolean;
+    _attachParent(parent: BaseRule): boolean;
     equals(value: unknown): value is this;
     // (undocumented)
     get important(): boolean;
@@ -185,10 +185,10 @@ export class Declaration implements Equatable, Serializable {
     static of(name: string, value: string, important?: boolean): Declaration;
     // (undocumented)
     get owner(): Option_2<Element_2>;
-    // Warning: (ae-forgotten-export) The symbol "Rule_2" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "BaseRule" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    get parent(): Option_2<Rule_2>;
+    get parent(): Option_2<BaseRule>;
     // (undocumented)
     toJSON(): Declaration.JSON;
     // (undocumented)
@@ -614,14 +614,14 @@ namespace Node_2 {
     function clone(node: Comment_2, options?: ElementReplacementOptions, device?: Device): Comment_2;
     const // (undocumented)
     Traversal: {
-        of: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => {
-            has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
-            isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
-            add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-            set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-            remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-            unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-            is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
+        of: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => {
+            has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
+            isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
+            add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+            set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+            remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+            unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+            is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
             equals(value: any): boolean;
             equals(value: unknown): value is any;
             toString(): string;
@@ -639,13 +639,13 @@ namespace Node_2 {
         };
         readonly none: 0;
         readonly empty: {
-            has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
-            isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
-            add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-            set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-            remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-            unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-            is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
+            has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
+            isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
+            add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+            set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+            remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+            unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+            is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
             equals(value: any): boolean;
             equals(value: unknown): value is any;
             toString(): string;
@@ -674,13 +674,13 @@ namespace Node_2 {
     function clone(node: Document_2, options?: ElementReplacementOptions, device?: Device): Document_2;
     function clone(node: Type, options?: ElementReplacementOptions, device?: Device): Document_2;
     const flatTree: {
-        has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
-        isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
-        add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-        set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-        remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-        unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-        is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
+        has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
+        isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
+        add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+        set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+        remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+        unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+        is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
         equals(value: any): boolean;
         equals(value: unknown): value is any;
         toString(): string;
@@ -697,13 +697,13 @@ namespace Node_2 {
         nested: boolean;
     };
     const fullTree: {
-        has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
-        isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
-        add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-        set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-        remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-        unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-        is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
+        has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
+        isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
+        add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+        set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+        remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+        unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+        is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
         equals(value: any): boolean;
         equals(value: unknown): value is any;
         toString(): string;
@@ -720,13 +720,13 @@ namespace Node_2 {
         nested: boolean;
     };
     const composedNested: {
-        has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
-        isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
-        add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-        set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-        remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-        unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-        is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
+        has(flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4): boolean;
+        isSet: (flag: 0 | 1 | 2 | "composed" | "flattened" | "nested" | 4) => boolean;
+        add(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+        set: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+        remove(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): any;
+        unset: (...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>) => any;
+        is(...flags: Array_2<0 | 1 | 2 | "composed" | "flattened" | "nested" | 4>): boolean;
         equals(value: any): boolean;
         equals(value: unknown): value is any;
         toString(): string;
@@ -923,7 +923,7 @@ export namespace Rule {
     // (undocumented)
     export function from(json: Rule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Rule;
     // @internal (undocumented)
-    export function fromRule(sheetFactory: (rules: Iterable<Rule>) => Sheet): (json: Rule_2.JSON) => Trampoline<Rule_2>;
+    export function fromRule(sheetFactory: (rules: Iterable<Rule>) => Sheet): (json: BaseRule.JSON) => Trampoline<BaseRule>;
     // Warning: (ae-forgotten-export) The symbol "FontFaceRule" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "ImportRule" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "KeyframeRule" needs to be exported by the entry point index.d.ts

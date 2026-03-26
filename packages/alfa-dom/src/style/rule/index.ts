@@ -12,7 +12,7 @@ import { PageRule } from "./page.js";
 import { StyleRule } from "./style.js";
 import { SupportsRule } from "./supports.js";
 
-import type { Rule as BaseRule } from "./rule.js";
+import type { BaseRule } from "./rule.js";
 
 /**
  * @public

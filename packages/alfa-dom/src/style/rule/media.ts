@@ -6,20 +6,20 @@ import type { Predicate } from "@siteimprove/alfa-predicate";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import type { Rule } from "./rule.js";
+import type { BaseRule } from "./rule.js";
 import { ConditionRule } from "./condition.js";
 
 /**
  * @public
  */
 export class MediaRule extends ConditionRule<"media"> {
-  public static of(condition: string, rules: Iterable<Rule>): MediaRule {
+  public static of(condition: string, rules: Iterable<BaseRule>): MediaRule {
     return new MediaRule(condition, Array.from(rules));
   }
 
   private readonly _queries: Feature.Media.List;
 
-  protected constructor(condition: string, rules: Array<Rule>) {
+  protected constructor(condition: string, rules: Array<BaseRule>) {
     super("media", condition, rules);
 
     this._queries = Feature.parseMediaQuery(Lexer.lex(condition))
@@ -63,7 +63,7 @@ export namespace MediaRule {
    */
   export function fromMediaRule(
     json: JSON,
-    fromRule: (json: Rule.JSON) => Trampoline<Rule>,
+    fromRule: (json: BaseRule.JSON) => Trampoline<BaseRule>,
   ): Trampoline<MediaRule> {
     return Trampoline.traverse(json.rules, fromRule).map((rules) =>
       MediaRule.of(json.condition, rules),

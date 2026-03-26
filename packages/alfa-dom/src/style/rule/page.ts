@@ -3,12 +3,12 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Block } from "../block.js";
 import type { Declaration } from "../declaration.js";
-import { Rule } from "./rule.js";
+import { BaseRule } from "./rule.js";
 
 /**
  * @public
  */
-export class PageRule extends Rule<"page"> {
+export class PageRule extends BaseRule<"page"> {
   public static of(
     selector: string,
     declarations: Iterable<Declaration>,
@@ -57,7 +57,7 @@ export class PageRule extends Rule<"page"> {
  * @public
  */
 export namespace PageRule {
-  export interface JSON extends Rule.JSON<"page"> {
+  export interface JSON extends BaseRule.JSON<"page"> {
     selector: string;
     style: Block.JSON | string;
   }

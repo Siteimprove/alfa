@@ -3,12 +3,12 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Block } from "../block.js";
 import type { Declaration } from "../declaration.js";
-import { Rule } from "./rule.js";
+import { BaseRule } from "./rule.js";
 
 /**
  * @public
  */
-export class FontFaceRule extends Rule<"font-face"> {
+export class FontFaceRule extends BaseRule<"font-face"> {
   public static of(declarations: Iterable<Declaration>): FontFaceRule {
     return new FontFaceRule(Array.from(declarations));
   }
@@ -45,7 +45,7 @@ export class FontFaceRule extends Rule<"font-face"> {
  * @public
  */
 export namespace FontFaceRule {
-  export interface JSON extends Rule.JSON<"font-face"> {
+  export interface JSON extends BaseRule.JSON<"font-face"> {
     style: Block.JSON | string;
   }
 

@@ -10,11 +10,11 @@ import type { Sheet } from "../sheet.js";
 /**
  * @public
  */
-export abstract class Rule<T extends string = string>
+export abstract class BaseRule<T extends string = string>
   implements Equatable, Serializable
 {
   protected _owner: Option<Sheet> = None;
-  protected _parent: Option<Rule> = None;
+  protected _parent: Option<BaseRule> = None;
   private readonly _type: T;
 
   protected constructor(type: T) {
@@ -29,20 +29,20 @@ export abstract class Rule<T extends string = string>
     return this._owner;
   }
 
-  public get parent(): Option<Rule> {
+  public get parent(): Option<BaseRule> {
     return this._parent;
   }
 
-  public *children(): Iterable<Rule> {}
+  public *children(): Iterable<BaseRule> {}
 
-  public *descendants(): Iterable<Rule> {
+  public *descendants(): Iterable<BaseRule> {
     for (const child of this.children()) {
       yield child;
       yield* child.descendants();
     }
   }
 
-  public *ancestors(): Iterable<Rule> {
+  public *ancestors(): Iterable<BaseRule> {
     for (const parent of this._parent) {
       yield parent;
       yield* parent.ancestors();
@@ -53,7 +53,7 @@ export abstract class Rule<T extends string = string>
     return value === this;
   }
 
-  public toJSON(): Rule.JSON<T> {
+  public toJSON(): BaseRule.JSON<T> {
     return { type: this._type };
   }
 
@@ -74,7 +74,7 @@ export abstract class Rule<T extends string = string>
   /**
    * @internal
    */
-  public _attachParent(parent: Rule): boolean {
+  public _attachParent(parent: BaseRule): boolean {
     if (this._parent.isSome()) {
       return false;
     }
@@ -88,7 +88,7 @@ export abstract class Rule<T extends string = string>
 /**
  * @public
  */
-export namespace Rule {
+export namespace BaseRule {
   export interface JSON<T extends string = string> {
     [key: string]: json.JSON;
     type: T;

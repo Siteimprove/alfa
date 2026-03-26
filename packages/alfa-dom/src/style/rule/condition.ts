@@ -1,4 +1,4 @@
-import type { Rule } from "./rule.js";
+import type { BaseRule } from "./rule.js";
 import { GroupingRule } from "./grouping.js";
 
 /**
@@ -9,7 +9,7 @@ export abstract class ConditionRule<
 > extends GroupingRule<T> {
   protected readonly _condition: string;
 
-  protected constructor(type: T, condition: string, rules: Array<Rule>) {
+  protected constructor(type: T, condition: string, rules: Array<BaseRule>) {
     super(type, rules);
 
     this._condition = condition;

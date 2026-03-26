@@ -3,7 +3,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { Rule } from "./rule.js";
+import { BaseRule } from "./rule.js";
 import { GroupingRule } from "./grouping.js";
 
 /**
@@ -24,7 +24,7 @@ export namespace Layer {
    * {@link https://drafts.csswg.org/css-cascade-5/#layer-empty}
    * {@link https://developer.mozilla.org/en-US/docs/Web/API/CSSLayerStatementRule}
    */
-  export class StatementRule extends Rule<"layer-statement"> {
+  export class StatementRule extends BaseRule<"layer-statement"> {
     public static of(layers: Iterable<string>): StatementRule {
       return new StatementRule(Array.from(layers));
     }
@@ -53,7 +53,7 @@ export namespace Layer {
   }
 
   export namespace StatementRule {
-    export interface JSON extends Rule.JSON<"layer-statement"> {
+    export interface JSON extends BaseRule.JSON<"layer-statement"> {
       layers: Array<string>;
     }
 
@@ -76,13 +76,16 @@ export namespace Layer {
    * {@link https://developer.mozilla.org/en-US/docs/Web/API/CSSLayerBlockRule}
    */
   export class BlockRule extends GroupingRule<"layer-block"> {
-    public static of(rules: Iterable<Rule>, layer?: string | null): BlockRule {
+    public static of(
+      rules: Iterable<BaseRule>,
+      layer?: string | null,
+    ): BlockRule {
       return new BlockRule(Option.from(layer), Array.from(rules));
     }
 
     private readonly _layer: Option<string>;
 
-    protected constructor(layer: Option<string>, rules: Array<Rule>) {
+    protected constructor(layer: Option<string>, rules: Array<BaseRule>) {
       super("layer-block", rules);
       this._layer = layer;
     }
@@ -124,7 +127,7 @@ export namespace Layer {
 
     export function fromLayerBlockRule(
       json: JSON,
-      fromRule: (json: Rule.JSON) => Trampoline<Rule>,
+      fromRule: (json: BaseRule.JSON) => Trampoline<BaseRule>,
     ): Trampoline<BlockRule> {
       return Trampoline.traverse(json.rules, fromRule).map((rules) =>
         BlockRule.of(rules, json.layer),
