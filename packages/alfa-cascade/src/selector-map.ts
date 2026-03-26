@@ -373,10 +373,7 @@ export namespace SelectorMap {
     function visitChildren(
       visitor: (rule: Rule) => void,
     ): (rule: Rule) => void {
-      return (rule) =>
-        // rule.children() is typed as returning the abstract Rule, so we need
-        // to assert they are actually concrete.
-        Iterable.forEach(rule.children() as Iterable<Rule>, visitor);
+      return (rule) => Iterable.forEach(rule.children(), visitor);
     }
 
     /**

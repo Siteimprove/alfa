@@ -55,10 +55,7 @@ export class Sheet implements Equatable, Serializable {
   public *descendants(): Iterable<Rule> {
     for (const child of this.children()) {
       yield child;
-      // child.descendants() is typed as the abstract class Rule, from which all
-      // others inherit, so TS is unhappy as it could be a subclass which has not
-      // been included in the union. We assert the type to be the union one.
-      yield* child.descendants() as Iterable<Rule>;
+      yield* child.descendants();
     }
   }
 

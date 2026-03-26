@@ -6,7 +6,7 @@ import type * as json from "@siteimprove/alfa-json";
 
 import type { Element } from "../node/element.js";
 
-import type { BaseRule } from "./rule/rule.js";
+import type { Rule } from "./rule/index.js";
 
 /**
  * @public
@@ -27,7 +27,7 @@ export class Declaration implements Equatable, Serializable {
    * @remarks
    * If the declaration is in a style rule, point to it
    */
-  private _parent: Option<BaseRule> = None;
+  private _parent: Option<Rule> = None;
   /**
    * @remarks
    * If the declaration is in a style attribute on an element, point to it
@@ -56,7 +56,7 @@ export class Declaration implements Equatable, Serializable {
     return this._important;
   }
 
-  public get parent(): Option<BaseRule> {
+  public get parent(): Option<Rule> {
     return this._parent;
   }
 
@@ -64,7 +64,7 @@ export class Declaration implements Equatable, Serializable {
     return this._owner;
   }
 
-  public *ancestors(): Iterable<BaseRule> {
+  public *ancestors(): Iterable<Rule> {
     for (const parent of this._parent) {
       yield parent;
       yield* parent.ancestors();
@@ -100,7 +100,7 @@ export class Declaration implements Equatable, Serializable {
   /**
    * @internal
    */
-  public _attachParent(parent: BaseRule): boolean {
+  public _attachParent(parent: Rule): boolean {
     if (this._parent.isSome() || this._owner.isSome()) {
       return false;
     }
