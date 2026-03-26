@@ -6,7 +6,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import type { BaseRule } from "./rule.js";
+import type { Rule } from "./index.js";
 import type { Sheet } from "../sheet.js";
 import { ConditionRule } from "./condition.js";
 
@@ -87,7 +87,7 @@ export class ImportRule extends ConditionRule<"import"> {
     return this._layer;
   }
 
-  public get rules(): Iterable<BaseRule> {
+  public get rules(): Iterable<Rule> {
     return this._sheet.rules;
   }
 
@@ -159,8 +159,8 @@ export namespace ImportRule {
    */
   export function fromImportRule(
     json: JSON,
-    fromRule: (json: BaseRule.JSON) => Trampoline<BaseRule>,
-    sheetFactory: (rules: Iterable<BaseRule>) => Sheet,
+    fromRule: (json: Rule.JSON) => Trampoline<Rule>,
+    sheetFactory: (rules: Iterable<Rule>) => Sheet,
   ): Trampoline<ImportRule> {
     return Trampoline.traverse(json.rules, fromRule).map((rules) =>
       ImportRule.of(

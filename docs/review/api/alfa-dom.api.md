@@ -852,11 +852,12 @@ export namespace Query {
 }
 
 // @public (undocumented)
-export type Rule = Rule.FontFace | Rule.Import | Rule.Keyframe | Rule.Keyframes | Rule.Layer.Block | Rule.Layer.Statement | Rule.Media | Rule.Namespace | Rule.Page | Rule.Style | Rule.Supports;
+export type Rule = Rule.FontFace | Rule.Grouping | Rule.Import | Rule.Keyframe | Rule.Keyframes | Rule.Layer.Block | Rule.Layer.Statement | Rule.Media | Rule.Namespace | Rule.Page | Rule.Style | Rule.Supports;
 
 // @public (undocumented)
 export namespace Rule {
     import FontFace = FontFaceRule;
+    import Grouping = GroupingRule;
     import Import = ImportRule;
     import Keyframe = KeyframeRule;
     import Keyframes = KeyframesRule;
@@ -881,7 +882,9 @@ export namespace Rule {
     const // (undocumented)
     keyframes: typeof KeyframesRule.of, // (undocumented)
     isKeyframesRule: typeof KeyframesRule.isKeyframesRule;
-    const // (undocumented)
+    const // Warning: (ae-forgotten-export) The symbol "Layer" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
     layerBlock: typeof Layer.BlockRule.of, // (undocumented)
     isLayerBlockRule: typeof Layer.BlockRule.isLayerBlockRule;
     const // (undocumented)
@@ -923,12 +926,12 @@ export namespace Rule {
     // (undocumented)
     export function from(json: Rule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Rule;
     // @internal (undocumented)
-    export function fromRule(sheetFactory: (rules: Iterable<Rule>) => Sheet): (json: BaseRule.JSON) => Trampoline<BaseRule>;
+    export function fromRule(sheetFactory: (rules: Iterable<Rule>) => Sheet): (json: Rule.JSON) => Trampoline<Rule>;
     // Warning: (ae-forgotten-export) The symbol "FontFaceRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "GroupingRule" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "ImportRule" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "KeyframeRule" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "KeyframesRule" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "Layer" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "MediaRule" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "NamespaceRule" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "PageRule" needs to be exported by the entry point index.d.ts
@@ -936,7 +939,7 @@ export namespace Rule {
     // Warning: (ae-forgotten-export) The symbol "SupportsRule" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    export type JSON = FontFaceRule.JSON | ImportRule.JSON | KeyframeRule.JSON | KeyframesRule.JSON | Layer.BlockRule.JSON | Layer.StatementRule.JSON | MediaRule.JSON | NamespaceRule.JSON | PageRule.JSON | StyleRule.JSON | SupportsRule.JSON;
+    export type JSON = FontFaceRule.JSON | GroupingRule.JSON | ImportRule.JSON | KeyframeRule.JSON | KeyframesRule.JSON | Layer.Block.JSON | Layer.Statement.JSON | MediaRule.JSON | NamespaceRule.JSON | PageRule.JSON | StyleRule.JSON | SupportsRule.JSON;
     // (undocumented)
     export namespace Layer {
         import Block = LayerRules.BlockRule;

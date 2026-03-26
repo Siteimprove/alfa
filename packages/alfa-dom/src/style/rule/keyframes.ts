@@ -1,6 +1,7 @@
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
+import type { Rule } from "./index.js";
 import type { BaseRule } from "./rule.js";
 import { GroupingRule } from "./grouping.js";
 
@@ -8,13 +9,13 @@ import { GroupingRule } from "./grouping.js";
  * @public
  */
 export class KeyframesRule extends GroupingRule<"keyframes"> {
-  public static of(name: string, rules: Iterable<BaseRule>): KeyframesRule {
+  public static of(name: string, rules: Iterable<Rule>): KeyframesRule {
     return new KeyframesRule(name, Array.from(rules));
   }
 
   private readonly _name: string;
 
-  protected constructor(name: string, rules: Array<BaseRule>) {
+  protected constructor(name: string, rules: Array<Rule>) {
     super("keyframes", rules);
 
     this._name = name;
@@ -57,7 +58,7 @@ export namespace KeyframesRule {
    */
   export function fromKeyframesRule(
     json: JSON,
-    fromRule: (json: BaseRule.JSON) => Trampoline<BaseRule>,
+    fromRule: (json: Rule.JSON) => Trampoline<Rule>,
   ): Trampoline<KeyframesRule> {
     return Trampoline.traverse(json.rules, fromRule).map((rules) =>
       KeyframesRule.of(json.name, rules),

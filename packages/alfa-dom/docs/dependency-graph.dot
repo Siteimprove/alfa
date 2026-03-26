@@ -9,6 +9,7 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
   "src/node/element.ts";
   "src/style/declaration.ts";
   "src/style/rule/condition.ts";
+  "src/style/rule/index.ts";
   "src/style/rule/rule.ts";
   "exit_src/node/predicate";
   "src/node/text.ts";
@@ -29,7 +30,6 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
   "exit_src/style/rule";
   "exit_src/node/query";
   "src/node/element/predicate/has-name.ts";
-  "src/style/rule/index.ts";
   "name_src/style/rule";
   "exit_src/node/element/predicate";
   "src/node/element/predicate/is-replaced.ts";
@@ -1373,6 +1373,13 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     style = "solid";
     color = "black";
   ];
+  "src/style/rule/supports.ts" -> "src/style/rule/index.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/supports.ts" -> "src/style/rule/index.ts" [
+    style = "dotted";
+    color = "black";
+  ];
   "src/style/rule/supports.ts" -> "src/style/rule/rule.ts" [
     style = "invis";
   ];
@@ -1506,6 +1513,13 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     color = "#00ffb9";
     lhead = "cluster_src/style";
     ltail = "cluster_src/node";
+  ];
+  "src/style/rule/rule.ts" -> "src/style/rule/index.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/rule.ts" -> "src/style/rule/index.ts" [
+    style = "dotted";
+    color = "black";
   ];
   "src/style/rule/rule.ts" -> "src/style/sheet.ts" [
     style = "invis";
@@ -1686,6 +1700,13 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
   ];
   "src/style/rule/layer.ts" -> "src/style/rule/grouping.ts" [
     style = "solid";
+    color = "black";
+  ];
+  "src/style/rule/layer.ts" -> "src/style/rule/index.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/layer.ts" -> "src/style/rule/index.ts" [
+    style = "dotted";
     color = "black";
   ];
   "src/style/rule/layer.ts" -> "src/style/rule/rule.ts" [
@@ -1901,6 +1922,13 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
   ];
   "src/style/rule/keyframes.ts" -> "src/style/rule/grouping.ts" [
     style = "solid";
+    color = "black";
+  ];
+  "src/style/rule/keyframes.ts" -> "src/style/rule/index.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/keyframes.ts" -> "src/style/rule/index.ts" [
+    style = "dotted";
     color = "black";
   ];
   "src/style/rule/keyframes.ts" -> "src/style/rule/rule.ts" [
@@ -2416,6 +2444,13 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     style = "solid";
     color = "black";
   ];
+  "src/style/rule/index.ts" -> "src/style/rule/grouping.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/index.ts" -> "src/style/rule/grouping.ts" [
+    style = "solid";
+    color = "black";
+  ];
   "src/style/rule/index.ts" -> "src/style/rule/import.ts" [
     style = "invis";
   ];
@@ -2517,10 +2552,10 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     style = "solid";
     color = "black";
   ];
-  "src/style/rule/import.ts" -> "src/style/rule/rule.ts" [
+  "src/style/rule/import.ts" -> "src/style/rule/index.ts" [
     style = "invis";
   ];
-  "src/style/rule/import.ts" -> "src/style/rule/rule.ts" [
+  "src/style/rule/import.ts" -> "src/style/rule/index.ts" [
     style = "dotted";
     color = "black";
   ];
@@ -2570,10 +2605,10 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     style = "solid";
     color = "black";
   ];
-  "src/style/rule/media.ts" -> "src/style/rule/rule.ts" [
+  "src/style/rule/media.ts" -> "src/style/rule/index.ts" [
     style = "invis";
   ];
-  "src/style/rule/media.ts" -> "src/style/rule/rule.ts" [
+  "src/style/rule/media.ts" -> "src/style/rule/index.ts" [
     style = "dotted";
     color = "black";
   ];
@@ -2581,6 +2616,13 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     style = "invis";
   ];
   "src/native.ts" -> "src/index.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "src/style/rule/grouping.ts" -> "src/style/rule/index.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/grouping.ts" -> "src/style/rule/index.ts" [
     style = "dotted";
     color = "black";
   ];
@@ -2673,10 +2715,10 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     style = "solid";
     color = "black";
   ];
-  "src/style/rule/condition.ts" -> "src/style/rule/rule.ts" [
+  "src/style/rule/condition.ts" -> "src/style/rule/index.ts" [
     style = "invis";
   ];
-  "src/style/rule/condition.ts" -> "src/style/rule/rule.ts" [
+  "src/style/rule/condition.ts" -> "src/style/rule/index.ts" [
     style = "dotted";
     color = "black";
   ];

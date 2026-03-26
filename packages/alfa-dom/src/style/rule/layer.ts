@@ -3,6 +3,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
+import type { Rule } from "./index.js";
 import { BaseRule } from "./rule.js";
 import { GroupingRule } from "./grouping.js";
 
@@ -76,16 +77,13 @@ export namespace Layer {
    * {@link https://developer.mozilla.org/en-US/docs/Web/API/CSSLayerBlockRule}
    */
   export class BlockRule extends GroupingRule<"layer-block"> {
-    public static of(
-      rules: Iterable<BaseRule>,
-      layer?: string | null,
-    ): BlockRule {
+    public static of(rules: Iterable<Rule>, layer?: string | null): BlockRule {
       return new BlockRule(Option.from(layer), Array.from(rules));
     }
 
     private readonly _layer: Option<string>;
 
-    protected constructor(layer: Option<string>, rules: Array<BaseRule>) {
+    protected constructor(layer: Option<string>, rules: Array<Rule>) {
       super("layer-block", rules);
       this._layer = layer;
     }
@@ -127,7 +125,7 @@ export namespace Layer {
 
     export function fromLayerBlockRule(
       json: JSON,
-      fromRule: (json: BaseRule.JSON) => Trampoline<BaseRule>,
+      fromRule: (json: Rule.JSON) => Trampoline<Rule>,
     ): Trampoline<BlockRule> {
       return Trampoline.traverse(json.rules, fromRule).map((rules) =>
         BlockRule.of(rules, json.layer),

@@ -4,6 +4,7 @@ import type { Option } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
+import type { Rule } from "./index.js";
 import type { BaseRule } from "./rule.js";
 import { ConditionRule } from "./condition.js";
 import type { Device } from "@siteimprove/alfa-device";
@@ -13,13 +14,13 @@ import type { Predicate } from "@siteimprove/alfa-predicate";
  * @public
  */
 export class SupportsRule extends ConditionRule<"supports"> {
-  public static of(condition: string, rules: Iterable<BaseRule>): SupportsRule {
+  public static of(condition: string, rules: Iterable<Rule>): SupportsRule {
     return new SupportsRule(condition, Array.from(rules));
   }
 
   private readonly _query: Option<Feature.Supports.Query>;
 
-  protected constructor(condition: string, rules: Array<BaseRule>) {
+  protected constructor(condition: string, rules: Array<Rule>) {
     super("supports", condition, rules);
 
     this._query = Feature.parseSupportsQuery(Lexer.lex(condition))
@@ -67,7 +68,7 @@ export namespace SupportsRule {
    */
   export function fromSupportsRule(
     json: JSON,
-    fromRule: (json: BaseRule.JSON) => Trampoline<BaseRule>,
+    fromRule: (json: Rule.JSON) => Trampoline<Rule>,
   ): Trampoline<SupportsRule> {
     return Trampoline.traverse(json.rules, fromRule).map((rules) =>
       SupportsRule.of(json.condition, rules),

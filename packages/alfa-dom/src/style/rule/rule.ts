@@ -7,6 +7,8 @@ import * as json from "@siteimprove/alfa-json";
 
 import type { Sheet } from "../sheet.js";
 
+import type { Rule } from "./index.js";
+
 /**
  * @public
  */
@@ -14,7 +16,7 @@ export abstract class BaseRule<T extends string = string>
   implements Equatable, Serializable
 {
   protected _owner: Option<Sheet> = None;
-  protected _parent: Option<BaseRule> = None;
+  protected _parent: Option<Rule> = None;
   private readonly _type: T;
 
   protected constructor(type: T) {
@@ -29,20 +31,20 @@ export abstract class BaseRule<T extends string = string>
     return this._owner;
   }
 
-  public get parent(): Option<BaseRule> {
+  public get parent(): Option<Rule> {
     return this._parent;
   }
 
-  public *children(): Iterable<BaseRule> {}
+  public *children(): Iterable<Rule> {}
 
-  public *descendants(): Iterable<BaseRule> {
+  public *descendants(): Iterable<Rule> {
     for (const child of this.children()) {
       yield child;
       yield* child.descendants();
     }
   }
 
-  public *ancestors(): Iterable<BaseRule> {
+  public *ancestors(): Iterable<Rule> {
     for (const parent of this._parent) {
       yield parent;
       yield* parent.ancestors();
@@ -74,7 +76,7 @@ export abstract class BaseRule<T extends string = string>
   /**
    * @internal
    */
-  public _attachParent(parent: BaseRule): boolean {
+  public _attachParent(parent: Rule): boolean {
     if (this._parent.isSome()) {
       return false;
     }

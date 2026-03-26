@@ -2,6 +2,7 @@ import type { Trampoline } from "@siteimprove/alfa-trampoline";
 import type { Sheet } from "../sheet.js";
 
 import { FontFaceRule } from "./font-face.js";
+import { GroupingRule } from "./grouping.js";
 import { ImportRule } from "./import.js";
 import { KeyframeRule } from "./keyframe.js";
 import { KeyframesRule } from "./keyframes.js";
@@ -19,6 +20,7 @@ import type { BaseRule } from "./rule.js";
  */
 export type Rule =
   | Rule.FontFace
+  | Rule.Grouping
   | Rule.Import
   | Rule.Keyframe
   | Rule.Keyframes
@@ -35,6 +37,7 @@ export type Rule =
  */
 export namespace Rule {
   export import FontFace = FontFaceRule;
+  export import Grouping = GroupingRule;
   export import Import = ImportRule;
   export import Keyframe = KeyframeRule;
   export import Keyframes = KeyframesRule;
@@ -50,16 +53,17 @@ export namespace Rule {
 
   export type JSON =
     | FontFace.JSON
-    | ImportRule.JSON
-    | KeyframeRule.JSON
-    | KeyframesRule.JSON
-    | LayerRules.BlockRule.JSON
-    | LayerRules.StatementRule.JSON
-    | MediaRule.JSON
-    | NamespaceRule.JSON
-    | PageRule.JSON
-    | StyleRule.JSON
-    | SupportsRule.JSON;
+    | Grouping.JSON
+    | Import.JSON
+    | Keyframe.JSON
+    | Keyframes.JSON
+    | Layer.Block.JSON
+    | Layer.Statement.JSON
+    | Media.JSON
+    | Namespace.JSON
+    | Page.JSON
+    | Style.JSON
+    | Supports.JSON;
 
   export const { of: fontFace, isFontFaceRule } = FontFace;
   export const { of: importRule, isImportRule } = Import;
@@ -137,7 +141,7 @@ export namespace Rule {
     json: Rule.JSON,
     sheetFactory: (rules: Iterable<Rule>) => Sheet,
   ): Rule {
-    return fromRule(sheetFactory)(json).run() as Rule;
+    return fromRule(sheetFactory)(json).run();
   }
 
   /**
@@ -145,8 +149,8 @@ export namespace Rule {
    */
   export function fromRule(
     sheetFactory: (rules: Iterable<Rule>) => Sheet,
-  ): (json: BaseRule.JSON) => Trampoline<BaseRule> {
-    return function from(json: BaseRule.JSON): Trampoline<BaseRule> {
+  ): (json: Rule.JSON) => Trampoline<Rule> {
+    return function from(json: Rule.JSON): Trampoline<Rule> {
       switch (json.type) {
         case "font-face":
           return FontFace.fromFontFaceRule(json as FontFace.JSON);
