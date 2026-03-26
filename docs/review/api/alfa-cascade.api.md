@@ -26,7 +26,6 @@ import { Shadow } from '@siteimprove/alfa-dom';
 import type { Sheet } from '@siteimprove/alfa-dom';
 import { Simple } from '@siteimprove/alfa-selector';
 import { Specificity } from '@siteimprove/alfa-selector';
-import type { StyleRule } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
 export class Cascade implements Serializable {
