@@ -254,9 +254,13 @@ namespace Document_2 {
 }
 export { Document_2 as Document }
 
+// Warning: (ae-forgotten-export) The symbol "Slotable_2" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-class Element<N extends string = string> extends Slotable<"element"> {
+class Element<N extends string = string> extends Slotable_2<"element"> {
     protected constructor(namespace: Option_2<Namespace>, prefix: Option_2<string>, name: N, attributes: Array<Attribute>, children: Array<Node_2>, style: Option_2<Block>, box: Option_2<Rectangle>, device: Option_2<Device>, externalId?: string, internalId?: string, extraData?: any);
+    // Warning: (ae-forgotten-export) The symbol "Slot" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
     assignedSlot(): Option_2<Slot>;
     // @internal (undocumented)
@@ -1020,14 +1024,7 @@ export namespace Sheet {
 }
 
 // @public (undocumented)
-export type Slot = Element_2<"slot">;
-
-// @public (undocumented)
-export abstract class Slotable<T extends string = string> extends Node_2<T> {
-    abstract assignedSlot(): Option_2<Slot>;
-    // (undocumented)
-    abstract slotableName(): string;
-}
+export type Slotable = Element_2 | Text_2;
 
 // @public (undocumented)
 export namespace Slotable {
@@ -1036,7 +1033,7 @@ export namespace Slotable {
 }
 
 // @public (undocumented)
-class Text_2 extends Slotable<"text"> {
+class Text_2 extends Slotable_2<"text"> {
     protected constructor(data: string, box: Option_2<Rectangle>, device: Option_2<Device>, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     assignedSlot(): Option_2<Slot>;

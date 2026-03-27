@@ -8,7 +8,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Node } from "../node.js";
 import { Sheet } from "../style/sheet.js";
-import type { Element } from "./slotable/element.js";
+import type { Element } from "./slotable/index.js";
 
 /**
  * @public
