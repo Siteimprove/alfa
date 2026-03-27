@@ -27,7 +27,6 @@ import {
   Element,
   Fragment,
   Shadow,
-  Slot,
   Slotable,
   Text,
   Type,
@@ -110,7 +109,7 @@ export abstract class Node<T extends string = string>
         }
 
         // If the element is a slot, we replace it by its assigned nodes.
-        if (Slot.isSlot(element)) {
+        if (Element.isSlot(element)) {
           return Sequence.from(element.assignedNodes())
             .filter(Element.isElement)
             .map((element) => [element, tabIndex]);

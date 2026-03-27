@@ -1,8 +1,8 @@
 import type { Option } from "@siteimprove/alfa-option";
 
-import type { Node } from "../node.js";
+import type { Node } from "../../node.js";
 import { Element } from "./element.js";
-import { Slot } from "./slot.js";
+import type { Slot } from "./slot.js";
 import { Text } from "./text.js";
 
 /**
@@ -50,8 +50,8 @@ export namespace Slotable {
         parent.shadow.flatMap((shadow) =>
           shadow
             .descendants()
-            .filter(Slot.isSlot)
-            .find((slot) => Slot.name(slot) === name),
+            .filter(Element.isSlot)
+            .find((slot) => slot.slotName() === name),
         ),
       );
   }

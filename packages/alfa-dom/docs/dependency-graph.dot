@@ -174,8 +174,6 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
         ];
         "src/node/slot.ts" [
           label = "slot.ts";
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
         ];
         "src/node/document.ts" [
           label = "document.ts";
@@ -1494,7 +1492,7 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     style = "invis";
   ];
   "src/node/element.ts" -> "src/node/slot.ts" [
-    style = "solid";
+    style = "dotted";
     color = "black";
   ];
   "src/node/element.ts" -> "src/node/slotable.ts" [
@@ -1622,7 +1620,7 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     style = "invis";
   ];
   "src/node/slotable.ts" -> "src/node/slot.ts" [
-    style = "solid";
+    style = "dotted";
     color = "black";
   ];
   "src/node/slotable.ts" -> "src/node/text.ts" [

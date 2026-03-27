@@ -1,7 +1,7 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import type { Element } from "../../element.js";
+import type { Element } from "../../slotable/element.js";
 import type { Node } from "../../../node.js";
 
 import { isReplaced } from "./is-replaced.js";

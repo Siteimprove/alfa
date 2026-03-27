@@ -3,7 +3,7 @@ import { Map } from "@siteimprove/alfa-map";
 
 import type { Node } from "../../node.js";
 import { Document } from "../document.js";
-import type { Element } from "../element.js";
+import type { Element } from "../slotable/element.js";
 
 import { getElementDescendants } from "./descendants.js";
 

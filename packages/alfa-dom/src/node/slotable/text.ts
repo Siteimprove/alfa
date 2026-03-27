@@ -7,7 +7,7 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "../node.js";
+import { Node } from "../../node.js";
 import type { Slot } from "./slot.js";
 import { Slotable } from "./slotable.js";
 

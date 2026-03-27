@@ -10,19 +10,19 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import type { Namespace } from "../namespace.js";
-import { Node } from "../node.js";
+import type { Namespace } from "../../namespace.js";
+import { Node } from "../../node.js";
 
-import { Block } from "../style/index.js";
+import { Block } from "../../style/index.js";
 
-import { Attribute } from "./attribute.js";
-import { Document } from "./document.js";
-import { Shadow } from "./shadow.js";
-import { Slot } from "./slot.js";
+import { Attribute } from "../attribute.js";
+import { Document } from "../document.js";
+import { Shadow } from "../shadow.js";
+import type { Slot } from "./slot.js";
 import { Slotable } from "./slotable.js";
 
-import type * as helpers from "./element/input-type.js";
-import * as predicate from "./element/predicate/index.js";
+import type * as helpers from "../element/input-type.js";
+import * as predicate from "../element/predicate/index.js";
 
 const { isEmpty } = Iterable;
 const { and, not, or, test } = Predicate;
@@ -32,7 +32,7 @@ const { and, not, or, test } = Predicate;
  */
 export class Element<N extends string = string>
   extends Node<"element">
-  implements Slot, Slotable
+  implements Slotable
 {
   public static of<N extends string = string>(
     namespace: Option<Namespace>,
@@ -177,12 +177,12 @@ export class Element<N extends string = string>
         return this._shadow.get().children(options);
       }
 
-      if (Slot.isSlot(this)) {
+      if (Element.isSlot(this)) {
         return Sequence.from(this.assignedNodes());
       }
 
       for (const child of treeChildren) {
-        if (Slot.isSlot(child)) {
+        if (Element.isSlot(child)) {
           children.push(...child.children(options));
         } else {
           children.push(child);
@@ -321,13 +321,6 @@ export class Element<N extends string = string>
    */
   public assignedSlot(): Option<Slot> {
     return Slotable.findSlot(this);
-  }
-
-  /**
-   * {@link https://html.spec.whatwg.org/#dom-slot-assignednodes}
-   */
-  public assignedNodes(): Iterable<Slotable> {
-    return Slot.findSlotables(this);
   }
 
   /**
@@ -499,6 +492,10 @@ export namespace Element {
 
   export function isElement(value: unknown): value is Element {
     return value instanceof Element;
+  }
+
+  export function isSlot(value: unknown): value is Slot {
+    return Element.isElement(value) && value.name === "slot";
   }
 
   /**

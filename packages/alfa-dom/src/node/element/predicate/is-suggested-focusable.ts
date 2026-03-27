@@ -1,4 +1,4 @@
-import type { Element } from "../../element.js";
+import type { Element } from "../../slotable/element.js";
 
 import { isBrowsingContextContainer } from "./is-browsing-context-container.js";
 import { isEditingHost } from "./is-editing-host.js";
