@@ -255,7 +255,7 @@ namespace Document_2 {
 export { Document_2 as Document }
 
 // @public (undocumented)
-class Element<N extends string = string> extends Node_2<"element"> implements Slotable {
+class Element<N extends string = string> extends Slotable<"element"> {
     protected constructor(namespace: Option_2<Namespace>, prefix: Option_2<string>, name: N, attributes: Array<Attribute>, children: Array<Node_2>, style: Option_2<Block>, box: Option_2<Rectangle>, device: Option_2<Device>, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     assignedSlot(): Option_2<Slot>;
@@ -304,6 +304,8 @@ class Element<N extends string = string> extends Node_2<"element"> implements Sl
     get qualifiedName(): string;
     // (undocumented)
     get shadow(): Option_2<Shadow>;
+    // (undocumented)
+    slotableName(): string;
     // (undocumented)
     get style(): Option_2<Block>;
     // (undocumented)
@@ -1021,22 +1023,20 @@ export namespace Sheet {
 export type Slot = Element_2<"slot">;
 
 // @public (undocumented)
-export interface Slotable extends Node_2 {
-    assignedSlot(): Option_2<Slot>;
+export abstract class Slotable<T extends string = string> extends Node_2<T> {
+    abstract assignedSlot(): Option_2<Slot>;
+    // (undocumented)
+    abstract slotableName(): string;
 }
 
 // @public (undocumented)
 export namespace Slotable {
     // (undocumented)
-    export function findSlot(slotable: Slotable): Option_2<Slot>;
-    // (undocumented)
     export function isSlotable(value: unknown): value is Slotable;
-    // (undocumented)
-    export function name(slotable: Slotable): string;
 }
 
 // @public (undocumented)
-class Text_2 extends Node_2<"text"> implements Slotable {
+class Text_2 extends Slotable<"text"> {
     protected constructor(data: string, box: Option_2<Rectangle>, device: Option_2<Device>, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     assignedSlot(): Option_2<Slot>;
@@ -1052,6 +1052,8 @@ class Text_2 extends Node_2<"text"> implements Slotable {
     is(predicate: Predicate<string>): boolean;
     // (undocumented)
     static of(data: string, box?: Option_2<Rectangle>, device?: Option_2<Device>, externalId?: string, internalId?: string, extraData?: any): Text_2;
+    // (undocumented)
+    slotableName(): string;
     // (undocumented)
     toJSON(options: Node_2.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;

@@ -12,6 +12,7 @@ declare module "./element.js" {
      * Get the slotables assigned to this slot.
      *
      * {@link https://html.spec.whatwg.org/#dom-slot-assignednodes}
+     * {@link https://dom.spec.whatwg.org/#find-slotables}
      */
     assignedNodes(this: Slot): Iterable<Slotable>;
 

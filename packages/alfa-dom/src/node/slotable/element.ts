@@ -30,10 +30,7 @@ const { and, not, or, test } = Predicate;
 /**
  * @public
  */
-export class Element<N extends string = string>
-  extends Node<"element">
-  implements Slotable
-{
+export class Element<N extends string = string> extends Slotable<"element"> {
   public static of<N extends string = string>(
     namespace: Option<Namespace>,
     prefix: Option<string>,
@@ -320,7 +317,24 @@ export class Element<N extends string = string>
    * {@link https://dom.spec.whatwg.org/#dom-slotable-assignedslot}
    */
   public assignedSlot(): Option<Slot> {
-    return Slotable.findSlot(this);
+    const name = this.slotableName();
+
+    return this.parent()
+      .filter(Element.isElement)
+      .flatMap((parent) =>
+        parent.shadow.flatMap((shadow) =>
+          shadow
+            .descendants()
+            .filter(Element.isSlot)
+            .find((slot) => slot.slotName() === name),
+        ),
+      );
+  }
+
+  public slotableName(): string {
+    return this.attribute("slot")
+      .map((slot) => slot.value)
+      .getOr("");
   }
 
   /**

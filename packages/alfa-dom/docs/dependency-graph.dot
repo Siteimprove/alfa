@@ -529,21 +529,15 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
           ];
           "src/node/slotable/text.ts" [
             label = "text.ts";
-            fillcolor = "#ff6c60";
-            style = "rounded,filled";
           ];
           "src/node/slotable/element.ts" [
             label = "element.ts";
-            fillcolor = "#ff6c60";
-            style = "rounded,filled";
           ];
           "src/node/slotable/slot.ts" [
             label = "slot.ts";
           ];
           "src/node/slotable/slotable.ts" [
             label = "slotable.ts";
-            fillcolor = "#ff6c60";
-            style = "rounded,filled";
           ];
           "src/node/slotable/text.ts" -> "exit_src/node/slotable" [
             style = "invis";
@@ -1530,6 +1524,13 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     color = "#00ffff";
     ltail = "cluster_src/node";
   ];
+  "src/node/slotable/text.ts" -> "src/node/slotable/element.ts" [
+    style = "invis";
+  ];
+  "src/node/slotable/text.ts" -> "src/node/slotable/element.ts" [
+    style = "solid";
+    color = "black";
+  ];
   "src/node/slotable/text.ts" -> "src/node/slotable/slot.ts" [
     style = "invis";
   ];
@@ -2205,25 +2206,11 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     color = "#00ffff";
     ltail = "cluster_src/node";
   ];
-  "src/node/slotable/slotable.ts" -> "src/node/slotable/element.ts" [
-    style = "invis";
-  ];
-  "src/node/slotable/slotable.ts" -> "src/node/slotable/element.ts" [
-    style = "solid";
-    color = "black";
-  ];
   "src/node/slotable/slotable.ts" -> "src/node/slotable/slot.ts" [
     style = "invis";
   ];
   "src/node/slotable/slotable.ts" -> "src/node/slotable/slot.ts" [
     style = "dotted";
-    color = "black";
-  ];
-  "src/node/slotable/slotable.ts" -> "src/node/slotable/text.ts" [
-    style = "invis";
-  ];
-  "src/node/slotable/slotable.ts" -> "src/node/slotable/text.ts" [
-    style = "solid";
     color = "black";
   ];
   "src/node/element/predicate/is-actually-disabled.ts" -> "src/node/element/predicate/has-name.ts" [
