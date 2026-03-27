@@ -19,25 +19,10 @@ declare module "./element.js" {
      * {@link https://dom.spec.whatwg.org/#slot-name}
      */
     slotName(this: Slot): string;
-
-    /**
-     * {@link https://dom.spec.whatwg.org/#find-slotables}
-     */
-    findSlotables(this: Slot): Iterable<Slotable>;
   }
 }
 
-Element.prototype.assignedNodes = function (this: Slot): Iterable<Slotable> {
-  return this.findSlotables();
-};
-
-Element.prototype.slotName = function (this: Slot): string {
-  return this.attribute("name")
-    .map((name) => name.value)
-    .getOr("");
-};
-
-Element.prototype.findSlotables = function* (this: Slot): Iterable<Slotable> {
+Element.prototype.assignedNodes = function* (this: Slot): Iterable<Slotable> {
   const root = this.root();
 
   if (Shadow.isShadow(root)) {
@@ -49,4 +34,10 @@ Element.prototype.findSlotables = function* (this: Slot): Iterable<Slotable> {
       }
     }
   }
+};
+
+Element.prototype.slotName = function (this: Slot): string {
+  return this.attribute("name")
+    .map((name) => name.value)
+    .getOr("");
 };
