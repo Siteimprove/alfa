@@ -8,7 +8,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Node } from "../node.js";
 import { Sheet } from "../style/sheet.js";
-import { Element } from "./element.js";
+import type { Element } from "./slotable/element.js";
 
 /**
  * @public
@@ -191,31 +191,5 @@ export namespace Shadow {
         json.internalId,
       ),
     );
-  }
-
-  /**
-   * @internal
-   */
-  export function cloneShadow(
-    options: Node.ElementReplacementOptions,
-    device?: Device,
-  ): (shadow: Shadow) => Trampoline<Shadow> {
-    return (shadow) =>
-      Trampoline.traverse(shadow.children(), (child) => {
-        if (Element.isElement(child) && options.predicate(child)) {
-          return Trampoline.done(Array.from(options.newElements));
-        }
-
-        return Node.cloneNode(child, options, device).map((node) => [node]);
-      }).map((children) => {
-        return Shadow.of(
-          Iterable.flatten(children),
-          shadow.style,
-          shadow.mode,
-          shadow.externalId,
-          shadow.extraData,
-          shadow.internalId,
-        );
-      });
   }
 }

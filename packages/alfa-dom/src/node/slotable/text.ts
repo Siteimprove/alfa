@@ -7,14 +7,15 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "../node.js";
+import { Node } from "../../node.js";
+import { Element } from "./element.js";
 import type { Slot } from "./slot.js";
 import { Slotable } from "./slotable.js";
 
 /**
  * @public
  */
-export class Text extends Node<"text"> implements Slotable {
+export class Text extends Slotable<"text"> {
   public static of(
     data: string,
     box: Option<Rectangle> = None,
@@ -55,7 +56,22 @@ export class Text extends Node<"text"> implements Slotable {
   }
 
   public assignedSlot(): Option<Slot> {
-    return Slotable.findSlot(this);
+    const name = this.slotableName();
+
+    return this.parent()
+      .filter(Element.isElement)
+      .flatMap((parent) =>
+        parent.shadow.flatMap((shadow) =>
+          shadow
+            .descendants()
+            .filter(Element.isSlot)
+            .find((slot) => slot.slotName() === name),
+        ),
+      );
+  }
+
+  public slotableName(): string {
+    return "";
   }
 
   public getBoundingBox(device: Device): Option<Rectangle> {
@@ -163,22 +179,5 @@ export namespace Text {
         json.internalId,
       ),
     );
-  }
-
-  /**
-   * @internal
-   */
-  export function cloneText(device?: Device): (text: Text) => Trampoline<Text> {
-    return (text) =>
-      Trampoline.done(
-        Text.of(
-          text.data,
-          Option.from(device).flatMap((d) => text.getBoundingBox(d)),
-          Option.from(device),
-          text.externalId,
-          text.extraData,
-          text.internalId,
-        ),
-      );
   }
 }

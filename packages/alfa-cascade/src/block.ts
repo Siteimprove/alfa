@@ -1,7 +1,7 @@
 import { Array } from "@siteimprove/alfa-array";
 import { type Comparer } from "@siteimprove/alfa-comparable";
 import { Lexer } from "@siteimprove/alfa-css";
-import type { Declaration, Rule, StyleRule } from "@siteimprove/alfa-dom";
+import type { Declaration, Rule } from "@siteimprove/alfa-dom";
 import { Element, h } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -82,7 +82,7 @@ export class Block<
   // However, these (especially the selector) are used on hot path when
   // resolving cascade. Having them nullable, and encoding the nullability
   // in the type, allow for direct access without the small overhead of Options.
-  private readonly _rule: S extends Block.Source ? StyleRule : null;
+  private readonly _rule: S extends Block.Source ? Rule.Style : null;
   private readonly _selector: S extends Block.Source
     ? Compound | Complex | Simple
     : null;
@@ -96,13 +96,13 @@ export class Block<
     precedence: Precedence<LAYERED>,
   ) {
     if (Element.isElement(source)) {
-      this._rule = null as S extends Block.Source ? StyleRule : null;
+      this._rule = null as S extends Block.Source ? Rule.Style : null;
       this._selector = null as S extends Block.Source
         ? Compound | Complex | Simple
         : null;
       this._owner = source as unknown as S extends Element ? Element : null;
     } else {
-      this._rule = source.rule as S extends Block.Source ? StyleRule : null;
+      this._rule = source.rule as S extends Block.Source ? Rule.Style : null;
       this._selector = source.selector as S extends Block.Source
         ? Compound | Complex | Simple
         : null;
@@ -119,7 +119,7 @@ export class Block<
         ({ rule: this._rule, selector: this._selector } as S);
   }
 
-  public get rule(): S extends Block.Source ? StyleRule : null {
+  public get rule(): S extends Block.Source ? Rule.Style : null {
     return this._rule;
   }
 
@@ -194,7 +194,7 @@ export namespace Block {
    * @internal
    */
   export interface Source {
-    rule: StyleRule;
+    rule: Rule.Style;
     selector: Compound | Complex | Simple;
   }
 
@@ -216,7 +216,7 @@ export namespace Block {
    * share the exact same order.
    */
   export function from(
-    rule: StyleRule,
+    rule: Rule.Style,
     order: number,
     encapsulationDepth: number,
     // It is actually the same layer, but the rules are split into block by importance,

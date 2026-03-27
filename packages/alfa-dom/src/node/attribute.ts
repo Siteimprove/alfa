@@ -8,7 +8,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Namespace } from "../namespace.js";
 import { Node } from "../node.js";
-import type { Element } from "./element.js";
+import type { Element } from "./slotable/element.js";
 
 import * as predicate from "./attribute/predicate.js";
 import * as autocomplete from "./attribute/autocomplete.js";
@@ -218,8 +218,9 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
 export namespace Attribute {
   export interface MinimalJSON extends Node.JSON<"attribute"> {}
 
-  export interface JSON<N extends string = string>
-    extends Node.JSON<"attribute"> {
+  export interface JSON<
+    N extends string = string,
+  > extends Node.JSON<"attribute"> {
     namespace: string | null;
     prefix: string | null;
     name: N;
@@ -249,27 +250,8 @@ export namespace Attribute {
   }
 
   /**
-   * @internal
-   */
-  export function cloneAttribute<N extends string = string>(
-    attribute: Attribute<N>,
-  ): Trampoline<Attribute<N | Lowercase<N>>> {
-    return Trampoline.done(
-      Attribute.of(
-        attribute.namespace,
-        attribute.prefix,
-        attribute.name,
-        attribute.value,
-        attribute.externalId,
-        attribute.internalId,
-        attribute.extraData,
-      ),
-    );
-  }
-
-  /**
    * Conditionally fold the case of an attribute name based on its owner; HTML
-   * attributes are case insensitive while attributes in other namespaces aren't.
+   * attributes are case-insensitive while attributes in other namespaces aren't.
    *
    * @internal
    */

@@ -11,7 +11,6 @@ import { Lazy } from "@siteimprove/alfa-lazy";
 import { Option } from "@siteimprove/alfa-option";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
-import { Selective } from "@siteimprove/alfa-selective";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { String } from "@siteimprove/alfa-string";
 import type { Trampoline } from "@siteimprove/alfa-trampoline";
@@ -28,14 +27,13 @@ import {
   Element,
   Fragment,
   Shadow,
-  Slot,
   Slotable,
   Text,
   Type,
 } from "./index.js";
 
-import * as predicate from "./node/predicate.js";
-import * as traversal from "./node/traversal.js";
+import * as predicate from "./node/predicate/index.js";
+import * as traversal from "./node/traversal/index.js";
 
 /**
  * @public
@@ -111,7 +109,7 @@ export abstract class Node<T extends string = string>
         }
 
         // If the element is a slot, we replace it by its assigned nodes.
-        if (Slot.isSlot(element)) {
+        if (Element.isSlot(element)) {
           return Sequence.from(element.assignedNodes())
             .filter(Element.isElement)
             .map((element) => [element, tabIndex]);
@@ -463,193 +461,16 @@ export namespace Node {
     }
   }
 
-  export interface ElementReplacementOptions {
-    predicate: Predicate<Element>;
-    newElements: Iterable<Element>;
-  }
+  export const getNodesBetween = traversal.getNodesBetween(
+    Node.Traversal.empty,
+  );
 
-  /**
-   * Creates a new `Element` instance with the same value as the original and
-   * deeply referentially non-equal. Optionally replaces child elements based
-   * on a predicate.
-   *
-   * @remarks
-   * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be
-   * `undefined`.
-   */
-  export function clone(
-    node: Element,
-    options?: ElementReplacementOptions,
-    device?: Device,
-  ): Element;
+  export const { hasBox, isRoot } = predicate;
 
-  /**
-   * Creates a new `Attribute` instance with the same value as the original and
-   * referentially non-equal.
-   *
-   * @remarks
-   * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be
-   * `undefined`.
-   */
-  export function clone(
-    node: Attribute,
-    options?: ElementReplacementOptions,
-    device?: Device,
-  ): Attribute;
-
-  /**
-   * Creates a new `Text` instance with the same value as the original and
-   * referentially non-equal.
-   *
-   * @remarks
-   * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be
-   * `undefined`.
-   */
-  export function clone(
-    node: Text,
-    options?: ElementReplacementOptions,
-    device?: Device,
-  ): Text;
-
-  /**
-   * Creates a new `Comment` instance with the same value as the original and
-   * referentially non-equal.
-   *
-   * @remarks
-   * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be
-   * `undefined`.
-   */
-  export function clone(
-    node: Comment,
-    options?: ElementReplacementOptions,
-    device?: Device,
-  ): Comment;
-
-  /**
-   * Creates a new `Document` instance with the same value as the original and
-   * deeply referentially non-equal. Optionally replaces child elements based
-   * on a predicate.
-   *
-   * @remarks
-   * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be
-   * `undefined`.
-   */
-  export function clone(
-    node: Document,
-    options?: ElementReplacementOptions,
-    device?: Device,
-  ): Document;
-
-  /**
-   * Creates a new `Type` instance with the same value as the original and
-   * referentially non-equal.
-   *
-   * @remarks
-   * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be
-   * `undefined`.
-   */
-  export function clone(
-    node: Type,
-    options?: ElementReplacementOptions,
-    device?: Device,
-  ): Document;
-
-  /**
-   * Creates a new `Fragment` instance with the same value as the original and
-   * deeply referentially non-equal. Optionally replaces child elements based
-   * on a predicate.
-   *
-   * @remarks
-   * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be
-   * `undefined`.
-   */
-  export function clone(
-    node: Fragment,
-    options?: ElementReplacementOptions,
-    device?: Device,
-  ): Fragment;
-
-  /**
-   * Creates a new `Shadow` instance with the same value as the original and
-   * deeply referentially non-equal. Optionally replaces child elements based
-   * on a predicate.
-   *
-   * @remarks
-   * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be
-   * `undefined`.
-   */
-  export function clone(
-    node: Shadow,
-    options?: ElementReplacementOptions,
-    device?: Device,
-  ): Shadow;
-
-  /**
-   * Creates a new `Node` instance with the same value as the original and
-   * deeply referentially non-equal. Optionally replaces child elements based
-   * on a predicate.
-   *
-   * @remarks
-   * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be
-   *   `undefined`.
-   */
-  export function clone(
-    node: Node,
-    options?: ElementReplacementOptions,
-    device?: Device,
-  ): Node;
-
-  export function clone(
-    node: Node,
-    options?: ElementReplacementOptions,
-    device?: Device,
-  ): Node {
-    return cloneNode(node, options, device).run();
-  }
-
-  /**
-   * @internal
-   */
-  export function cloneNode(
-    node: Node,
-    options: ElementReplacementOptions = {
-      predicate: () => false,
-      newElements: [],
-    },
-    device?: Device,
-  ): Trampoline<Node> {
-    return Selective.of(node)
-      .if(Element.isElement, Element.cloneElement(options, device))
-      .if(Attribute.isAttribute, Attribute.cloneAttribute)
-      .if(Text.isText, Text.cloneText(device))
-      .if(Comment.isComment, Comment.cloneComment)
-      .if(Document.isDocument, Document.cloneDocument(options, device))
-      .if(Type.isType, Type.cloneType)
-      .if(Fragment.isFragment, Fragment.cloneFragment(options, device))
-      .if(Shadow.isShadow, Shadow.cloneShadow(options, device))
-      .else(() => {
-        throw new Error(`Unexpected node of type: ${node.type}`);
-      })
-      .get();
-  }
-
-  export const { getNodesBetween } = traversal;
-
-  export const {
-    hasBox,
-    hasChild,
-    hasDescendant,
-    hasInclusiveDescendant,
-    hasTextContent,
-    isRoot,
-  } = predicate;
+  export const hasChild = predicate.hasChild(Node.Traversal.empty);
+  export const hasDescendant = predicate.hasDescendant(Node.Traversal.empty);
+  export const hasInclusiveDescendant = predicate.hasInclusiveDescendant(
+    Node.Traversal.empty,
+  );
+  export const hasTextContent = predicate.hasTextContent(Node.Traversal.empty);
 }

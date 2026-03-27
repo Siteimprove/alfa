@@ -3,27 +3,18 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Device } from "@siteimprove/alfa-device";
 import type { Rectangle } from "@siteimprove/alfa-rectangle";
-import type { Node, Rule } from "./index.js";
+import type { Node } from "./index.js";
 import {
   Attribute,
   Block,
   Declaration,
   Document,
   Element,
-  FontFaceRule,
   Fragment,
-  ImportRule,
-  KeyframeRule,
-  KeyframesRule,
-  Layer,
-  MediaRule,
   Namespace,
-  NamespaceRule,
-  PageRule,
+  Rule,
   Shadow,
   Sheet,
-  StyleRule,
-  SupportsRule,
   Text,
   Type,
 } from "./index.js";
@@ -284,8 +275,8 @@ export namespace h {
   export namespace rule {
     export function fontFace(
       declarations: Array<Declaration> | Record<string, string>,
-    ): FontFaceRule {
-      return FontFaceRule.of(block(declarations));
+    ): Rule.FontFace {
+      return Rule.fontFace(block(declarations));
     }
 
     export function importRule(
@@ -295,8 +286,8 @@ export namespace h {
       supportCondition?: string,
       // Use "" for anonymous layer.
       layer?: string,
-    ): ImportRule {
-      return ImportRule.of(
+    ): Rule.Import {
+      return Rule.importRule(
         url,
         sheet,
         Option.from(mediaCondition),
@@ -307,56 +298,61 @@ export namespace h {
     export function keyframe(
       key: string,
       declarations: Array<Declaration> | Record<string, string>,
-    ): KeyframeRule {
-      return KeyframeRule.of(key, block(declarations));
+    ): Rule.Keyframe {
+      return Rule.keyframe(key, block(declarations));
     }
 
-    export function keyframes(name: string, rules: Array<Rule>): KeyframesRule {
-      return KeyframesRule.of(name, rules);
+    export function keyframes(
+      name: string,
+      rules: Array<Rule>,
+    ): Rule.Keyframes {
+      return Rule.keyframes(name, rules);
     }
 
     export function layerBlock(
       rules: Array<Rule>,
       layer?: string,
-    ): Layer.BlockRule {
-      return Layer.BlockRule.of(rules, layer);
+    ): Rule.Layer.Block {
+      return Rule.layerBlock(rules, layer);
     }
 
-    export function layerStatement(layers: Array<string>): Layer.StatementRule {
-      return Layer.StatementRule.of(layers);
+    export function layerStatement(
+      layers: Array<string>,
+    ): Rule.Layer.Statement {
+      return Rule.layerStatement(layers);
     }
 
-    export function media(condition: string, rules: Array<Rule>): MediaRule {
-      return MediaRule.of(condition, rules);
+    export function media(condition: string, rules: Array<Rule>): Rule.Media {
+      return Rule.media(condition, rules);
     }
 
     export function namespace(
       namespace: string,
       prefix?: string,
-    ): NamespaceRule {
-      return NamespaceRule.of(namespace, Option.from(prefix));
+    ): Rule.Namespace {
+      return Rule.namespace(namespace, Option.from(prefix));
     }
 
     export function page(
       selector: string,
       declarations: Array<Declaration> | Record<string, string>,
-    ): PageRule {
-      return PageRule.of(selector, block(declarations));
+    ): Rule.Page {
+      return Rule.page(selector, block(declarations));
     }
 
     export function style(
       selector: string,
       declarations: Array<Declaration> | Record<string, string>,
       hint?: boolean,
-    ): StyleRule {
-      return StyleRule.of(selector, block(declarations), hint);
+    ): Rule.Style {
+      return Rule.style(selector, block(declarations), hint);
     }
 
     export function supports(
       condition: string,
       rules: Array<Rule>,
-    ): SupportsRule {
-      return SupportsRule.of(condition, rules);
+    ): Rule.Supports {
+      return Rule.supports(condition, rules);
     }
   }
 }

@@ -109,18 +109,4 @@ export namespace Comment {
       Comment.of(json.data, json.externalId, json.internalId),
     );
   }
-
-  /**
-   * @internal
-   */
-  export function cloneComment(comment: Comment): Trampoline<Comment> {
-    return Trampoline.done(
-      Comment.of(
-        comment.data,
-        comment.externalId,
-        comment.internalId,
-        comment.extraData,
-      ),
-    );
-  }
 }

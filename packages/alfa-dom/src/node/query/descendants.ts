@@ -4,8 +4,8 @@ import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { Node } from "../../node.js";
-import { Element } from "../element.js";
-import { Text } from "../text.js";
+import { Element } from "../slotable/element.js";
+import { Text } from "../slotable/text.js";
 
 const _descendantsCache = Cache.empty<
   Predicate<Node>,

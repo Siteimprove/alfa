@@ -2,14 +2,8 @@ import type { Array } from "@siteimprove/alfa-array";
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
 import type { Device } from "@siteimprove/alfa-device";
-import type { Element, Rule, Sheet } from "@siteimprove/alfa-dom";
-import {
-  ImportRule,
-  Layer as LayerRules,
-  MediaRule,
-  StyleRule,
-  SupportsRule,
-} from "@siteimprove/alfa-dom";
+import type { Element, Sheet } from "@siteimprove/alfa-dom";
+import { Rule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { Maybe, None } from "@siteimprove/alfa-option";
@@ -37,12 +31,14 @@ const isDescendantSelector = and(
   ),
 );
 
-const { isImportRule } = ImportRule;
-const { isLayerBlockRule } = LayerRules.BlockRule;
-const { isLayerStatementRule } = LayerRules.StatementRule;
-const { isMediaRule } = MediaRule;
-const { isStyleRule } = StyleRule;
-const { isSupportsRule } = SupportsRule;
+const {
+  isImportRule,
+  isLayerBlockRule,
+  isLayerStatementRule,
+  isMediaRule,
+  isStyleRule,
+  isSupportsRule,
+} = Rule;
 
 /**
  * The selector map is a data structure used for providing indexed access to
@@ -389,7 +385,7 @@ export namespace SelectorMap {
           // For style rules, store its blocks; this is where the actual work happens.
           // Style rules with empty style blocks aren't relevant and so can be
           // skipped entirely to avoid increasing order.
-          .ifGuarded(isStyleRule, StyleRule.isEmpty, skip, (rule) => {
+          .ifGuarded(isStyleRule, Rule.Style.isEmpty, skip, (rule) => {
             let blocks: Array<Block<Block.Source>> = [];
             [blocks, order] = Block.from(
               rule,
@@ -407,7 +403,7 @@ export namespace SelectorMap {
           // if the import condition matches the device.
           .ifGuarded(
             isImportRule,
-            ImportRule.matches(device),
+            Rule.Import.matches(device),
             (rule) =>
               Iterable.forEach(
                 rule.sheet.children(),
@@ -433,7 +429,7 @@ export namespace SelectorMap {
           // media condition matches the device.
           .ifGuarded(
             isMediaRule,
-            MediaRule.matches(device),
+            Rule.Media.matches(device),
             visitChildren(visit(layer)),
             skip,
           )
@@ -441,7 +437,7 @@ export namespace SelectorMap {
           // if the support condition matches the device.
           .ifGuarded(
             isSupportsRule,
-            SupportsRule.matches(device),
+            Rule.Supports.matches(device),
             visitChildren(visit(layer)),
             skip,
           )
