@@ -797,10 +797,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdn/browser-compat-data@npm:^7.3.8":
-  version: 7.3.8
-  resolution: "@mdn/browser-compat-data@npm:7.3.8"
-  checksum: 10c0/1f5e294add87b10f7c917e78a7d54c19005fa0837fa2acdc54d474639ae94b313014acb0e5a522d0a10143b57b10fef2efb7695f1792fe715a08dd0766295a9e
+"@mdn/browser-compat-data@npm:^7.3.9":
+  version: 7.3.9
+  resolution: "@mdn/browser-compat-data@npm:7.3.9"
+  checksum: 10c0/7119de704926482176f3de75424be882aa02b6abf794fecbd3a5b699317b6e6e1d199145f09bd8e581a8cd9cc906956b239f3e01ef7088d3dcbb95097266aca8
   languageName: node
   linkType: hard
 
@@ -1638,7 +1638,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-compatibility@workspace:packages/alfa-compatibility"
   dependencies:
-    "@mdn/browser-compat-data": "npm:^7.3.8"
+    "@mdn/browser-compat-data": "npm:^7.3.9"
     "@siteimprove/alfa-iterable": "workspace:^"
     "@siteimprove/alfa-json": "workspace:^"
     browserslist: "npm:^4.28.1"
@@ -1749,7 +1749,7 @@ __metadata:
     "@siteimprove/alfa-test": "workspace:^"
     "@siteimprove/alfa-trampoline": "workspace:^"
     "@siteimprove/alfa-tree": "workspace:^"
-    "@types/jsdom": "npm:^28.0.0"
+    "@types/jsdom": "npm:^28.0.1"
     jsdom: "npm:^29.0.1"
   languageName: unknown
   linkType: soft
@@ -2849,15 +2849,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsdom@npm:^28.0.0":
-  version: 28.0.0
-  resolution: "@types/jsdom@npm:28.0.0"
+"@types/jsdom@npm:^28.0.1":
+  version: 28.0.1
+  resolution: "@types/jsdom@npm:28.0.1"
   dependencies:
     "@types/node": "npm:*"
     "@types/tough-cookie": "npm:*"
     parse5: "npm:^7.0.0"
     undici-types: "npm:^7.21.0"
-  checksum: 10c0/7b4b06dee1c611e37766ae2c5f92b0a881e3a2da8e38cc34999e812ab030b54b7250b0b9cc9af24dbeadc0fc2d341cc4e0adc5e5ca7d624d134ced1414a1ea5e
+  checksum: 10c0/4d0e412b4de5389279544ff227c6bacf6a8cb3e2fcabf8b543026568444c60e770848ba752cd134ef90f6ce3e7bafd3158b2a3dc1947c2961a5824b12d15bfac
   languageName: node
   linkType: hard
 
