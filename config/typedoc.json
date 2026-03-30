@@ -3,6 +3,7 @@
   "entryPoints": ["../packages/alfa-act", "../packages/alfa-dom"],
   "entryPointStrategy": "packages",
   "includeVersion": false,
+  "excludeExternals": true,
   "plugin": ["typedoc-plugin-markdown"],
   "outputs": [
     { "name": "html", "path": "../docs/typedoc/html" },
@@ -11,5 +12,7 @@
   "packageOptions": {
     "includeVersion": true,
     "entryPoints": ["src/index.ts"]
-  }
+  },
+  "router": "structure",
+  "favicon": "../media/icon.svg"
 }
