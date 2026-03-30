@@ -530,6 +530,8 @@ type Node_2 = Attribute | Comment_2 | Document_2 | Element_2 | Fragment | Shadow
 namespace Node_2 {
     // (undocumented)
     function from(json: Element_2.JSON, device?: Device): Element_2;
+    const // (undocumented)
+    isNode: Refinement<unknown, Node_2>;
     // (undocumented)
     function from(json: Attribute.JSON, device?: Device): Attribute;
     import Traversal = BaseNode.Traversal;
