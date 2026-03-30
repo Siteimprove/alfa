@@ -28,13 +28,11 @@ Alfa is an open and standards-based accessibility conformance testing engine. It
 
 ## Usage
 
-Alfa is distributed through [GitHub Packages](../../packages) as a set of separate packages that can be installed via your favourite [npm](https://www.npmjs.com/)-compatible package manager:
+Alfa is distributed through [npm Packages](https://www.npmjs.com/~si-npm) as a set of separate packages that can be installed via your favourite [npm](https://www.npmjs.com/)-compatible package manager:
 
 ```console
 $ npm install @siteimprove/alfa-<package-name>
 ```
-
-> :warning: Make sure to instruct your client to pull packages belonging to the `@siteimprove` scope from GitHub by adding the line `@siteimprove:registry=https://npm.pkg.github.com/siteimprove` to your `.npmrc` file. See [Installing a package from Github registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#installing-a-package) for details.
 
 On their own, each of these packages do very little, but when put together they provide a full suite of tools for performing accessibility comformance testing across all stages of the content development and publication workflow. If you are looking for an easy way to started using Alfa, check out the section on [integrations](#integrations); we might already have a ready-made solution for you!
 
@@ -186,11 +184,11 @@ At its core, Alfa is built around a tree structure that mirrors a subset of the 
 
 By implementing browser aspects, such as a style system and the accessibility tree, directly within Alfa, we gain the ability to do some things that would otherwise not be possible had we relied on only the APIs provided by the browser. The most radical difference is perhaps the computation of CSS properties, where Alfa can follow declared CSS properties up through cascade, inheritance, and absolutisation.
 
-At the code level, Alfa is structured as a monolithic repository consisting of several packages that each have their own area of responsibility. You can find more information on the overall architecture of Alfa in the [architecture documentation](docs/architecture). We also write and maintain [architecture decision reports](docs/architecture/decisions) if you want to get the complete picture of how Alfa came to be.
+At the code level, Alfa is structured as a monolithic repository consisting of several packages that each have their own area of responsibility. You can find more information on the overall architecture of Alfa in the [architecture documentation](https://github.com/Siteimprove/alfa/tree/main/docs/architecture). We also write and maintain [architecture decision reports](https://github.com/Siteimprove/alfa/tree/main/docs/architecture/decisions) if you want to get the complete picture of how Alfa came to be.
 
 ## Guides
 
-A list of guides on how to develop with Alfa can be found under [guides](docs/guides).
+A list of guides on how to develop with Alfa can be found under [guides](https://github.com/Siteimprove/alfa/tree/main/docs/guides).
 
 ## Funding
 
@@ -202,6 +200,7 @@ Alfa is part of a project that has received funding from the European Union's [H
 
 Copyright &copy; [Siteimprove A/S](https://siteimprove.com/). Released under the terms of the [MIT license](LICENSE.md).
 
-[alfa integrations]: https://github.com/Siteimprove/alfa-integrations
-[open an issue]: ../../issues/new/choose "Open a new issue"
-[node.js]: https://nodejs.org/en/
+[alfa integrations]: https://github.com/Siteimprove/alfa-integrations "Alfa integrations repository"
+[node.js]: https://nodejs.org/en/ "NodeJS"
+[open an issue]: https://github.com/Siteimprove/alfa/issues/new/choose "Open a new issue"
+[scratches]: https://github.com/Siteimprove/alfa/tree/main/scratches "Scratches directory"
