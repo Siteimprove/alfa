@@ -1,0 +1,6 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["../packages/*/src/index.ts"],
+  "out": "./docs/typedoc",
+  "plugin": ["typedoc-plugin-markdown"]
+}
