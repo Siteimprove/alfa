@@ -14,5 +14,11 @@
     "entryPoints": ["src/index.ts"]
   },
   "router": "structure",
-  "favicon": "../media/icon.svg"
+  "favicon": "../media/icon.svg",
+  "sourceLinkExternal": true,
+  "navigationLinks": {
+    "Alfa technical documentation": "https://alfa.siteimprove.com",
+    "Siteimprove": "https://siteimprove.com"
+  },
+  "useFirstParagraphOfCommentAsSummary": true
 }

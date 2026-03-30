@@ -3,5 +3,8 @@
   "entryPoints": ["../src/index.ts"],
   "includeVersion": true,
   "excludeExternals": true,
-  "excludeInternal": true
+  "excludeInternal": true,
+  "gitRevision": "{branch}",
+  "jsDocCompatibility": false,
+  "excludeTags": ["@knipignore"]
 }
