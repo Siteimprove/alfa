@@ -413,7 +413,8 @@ export namespace BaseNode {
   export const composedNested = Traversal.of("composed", "nested");
 }
 
-/* Sub-nodes type guards, we need to duplicate them to avoid circular references.
+/*
+ * Sub-nodes type guards, we need to duplicate them to avoid circular references.
  * Here, we only use the differentiating `type` property.
  */
 function isElement(node: Node): node is Element {

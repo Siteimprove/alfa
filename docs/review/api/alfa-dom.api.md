@@ -7,7 +7,7 @@
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Device } from '@siteimprove/alfa-device';
 import type * as earl from '@siteimprove/alfa-earl';
-import { Element as Element_3 } from '../slotable/element.js';
+import { Element as Element_3 } from '../index.js';
 import type { Equatable } from '@siteimprove/alfa-equatable';
 import { Feature } from '@siteimprove/alfa-css-feature';
 import { Flags } from '@siteimprove/alfa-flags';
@@ -24,8 +24,10 @@ import { Serializable } from '@siteimprove/alfa-json';
 import { Trampoline } from '@siteimprove/alfa-trampoline';
 import * as tree from '@siteimprove/alfa-tree';
 
+// Warning: (ae-forgotten-export) The symbol "BaseNode" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export class Attribute<N extends string = string> extends Node_2<"attribute"> {
+export class Attribute<N extends string = string> extends BaseNode<"attribute"> {
     protected constructor(namespace: Option_2<Namespace>, prefix: Option_2<string>, name: N, value: string, externalId?: string, internalId?: string, extraData?: any);
     // @internal (undocumented)
     _attachOwner(owner: Element_2): boolean;
@@ -36,7 +38,7 @@ export class Attribute<N extends string = string> extends Node_2<"attribute"> {
     // (undocumented)
     enumerate<T extends string>(valid: T, ...rest: Array<T>): Option_2<T>;
     // @internal (undocumented)
-    protected _internalPath(options?: Node_2.Traversal): string;
+    protected _internalPath(options?: BaseNode.Traversal): string;
     // (undocumented)
     isBoolean(): boolean;
     // (undocumented)
@@ -52,11 +54,11 @@ export class Attribute<N extends string = string> extends Node_2<"attribute"> {
     // (undocumented)
     get qualifiedName(): string;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Attribute.MinimalJSON;
     // (undocumented)
-    toJSON(options?: Node_2.SerializationOptions): Attribute.JSON<N>;
+    toJSON(options?: BaseNode.SerializationOptions): Attribute.JSON<N>;
     // (undocumented)
     tokens(separator?: string | RegExp): Sequence<string>;
     // (undocumented)
@@ -74,7 +76,7 @@ export namespace Attribute {
     // (undocumented)
     export function isAttribute(value: unknown): value is Attribute;
     // (undocumented)
-    export interface JSON<N extends string = string> extends Node_2.JSON<"attribute"> {
+    export interface JSON<N extends string = string> extends BaseNode.JSON<"attribute"> {
         // (undocumented)
         name: N;
         // (undocumented)
@@ -85,7 +87,7 @@ export namespace Attribute {
         value: string;
     }
     // (undocumented)
-    export interface MinimalJSON extends Node_2.JSON<"attribute"> {
+    export interface MinimalJSON extends BaseNode.JSON<"attribute"> {
     }
     const // Warning: (ae-forgotten-export) The symbol "predicate_3" needs to be exported by the entry point index.d.ts
     //
@@ -126,22 +128,22 @@ export namespace Block {
 }
 
 // @public (undocumented)
-class Comment_2 extends Node_2<"comment"> {
+class Comment_2 extends BaseNode<"comment"> {
     protected constructor(data: string, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     get data(): string;
     // (undocumented)
     static empty(): Comment_2;
     // @internal (undocumented)
-    protected _internalPath(options?: Node_2.Traversal): string;
+    protected _internalPath(options?: BaseNode.Traversal): string;
     // (undocumented)
     static of(data: string, externalId?: string, internalId?: string, extraData?: any): Comment_2;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Comment_2.MinimalJSON;
     // (undocumented)
-    toJSON(options?: Node_2.SerializationOptions): Comment_2.JSON;
+    toJSON(options?: BaseNode.SerializationOptions): Comment_2.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -153,12 +155,12 @@ namespace Comment_2 {
     // (undocumented)
     function isComment(value: unknown): value is Comment_2;
     // (undocumented)
-    interface JSON extends Node_2.JSON<"comment"> {
+    interface JSON extends BaseNode.JSON<"comment"> {
         // (undocumented)
         data: string;
     }
     // (undocumented)
-    interface MinimalJSON extends Node_2.JSON<"comment"> {
+    interface MinimalJSON extends BaseNode.JSON<"comment"> {
     }
 }
 export { Comment_2 as Comment }
@@ -209,7 +211,7 @@ export namespace Declaration {
 }
 
 // @public (undocumented)
-class Document_2 extends Node_2<"document"> {
+class Document_2 extends BaseNode<"document"> {
     protected constructor(children: Array_2<Node_2>, style: Iterable_2<Sheet>, externalId?: string, internalId?: string, extraData?: any);
     // @internal (undocumented)
     _attachFrame(frame: Element_2): boolean;
@@ -220,19 +222,19 @@ class Document_2 extends Node_2<"document"> {
     // (undocumented)
     get frame(): Option_2<Element_2>;
     // @internal (undocumented)
-    protected _internalPath(options?: Node_2.Traversal): string;
+    protected _internalPath(options?: BaseNode.Traversal): string;
     // (undocumented)
     static of(children: Iterable_2<Node_2>, style?: Iterable_2<Sheet>, externalId?: string, internalId?: string, extraData?: any): Document_2;
     // (undocumented)
-    parent(options?: Node_2.Traversal): Option_2<Node_2>;
+    parent(options?: BaseNode.Traversal): Option_2<Node_2>;
     // (undocumented)
     get style(): Iterable_2<Sheet>;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Document_2.MinimalJSON;
     // (undocumented)
-    toJSON(options?: Node_2.SerializationOptions): Document_2.JSON;
+    toJSON(options?: BaseNode.SerializationOptions): Document_2.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -240,16 +242,16 @@ class Document_2 extends Node_2<"document"> {
 // @public (undocumented)
 namespace Document_2 {
     // @internal (undocumented)
-    function fromDocument(json: JSON, device?: Device): Trampoline<Document_2>;
+    function fromDocument(json: JSON, fromNode: (json: Node_2.JSON, device?: Device) => Trampoline<Node_2>, device?: Device): Trampoline<Document_2>;
     // (undocumented)
     function isDocument(value: unknown): value is Document_2;
     // (undocumented)
-    interface JSON extends Node_2.JSON<"document"> {
+    interface JSON extends BaseNode.JSON<"document"> {
         // (undocumented)
         style: Array_2<Sheet.JSON>;
     }
     // (undocumented)
-    interface MinimalJSON extends Node_2.JSON<"document"> {
+    interface MinimalJSON extends BaseNode.JSON<"document"> {
     }
 }
 export { Document_2 as Document }
@@ -274,7 +276,7 @@ class Element<N extends string = string> extends Slotable_2<"element"> {
     // (undocumented)
     get attributes(): Sequence<Attribute>;
     // (undocumented)
-    children(options?: Node_2.Traversal): Sequence<Node_2>;
+    children(options?: BaseNode.Traversal): Sequence<Node_2>;
     // (undocumented)
     get classes(): Sequence<string>;
     // (undocumented)
@@ -290,7 +292,7 @@ class Element<N extends string = string> extends Slotable_2<"element"> {
     // (undocumented)
     protected _inputType: helpers.InputType | undefined;
     // @internal (undocumented)
-    protected _internalPath(options?: Node_2.Traversal): string;
+    protected _internalPath(options?: BaseNode.Traversal): string;
     isInert(): boolean;
     // (undocumented)
     isVoid(): boolean;
@@ -315,17 +317,17 @@ class Element<N extends string = string> extends Slotable_2<"element"> {
     // (undocumented)
     tabIndex(): Option_2<number>;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Element.MinimalJSON;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.High;
     }): Element.JSON & {
         assignedSlot: Element.MinimalJSON | null;
     };
     // (undocumented)
-    toJSON(options?: Node_2.SerializationOptions): Element.JSON<N>;
+    toJSON(options?: BaseNode.SerializationOptions): Element.JSON<N>;
     // (undocumented)
     toString(): string;
 }
@@ -333,7 +335,7 @@ class Element<N extends string = string> extends Slotable_2<"element"> {
 // @public (undocumented)
 namespace Element {
     // @internal (undocumented)
-    function fromElement<N extends string = string>(json: JSON<N>, device?: Device): Trampoline<Element<N>>;
+    function fromElement<N extends string = string>(json: JSON<N>, fromNode: (json: Node_2.JSON, device?: Device) => Trampoline<Node_2>, device?: Device): Trampoline<Element<N>>;
     // (undocumented)
     type InputType = helpers.InputType;
     // (undocumented)
@@ -341,7 +343,7 @@ namespace Element {
     // (undocumented)
     function isSlot(value: unknown): value is Slot;
     // (undocumented)
-    interface JSON<N extends string = string> extends Node_2.JSON<"element"> {
+    interface JSON<N extends string = string> extends BaseNode.JSON<"element"> {
         // (undocumented)
         attributes: Array<Attribute.JSON>;
         // (undocumented)
@@ -379,21 +381,21 @@ namespace Element {
     const // (undocumented)
     isActuallyDisabled: Predicate<Element<string>>;
     const // (undocumented)
-    isContent: (options?: Node_2.Traversal) => Predicate<Node_2>;
+    isContent: (options?: BaseNode.Traversal) => Predicate<BaseNode>;
     const // (undocumented)
     isDocumentElement: Refinement<unknown, Element<"html">>;
     const // (undocumented)
-    isFallback: Predicate<Node_2<string>>;
+    isFallback: Predicate<BaseNode<string>>;
     const // (undocumented)
     isScopedTo: (name: string, ...rest: Array<string>) => Predicate<Element>;
     // (undocumented)
-    interface MinimalJSON extends Node_2.JSON<"element"> {
+    interface MinimalJSON extends BaseNode.JSON<"element"> {
     }
 }
 export { Element_2 as Element }
 
 // @public (undocumented)
-export class Fragment extends Node_2<"fragment"> {
+export class Fragment extends BaseNode<"fragment"> {
     protected constructor(children: Array<Node_2>, externalId?: string, internalId?: string, extraData?: any);
     // @internal (undocumented)
     _attachParent(): boolean;
@@ -410,11 +412,11 @@ export class Fragment extends Node_2<"fragment"> {
 // @public (undocumented)
 export namespace Fragment {
     // @internal (undocumented)
-    export function fromFragment(json: JSON, device?: Device): Trampoline<Fragment>;
+    export function fromFragment(json: JSON, fromNode: (json: Node_2.JSON, device?: Device) => Trampoline<Node_2>, device?: Device): Trampoline<Fragment>;
     // (undocumented)
     export function isFragment(value: unknown): value is Fragment;
     // (undocumented)
-    export interface JSON extends Node_2.JSON<"fragment"> {
+    export interface JSON extends BaseNode.JSON<"fragment"> {
     }
 }
 
@@ -470,19 +472,19 @@ export namespace h {
     export function type<N extends string = string>(name: N, publicId?: string, systemId?: string, externalId?: string, internalId?: string, extraData?: any): Type<N>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "dom" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export function jsx<N extends string = string>(name: N, properties?: jsx.Properties | null, ...children: jsx.Children): Element_2<N>;
+export function jsx<N extends string = string>(name: N, properties?: jsx.Properties | null, ...children: jsx.Children): dom.Element<N>;
 
 // @public (undocumented)
 export namespace jsx {
     // (undocumented)
-    export type Child = Node_2 | string;
+    export type Child = dom.Node | string;
     // (undocumented)
     export type Children = (Child | Children)[];
     // (undocumented)
     export namespace JSX {
-        // Warning: (ae-forgotten-export) The symbol "dom" needs to be exported by the entry point index.d.ts
-        //
         // (undocumented)
         export type Element<N extends string = string> = dom.Element<N>;
         // (undocumented)
@@ -522,244 +524,29 @@ export namespace Namespace {
 }
 
 // @public (undocumented)
-abstract class Node_2<T extends string = string> extends tree.Node<"DOM traversal", Node_2.TraversalFlags, T> implements earl.Serializable<Node_2.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
-    protected constructor(children: Array<Node_2>, type: T, externalId?: string, internalId?: string, extraData?: any);
-    // (undocumented)
-    equals(value: Node_2): boolean;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // @internal (undocumented)
-    protected _internalPath(options?: Node_2.Traversal): string;
-    path(options?: Node_2.Traversal): string;
-    tabOrder(): Sequence<Element_2>;
-    // (undocumented)
-    textContent(options?: Node_2.Traversal): string;
-    // (undocumented)
-    toEARL(): Node_2.EARL;
-    // (undocumented)
-    toJSON(options?: Serializable.Options): Node_2.JSON<T>;
-    // (undocumented)
-    toSARIF(): sarif.Location;
-}
-
-// @public (undocumented)
-interface Node_2 {
-    // (undocumented)
-    ancestors(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    children(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    closest<T extends Node_2>(refinement: Refinement<Node_2, T>, options?: Node_2.Traversal): Option_2<T>;
-    // (undocumented)
-    closest(predicate: Predicate<Node_2>, options?: Node_2.Traversal): Option_2<Node_2>;
-    // (undocumented)
-    descendants(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    first(options?: Node_2.Traversal): Option_2<Node_2>;
-    // (undocumented)
-    following(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    inclusiveAncestors(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    inclusiveDescendants(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    inclusiveSiblings(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    index(options?: Node_2.Traversal, predicate?: Predicate<Node_2>): number;
-    // (undocumented)
-    isAncestorOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isChildOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isDescendantOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isInclusiveAncestorOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isInclusiveDescendantsOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isInclusiveSiblingOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isParentOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isRootOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isSiblingOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    last(options?: Node_2.Traversal): Option_2<Node_2>;
-    // (undocumented)
-    next(options?: Node_2.Traversal): Option_2<Node_2>;
-    // (undocumented)
-    parent(options?: Node_2.Traversal): Option_2<Node_2>;
-    // (undocumented)
-    preceding(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    previous(options?: Node_2.Traversal): Option_2<Node_2>;
-    // (undocumented)
-    root(options?: Node_2.Traversal): Node_2;
-    // (undocumented)
-    siblings(options?: Node_2.Traversal): Sequence<Node_2>;
-}
+type Node_2 = Attribute | Comment_2 | Document_2 | Element_2 | Fragment | Shadow | Type | Text_2;
 
 // @public (undocumented)
 namespace Node_2 {
     // (undocumented)
-    interface EARL extends earl.EARL {
-        // (undocumented)
-        "@context": {
-            ptr: "http://www.w3.org/2009/pointers#";
-        };
-        // (undocumented)
-        "@type": [
-        "ptr:Pointer",
-        "ptr:SinglePointer",
-        "ptr:ExpressionPointer",
-        "ptr:XPathPointer"
-        ];
-        // (undocumented)
-        "ptr:expression": string;
-        // (undocumented)
-        "ptr:reference"?: {
-            "@id": string;
-        };
-    }
-    // (undocumented)
     function from(json: Element_2.JSON, device?: Device): Element_2;
     // (undocumented)
     function from(json: Attribute.JSON, device?: Device): Attribute;
+    import Traversal = BaseNode.Traversal;
+    const // Warning: (ae-forgotten-export) The symbol "BaseNode" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    flatTree: Traversal;
+    const // (undocumented)
+    fullTree: Traversal;
+    const // (undocumented)
+    composedNested: Traversal;
     // (undocumented)
     function from(json: Text_2.JSON, device?: Device): Text_2;
-    const // (undocumented)
-    Traversal: {
-        of: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => {
-            has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
-            isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
-            add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-            set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-            remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-            unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-            is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
-            equals(value: any): boolean;
-            equals(value: unknown): value is any;
-            toString(): string;
-            toJSON(): Flags.JSON<"DOM traversal"> & {
-                composed: boolean;
-                flattened: boolean;
-                nested: boolean;
-            };
-            readonly value: number;
-            readonly kind: "DOM traversal";
-        } & {
-            composed: boolean;
-            flattened: boolean;
-            nested: boolean;
-        };
-        readonly none: 0;
-        readonly empty: {
-            has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
-            isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
-            add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-            set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-            remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-            unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-            is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
-            equals(value: any): boolean;
-            equals(value: unknown): value is any;
-            toString(): string;
-            toJSON(): Flags.JSON<"DOM traversal"> & {
-                composed: boolean;
-                flattened: boolean;
-                nested: boolean;
-            };
-            readonly value: number;
-            readonly kind: "DOM traversal";
-        } & {
-            composed: boolean;
-            flattened: boolean;
-            nested: boolean;
-        };
-        readonly allFlags: [1, 2, 4];
-        nameOf: (flag: 1 | 2 | 4) => "composed" | "flattened" | "nested";
-        reduce: (...flags: Array_2<number>) => number;
-        named: <K extends string, A extends Array_2<string>>(kind: K, ...flags: A) => {
-            [x: string]: any;
-        };
-        composed: 1 | 2 | 4;
-        flattened: 1 | 2 | 4;
-        nested: 1 | 2 | 4;
-    };
     // (undocumented)
     function from(json: Comment_2.JSON, device?: Device): Comment_2;
     // (undocumented)
     function from(json: Document_2.JSON, device?: Device): Document_2;
-    const flatTree: {
-        has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
-        isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
-        add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-        set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-        remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-        unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-        is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
-        equals(value: any): boolean;
-        equals(value: unknown): value is any;
-        toString(): string;
-        toJSON(): Flags.JSON<"DOM traversal"> & {
-            composed: boolean;
-            flattened: boolean;
-            nested: boolean;
-        };
-        readonly value: number;
-        readonly kind: "DOM traversal";
-    } & {
-        composed: boolean;
-        flattened: boolean;
-        nested: boolean;
-    };
-    const fullTree: {
-        has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
-        isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
-        add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-        set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-        remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-        unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-        is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
-        equals(value: any): boolean;
-        equals(value: unknown): value is any;
-        toString(): string;
-        toJSON(): Flags.JSON<"DOM traversal"> & {
-            composed: boolean;
-            flattened: boolean;
-            nested: boolean;
-        };
-        readonly value: number;
-        readonly kind: "DOM traversal";
-    } & {
-        composed: boolean;
-        flattened: boolean;
-        nested: boolean;
-    };
-    const composedNested: {
-        has(flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4): boolean;
-        isSet: (flag: 0 | "composed" | 1 | "flattened" | 2 | "nested" | 4) => boolean;
-        add(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-        set: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-        remove(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): any;
-        unset: (...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>) => any;
-        is(...flags: Array_2<0 | "composed" | 1 | "flattened" | 2 | "nested" | 4>): boolean;
-        equals(value: any): boolean;
-        equals(value: unknown): value is any;
-        toString(): string;
-        toJSON(): Flags.JSON<"DOM traversal"> & {
-            composed: boolean;
-            flattened: boolean;
-            nested: boolean;
-        };
-        readonly value: number;
-        readonly kind: "DOM traversal";
-    } & {
-        composed: boolean;
-        flattened: boolean;
-        nested: boolean;
-    };
     // (undocumented)
     function from(json: Type.JSON, device?: Device): Document_2;
     // (undocumented)
@@ -769,21 +556,9 @@ namespace Node_2 {
     // @internal (undocumented)
     function fromNode(json: JSON, device?: Device): Trampoline<Node_2>;
     // (undocumented)
-    function isNode(value: unknown): value is Node_2;
+    type JSON = Attribute.JSON | Comment_2.JSON | Document_2.JSON | Element_2.JSON | Fragment.JSON | Shadow.JSON | Type.JSON | Text_2.JSON;
     // (undocumented)
-    interface JSON<T extends string = string> extends tree.Node.JSON<T> {
-        // (undocumented)
-        path?: string;
-    }
-    // (undocumented)
-    interface SerializationOptions extends json.Serializable.Options {
-        // (undocumented)
-        device?: Device;
-    }
-    // (undocumented)
-    type Traversal = ReturnType<(typeof Traversal)["of"]>;
-    // (undocumented)
-    type TraversalFlags = (typeof Node_2.Traversal.allFlags)[number];
+    type SerializationOptions = BaseNode.SerializationOptions;
     const // (undocumented)
     getNodesBetween: (node1: Node_2, node2: Node_2, includeOptions?: {
         includeFirst: boolean;
@@ -812,7 +587,7 @@ export namespace Query {
     // (undocumented)
     getDescendants: typeof descendants.getDescendants;
     const // (undocumented)
-    getElementDescendants: (node: Node_2, options?: Node_2.Traversal) => Sequence<Element_3<string>>;
+    getElementDescendants: (node: BaseNode, options?: BaseNode.Traversal) => Sequence<Element_3<string>>;
     const // (undocumented)
     getInclusiveElementDescendants: typeof descendants.getInclusiveElementDescendants;
     const // (undocumented)
@@ -824,7 +599,7 @@ export namespace Query {
     // (undocumented)
     export type TextGroup = descendants.TextGroup;
     // (undocumented)
-    export type TextGroupOptions<N extends Node_2 = Node_2> = descendants.TextGroupOptions<N>;
+    export type TextGroupOptions<N extends BaseNode = BaseNode> = descendants.TextGroupOptions<N>;
 }
 
 // @public (undocumented)
@@ -924,7 +699,7 @@ export namespace Rule {
 }
 
 // @public (undocumented)
-export class Shadow extends Node_2<"shadow"> {
+export class Shadow extends BaseNode<"shadow"> {
     protected constructor(children: Array<Node_2>, style: Array<Sheet>, mode: Shadow.Mode, externalId?: string, internalId?: string, extraData?: any);
     // @internal (undocumented)
     _attachHost(host: Element_2): boolean;
@@ -935,21 +710,21 @@ export class Shadow extends Node_2<"shadow"> {
     // (undocumented)
     get host(): Option_2<Element_2>;
     // @internal (undocumented)
-    protected _internalPath(options?: Node_2.Traversal): string;
+    protected _internalPath(options?: BaseNode.Traversal): string;
     // (undocumented)
     get mode(): Shadow.Mode;
     // (undocumented)
     static of(children: Iterable_2<Node_2>, style?: Iterable_2<Sheet>, mode?: Shadow.Mode, externalId?: string, internalId?: string, extraData?: any): Shadow;
     // (undocumented)
-    parent(options?: Node_2.Traversal): Option_2<Node_2>;
+    parent(options?: BaseNode.Traversal): Option_2<Node_2>;
     // (undocumented)
     get style(): Iterable_2<Sheet>;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Shadow.MinimalJSON;
     // (undocumented)
-    toJSON(options?: Node_2.SerializationOptions): Shadow.JSON;
+    toJSON(options?: BaseNode.SerializationOptions): Shadow.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -957,11 +732,11 @@ export class Shadow extends Node_2<"shadow"> {
 // @public (undocumented)
 export namespace Shadow {
     // @internal (undocumented)
-    export function fromShadow(json: JSON, device?: Device): Trampoline<Shadow>;
+    export function fromShadow(json: JSON, fromNode: (json: Node_2.JSON, device?: Device) => Trampoline<Node_2>, device?: Device): Trampoline<Shadow>;
     // (undocumented)
     export function isShadow(value: unknown): value is Shadow;
     // (undocumented)
-    export interface JSON extends Node_2.JSON {
+    export interface JSON extends BaseNode.JSON {
         // (undocumented)
         mode: string;
         // (undocumented)
@@ -970,7 +745,7 @@ export namespace Shadow {
         type: "shadow";
     }
     // (undocumented)
-    export interface MinimalJSON extends Node_2.JSON {
+    export interface MinimalJSON extends BaseNode.JSON {
     }
     // (undocumented)
     export enum Mode {
@@ -1044,7 +819,7 @@ class Text_2 extends Slotable_2<"text"> {
     // (undocumented)
     getBoundingBox(device: Device): Option_2<Rectangle>;
     // @internal (undocumented)
-    protected _internalPath(options?: Node_2.Traversal): string;
+    protected _internalPath(options?: BaseNode.Traversal): string;
     // (undocumented)
     is(predicate: Predicate<string>): boolean;
     // (undocumented)
@@ -1052,11 +827,11 @@ class Text_2 extends Slotable_2<"text"> {
     // (undocumented)
     slotableName(): string;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Text_2.MinimalJSON;
     // (undocumented)
-    toJSON(options?: Node_2.SerializationOptions): Text_2.JSON;
+    toJSON(options?: BaseNode.SerializationOptions): Text_2.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -1070,20 +845,20 @@ namespace Text_2 {
     // (undocumented)
     function isText(value: unknown): value is Text_2;
     // (undocumented)
-    interface JSON extends Node_2.JSON<"text"> {
+    interface JSON extends BaseNode.JSON<"text"> {
         // (undocumented)
         box: Rectangle.JSON | null;
         // (undocumented)
         data: string;
     }
     // (undocumented)
-    interface MinimalJSON extends Node_2.JSON<"text"> {
+    interface MinimalJSON extends BaseNode.JSON<"text"> {
     }
 }
 export { Text_2 as Text }
 
 // @public (undocumented)
-export class Type<N extends string = string> extends Node_2<"type"> {
+export class Type<N extends string = string> extends BaseNode<"type"> {
     protected constructor(name: N, publicId: Option_2<string>, systemId: Option_2<string>, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     static empty(): Type;
@@ -1096,11 +871,11 @@ export class Type<N extends string = string> extends Node_2<"type"> {
     // (undocumented)
     get systemId(): Option_2<string>;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Type.MinimalJSON;
     // (undocumented)
-    toJSON(options?: Node_2.SerializationOptions): Type.JSON<N>;
+    toJSON(options?: BaseNode.SerializationOptions): Type.JSON<N>;
     // (undocumented)
     toString(): string;
 }
@@ -1112,7 +887,7 @@ export namespace Type {
     // (undocumented)
     export function isType(value: unknown): value is Type;
     // (undocumented)
-    export interface JSON<N extends string = string> extends Node_2.JSON<"type"> {
+    export interface JSON<N extends string = string> extends BaseNode.JSON<"type"> {
         // (undocumented)
         name: N;
         // (undocumented)
@@ -1121,7 +896,7 @@ export namespace Type {
         systemId: string | null;
     }
     // (undocumented)
-    export interface MinimalJSON extends Node_2.JSON<"type"> {
+    export interface MinimalJSON extends BaseNode.JSON<"type"> {
     }
 }
 

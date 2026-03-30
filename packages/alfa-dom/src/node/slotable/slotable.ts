@@ -25,3 +25,12 @@ export abstract class Slotable<T extends string = string> extends BaseNode<T> {
    */
   public abstract slotableName(): string;
 }
+
+/**
+ * @public
+ */
+export namespace Slotable {
+  export function isSlotable(value: unknown): value is Slotable {
+    return value instanceof Slotable;
+  }
+}

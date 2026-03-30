@@ -2,7 +2,8 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Element } from "./element.js";
 import { Shadow } from "../shadow.js";
 
-import { Slotable } from "./index.js";
+import { Slotable as BaseSlotable } from "./slotable.js";
+import type { Slotable } from "./index.js";
 
 /** @public */
 export type Slot = Element<"slot">;
@@ -30,7 +31,10 @@ Element.prototype.assignedNodes = function* (this: Slot): Iterable<Slotable> {
   if (Shadow.isShadow(root)) {
     for (const host of root.host) {
       for (const child of host.children()) {
-        if (Slotable.isSlotable(child) && child.assignedSlot().includes(this)) {
+        if (
+          BaseSlotable.isSlotable(child) &&
+          child.assignedSlot().includes(this)
+        ) {
           yield child;
         }
       }
