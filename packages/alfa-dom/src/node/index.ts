@@ -1,5 +1,6 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { BaseNode as BaseNode } from "./node.js";
@@ -14,6 +15,8 @@ import { Type } from "./type.js";
 
 import * as predicate from "./predicate/index.js";
 import * as traversal from "./traversal/index.js";
+
+const { or } = Refinement;
 
 export * from "./attribute.js";
 export * from "./comment.js";
@@ -49,9 +52,23 @@ export namespace Node {
     | Shadow.JSON
     | Type.JSON
     | Text.JSON;
-  // export function isNode(value: unknown): value is Node {
-  //   return value instanceof Node;
-  // }
+
+  export const isNode: Refinement<unknown, Node> = or(
+    Attribute.isAttribute,
+    or(
+      Comment.isComment,
+      or(
+        Document.isDocument,
+        or(
+          Element.isElement,
+          or(
+            Fragment.isFragment,
+            or(Shadow.isShadow, or(Type.isType, Text.isText)),
+          ),
+        ),
+      ),
+    ),
+  );
 
   export type SerializationOptions = BaseNode.SerializationOptions;
 
