@@ -1,6 +1,6 @@
 {
   "$schema": "https://typedoc.org/schema.json",
-  "entryPoints": ["../packages/alfa-act", "../packages/alfa-web"],
+  "entryPoints": ["../packages/alfa-act", "../packages/alfa-dom"],
   "entryPointStrategy": "packages",
   "includeVersion": false,
   "plugin": ["typedoc-plugin-markdown"],
