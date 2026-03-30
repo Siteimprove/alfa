@@ -1,12 +1,12 @@
 import type { Option } from "@siteimprove/alfa-option";
 
-import { Node } from "../../node.js";
+import { BaseNode } from "../node.js";
 import type { Slot } from "./slot.js";
 
 /**
  * @public
  */
-export abstract class Slotable<T extends string = string> extends Node<T> {
+export abstract class Slotable<T extends string = string> extends BaseNode<T> {
   /**
    * Get the slot that this slotable is assigned to.
    *
@@ -25,44 +25,3 @@ export abstract class Slotable<T extends string = string> extends Node<T> {
    */
   public abstract slotableName(): string;
 }
-
-/**
- * @public
- */
-export namespace Slotable {
-  export function isSlotable(value: unknown): value is Slotable {
-    return value instanceof Slotable;
-  }
-}
-//
-//   /**
-//    * {@link https://dom.spec.whatwg.org/#slotable-name}
-//    */
-//   export function name(slotable: Slotable): string {
-//     return Element.isElement(slotable)
-//       ? slotable
-//           .attribute("slot")
-//           .map((slot) => slot.value)
-//           .getOr("")
-//       : "";
-//   }
-//
-//   /**
-//    * {@link https://dom.spec.whatwg.org/#find-a-slot}
-//    */
-//   export function findSlot(slotable: Slotable): Option<Slot> {
-//     const name = Slotable.name(slotable);
-//
-//     return slotable
-//       .parent()
-//       .filter(Element.isElement)
-//       .flatMap((parent) =>
-//         parent.shadow.flatMap((shadow) =>
-//           shadow
-//             .descendants()
-//             .filter(Element.isSlot)
-//             .find((slot) => slot.slotName() === name),
-//         ),
-//       );
-//   }
-// }

@@ -2,7 +2,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 import type { Element } from "../../slotable/element.js";
-import type { Node } from "../../../node.js";
+import type { BaseNode } from "../../node.js";
 
 import { hasName } from "./has-name.js";
 
@@ -23,7 +23,7 @@ const { and } = Refinement;
  */
 export function isFallback(
   isElement: Refinement<unknown, Element>,
-): Predicate<Node> {
+): Predicate<BaseNode> {
   return or(
     hasParentName(isElement, "iframe"),
     and(
@@ -37,7 +37,7 @@ function hasParentName(
   isElement: Refinement<unknown, Element>,
   name: string,
   ...names: Array<string>
-): Predicate<Node> {
+): Predicate<BaseNode> {
   return (node) =>
     node
       .parent()

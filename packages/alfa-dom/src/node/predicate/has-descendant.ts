@@ -1,6 +1,6 @@
 import type { Predicate } from "@siteimprove/alfa-predicate";
 
-import type { Node } from "../../node.js";
+import type { Node } from "../index.js";
 
 /**
  * @public

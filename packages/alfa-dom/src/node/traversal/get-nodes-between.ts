@@ -1,7 +1,7 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import type { Node } from "../../node.js";
+import type { Node } from "../index.js";
 
 import { lowestCommonAncestor } from "./lowest-common-ancestor.js";
 

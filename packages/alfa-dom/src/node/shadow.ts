@@ -6,14 +6,16 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "../node.js";
 import { Sheet } from "../style/sheet.js";
+import { BaseNode } from "./node.js";
 import type { Element } from "./slotable/index.js";
+
+import type { Node } from "./index.js";
 
 /**
  * @public
  */
-export class Shadow extends Node<"shadow"> {
+export class Shadow extends BaseNode<"shadow"> {
   public static of(
     children: Iterable<Node>,
     style: Iterable<Sheet> = [],
@@ -66,10 +68,12 @@ export class Shadow extends Node<"shadow"> {
     return this._style;
   }
 
-  public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
+  public parent(
+    options: BaseNode.Traversal = BaseNode.Traversal.empty,
+  ): Option<Node> {
     // We only "land" on Shadow roots when traversing the composed tree.
     // Notably, flattening the tree "jumps" over them.
-    if (options.isSet(Node.Traversal.composed)) {
+    if (options.isSet(BaseNode.Traversal.composed)) {
       return this._host;
     }
 
@@ -80,16 +84,16 @@ export class Shadow extends Node<"shadow"> {
    * @internal
    **/
   protected _internalPath(
-    options: Node.Traversal = Node.Traversal.empty,
+    options: BaseNode.Traversal = BaseNode.Traversal.empty,
   ): string {
-    if (options.isSet(Node.Traversal.composed)) {
+    if (options.isSet(BaseNode.Traversal.composed)) {
       return (
         this._host.map((host) => host.path(options)).getOr("") +
         "/shadow-root()"
       );
     }
 
-    if (options.isSet(Node.Traversal.flattened)) {
+    if (options.isSet(BaseNode.Traversal.flattened)) {
       return this._host.map((host) => host.path(options)).getOr("/");
     }
 
@@ -97,15 +101,15 @@ export class Shadow extends Node<"shadow"> {
   }
 
   public toJSON(
-    options: Node.SerializationOptions & {
+    options: BaseNode.SerializationOptions & {
       verbosity:
         | json.Serializable.Verbosity.Minimal
         | json.Serializable.Verbosity.Low;
     },
   ): Shadow.MinimalJSON;
-  public toJSON(options?: Node.SerializationOptions): Shadow.JSON;
+  public toJSON(options?: BaseNode.SerializationOptions): Shadow.JSON;
   public toJSON(
-    options?: Node.SerializationOptions,
+    options?: BaseNode.SerializationOptions,
   ): Shadow.MinimalJSON | Shadow.JSON {
     const result = {
       ...super.toJSON(options),
@@ -164,9 +168,9 @@ export namespace Shadow {
     Closed = "closed",
   }
 
-  export interface MinimalJSON extends Node.JSON {}
+  export interface MinimalJSON extends BaseNode.JSON {}
 
-  export interface JSON extends Node.JSON {
+  export interface JSON extends BaseNode.JSON {
     type: "shadow";
     mode: string;
     style: Array<Sheet.JSON>;
@@ -179,9 +183,13 @@ export namespace Shadow {
   /**
    * @internal
    */
-  export function fromShadow(json: JSON, device?: Device): Trampoline<Shadow> {
+  export function fromShadow(
+    json: JSON,
+    fromNode: (json: Node.JSON, device?: Device) => Trampoline<Node>,
+    device?: Device,
+  ): Trampoline<Shadow> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      Node.fromNode(child, device),
+      fromNode(child, device),
     ).map((children) =>
       Shadow.of(
         children,

@@ -4,7 +4,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 
 import type { Element } from "../../slotable/element.js";
-import type { Node } from "../../../node.js";
+import type { BaseNode } from "../../node.js";
 
 import { hasId } from "./has-id.js";
 
@@ -16,7 +16,7 @@ const { and } = Predicate;
 export function hasUniqueId(
   isElement: Refinement<unknown, Element>,
 ): Predicate<Element> {
-  const uniques = Cache.empty<Node, Set<string>>();
+  const uniques = Cache.empty<BaseNode, Set<string>>();
 
   return and(hasId(), (element) =>
     uniques

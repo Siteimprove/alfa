@@ -1,7 +1,8 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Element } from "./element.js";
 import { Shadow } from "../shadow.js";
-import { Slotable } from "./slotable.js";
+
+import { Slotable } from "./index.js";
 
 /** @public */
 export type Slot = Element<"slot">;

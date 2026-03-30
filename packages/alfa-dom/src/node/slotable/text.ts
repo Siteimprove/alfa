@@ -7,7 +7,8 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "../../node.js";
+import { BaseNode } from "../node.js";
+
 import { Element } from "./element.js";
 import type { Slot } from "./slot.js";
 import { Slotable } from "./slotable.js";
@@ -85,7 +86,7 @@ export class Text extends Slotable<"text"> {
   /**
    * @internal
    **/
-  protected _internalPath(options?: Node.Traversal): string {
+  protected _internalPath(options?: BaseNode.Traversal): string {
     let path = this.parent(options)
       .map((parent) => parent.path(options))
       .getOr("/");
@@ -101,15 +102,15 @@ export class Text extends Slotable<"text"> {
   }
 
   public toJSON(
-    options: Node.SerializationOptions & {
+    options: BaseNode.SerializationOptions & {
       verbosity:
         | json.Serializable.Verbosity.Minimal
         | json.Serializable.Verbosity.Low;
     },
   ): Text.MinimalJSON;
-  public toJSON(options?: Node.SerializationOptions): Text.JSON;
+  public toJSON(options?: BaseNode.SerializationOptions): Text.JSON;
   public toJSON(
-    options?: Node.SerializationOptions,
+    options?: BaseNode.SerializationOptions,
   ): Text.MinimalJSON | Text.JSON {
     const result = {
       ...super.toJSON(options),
@@ -150,9 +151,9 @@ export class Text extends Slotable<"text"> {
  * @public
  */
 export namespace Text {
-  export interface MinimalJSON extends Node.JSON<"text"> {}
+  export interface MinimalJSON extends BaseNode.JSON<"text"> {}
 
-  export interface JSON extends Node.JSON<"text"> {
+  export interface JSON extends BaseNode.JSON<"text"> {
     data: string;
     box: Rectangle.JSON | null;
   }

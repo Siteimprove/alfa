@@ -1,6 +1,6 @@
 import { None, Option } from "@siteimprove/alfa-option";
 
-import type { Node } from "../../node.js";
+import type { BaseNode } from "../node.js";
 
 /**
  * Find the lowest common ancestor of two nodes:
@@ -12,14 +12,18 @@ import type { Node } from "../../node.js";
  * @internal
  */
 export function lowestCommonAncestor(
-  defaultTraversal: Node.Traversal,
-): (node1: Node, node2: Node, options?: Node.Traversal) => Option<Node> {
+  defaultTraversal: BaseNode.Traversal,
+): (
+  node1: BaseNode,
+  node2: BaseNode,
+  options?: BaseNode.Traversal,
+) => Option<BaseNode> {
   return (node1, node2, options = defaultTraversal) =>
     node1
       .inclusiveAncestors(options)
       .reverse()
       .zip(node2.inclusiveAncestors(options).reverse())
-      .reduceWhile<Option<Node>>(
+      .reduceWhile<Option<BaseNode>>(
         ([first1, first2]) => first1.equals(first2),
         (_, [node]) => Option.of(node),
         None,

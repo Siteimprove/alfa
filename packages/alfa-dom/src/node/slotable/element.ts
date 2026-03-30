@@ -11,7 +11,7 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 import * as json from "@siteimprove/alfa-json";
 
 import type { Namespace } from "../../namespace.js";
-import { Node } from "../../node.js";
+import { BaseNode } from "../node.js";
 
 import { Block } from "../../style/index.js";
 
@@ -20,6 +20,8 @@ import { Document } from "../document.js";
 import { Shadow } from "../shadow.js";
 import type { Slot } from "./slot.js";
 import { Slotable } from "./slotable.js";
+
+import type { Node } from "../index.js";
 
 import type * as helpers from "../element/input-type.js";
 import * as predicate from "../element/predicate/index.js";
@@ -164,12 +166,12 @@ export class Element<N extends string = string> extends Slotable<"element"> {
   }
 
   public children(
-    options: Node.Traversal = Node.Traversal.empty,
+    options: BaseNode.Traversal = BaseNode.Traversal.empty,
   ): Sequence<Node> {
     const treeChildren = this._children as Array<Node>;
     const children: Array<Node> = [];
 
-    if (options.isSet(Node.Traversal.flattened)) {
+    if (options.isSet(BaseNode.Traversal.flattened)) {
       if (this._shadow.isSome()) {
         return this._shadow.get().children(options);
       }
@@ -186,14 +188,14 @@ export class Element<N extends string = string> extends Slotable<"element"> {
         }
       }
     } else {
-      if (options.isSet(Node.Traversal.composed) && this._shadow.isSome()) {
+      if (options.isSet(BaseNode.Traversal.composed) && this._shadow.isSome()) {
         children.push(this._shadow.get());
       }
 
       children.push(...treeChildren);
     }
 
-    if (options.isSet(Node.Traversal.nested) && this._content.isSome()) {
+    if (options.isSet(BaseNode.Traversal.nested) && this._content.isSome()) {
       children.push(this._content.get());
     }
 
@@ -285,7 +287,7 @@ export class Element<N extends string = string> extends Slotable<"element"> {
             // and with an inert ancestor.
             (element) =>
               element
-                .parent(Node.flatTree)
+                .parent(BaseNode.flatTree)
                 .filter(Element.isElement)
                 .some((parent) => parent.isInert()),
           ),
@@ -340,7 +342,7 @@ export class Element<N extends string = string> extends Slotable<"element"> {
   /**
    * @internal
    **/
-  protected _internalPath(options?: Node.Traversal): string {
+  protected _internalPath(options?: BaseNode.Traversal): string {
     let path = this.parent(options)
       .map((parent) => parent.path(options))
       .getOr("/");
@@ -359,7 +361,7 @@ export class Element<N extends string = string> extends Slotable<"element"> {
   }
 
   public toJSON(
-    options: Node.SerializationOptions & {
+    options: BaseNode.SerializationOptions & {
       verbosity:
         | json.Serializable.Verbosity.Minimal
         | json.Serializable.Verbosity.Low;
@@ -367,15 +369,15 @@ export class Element<N extends string = string> extends Slotable<"element"> {
   ): Element.MinimalJSON;
 
   public toJSON(
-    options: Node.SerializationOptions & {
+    options: BaseNode.SerializationOptions & {
       verbosity: json.Serializable.Verbosity.High;
     },
   ): Element.JSON & { assignedSlot: Element.MinimalJSON | null };
 
-  public toJSON(options?: Node.SerializationOptions): Element.JSON<N>;
+  public toJSON(options?: BaseNode.SerializationOptions): Element.JSON<N>;
 
   public toJSON(
-    options?: Node.SerializationOptions,
+    options?: BaseNode.SerializationOptions,
   ):
     | Element.MinimalJSON
     | Element.JSON<N>
@@ -489,11 +491,11 @@ export class Element<N extends string = string> extends Slotable<"element"> {
  * @public
  */
 export namespace Element {
-  export interface MinimalJSON extends Node.JSON<"element"> {}
+  export interface MinimalJSON extends BaseNode.JSON<"element"> {}
 
   export interface JSON<
     N extends string = string,
-  > extends Node.JSON<"element"> {
+  > extends BaseNode.JSON<"element"> {
     namespace: string | null;
     prefix: string | null;
     name: N;
@@ -517,10 +519,11 @@ export namespace Element {
    */
   export function fromElement<N extends string = string>(
     json: JSON<N>,
+    fromNode: (json: Node.JSON, device?: Device) => Trampoline<Node>,
     device?: Device,
   ): Trampoline<Element<N>> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      Node.fromNode(child, device),
+      fromNode(child, device),
     ).map((children) => {
       const element = Element.of(
         Option.from(json.namespace as Namespace | null),
@@ -540,12 +543,14 @@ export namespace Element {
       );
 
       if (json.shadow !== null) {
-        element._attachShadow(Shadow.fromShadow(json.shadow, device).run());
+        element._attachShadow(
+          Shadow.fromShadow(json.shadow, fromNode, device).run(),
+        );
       }
 
       if (json.content !== null) {
         element._attachContent(
-          Document.fromDocument(json.content, device).run(),
+          Document.fromDocument(json.content, fromNode, device).run(),
         );
       }
 
@@ -570,7 +575,10 @@ export namespace Element {
 
   export const hasUniqueId = predicate.hasUniqueId(isElement);
   export const isActuallyDisabled = predicate.isActuallyDisabled(isElement);
-  export const isContent = predicate.isContent(isElement, Node.Traversal.empty);
+  export const isContent = predicate.isContent(
+    isElement,
+    BaseNode.Traversal.empty,
+  );
   export const isDocumentElement = predicate.isDocumentElement(isElement);
   export const isFallback = predicate.isFallback(isElement);
   export const isScopedTo = predicate.isScopedTo(isElement);

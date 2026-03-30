@@ -1,23 +1,20 @@
+import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-
-import { Device } from "@siteimprove/alfa-device";
 import type { Rectangle } from "@siteimprove/alfa-rectangle";
-import type { Node } from "./index.js";
+
+import { Namespace } from "./namespace.js";
 import {
   Attribute,
-  Block,
-  Declaration,
   Document,
   Element,
   Fragment,
-  Namespace,
-  Rule,
+  type Node,
   Shadow,
-  Sheet,
   Text,
   Type,
-} from "./index.js";
+} from "./node/index.js";
+import { Block, Declaration, Rule, Sheet } from "./style/index.js";
 
 const { entries } = Object;
 const { nor } = Predicate;
