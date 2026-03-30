@@ -2,12 +2,12 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "../node.js";
+import { BaseNode } from "./node.js";
 
 /**
  * @public
  */
-export class Comment extends Node<"comment"> {
+export class Comment extends BaseNode<"comment"> {
   public static of(
     data: string,
     externalId?: string,
@@ -41,7 +41,7 @@ export class Comment extends Node<"comment"> {
   /**
    * @internal
    **/
-  protected _internalPath(options?: Node.Traversal): string {
+  protected _internalPath(options?: BaseNode.Traversal): string {
     let path = this.parent(options)
       .map((parent) => parent.path(options))
       .getOr("/");
@@ -57,15 +57,15 @@ export class Comment extends Node<"comment"> {
   }
 
   public toJSON(
-    options: Node.SerializationOptions & {
+    options: BaseNode.SerializationOptions & {
       verbosity:
         | json.Serializable.Verbosity.Minimal
         | json.Serializable.Verbosity.Low;
     },
   ): Comment.MinimalJSON;
-  public toJSON(options?: Node.SerializationOptions): Comment.JSON;
+  public toJSON(options?: BaseNode.SerializationOptions): Comment.JSON;
   public toJSON(
-    options?: Node.SerializationOptions,
+    options?: BaseNode.SerializationOptions,
   ): Comment.MinimalJSON | Comment.JSON {
     const result = {
       ...super.toJSON(options),
@@ -91,9 +91,9 @@ export class Comment extends Node<"comment"> {
  * @public
  */
 export namespace Comment {
-  export interface MinimalJSON extends Node.JSON<"comment"> {}
+  export interface MinimalJSON extends BaseNode.JSON<"comment"> {}
 
-  export interface JSON extends Node.JSON<"comment"> {
+  export interface JSON extends BaseNode.JSON<"comment"> {
     data: string;
   }
 
@@ -107,20 +107,6 @@ export namespace Comment {
   export function fromComment(json: JSON): Trampoline<Comment> {
     return Trampoline.done(
       Comment.of(json.data, json.externalId, json.internalId),
-    );
-  }
-
-  /**
-   * @internal
-   */
-  export function cloneComment(comment: Comment): Trampoline<Comment> {
-    return Trampoline.done(
-      Comment.of(
-        comment.data,
-        comment.externalId,
-        comment.internalId,
-        comment.extraData,
-      ),
     );
   }
 }

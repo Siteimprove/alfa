@@ -12,31 +12,15 @@ export interface Descriptor<T = unknown, V = unknown, P = {}> {
  * @internal
  */
 export namespace Descriptor {
-  export type Type<D> = D extends Descriptor<infer T, infer V, infer P>
-    ? T
-    : never;
+  export type Value<D> =
+    D extends Descriptor<infer T, infer V, infer P> ? V : never;
 
-  export type Value<D> = D extends Descriptor<infer T, infer V, infer P>
-    ? V
-    : never;
-
-  export type Properties<D extends Descriptor> = D extends Descriptor<
-    infer T,
-    infer V,
-    infer P
-  >
-    ? P
-    : never;
-
-  export type For<V, D extends Descriptor> = D extends Descriptor<
-    infer T,
-    infer U,
-    infer P
-  >
-    ? U extends V
-      ? D
-      : never
-    : never;
+  export type For<V, D extends Descriptor> =
+    D extends Descriptor<infer T, infer U, infer P>
+      ? U extends V
+        ? D
+        : never
+      : never;
 }
 
 /**

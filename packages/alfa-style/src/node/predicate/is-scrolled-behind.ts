@@ -10,7 +10,8 @@ import {
 } from "../../element/element.js";
 import type { Longhands } from "../../longhands.js";
 
-const { isElement, hasBox } = Element;
+const { isElement } = Element;
+const { hasBox } = Node;
 const { and, or, not } = Predicate;
 
 const cache = Cache.empty<Device, Cache<Node, boolean>>();

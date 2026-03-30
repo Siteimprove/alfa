@@ -3,13 +3,12 @@ import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import { Node } from "../../node.js";
-import { Element } from "../element.js";
-import { Text } from "../text.js";
+import { BaseNode } from "../node.js";
+import { Element, Text } from "../slotable/index.js";
 
 const _descendantsCache = Cache.empty<
-  Predicate<Node>,
-  Cache<Node, Array<Sequence<Node>>>
+  Predicate<BaseNode>,
+  Cache<BaseNode, Array<Sequence<BaseNode>>>
 >();
 
 /**
@@ -21,9 +20,9 @@ const _descendantsCache = Cache.empty<
  *
  * @public
  */
-export function getDescendants<T extends Node>(
-  refinement: Refinement<Node, T>,
-): (node: Node, options?: Node.Traversal) => Sequence<T>;
+export function getDescendants<T extends BaseNode>(
+  refinement: Refinement<BaseNode, T>,
+): (node: BaseNode, options?: BaseNode.Traversal) => Sequence<T>;
 
 /**
  * Get all descendants of a node that satisfy a given predicate.
@@ -35,26 +34,19 @@ export function getDescendants<T extends Node>(
  * @public
  */
 export function getDescendants(
-  predicate: Predicate<Node>,
-): (node: Node, options?: Node.Traversal) => Sequence<Node>;
+  predicate: Predicate<BaseNode>,
+): (node: BaseNode, options?: BaseNode.Traversal) => Sequence<BaseNode>;
 
 export function getDescendants(
-  predicate: Predicate<Node>,
-): (node: Node, options?: Node.Traversal) => Sequence<Node> {
-  return (node, options = Node.Traversal.empty) => {
-    console.log("Calling getDescendants");
-
+  predicate: Predicate<BaseNode>,
+): (node: BaseNode, options?: BaseNode.Traversal) => Sequence<BaseNode> {
+  return (node, options = BaseNode.Traversal.empty) => {
     const optionsMap = _descendantsCache
       .get(predicate, Cache.empty)
       .get(node, () => []);
 
     if (optionsMap[options.value] === undefined) {
-      console.log("Was empty")
-      let descendants = node.descendants(options);
-
-      console.log(descendants.toJSON())
-
-      optionsMap[options.value] = descendants.filter(predicate);
+      optionsMap[options.value] = node.descendants(options).filter(predicate);
     }
 
     return optionsMap[options.value];
@@ -71,14 +63,14 @@ export const getElementDescendants = getDescendants(Element.isElement);
  */
 export function getInclusiveElementDescendants(
   node: Element,
-  options: Node.Traversal = Node.Traversal.empty,
+  options: BaseNode.Traversal = BaseNode.Traversal.empty,
 ): Sequence<Element> {
   return getElementDescendants(node, options).prepend(node);
 }
 
 const _textCache = Cache.empty<
   TextGroupOptions<any>,
-  Cache<Node, Array<Sequence<Text | TextGroup>>>
+  Cache<BaseNode, Array<Sequence<Text | TextGroup>>>
 >();
 
 /**
@@ -96,8 +88,8 @@ export interface TextGroup {
  *
  * @public
  */
-export interface TextGroupOptions<N extends Node = Node> {
-  startsGroup: Refinement<Node, N>;
+export interface TextGroupOptions<N extends BaseNode = BaseNode> {
+  startsGroup: Refinement<BaseNode, N>;
   getLabel: (node: N) => string;
 }
 
@@ -119,10 +111,13 @@ const defaultTextOptions: TextGroupOptions<any> = {
  *
  * @public
  */
-export function getTextDescendants<N extends Node = Node>(
+export function getTextDescendants<N extends BaseNode = BaseNode>(
   textOptions: TextGroupOptions<N> = defaultTextOptions,
-): (node: Node, options?: Node.Traversal) => Sequence<Text | TextGroup> {
-  return (node, options = Node.Traversal.empty) => {
+): (
+  node: BaseNode,
+  options?: BaseNode.Traversal,
+) => Sequence<Text | TextGroup> {
+  return (node, options = BaseNode.Traversal.empty) => {
     const optionsMap = _textCache
       .get(textOptions, Cache.empty)
       .get(node, () => []);
@@ -137,10 +132,10 @@ export function getTextDescendants<N extends Node = Node>(
   };
 }
 
-function* _getTextDescendants<N extends Node = Node>(
-  node: Node,
+function* _getTextDescendants<N extends BaseNode = BaseNode>(
+  node: BaseNode,
   textOptions: TextGroupOptions<N>,
-  traversalOptions: Node.Traversal,
+  traversalOptions: BaseNode.Traversal,
 ): Generator<Text | TextGroup> {
   const { startsGroup, getLabel } = textOptions;
 

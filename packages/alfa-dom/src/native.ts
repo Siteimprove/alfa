@@ -20,20 +20,10 @@ import type {
   Comment,
   Document,
   Element,
-  FontFaceRule,
-  ImportRule,
-  KeyframeRule,
-  KeyframesRule,
-  Layer,
-  MediaRule,
-  NamespaceRule,
   Node,
-  PageRule,
   Rule,
   Shadow,
   Sheet,
-  StyleRule,
-  SupportsRule,
   Text,
   Type,
 } from "./index.js";
@@ -392,14 +382,14 @@ export namespace Native {
 
     function toFontFaceRule(
       rule: globalThis.CSSFontFaceRule,
-    ): FontFaceRule.JSON {
+    ): Rule.FontFace.JSON {
       return {
         type: "font-face",
         style: toBlock(rule.style),
       };
     }
 
-    function toImportRule(rule: globalThis.CSSImportRule): ImportRule.JSON {
+    function toImportRule(rule: globalThis.CSSImportRule): Rule.Import.JSON {
       try {
         // See https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet#instance_properties
         // While the error may theoretically occur on any style sheet, it seems
@@ -437,7 +427,7 @@ export namespace Native {
 
     function toKeyframeRule(
       rule: globalThis.CSSKeyframeRule,
-    ): KeyframeRule.JSON {
+    ): Rule.Keyframe.JSON {
       return {
         type: "keyframe",
         key: rule.keyText,
@@ -447,7 +437,7 @@ export namespace Native {
 
     function toKeyframesRule(
       rule: globalThis.CSSKeyframesRule,
-    ): KeyframesRule.JSON {
+    ): Rule.Keyframes.JSON {
       let rules: Array<Rule.JSON>;
 
       try {
@@ -465,7 +455,7 @@ export namespace Native {
 
     function toLayerBlockRule(
       rule: globalThis.CSSLayerBlockRule,
-    ): Layer.BlockRule.JSON {
+    ): Rule.Layer.Block.JSON {
       return {
         type: "layer-block",
         layer: rule.name,
@@ -475,14 +465,14 @@ export namespace Native {
 
     function toLayerStatementRule(
       rule: globalThis.CSSLayerStatementRule,
-    ): Layer.StatementRule.JSON {
+    ): Rule.Layer.Statement.JSON {
       return {
         type: "layer-statement",
         layers: [...rule.nameList],
       };
     }
 
-    function toMediaRule(rule: globalThis.CSSMediaRule): MediaRule.JSON {
+    function toMediaRule(rule: globalThis.CSSMediaRule): Rule.Media.JSON {
       let rules: Array<Rule.JSON>;
 
       try {
@@ -500,7 +490,7 @@ export namespace Native {
 
     function toNamespaceRule(
       rule: globalThis.CSSNamespaceRule,
-    ): NamespaceRule.JSON {
+    ): Rule.Namespace.JSON {
       return {
         type: "namespace",
         namespace: rule.namespaceURI,
@@ -508,7 +498,7 @@ export namespace Native {
       };
     }
 
-    function toPageRule(rule: globalThis.CSSPageRule): PageRule.JSON {
+    function toPageRule(rule: globalThis.CSSPageRule): Rule.Page.JSON {
       return {
         type: "page",
         selector: rule.selectorText,
@@ -516,7 +506,7 @@ export namespace Native {
       };
     }
 
-    function toStyleRule(styleRule: globalThis.CSSStyleRule): StyleRule.JSON {
+    function toStyleRule(styleRule: globalThis.CSSStyleRule): Rule.Style.JSON {
       return {
         type: "style",
         selector: styleRule.selectorText,
@@ -526,7 +516,7 @@ export namespace Native {
 
     function toSupportsRule(
       rule: globalThis.CSSSupportsRule,
-    ): SupportsRule.JSON {
+    ): Rule.Supports.JSON {
       let rules: Array<Rule.JSON>;
 
       try {

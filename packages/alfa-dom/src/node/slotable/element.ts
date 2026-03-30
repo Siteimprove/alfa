@@ -10,20 +10,21 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import type { Namespace } from "../namespace.js";
-import { Node } from "../node.js";
+import type { Namespace } from "../../namespace.js";
+import { BaseNode } from "../node.js";
 
-import { Block } from "../style/block.js";
-import { Declaration } from "../style/declaration.js";
+import { Block } from "../../style/index.js";
 
-import { Attribute } from "./attribute.js";
-import { Document } from "./document.js";
-import { Shadow } from "./shadow.js";
-import { Slot } from "./slot.js";
+import { Attribute } from "../attribute.js";
+import { Document } from "../document.js";
+import { Shadow } from "../shadow.js";
+import type { Slot } from "./slot.js";
 import { Slotable } from "./slotable.js";
 
-import type * as helpers from "./element/input-type.js";
-import * as predicate from "./element/predicate.js";
+import type { Node } from "../index.js";
+
+import type * as helpers from "../element/input-type.js";
+import * as predicate from "../element/predicate/index.js";
 
 const { isEmpty } = Iterable;
 const { and, not, or, test } = Predicate;
@@ -31,10 +32,7 @@ const { and, not, or, test } = Predicate;
 /**
  * @public
  */
-export class Element<N extends string = string>
-  extends Node<"element">
-  implements Slot, Slotable
-{
+export class Element<N extends string = string> extends Slotable<"element"> {
   public static of<N extends string = string>(
     namespace: Option<Namespace>,
     prefix: Option<string>,
@@ -168,36 +166,36 @@ export class Element<N extends string = string>
   }
 
   public children(
-    options: Node.Traversal = Node.Traversal.empty,
+    options: BaseNode.Traversal = BaseNode.Traversal.empty,
   ): Sequence<Node> {
     const treeChildren = this._children as Array<Node>;
     const children: Array<Node> = [];
 
-    if (options.isSet(Node.Traversal.flattened)) {
+    if (options.isSet(BaseNode.Traversal.flattened)) {
       if (this._shadow.isSome()) {
         return this._shadow.get().children(options);
       }
 
-      if (Slot.isSlot(this)) {
+      if (Element.isSlot(this)) {
         return Sequence.from(this.assignedNodes());
       }
 
       for (const child of treeChildren) {
-        if (Slot.isSlot(child)) {
+        if (Element.isSlot(child)) {
           children.push(...child.children(options));
         } else {
           children.push(child);
         }
       }
     } else {
-      if (options.isSet(Node.Traversal.composed) && this._shadow.isSome()) {
+      if (options.isSet(BaseNode.Traversal.composed) && this._shadow.isSome()) {
         children.push(this._shadow.get());
       }
 
       children.push(...treeChildren);
     }
 
-    if (options.isSet(Node.Traversal.nested) && this._content.isSome()) {
+    if (options.isSet(BaseNode.Traversal.nested) && this._content.isSome()) {
       children.push(this._content.get());
     }
 
@@ -289,7 +287,7 @@ export class Element<N extends string = string>
             // and with an inert ancestor.
             (element) =>
               element
-                .parent(Node.flatTree)
+                .parent(BaseNode.flatTree)
                 .filter(Element.isElement)
                 .some((parent) => parent.isInert()),
           ),
@@ -321,20 +319,30 @@ export class Element<N extends string = string>
    * {@link https://dom.spec.whatwg.org/#dom-slotable-assignedslot}
    */
   public assignedSlot(): Option<Slot> {
-    return Slotable.findSlot(this);
+    const name = this.slotableName();
+
+    return this.parent()
+      .filter(Element.isElement)
+      .flatMap((parent) =>
+        parent.shadow.flatMap((shadow) =>
+          shadow
+            .descendants()
+            .filter(Element.isSlot)
+            .find((slot) => slot.slotName() === name),
+        ),
+      );
   }
 
-  /**
-   * {@link https://html.spec.whatwg.org/#dom-slot-assignednodes}
-   */
-  public assignedNodes(): Iterable<Slotable> {
-    return Slot.findSlotables(this);
+  public slotableName(): string {
+    return this.attribute("slot")
+      .map((slot) => slot.value)
+      .getOr("");
   }
 
   /**
    * @internal
    **/
-  protected _internalPath(options?: Node.Traversal): string {
+  protected _internalPath(options?: BaseNode.Traversal): string {
     let path = this.parent(options)
       .map((parent) => parent.path(options))
       .getOr("/");
@@ -353,7 +361,7 @@ export class Element<N extends string = string>
   }
 
   public toJSON(
-    options: Node.SerializationOptions & {
+    options: BaseNode.SerializationOptions & {
       verbosity:
         | json.Serializable.Verbosity.Minimal
         | json.Serializable.Verbosity.Low;
@@ -361,15 +369,15 @@ export class Element<N extends string = string>
   ): Element.MinimalJSON;
 
   public toJSON(
-    options: Node.SerializationOptions & {
+    options: BaseNode.SerializationOptions & {
       verbosity: json.Serializable.Verbosity.High;
     },
   ): Element.JSON & { assignedSlot: Element.MinimalJSON | null };
 
-  public toJSON(options?: Node.SerializationOptions): Element.JSON<N>;
+  public toJSON(options?: BaseNode.SerializationOptions): Element.JSON<N>;
 
   public toJSON(
-    options?: Node.SerializationOptions,
+    options?: BaseNode.SerializationOptions,
   ):
     | Element.MinimalJSON
     | Element.JSON<N>
@@ -483,11 +491,11 @@ export class Element<N extends string = string>
  * @public
  */
 export namespace Element {
-  export interface MinimalJSON extends Node.JSON<"element"> {}
+  export interface MinimalJSON extends BaseNode.JSON<"element"> {}
 
   export interface JSON<
     N extends string = string,
-  > extends Node.JSON<"element"> {
+  > extends BaseNode.JSON<"element"> {
     namespace: string | null;
     prefix: string | null;
     name: N;
@@ -502,15 +510,20 @@ export namespace Element {
     return value instanceof Element;
   }
 
+  export function isSlot(value: unknown): value is Slot {
+    return Element.isElement(value) && value.name === "slot";
+  }
+
   /**
    * @internal
    */
   export function fromElement<N extends string = string>(
     json: JSON<N>,
+    fromNode: (json: Node.JSON, device?: Device) => Trampoline<Node>,
     device?: Device,
   ): Trampoline<Element<N>> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      Node.fromNode(child, device),
+      fromNode(child, device),
     ).map((children) => {
       const element = Element.of(
         Option.from(json.namespace as Namespace | null),
@@ -530,75 +543,19 @@ export namespace Element {
       );
 
       if (json.shadow !== null) {
-        element._attachShadow(Shadow.fromShadow(json.shadow, device).run());
+        element._attachShadow(
+          Shadow.fromShadow(json.shadow, fromNode, device).run(),
+        );
       }
 
       if (json.content !== null) {
         element._attachContent(
-          Document.fromDocument(json.content, device).run(),
+          Document.fromDocument(json.content, fromNode, device).run(),
         );
       }
 
       return element;
     });
-  }
-
-  /**
-   * @internal
-   */
-  export function cloneElement(
-    options: Node.ElementReplacementOptions,
-    device?: Device,
-  ): (element: Element) => Trampoline<Element> {
-    return (element) =>
-      Trampoline.traverse(element.children(), (child) => {
-        if (Element.isElement(child) && options.predicate(child)) {
-          return Trampoline.done(Array.from(options.newElements));
-        }
-
-        return Node.cloneNode(child, options, device).map((node) => [node]);
-      }).map((children) => {
-        const deviceOption = Option.from(device);
-        const clonedElement = Element.of(
-          element.namespace,
-          element.prefix,
-          element.name,
-          element.attributes.map((attribute) =>
-            Attribute.clone(attribute, options, device),
-          ),
-          Iterable.flatten(children),
-          element.style.map((block) => {
-            return Block.of(
-              Iterable.map(block.declarations, (declaration) =>
-                Declaration.of(
-                  declaration.name,
-                  declaration.value,
-                  declaration.important,
-                ),
-              ),
-            );
-          }),
-          deviceOption.flatMap((d) => element.getBoundingBox(d)),
-          deviceOption,
-          element.externalId,
-          element.internalId,
-          element.extraData,
-        );
-
-        if (element.shadow.isSome()) {
-          clonedElement._attachShadow(
-            Shadow.clone(element.shadow.get(), options, device),
-          );
-        }
-
-        if (element.content.isSome()) {
-          clonedElement._attachContent(
-            Document.clone(element.content.get(), options, device),
-          );
-        }
-
-        return clonedElement;
-      });
   }
 
   export const {
@@ -609,18 +566,22 @@ export namespace Element {
     hasName,
     hasNamespace,
     hasTabIndex,
-    hasUniqueId,
     isBrowsingContextContainer,
-    isContent,
-    isActuallyDisabled,
-    isDocumentElement,
     isDraggable,
     isEditingHost,
-    isFallback,
-    isScopedTo,
     isSuggestedFocusable,
     isReplaced,
   } = predicate;
+
+  export const hasUniqueId = predicate.hasUniqueId(isElement);
+  export const isActuallyDisabled = predicate.isActuallyDisabled(isElement);
+  export const isContent = predicate.isContent(
+    isElement,
+    BaseNode.Traversal.empty,
+  );
+  export const isDocumentElement = predicate.isDocumentElement(isElement);
+  export const isFallback = predicate.isFallback(isElement);
+  export const isScopedTo = predicate.isScopedTo(isElement);
 
   export type InputType = helpers.InputType;
 }

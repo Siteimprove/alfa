@@ -1,8 +1,10 @@
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import { h } from "../../../src/index.ts";
-import { lowestCommonAncestor } from "../../../src/node/traversal/lowest-common-ancestor.ts";
+import { h, Node } from "../../../src/index.ts";
+import { lowestCommonAncestor as LCA } from "../../../src/node/traversal/lowest-common-ancestor.ts";
+
+const lowestCommonAncestor = LCA(Node.Traversal.empty);
 
 test("lowestCommonAncestor() returns the parent of two siblings", (t) => {
   const node1 = <span>Hello</span>;

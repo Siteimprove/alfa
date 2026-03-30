@@ -1,9 +1,9 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Map } from "@siteimprove/alfa-map";
 
-import type { Node } from "../../node.js";
+import type { BaseNode } from "../node.js";
 import { Document } from "../document.js";
-import type { Element } from "../element.js";
+import type { Element } from "../slotable/element.js";
 
 import { getElementDescendants } from "./descendants.js";
 
@@ -18,7 +18,7 @@ const elementMapCache = Cache.empty<Document, Map<string, Element>>();
  *
  * @public
  */
-export function getElementIdMap(node: Node): Map<string, Element> {
+export function getElementIdMap(node: BaseNode): Map<string, Element> {
   if (Document.isDocument(node)) {
     return elementMapCache.get(node, () => buildElementIdMap(node));
   }
@@ -26,7 +26,7 @@ export function getElementIdMap(node: Node): Map<string, Element> {
   return buildElementIdMap(node);
 }
 
-function buildElementIdMap(node: Node): Map<string, Element> {
+function buildElementIdMap(node: BaseNode): Map<string, Element> {
   // Build a map from ID -> element to allow fast resolution of ID references.
   // The collected references are added to the map in reverse order to ensure
   // that the first occurrence of a given ID is what ends up in the map in

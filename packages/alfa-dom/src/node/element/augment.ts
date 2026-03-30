@@ -10,13 +10,13 @@ import { None, Some } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import { Element } from "../element.js";
+import { Element } from "../slotable/element.js";
 import type { InputType } from "./input-type.js";
 
 const { isElement } = Element;
 const { and } = Refinement;
 
-declare module "../element.js" {
+declare module "../slotable/element.js" {
   interface Element<N extends string> {
     /**
      * {@link https://html.spec.whatwg.org/#attr-input-type}

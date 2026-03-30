@@ -3,12 +3,12 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Block } from "../block.js";
 import type { Declaration } from "../declaration.js";
-import { Rule } from "../rule.js";
+import { BaseRule } from "./rule.js";
 
 /**
  * @public
  */
-export class KeyframeRule extends Rule<"keyframe"> {
+export class KeyframeRule extends BaseRule<"keyframe"> {
   public static of(
     key: string,
     declarations: Iterable<Declaration>,
@@ -57,7 +57,7 @@ export class KeyframeRule extends Rule<"keyframe"> {
  * @public
  */
 export namespace KeyframeRule {
-  export interface JSON extends Rule.JSON<"keyframe"> {
+  export interface JSON extends BaseRule.JSON<"keyframe"> {
     key: string;
     style: Block.JSON | string;
   }

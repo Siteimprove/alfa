@@ -9,7 +9,7 @@ import { h } from "../src/index.ts";
 import { Namespace } from "../src/namespace.ts";
 
 import { Document } from "../src/node/document.ts";
-import { Element } from "../src/node/element.ts";
+import { Element } from "../src/node/slotable/element.ts";
 import { Type } from "../src/node/type.ts";
 
 test("h() constructs an element", (t) => {

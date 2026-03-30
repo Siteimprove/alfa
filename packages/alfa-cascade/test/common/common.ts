@@ -1,5 +1,5 @@
 import { Array } from "@siteimprove/alfa-array";
-import { StyleRule } from "@siteimprove/alfa-dom";
+import { Rule } from "@siteimprove/alfa-dom";
 
 import { Block } from "../../src/block.ts";
 import { Layer } from "../../src/index.ts";
@@ -24,7 +24,7 @@ const implicitLayer = layer("", 1);
  * @internal
  */
 export function ruleToBlockJSON(
-  rule: StyleRule,
+  rule: Rule.Style,
   order: number,
   encapsulationDepth: number = 1,
   layer: { normal: Layer<true>; important: Layer<true> } = implicitLayer,
@@ -36,7 +36,7 @@ export function ruleToBlockJSON(
  * @internal
  */
 export function getBlock(
-  rule: StyleRule,
+  rule: Rule.Style,
   order: number,
   encapsulationDepth: number = 1,
   layer: { normal: Layer<true>; important: Layer<true> } = implicitLayer,
@@ -45,7 +45,7 @@ export function getBlock(
 }
 
 const UA_MAX_RULES = [...UserAgent.descendants()].filter(
-  StyleRule.isStyleRule,
+  Rule.isStyleRule,
 ).length;
 
 /**
