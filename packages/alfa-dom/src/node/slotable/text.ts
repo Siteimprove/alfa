@@ -7,14 +7,16 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "../node.js";
+import { BaseNode } from "../node.js";
+
+import { Element } from "./element.js";
 import type { Slot } from "./slot.js";
 import { Slotable } from "./slotable.js";
 
 /**
  * @public
  */
-export class Text extends Node<"text"> implements Slotable {
+export class Text extends Slotable<"text"> {
   public static of(
     data: string,
     box: Option<Rectangle> = None,
@@ -55,7 +57,22 @@ export class Text extends Node<"text"> implements Slotable {
   }
 
   public assignedSlot(): Option<Slot> {
-    return Slotable.findSlot(this);
+    const name = this.slotableName();
+
+    return this.parent()
+      .filter(Element.isElement)
+      .flatMap((parent) =>
+        parent.shadow.flatMap((shadow) =>
+          shadow
+            .descendants()
+            .filter(Element.isSlot)
+            .find((slot) => slot.slotName() === name),
+        ),
+      );
+  }
+
+  public slotableName(): string {
+    return "";
   }
 
   public getBoundingBox(device: Device): Option<Rectangle> {
@@ -69,7 +86,7 @@ export class Text extends Node<"text"> implements Slotable {
   /**
    * @internal
    **/
-  protected _internalPath(options?: Node.Traversal): string {
+  protected _internalPath(options?: BaseNode.Traversal): string {
     let path = this.parent(options)
       .map((parent) => parent.path(options))
       .getOr("/");
@@ -85,15 +102,15 @@ export class Text extends Node<"text"> implements Slotable {
   }
 
   public toJSON(
-    options: Node.SerializationOptions & {
+    options: BaseNode.SerializationOptions & {
       verbosity:
         | json.Serializable.Verbosity.Minimal
         | json.Serializable.Verbosity.Low;
     },
   ): Text.MinimalJSON;
-  public toJSON(options?: Node.SerializationOptions): Text.JSON;
+  public toJSON(options?: BaseNode.SerializationOptions): Text.JSON;
   public toJSON(
-    options?: Node.SerializationOptions,
+    options?: BaseNode.SerializationOptions,
   ): Text.MinimalJSON | Text.JSON {
     const result = {
       ...super.toJSON(options),
@@ -134,9 +151,9 @@ export class Text extends Node<"text"> implements Slotable {
  * @public
  */
 export namespace Text {
-  export interface MinimalJSON extends Node.JSON<"text"> {}
+  export interface MinimalJSON extends BaseNode.JSON<"text"> {}
 
-  export interface JSON extends Node.JSON<"text"> {
+  export interface JSON extends BaseNode.JSON<"text"> {
     data: string;
     box: Rectangle.JSON | null;
   }
@@ -163,22 +180,5 @@ export namespace Text {
         json.internalId,
       ),
     );
-  }
-
-  /**
-   * @internal
-   */
-  export function cloneText(device?: Device): (text: Text) => Trampoline<Text> {
-    return (text) =>
-      Trampoline.done(
-        Text.of(
-          text.data,
-          Option.from(device).flatMap((d) => text.getBoundingBox(d)),
-          Option.from(device),
-          text.externalId,
-          text.extraData,
-          text.internalId,
-        ),
-      );
   }
 }

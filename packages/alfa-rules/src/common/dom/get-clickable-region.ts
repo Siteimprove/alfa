@@ -11,7 +11,7 @@ import { isTarget } from "../applicability/targets-of-pointer-events.js";
 
 const { isVisible, hasComputedStyle } = Style;
 const { and, not, or } = Refinement;
-const { hasBox } = Element;
+const { hasBox } = Node;
 
 /**
  * Gets a collection of rectangles covering the region where an element would

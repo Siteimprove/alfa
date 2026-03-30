@@ -1,10 +1,14 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Rule } from "../rule.js";
+
+import type { Rule } from "./index.js";
+import { BaseRule } from "./rule.js";
 
 /**
  * @public
  */
-export abstract class GroupingRule<T extends string = string> extends Rule<T> {
+export abstract class GroupingRule<
+  T extends string = string,
+> extends BaseRule<T> {
   protected readonly _rules: Array<Rule>;
 
   protected constructor(type: T, rules: Array<Rule>) {
@@ -33,7 +37,7 @@ export abstract class GroupingRule<T extends string = string> extends Rule<T> {
  * @public
  */
 export namespace GroupingRule {
-  export interface JSON<T extends string = string> extends Rule.JSON<T> {
+  export interface JSON<T extends string = string> extends BaseRule.JSON<T> {
     rules: Array<Rule.JSON>;
   }
 

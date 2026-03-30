@@ -1,7 +1,6 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
-import type { Node } from "@siteimprove/alfa-dom";
-import { Document } from "@siteimprove/alfa-dom";
+import { Document, Node } from "@siteimprove/alfa-dom";
 import { Decoder } from "@siteimprove/alfa-encoding";
 import { Request, Response } from "@siteimprove/alfa-http";
 
@@ -133,12 +132,7 @@ export namespace Page {
       const device = Device.from(json.device);
       return Request.from(json.request).andThen((request) =>
         Response.from(json.response).map((response) =>
-          Page.of(
-            request,
-            response,
-            Document.from(json.document, device),
-            device,
-          ),
+          Page.of(request, response, Node.from(json.document, device), device),
         ),
       );
     });

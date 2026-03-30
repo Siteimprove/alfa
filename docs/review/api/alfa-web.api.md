@@ -9,7 +9,7 @@ import { Document as Document_2 } from '@siteimprove/alfa-dom';
 import type * as earl from '@siteimprove/alfa-earl';
 import type { Graph } from '@siteimprove/alfa-graph';
 import type * as json from '@siteimprove/alfa-json';
-import type { Node as Node_2 } from '@siteimprove/alfa-dom';
+import { Node as Node_2 } from '@siteimprove/alfa-dom';
 import { Request as Request_2 } from '@siteimprove/alfa-http';
 import { Response as Response_2 } from '@siteimprove/alfa-http';
 import type { Result } from '@siteimprove/alfa-result';

@@ -7,7 +7,7 @@
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Device } from '@siteimprove/alfa-device';
 import type * as earl from '@siteimprove/alfa-earl';
-import { Element as Element_3 } from '../element.js';
+import { Element as Element_3 } from '../index.js';
 import type { Equatable } from '@siteimprove/alfa-equatable';
 import { Feature } from '@siteimprove/alfa-css-feature';
 import { Flags } from '@siteimprove/alfa-flags';
@@ -17,15 +17,17 @@ import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Option as Option_2 } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Rectangle } from '@siteimprove/alfa-rectangle';
-import type { Refinement } from '@siteimprove/alfa-refinement';
+import { Refinement } from '@siteimprove/alfa-refinement';
 import type * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Trampoline } from '@siteimprove/alfa-trampoline';
 import * as tree from '@siteimprove/alfa-tree';
 
+// Warning: (ae-forgotten-export) The symbol "BaseNode" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export class Attribute<N extends string = string> extends Node_2<"attribute"> {
+export class Attribute<N extends string = string> extends BaseNode<"attribute"> {
     protected constructor(namespace: Option_2<Namespace>, prefix: Option_2<string>, name: N, value: string, externalId?: string, internalId?: string, extraData?: any);
     // @internal (undocumented)
     _attachOwner(owner: Element_2): boolean;
@@ -36,7 +38,7 @@ export class Attribute<N extends string = string> extends Node_2<"attribute"> {
     // (undocumented)
     enumerate<T extends string>(valid: T, ...rest: Array<T>): Option_2<T>;
     // @internal (undocumented)
-    protected _internalPath(options?: Node_2.Traversal): string;
+    protected _internalPath(options?: BaseNode.Traversal): string;
     // (undocumented)
     isBoolean(): boolean;
     // (undocumented)
@@ -52,11 +54,11 @@ export class Attribute<N extends string = string> extends Node_2<"attribute"> {
     // (undocumented)
     get qualifiedName(): string;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Attribute.MinimalJSON;
     // (undocumented)
-    toJSON(options?: Node_2.SerializationOptions): Attribute.JSON<N>;
+    toJSON(options?: BaseNode.SerializationOptions): Attribute.JSON<N>;
     // (undocumented)
     tokens(separator?: string | RegExp): Sequence<string>;
     // (undocumented)
@@ -67,8 +69,6 @@ export class Attribute<N extends string = string> extends Node_2<"attribute"> {
 
 // @public (undocumented)
 export namespace Attribute {
-    // @internal (undocumented)
-    export function cloneAttribute<N extends string = string>(attribute: Attribute<N>): Trampoline<Attribute<N | Lowercase<N>>>;
     // @internal
     export function foldCase<N extends string = string>(name: N, owner: Option_2<Element_2>): N | Lowercase<N>;
     // @internal (undocumented)
@@ -76,7 +76,7 @@ export namespace Attribute {
     // (undocumented)
     export function isAttribute(value: unknown): value is Attribute;
     // (undocumented)
-    export interface JSON<N extends string = string> extends Node_2.JSON<"attribute"> {
+    export interface JSON<N extends string = string> extends BaseNode.JSON<"attribute"> {
         // (undocumented)
         name: N;
         // (undocumented)
@@ -87,7 +87,7 @@ export namespace Attribute {
         value: string;
     }
     // (undocumented)
-    export interface MinimalJSON extends Node_2.JSON<"attribute"> {
+    export interface MinimalJSON extends BaseNode.JSON<"attribute"> {
     }
     const // Warning: (ae-forgotten-export) The symbol "predicate_3" needs to be exported by the entry point index.d.ts
     //
@@ -128,22 +128,22 @@ export namespace Block {
 }
 
 // @public (undocumented)
-class Comment_2 extends Node_2<"comment"> {
+class Comment_2 extends BaseNode<"comment"> {
     protected constructor(data: string, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     get data(): string;
     // (undocumented)
     static empty(): Comment_2;
     // @internal (undocumented)
-    protected _internalPath(options?: Node_2.Traversal): string;
+    protected _internalPath(options?: BaseNode.Traversal): string;
     // (undocumented)
     static of(data: string, externalId?: string, internalId?: string, extraData?: any): Comment_2;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Comment_2.MinimalJSON;
     // (undocumented)
-    toJSON(options?: Node_2.SerializationOptions): Comment_2.JSON;
+    toJSON(options?: BaseNode.SerializationOptions): Comment_2.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -151,43 +151,19 @@ class Comment_2 extends Node_2<"comment"> {
 // @public (undocumented)
 namespace Comment_2 {
     // @internal (undocumented)
-    function cloneComment(comment: Comment_2): Trampoline<Comment_2>;
-    // @internal (undocumented)
     function fromComment(json: JSON): Trampoline<Comment_2>;
     // (undocumented)
     function isComment(value: unknown): value is Comment_2;
     // (undocumented)
-    interface JSON extends Node_2.JSON<"comment"> {
+    interface JSON extends BaseNode.JSON<"comment"> {
         // (undocumented)
         data: string;
     }
     // (undocumented)
-    interface MinimalJSON extends Node_2.JSON<"comment"> {
+    interface MinimalJSON extends BaseNode.JSON<"comment"> {
     }
 }
 export { Comment_2 as Comment }
-
-// @public (undocumented)
-export abstract class ConditionRule<T extends string = string> extends GroupingRule<T> {
-    protected constructor(type: T, condition: string, rules: Array<Rule>);
-    // (undocumented)
-    get condition(): string;
-    // (undocumented)
-    protected readonly _condition: string;
-    // (undocumented)
-    toJSON(): ConditionRule.JSON<T>;
-}
-
-// @public (undocumented)
-export namespace ConditionRule {
-    // (undocumented)
-    export function isConditionRule(value: unknown): value is ConditionRule;
-    // (undocumented)
-    export interface JSON<T extends string = string> extends GroupingRule.JSON<T> {
-        // (undocumented)
-        condition: string;
-    }
-}
 
 // @public (undocumented)
 export class Declaration implements Equatable, Serializable {
@@ -235,7 +211,7 @@ export namespace Declaration {
 }
 
 // @public (undocumented)
-class Document_2 extends Node_2<"document"> {
+class Document_2 extends BaseNode<"document"> {
     protected constructor(children: Array_2<Node_2>, style: Iterable_2<Sheet>, externalId?: string, internalId?: string, extraData?: any);
     // @internal (undocumented)
     _attachFrame(frame: Element_2): boolean;
@@ -246,19 +222,19 @@ class Document_2 extends Node_2<"document"> {
     // (undocumented)
     get frame(): Option_2<Element_2>;
     // @internal (undocumented)
-    protected _internalPath(options?: Node_2.Traversal): string;
+    protected _internalPath(options?: BaseNode.Traversal): string;
     // (undocumented)
     static of(children: Iterable_2<Node_2>, style?: Iterable_2<Sheet>, externalId?: string, internalId?: string, extraData?: any): Document_2;
     // (undocumented)
-    parent(options?: Node_2.Traversal): Option_2<Node_2>;
+    parent(options?: BaseNode.Traversal): Option_2<Node_2>;
     // (undocumented)
     get style(): Iterable_2<Sheet>;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Document_2.MinimalJSON;
     // (undocumented)
-    toJSON(options?: Node_2.SerializationOptions): Document_2.JSON;
+    toJSON(options?: BaseNode.SerializationOptions): Document_2.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -266,27 +242,27 @@ class Document_2 extends Node_2<"document"> {
 // @public (undocumented)
 namespace Document_2 {
     // @internal (undocumented)
-    function cloneDocument(options: Node_2.ElementReplacementOptions, device?: Device): (document: Document_2) => Trampoline<Document_2>;
-    // @internal (undocumented)
-    function fromDocument(json: JSON, device?: Device): Trampoline<Document_2>;
+    function fromDocument(json: JSON, fromNode: (json: Node_2.JSON, device?: Device) => Trampoline<Node_2>, device?: Device): Trampoline<Document_2>;
     // (undocumented)
     function isDocument(value: unknown): value is Document_2;
     // (undocumented)
-    interface JSON extends Node_2.JSON<"document"> {
+    interface JSON extends BaseNode.JSON<"document"> {
         // (undocumented)
         style: Array_2<Sheet.JSON>;
     }
     // (undocumented)
-    interface MinimalJSON extends Node_2.JSON<"document"> {
+    interface MinimalJSON extends BaseNode.JSON<"document"> {
     }
 }
 export { Document_2 as Document }
 
+// Warning: (ae-forgotten-export) The symbol "Slotable_2" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-class Element<N extends string = string> extends Node_2<"element"> implements Slot, Slotable {
+class Element<N extends string = string> extends Slotable_2<"element"> {
     protected constructor(namespace: Option_2<Namespace>, prefix: Option_2<string>, name: N, attributes: Array<Attribute>, children: Array<Node_2>, style: Option_2<Block>, box: Option_2<Rectangle>, device: Option_2<Device>, externalId?: string, internalId?: string, extraData?: any);
-    // (undocumented)
-    assignedNodes(): Iterable_2<Slotable>;
+    // Warning: (ae-forgotten-export) The symbol "Slot" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
     assignedSlot(): Option_2<Slot>;
     // @internal (undocumented)
@@ -300,7 +276,7 @@ class Element<N extends string = string> extends Node_2<"element"> implements Sl
     // (undocumented)
     get attributes(): Sequence<Attribute>;
     // (undocumented)
-    children(options?: Node_2.Traversal): Sequence<Node_2>;
+    children(options?: BaseNode.Traversal): Sequence<Node_2>;
     // (undocumented)
     get classes(): Sequence<string>;
     // (undocumented)
@@ -316,7 +292,7 @@ class Element<N extends string = string> extends Node_2<"element"> implements Sl
     // (undocumented)
     protected _inputType: helpers.InputType | undefined;
     // @internal (undocumented)
-    protected _internalPath(options?: Node_2.Traversal): string;
+    protected _internalPath(options?: BaseNode.Traversal): string;
     isInert(): boolean;
     // (undocumented)
     isVoid(): boolean;
@@ -335,21 +311,23 @@ class Element<N extends string = string> extends Node_2<"element"> implements Sl
     // (undocumented)
     get shadow(): Option_2<Shadow>;
     // (undocumented)
+    slotableName(): string;
+    // (undocumented)
     get style(): Option_2<Block>;
     // (undocumented)
     tabIndex(): Option_2<number>;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Element.MinimalJSON;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.High;
     }): Element.JSON & {
         assignedSlot: Element.MinimalJSON | null;
     };
     // (undocumented)
-    toJSON(options?: Node_2.SerializationOptions): Element.JSON<N>;
+    toJSON(options?: BaseNode.SerializationOptions): Element.JSON<N>;
     // (undocumented)
     toString(): string;
 }
@@ -357,15 +335,15 @@ class Element<N extends string = string> extends Node_2<"element"> implements Sl
 // @public (undocumented)
 namespace Element {
     // @internal (undocumented)
-    function cloneElement(options: Node_2.ElementReplacementOptions, device?: Device): (element: Element) => Trampoline<Element>;
-    // @internal (undocumented)
-    function fromElement<N extends string = string>(json: JSON<N>, device?: Device): Trampoline<Element<N>>;
+    function fromElement<N extends string = string>(json: JSON<N>, fromNode: (json: Node_2.JSON, device?: Device) => Trampoline<Node_2>, device?: Device): Trampoline<Element<N>>;
     // (undocumented)
     type InputType = helpers.InputType;
     // (undocumented)
     function isElement(value: unknown): value is Element;
     // (undocumented)
-    interface JSON<N extends string = string> extends Node_2.JSON<"element"> {
+    function isSlot(value: unknown): value is Slot;
+    // (undocumented)
+    interface JSON<N extends string = string> extends BaseNode.JSON<"element"> {
         // (undocumented)
         attributes: Array<Attribute.JSON>;
         // (undocumented)
@@ -393,51 +371,31 @@ namespace Element {
     hasName: typeof predicate.hasName, // (undocumented)
     hasNamespace: typeof predicate.hasNamespace, // (undocumented)
     hasTabIndex: typeof predicate.hasTabIndex, // (undocumented)
-    hasUniqueId: Predicate<Element<string>>, // (undocumented)
     isBrowsingContextContainer: typeof predicate.isBrowsingContextContainer, // (undocumented)
-    isContent: typeof predicate.isContent, // (undocumented)
-    isActuallyDisabled: typeof predicate.isActuallyDisabled, // (undocumented)
-    isDocumentElement: typeof predicate.isDocumentElement, // (undocumented)
     isDraggable: typeof predicate.isDraggable, // (undocumented)
     isEditingHost: typeof predicate.isEditingHost, // (undocumented)
-    isFallback: typeof predicate.isFallback, // (undocumented)
-    isScopedTo: typeof predicate.isScopedTo, // (undocumented)
     isSuggestedFocusable: typeof predicate.isSuggestedFocusable, // (undocumented)
     isReplaced: typeof predicate.isReplaced;
+    const // (undocumented)
+    hasUniqueId: Predicate<Element<string>>;
+    const // (undocumented)
+    isActuallyDisabled: Predicate<Element<string>>;
+    const // (undocumented)
+    isContent: (options?: BaseNode.Traversal) => Predicate<BaseNode>;
+    const // (undocumented)
+    isDocumentElement: Refinement<unknown, Element<"html">>;
+    const // (undocumented)
+    isFallback: Predicate<BaseNode<string>>;
+    const // (undocumented)
+    isScopedTo: (name: string, ...rest: Array<string>) => Predicate<Element>;
     // (undocumented)
-    interface MinimalJSON extends Node_2.JSON<"element"> {
+    interface MinimalJSON extends BaseNode.JSON<"element"> {
     }
 }
 export { Element_2 as Element }
 
 // @public (undocumented)
-export class FontFaceRule extends Rule<"font-face"> {
-    protected constructor(declarations: Array<Declaration>);
-    // (undocumented)
-    static of(declarations: Iterable<Declaration>): FontFaceRule;
-    // (undocumented)
-    get style(): Block;
-    // (undocumented)
-    toJSON(): FontFaceRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace FontFaceRule {
-    // @internal (undocumented)
-    export function fromFontFaceRule(json: JSON): Trampoline<FontFaceRule>;
-    // (undocumented)
-    export function isFontFaceRule(value: unknown): value is FontFaceRule;
-    // (undocumented)
-    export interface JSON extends Rule.JSON<"font-face"> {
-        // (undocumented)
-        style: Block.JSON | string;
-    }
-}
-
-// @public (undocumented)
-export class Fragment extends Node_2<"fragment"> {
+export class Fragment extends BaseNode<"fragment"> {
     protected constructor(children: Array<Node_2>, externalId?: string, internalId?: string, extraData?: any);
     // @internal (undocumented)
     _attachParent(): boolean;
@@ -454,37 +412,11 @@ export class Fragment extends Node_2<"fragment"> {
 // @public (undocumented)
 export namespace Fragment {
     // @internal (undocumented)
-    export function cloneFragment(options: Node_2.ElementReplacementOptions, device?: Device): (fragment: Fragment) => Trampoline<Fragment>;
-    // @internal (undocumented)
-    export function fromFragment(json: JSON, device?: Device): Trampoline<Fragment>;
+    export function fromFragment(json: JSON, fromNode: (json: Node_2.JSON, device?: Device) => Trampoline<Node_2>, device?: Device): Trampoline<Fragment>;
     // (undocumented)
     export function isFragment(value: unknown): value is Fragment;
     // (undocumented)
-    export interface JSON extends Node_2.JSON<"fragment"> {
-    }
-}
-
-// @public (undocumented)
-export abstract class GroupingRule<T extends string = string> extends Rule<T> {
-    protected constructor(type: T, rules: Array_2<Rule>);
-    // (undocumented)
-    children(): Iterable<Rule>;
-    // (undocumented)
-    get rules(): Iterable<Rule>;
-    // (undocumented)
-    protected readonly _rules: Array_2<Rule>;
-    // (undocumented)
-    toJSON(): GroupingRule.JSON<T>;
-}
-
-// @public (undocumented)
-export namespace GroupingRule {
-    // (undocumented)
-    export function isGroupingRule(value: unknown): value is GroupingRule;
-    // (undocumented)
-    export interface JSON<T extends string = string> extends Rule.JSON<T> {
-        // (undocumented)
-        rules: Array_2<Rule.JSON>;
+    export interface JSON extends BaseNode.JSON<"fragment"> {
     }
 }
 
@@ -508,27 +440,27 @@ export namespace h {
     // (undocumented)
     export namespace rule {
         // (undocumented)
-        export function fontFace(declarations: Array<Declaration> | Record<string, string>): FontFaceRule;
+        export function fontFace(declarations: Array<Declaration> | Record<string, string>): Rule.FontFace;
         // (undocumented)
-        export function importRule(url: string, sheet: Sheet, mediaCondition?: string, supportCondition?: string, layer?: string): ImportRule;
+        export function importRule(url: string, sheet: Sheet, mediaCondition?: string, supportCondition?: string, layer?: string): Rule.Import;
         // (undocumented)
-        export function keyframe(key: string, declarations: Array<Declaration> | Record<string, string>): KeyframeRule;
+        export function keyframe(key: string, declarations: Array<Declaration> | Record<string, string>): Rule.Keyframe;
         // (undocumented)
-        export function keyframes(name: string, rules: Array<Rule>): KeyframesRule;
+        export function keyframes(name: string, rules: Array<Rule>): Rule.Keyframes;
         // (undocumented)
-        export function layerBlock(rules: Array<Rule>, layer?: string): Layer.BlockRule;
+        export function layerBlock(rules: Array<Rule>, layer?: string): Rule.Layer.Block;
         // (undocumented)
-        export function layerStatement(layers: Array<string>): Layer.StatementRule;
+        export function layerStatement(layers: Array<string>): Rule.Layer.Statement;
         // (undocumented)
-        export function media(condition: string, rules: Array<Rule>): MediaRule;
+        export function media(condition: string, rules: Array<Rule>): Rule.Media;
         // (undocumented)
-        export function namespace(namespace: string, prefix?: string): NamespaceRule;
+        export function namespace(namespace: string, prefix?: string): Rule.Namespace;
         // (undocumented)
-        export function page(selector: string, declarations: Array<Declaration> | Record<string, string>): PageRule;
+        export function page(selector: string, declarations: Array<Declaration> | Record<string, string>): Rule.Page;
         // (undocumented)
-        export function style(selector: string, declarations: Array<Declaration> | Record<string, string>, hint?: boolean): StyleRule;
+        export function style(selector: string, declarations: Array<Declaration> | Record<string, string>, hint?: boolean): Rule.Style;
         // (undocumented)
-        export function supports(condition: string, rules: Array<Rule>): SupportsRule;
+        export function supports(condition: string, rules: Array<Rule>): Rule.Supports;
     }
     // (undocumented)
     export function shadow(children: Array<Node_2 | string>, style?: Array<Sheet>, mode?: Shadow.Mode, externalId?: string, internalId?: string, extraData?: any): Shadow;
@@ -540,63 +472,19 @@ export namespace h {
     export function type<N extends string = string>(name: N, publicId?: string, systemId?: string, externalId?: string, internalId?: string, extraData?: any): Type<N>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "dom" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export class ImportRule extends ConditionRule<"import"> {
-    protected constructor(href: string, sheet: Sheet, mediaCondition: Option_2<string>, supportCondition: Option_2<string>, layer: Option_2<string>);
-    // (undocumented)
-    get href(): string;
-    // (undocumented)
-    get layer(): Option_2<string>;
-    // (undocumented)
-    get mediaQueries(): Feature.Media.List;
-    // (undocumented)
-    static of(href: string, sheet: Sheet, mediaCondition?: Option_2<string>, supportCondition?: Option_2<string>, layer?: Option_2<string>): ImportRule;
-    // (undocumented)
-    get rules(): Iterable_2<Rule>;
-    // (undocumented)
-    get sheet(): Sheet;
-    // (undocumented)
-    get supportCondition(): Option_2<string>;
-    // (undocumented)
-    get supportQuery(): Option_2<Option_2<Feature.Supports.Query>>;
-    // (undocumented)
-    toJSON(): ImportRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace ImportRule {
-    // @internal (undocumented)
-    export function fromImportRule(json: JSON): Trampoline<ImportRule>;
-    // (undocumented)
-    export function isImportRule(value: unknown): value is ImportRule;
-    // (undocumented)
-    export interface JSON extends ConditionRule.JSON<"import"> {
-        // (undocumented)
-        href: string;
-        // (undocumented)
-        layer: string | null;
-        // (undocumented)
-        supportText: string | null;
-    }
-    // (undocumented)
-    export function matches(device: Device): Predicate<ImportRule>;
-}
-
-// @public (undocumented)
-export function jsx<N extends string = string>(name: N, properties?: jsx.Properties | null, ...children: jsx.Children): Element_2<N>;
+export function jsx<N extends string = string>(name: N, properties?: jsx.Properties | null, ...children: jsx.Children): dom.Element<N>;
 
 // @public (undocumented)
 export namespace jsx {
     // (undocumented)
-    export type Child = Node_2 | string;
+    export type Child = dom.Node | string;
     // (undocumented)
     export type Children = (Child | Children)[];
     // (undocumented)
     export namespace JSX {
-        // Warning: (ae-forgotten-export) The symbol "dom" needs to be exported by the entry point index.d.ts
-        //
         // (undocumented)
         export type Element<N extends string = string> = dom.Element<N>;
         // (undocumented)
@@ -611,142 +499,6 @@ export namespace jsx {
         [name: string]: unknown;
         style?: Record<string, string>;
     }
-}
-
-// @public (undocumented)
-export class KeyframeRule extends Rule<"keyframe"> {
-    protected constructor(key: string, declarations: Array<Declaration>);
-    // (undocumented)
-    get key(): string;
-    // (undocumented)
-    static of(key: string, declarations: Iterable<Declaration>): KeyframeRule;
-    // (undocumented)
-    get style(): Block;
-    // (undocumented)
-    toJSON(): KeyframeRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace KeyframeRule {
-    // @internal (undocumented)
-    export function fromKeyframeRule(json: JSON): Trampoline<KeyframeRule>;
-    // (undocumented)
-    export function isKeyframeRule(value: unknown): value is KeyframeRule;
-    // (undocumented)
-    export interface JSON extends Rule.JSON<"keyframe"> {
-        // (undocumented)
-        key: string;
-        // (undocumented)
-        style: Block.JSON | string;
-    }
-}
-
-// @public (undocumented)
-export class KeyframesRule extends GroupingRule<"keyframes"> {
-    protected constructor(name: string, rules: Array<Rule>);
-    // (undocumented)
-    get name(): string;
-    // (undocumented)
-    static of(name: string, rules: Iterable<Rule>): KeyframesRule;
-    // (undocumented)
-    toJSON(): KeyframesRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace KeyframesRule {
-    // @internal (undocumented)
-    export function fromKeyframesRule(json: JSON): Trampoline<KeyframesRule>;
-    // (undocumented)
-    export function isKeyframesRule(value: unknown): value is KeyframesRule;
-    // (undocumented)
-    export interface JSON extends GroupingRule.JSON<"keyframes"> {
-        // (undocumented)
-        name: string;
-    }
-}
-
-// @public
-export namespace Layer {
-    // (undocumented)
-    export class BlockRule extends GroupingRule<"layer-block"> {
-        protected constructor(layer: Option_2<string>, rules: Array_2<Rule>);
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        get layer(): Option_2<string>;
-        // (undocumented)
-        static of(rules: Iterable<Rule>, layer?: string | null): BlockRule;
-        // (undocumented)
-        toJSON(): BlockRule.JSON;
-        // (undocumented)
-        toString(): string;
-    }
-    // (undocumented)
-    export namespace BlockRule {
-        // (undocumented)
-        export function fromLayerBlockRule(json: JSON): Trampoline<BlockRule>;
-        // (undocumented)
-        export function isLayerBlockRule(value: unknown): value is BlockRule;
-        // (undocumented)
-        export interface JSON extends GroupingRule.JSON<"layer-block"> {
-            // (undocumented)
-            layer: string | null;
-        }
-    }
-    // (undocumented)
-    export class StatementRule extends Rule<"layer-statement"> {
-        protected constructor(layers: Array_2<string>);
-        // (undocumented)
-        get layers(): Iterable<string>;
-        // (undocumented)
-        static of(layers: Iterable<string>): StatementRule;
-        // (undocumented)
-        toJSON(): StatementRule.JSON;
-        // (undocumented)
-        toString(): string;
-    }
-    // (undocumented)
-    export namespace StatementRule {
-        // (undocumented)
-        export function fromLayerStatementRule(json: JSON): Trampoline<StatementRule>;
-        // (undocumented)
-        export function isLayerStatementRule(value: unknown): value is StatementRule;
-        // (undocumented)
-        export interface JSON extends Rule.JSON<"layer-statement"> {
-            // (undocumented)
-            layers: Array_2<string>;
-        }
-    }
-}
-
-// @public (undocumented)
-export class MediaRule extends ConditionRule<"media"> {
-    protected constructor(condition: string, rules: Array<Rule>);
-    // (undocumented)
-    static of(condition: string, rules: Iterable_2<Rule>): MediaRule;
-    // (undocumented)
-    get queries(): Feature.Media.List;
-    // (undocumented)
-    toJSON(): MediaRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace MediaRule {
-    // @internal (undocumented)
-    export function fromMediaRule(json: JSON): Trampoline<MediaRule>;
-    // (undocumented)
-    export function isMediaRule(value: unknown): value is MediaRule;
-    // (undocumented)
-    export interface JSON extends ConditionRule.JSON<"media"> {
-    }
-    // (undocumented)
-    export function matches(device: Device): Predicate<MediaRule>;
 }
 
 // @public (undocumented)
@@ -772,286 +524,25 @@ export namespace Namespace {
 }
 
 // @public (undocumented)
-export class NamespaceRule extends Rule<"namespace"> {
-    protected constructor(namespace: string, prefix: Option_2<string>);
-    // (undocumented)
-    get namespace(): string;
-    // (undocumented)
-    static of(namespace: string, prefix: Option_2<string>): NamespaceRule;
-    // (undocumented)
-    get prefix(): Option_2<string>;
-    // (undocumented)
-    toJSON(): NamespaceRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace NamespaceRule {
-    // @internal (undocumented)
-    export function fromNamespaceRule(json: JSON): Trampoline<NamespaceRule>;
-    // (undocumented)
-    export function isNamespaceRule(value: unknown): value is NamespaceRule;
-    // (undocumented)
-    export interface JSON extends Rule.JSON<"namespace"> {
-        // (undocumented)
-        namespace: string;
-        // (undocumented)
-        prefix: string | null;
-    }
-}
-
-// @public (undocumented)
-abstract class Node_2<T extends string = string> extends tree.Node<"DOM traversal", Node_2.TraversalFlags, T> implements earl.Serializable<Node_2.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
-    protected constructor(children: Array<Node_2>, type: T, externalId?: string, internalId?: string, extraData?: any);
-    // (undocumented)
-    equals(value: Node_2): boolean;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // @internal (undocumented)
-    protected _internalPath(options?: Node_2.Traversal): string;
-    path(options?: Node_2.Traversal): string;
-    tabOrder(): Sequence<Element_2>;
-    // (undocumented)
-    textContent(options?: Node_2.Traversal): string;
-    // (undocumented)
-    toEARL(): Node_2.EARL;
-    // (undocumented)
-    toJSON(options?: Serializable.Options): Node_2.JSON<T>;
-    // (undocumented)
-    toSARIF(): sarif.Location;
-}
-
-// @public (undocumented)
-interface Node_2 {
-    // (undocumented)
-    ancestors(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    children(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    closest<T extends Node_2>(refinement: Refinement<Node_2, T>, options?: Node_2.Traversal): Option_2<T>;
-    // (undocumented)
-    closest(predicate: Predicate<Node_2>, options?: Node_2.Traversal): Option_2<Node_2>;
-    // (undocumented)
-    descendants(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    first(options?: Node_2.Traversal): Option_2<Node_2>;
-    // (undocumented)
-    following(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    inclusiveAncestors(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    inclusiveDescendants(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    inclusiveSiblings(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    index(options?: Node_2.Traversal, predicate?: Predicate<Node_2>): number;
-    // (undocumented)
-    isAncestorOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isChildOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isDescendantOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isInclusiveAncestorOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isInclusiveDescendantsOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isInclusiveSiblingOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isParentOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isRootOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    isSiblingOf(node: Node_2, options?: Node_2.Traversal): boolean;
-    // (undocumented)
-    last(options?: Node_2.Traversal): Option_2<Node_2>;
-    // (undocumented)
-    next(options?: Node_2.Traversal): Option_2<Node_2>;
-    // (undocumented)
-    parent(options?: Node_2.Traversal): Option_2<Node_2>;
-    // (undocumented)
-    preceding(options?: Node_2.Traversal): Sequence<Node_2>;
-    // (undocumented)
-    previous(options?: Node_2.Traversal): Option_2<Node_2>;
-    // (undocumented)
-    root(options?: Node_2.Traversal): Node_2;
-    // (undocumented)
-    siblings(options?: Node_2.Traversal): Sequence<Node_2>;
-}
+type Node_2 = Attribute | Comment_2 | Document_2 | Element_2 | Fragment | Shadow | Type | Text_2;
 
 // @public (undocumented)
 namespace Node_2 {
-    function clone(node: Element_2, options?: ElementReplacementOptions, device?: Device): Element_2;
-    function clone(node: Attribute, options?: ElementReplacementOptions, device?: Device): Attribute;
-    function clone(node: Text_2, options?: ElementReplacementOptions, device?: Device): Text_2;
-    function clone(node: Comment_2, options?: ElementReplacementOptions, device?: Device): Comment_2;
-    const // (undocumented)
-    Traversal: {
-        of: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => {
-            has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
-            isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
-            add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-            set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-            remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-            unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-            is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
-            equals(value: any): boolean;
-            equals(value: unknown): value is any;
-            toString(): string;
-            toJSON(): Flags.JSON<"DOM traversal"> & {
-                composed: boolean;
-                flattened: boolean;
-                nested: boolean;
-            };
-            readonly value: number;
-            readonly kind: "DOM traversal";
-        } & {
-            composed: boolean;
-            flattened: boolean;
-            nested: boolean;
-        };
-        readonly none: 0;
-        readonly empty: {
-            has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
-            isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
-            add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-            set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-            remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-            unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-            is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
-            equals(value: any): boolean;
-            equals(value: unknown): value is any;
-            toString(): string;
-            toJSON(): Flags.JSON<"DOM traversal"> & {
-                composed: boolean;
-                flattened: boolean;
-                nested: boolean;
-            };
-            readonly value: number;
-            readonly kind: "DOM traversal";
-        } & {
-            composed: boolean;
-            flattened: boolean;
-            nested: boolean;
-        };
-        readonly allFlags: [1, 2, 4];
-        nameOf: (flag: 1 | 2 | 4) => "composed" | "flattened" | "nested";
-        reduce: (...flags: Array_2<number>) => number;
-        named: <K extends string, A extends Array_2<string>>(kind: K, ...flags: A) => {
-            [x: string]: any;
-        };
-        composed: 1 | 2 | 4;
-        flattened: 1 | 2 | 4;
-        nested: 1 | 2 | 4;
-    };
-    function clone(node: Document_2, options?: ElementReplacementOptions, device?: Device): Document_2;
-    function clone(node: Type, options?: ElementReplacementOptions, device?: Device): Document_2;
-    const flatTree: {
-        has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
-        isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
-        add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-        set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-        remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-        unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-        is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
-        equals(value: any): boolean;
-        equals(value: unknown): value is any;
-        toString(): string;
-        toJSON(): Flags.JSON<"DOM traversal"> & {
-            composed: boolean;
-            flattened: boolean;
-            nested: boolean;
-        };
-        readonly value: number;
-        readonly kind: "DOM traversal";
-    } & {
-        composed: boolean;
-        flattened: boolean;
-        nested: boolean;
-    };
-    const fullTree: {
-        has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
-        isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
-        add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-        set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-        remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-        unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-        is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
-        equals(value: any): boolean;
-        equals(value: unknown): value is any;
-        toString(): string;
-        toJSON(): Flags.JSON<"DOM traversal"> & {
-            composed: boolean;
-            flattened: boolean;
-            nested: boolean;
-        };
-        readonly value: number;
-        readonly kind: "DOM traversal";
-    } & {
-        composed: boolean;
-        flattened: boolean;
-        nested: boolean;
-    };
-    const composedNested: {
-        has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
-        isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
-        add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-        set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-        remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
-        unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
-        is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
-        equals(value: any): boolean;
-        equals(value: unknown): value is any;
-        toString(): string;
-        toJSON(): Flags.JSON<"DOM traversal"> & {
-            composed: boolean;
-            flattened: boolean;
-            nested: boolean;
-        };
-        readonly value: number;
-        readonly kind: "DOM traversal";
-    } & {
-        composed: boolean;
-        flattened: boolean;
-        nested: boolean;
-    };
-    function clone(node: Fragment, options?: ElementReplacementOptions, device?: Device): Fragment;
-    function clone(node: Shadow, options?: ElementReplacementOptions, device?: Device): Shadow;
-    function clone(node: Node_2, options?: ElementReplacementOptions, device?: Device): Node_2;
-    // @internal (undocumented)
-    function cloneNode(node: Node_2, options?: ElementReplacementOptions, device?: Device): Trampoline<Node_2>;
-    // (undocumented)
-    interface EARL extends earl.EARL {
-        // (undocumented)
-        "@context": {
-            ptr: "http://www.w3.org/2009/pointers#";
-        };
-        // (undocumented)
-        "@type": [
-        "ptr:Pointer",
-        "ptr:SinglePointer",
-        "ptr:ExpressionPointer",
-        "ptr:XPathPointer"
-        ];
-        // (undocumented)
-        "ptr:expression": string;
-        // (undocumented)
-        "ptr:reference"?: {
-            "@id": string;
-        };
-    }
-    // (undocumented)
-    interface ElementReplacementOptions {
-        // (undocumented)
-        newElements: Iterable<Element_2>;
-        // (undocumented)
-        predicate: Predicate<Element_2>;
-    }
     // (undocumented)
     function from(json: Element_2.JSON, device?: Device): Element_2;
+    const // (undocumented)
+    isNode: Refinement<unknown, Node_2>;
     // (undocumented)
     function from(json: Attribute.JSON, device?: Device): Attribute;
+    import Traversal = BaseNode.Traversal;
+    const // Warning: (ae-forgotten-export) The symbol "BaseNode" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    flatTree: Traversal;
+    const // (undocumented)
+    fullTree: Traversal;
+    const // (undocumented)
+    composedNested: Traversal;
     // (undocumented)
     function from(json: Text_2.JSON, device?: Device): Text_2;
     // (undocumented)
@@ -1067,66 +558,29 @@ namespace Node_2 {
     // @internal (undocumented)
     function fromNode(json: JSON, device?: Device): Trampoline<Node_2>;
     // (undocumented)
-    function isNode(value: unknown): value is Node_2;
+    type JSON = Attribute.JSON | Comment_2.JSON | Document_2.JSON | Element_2.JSON | Fragment.JSON | Shadow.JSON | Type.JSON | Text_2.JSON;
     // (undocumented)
-    interface JSON<T extends string = string> extends tree.Node.JSON<T> {
-        // (undocumented)
-        path?: string;
-    }
-    // (undocumented)
-    interface SerializationOptions extends json.Serializable.Options {
-        // (undocumented)
-        device?: Device;
-    }
-    // (undocumented)
-    type Traversal = ReturnType<(typeof Traversal)["of"]>;
-    // (undocumented)
-    type TraversalFlags = (typeof Node_2.Traversal.allFlags)[number];
-    const // Warning: (ae-forgotten-export) The symbol "traversal" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    getNodesBetween: typeof traversal.getNodesBetween;
+    type SerializationOptions = BaseNode.SerializationOptions;
+    const // (undocumented)
+    getNodesBetween: (node1: Node_2, node2: Node_2, includeOptions?: {
+        includeFirst: boolean;
+        includeSecond: boolean;
+    }) => Sequence<Node_2>;
     const // Warning: (ae-forgotten-export) The symbol "predicate_2" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     hasBox: typeof predicate_2.hasBox, // (undocumented)
-    hasChild: typeof predicate_2.hasChild, // (undocumented)
-    hasDescendant: typeof predicate_2.hasDescendant, // (undocumented)
-    hasInclusiveDescendant: typeof predicate_2.hasInclusiveDescendant, // (undocumented)
-    hasTextContent: typeof predicate_2.hasTextContent, // (undocumented)
     isRoot: typeof predicate_2.isRoot;
+    const // (undocumented)
+    hasChild: (predicate: Predicate<Node_2>, options?: Node_2.Traversal) => Predicate<Node_2>;
+    const // (undocumented)
+    hasDescendant: (predicate: Predicate<Node_2>, options?: Node_2.Traversal) => Predicate<Node_2>;
+    const // (undocumented)
+    hasInclusiveDescendant: (predicate: Predicate<Node_2>, options?: Node_2.Traversal) => Predicate<Node_2>;
+    const // (undocumented)
+    hasTextContent: (predicate?: Predicate<string>, options?: Node_2.Traversal) => Predicate<Node_2>;
 }
 export { Node_2 as Node }
-
-// @public (undocumented)
-export class PageRule extends Rule<"page"> {
-    protected constructor(selector: string, declarations: Array<Declaration>);
-    // (undocumented)
-    static of(selector: string, declarations: Iterable<Declaration>): PageRule;
-    // (undocumented)
-    get selector(): string;
-    // (undocumented)
-    get style(): Block;
-    // (undocumented)
-    toJSON(): PageRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace PageRule {
-    // @internal (undocumented)
-    export function fromPageRule(json: JSON): Trampoline<PageRule>;
-    // (undocumented)
-    export function isPageRule(value: unknown): value is PageRule;
-    // (undocumented)
-    export interface JSON extends Rule.JSON<"page"> {
-        // (undocumented)
-        selector: string;
-        // (undocumented)
-        style: Block.JSON | string;
-    }
-}
 
 // @public (undocumented)
 export namespace Query {
@@ -1135,7 +589,7 @@ export namespace Query {
     // (undocumented)
     getDescendants: typeof descendants.getDescendants;
     const // (undocumented)
-    getElementDescendants: (node: Node_2, options?: Node_2.Traversal) => Sequence<Element_3<string>>;
+    getElementDescendants: (node: BaseNode, options?: BaseNode.Traversal) => Sequence<Element_3<string>>;
     const // (undocumented)
     getInclusiveElementDescendants: typeof descendants.getInclusiveElementDescendants;
     const // (undocumented)
@@ -1147,79 +601,107 @@ export namespace Query {
     // (undocumented)
     export type TextGroup = descendants.TextGroup;
     // (undocumented)
-    export type TextGroupOptions<N extends Node_2 = Node_2> = descendants.TextGroupOptions<N>;
+    export type TextGroupOptions<N extends BaseNode = BaseNode> = descendants.TextGroupOptions<N>;
 }
 
 // @public (undocumented)
-export abstract class Rule<T extends string = string> implements Equatable, Serializable {
-    protected constructor(type: T);
-    // (undocumented)
-    ancestors(): Iterable_2<Rule>;
-    // @internal (undocumented)
-    _attachOwner(owner: Sheet): boolean;
-    // @internal (undocumented)
-    _attachParent(parent: Rule): boolean;
-    // (undocumented)
-    children(): Iterable_2<Rule>;
-    // (undocumented)
-    descendants(): Iterable_2<Rule>;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    inclusiveAncestors(): Iterable_2<Rule>;
-    // (undocumented)
-    get owner(): Option_2<Sheet>;
-    // (undocumented)
-    protected _owner: Option_2<Sheet>;
-    // (undocumented)
-    get parent(): Option_2<Rule>;
-    // (undocumented)
-    protected _parent: Option_2<Rule>;
-    // (undocumented)
-    toJSON(): Rule.JSON<T>;
-    // (undocumented)
-    get type(): T;
-}
+export type Rule = Rule.FontFace | Rule.Grouping | Rule.Import | Rule.Keyframe | Rule.Keyframes | Rule.Layer.Block | Rule.Layer.Statement | Rule.Media | Rule.Namespace | Rule.Page | Rule.Style | Rule.Supports;
 
 // @public (undocumented)
 export namespace Rule {
+    import FontFace = FontFaceRule;
+    import Grouping = GroupingRule;
+    import Import = ImportRule;
+    import Keyframe = KeyframeRule;
+    import Keyframes = KeyframesRule;
     // (undocumented)
-    export function from(json: FontFaceRule.JSON): FontFaceRule;
+    export function from(json: FontFaceRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): FontFaceRule;
+    import Media = MediaRule;
+    import Namespace = NamespaceRule;
+    import Page = PageRule;
+    import Style = StyleRule;
+    import Supports = SupportsRule;
     // (undocumented)
-    export function from(json: ImportRule.JSON): ImportRule;
+    export function from(json: ImportRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): ImportRule;
+    const // (undocumented)
+    fontFace: typeof FontFaceRule.of, // (undocumented)
+    isFontFaceRule: typeof FontFaceRule.isFontFaceRule;
+    const // (undocumented)
+    importRule: typeof ImportRule.of, // (undocumented)
+    isImportRule: typeof ImportRule.isImportRule;
+    const // (undocumented)
+    keyframe: typeof KeyframeRule.of, // (undocumented)
+    isKeyframeRule: typeof KeyframeRule.isKeyframeRule;
+    const // (undocumented)
+    keyframes: typeof KeyframesRule.of, // (undocumented)
+    isKeyframesRule: typeof KeyframesRule.isKeyframesRule;
+    const // Warning: (ae-forgotten-export) The symbol "Layer" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
-    export function from(json: KeyframeRule.JSON): KeyframeRule;
+    layerBlock: typeof Layer.BlockRule.of, // (undocumented)
+    isLayerBlockRule: typeof Layer.BlockRule.isLayerBlockRule;
+    const // (undocumented)
+    layerStatement: typeof Layer.StatementRule.of, // (undocumented)
+    isLayerStatementRule: typeof Layer.StatementRule.isLayerStatementRule;
+    const // (undocumented)
+    media: typeof MediaRule.of, // (undocumented)
+    isMediaRule: typeof MediaRule.isMediaRule;
+    const // (undocumented)
+    namespace: typeof NamespaceRule.of, // (undocumented)
+    isNamespaceRule: typeof NamespaceRule.isNamespaceRule;
+    const // (undocumented)
+    page: typeof PageRule.of, // (undocumented)
+    isPageRule: typeof PageRule.isPageRule;
+    const // (undocumented)
+    style: typeof StyleRule.of, // (undocumented)
+    isStyleRule: typeof StyleRule.isStyleRule;
+    const // (undocumented)
+    supports: typeof SupportsRule.of, // (undocumented)
+    isSupportsRule: typeof SupportsRule.isSupportsRule;
     // (undocumented)
-    export function from(json: KeyframesRule.JSON): KeyframesRule;
+    export function from(json: KeyframeRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): KeyframeRule;
     // (undocumented)
-    export function from(json: Layer.BlockRule.JSON): Layer.BlockRule;
+    export function from(json: KeyframesRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): KeyframesRule;
     // (undocumented)
-    export function from(json: Layer.StatementRule.JSON): Layer.StatementRule;
+    export function from(json: Layer.Block.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Layer.Block;
     // (undocumented)
-    export function from(json: MediaRule.JSON): MediaRule;
+    export function from(json: Layer.Statement.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Layer.Statement;
     // (undocumented)
-    export function from(json: NamespaceRule.JSON): NamespaceRule;
+    export function from(json: MediaRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): MediaRule;
     // (undocumented)
-    export function from(json: PageRule.JSON): PageRule;
+    export function from(json: NamespaceRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): NamespaceRule;
     // (undocumented)
-    export function from(json: StyleRule.JSON): StyleRule;
+    export function from(json: PageRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): PageRule;
     // (undocumented)
-    export function from(json: SupportsRule.JSON): SupportsRule;
+    export function from(json: StyleRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): StyleRule;
     // (undocumented)
-    export function from(json: JSON): Rule;
+    export function from(json: SupportsRule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): SupportsRule;
+    // (undocumented)
+    export function from(json: Rule.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Rule;
     // @internal (undocumented)
-    export function fromRule(json: JSON): Trampoline<Rule>;
+    export function fromRule(sheetFactory: (rules: Iterable<Rule>) => Sheet): (json: Rule.JSON) => Trampoline<Rule>;
+    // Warning: (ae-forgotten-export) The symbol "FontFaceRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "GroupingRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "ImportRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "KeyframeRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "KeyframesRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "MediaRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "NamespaceRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "PageRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "StyleRule" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "SupportsRule" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
-    export interface JSON<T extends string = string> {
-        // (undocumented)
-        [key: string]: json.JSON;
-        // (undocumented)
-        type: T;
+    export type JSON = FontFaceRule.JSON | GroupingRule.JSON | ImportRule.JSON | KeyframeRule.JSON | KeyframesRule.JSON | Layer.Block.JSON | Layer.Statement.JSON | MediaRule.JSON | NamespaceRule.JSON | PageRule.JSON | StyleRule.JSON | SupportsRule.JSON;
+    // (undocumented)
+    export namespace Layer {
+        import Block = LayerRules.BlockRule;
+        import Statement = LayerRules.StatementRule;
     }
 }
 
 // @public (undocumented)
-export class Shadow extends Node_2<"shadow"> {
+export class Shadow extends BaseNode<"shadow"> {
     protected constructor(children: Array<Node_2>, style: Array<Sheet>, mode: Shadow.Mode, externalId?: string, internalId?: string, extraData?: any);
     // @internal (undocumented)
     _attachHost(host: Element_2): boolean;
@@ -1230,21 +712,21 @@ export class Shadow extends Node_2<"shadow"> {
     // (undocumented)
     get host(): Option_2<Element_2>;
     // @internal (undocumented)
-    protected _internalPath(options?: Node_2.Traversal): string;
+    protected _internalPath(options?: BaseNode.Traversal): string;
     // (undocumented)
     get mode(): Shadow.Mode;
     // (undocumented)
     static of(children: Iterable_2<Node_2>, style?: Iterable_2<Sheet>, mode?: Shadow.Mode, externalId?: string, internalId?: string, extraData?: any): Shadow;
     // (undocumented)
-    parent(options?: Node_2.Traversal): Option_2<Node_2>;
+    parent(options?: BaseNode.Traversal): Option_2<Node_2>;
     // (undocumented)
     get style(): Iterable_2<Sheet>;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Shadow.MinimalJSON;
     // (undocumented)
-    toJSON(options?: Node_2.SerializationOptions): Shadow.JSON;
+    toJSON(options?: BaseNode.SerializationOptions): Shadow.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -1252,13 +734,11 @@ export class Shadow extends Node_2<"shadow"> {
 // @public (undocumented)
 export namespace Shadow {
     // @internal (undocumented)
-    export function cloneShadow(options: Node_2.ElementReplacementOptions, device?: Device): (shadow: Shadow) => Trampoline<Shadow>;
-    // @internal (undocumented)
-    export function fromShadow(json: JSON, device?: Device): Trampoline<Shadow>;
+    export function fromShadow(json: JSON, fromNode: (json: Node_2.JSON, device?: Device) => Trampoline<Node_2>, device?: Device): Trampoline<Shadow>;
     // (undocumented)
     export function isShadow(value: unknown): value is Shadow;
     // (undocumented)
-    export interface JSON extends Node_2.JSON {
+    export interface JSON extends BaseNode.JSON {
         // (undocumented)
         mode: string;
         // (undocumented)
@@ -1267,7 +747,7 @@ export namespace Shadow {
         type: "shadow";
     }
     // (undocumented)
-    export interface MinimalJSON extends Node_2.JSON {
+    export interface MinimalJSON extends BaseNode.JSON {
     }
     // (undocumented)
     export enum Mode {
@@ -1321,99 +801,16 @@ export namespace Sheet {
 }
 
 // @public (undocumented)
-export interface Slot extends Element_2 {
-    assignedNodes(): Iterable<Slotable>;
-}
-
-// @public (undocumented)
-export namespace Slot {
-    // (undocumented)
-    export function findSlotables(slot: Slot): Iterable<Slotable>;
-    // (undocumented)
-    export function isSlot(element: Element_2): boolean;
-    // (undocumented)
-    export function isSlot(value: unknown): value is Slot;
-    // (undocumented)
-    export function name(slot: Slot): string;
-}
-
-// @public (undocumented)
-export interface Slotable extends Node_2 {
-    assignedSlot(): Option_2<Slot>;
-}
+export type Slotable = Element_2 | Text_2;
 
 // @public (undocumented)
 export namespace Slotable {
     // (undocumented)
-    export function findSlot(slotable: Slotable): Option_2<Slot>;
-    // (undocumented)
     export function isSlotable(value: unknown): value is Slotable;
-    // (undocumented)
-    export function name(slotable: Slotable): string;
 }
 
 // @public (undocumented)
-export class StyleRule extends Rule<"style"> {
-    protected constructor(selector: string, declarations: Array<Declaration>, hint: boolean);
-    // (undocumented)
-    get hint(): boolean;
-    // (undocumented)
-    static of(selector: string, declarations: Iterable<Declaration>, hint?: boolean): StyleRule;
-    // (undocumented)
-    get selector(): string;
-    // (undocumented)
-    get style(): Block;
-    // (undocumented)
-    toJSON(): StyleRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace StyleRule {
-    // @internal (undocumented)
-    export function fromStyleRule(json: JSON): Trampoline<StyleRule>;
-    // (undocumented)
-    export function isEmpty(rule: StyleRule): boolean;
-    // (undocumented)
-    export function isStyleRule(value: unknown): value is StyleRule;
-    // (undocumented)
-    export interface JSON extends Rule.JSON<"style"> {
-        // (undocumented)
-        selector: string;
-        // (undocumented)
-        style: Block.JSON | string;
-    }
-}
-
-// @public (undocumented)
-export class SupportsRule extends ConditionRule<"supports"> {
-    protected constructor(condition: string, rules: Array<Rule>);
-    // (undocumented)
-    static of(condition: string, rules: Iterable<Rule>): SupportsRule;
-    // (undocumented)
-    get query(): Option_2<Feature.Supports.Query>;
-    // (undocumented)
-    toJSON(): SupportsRule.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace SupportsRule {
-    // @internal (undocumented)
-    export function fromSupportsRule(json: JSON): Trampoline<SupportsRule>;
-    // (undocumented)
-    export function isSupportsRule(value: unknown): value is SupportsRule;
-    // (undocumented)
-    export interface JSON extends ConditionRule.JSON<"supports"> {
-    }
-    // (undocumented)
-    export function matches(device: Device): Predicate<SupportsRule>;
-}
-
-// @public (undocumented)
-class Text_2 extends Node_2<"text"> implements Slotable {
+class Text_2 extends Slotable_2<"text"> {
     protected constructor(data: string, box: Option_2<Rectangle>, device: Option_2<Device>, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     assignedSlot(): Option_2<Slot>;
@@ -1424,17 +821,19 @@ class Text_2 extends Node_2<"text"> implements Slotable {
     // (undocumented)
     getBoundingBox(device: Device): Option_2<Rectangle>;
     // @internal (undocumented)
-    protected _internalPath(options?: Node_2.Traversal): string;
+    protected _internalPath(options?: BaseNode.Traversal): string;
     // (undocumented)
     is(predicate: Predicate<string>): boolean;
     // (undocumented)
     static of(data: string, box?: Option_2<Rectangle>, device?: Option_2<Device>, externalId?: string, internalId?: string, extraData?: any): Text_2;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    slotableName(): string;
+    // (undocumented)
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Text_2.MinimalJSON;
     // (undocumented)
-    toJSON(options?: Node_2.SerializationOptions): Text_2.JSON;
+    toJSON(options?: BaseNode.SerializationOptions): Text_2.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -1442,28 +841,26 @@ class Text_2 extends Node_2<"text"> implements Slotable {
 // @public (undocumented)
 namespace Text_2 {
     // @internal (undocumented)
-    function cloneText(device?: Device): (text: Text_2) => Trampoline<Text_2>;
-    // @internal (undocumented)
     function fromText(json: JSON, device?: Device): Trampoline<Text_2>;
     // (undocumented)
     function is(predicate: Predicate<string>): Predicate<Text_2>;
     // (undocumented)
     function isText(value: unknown): value is Text_2;
     // (undocumented)
-    interface JSON extends Node_2.JSON<"text"> {
+    interface JSON extends BaseNode.JSON<"text"> {
         // (undocumented)
         box: Rectangle.JSON | null;
         // (undocumented)
         data: string;
     }
     // (undocumented)
-    interface MinimalJSON extends Node_2.JSON<"text"> {
+    interface MinimalJSON extends BaseNode.JSON<"text"> {
     }
 }
 export { Text_2 as Text }
 
 // @public (undocumented)
-export class Type<N extends string = string> extends Node_2<"type"> {
+export class Type<N extends string = string> extends BaseNode<"type"> {
     protected constructor(name: N, publicId: Option_2<string>, systemId: Option_2<string>, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     static empty(): Type;
@@ -1476,11 +873,11 @@ export class Type<N extends string = string> extends Node_2<"type"> {
     // (undocumented)
     get systemId(): Option_2<string>;
     // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
+    toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Type.MinimalJSON;
     // (undocumented)
-    toJSON(options?: Node_2.SerializationOptions): Type.JSON<N>;
+    toJSON(options?: BaseNode.SerializationOptions): Type.JSON<N>;
     // (undocumented)
     toString(): string;
 }
@@ -1488,13 +885,11 @@ export class Type<N extends string = string> extends Node_2<"type"> {
 // @public (undocumented)
 export namespace Type {
     // @internal (undocumented)
-    export function cloneType<N extends string = string>(type: Type<N>): Trampoline<Type<N>>;
-    // @internal (undocumented)
     export function fromType<N extends string = string>(json: JSON<N>): Trampoline<Type<N>>;
     // (undocumented)
     export function isType(value: unknown): value is Type;
     // (undocumented)
-    export interface JSON<N extends string = string> extends Node_2.JSON<"type"> {
+    export interface JSON<N extends string = string> extends BaseNode.JSON<"type"> {
         // (undocumented)
         name: N;
         // (undocumented)
@@ -1503,7 +898,7 @@ export namespace Type {
         systemId: string | null;
     }
     // (undocumented)
-    export interface MinimalJSON extends Node_2.JSON<"type"> {
+    export interface MinimalJSON extends BaseNode.JSON<"type"> {
     }
 }
 
