@@ -167,10 +167,6 @@ export namespace Descriptor {
     // (undocumented)
     export type For<V, D extends Descriptor> = D extends Descriptor<infer T, infer U, infer P> ? U extends V ? D : never : never;
     // (undocumented)
-    export type Properties<D extends Descriptor> = D extends Descriptor<infer T, infer V, infer P> ? P : never;
-    // (undocumented)
-    export type Type<D> = D extends Descriptor<infer T, infer V, infer P> ? T : never;
-    // (undocumented)
     export type Value<D> = D extends Descriptor<infer T, infer V, infer P> ? V : never;
 }
 
