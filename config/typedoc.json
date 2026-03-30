@@ -1,10 +1,13 @@
 {
   "$schema": "https://typedoc.org/schema.json",
-  "entryPoints": ["../packages/*"],
+  "entryPoints": ["../packages/alfa-*/config"],
   "entryPointStrategy": "packages",
   "includeVersion": false,
-  "out": "../docs/typedoc",
   "plugin": ["typedoc-plugin-markdown"],
+  "outputs": [
+    { "name": "html", "path": "../docs/typedoc/html" },
+    { "name": "markdown", "path": "../docs/typedoc/markdow" }
+  ],
   "packageOptions": {
     "includeVersion": true,
     "entryPoints": ["src/index.ts"]
