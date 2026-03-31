@@ -80,6 +80,7 @@ const _textCache = Cache.empty<
  * @public
  */
 export interface TextGroup {
+  node: Node;
   label: string;
   text: Sequence<Text>;
 }
@@ -141,6 +142,7 @@ function* _getTextDescendants<N extends Node = Node>(
     if (startsGroup(child)) {
       const groupText = getDescendants(Text.isText)(child, traversalOptions);
       yield {
+        node: child,
         label: getLabel(child),
         text: groupText,
       };
