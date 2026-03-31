@@ -7,14 +7,16 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "../node.js";
+import { BaseNode } from "./node.js";
 import { Sheet } from "../style/sheet.js";
-import { Element } from "./element.js";
+import type { Element } from "./slotable/index.js";
+
+import type { Node } from "./index.js";
 
 /**
  * @public
  */
-export class Document extends Node<"document"> {
+export class Document extends BaseNode<"document"> {
   public static of(
     children: Iterable<Node>,
     style: Iterable<Sheet> = [],
@@ -58,8 +60,10 @@ export class Document extends Node<"document"> {
     return this._frame;
   }
 
-  public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
-    return options.isSet(Node.Traversal.nested)
+  public parent(
+    options: BaseNode.Traversal = BaseNode.Traversal.empty,
+  ): Option<Node> {
+    return options.isSet(BaseNode.Traversal.nested)
       ? this.frame
       : super.parent(options);
   }
@@ -68,9 +72,9 @@ export class Document extends Node<"document"> {
    * @internal
    **/
   protected _internalPath(
-    options: Node.Traversal = Node.Traversal.empty,
+    options: BaseNode.Traversal = BaseNode.Traversal.empty,
   ): string {
-    if (options.isSet(Node.Traversal.nested)) {
+    if (options.isSet(BaseNode.Traversal.nested)) {
       return this._frame
         .map((frame) => frame.path(options) + "/document-node()")
         .getOr("/");
@@ -80,15 +84,15 @@ export class Document extends Node<"document"> {
   }
 
   public toJSON(
-    options: Node.SerializationOptions & {
+    options: BaseNode.SerializationOptions & {
       verbosity:
         | json.Serializable.Verbosity.Minimal
         | json.Serializable.Verbosity.Low;
     },
   ): Document.MinimalJSON;
-  public toJSON(options?: Node.SerializationOptions): Document.JSON;
+  public toJSON(options?: BaseNode.SerializationOptions): Document.JSON;
   public toJSON(
-    options?: Node.SerializationOptions,
+    options?: BaseNode.SerializationOptions,
   ): Document.MinimalJSON | Document.JSON {
     const result = {
       ...super.toJSON(options),
@@ -139,9 +143,9 @@ export class Document extends Node<"document"> {
  * @public
  */
 export namespace Document {
-  export interface MinimalJSON extends Node.JSON<"document"> {}
+  export interface MinimalJSON extends BaseNode.JSON<"document"> {}
 
-  export interface JSON extends Node.JSON<"document"> {
+  export interface JSON extends BaseNode.JSON<"document"> {
     style: Array<Sheet.JSON>;
   }
 
@@ -154,10 +158,11 @@ export namespace Document {
    */
   export function fromDocument(
     json: JSON,
+    fromNode: (json: Node.JSON, device?: Device) => Trampoline<Node>,
     device?: Device,
   ): Trampoline<Document> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      Node.fromNode(child, device),
+      fromNode(child, device),
     ).map((children) =>
       Document.of(
         children,
@@ -166,30 +171,5 @@ export namespace Document {
         json.internalId,
       ),
     );
-  }
-
-  /**
-   * @internal
-   */
-  export function cloneDocument(
-    options: Node.ElementReplacementOptions,
-    device?: Device,
-  ): (document: Document) => Trampoline<Document> {
-    return (document) =>
-      Trampoline.traverse(document.children(), (child) => {
-        if (Element.isElement(child) && options.predicate(child)) {
-          return Trampoline.done(Array.from(options.newElements));
-        }
-
-        return Node.cloneNode(child, options, device).map((node) => [node]);
-      }).map((children) => {
-        return Document.of(
-          Iterable.flatten(children),
-          document.style,
-          document.externalId,
-          document.internalId,
-          document.extraData,
-        );
-      });
   }
 }

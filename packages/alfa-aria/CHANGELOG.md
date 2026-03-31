@@ -1,5 +1,13 @@
 # @siteimprove/alfa-aria
 
+## 0.113.0
+
+### Patch Changes
+
+- **Fixed:** Name computation of `<input>` element has been updated to the latest HTML AAM specifications. ([#2009](https://github.com/Siteimprove/alfa/pull/2009))
+
+  Most notably allowing `aria-placeholder`; allowing `placeholder` in `<input type="number">`; and allowing `title` in buttons, submit buttons and reset buttons.
+
 ## 0.112.0
 
 ## 0.111.0

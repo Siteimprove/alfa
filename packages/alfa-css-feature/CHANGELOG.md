@@ -1,5 +1,7 @@
 # @siteimprove/alfa-css-feature
 
+## 0.113.0
+
 ## 0.112.0
 
 ## 0.111.0

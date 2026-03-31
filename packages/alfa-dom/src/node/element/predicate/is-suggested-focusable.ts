@@ -1,4 +1,7 @@
-import { Element } from "../../element.js";
+import type { Element } from "../../slotable/element.js";
+
+import { isBrowsingContextContainer } from "./is-browsing-context-container.js";
+import { isEditingHost } from "./is-editing-host.js";
 
 /**
  * {@link https://html.spec.whatwg.org/multipage/#tabindex-value}
@@ -41,8 +44,5 @@ export function isSuggestedFocusable(element: Element): boolean {
       return (element as Element<"summary">).isSummaryForItsParentDetails();
   }
 
-  return (
-    Element.isEditingHost(element) ||
-    Element.isBrowsingContextContainer(element)
-  );
+  return isEditingHost(element) || isBrowsingContextContainer(element);
 }

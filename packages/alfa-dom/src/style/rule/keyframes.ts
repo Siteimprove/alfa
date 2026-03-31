@@ -1,7 +1,8 @@
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { Rule } from "../rule.js";
+import type { Rule } from "./index.js";
+import type { BaseRule } from "./rule.js";
 import { GroupingRule } from "./grouping.js";
 
 /**
@@ -55,8 +56,11 @@ export namespace KeyframesRule {
   /**
    * @internal
    */
-  export function fromKeyframesRule(json: JSON): Trampoline<KeyframesRule> {
-    return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
+  export function fromKeyframesRule(
+    json: JSON,
+    fromRule: (json: Rule.JSON) => Trampoline<Rule>,
+  ): Trampoline<KeyframesRule> {
+    return Trampoline.traverse(json.rules, fromRule).map((rules) =>
       KeyframesRule.of(json.name, rules),
     );
   }

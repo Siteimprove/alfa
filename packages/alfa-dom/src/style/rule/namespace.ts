@@ -1,12 +1,12 @@
 import { Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { Rule } from "../rule.js";
+import { BaseRule } from "./rule.js";
 
 /**
  * @public
  */
-export class NamespaceRule extends Rule<"namespace"> {
+export class NamespaceRule extends BaseRule<"namespace"> {
   public static of(namespace: string, prefix: Option<string>): NamespaceRule {
     return new NamespaceRule(namespace, prefix);
   }
@@ -48,7 +48,7 @@ export class NamespaceRule extends Rule<"namespace"> {
  * @public
  */
 export namespace NamespaceRule {
-  export interface JSON extends Rule.JSON<"namespace"> {
+  export interface JSON extends BaseRule.JSON<"namespace"> {
     namespace: string;
     prefix: string | null;
   }

@@ -1,5 +1,7 @@
 # @siteimprove/alfa-thunk
 
+## 0.113.0
+
 ## 0.112.0
 
 ### Minor Changes

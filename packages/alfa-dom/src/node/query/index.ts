@@ -1,7 +1,7 @@
 import * as descendants from "./descendants.js";
 import * as elementIdMap from "./element-id-map.js";
 
-import type { Node } from "../../node.js";
+import type { BaseNode } from "../node.js";
 
 /**
  * @public
@@ -15,6 +15,6 @@ export namespace Query {
   export const getElementIdMap = elementIdMap.getElementIdMap;
 
   export type TextGroup = descendants.TextGroup;
-  export type TextGroupOptions<N extends Node = Node> =
+  export type TextGroupOptions<N extends BaseNode = BaseNode> =
     descendants.TextGroupOptions<N>;
 }

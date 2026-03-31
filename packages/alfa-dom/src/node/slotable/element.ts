@@ -1,0 +1,587 @@
+import { Cache } from "@siteimprove/alfa-cache";
+import type { Device } from "@siteimprove/alfa-device";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option, Some } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
+import { Sequence } from "@siteimprove/alfa-sequence";
+import { String } from "@siteimprove/alfa-string";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
+
+import * as json from "@siteimprove/alfa-json";
+
+import type { Namespace } from "../../namespace.js";
+import { BaseNode } from "../node.js";
+
+import { Block } from "../../style/index.js";
+
+import { Attribute } from "../attribute.js";
+import { Document } from "../document.js";
+import { Shadow } from "../shadow.js";
+import type { Slot } from "./slot.js";
+import { Slotable } from "./slotable.js";
+
+import type { Node } from "../index.js";
+
+import type * as helpers from "../element/input-type.js";
+import * as predicate from "../element/predicate/index.js";
+
+const { isEmpty } = Iterable;
+const { and, not, or, test } = Predicate;
+
+/**
+ * @public
+ */
+export class Element<N extends string = string> extends Slotable<"element"> {
+  public static of<N extends string = string>(
+    namespace: Option<Namespace>,
+    prefix: Option<string>,
+    name: N,
+    attributes: Iterable<Attribute> = [],
+    children: Iterable<Node> = [],
+    style: Option<Block> = None,
+    box: Option<Rectangle> = None,
+    device: Option<Device> = None,
+    externalId?: string,
+    internalId?: string,
+    extraData?: any,
+  ): Element<N> {
+    return new Element(
+      namespace,
+      prefix,
+      name,
+      Array.from(attributes),
+      Array.from(children),
+      style,
+      box,
+      device,
+      externalId,
+      internalId,
+      extraData,
+    );
+  }
+
+  private readonly _namespace: Option<Namespace>;
+  private readonly _prefix: Option<string>;
+  private readonly _name: N;
+  private readonly _attributes: Map<string, Attribute>;
+  private readonly _style: Option<Block>;
+  private _shadow: Option<Shadow> = None;
+  private _content: Option<Document> = None;
+  private readonly _id: Option<string>;
+  private readonly _classes: Array<string>;
+  private readonly _boxes: Cache<Device, Rectangle>;
+
+  protected constructor(
+    namespace: Option<Namespace>,
+    prefix: Option<string>,
+    name: N,
+    attributes: Array<Attribute>,
+    children: Array<Node>,
+    style: Option<Block>,
+    box: Option<Rectangle>,
+    device: Option<Device>,
+    externalId?: string,
+    internalId?: string,
+    extraData?: any,
+  ) {
+    super(children, "element", externalId, internalId, extraData);
+
+    this._namespace = namespace;
+    this._prefix = prefix;
+    this._name = name;
+    this._attributes = new Map(
+      attributes
+        .filter((attribute) => attribute._attachOwner(this))
+        .map((attribute) => [attribute.qualifiedName, attribute]),
+    );
+
+    style.forEach((block) =>
+      Iterable.forEach(block, (declaration) => declaration._attachOwner(this)),
+    );
+    this._style = style;
+
+    this._id = this.attribute("id").map((attr) => attr.value);
+
+    this._classes = this.attribute("class")
+      .map((attr) => attr.value.trim().split(/\s+/))
+      .getOr([]);
+
+    this._boxes = Cache.from(
+      device.isSome() && box.isSome() ? [[device.get(), box.get()]] : [],
+    );
+  }
+
+  public get namespace(): Option<Namespace> {
+    return this._namespace;
+  }
+
+  public get prefix(): Option<string> {
+    return this._prefix;
+  }
+
+  public get name(): N {
+    return this._name;
+  }
+
+  public get qualifiedName(): string {
+    return this._prefix.reduce<string>(
+      (name, prefix) => `${prefix}:${name}`,
+      this._name,
+    );
+  }
+
+  public get attributes(): Sequence<Attribute> {
+    return Sequence.from(this._attributes.values());
+  }
+
+  public get style(): Option<Block> {
+    return this._style;
+  }
+
+  public get shadow(): Option<Shadow> {
+    return this._shadow;
+  }
+
+  public get content(): Option<Document> {
+    return this._content;
+  }
+
+  /**
+   * {@link https://dom.spec.whatwg.org/#concept-id}
+   */
+  public get id(): Option<string> {
+    return this._id;
+  }
+
+  /**
+   * {@link https://dom.spec.whatwg.org/#concept-class}
+   */
+  public get classes(): Sequence<string> {
+    return Sequence.from(this._classes);
+  }
+
+  public getBoundingBox(device: Device): Option<Rectangle> {
+    return this._boxes.get(device);
+  }
+
+  public children(
+    options: BaseNode.Traversal = BaseNode.Traversal.empty,
+  ): Sequence<Node> {
+    const treeChildren = this._children as Array<Node>;
+    const children: Array<Node> = [];
+
+    if (options.isSet(BaseNode.Traversal.flattened)) {
+      if (this._shadow.isSome()) {
+        return this._shadow.get().children(options);
+      }
+
+      if (Element.isSlot(this)) {
+        return Sequence.from(this.assignedNodes());
+      }
+
+      for (const child of treeChildren) {
+        if (Element.isSlot(child)) {
+          children.push(...child.children(options));
+        } else {
+          children.push(child);
+        }
+      }
+    } else {
+      if (options.isSet(BaseNode.Traversal.composed) && this._shadow.isSome()) {
+        children.push(this._shadow.get());
+      }
+
+      children.push(...treeChildren);
+    }
+
+    if (options.isSet(BaseNode.Traversal.nested) && this._content.isSome()) {
+      children.push(this._content.get());
+    }
+
+    return Sequence.from(children);
+  }
+
+  public attribute<A extends string = string>(name: A): Option<Attribute<A>>;
+
+  public attribute<A extends string = string>(
+    predicate: Predicate<Attribute<A>>,
+  ): Option<Attribute<A>>;
+
+  public attribute(
+    nameOrPredicate: string | Predicate<Attribute>,
+  ): Option<Attribute> {
+    if (typeof nameOrPredicate === "string") {
+      return Option.from(this._attributes.get(nameOrPredicate));
+    } else {
+      return Iterable.find(this._attributes.values(), nameOrPredicate);
+    }
+  }
+
+  /**
+   * {@link https://html.spec.whatwg.org/#void-elements}
+   */
+  public isVoid(): boolean {
+    switch (this._name) {
+      case "area":
+      case "base":
+      case "basefont":
+      case "bgsound":
+      case "br":
+      case "col":
+      case "embed":
+      case "frame":
+      case "hr":
+      case "img":
+      case "input":
+      case "link":
+      case "meta":
+      case "param":
+      case "source":
+      case "track":
+      case "wbr":
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * {@link https://html.spec.whatwg.org/#dom-tabindex}
+   */
+  public tabIndex(): Option<number> {
+    for (const tabIndex of this.attribute("tabindex")) {
+      const number = parseInt(tabIndex.value, 10);
+
+      //Checking if tabindex isn't NaN, undefined, null, Infinity
+      if (number === number && number === (number | 0)) {
+        return Some.of(number);
+      }
+    }
+
+    if (Element.isSuggestedFocusable(this)) {
+      return Some.of(0);
+    }
+
+    return None;
+  }
+
+  /**
+   * Computes inertness of an element based on the `inert` attribute.
+   *
+   * {@link https://html.spec.whatwg.org/#the-inert-attribute}
+   *
+   * @privateRemarks
+   * According to {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inert}
+   * only open dialogs can escape inertness (except when they have the `inert` attribute).
+   */
+  public isInert(): boolean {
+    if (this._isInert === undefined) {
+      this._isInert = test(
+        or(
+          // Explicitly inert;
+          Element.hasAttribute("inert"),
+          and(
+            // or not an open dialog,
+            not(and(Element.hasName("dialog"), Element.hasAttribute("open"))),
+            // and with an inert ancestor.
+            (element) =>
+              element
+                .parent(BaseNode.flatTree)
+                .filter(Element.isElement)
+                .some((parent) => parent.isInert()),
+          ),
+        ),
+        this,
+      );
+    }
+    return this._isInert;
+  }
+
+  /*
+   * This collects caches for methods that are specific to some kind of elements.
+   * The actual methods are declared in element/augment.ts to de-clutter this
+   * class. However, we need to declare the variables here as they would
+   * otherwise be public which exposes too much. And they must be `protected`
+   * to be accessible by the augments.
+   */
+
+  protected _inputType: helpers.InputType | undefined;
+  protected _displaySize: number | undefined;
+  protected _optionsList: Sequence<Element<"option">> | undefined;
+  private _isInert: boolean | undefined;
+
+  /*
+   * End of caches for methods specific to some kind of elements.
+   */
+
+  /**
+   * {@link https://dom.spec.whatwg.org/#dom-slotable-assignedslot}
+   */
+  public assignedSlot(): Option<Slot> {
+    const name = this.slotableName();
+
+    return this.parent()
+      .filter(Element.isElement)
+      .flatMap((parent) =>
+        parent.shadow.flatMap((shadow) =>
+          shadow
+            .descendants()
+            .filter(Element.isSlot)
+            .find((slot) => slot.slotName() === name),
+        ),
+      );
+  }
+
+  public slotableName(): string {
+    return this.attribute("slot")
+      .map((slot) => slot.value)
+      .getOr("");
+  }
+
+  /**
+   * @internal
+   **/
+  protected _internalPath(options?: BaseNode.Traversal): string {
+    let path = this.parent(options)
+      .map((parent) => parent.path(options))
+      .getOr("/");
+
+    path += path === "/" ? "" : "/";
+    path += this._name;
+
+    const index = this.index(
+      options,
+      (node: Node) => Element.isElement(node) && node._name === this._name,
+    );
+
+    path += `[${index + 1}]`;
+
+    return path;
+  }
+
+  public toJSON(
+    options: BaseNode.SerializationOptions & {
+      verbosity:
+        | json.Serializable.Verbosity.Minimal
+        | json.Serializable.Verbosity.Low;
+    },
+  ): Element.MinimalJSON;
+
+  public toJSON(
+    options: BaseNode.SerializationOptions & {
+      verbosity: json.Serializable.Verbosity.High;
+    },
+  ): Element.JSON & { assignedSlot: Element.MinimalJSON | null };
+
+  public toJSON(options?: BaseNode.SerializationOptions): Element.JSON<N>;
+
+  public toJSON(
+    options?: BaseNode.SerializationOptions,
+  ):
+    | Element.MinimalJSON
+    | Element.JSON<N>
+    | (Element.JSON & { assignedSlot: Element.MinimalJSON | null }) {
+    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
+
+    const result:
+      | Element.MinimalJSON
+      | Element.JSON<N>
+      | (Element.JSON & { assignedSlot: Element.MinimalJSON | null }) =
+      super.toJSON(options);
+
+    if (verbosity < json.Serializable.Verbosity.Medium) {
+      return result;
+    }
+
+    if (verbosity >= json.Serializable.Verbosity.High) {
+      result.assignedSlot = this.assignedSlot()
+        .map((slot) =>
+          slot.toJSON({ verbosity: json.Serializable.Verbosity.Minimal }),
+        )
+        .getOr(null);
+    }
+
+    return {
+      ...result,
+      namespace: this._namespace.getOr(null),
+      prefix: this._prefix.getOr(null),
+      name: this._name,
+      attributes: [...this._attributes.values()].map((attribute) =>
+        attribute.toJSON(options),
+      ),
+      style: this._style.map((style) => style.toJSON()).getOr(null),
+      shadow: this._shadow.map((shadow) => shadow.toJSON(options)).getOr(null),
+      content: this._content
+        .map((content) => content.toJSON(options))
+        .getOr(null),
+      box:
+        options?.device === undefined
+          ? null
+          : this._boxes
+              .get(options.device)
+              .map((box) => box.toJSON())
+              .getOr(null),
+    };
+  }
+
+  public toString(): string {
+    const name = this.qualifiedName;
+
+    const attributes = [...this._attributes.values()]
+      .map((attribute) => ` ${attribute.toString()}`)
+      .join("");
+
+    if (this.isVoid()) {
+      return `<${name}${attributes}>`;
+    }
+
+    const children = [...this._shadow, ...this._children, ...this._content]
+      .map((child) => {
+        const value = child.toString();
+
+        // If the child is only spaces, we do not want to trim them to nothingness.
+        if (value.match(/\s+/) !== null) {
+          return value;
+        }
+
+        return value.trim();
+      })
+      .filter(not(isEmpty))
+      .map(String.indent)
+      .join("\n");
+
+    return `<${name}${attributes}>${
+      children === "" ? "" : `\n${children}\n`
+    }</${name}>`;
+  }
+
+  /**
+   * @internal
+   */
+  public _attachShadow(shadow: Shadow): boolean {
+    if (this._frozen || this._shadow.isSome() || !shadow._attachHost(this)) {
+      return false;
+    }
+
+    this._shadow = Option.of(shadow);
+
+    return true;
+  }
+
+  /**
+   * @internal
+   */
+  public _attachContent(document: Document): boolean {
+    if (
+      this._frozen ||
+      this._content.isSome() ||
+      !document._attachFrame(this)
+    ) {
+      return false;
+    }
+
+    this._content = Option.of(document);
+
+    return true;
+  }
+}
+
+/**
+ * @public
+ */
+export namespace Element {
+  export interface MinimalJSON extends BaseNode.JSON<"element"> {}
+
+  export interface JSON<
+    N extends string = string,
+  > extends BaseNode.JSON<"element"> {
+    namespace: string | null;
+    prefix: string | null;
+    name: N;
+    attributes: Array<Attribute.JSON>;
+    style: Block.JSON | string | null;
+    shadow: Shadow.JSON | null;
+    content: Document.JSON | null;
+    box: Rectangle.JSON | null;
+  }
+
+  export function isElement(value: unknown): value is Element {
+    return value instanceof Element;
+  }
+
+  export function isSlot(value: unknown): value is Slot {
+    return Element.isElement(value) && value.name === "slot";
+  }
+
+  /**
+   * @internal
+   */
+  export function fromElement<N extends string = string>(
+    json: JSON<N>,
+    fromNode: (json: Node.JSON, device?: Device) => Trampoline<Node>,
+    device?: Device,
+  ): Trampoline<Element<N>> {
+    return Trampoline.traverse(json.children ?? [], (child) =>
+      fromNode(child, device),
+    ).map((children) => {
+      const element = Element.of(
+        Option.from(json.namespace as Namespace | null),
+        Option.from(json.prefix),
+        json.name,
+        json.attributes.map((attribute) =>
+          Attribute.fromAttribute(attribute).run(),
+        ),
+        children,
+        json.style?.length === 0
+          ? None
+          : Option.from(json.style).map(Block.from),
+        Option.from(json.box).map(Rectangle.from),
+        Option.from(device),
+        json.externalId,
+        json.internalId,
+      );
+
+      if (json.shadow !== null) {
+        element._attachShadow(
+          Shadow.fromShadow(json.shadow, fromNode, device).run(),
+        );
+      }
+
+      if (json.content !== null) {
+        element._attachContent(
+          Document.fromDocument(json.content, fromNode, device).run(),
+        );
+      }
+
+      return element;
+    });
+  }
+
+  export const {
+    hasAttribute,
+    hasDisplaySize,
+    hasId,
+    hasInputType,
+    hasName,
+    hasNamespace,
+    hasTabIndex,
+    isBrowsingContextContainer,
+    isDraggable,
+    isEditingHost,
+    isSuggestedFocusable,
+    isReplaced,
+  } = predicate;
+
+  export const hasUniqueId = predicate.hasUniqueId(isElement);
+  export const isActuallyDisabled = predicate.isActuallyDisabled(isElement);
+  export const isContent = predicate.isContent(
+    isElement,
+    BaseNode.Traversal.empty,
+  );
+  export const isDocumentElement = predicate.isDocumentElement(isElement);
+  export const isFallback = predicate.isFallback(isElement);
+  export const isScopedTo = predicate.isScopedTo(isElement);
+
+  export type InputType = helpers.InputType;
+}

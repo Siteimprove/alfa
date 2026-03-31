@@ -1,6 +1,6 @@
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import type { Element } from "../../element.js";
+import type { Element } from "../../slotable/element.js";
 import { hasName } from "./has-name.js";
 
 const { test } = Refinement;

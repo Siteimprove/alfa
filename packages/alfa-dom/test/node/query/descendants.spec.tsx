@@ -114,9 +114,17 @@ test("#getTextDescendants() groups text by HTML headings", (t) => {
 
   t.deepEqual(items.toJSON(), [
     before.toJSON(),
-    { label: "heading1", text: [heading1Text.toJSON()] },
+    {
+      node: heading1.toJSON(),
+      label: "heading1",
+      text: [heading1Text.toJSON()],
+    },
     text1.toJSON(),
-    { label: "heading2", text: [heading2Text.toJSON()] },
+    {
+      node: heading2.toJSON(),
+      label: "heading2",
+      text: [heading2Text.toJSON()],
+    },
     text2.toJSON(),
   ]);
 });

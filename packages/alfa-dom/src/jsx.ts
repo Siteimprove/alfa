@@ -1,7 +1,5 @@
 import { h } from "./h.js";
 
-import type { Element, Node } from "./index.js";
-
 import type { Device } from "@siteimprove/alfa-device";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import type * as dom from "./index.js";
@@ -15,7 +13,7 @@ export function jsx<N extends string = string>(
   name: N,
   properties: jsx.Properties | null = null,
   ...children: jsx.Children
-): Element<N> {
+): dom.Element<N> {
   const attributes: Record<string, string | boolean> = {};
   const style: Record<string, string> = {};
   let box: Rectangle | undefined = undefined;
@@ -77,7 +75,7 @@ export function jsx<N extends string = string>(
  * @public
  */
 export namespace jsx {
-  export type Child = Node | string;
+  export type Child = dom.Node | string;
 
   /**
    * @remarks

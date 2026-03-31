@@ -4,7 +4,7 @@ import { Option, None } from "@siteimprove/alfa-option";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { Rule } from "./rule.js";
+import { Rule } from "./rule/index.js";
 
 /**
  * @public
@@ -95,7 +95,7 @@ export namespace Sheet {
 
   export function from(json: JSON): Sheet {
     return Sheet.of(
-      json.rules.map(Rule.from),
+      json.rules.map((ruleJson) => Rule.from(ruleJson, Sheet.of)),
       json.disabled,
       Option.from(json.condition),
     );

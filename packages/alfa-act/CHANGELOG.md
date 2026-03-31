@@ -1,5 +1,17 @@
 # @siteimprove/alfa-act
 
+## 0.113.0
+
+### Minor Changes
+
+- **Breaking:** `Diagnostic.empty` is now a function with 0 parameters, instead of a constant. ([#2036](https://github.com/Siteimprove/alfa/pull/2036))
+
+  This matches better the singleton pattern that we use for empty instances in other packages.
+
+### Patch Changes
+
+- **Added:** A new `Finding` type alias is now available in place of the `Either` that was returned when conducting an interview, with the `Left`/`Right` parts called conclusive/inconclusive findings. The underlying type is the same, this is just an alias for convenience. ([#2036](https://github.com/Siteimprove/alfa/pull/2036))
+
 ## 0.112.0
 
 ## 0.111.0

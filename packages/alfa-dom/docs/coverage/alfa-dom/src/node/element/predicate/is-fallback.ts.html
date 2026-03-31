@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/5</span>
+                <span class='fraction'>4/5</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>2/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/5</span>
+                <span class='fraction'>4/5</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -106,7 +106,10 @@
 <a name='L41'></a><a href='#L41'>41</a>
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -130,7 +133,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -143,7 +148,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -152,12 +158,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 &nbsp;
-import { Element } from "../../element.js";
-import type { Node } from "../../../node.js";
+import type { Element } from "../../slotable/element.js";
+import type { BaseNode } from "../../node.js";
 &nbsp;
 import { hasName } from "./has-name.js";
 &nbsp;
-const { not, or, test } = Predicate;
+const { not, or } = Predicate;
 const { and } = Refinement;
 &nbsp;
 /**
@@ -172,24 +178,27 @@ const { and } = Refinement;
  *
  * @public
  */
-export function <span class="fstat-no" title="function not covered" >isFallback(</span>node: Node): boolean {
-<span class="cstat-no" title="statement not covered" >  return test(</span>
-    or(
-      hasParentName("iframe"),
-      and(
-        hasParentName("audio", "video"),
-        not(and(Element.isElement, hasName("track", "source"))),
-      ),
+export function isFallback(
+  isElement: Refinement&lt;unknown, Element&gt;,
+): Predicate&lt;BaseNode&gt; {
+  return or(
+    hasParentName(isElement, "iframe"),
+    and(
+      hasParentName(isElement, "audio", "video"),
+      not(and(isElement, hasName("track", "source"))),
     ),
-    node,
   );
 }
 &nbsp;
-function <span class="fstat-no" title="function not covered" >hasParentName(</span>name: string, ...names: Array&lt;string&gt;): Predicate&lt;Node&gt; {
-<span class="cstat-no" title="statement not covered" >  return <span class="fstat-no" title="function not covered" >(n</span>ode) =&gt;</span>
+function hasParentName(
+  isElement: Refinement&lt;unknown, Element&gt;,
+  name: string,
+  ...names: Array&lt;string&gt;
+): Predicate&lt;BaseNode&gt; {
+  return <span class="fstat-no" title="function not covered" >(n</span>ode) =&gt;
 <span class="cstat-no" title="statement not covered" >    node</span>
       .parent()
-      .filter(Element.isElement)
+      .filter(isElement)
       .some(hasName(name, ...names));
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -199,7 +208,7 @@ function <span class="fstat-no" title="function not covered" >hasParentName(</sp
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-02-24T14:06:21.684Z
+                at 2026-03-31T11:06:21.155Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

@@ -47,7 +47,7 @@ export namespace PaintingOrder {
         type: "painting-order";
         elements: Array_2<Element_2.JSON>;
     };
-    const from: (this: unknown, root: Node_2<string>, device: Device) => PaintingOrder;
+    const from: (this: unknown, root: Node_2, device: Device) => PaintingOrder;
 }
 
 // (No @packageDocumentation comment for this package)
