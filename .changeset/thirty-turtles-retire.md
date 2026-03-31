@@ -2,4 +2,4 @@
 "@siteimprove/alfa-dom": minor
 ---
 
-A new property `node` has been added to the `TextGroup` interface.
+**Breaking:** A new required property `node` has been added to the `TextGroup` interface.
