@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "compilerOptions": { "outDir": "../dist" },
+  "compilerOptions": { "outDir": "../dist", "rewriteRelativeImportExtensions": true },
   "files": ["./cons.ts", "./index.ts", "./nil.ts", "./sequence.ts"],
   "references": [
     { "path": "../../alfa-array" },

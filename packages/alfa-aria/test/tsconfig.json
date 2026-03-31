@@ -5,8 +5,7 @@
     "jsx": "react-jsx",
     "jsxImportSource": "@siteimprove/alfa-dom",
     "noEmit": true,
-    "lib": ["DOM", "ESNext"],
-    "allowImportingTsExtensions": true
+    "lib": ["DOM", "ESNext"]
   },
   "files": [
     "./dom/predicate/has-accessible-name.spec.tsx",

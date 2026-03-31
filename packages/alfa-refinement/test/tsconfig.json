@@ -3,8 +3,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "noEmit": true,
-    "lib": ["DOM", "ESNext"],
-    "allowImportingTsExtensions": true
+    "lib": ["DOM", "ESNext"]
   },
   "files": ["./refinement.spec.ts"],
   "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]

@@ -5,8 +5,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "@siteimprove/alfa-dom",
-    "lib": ["DOM", "ESNext"],
-    "allowImportingTsExtensions": true
+    "lib": ["DOM", "ESNext"]
   },
   "files": [
     "./common.ts",
