@@ -106,7 +106,10 @@
 <a name='L41'></a><a href='#L41'>41</a>
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -114,23 +117,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">234x</span>
-<span class="cline-any cline-yes">234x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3489x</span>
+<span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-yes">235x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -143,7 +131,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6978x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">470x</span>
 <span class="cline-any cline-yes">6975x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -152,12 +158,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 &nbsp;
-import { Element } from "../../element.js";
-import type { Node } from "../../../node.js";
+import type { Element } from "../../slotable/element.js";
+import type { BaseNode } from "../../node.js";
 &nbsp;
 import { hasName } from "./has-name.js";
 &nbsp;
-const { not, or, test } = Predicate;
+const { not, or } = Predicate;
 const { and } = Refinement;
 &nbsp;
 /**
@@ -172,24 +178,27 @@ const { and } = Refinement;
  *
  * @public
  */
-export function isFallback(node: Node): boolean {
-  return test(
-    or(
-      hasParentName("iframe"),
-      and(
-        hasParentName("audio", "video"),
-        not(and(Element.isElement, hasName("track", "source"))),
-      ),
+export function isFallback(
+  isElement: Refinement&lt;unknown, Element&gt;,
+): Predicate&lt;BaseNode&gt; {
+  return or(
+    hasParentName(isElement, "iframe"),
+    and(
+      hasParentName(isElement, "audio", "video"),
+      not(and(isElement, hasName("track", "source"))),
     ),
-    node,
   );
 }
 &nbsp;
-function hasParentName(name: string, ...names: Array&lt;string&gt;): Predicate&lt;Node&gt; {
+function hasParentName(
+  isElement: Refinement&lt;unknown, Element&gt;,
+  name: string,
+  ...names: Array&lt;string&gt;
+): Predicate&lt;BaseNode&gt; {
   return (node) =&gt;
     node
       .parent()
-      .filter(Element.isElement)
+      .filter(isElement)
       .some(hasName(name, ...names));
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -199,7 +208,7 @@ function hasParentName(name: string, ...names: Array&lt;string&gt;): Predicate&l
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-02-24T14:05:50.979Z
+                at 2026-03-31T11:05:47.734Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>
