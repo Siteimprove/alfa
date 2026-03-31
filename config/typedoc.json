@@ -1,5 +1,6 @@
 {
   "$schema": "https://typedoc.org/schema.json",
+  "name": "Alfa API documentation",
   "entryPoints": ["../packages/alfa-act", "../packages/alfa-dom"],
   "entryPointStrategy": "packages",
   "includeVersion": false,
@@ -9,10 +10,6 @@
     { "name": "html", "path": "../docs/typedoc/html" },
     { "name": "markdown", "path": "../docs/typedoc/markdown" }
   ],
-  "packageOptions": {
-    "includeVersion": true,
-    "entryPoints": ["src/index.ts"]
-  },
   "router": "structure",
   "favicon": "../media/icon.svg",
   "sourceLinkExternal": true,
@@ -20,5 +17,8 @@
     "Alfa technical documentation": "https://alfa.siteimprove.com",
     "Siteimprove": "https://siteimprove.com"
   },
-  "useFirstParagraphOfCommentAsSummary": true
+  "useFirstParagraphOfCommentAsSummary": true,
+  "navigation": {
+    "includeCategories": true
+  }
 }

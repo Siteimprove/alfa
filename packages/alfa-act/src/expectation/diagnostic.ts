@@ -11,6 +11,7 @@ import type * as json from "@siteimprove/alfa-json";
  * information for the rules that need it.
  *
  * @public
+ * @category Diagnostic
  */
 export class Diagnostic
   implements Equatable, Hashable, Serializable<Diagnostic.JSON>
@@ -56,6 +57,7 @@ export class Diagnostic
 
 /**
  * @public
+ * @category Diagnostic
  */
 export namespace Diagnostic {
   export interface JSON {
