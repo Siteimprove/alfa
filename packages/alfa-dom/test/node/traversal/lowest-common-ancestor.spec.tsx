@@ -1,8 +1,8 @@
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import { h, Node } from "../../../src/index.ts";
-import { lowestCommonAncestor as LCA } from "../../../src/node/traversal/lowest-common-ancestor.ts";
+import { h, Node } from "../../../dist/index.js";
+import { lowestCommonAncestor as LCA } from "../../../dist/node/traversal/lowest-common-ancestor.js";
 
 const lowestCommonAncestor = LCA(Node.Traversal.empty);
 

@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { h, Node } from "../../../src/index.ts";
-import { getNodesBetween as GNB } from "../../../src/node/traversal/get-nodes-between.ts";
+import { h, Node } from "../../../dist/index.js";
+import { getNodesBetween as GNB } from "../../../dist/node/traversal/get-nodes-between.js";
 
 const getNodesBetween = GNB(Node.Traversal.empty);
 

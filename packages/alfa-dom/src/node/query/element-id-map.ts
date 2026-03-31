@@ -33,7 +33,6 @@ function buildElementIdMap(node: BaseNode): Map<string, Element> {
   // event of duplicates.
   return Map.from(
     getElementDescendants(node)
-      .tee((seq) => console.dir(seq.toJSON()))
       .collect((element) => element.id.map((id) => [id, element] as const))
       .reverse(),
   );

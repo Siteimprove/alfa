@@ -1,7 +1,7 @@
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { test } from "@siteimprove/alfa-test";
 
-import { Element, Node, Query, h } from "../../../src/index.ts";
+import { Element, Node, Query, h } from "../../../dist/index.js";
 
 const { and, tee } = Refinement;
 const { getDescendants, getElementDescendants, getTextDescendants } = Query;

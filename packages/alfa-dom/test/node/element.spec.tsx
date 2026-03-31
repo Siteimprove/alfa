@@ -1,7 +1,7 @@
 import { Array } from "@siteimprove/alfa-array";
 import { test } from "@siteimprove/alfa-test";
 
-import { type Element, h } from "../../src/index.ts";
+import { type Element, h } from "../../dist/index.js";
 
 test("#tabIndex() returns the tab index explicitly assigned to an element", (t) => {
   t.equal((<div tabindex="42" />).tabIndex().getUnsafe(), 42);
