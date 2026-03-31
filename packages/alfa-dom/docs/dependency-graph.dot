@@ -21,7 +21,7 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
   "src/style/sheet.ts";
   "exit_src/style/rule";
   "exit_src/node/query";
-  "src/node/slotable/text.ts";
+  "src/node/slotable/index.ts";
   "exit_src/node/slotable";
   "src/node/slotable/slot.ts";
   "src/node/slotable/slotable.ts";
@@ -70,12 +70,12 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
   "src/node/fragment.ts";
   "src/node/predicate/index.ts";
   "name_src/node/predicate";
-  "src/node/slotable/index.ts";
   "src/node/traversal/index.ts";
   "name_src/node/traversal";
   "src/node/type.ts";
   "src/index.ts";
   "src/jsx.ts";
+  "src/node/slotable/text.ts";
   "src/h.ts";
   "name_src/node";
   "src/node/query/index.ts";
@@ -1509,12 +1509,6 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     lhead = "cluster_src/node/slotable";
     ltail = "cluster_src/node/query";
   ];
-  "exit_src/node/query" -> "name_src/node/slotable" [
-    style = "invis";
-    color = "#ff0000";
-    lhead = "cluster_src/node/slotable";
-    ltail = "cluster_src/node/query";
-  ];
   "exit_src/node/element" -> "name_src/node/slotable" [
     style = "invis";
     color = "#80ff00";
@@ -1927,6 +1921,13 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
   ];
   "src/node/slotable/slot.ts" -> "src/node/slotable/element.ts" [
     style = "solid";
+    color = "black";
+  ];
+  "src/node/slotable/slot.ts" -> "src/node/slotable/index.ts" [
+    style = "invis";
+  ];
+  "src/node/slotable/slot.ts" -> "src/node/slotable/index.ts" [
+    style = "dotted";
     color = "black";
   ];
   "src/node/slotable/slot.ts" -> "src/node/slotable/slotable.ts" [
