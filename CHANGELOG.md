@@ -1,5 +1,43 @@
 # Alfa changelog
 
+## [0.113.0](../../compare/v0.112.0...v0.113.0) (2026-03-31)
+
+### Breaking
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01130): The abstract class `Rule` has been renamed `BaseRule`; a new type `Rule`, being the union of actual concrete rules is now available. This should have no impact unless trying to extend the abstract class. ([#2040](https://github.com/Siteimprove/alfa/pull/2040))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01130): The various subclasses of style rules are now exported as `Rule.Media`, … instead of `MediaRule`, …. ([#2040](https://github.com/Siteimprove/alfa/pull/2040))
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#01130): `Diagnostic.empty` is now a function with 0 parameters, instead of a constant. ([#2036](https://github.com/Siteimprove/alfa/pull/2036))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01130): The `Slot` interface is now just a type alias for `Element<"slot">`. The `Slot.foo` functions are now `Slot#foo` methods; The `Slot.findSlottable` function/method has been removed as it is just an alias for `Slot#assignedNodes`. ([#2040](https://github.com/Siteimprove/alfa/pull/2040))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01130): The `Node.clone` function has been deleted, as it wasn't used. ([#2040](https://github.com/Siteimprove/alfa/pull/2040))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01130): `Rule.from` now requires a style sheet factory function as second argument; simply use `Sheet.of`. ([#2040](https://github.com/Siteimprove/alfa/pull/2040))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01130): The `Slotable` interface is now an intermediate abstract class between `Node` and `Element`/`Text`. The `Slotable.foo` functions are now `Slotable#foo` methods; The `Slotable.findSlot` function/method has been removed as it is just an alias for `Slotable#assignedSlot`. ([#2040](https://github.com/Siteimprove/alfa/pull/2040))
+
+- [@siteimprove/alfa-continuation](packages/alfa-continuation/CHANGELOG.md#01130): The `Continuation` namespace (and the `.of`, `.map` and `flatMap` functions) has been removed. ([#2020](https://github.com/Siteimprove/alfa/pull/2020))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01130): A new required property `node` has been added to the `TextGroup` interface. ([#2047](https://github.com/Siteimprove/alfa/pull/2047))
+
+- [@siteimprove/alfa-compatibility](packages/alfa-compatibility/CHANGELOG.md#01130): The `@siteimprove/alfa-compatibility` package is now deprecated. ([#2030](https://github.com/Siteimprove/alfa/pull/2030))
+
+### Added
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01130): `Native.fromNode()` now accepts an `injectDataAlfaId` option. If set, every element in the page will be updated by adding a `data-alfa-id` attribute whose value matches the `internalId` of the corresponding Alfa `Element`. This allows for easier matching of test targets with the original DOM element. ([#2010](https://github.com/Siteimprove/alfa/pull/2010))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01130): Style rule subclasses now export their factory functions and type guards directly from the `Rule` namespace, e.g. use `Rule.media` (resp. `Rule.isMediaRule`) as an alias for `Rule.Media.of` (resp. `Rule.Media.isMediaRule`). ([#2040](https://github.com/Siteimprove/alfa/pull/2040))
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#01130): A new `Finding` type alias is now available in place of the `Either` that was returned when conducting an interview, with the `Left`/`Right` parts called conclusive/inconclusive findings. The underlying type is the same, this is just an alias for convenience. ([#2036](https://github.com/Siteimprove/alfa/pull/2036))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#01130): Name computation of `<input>` element has been updated to the latest HTML AAM specifications. ([#2009](https://github.com/Siteimprove/alfa/pull/2009))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#01130): Overwriting legacy alias with the actual property now works correctly. ([#2022](https://github.com/Siteimprove/alfa/pull/2022))
+
 ## [0.112.0](../../compare/v0.111.0...v0.112.0) (2026-02-24)
 
 ### Added

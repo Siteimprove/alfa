@@ -1,5 +1,13 @@
 # @siteimprove/alfa-compatibility
 
+## 0.113.0
+
+### Minor Changes
+
+- **Breaking:** The `@siteimprove/alfa-compatibility` package is now deprecated. ([#2030](https://github.com/Siteimprove/alfa/pull/2030))
+
+  This package was not used anymore in our products. It will be entirely deleted in a further release.
+
 ## 0.112.0
 
 ## 0.111.0
