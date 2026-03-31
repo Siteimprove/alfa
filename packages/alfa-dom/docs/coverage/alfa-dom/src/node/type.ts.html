@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.07% </span>
+                <span class="strong">70.83% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/26</span>
+                <span class='fraction'>17/24</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.33% </span>
+                <span class="strong">54.54% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/12</span>
+                <span class='fraction'>6/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.07% </span>
+                <span class="strong">70.83% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>19/26</span>
+                <span class='fraction'>17/24</span>
             </div>
         
             
@@ -196,22 +196,7 @@
 <a name='L131'></a><a href='#L131'>131</a>
 <a name='L132'></a><a href='#L132'>132</a>
 <a name='L133'></a><a href='#L133'>133</a>
-<a name='L134'></a><a href='#L134'>134</a>
-<a name='L135'></a><a href='#L135'>135</a>
-<a name='L136'></a><a href='#L136'>136</a>
-<a name='L137'></a><a href='#L137'>137</a>
-<a name='L138'></a><a href='#L138'>138</a>
-<a name='L139'></a><a href='#L139'>139</a>
-<a name='L140'></a><a href='#L140'>140</a>
-<a name='L141'></a><a href='#L141'>141</a>
-<a name='L142'></a><a href='#L142'>142</a>
-<a name='L143'></a><a href='#L143'>143</a>
-<a name='L144'></a><a href='#L144'>144</a>
-<a name='L145'></a><a href='#L145'>145</a>
-<a name='L146'></a><a href='#L146'>146</a>
-<a name='L147'></a><a href='#L147'>147</a>
-<a name='L148'></a><a href='#L148'>148</a>
-<a name='L149'></a><a href='#L149'>149</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L134'></a><a href='#L134'>134</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -321,25 +306,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -364,12 +334,12 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 &nbsp;
 import * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { Node } from "../node.js";
+import { BaseNode } from "./node.js";
 &nbsp;
 /**
  * @public
  */
-export class Type&lt;N extends string = string&gt; extends Node&lt;"type"&gt; {
+export class Type&lt;N extends string = string&gt; extends BaseNode&lt;"type"&gt; {
   public static of&lt;N extends string = string&gt;(
     name: N,
     publicId: Option&lt;string&gt; = None,
@@ -424,15 +394,15 @@ export class Type&lt;N extends string = string&gt; extends Node&lt;"type"&gt; {
   }
 &nbsp;
   public toJSON(
-    options: Node.SerializationOptions &amp; {
+    options: BaseNode.SerializationOptions &amp; {
       verbosity:
         | json.Serializable.Verbosity.Minimal
         | json.Serializable.Verbosity.Low;
     },
   ): Type.MinimalJSON;
-  public toJSON(options?: Node.SerializationOptions): Type.JSON&lt;N&gt;;
+  public toJSON(options?: BaseNode.SerializationOptions): Type.JSON&lt;N&gt;;
   public toJSON(
-    options?: Node.SerializationOptions,
+    options?: BaseNode.SerializationOptions,
   ): Type.MinimalJSON | Type.JSON&lt;N&gt; {
     const result = {
       ...super.toJSON(options),
@@ -461,16 +431,18 @@ export class Type&lt;N extends string = string&gt; extends Node&lt;"type"&gt; {
  * @public
  */
 export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Type {</span>
-  export interface MinimalJSON extends Node.JSON&lt;"type"&gt; {}
+  export interface MinimalJSON extends BaseNode.JSON&lt;"type"&gt; {}
 &nbsp;
-  export interface JSON&lt;N extends string = string&gt; extends Node.JSON&lt;"type"&gt; {
+  export interface JSON&lt;
+    N extends string = string,
+  &gt; extends BaseNode.JSON&lt;"type"&gt; {
     name: N;
     publicId: string | null;
     systemId: string | null;
   }
 &nbsp;
-  export function isType(value: unknown): value is Type {
-    return value instanceof Type;
+  export function <span class="fstat-no" title="function not covered" >isType(</span>value: unknown): value is Type {
+<span class="cstat-no" title="statement not covered" >    return value instanceof Type;</span>
   }
 &nbsp;
   /**
@@ -489,23 +461,6 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >T
       ),
     );
   }
-&nbsp;
-  /**
-   * @internal
-   */
-  export function <span class="fstat-no" title="function not covered" >cloneType&lt;</span>N extends string = string&gt;(
-    type: Type&lt;N&gt;,
-  ): Trampoline&lt;Type&lt;N&gt;&gt; {
-<span class="cstat-no" title="statement not covered" >    return Trampoline.done(</span>
-      Type.of(
-        type.name,
-        type.publicId,
-        type.systemId,
-        type.externalId,
-        type.internalId,
-      ),
-    );
-  }
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -514,7 +469,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >T
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-02-24T14:06:21.684Z
+                at 2026-03-31T11:06:21.155Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

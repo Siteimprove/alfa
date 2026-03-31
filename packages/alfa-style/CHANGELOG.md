@@ -1,5 +1,11 @@
 # @siteimprove/alfa-style
 
+## 0.113.0
+
+### Patch Changes
+
+- **Fixed:** Overwriting legacy alias with the actual property now works correctly. ([#2022](https://github.com/Siteimprove/alfa/pull/2022))
+
 ## 0.112.0
 
 ## 0.111.0

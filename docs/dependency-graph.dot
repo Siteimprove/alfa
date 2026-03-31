@@ -52,6 +52,7 @@ digraph "dependency-graph-Alfa" {
   "@siteimprove/alfa-trilean";
   "@siteimprove/alfa-tuple";
   "exit_Type definitions";
+  "exit_Hash tables";
   "@siteimprove/alfa-clone";
   "@siteimprove/alfa-fnv";
   "exit_Performance measurements";
@@ -74,7 +75,6 @@ digraph "dependency-graph-Alfa" {
   "@siteimprove/alfa-graph";
   "name_Graphs";
   "@siteimprove/alfa-http";
-  "exit_Hash tables";
   "@siteimprove/alfa-emitter";
   "exit_Tooling";
   "@siteimprove/alfa-flags";
@@ -1625,6 +1625,12 @@ digraph "dependency-graph-Alfa" {
     lhead = "cluster_other";
     ltail = "cluster_Type definitions";
   ];
+  "exit_Hash tables" -> "name_other" [
+    style = "dotted";
+    color = "#ffd100";
+    lhead = "cluster_other";
+    ltail = "cluster_Hash tables";
+  ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
     color = "#a2ff00";
@@ -2248,7 +2254,7 @@ digraph "dependency-graph-Alfa" {
     color = "black";
   ];
   "exit_Hash tables" -> "name_other" [
-    style = "dotted";
+    style = "invis";
     color = "#ffd100";
     lhead = "cluster_other";
     ltail = "cluster_Hash tables";
@@ -3158,12 +3164,6 @@ digraph "dependency-graph-Alfa" {
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
-  "exit_Understanding the web" -> "name_Alternatives" [
-    style = "invis";
-    color = "#ff4600";
-    lhead = "cluster_Alternatives";
-    ltail = "cluster_Understanding the web";
-  ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
     color = "#ff4600";
@@ -3510,13 +3510,6 @@ digraph "dependency-graph-Alfa" {
     style = "solid";
     color = "black";
   ];
-  "@siteimprove/alfa-continuation" -> "@siteimprove/alfa-mapper" [
-    style = "invis";
-  ];
-  "@siteimprove/alfa-continuation" -> "@siteimprove/alfa-mapper" [
-    style = "solid";
-    color = "black";
-  ];
   "@siteimprove/alfa-xpath" -> "name_HTML" [
     style = "solid";
     color = "#ff4600";
@@ -3759,6 +3752,12 @@ digraph "dependency-graph-Alfa" {
     style = "solid";
     color = "#ffd100";
     lhead = "cluster_Logic";
+    ltail = "cluster_Hash tables";
+  ];
+  "exit_Hash tables" -> "name_other" [
+    style = "invis";
+    color = "#ffd100";
+    lhead = "cluster_other";
     ltail = "cluster_Hash tables";
   ];
   "exit_Understanding the web" -> "name_Serialization" [

@@ -1,5 +1,13 @@
 # @siteimprove/alfa-continuation
 
+## 0.113.0
+
+### Minor Changes
+
+- **Breaking:** The `Continuation` namespace (and the `.of`, `.map` and `flatMap` functions) has been removed. ([#2020](https://github.com/Siteimprove/alfa/pull/2020))
+
+  These functions were not used anywhere in the codebase.
+
 ## 0.112.0
 
 ## 0.111.0

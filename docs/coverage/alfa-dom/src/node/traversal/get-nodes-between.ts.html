@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.75% </span>
+                <span class="strong">94.11% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/16</span>
+                <span class='fraction'>16/17</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.33% </span>
+                <span class="strong">93.75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/15</span>
+                <span class='fraction'>15/16</span>
             </div>
         
             
@@ -150,30 +150,39 @@
 <a name='L85'></a><a href='#L85'>85</a>
 <a name='L86'></a><a href='#L86'>86</a>
 <a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">234x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">235x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">236x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -221,6 +230,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">57x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">57x</span>
@@ -239,7 +249,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { Node } from "../../index.js";
+&nbsp;
+import type { Node } from "../index.js";
 &nbsp;
 import { lowestCommonAncestor } from "./lowest-common-ancestor.js";
 &nbsp;
@@ -261,43 +272,47 @@ const { equals, or } = Predicate;
  * @public
  */
 export function getNodesBetween(
-  node1: Node,
-  node2: Node,
-  includeOptions: Options = { includeFirst: false, includeSecond: false },
-  treeOptions: Node.Traversal = Node.fullTree,
-): Sequence&lt;Node&gt; {
-  let between = getNodesInclusivelyBetween(node1, node2, treeOptions);
+  defaultTreeOptions: Node.Traversal,
+): (node1: Node, node2: Node, includeOptions?: Options) =&gt; Sequence&lt;Node&gt; {
+  return function getNodes(
+    node1: Node,
+    node2: Node,
+    includeOptions: Options = { includeFirst: false, includeSecond: false },
+    treeOptions: Node.Traversal = defaultTreeOptions,
+  ) {
+    let between = getNodesInclusivelyBetween(node1, node2, treeOptions);
 &nbsp;
-  // If somehow there is nothing between them, escape now
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (between.isEmpty()) {
-<span class="cstat-no" title="statement not covered" >    return between;</span>
-  }
+    // If somehow there is nothing between them, escape now
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (between.isEmpty()) {
+<span class="cstat-no" title="statement not covered" >      return between;</span>
+    }
 &nbsp;
-  // Do we keep the first node or skip its subtree?
-  if (!includeOptions.includeFirst) {
-    // By previous test, between is not empty
-    const first = between.first().getUnsafe();
+    // Do we keep the first node or skip its subtree?
+    if (!includeOptions.includeFirst) {
+      // By previous test, between is not empty
+      const first = between.first().getUnsafe();
 &nbsp;
-    // The 'first node after the subtree rooted at first' is the next sibling
-    // of the closest ancestor having one.
-    between = first
-      // Closest ancestor with a next sibling.
-      .closest((ancestor) =&gt; ancestor.next(treeOptions).isSome(), treeOptions)
-      // Get that sibling.
-      .flatMap((node) =&gt; node.next(treeOptions))
-      // Skip everything until next.
-      .map((next) =&gt; between.skipUntil((node) =&gt; node.equals(next)))
-      // If nothing after the subtree at first, just escape.
-      .getOrElse(Sequence.empty);
-  }
+      // The 'first node after the subtree rooted at first' is the next sibling
+      // of the closest ancestor having one.
+      between = first
+        // Closest ancestor with a next sibling.
+        .closest((ancestor) =&gt; ancestor.next(treeOptions).isSome(), treeOptions)
+        // Get that sibling.
+        .flatMap((node) =&gt; node.next(treeOptions))
+        // Skip everything until next.
+        .map((next) =&gt; between.skipUntil((node) =&gt; node.equals(next)))
+        // If nothing after the subtree at first, just escape.
+        .getOrElse(Sequence.empty);
+    }
 &nbsp;
-  // Do we keep the second node or remove it?
-  between =
-    includeOptions.includeSecond || between.isEmpty()
-      ? between
-      : between.skipLast(1);
+    // Do we keep the second node or remove it?
+    between =
+      includeOptions.includeSecond || between.isEmpty()
+        ? between
+        : between.skipLast(1);
 &nbsp;
-  return between;
+    return between;
+  };
 }
 &nbsp;
 /**
@@ -310,7 +325,7 @@ function getNodesInclusivelyBetween(
 ): Sequence&lt;Node&gt; {
   const isFrontier = or(equals(node1), equals(node2));
 &nbsp;
-  return lowestCommonAncestor(node1, node2, treeOptions)
+  return lowestCommonAncestor(treeOptions)(node1, node2)
     .map((context) =&gt;
       context
         .inclusiveDescendants(treeOptions)
@@ -331,7 +346,7 @@ type Options = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-02-24T14:05:50.979Z
+                at 2026-03-31T11:05:47.734Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

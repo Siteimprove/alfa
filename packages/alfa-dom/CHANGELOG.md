@@ -1,5 +1,29 @@
 # @siteimprove/alfa-dom
 
+## 0.113.0
+
+### Minor Changes
+
+- **Added:** Style rule subclasses now export their factory functions and type guards directly from the `Rule` namespace, e.g. use `Rule.media` (resp. `Rule.isMediaRule`) as an alias for `Rule.Media.of` (resp. `Rule.Media.isMediaRule`). ([#2040](https://github.com/Siteimprove/alfa/pull/2040))
+
+- **Breaking:** The abstract class `Rule` has been renamed `BaseRule`; a new type `Rule`, being the union of actual concrete rules is now available. This should have no impact unless trying to extend the abstract class. ([#2040](https://github.com/Siteimprove/alfa/pull/2040))
+
+- **Breaking:** The various subclasses of style rules are now exported as `Rule.Media`, … instead of `MediaRule`, … ([#2040](https://github.com/Siteimprove/alfa/pull/2040))
+
+- **Breaking:** The `Slot` interface is now just a type alias for `Element<"slot">`. The `Slot.foo` functions are now `Slot#foo` methods; The `Slot.findSlottable` function/method has been removed as it is just an alias for `Slot#assignedNodes`. ([#2040](https://github.com/Siteimprove/alfa/pull/2040))
+
+- **Breaking:** The `Node.clone` function has been deleted, as it wasn't used. ([#2040](https://github.com/Siteimprove/alfa/pull/2040))
+
+- **Breaking:** `Rule.from` now requires a style sheet factory function as second argument; simply use `Sheet.of`. ([#2040](https://github.com/Siteimprove/alfa/pull/2040))
+
+- **Breaking:** The `Slotable` interface is now an intermediate abstract class between `Node` and `Element`/`Text`. The `Slotable.foo` functions are now `Slotable#foo` methods; The `Slotable.findSlot` function/method has been removed as it is just an alias for `Slotable#assignedSlot`. ([#2040](https://github.com/Siteimprove/alfa/pull/2040))
+
+- **Breaking:** A new required property `node` has been added to the `TextGroup` interface. ([#2047](https://github.com/Siteimprove/alfa/pull/2047))
+
+### Patch Changes
+
+- **Added:** `Native.fromNode()` now accepts an `injectDataAlfaId` option. If set, every element in the page will be updated by adding a `data-alfa-id` attribute whose value matches the `internalId` of the corresponding Alfa `Element`. This allows for easier matching of test targets with the original DOM element. ([#2010](https://github.com/Siteimprove/alfa/pull/2010))
+
 ## 0.112.0
 
 ## 0.111.0
