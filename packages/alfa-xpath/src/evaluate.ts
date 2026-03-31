@@ -7,17 +7,17 @@ import {
   Node,
 } from "@siteimprove/alfa-dom";
 
-import { Builder } from "./builder.js";
-import { coerceItems } from "./coerce.js";
-import * as d from "./descriptors.js";
-import { type Environment, type Focus, withFocus } from "./environment.js";
-import { lookupFunction } from "./function.js";
-import { functions } from "./functions/index.js";
-import { matches } from "./matches.js";
-import type { Expression } from "./expression.js";
-import type { Item, Type, Value } from "./types.js";
-import { walk } from "./walk.js";
-import { Parser } from "./syntax/parser.js";
+import { Builder } from "./builder.ts";
+import { coerceItems } from "./coerce.ts";
+import * as d from "./descriptors.ts";
+import { type Environment, type Focus, withFocus } from "./environment.ts";
+import { lookupFunction } from "./function.ts";
+import { functions } from "./functions/index.ts";
+import { matches } from "./matches.ts";
+import type { Expression } from "./expression.ts";
+import type { Item, Type, Value } from "./types.ts";
+import { walk } from "./walk.ts";
+import { Parser } from "./syntax/parser.ts";
 
 /**
  * @public

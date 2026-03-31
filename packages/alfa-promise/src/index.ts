@@ -4,4 +4,4 @@
  * @packageDocumentation
  */
 
-export * from "./promise.js";
+export * from "./promise.ts";

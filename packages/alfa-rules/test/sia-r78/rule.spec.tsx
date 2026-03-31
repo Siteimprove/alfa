@@ -4,8 +4,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R78, { Outcomes } from "../../src/sia-r78/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test(`evaluates() passes headings with content`, async (t) => {
   const part1 = <h1>Part one</h1>;

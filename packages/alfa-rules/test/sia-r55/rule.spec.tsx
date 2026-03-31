@@ -4,9 +4,9 @@ import { test } from "@siteimprove/alfa-test";
 
 import R55, { Outcomes, WithRoleAndName } from "../../src/sia-r55/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { passed, failed, inapplicable, cantTell } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { passed, failed, inapplicable, cantTell } from "../common/outcome.ts";
 
 import { Group } from "../../src/common/act/group.ts";
 

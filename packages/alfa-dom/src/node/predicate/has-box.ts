@@ -2,7 +2,7 @@ import type { Device } from "@siteimprove/alfa-device";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Rectangle } from "@siteimprove/alfa-rectangle";
 
-import type { Element, Text } from "../index.js";
+import type { Element, Text } from "../index.ts";
 
 /**
  * @public

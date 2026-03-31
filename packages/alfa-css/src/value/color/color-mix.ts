@@ -3,22 +3,22 @@ import type { Option, Some } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
-import { Function, Token } from "../../syntax/index.js";
-import type { Parser as CSSParser } from "../../syntax/parser.js";
+import { Function, Token } from "../../syntax/index.ts";
+import type { Parser as CSSParser } from "../../syntax/parser.ts";
 
-import type { List } from "../collection/index.js";
-import { Percentage } from "../numeric/index.js";
+import type { List } from "../collection/index.ts";
+import { Percentage } from "../numeric/index.ts";
 
-import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
-import { Keyword } from "../textual/index.js";
-import { Value } from "../value.js";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.ts";
+import { Keyword } from "../textual/index.ts";
+import { Value } from "../value.ts";
 
-import type { Color } from "./color.js";
+import type { Color } from "./color.ts";
 
-import { CSS4Color } from "./css4-color.js";
-import { Current } from "./current.js";
-import { Mix, MixItem } from "./mix.js";
-import { System } from "./system.js";
+import { CSS4Color } from "./css4-color.ts";
+import { Current } from "./current.ts";
+import { Mix, MixItem } from "./mix.ts";
+import { System } from "./system.ts";
 
 const { left, map, mapResult, option, pair, right, separated } = Parser;
 

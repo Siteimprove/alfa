@@ -2,11 +2,11 @@ import type { Device } from "@siteimprove/alfa-device";
 import type { Element, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import type { Name } from "../../name/index.js";
-import { hasValue } from "../../name/index.js";
-import { Node } from "../../node.js";
+import type { Name } from "../../name/index.ts";
+import { hasValue } from "../../name/index.ts";
+import { Node } from "../../node.ts";
 
-import { hasName } from "../../node/predicate.js";
+import { hasName } from "../../node/predicate.ts";
 
 const { test } = Predicate;
 

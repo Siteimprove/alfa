@@ -5,9 +5,9 @@ import { test } from "@siteimprove/alfa-test";
 
 import R50, { Outcomes } from "../../src/sia-r50/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.ts";
 
 test(`evaluate() passes when R48 passes`, async (t) => {
   const target = <video autoplay src="foo.mp4" />;

@@ -1,9 +1,9 @@
 import { Color, System } from "@siteimprove/alfa-css";
 import { Selective } from "@siteimprove/alfa-selective";
 
-import { Longhand } from "../longhand.js";
-import type { Style } from "../style.js";
-import type { Value } from "../value.js";
+import { Longhand } from "../longhand.ts";
+import type { Style } from "../style.ts";
+import type { Value } from "../value.ts";
 
 type Specified = Color;
 

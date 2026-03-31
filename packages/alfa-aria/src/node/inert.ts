@@ -1,6 +1,6 @@
 import type * as dom from "@siteimprove/alfa-dom";
 
-import { Node } from "../node.js";
+import { Node } from "../node.ts";
 
 /**
  * @public

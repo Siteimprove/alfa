@@ -1,1 +1,1 @@
-export * from "./thenable.js";
+export * from "./thenable.ts";

@@ -34,7 +34,7 @@ import { Set } from "@siteimprove/alfa-set";
 
 import * as gv from "ts-graphviz";
 
-import { Rainbow } from "./rainbow.js";
+import { Rainbow } from "./rainbow.ts";
 
 /**
  * Parameters for building a dependency graph.

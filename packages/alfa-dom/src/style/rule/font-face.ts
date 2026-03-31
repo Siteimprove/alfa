@@ -1,9 +1,9 @@
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { Block } from "../block.js";
-import type { Declaration } from "../declaration.js";
-import { BaseRule } from "./rule.js";
+import { Block } from "../block.ts";
+import type { Declaration } from "../declaration.ts";
+import { BaseRule } from "./rule.ts";
 
 /**
  * @public

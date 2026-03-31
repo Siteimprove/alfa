@@ -26,7 +26,7 @@ const {
   isVisible,
 } = Style;
 
-import { createsStackingContext } from "./predicate/creates-stacking-context.js";
+import { createsStackingContext } from "./predicate/creates-stacking-context.ts";
 
 /**
  * @public

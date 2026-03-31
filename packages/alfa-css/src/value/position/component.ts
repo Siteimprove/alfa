@@ -1,12 +1,12 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
-import type { Parser as CSSParser } from "../../syntax/index.js";
+import type { Parser as CSSParser } from "../../syntax/index.ts";
 
-import { Keyword } from "../textual/keyword.js";
-import { LengthPercentage } from "../numeric/index.js";
+import { Keyword } from "../textual/keyword.ts";
+import { LengthPercentage } from "../numeric/index.ts";
 
-import type { Keywords } from "./keywords.js";
-import { Side } from "./side.js";
+import type { Keywords } from "./keywords.ts";
+import { Side } from "./side.ts";
 
 const { either, map } = Parser;
 

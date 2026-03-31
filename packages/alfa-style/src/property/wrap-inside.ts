@@ -1,7 +1,7 @@
 import { Keyword } from "@siteimprove/alfa-css";
 import { Option } from "@siteimprove/alfa-option";
-import { Longhand } from "../longhand.js";
-import { isInlineBox } from "../predicate/index.js";
+import { Longhand } from "../longhand.ts";
+import { isInlineBox } from "../predicate/index.ts";
 
 type Specified = Keyword<"auto"> | Keyword<"avoid">;
 

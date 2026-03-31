@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 
 import { Style } from "../../src/style.ts";
-import { cascaded } from "../common.js";
+import { cascaded } from "../common.ts";
 
 const device = Device.standard();
 

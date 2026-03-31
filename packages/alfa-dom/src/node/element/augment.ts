@@ -10,8 +10,8 @@ import { None, Some } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import { Element } from "../slotable/element.js";
-import type { InputType } from "./input-type.js";
+import { Element } from "../slotable/element.ts";
+import type { InputType } from "./input-type.ts";
 
 const { isElement } = Element;
 const { and } = Refinement;

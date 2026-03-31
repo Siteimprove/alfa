@@ -1,4 +1,4 @@
-import { Value } from "../value.js";
+import { Value } from "../value.ts";
 
 /**
  * @internal

@@ -2,12 +2,12 @@ import { Keyword } from "@siteimprove/alfa-css";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Longhand } from "../longhand.js";
+import { Longhand } from "../longhand.ts";
 import {
   isBlockContainer,
   isFlexContainer,
   isGridContainer,
-} from "../predicate/index.js";
+} from "../predicate/index.ts";
 
 const { or } = Predicate;
 

@@ -7,7 +7,7 @@ import type * as Outset from "../../src/property/border-image-outset.ts";
 import type * as Slice from "../../src/property/border-image-slice.ts";
 import type * as Width from "../../src/property/border-image-width.ts";
 
-import { cascaded } from "../common.js";
+import { cascaded } from "../common.ts";
 
 function fourLength(
   top: number,

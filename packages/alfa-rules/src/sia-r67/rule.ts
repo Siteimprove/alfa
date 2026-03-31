@@ -9,8 +9,8 @@ import type { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { expectation } from "../common/act/expectation.js";
-import { Scope, Stability } from "../tags/index.js";
+import { expectation } from "../common/act/expectation.ts";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { isMarkedDecorative } = DOM;
 const { hasName, hasNamespace } = Element;

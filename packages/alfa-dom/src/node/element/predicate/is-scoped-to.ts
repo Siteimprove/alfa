@@ -1,9 +1,9 @@
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import type { Element } from "../../slotable/element.js";
+import type { Element } from "../../slotable/element.ts";
 
-import { hasName } from "./has-name.js";
+import { hasName } from "./has-name.ts";
 
 /**
  * @public

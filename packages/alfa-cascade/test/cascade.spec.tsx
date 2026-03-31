@@ -7,7 +7,7 @@ import { Cascade } from "../src/index.ts";
 import { Block } from "../src/block.ts";
 import { Layer, Origin } from "../src/index.ts";
 
-import { authorOrder, getBlock, layer } from "./common/common.js";
+import { authorOrder, getBlock, layer } from "./common/common.ts";
 
 const device = Device.standard();
 

@@ -1,9 +1,9 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Math } from "../../../src/index.ts";
-import { parser, parserUnsafe, serializer } from "../../common/parse.js";
+import { parser, parserUnsafe, serializer } from "../../common/parse.ts";
 
-import { resolver } from "../common.js";
+import { resolver } from "../common.ts";
 
 const parseErr = parser(Math.parse);
 const parse = parserUnsafe(Math.parse);

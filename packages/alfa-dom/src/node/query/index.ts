@@ -1,7 +1,7 @@
-import * as descendants from "./descendants.js";
-import * as elementIdMap from "./element-id-map.js";
+import * as descendants from "./descendants.ts";
+import * as elementIdMap from "./element-id-map.ts";
 
-import type { BaseNode } from "../node.js";
+import type { BaseNode } from "../node.ts";
 
 /**
  * @public

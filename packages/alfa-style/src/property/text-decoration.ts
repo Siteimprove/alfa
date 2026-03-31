@@ -1,13 +1,13 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Err, Result } from "@siteimprove/alfa-result";
 
-import type { Longhand } from "../longhand.js";
-import { Shorthand } from "../shorthand.js";
+import type { Longhand } from "../longhand.ts";
+import { Shorthand } from "../shorthand.ts";
 
-import Color from "./text-decoration-color.js";
-import Line from "./text-decoration-line.js";
-import Style from "./text-decoration-style.js";
-import Thickness from "./text-decoration-thickness.js";
+import Color from "./text-decoration-color.ts";
+import Line from "./text-decoration-line.ts";
+import Style from "./text-decoration-style.ts";
+import Thickness from "./text-decoration-thickness.ts";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration}

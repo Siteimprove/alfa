@@ -5,9 +5,9 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 const { map, right, take, takeBetween } = Parser;
 
-import { Specificity } from "../../../specificity.js";
+import { Specificity } from "../../../specificity.ts";
 
-import { WithName } from "../../selector.js";
+import { WithName } from "../../selector.ts";
 
 export abstract class PseudoElementSelector<
   N extends string = string,

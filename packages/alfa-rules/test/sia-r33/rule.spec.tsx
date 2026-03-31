@@ -7,9 +7,9 @@ import { Option, None } from "@siteimprove/alfa-option";
 import R33 from "../../src/sia-r33/rule.ts";
 import { Outcomes } from "../../src/common/expectation/media-transcript.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { passed, failed, inapplicable, cantTell } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { passed, failed, inapplicable, cantTell } from "../common/outcome.ts";
 
 test(`evaluate() passes when non-streaming video-only elements have all visual information available in a transcript`, async (t) => {
   const target = <video src="foo.mp4" type="video/mp4" />;

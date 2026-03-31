@@ -4,11 +4,11 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { video } from "../common/applicability/video.js";
-import { videoTranscript } from "../common/expectation/media-transcript.js";
-import type { Question } from "../common/act/question.js";
+import { video } from "../common/applicability/video.ts";
+import { videoTranscript } from "../common/expectation/media-transcript.ts";
+import type { Question } from "../common/act/question.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { isIncludedInTheAccessibilityTree } = DOM;
 

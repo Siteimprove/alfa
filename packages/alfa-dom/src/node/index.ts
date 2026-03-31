@@ -3,30 +3,30 @@ import type { Device } from "@siteimprove/alfa-device";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { BaseNode as BaseNode } from "./node.js";
+import { BaseNode as BaseNode } from "./node.ts";
 
-import { Attribute } from "./attribute.js";
-import { Comment } from "./comment.js";
-import { Document } from "./document.js";
-import { Shadow } from "./shadow.js";
-import { Element, Text } from "./slotable/index.js";
-import { Fragment } from "./fragment.js";
-import { Type } from "./type.js";
+import { Attribute } from "./attribute.ts";
+import { Comment } from "./comment.ts";
+import { Document } from "./document.ts";
+import { Shadow } from "./shadow.ts";
+import { Element, Text } from "./slotable/index.ts";
+import { Fragment } from "./fragment.ts";
+import { Type } from "./type.ts";
 
-import * as predicate from "./predicate/index.js";
-import * as traversal from "./traversal/index.js";
+import * as predicate from "./predicate/index.ts";
+import * as traversal from "./traversal/index.ts";
 
 const { or } = Refinement;
 
-export * from "./attribute.js";
-export * from "./comment.js";
-export * from "./document.js";
-export * from "./shadow.js";
-export * from "./slotable/index.js";
+export * from "./attribute.ts";
+export * from "./comment.ts";
+export * from "./document.ts";
+export * from "./shadow.ts";
+export * from "./slotable/index.ts";
 // Load the element specific augments.
 import "./element/augment.js";
-export * from "./fragment.js";
-export * from "./type.js";
+export * from "./fragment.ts";
+export * from "./type.ts";
 
 /** @public */
 export type Node =

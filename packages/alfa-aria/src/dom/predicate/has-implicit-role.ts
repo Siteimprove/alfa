@@ -1,7 +1,7 @@
 import type { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Role } from "../../role.js";
+import { Role } from "../../role.ts";
 
 const { equals, property } = Predicate;
 

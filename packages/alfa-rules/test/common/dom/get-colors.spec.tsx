@@ -11,7 +11,7 @@ import {
   getForeground,
 } from "../../../src/common/dom/get-colors.ts";
 
-import { rgb } from "../color.js";
+import { rgb } from "../color.ts";
 
 const device = Device.standard();
 

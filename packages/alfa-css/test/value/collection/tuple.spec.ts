@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Length, LengthPercentage, Tuple } from "../../../src/index.ts";
 
-import { parserUnsafe } from "../../common/parse.js";
+import { parserUnsafe } from "../../common/parse.ts";
 
 const parse = parserUnsafe(LengthPercentage.parse);
 

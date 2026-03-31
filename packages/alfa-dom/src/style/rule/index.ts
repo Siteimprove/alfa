@@ -1,19 +1,19 @@
 import type { Trampoline } from "@siteimprove/alfa-trampoline";
-import type { Sheet } from "../sheet.js";
+import type { Sheet } from "../sheet.ts";
 
-import { FontFaceRule } from "./font-face.js";
-import { GroupingRule } from "./grouping.js";
-import { ImportRule } from "./import.js";
-import { KeyframeRule } from "./keyframe.js";
-import { KeyframesRule } from "./keyframes.js";
-import { Layer as LayerRules } from "./layer.js";
-import { MediaRule } from "./media.js";
-import { NamespaceRule } from "./namespace.js";
-import { PageRule } from "./page.js";
-import { StyleRule } from "./style.js";
-import { SupportsRule } from "./supports.js";
+import { FontFaceRule } from "./font-face.ts";
+import { GroupingRule } from "./grouping.ts";
+import { ImportRule } from "./import.ts";
+import { KeyframeRule } from "./keyframe.ts";
+import { KeyframesRule } from "./keyframes.ts";
+import { Layer as LayerRules } from "./layer.ts";
+import { MediaRule } from "./media.ts";
+import { NamespaceRule } from "./namespace.ts";
+import { PageRule } from "./page.ts";
+import { StyleRule } from "./style.ts";
+import { SupportsRule } from "./supports.ts";
 
-import type { BaseRule } from "./rule.js";
+import type { BaseRule } from "./rule.ts";
 
 /**
  * @public

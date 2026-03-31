@@ -3,10 +3,10 @@ import { Specificity } from "@siteimprove/alfa-selector";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { Encapsulation } from "./encapsulation.js";
-import { Layer } from "./layer.js";
-import { Order } from "./order.js";
-import { Origin } from "./origin.js";
+import { Encapsulation } from "./encapsulation.ts";
+import { Layer } from "./layer.ts";
+import { Order } from "./order.ts";
+import { Origin } from "./origin.ts";
 
 /**
  * Store the various components needed for precedence in the Cascade Sorting Order.

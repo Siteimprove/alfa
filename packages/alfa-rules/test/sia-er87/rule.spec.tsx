@@ -6,9 +6,9 @@ import { None, Option } from "@siteimprove/alfa-option";
 
 import ER87, { Outcomes } from "../../src/sia-er87/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { cantTell, passed, failed } from "../common/outcome.js";
-import { oracle } from "../common/oracle.js";
+import { evaluate } from "../common/evaluate.ts";
+import { cantTell, passed, failed } from "../common/outcome.ts";
+import { oracle } from "../common/oracle.ts";
 
 test(`evaluate() passes a document whose first tabbable link references an
       element with a role of main`, async (t) => {

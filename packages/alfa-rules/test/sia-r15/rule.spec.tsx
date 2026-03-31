@@ -10,9 +10,9 @@ import R15, { Outcomes } from "../../src/sia-r15/rule.ts";
 import { Group } from "../../src/common/act/group.ts";
 
 import { WithName } from "../../src/common/diagnostic.ts";
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.ts";
 
 test("evaluate() passes when two iframes embed the exact same resource", async (t) => {
   const name = "Foo";

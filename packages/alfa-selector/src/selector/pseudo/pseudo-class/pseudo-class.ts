@@ -11,10 +11,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Absolute, Selector } from "../../index.js";
-import { Specificity } from "../../../specificity.js";
+import type { Absolute, Selector } from "../../index.ts";
+import { Specificity } from "../../../specificity.ts";
 
-import { WithName } from "../../selector.js";
+import { WithName } from "../../selector.ts";
 
 const { delimited, end, left, map, option, pair, right } = Parser;
 const { parseColon, parseIdent, parseWhitespace } = Token;

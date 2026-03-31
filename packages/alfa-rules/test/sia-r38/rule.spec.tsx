@@ -6,9 +6,9 @@ import { None } from "@siteimprove/alfa-option";
 
 import R38, { Outcomes } from "../../src/sia-r38/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { passed, cantTell } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { passed, cantTell } from "../common/outcome.ts";
 
 test("evaluate() passes when some atomic rules are passing", async (t) => {
   const target = (

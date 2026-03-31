@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Length } from "../../../src/index.ts";
 
-import { parser, serializer } from "../../common/parse.js";
+import { parser, serializer } from "../../common/parse.ts";
 
 const parse = parser(Length.parse);
 const serialize = serializer(Length.parse);

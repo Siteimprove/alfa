@@ -1,2 +1,2 @@
-export * from "./converter.js";
-export * from "./unit.js";
+export * from "./converter.ts";
+export * from "./unit.ts";

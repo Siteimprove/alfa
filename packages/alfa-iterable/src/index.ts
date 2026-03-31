@@ -1,1 +1,1 @@
-export * from "./iterable.js";
+export * from "./iterable.ts";

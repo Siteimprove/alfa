@@ -2,14 +2,14 @@ import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 
-import { type Parser as CSSParser, Token } from "../syntax/index.js";
-import { Unit } from "../unit/index.js";
+import { type Parser as CSSParser, Token } from "../syntax/index.ts";
+import { Unit } from "../unit/index.ts";
 
-import { Color } from "./color/index.js";
-import { Keyword } from "./textual/keyword.js";
-import { Length } from "./numeric/index.js";
-import type { Resolvable } from "./resolvable.js";
-import { Value } from "./value.js";
+import { Color } from "./color/index.ts";
+import { Keyword } from "./textual/keyword.ts";
+import { Length } from "./numeric/index.ts";
+import type { Resolvable } from "./resolvable.ts";
+import { Value } from "./value.ts";
 
 const { filter, separatedList } = Parser;
 

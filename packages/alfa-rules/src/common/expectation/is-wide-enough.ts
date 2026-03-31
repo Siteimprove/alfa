@@ -4,8 +4,8 @@ import type { Declaration, Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 
-import { expectation } from "../act/expectation.js";
-import { TextSpacing } from "../diagnostic/text-spacing.js";
+import { expectation } from "../act/expectation.ts";
+import { TextSpacing } from "../diagnostic/text-spacing.ts";
 
 type Name = "letter-spacing" | "line-height" | "word-spacing";
 type Computed =

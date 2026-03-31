@@ -5,9 +5,9 @@ import { test } from "@siteimprove/alfa-test";
 
 import R82, { Outcomes } from "../../src/sia-r82/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { passed, failed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { passed, failed } from "../common/outcome.ts";
 
 const target = <input type="text" />;
 

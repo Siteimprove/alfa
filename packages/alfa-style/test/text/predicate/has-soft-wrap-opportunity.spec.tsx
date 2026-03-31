@@ -3,7 +3,7 @@ import { type Element, h, type Text } from "@siteimprove/alfa-dom";
 import { type Assertions, test } from "@siteimprove/alfa-test";
 import type { Style } from "../../../src";
 
-import { hasSoftWrapOpportunity } from "../../../src/text/predicate/has-soft-wrap-opportunity.js";
+import { hasSoftWrapOpportunity } from "../../../src/text/predicate/has-soft-wrap-opportunity.ts";
 
 const device = Device.standard();
 

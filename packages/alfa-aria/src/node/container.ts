@@ -4,8 +4,8 @@ import { String } from "@siteimprove/alfa-string";
 
 import type * as dom from "@siteimprove/alfa-dom";
 
-import { Node } from "../node.js";
-import type { Role } from "../role.js";
+import { Node } from "../node.ts";
+import type { Role } from "../role.ts";
 
 /**
  * @remarks

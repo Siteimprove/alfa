@@ -1,2 +1,2 @@
-export * from "./map.js";
-export * from "./node.js";
+export * from "./map.ts";
+export * from "./node.ts";

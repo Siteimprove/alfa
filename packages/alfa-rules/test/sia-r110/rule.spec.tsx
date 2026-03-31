@@ -3,8 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R110, { Outcomes } from "../../src/sia-r110/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test("evaluates() passes an element with a single valid role", async (t) => {
   const target = h.attribute("role", "button");

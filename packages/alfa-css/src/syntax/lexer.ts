@@ -2,7 +2,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "./token.js";
+import { Token } from "./token.ts";
 
 const { fromCharCode } = String;
 

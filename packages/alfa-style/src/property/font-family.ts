@@ -1,7 +1,7 @@
 import { Keyword, List, String, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../longhand.js";
+import { Longhand } from "../longhand.ts";
 
 const { either, map, separatedList } = Parser;
 

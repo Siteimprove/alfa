@@ -6,15 +6,15 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { hasComputedStyle } from "../../element/predicate/has-computed-style.js";
-import { isPositioned } from "../../element/predicate/is-positioned.js";
-import { hasSameForegroundAsBackground } from "./has-same-foreground-as-background.js";
+import { hasComputedStyle } from "../../element/predicate/has-computed-style.ts";
+import { isPositioned } from "../../element/predicate/is-positioned.ts";
+import { hasSameForegroundAsBackground } from "./has-same-foreground-as-background.ts";
 
-import { isClipped } from "./is-clipped.js";
-import { isOffscreen } from "./is-offscreen.js";
-import { isOptionHidden } from "./is-option-hidden.js";
-import { isRendered } from "./is-rendered.js";
-import { isTransparent } from "./is-transparent.js";
+import { isClipped } from "./is-clipped.ts";
+import { isOffscreen } from "./is-offscreen.ts";
+import { isOptionHidden } from "./is-option-hidden.ts";
+import { isRendered } from "./is-rendered.ts";
+import { isTransparent } from "./is-transparent.ts";
 
 const { hasName, isElement, isReplaced } = Element;
 const { nor, not, test } = Predicate;

@@ -1,7 +1,7 @@
 import { Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Parser } from "@siteimprove/alfa-parser";
-import type { Feature } from "../feature.js";
+import type { Feature } from "../feature.ts";
 
 import type * as json from "@siteimprove/alfa-json";
 

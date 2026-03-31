@@ -1,3 +1,3 @@
-export * from "./cons.js";
-export * from "./nil.js";
-export * from "./sequence.js";
+export * from "./cons.ts";
+export * from "./nil.ts";
+export * from "./sequence.ts";

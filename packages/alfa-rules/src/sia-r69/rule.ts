@@ -4,13 +4,13 @@ import { EAA } from "@siteimprove/alfa-eaa";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import type { Group } from "../common/act/group.js";
-import type { Question } from "../common/act/question.js";
-import { nonDisabledTexts } from "../common/applicability/non-disabled-texts.js";
+import type { Group } from "../common/act/group.ts";
+import type { Question } from "../common/act/question.ts";
+import { nonDisabledTexts } from "../common/applicability/non-disabled-texts.ts";
 
-import { hasSufficientContrast } from "../common/expectation/contrast.js";
+import { hasSufficientContrast } from "../common/expectation/contrast.ts";
 
-import { Scope, Stability, Version } from "../tags/index.js";
+import { Scope, Stability, Version } from "../tags/index.ts";
 
 export default Rule.Atomic.of<
   Page,

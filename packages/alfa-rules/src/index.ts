@@ -3,19 +3,19 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 
 import type * as act from "@siteimprove/alfa-act";
 
-export * from "./tags/index.js";
-export * from "./requirements/index.js";
-import * as experimentalRules from "./experimental.js";
+export * from "./tags/index.ts";
+export * from "./requirements/index.ts";
+import * as experimentalRules from "./experimental.ts";
 export { experimentalRules };
 
-import * as deprecatedRules from "./deprecated.js";
+import * as deprecatedRules from "./deprecated.ts";
 export { deprecatedRules };
 
-import * as rules from "./rules.js";
+import * as rules from "./rules.ts";
 
-import type { Question } from "./common/act/question.js";
+import type { Question } from "./common/act/question.ts";
 
-import version from "./version.js";
+import version from "./version.ts";
 /**
  * @public
  */
@@ -115,6 +115,6 @@ const FlattenedRules = Sequence.from<Flattened.Rule>(Rules.values());
 
 export default FlattenedRules;
 
-export * from "./common/act/diagnostic.js";
-export * from "./common/act/group.js";
-export * from "./common/act/question.js";
+export * from "./common/act/diagnostic.ts";
+export * from "./common/act/group.ts";
+export * from "./common/act/question.ts";

@@ -4,7 +4,7 @@ import type { Result } from "@siteimprove/alfa-result";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../longhand.js";
+import { Longhand } from "../longhand.ts";
 
 const { either, left, map, mapResult, option, pair, separatedList } = Parser;
 

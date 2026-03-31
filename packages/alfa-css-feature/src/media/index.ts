@@ -1,10 +1,10 @@
-import * as mediaFeature from "./feature/index.js";
-import * as mediaList from "./list.js";
-import * as modifier from "./modifier.js";
-import * as mediaQuery from "./query.js";
-import * as mediaType from "./type.js";
+import * as mediaFeature from "./feature/index.ts";
+import * as mediaList from "./list.ts";
+import * as modifier from "./modifier.ts";
+import * as mediaQuery from "./query.ts";
+import * as mediaType from "./type.ts";
 
-import * as value from "./feature/value/index.js";
+import * as value from "./feature/value/index.ts";
 
 /**
  * @public

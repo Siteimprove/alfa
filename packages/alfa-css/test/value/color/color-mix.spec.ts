@@ -3,11 +3,11 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Color } from "../../../src/value/color/color.ts";
 import { ColorMix } from "../../../src/value/color/color-mix.ts";
-import { CSS4Color, List, Percentage } from "../../../src/index.js";
-import { MixItem } from "../../../src/value/color/mix.js";
+import { CSS4Color, List, Percentage } from "../../../src/index.ts";
+import { MixItem } from "../../../src/value/color/mix.ts";
 
-import { color } from "../../common/color.js";
-import { parser, serializer } from "../../common/parse.js";
+import { color } from "../../common/color.ts";
+import { parser, serializer } from "../../common/parse.ts";
 
 const parse = parser(ColorMix.parse(Color.parse));
 const serialize = serializer(ColorMix.parse(Color.parse));

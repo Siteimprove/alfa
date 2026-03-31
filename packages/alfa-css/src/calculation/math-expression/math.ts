@@ -4,15 +4,15 @@ import { Err, Result } from "@siteimprove/alfa-result";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import type { Unit } from "../../unit/index.js";
+import type { Unit } from "../../unit/index.ts";
 
-import type { Numeric } from "../numeric/index.js";
-import { Angle, Length, Number, Percentage } from "../numeric/index.js";
+import type { Numeric } from "../numeric/index.ts";
+import { Angle, Length, Number, Percentage } from "../numeric/index.ts";
 
-import type { Expression } from "./expression.js";
-import { Function } from "./function/index.js";
-import type { Kind } from "./kind.js";
-import { Operation } from "./operation.js";
+import type { Expression } from "./expression.ts";
+import { Function } from "./function/index.ts";
+import type { Kind } from "./kind.ts";
+import { Operation } from "./operation.ts";
 
 const { filter, map } = Parser;
 

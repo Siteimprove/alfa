@@ -3,8 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R95, { Outcomes } from "../../src/sia-r95/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { failed, inapplicable, passed } from "../common/outcome.ts";
 
 test("evaluate() passes an iframe with non-negative tabindex", async (t) => {
   const button = <button>Hello World!</button>;

@@ -3,8 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R17, { Outcomes } from "../../src/sia-r17/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test(`evaluate() passes an element which is not focusable by default`, async (t) => {
   const target = <p aria-hidden="true">Some text</p>;

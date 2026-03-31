@@ -2,8 +2,8 @@ import type { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { isInert } from "./is-inert.js";
-import { isRendered } from "../../node/predicate/is-rendered.js";
+import { isInert } from "./is-inert.ts";
+import { isRendered } from "../../node/predicate/is-rendered.ts";
 
 const { hasName, hasNamespace, hasTabIndex, isActuallyDisabled } = Element;
 const { and, not } = Predicate;

@@ -3,8 +3,8 @@ import type { Device } from "@siteimprove/alfa-device";
 import { Preference } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 
-import { Media } from "./media.js";
-import type { Value } from "./value/index.js";
+import { Media } from "./media.ts";
+import type { Value } from "./value/index.ts";
 
 export namespace Discrete {
   interface Discrete<N extends string, K extends string> {

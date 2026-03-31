@@ -3,8 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R5, { Outcomes } from "../../src/sia-r5/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test(`evaluate() passes a lang attribute with valid primary tag`, async (t) => {
   const html = <html lang="en"></html>;

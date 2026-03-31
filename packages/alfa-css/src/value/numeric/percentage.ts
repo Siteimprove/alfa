@@ -2,25 +2,25 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { type Expression, Math } from "../../calculation/index.js";
-import type { Numeric as BaseNumeric } from "../../calculation/numeric/index.js";
+import { type Expression, Math } from "../../calculation/index.ts";
+import type { Numeric as BaseNumeric } from "../../calculation/numeric/index.ts";
 import {
   Angle as BaseAngle,
   Integer as BaseInteger,
   Length as BaseLength,
   Number as BaseNumber,
   Percentage as BasePercentage,
-} from "../../calculation/numeric/index.js";
+} from "../../calculation/numeric/index.ts";
 
-import type { Token } from "../../syntax/index.js";
+import type { Token } from "../../syntax/index.ts";
 
-import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.ts";
 
-import { Angle } from "./angle.js";
-import { Integer } from "./integer.js";
-import { Length } from "./length.js";
-import { Number } from "./number.js";
-import { Numeric } from "./numeric.js";
+import { Angle } from "./angle.ts";
+import { Integer } from "./integer.ts";
+import { Length } from "./length.ts";
+import { Number } from "./number.ts";
+import { Numeric } from "./numeric.ts";
 
 const { either, map } = Parser;
 

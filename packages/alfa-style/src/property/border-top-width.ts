@@ -1,13 +1,13 @@
 import { Keyword, Length } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../longhand.js";
+import { Longhand } from "../longhand.ts";
 
-import { Resolver } from "../resolver.js";
-import type { Style } from "../style.js";
-import type { Value } from "../value.js";
+import { Resolver } from "../resolver.ts";
+import type { Style } from "../style.ts";
+import type { Value } from "../value.ts";
 
-import type StyleProp from "./border-top-style.js";
+import type StyleProp from "./border-top-style.ts";
 
 const { either } = Parser;
 

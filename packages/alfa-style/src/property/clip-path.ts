@@ -1,7 +1,7 @@
 import { Shape, Keyword, URL } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../longhand.js";
+import { Longhand } from "../longhand.ts";
 
 const { either } = Parser;
 

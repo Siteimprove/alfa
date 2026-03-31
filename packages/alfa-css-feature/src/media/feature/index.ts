@@ -2,12 +2,12 @@ import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import * as media from "./media.js";
+import * as media from "./media.ts";
 
-import * as height from "./height.js";
-import { Discrete } from "./discrete.js";
-import * as scripting from "./scripting.js";
-import * as width from "./width.js";
+import * as height from "./height.ts";
+import { Discrete } from "./discrete.ts";
+import * as scripting from "./scripting.ts";
+import * as width from "./width.ts";
 
 const { delimited, either, option } = Parser;
 

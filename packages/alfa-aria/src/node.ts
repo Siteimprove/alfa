@@ -14,14 +14,14 @@ import { Style } from "@siteimprove/alfa-style";
 import * as dom from "@siteimprove/alfa-dom";
 import * as tree from "@siteimprove/alfa-tree";
 
-import { Attribute } from "./attribute.js";
-import { Feature } from "./feature.js";
-import { Name } from "./name/index.js";
-import { Role } from "./role.js";
+import { Attribute } from "./attribute.ts";
+import { Feature } from "./feature.ts";
+import { Name } from "./name/index.ts";
+import { Role } from "./role.ts";
 
-import { Container, Element, Inert, Text } from "./index.js";
+import { Container, Element, Inert, Text } from "./index.ts";
 
-import * as predicate from "./node/predicate.js";
+import * as predicate from "./node/predicate.ts";
 
 const { and, equals, not, test } = Predicate;
 const { isRendered } = Style;

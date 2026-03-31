@@ -3,7 +3,7 @@ import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
 import { Style } from "../../src/style.ts";
-import { color } from "../common.js";
+import { color } from "../common.ts";
 
 const device = Device.standard();
 

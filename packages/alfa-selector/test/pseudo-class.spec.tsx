@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Context } from "../src/index.ts";
 
-import { parse, parseErr, serialize } from "./parser.js";
+import { parse, parseErr, serialize } from "./parser.ts";
 
 test(".parse() parses a named pseudo-class selector", (t) => {
   t.deepEqual(serialize(":hover"), {

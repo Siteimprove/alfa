@@ -5,19 +5,19 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Token, type Parser as CSSParser } from "../../syntax/index.js";
-import { Unit } from "../../unit/index.js";
+import { Token, type Parser as CSSParser } from "../../syntax/index.ts";
+import { Unit } from "../../unit/index.ts";
 import {
   Angle,
   Length,
   Number,
   type Numeric,
   Percentage,
-} from "../numeric/index.js";
+} from "../numeric/index.ts";
 
-import { Expression } from "./expression.js";
-import type { Function } from "./function/index.js";
-import { Kind } from "./kind.js";
+import { Expression } from "./expression.ts";
+import type { Function } from "./function/index.ts";
+import { Kind } from "./kind.ts";
 
 const { isAngle } = Angle;
 const { isLength } = Length;

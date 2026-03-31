@@ -1,4 +1,4 @@
-import { Option } from "./option.js";
+import { Option } from "./option.ts";
 
 /**
  * @remarks

@@ -5,9 +5,9 @@ import { test } from "@siteimprove/alfa-test";
 import R39, { Outcomes } from "../../src/sia-r39/rule.ts";
 
 import { WithName } from "../../src/common/diagnostic.ts";
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.ts";
 
 test("evaluate() passes images whose name is descriptive", async (t) => {
   const target = <img src="Placeholder" alt="Placeholder" />;

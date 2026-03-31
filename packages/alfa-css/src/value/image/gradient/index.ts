@@ -1,1 +1,1 @@
-export * from "./gradient.js";
+export * from "./gradient.ts";

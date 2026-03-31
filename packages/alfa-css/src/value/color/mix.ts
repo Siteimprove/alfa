@@ -12,14 +12,14 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Maybe, None, Option, Some } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Token } from "../../syntax/index.js";
+import { Token } from "../../syntax/index.ts";
 
-import type { Parser as CSSParser } from "../../syntax/parser.js";
-import { List } from "../collection/index.js";
+import type { Parser as CSSParser } from "../../syntax/parser.ts";
+import { List } from "../collection/index.ts";
 
-import { Percentage } from "../numeric/index.js";
-import { type Resolvable } from "../resolvable.js";
-import { Value } from "../value.js";
+import { Percentage } from "../numeric/index.ts";
+import { type Resolvable } from "../resolvable.ts";
+import { Value } from "../value.ts";
 
 const { map, option, pair, right } = Parser;
 

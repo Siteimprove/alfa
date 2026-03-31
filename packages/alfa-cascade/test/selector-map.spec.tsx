@@ -14,8 +14,8 @@ import { AncestorFilter } from "../src/ancestor-filter.ts";
 import { Layer, Origin } from "../src/index.ts";
 import { SelectorMap } from "../src/selector-map.ts";
 
-import { layer, ruleToBlockJSON } from "./common/common.js";
-import { parse } from "./common/parser.js";
+import { layer, ruleToBlockJSON } from "./common/common.ts";
+import { parse } from "./common/parser.ts";
 
 const device = Device.standard();
 

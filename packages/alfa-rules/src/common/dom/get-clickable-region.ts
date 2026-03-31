@@ -7,7 +7,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
-import { isTarget } from "../applicability/targets-of-pointer-events.js";
+import { isTarget } from "../applicability/targets-of-pointer-events.ts";
 
 const { isVisible, hasComputedStyle } = Style;
 const { and, not, or } = Refinement;

@@ -6,9 +6,9 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import type { Rule } from "./index.js";
-import type { Sheet } from "../sheet.js";
-import { ConditionRule } from "./condition.js";
+import type { Rule } from "./index.ts";
+import type { Sheet } from "../sheet.ts";
+import { ConditionRule } from "./condition.ts";
 
 const { and } = Predicate;
 

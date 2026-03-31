@@ -1,7 +1,7 @@
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import type { Attribute } from "../../attribute.js";
+import type { Attribute } from "../../attribute.ts";
 
 /**
  * @public

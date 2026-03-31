@@ -2,14 +2,14 @@ import type { Hash } from "@siteimprove/alfa-hash";
 import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import type { Parser as CSSParser } from "../../syntax/index.js";
+import type { Parser as CSSParser } from "../../syntax/index.ts";
 
-import { Keyword } from "../textual/keyword.js";
-import { LengthPercentage } from "../numeric/index.js";
-import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
-import { Value } from "../value.js";
+import { Keyword } from "../textual/keyword.ts";
+import { LengthPercentage } from "../numeric/index.ts";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.ts";
+import { Value } from "../value.ts";
 
-import { BasicShape } from "./basic-shape.js";
+import { BasicShape } from "./basic-shape.ts";
 
 const { either, filter, map } = Parser;
 

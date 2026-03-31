@@ -4,7 +4,7 @@ import { Element, Comment, Node } from "@siteimprove/alfa-dom";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { Style } from "../../style.js";
+import { Style } from "../../style.ts";
 
 const { isFallback } = Element;
 

@@ -1,1 +1,1 @@
-export type * from "./collection.js";
+export type * from "./collection.ts";

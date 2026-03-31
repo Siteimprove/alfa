@@ -5,9 +5,9 @@ import { test } from "@siteimprove/alfa-test";
 import R117, { Outcomes } from "../../src/sia-r117/rule.ts";
 import { WithName } from "../../src/common/diagnostic.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.ts";
 
 test("evaluate() passes img element with alt attribute that describes the image", async (t) => {
   const altText = "W3C logo";

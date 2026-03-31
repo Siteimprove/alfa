@@ -1,1 +1,1 @@
-export * from "./slice.js";
+export * from "./slice.ts";

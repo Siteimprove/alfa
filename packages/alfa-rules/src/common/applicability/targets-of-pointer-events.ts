@@ -9,7 +9,7 @@ import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
-import { getClickableRegion } from "../dom/get-clickable-region.js";
+import { getClickableRegion } from "../dom/get-clickable-region.ts";
 
 const { hasRole } = DOM;
 const { hasComputedStyle, isFocusable, isScrolledBehind, isVisible } = Style;

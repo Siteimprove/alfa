@@ -1,1 +1,1 @@
-export * from "./tuple.js";
+export * from "./tuple.ts";

@@ -6,16 +6,16 @@ import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Context } from "../context.js";
-import { Specificity } from "../specificity.js";
+import type { Context } from "../context.ts";
+import { Specificity } from "../specificity.ts";
 
-import { Complex } from "./complex.js";
-import type { Compound } from "./compound.js";
+import { Complex } from "./complex.ts";
+import type { Compound } from "./compound.ts";
 
-import type { Absolute, Relative, Selector } from "./index.js";
-import { Relative as BaseRelative } from "./relative.js";
-import { BaseSelector } from "./selector.js";
-import type { Simple } from "./simple/index.js";
+import type { Absolute, Relative, Selector } from "./index.ts";
+import { Relative as BaseRelative } from "./relative.ts";
+import { BaseSelector } from "./selector.ts";
+import type { Simple } from "./simple/index.ts";
 
 const { either, end, map, separatedList } = Parser;
 

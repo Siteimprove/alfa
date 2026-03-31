@@ -3,8 +3,8 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Longhand } from "../longhand.js";
-import { isBlockContainer, isInlineBox } from "../predicate/index.js";
+import { Longhand } from "../longhand.ts";
+import { isBlockContainer, isInlineBox } from "../predicate/index.ts";
 
 const { either } = Parser;
 const { or } = Predicate;

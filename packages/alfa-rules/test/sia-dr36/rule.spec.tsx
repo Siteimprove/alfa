@@ -5,9 +5,9 @@ import { test } from "@siteimprove/alfa-test";
 import { Outcomes } from "../../src/common/expectation/video-description-track-accurate.ts";
 import R36 from "../../src/sia-dr36/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.ts";
 
 test(`evaluate() passes video with accurate descriptions track`, async (t) => {
   const target = (

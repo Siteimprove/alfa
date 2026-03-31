@@ -1,12 +1,12 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Err, Result } from "@siteimprove/alfa-result";
 
-import type { Longhand } from "../longhand.js";
-import { Shorthand } from "../shorthand.js";
+import type { Longhand } from "../longhand.ts";
+import { Shorthand } from "../shorthand.ts";
 
-import Color from "./outline-color.js";
-import Style from "./outline-style.js";
-import Width from "./outline-width.js";
+import Color from "./outline-color.ts";
+import Style from "./outline-style.ts";
+import Width from "./outline-width.ts";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline}

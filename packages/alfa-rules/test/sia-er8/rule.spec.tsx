@@ -3,8 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import ER8, { Outcomes } from "../../src/sia-er8/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test("evaluate() passes an input element with implicit label", async (t) => {
   const target = <input />;

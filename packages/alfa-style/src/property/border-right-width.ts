@@ -1,8 +1,8 @@
-import { Longhand } from "../longhand.js";
-import type { Value } from "../value.js";
+import { Longhand } from "../longhand.ts";
+import type { Value } from "../value.ts";
 
-import type Style from "./border-top-style.js";
-import Base, { compute } from "./border-top-width.js";
+import type Style from "./border-top-style.ts";
+import Base, { compute } from "./border-top-width.ts";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-width}

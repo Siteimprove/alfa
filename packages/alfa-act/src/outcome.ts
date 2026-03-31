@@ -15,8 +15,8 @@ import {
   Diagnostic,
   type Finding,
   type Question,
-} from "./expectation/index.js";
-import type { Rule } from "./rule.js";
+} from "./expectation/index.ts";
+import type { Rule } from "./rule.ts";
 
 /**
  * @public

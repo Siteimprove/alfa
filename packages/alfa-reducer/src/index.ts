@@ -1,1 +1,1 @@
-export * from "./reducer.js";
+export * from "./reducer.ts";

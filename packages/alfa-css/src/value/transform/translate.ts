@@ -4,15 +4,15 @@ import { Parser } from "@siteimprove/alfa-parser";
 import {
   Function as CSSFunction,
   type Parser as CSSParser,
-} from "../../syntax/index.js";
-import { Unit } from "../../unit/index.js";
-import { List } from "../collection/index.js";
+} from "../../syntax/index.ts";
+import { Unit } from "../../unit/index.ts";
+import { List } from "../collection/index.ts";
 
-import { Length, LengthPercentage, Numeric } from "../numeric/index.js";
-import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
-import { Value } from "../value.js";
+import { Length, LengthPercentage, Numeric } from "../numeric/index.ts";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.ts";
+import { Value } from "../value.ts";
 
-import { Function } from "./function.js";
+import { Function } from "./function.ts";
 
 const { either, filter, map } = Parser;
 

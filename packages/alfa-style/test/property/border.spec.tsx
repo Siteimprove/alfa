@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { type Assertions, test } from "@siteimprove/alfa-test";
 
-import { cascaded, color } from "../common.js";
+import { cascaded, color } from "../common.ts";
 
 const colors = { red: color(1, 0, 0) };
 

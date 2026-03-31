@@ -4,9 +4,9 @@ import { test } from "@siteimprove/alfa-test";
 
 import R115, { Outcomes } from "../../src/sia-r115/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.ts";
 
 const goodHeading = <h1>Opening hours</h1>;
 const goodDocument = h.document([

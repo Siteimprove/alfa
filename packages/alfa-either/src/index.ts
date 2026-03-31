@@ -1,3 +1,3 @@
-export * from "./either.js";
-export * from "./left.js";
-export * from "./right.js";
+export * from "./either.ts";
+export * from "./left.ts";
+export * from "./right.ts";

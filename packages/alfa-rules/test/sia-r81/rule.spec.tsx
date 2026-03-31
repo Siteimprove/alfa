@@ -9,9 +9,9 @@ import { Group } from "../../src/common/act/group.ts";
 import { Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-url";
 import { WithName } from "../../src/common/diagnostic.ts";
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.ts";
 
 test(`evaluate() passes two links that have the same name and reference the same
       resource in the same context`, async (t) => {

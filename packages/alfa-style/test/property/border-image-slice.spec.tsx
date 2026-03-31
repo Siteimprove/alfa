@@ -5,7 +5,7 @@ import type { Serializable } from "@siteimprove/alfa-json";
 
 import type * as Slice from "../../src/property/border-image-slice.ts";
 
-import { cascaded } from "../common.js";
+import { cascaded } from "../common.ts";
 
 function slice(
   top: number,

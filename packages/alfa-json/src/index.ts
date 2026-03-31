@@ -1,2 +1,2 @@
-export * from "./json.js";
-export * from "./serializable.js";
+export * from "./json.ts";
+export * from "./serializable.ts";

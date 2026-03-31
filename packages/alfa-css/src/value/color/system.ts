@@ -1,7 +1,7 @@
-import { type Parser as CSSParser } from "../../syntax/index.js";
+import { type Parser as CSSParser } from "../../syntax/index.ts";
 
-import { Keyword } from "../textual/keyword.js";
-import { CSS4Color } from "./css4-color.js";
+import { Keyword } from "../textual/keyword.ts";
+import { CSS4Color } from "./css4-color.ts";
 
 /**
  * {@link https://drafts.csswg.org/css-color-4/#css-system-colors}

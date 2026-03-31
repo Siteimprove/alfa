@@ -7,7 +7,7 @@ import { h } from "@siteimprove/alfa-dom/h";
 
 import { Style } from "../src/style.ts";
 
-import { cascaded, color, specified } from "./common.js";
+import { cascaded, color, specified } from "./common.ts";
 
 const device = Device.standard();
 

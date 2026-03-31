@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Gradient } from "../../../src/index.ts";
-import { color } from "../../common/color.js";
-import { parser, serializer } from "../../common/parse.js";
+import { color } from "../../common/color.ts";
+import { parser, serializer } from "../../common/parse.ts";
 
 const parseErr = parser(Gradient.Radial.parse);
 const serialize = serializer(Gradient.Radial.parse);

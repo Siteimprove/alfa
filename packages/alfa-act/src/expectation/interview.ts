@@ -2,10 +2,10 @@ import { Future } from "@siteimprove/alfa-future";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
 
-import { Finding } from "./finding.js";
-import type { Oracle } from "./oracle.js";
-import { Question } from "./question.js";
-import type { Rule } from "../rule.js";
+import { Finding } from "./finding.ts";
+import type { Oracle } from "./oracle.ts";
+import { Question } from "./question.ts";
+import type { Rule } from "../rule.ts";
 
 /**
  * As `Interview` is a recursive type that models nested chains of `Question`s,

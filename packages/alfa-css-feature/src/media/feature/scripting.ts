@@ -2,8 +2,8 @@ import { Keyword } from "@siteimprove/alfa-css";
 import type { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 
-import { Media } from "./media.js";
-import type { Value } from "./value/index.js";
+import { Media } from "./media.ts";
+import type { Value } from "./value/index.ts";
 
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#scripting}

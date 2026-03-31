@@ -1,1 +1,1 @@
-export * from "./painting-order.js";
+export * from "./painting-order.ts";

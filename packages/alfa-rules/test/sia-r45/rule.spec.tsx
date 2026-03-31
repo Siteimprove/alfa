@@ -3,8 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R45, { Outcomes } from "../../src/sia-r45/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { failed, inapplicable, passed } from "../common/outcome.ts";
 
 test(`evaluate() passes when tokens in headers list refer to cells in the same
       table`, async (t) => {

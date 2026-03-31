@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Combinator } from "../src/index.ts";
-import { List, Selector } from "../src/index.js";
-import { parseErr, serialize as baseSerialize } from "./parser.js";
+import { List, Selector } from "../src/index.ts";
+import { parseErr, serialize as baseSerialize } from "./parser.ts";
 
 const serialize = (
   input: string,

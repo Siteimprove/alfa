@@ -5,8 +5,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R75, { Outcomes } from "../../src/sia-r75/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { failed, inapplicable, passed } from "../common/outcome.ts";
 
 const fontSize = (value: string) => Declaration.of("font-size", value);
 const makeTarget = (

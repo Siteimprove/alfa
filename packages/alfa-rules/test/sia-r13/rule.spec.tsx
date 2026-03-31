@@ -3,8 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R13, { Outcomes } from "../../src/sia-r13/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test(`evaluates() passes an <iframe> element with an accessible name given by
       the title attribute`, async (t) => {

@@ -1,10 +1,10 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Element, Query } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Context } from "../../../context.js";
-import { Combinator, type Relative, type Selector } from "../../index.js";
+import { Context } from "../../../context.ts";
+import { Combinator, type Relative, type Selector } from "../../index.ts";
 
-import { WithSelector } from "./pseudo-class.js";
+import { WithSelector } from "./pseudo-class.ts";
 
 /**
  * {@link https://drafts.csswg.org/selectors/#has-pseudo}

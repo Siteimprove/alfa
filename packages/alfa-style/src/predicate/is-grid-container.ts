@@ -1,4 +1,4 @@
-import type { Style } from "../style.js";
+import type { Style } from "../style.ts";
 
 /**
  * {@link https://www.w3.org/TR/css-grid-2/#grid-container}

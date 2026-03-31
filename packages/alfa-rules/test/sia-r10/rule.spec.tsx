@@ -3,8 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R10, { Outcomes } from "../../src/sia-r10/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test("evaluate() passes a valid simple autocomplete attribute on an <input> element", async (t) => {
   const element = <input autocomplete="username" />;

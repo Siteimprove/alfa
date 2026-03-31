@@ -3,8 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R6, { Outcomes } from "../../src/sia-dr6/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 const html = (lang: string, xml: string) =>
   h.element("html", [h.attribute("lang", lang), h.attribute("xml:lang", xml)]);

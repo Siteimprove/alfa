@@ -8,10 +8,10 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation, Question } from "../common/act/index.js";
-import { WithName } from "../common/diagnostic/with-name.js";
+import { expectation, Question } from "../common/act/index.ts";
+import { WithName } from "../common/diagnostic/with-name.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { hasAccessibleName } = DOM;
 const { isVisible } = Style;

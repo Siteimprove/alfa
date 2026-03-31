@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { cascaded } from "../common.js";
+import { cascaded } from "../common.ts";
 
 test(`#cascaded() parses \`background-image: url("foo.png")\``, (t) => {
   const element = <div style={{ backgroundImage: `url("foo.png")` }} />;

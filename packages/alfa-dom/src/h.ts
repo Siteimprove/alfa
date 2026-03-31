@@ -3,7 +3,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import type { Rectangle } from "@siteimprove/alfa-rectangle";
 
-import { Namespace } from "./namespace.js";
+import { Namespace } from "./namespace.ts";
 import {
   Attribute,
   Document,
@@ -13,8 +13,8 @@ import {
   Shadow,
   Text,
   Type,
-} from "./node/index.js";
-import { Block, Declaration, Rule, Sheet } from "./style/index.js";
+} from "./node/index.ts";
+import { Block, Declaration, Rule, Sheet } from "./style/index.ts";
 
 const { entries } = Object;
 const { nor } = Predicate;

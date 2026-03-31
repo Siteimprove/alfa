@@ -19,10 +19,10 @@ import * as adapter from "@ts-graphviz/adapter";
 import * as fs from "node:fs";
 import path from "node:path";
 import * as gv from "ts-graphviz";
-import { loadJSON } from "../common.js";
+import { loadJSON } from "../common.ts";
 
-import type { DependencyGraph } from "./dependency-graph.js";
-import { GraphFactory } from "./helpers.js";
+import type { DependencyGraph } from "./dependency-graph.ts";
+import { GraphFactory } from "./helpers.ts";
 
 /*
   Usage:

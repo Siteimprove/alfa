@@ -4,13 +4,13 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Context } from "../../../context.js";
-import { Specificity } from "../../../specificity.js";
+import { Context } from "../../../context.ts";
+import { Specificity } from "../../../specificity.ts";
 
-import type { Compound, Selector, Simple } from "../../index.js";
-import { BaseSelector } from "../../selector.js";
+import type { Compound, Selector, Simple } from "../../index.ts";
+import { BaseSelector } from "../../selector.ts";
 
-import { PseudoClassSelector } from "./pseudo-class.js";
+import { PseudoClassSelector } from "./pseudo-class.ts";
 
 const { either, filter, map, right } = Parser;
 const { parseColon } = Token;

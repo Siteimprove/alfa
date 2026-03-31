@@ -13,11 +13,11 @@ import type { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { expectation } from "../common/act/expectation.js";
-import { Group } from "../common/act/group.js";
-import { ARIA } from "../requirements/index.js";
+import { expectation } from "../common/act/expectation.ts";
+import { Group } from "../common/act/group.ts";
+import { ARIA } from "../requirements/index.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 const {
   hasIncorrectRoleWithoutName,

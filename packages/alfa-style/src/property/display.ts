@@ -4,10 +4,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../longhand.js";
+import { Longhand } from "../longhand.ts";
 
-import type Position from "./position.js";
-import type Float from "./float.js";
+import type Position from "./position.ts";
+import type Float from "./float.ts";
 
 const { map, either } = Parser;
 

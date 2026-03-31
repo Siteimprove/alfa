@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import type { Math} from "../../src/index.ts";
 import { Length, Position } from "../../src/index.ts";
-import { parserUnsafe, serializer } from "../common/parse.js";
+import { parserUnsafe, serializer } from "../common/parse.ts";
 
 const parse = parserUnsafe(Position.parse());
 const serialize = serializer(Position.parse());

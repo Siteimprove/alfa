@@ -4,7 +4,7 @@ import type { Serializable } from "@siteimprove/alfa-json";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import type { PartiallyResolvable, Resolvable } from "./resolvable.js";
+import type { PartiallyResolvable, Resolvable } from "./resolvable.ts";
 
 /**
  * Representation of a CSS Value

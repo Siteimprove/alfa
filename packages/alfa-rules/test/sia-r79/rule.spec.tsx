@@ -3,8 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R79, { Outcomes } from "../../src/sia-r79/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test(`evaluate() passes a visible <pre> element which is part of a <figure>`, async (t) => {
   const target = <pre aria-hidden="true">¯\_(ツ)_/¯</pre>;

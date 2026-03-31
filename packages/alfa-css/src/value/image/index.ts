@@ -1,2 +1,2 @@
-export * from "./gradient/index.js";
-export * from "./image.js";
+export * from "./gradient/index.ts";
+export * from "./image.ts";

@@ -9,7 +9,7 @@ import type { Precedence} from "../src/index.ts";
 import { Layer, Origin, RuleTree } from "../src/index.ts";
 import { Block } from "../src/block.ts";
 
-import { parse } from "./common/parser.js";
+import { parse } from "./common/parser.ts";
 
 function fakeBlock(
   selectorText: string,

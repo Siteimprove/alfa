@@ -7,12 +7,12 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/index.js";
-import { WithBadElements } from "../common/diagnostic/with-bad-elements.js";
+import { expectation } from "../common/act/index.ts";
+import { WithBadElements } from "../common/diagnostic/with-bad-elements.ts";
 
-import { withDocumentElement } from "../common/applicability/with-document-element.js";
-import { BestPractice } from "../requirements/index.js";
-import { Scope, Stability } from "../tags/index.js";
+import { withDocumentElement } from "../common/applicability/with-document-element.ts";
+import { BestPractice } from "../requirements/index.ts";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { hasName, hasNamespace } = Element;
 const { and } = Predicate;

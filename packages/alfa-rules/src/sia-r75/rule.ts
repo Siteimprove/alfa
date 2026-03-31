@@ -11,10 +11,10 @@ import type { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
-import { BestPractice } from "../requirements/index.js";
+import { expectation } from "../common/act/expectation.ts";
+import { BestPractice } from "../requirements/index.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { hasNamespace, hasName } = Element;
 const { isText } = Text;

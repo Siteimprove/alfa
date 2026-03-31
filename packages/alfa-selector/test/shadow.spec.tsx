@@ -7,7 +7,7 @@ import type { Host } from "../src/selector/pseudo/pseudo-class/host.ts";
 import type { HostContext } from "../src/selector/pseudo/pseudo-class/host-context.ts";
 import { Slotted } from "../src/selector/pseudo/pseudo-element/slotted.ts";
 
-import { parse } from "./parser.js";
+import { parse } from "./parser.ts";
 
 test("#matches() never matches a :host or :host-context selector", (t) => {
   for (const target of [<p />, <div class="foo" />]) {

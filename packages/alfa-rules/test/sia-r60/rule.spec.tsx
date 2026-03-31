@@ -3,8 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R60, { Outcomes } from "../../src/sia-r60/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test("evaluate() passes a <div> with a role of group and a name", async (t) => {
   const target = (

@@ -3,8 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R19, { Outcomes } from "../../src/sia-r19/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test(`evaluate() passes an aria-required attribute with a valid true value`, async (t) => {
   const target = <div role="textbox" aria-required="true"></div>;

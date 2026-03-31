@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { cascaded } from "../common.js";
+import { cascaded } from "../common.ts";
 
 for (const box of ["block", "inline"] as const) {
   for (const side of ["start", "end"] as const) {

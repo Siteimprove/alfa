@@ -5,8 +5,8 @@ import type * as earl from "@siteimprove/alfa-earl";
 import type * as json from "@siteimprove/alfa-json";
 
 import type { Result } from "@siteimprove/alfa-result";
-import type { Body } from "./body.js";
-import { Headers } from "./headers.js";
+import type { Body } from "./body.ts";
+import { Headers } from "./headers.ts";
 
 /**
  * {@link https://fetch.spec.whatwg.org/#request-class}

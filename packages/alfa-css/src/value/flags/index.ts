@@ -1,2 +1,2 @@
-export * from "./contain.js";
-export * from "./trim.js";
+export * from "./contain.ts";
+export * from "./trim.ts";

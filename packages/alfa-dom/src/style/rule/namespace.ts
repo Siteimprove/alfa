@@ -1,7 +1,7 @@
 import { Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { BaseRule } from "./rule.js";
+import { BaseRule } from "./rule.ts";
 
 /**
  * @public

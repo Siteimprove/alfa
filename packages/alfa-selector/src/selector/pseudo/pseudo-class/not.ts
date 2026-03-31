@@ -1,9 +1,9 @@
 import type { Element } from "@siteimprove/alfa-dom";
 
-import type { Context } from "../../../context.js";
-import type { Absolute, Selector } from "../../index.js";
+import type { Context } from "../../../context.ts";
+import type { Absolute, Selector } from "../../index.ts";
 
-import { WithSelector } from "./pseudo-class.js";
+import { WithSelector } from "./pseudo-class.ts";
 
 /**
  * {@link https://drafts.csswg.org/selectors/#negation-pseudo}

@@ -5,8 +5,8 @@ import { test } from "@siteimprove/alfa-test";
 import R92 from "../../src/sia-r92/rule.ts";
 import { Outcomes } from "../../src/common/expectation/is-wide-enough.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { failed, inapplicable, passed } from "../common/outcome.ts";
 
 test("evaluate() passes on large enough value", async (t) => {
   const declaration = h.declaration("word-spacing", "0.16em", true);

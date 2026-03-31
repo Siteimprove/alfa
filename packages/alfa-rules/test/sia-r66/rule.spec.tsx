@@ -6,12 +6,12 @@ import { Contrast as Outcomes } from "../../src/common/outcome/contrast.ts";
 
 import R66 from "../../src/sia-r66/rule.ts";
 
-import { black, gray, white } from "../common/color.js";
+import { black, gray, white } from "../common/color.ts";
 
-import { evaluate } from "../common/evaluate.js";
+import { evaluate } from "../common/evaluate.ts";
 
-import { oracle } from "../common/oracle.js";
-import { failed, inapplicable, passed } from "../common/outcome.js";
+import { oracle } from "../common/oracle.ts";
+import { failed, inapplicable, passed } from "../common/outcome.ts";
 
 test("evaluate() passes a text node that has sufficient contrast", async (t) => {
   const target = h.text("Hello world");

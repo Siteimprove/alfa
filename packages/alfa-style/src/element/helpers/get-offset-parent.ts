@@ -4,8 +4,8 @@ import type { Option} from "@siteimprove/alfa-option";
 import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { isPositioned } from "../predicate/is-positioned.js";
-import { isRendered } from "../../node/predicate/is-rendered.js";
+import { isPositioned } from "../predicate/is-positioned.ts";
+import { isRendered } from "../../node/predicate/is-rendered.ts";
 
 const { hasName, isElement } = Element;
 const { isRoot } = Node;

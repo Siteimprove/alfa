@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Shape } from "../../src/value/shape/shape.ts";
-import { parser, serializer } from "../common/parse.js";
+import { parser, serializer } from "../common/parse.ts";
 
 const parseErr = parser(Shape.parse);
 const serialize = serializer(Shape.parse);

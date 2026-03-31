@@ -4,9 +4,9 @@ import { test } from "@siteimprove/alfa-test";
 
 import R32, { Outcomes } from "../../src/sia-r32/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.ts";
 
 test(`evaluate() passes a video with a descriptive audio track`, async (t) => {
   const target = <video src="foo.mp4" />;

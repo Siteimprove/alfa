@@ -9,7 +9,7 @@ import type * as json from "@siteimprove/alfa-json";
 import type * as sarif from "@siteimprove/alfa-sarif";
 
 import type { Result } from "@siteimprove/alfa-result";
-import type { Resource } from "./resource.js";
+import type { Resource } from "./resource.ts";
 
 /**
  * {@link https://en.wikipedia.org/wiki/Web_page}

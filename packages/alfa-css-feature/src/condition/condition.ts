@@ -3,11 +3,11 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import type { Feature } from "../feature.js";
+import type { Feature } from "../feature.ts";
 
-import { And } from "./and.js";
-import { Not } from "./not.js";
-import { Or } from "./or.js";
+import { And } from "./and.ts";
+import { Not } from "./not.ts";
+import { Or } from "./or.ts";
 
 const { delimited, either, map, oneOrMore, option, pair, zeroOrMore } = Parser;
 

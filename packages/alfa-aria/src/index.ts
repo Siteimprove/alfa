@@ -5,19 +5,19 @@
  * @packageDocumentation
  */
 
-import * as dom from "./dom/dom.js";
+import * as dom from "./dom/dom.ts";
 
-export * from "./attribute.js";
-export * from "./feature.js";
-export * from "./name/index.js";
-export * from "./role.js";
+export * from "./attribute.ts";
+export * from "./feature.ts";
+export * from "./name/index.ts";
+export * from "./role.ts";
 
-export * from "./node.js";
+export * from "./node.ts";
 
-export * from "./node/container.js";
-export * from "./node/element.js";
-export * from "./node/inert.js";
-export * from "./node/text.js";
+export * from "./node/container.ts";
+export * from "./node/element.ts";
+export * from "./node/inert.ts";
+export * from "./node/text.ts";
 
 /**
  * Helpers and Predicates for accessibility aspects of DOM objects

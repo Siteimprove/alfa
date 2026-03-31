@@ -9,9 +9,9 @@ import type { Trilean } from "@siteimprove/alfa-trilean";
 import {
   hasComputedStyle,
   hasPositioningParent,
-} from "../../element/element.js";
+} from "../../element/element.ts";
 
-import { Style } from "../../style.js";
+import { Style } from "../../style.ts";
 
 const { isElement } = Element;
 const { abs } = Math;

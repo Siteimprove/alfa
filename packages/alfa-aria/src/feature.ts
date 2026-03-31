@@ -10,10 +10,10 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Sequence } from "@siteimprove/alfa-sequence";
 import { Cell, Table } from "@siteimprove/alfa-table";
 
-import { Attribute } from "./attribute.js";
-import type { State } from "./name/index.js";
-import { Name, Source } from "./name/index.js";
-import { Role } from "./role.js";
+import { Attribute } from "./attribute.ts";
+import type { State } from "./name/index.ts";
+import { Name, Source } from "./name/index.ts";
+import { Role } from "./role.ts";
 
 const { hasAttribute, hasInputType, hasName, isElement, isScopedTo } = Element;
 const { or, test } = Predicate;

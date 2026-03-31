@@ -4,9 +4,9 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as parser from "@siteimprove/alfa-parser";
 
-import { Expression } from "../expression.js";
-import { Token } from "./token.js";
-import { Lexer } from "./lexer.js";
+import { Expression } from "../expression.ts";
+import { Token } from "./token.ts";
+import { Lexer } from "./lexer.ts";
 
 const { fromCharCode } = String;
 const { map, either, delimited, option, pair, left, right, take, zeroOrMore } =

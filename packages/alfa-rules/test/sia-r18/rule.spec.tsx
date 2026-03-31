@@ -3,8 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R18, { Outcomes } from "../../src/sia-r18/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test(`evaluate() passes input with type password field and aria-required state`, async (t) => {
   const target = (

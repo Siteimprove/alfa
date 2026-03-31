@@ -1,1 +1,1 @@
-export * from "./rectangle.js";
+export * from "./rectangle.ts";

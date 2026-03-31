@@ -2,8 +2,8 @@ import type { Device } from "@siteimprove/alfa-device";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import type { PositionKeyword } from "../../property/position.js";
-import { hasComputedStyle } from "./has-computed-style.js";
+import type { PositionKeyword } from "../../property/position.ts";
+import { hasComputedStyle } from "./has-computed-style.ts";
 
 const { equals } = Predicate;
 

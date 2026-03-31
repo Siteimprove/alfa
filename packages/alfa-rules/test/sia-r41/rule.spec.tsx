@@ -11,9 +11,9 @@ import R41, { Outcomes } from "../../src/sia-r41/rule.ts";
 import { Group } from "../../src/index.ts";
 
 import { WithName } from "../../src/common/diagnostic.ts";
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.ts";
 
 test(`evaluate() passes two links that have the same name and reference the same
       resource`, async (t) => {

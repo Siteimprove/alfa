@@ -4,11 +4,11 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
-import { getRefreshTime } from "../common/expectation/get-refresh-time.js";
+import { expectation } from "../common/act/expectation.ts";
+import { getRefreshTime } from "../common/expectation/get-refresh-time.ts";
 
-import { RefreshDelay as Outcomes } from "../common/outcome/refresh-delay.js";
-import { Scope, Stability } from "../tags/index.js";
+import { RefreshDelay as Outcomes } from "../common/outcome/refresh-delay.ts";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { hasAttribute, hasName, hasNamespace } = Element;
 const { and } = Predicate;

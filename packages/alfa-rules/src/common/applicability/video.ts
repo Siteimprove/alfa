@@ -14,7 +14,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import type { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
-import { Question } from "../act/question.js";
+import { Question } from "../act/question.ts";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and } = Predicate;

@@ -2,17 +2,17 @@ import { Parser } from "@siteimprove/alfa-parser";
 import {
   Function as CSSFunction,
   type Parser as CSSParser,
-} from "../../../syntax/index.js";
+} from "../../../syntax/index.ts";
 
-import { Unit } from "../../../unit/index.js";
+import { Unit } from "../../../unit/index.ts";
 
-import type { Numeric } from "../../numeric/index.js";
+import type { Numeric } from "../../numeric/index.ts";
 
-import { Expression } from "../expression.js";
-import type { Kind } from "../kind.js";
-import { Value } from "../value.js";
+import { Expression } from "../expression.ts";
+import type { Kind } from "../kind.ts";
+import { Value } from "../value.ts";
 
-import { Function } from "./function.js";
+import { Function } from "./function.ts";
 
 const { isValueExpression } = Value;
 

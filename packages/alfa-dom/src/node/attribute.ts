@@ -6,12 +6,12 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Namespace } from "../namespace.js";
-import { BaseNode } from "./node.js";
-import type { Element } from "./slotable/element.js";
+import { Namespace } from "../namespace.ts";
+import { BaseNode } from "./node.ts";
+import type { Element } from "./slotable/element.ts";
 
-import * as predicate from "./attribute/predicate.js";
-import * as autocomplete from "./attribute/autocomplete.js";
+import * as predicate from "./attribute/predicate.ts";
+import * as autocomplete from "./attribute/autocomplete.ts";
 
 const { isEmpty } = Iterable;
 const { equals, not } = Predicate;

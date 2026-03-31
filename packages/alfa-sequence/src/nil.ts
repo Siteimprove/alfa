@@ -11,8 +11,8 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { None } from "@siteimprove/alfa-option";
 
-import { Sequence } from "./sequence.js";
-import { Cons } from "./cons.js";
+import { Sequence } from "./sequence.ts";
+import { Cons } from "./cons.ts";
 
 /**
  * @public

@@ -4,7 +4,7 @@ import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Context } from "@siteimprove/alfa-selector";
 import { String } from "@siteimprove/alfa-string";
 
-import { Style } from "../../style.js";
+import { Style } from "../../style.ts";
 
 /**
  * Detect hyphenation opportunities in a Text node.

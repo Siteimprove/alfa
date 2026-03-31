@@ -3,8 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import R94, { Outcomes } from "../../src/sia-r94/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test("evaluate() passes a menuitem with an accessible name", async (t) => {
   const target = <li role="menuitem">Foo</li>;

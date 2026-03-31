@@ -1,8 +1,8 @@
 import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Shorthand } from "../shorthand.js";
-import * as Top from "./top.js";
+import { Shorthand } from "../shorthand.ts";
+import * as Top from "./top.ts";
 
 const { takeBetween, map, delimited, option } = Parser;
 

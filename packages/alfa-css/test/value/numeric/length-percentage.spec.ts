@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Length, LengthPercentage } from "../../../src/index.ts";
 
-import { parser, parserUnsafe, serializer } from "../../common/parse.js";
+import { parser, parserUnsafe, serializer } from "../../common/parse.ts";
 
 const parseErr = parser(LengthPercentage.parse);
 const parse = parserUnsafe(LengthPercentage.parse);

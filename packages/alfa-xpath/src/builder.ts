@@ -4,7 +4,7 @@ import { Option, None } from "@siteimprove/alfa-option";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { Expression } from "./expression.js";
+import { Expression } from "./expression.ts";
 
 /**
  * @public

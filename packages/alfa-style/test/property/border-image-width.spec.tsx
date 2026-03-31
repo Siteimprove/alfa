@@ -5,7 +5,7 @@ import type { Serializable } from "@siteimprove/alfa-json";
 
 import type * as Width from "../../src/property/border-image-width.ts";
 
-import { cascaded } from "../common.js";
+import { cascaded } from "../common.ts";
 
 function width(
   top: number,

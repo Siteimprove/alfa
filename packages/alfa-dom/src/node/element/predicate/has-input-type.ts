@@ -1,9 +1,9 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import type { Element } from "../../slotable/element.js";
-import { type InputType } from "../input-type.js";
-import { hasName } from "./has-name.js";
+import type { Element } from "../../slotable/element.ts";
+import { type InputType } from "../input-type.ts";
+import { hasName } from "./has-name.ts";
 
 const { equals, test } = Predicate;
 const { and } = Refinement;

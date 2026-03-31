@@ -1,7 +1,7 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import type { Attribute } from "../../attribute.js";
-import type { Element } from "../../slotable/element.js";
+import type { Attribute } from "../../attribute.ts";
+import type { Element } from "../../slotable/element.ts";
 
 const { property } = Predicate;
 

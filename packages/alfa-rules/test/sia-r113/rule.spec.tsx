@@ -6,8 +6,8 @@ import { Rectangle } from "@siteimprove/alfa-rectangle";
 
 import { TargetSize } from "../../src/common/outcome/target-size.ts";
 import R113 from "../../src/sia-r113/rule.ts";
-import { evaluate } from "../common/evaluate.js";
-import { failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { failed, inapplicable, passed } from "../common/outcome.ts";
 
 test("evaluate() passes button with clickable area of exactly 24x24 pixels", async (t) => {
   const device = Device.standard();

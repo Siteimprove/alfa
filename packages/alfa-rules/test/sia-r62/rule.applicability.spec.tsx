@@ -3,9 +3,9 @@ import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 import R62, { Outcomes } from "../../src/sia-r62/rule.ts";
-import { evaluate } from "../common/evaluate.js";
-import { inapplicable, passed } from "../common/outcome.js";
-import { addCursor, addOutline, Defaults, makePairing } from "./common.js";
+import { evaluate } from "../common/evaluate.ts";
+import { inapplicable, passed } from "../common/outcome.ts";
+import { addCursor, addOutline, Defaults, makePairing } from "./common.ts";
 
 const {
   defaultStyle,

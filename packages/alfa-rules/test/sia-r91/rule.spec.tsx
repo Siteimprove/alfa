@@ -5,8 +5,8 @@ import { test } from "@siteimprove/alfa-test";
 import R91 from "../../src/sia-r91/rule.ts";
 import { Outcomes } from "../../src/common/expectation/is-wide-enough.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { failed, inapplicable, passed } from "../common/outcome.ts";
 
 test("evaluate() passes on large enough value", async (t) => {
   const declaration = h.declaration("letter-spacing", "0.12em", true);

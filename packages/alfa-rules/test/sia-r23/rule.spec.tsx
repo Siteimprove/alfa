@@ -6,9 +6,9 @@ import { test } from "@siteimprove/alfa-test";
 import R23 from "../../src/sia-r23/rule.ts";
 import { Outcomes } from "../../src/common/expectation/media-transcript.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable, cantTell } from "../common/outcome.js";
-import { oracle } from "../common/oracle.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable, cantTell } from "../common/outcome.ts";
+import { oracle } from "../common/oracle.ts";
 
 test(`evaluate() passes an audio with perceivable transcript`, async (t) => {
   const target = <audio src="foo.mp3" />;
