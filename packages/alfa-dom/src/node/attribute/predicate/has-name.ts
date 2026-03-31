@@ -1,7 +1,7 @@
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Attribute } from "../../attribute.js";
+import type { Attribute } from "../../attribute.js";
 
 /**
  * @public
@@ -22,18 +22,15 @@ export function hasName(
   nameOrPredicate: string | Predicate<string>,
   ...names: Array<string>
 ): Predicate<Attribute> {
-  let predicate: Predicate<string, [Attribute]>;
+  let predicate: Predicate<string>;
 
   if (typeof nameOrPredicate === "function") {
     predicate = nameOrPredicate;
   } else {
     names.unshift(nameOrPredicate);
 
-    predicate = (name, attribute) =>
-      names.some(
-        (candidate) => Attribute.foldCase(candidate, attribute.owner) === name,
-      );
+    predicate = (name) => names.some((candidate) => candidate === name);
   }
 
-  return (attribute) => predicate(attribute.name, attribute);
+  return (attribute) => predicate(attribute.name);
 }

@@ -1,6 +1,6 @@
 import type { Predicate } from "@siteimprove/alfa-predicate";
 
-import type { Element } from "../../element.js";
+import type { Element } from "../../slotable/element.js";
 
 /**
  * @public

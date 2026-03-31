@@ -22,6 +22,7 @@ export namespace Variable {
    * mapping each variable name to its declared value.
    *
    * @internal
+   * @knipignore used in tests
    */
   export type DefinitionMap = Map<string, Value<Slice<Token>>>;
 

@@ -3,12 +3,12 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "../node.js";
+import { BaseNode } from "./node.js";
 
 /**
  * @public
  */
-export class Type<N extends string = string> extends Node<"type"> {
+export class Type<N extends string = string> extends BaseNode<"type"> {
   public static of<N extends string = string>(
     name: N,
     publicId: Option<string> = None,
@@ -63,15 +63,15 @@ export class Type<N extends string = string> extends Node<"type"> {
   }
 
   public toJSON(
-    options: Node.SerializationOptions & {
+    options: BaseNode.SerializationOptions & {
       verbosity:
         | json.Serializable.Verbosity.Minimal
         | json.Serializable.Verbosity.Low;
     },
   ): Type.MinimalJSON;
-  public toJSON(options?: Node.SerializationOptions): Type.JSON<N>;
+  public toJSON(options?: BaseNode.SerializationOptions): Type.JSON<N>;
   public toJSON(
-    options?: Node.SerializationOptions,
+    options?: BaseNode.SerializationOptions,
   ): Type.MinimalJSON | Type.JSON<N> {
     const result = {
       ...super.toJSON(options),
@@ -100,9 +100,11 @@ export class Type<N extends string = string> extends Node<"type"> {
  * @public
  */
 export namespace Type {
-  export interface MinimalJSON extends Node.JSON<"type"> {}
+  export interface MinimalJSON extends BaseNode.JSON<"type"> {}
 
-  export interface JSON<N extends string = string> extends Node.JSON<"type"> {
+  export interface JSON<
+    N extends string = string,
+  > extends BaseNode.JSON<"type"> {
     name: N;
     publicId: string | null;
     systemId: string | null;
@@ -125,23 +127,6 @@ export namespace Type {
         Option.from(json.systemId),
         json.externalId,
         json.internalId,
-      ),
-    );
-  }
-
-  /**
-   * @internal
-   */
-  export function cloneType<N extends string = string>(
-    type: Type<N>,
-  ): Trampoline<Type<N>> {
-    return Trampoline.done(
-      Type.of(
-        type.name,
-        type.publicId,
-        type.systemId,
-        type.externalId,
-        type.internalId,
       ),
     );
   }

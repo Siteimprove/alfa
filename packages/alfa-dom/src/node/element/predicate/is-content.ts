@@ -1,8 +1,8 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Element } from "../../element.js";
-import { Node } from "../../../node.js";
+import type { Element } from "../../slotable/element.js";
+import type { BaseNode } from "../../node.js";
 
 import { isReplaced } from "./is-replaced.js";
 
@@ -16,10 +16,9 @@ const { and } = Refinement;
  * @public
  */
 export function isContent(
-  options: Node.Traversal = Node.Traversal.empty,
-): Predicate<Node> {
-  return or(
-    (node) => node.children(options).isEmpty(),
-    and(Element.isElement, isReplaced),
-  );
+  isElement: Refinement<unknown, Element>,
+  defaultTraversal: BaseNode.Traversal,
+): (options?: BaseNode.Traversal) => Predicate<BaseNode> {
+  return (options = defaultTraversal) =>
+    or((node) => node.children(options).isEmpty(), and(isElement, isReplaced));
 }

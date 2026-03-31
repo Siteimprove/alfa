@@ -9,7 +9,7 @@ import { h } from "../dist/index.js";
 import { Namespace } from "../dist/namespace.js";
 
 import { Document } from "../dist/node/document.js";
-import { Element } from "../dist/node/element.js";
+import { Element } from "../dist/node/slotable/element.js";
 import { Type } from "../dist/node/type.js";
 
 test("h() constructs an element", (t) => {

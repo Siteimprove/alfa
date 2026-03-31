@@ -1,6 +1,6 @@
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Element } from "../../element.js";
+import type { Element } from "../../slotable/element.js";
 import { Namespace } from "../../../namespace.js";
 
 import { hasName } from "./has-name.js";
@@ -11,9 +11,12 @@ const { and, test } = Refinement;
 /**
  * @public
  */
-export function isDocumentElement(value: unknown): value is Element<"html"> {
-  return test(
-    and(Element.isElement, and(hasName("html"), hasNamespace(Namespace.HTML))),
-    value,
-  );
+export function isDocumentElement(
+  isElement: Refinement<unknown, Element>,
+): Refinement<unknown, Element<"html">> {
+  return (value) =>
+    test(
+      and(isElement, and(hasName("html"), hasNamespace(Namespace.HTML))),
+      value,
+    );
 }

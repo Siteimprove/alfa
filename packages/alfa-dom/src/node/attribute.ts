@@ -7,8 +7,8 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 import * as json from "@siteimprove/alfa-json";
 
 import { Namespace } from "../namespace.js";
-import { Node } from "../node.js";
-import type { Element } from "./element.js";
+import { BaseNode } from "./node.js";
+import type { Element } from "./slotable/element.js";
 
 import * as predicate from "./attribute/predicate.js";
 import * as autocomplete from "./attribute/autocomplete.js";
@@ -19,7 +19,9 @@ const { equals, not } = Predicate;
 /**
  * @public
  */
-export class Attribute<N extends string = string> extends Node<"attribute"> {
+export class Attribute<
+  N extends string = string,
+> extends BaseNode<"attribute"> {
   public static of<N extends string = string>(
     namespace: Option<Namespace>,
     prefix: Option<string>,
@@ -113,7 +115,7 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
   /**
    * @internal
    **/
-  protected _internalPath(options?: Node.Traversal): string {
+  protected _internalPath(options?: BaseNode.Traversal): string {
     let path = this.owner.map((owner) => owner.path(options)).getOr("/");
 
     path += path === "/" ? "" : "/";
@@ -150,15 +152,15 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
   }
 
   public toJSON(
-    options: Node.SerializationOptions & {
+    options: BaseNode.SerializationOptions & {
       verbosity:
         | json.Serializable.Verbosity.Minimal
         | json.Serializable.Verbosity.Low;
     },
   ): Attribute.MinimalJSON;
-  public toJSON(options?: Node.SerializationOptions): Attribute.JSON<N>;
+  public toJSON(options?: BaseNode.SerializationOptions): Attribute.JSON<N>;
   public toJSON(
-    options?: Node.SerializationOptions,
+    options?: BaseNode.SerializationOptions,
   ): Attribute.MinimalJSON | Attribute.JSON<N> {
     const result = {
       ...super.toJSON(options),
@@ -216,10 +218,11 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
  * @public
  */
 export namespace Attribute {
-  export interface MinimalJSON extends Node.JSON<"attribute"> {}
+  export interface MinimalJSON extends BaseNode.JSON<"attribute"> {}
 
-  export interface JSON<N extends string = string>
-    extends Node.JSON<"attribute"> {
+  export interface JSON<
+    N extends string = string,
+  > extends BaseNode.JSON<"attribute"> {
     namespace: string | null;
     prefix: string | null;
     name: N;
@@ -249,27 +252,8 @@ export namespace Attribute {
   }
 
   /**
-   * @internal
-   */
-  export function cloneAttribute<N extends string = string>(
-    attribute: Attribute<N>,
-  ): Trampoline<Attribute<N | Lowercase<N>>> {
-    return Trampoline.done(
-      Attribute.of(
-        attribute.namespace,
-        attribute.prefix,
-        attribute.name,
-        attribute.value,
-        attribute.externalId,
-        attribute.internalId,
-        attribute.extraData,
-      ),
-    );
-  }
-
-  /**
    * Conditionally fold the case of an attribute name based on its owner; HTML
-   * attributes are case insensitive while attributes in other namespaces aren't.
+   * attributes are case-insensitive while attributes in other namespaces aren't.
    *
    * @internal
    */

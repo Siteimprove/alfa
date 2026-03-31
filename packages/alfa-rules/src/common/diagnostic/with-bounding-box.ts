@@ -152,10 +152,12 @@ export namespace WithBoundingBox {
     spacing: boolean;
   }
 
+  /** @public */
   export function isWithBoundingBox(
     value: WithBoundingBox,
   ): value is WithBoundingBox;
 
+  /** @public */
   export function isWithBoundingBox(value: unknown): value is WithBoundingBox;
 
   export function isWithBoundingBox(value: unknown): value is WithBoundingBox {

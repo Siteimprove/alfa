@@ -75,7 +75,7 @@ const _default_10: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Eleme
 const _default_2: Rule.Atomic<Page, Document_2, Question.Metadata, Element_2<string>>;
 
 // @public
-const _default_3: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Node_2<string> | Array_2<Node_2<string>>>;
+const _default_3: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Node_2 | Array_2<Node_2>>;
 
 // @public
 const _default_4: Rule.Atomic<Page, Document_2, Question.Metadata, Document_2>;
