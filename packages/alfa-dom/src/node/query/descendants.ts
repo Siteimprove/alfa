@@ -79,7 +79,7 @@ const _textCache = Cache.empty<
  * @public
  */
 export interface TextGroup {
-  node: Node;
+  node: BaseNode;
   label: string;
   text: Sequence<Text>;
 }
