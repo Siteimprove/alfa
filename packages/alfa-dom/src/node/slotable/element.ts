@@ -575,10 +575,7 @@ export namespace Element {
 
   export const hasUniqueId = predicate.hasUniqueId(isElement);
   export const isActuallyDisabled = predicate.isActuallyDisabled(isElement);
-  export const isContent = predicate.isContent(
-    isElement,
-    BaseNode.Traversal.empty,
-  );
+  export const isContent = predicate.isContent(isElement);
   export const isDocumentElement = predicate.isDocumentElement(isElement);
   export const isFallback = predicate.isFallback(isElement);
   export const isScopedTo = predicate.isScopedTo(isElement);

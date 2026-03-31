@@ -2,6 +2,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 import type { Node } from "../index.js";
+import { BaseNode } from "../node.js";
 
 import { lowestCommonAncestor } from "./lowest-common-ancestor.js";
 
@@ -23,47 +24,43 @@ const { equals, or } = Predicate;
  * @public
  */
 export function getNodesBetween(
-  defaultTreeOptions: Node.Traversal,
-): (node1: Node, node2: Node, includeOptions?: Options) => Sequence<Node> {
-  return function getNodes(
-    node1: Node,
-    node2: Node,
-    includeOptions: Options = { includeFirst: false, includeSecond: false },
-    treeOptions: Node.Traversal = defaultTreeOptions,
-  ) {
-    let between = getNodesInclusivelyBetween(node1, node2, treeOptions);
+  node1: Node,
+  node2: Node,
+  includeOptions: Options = { includeFirst: false, includeSecond: false },
+  treeOptions: Node.Traversal = BaseNode.Traversal.empty,
+): Sequence<Node> {
+  let between = getNodesInclusivelyBetween(node1, node2, treeOptions);
 
-    // If somehow there is nothing between them, escape now
-    if (between.isEmpty()) {
-      return between;
-    }
-
-    // Do we keep the first node or skip its subtree?
-    if (!includeOptions.includeFirst) {
-      // By previous test, between is not empty
-      const first = between.first().getUnsafe();
-
-      // The 'first node after the subtree rooted at first' is the next sibling
-      // of the closest ancestor having one.
-      between = first
-        // Closest ancestor with a next sibling.
-        .closest((ancestor) => ancestor.next(treeOptions).isSome(), treeOptions)
-        // Get that sibling.
-        .flatMap((node) => node.next(treeOptions))
-        // Skip everything until next.
-        .map((next) => between.skipUntil((node) => node.equals(next)))
-        // If nothing after the subtree at first, just escape.
-        .getOrElse(Sequence.empty);
-    }
-
-    // Do we keep the second node or remove it?
-    between =
-      includeOptions.includeSecond || between.isEmpty()
-        ? between
-        : between.skipLast(1);
-
+  // If somehow there is nothing between them, escape now
+  if (between.isEmpty()) {
     return between;
-  };
+  }
+
+  // Do we keep the first node or skip its subtree?
+  if (!includeOptions.includeFirst) {
+    // By previous test, between is not empty
+    const first = between.first().getUnsafe();
+
+    // The 'first node after the subtree rooted at first' is the next sibling
+    // of the closest ancestor having one.
+    between = first
+      // Closest ancestor with a next sibling.
+      .closest((ancestor) => ancestor.next(treeOptions).isSome(), treeOptions)
+      // Get that sibling.
+      .flatMap((node) => node.next(treeOptions))
+      // Skip everything until next.
+      .map((next) => between.skipUntil((node) => node.equals(next)))
+      // If nothing after the subtree at first, just escape.
+      .getOrElse(Sequence.empty);
+  }
+
+  // Do we keep the second node or remove it?
+  between =
+    includeOptions.includeSecond || between.isEmpty()
+      ? between
+      : between.skipLast(1);
+
+  return between;
 }
 
 /**
@@ -76,7 +73,7 @@ function getNodesInclusivelyBetween(
 ): Sequence<Node> {
   const isFrontier = or(equals(node1), equals(node2));
 
-  return lowestCommonAncestor(treeOptions)(node1, node2)
+  return lowestCommonAncestor(node1, node2)
     .map((context) =>
       context
         .inclusiveDescendants(treeOptions)

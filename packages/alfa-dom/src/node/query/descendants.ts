@@ -3,12 +3,13 @@ import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
+import type { Node } from "../index.js";
 import { BaseNode } from "../node.js";
 import { Element, Text } from "../slotable/index.js";
 
 const _descendantsCache = Cache.empty<
-  Predicate<BaseNode>,
-  Cache<BaseNode, Array<Sequence<BaseNode>>>
+  Predicate<Node>,
+  Cache<Node, Array<Sequence<Node>>>
 >();
 
 /**
@@ -20,9 +21,9 @@ const _descendantsCache = Cache.empty<
  *
  * @public
  */
-export function getDescendants<T extends BaseNode>(
-  refinement: Refinement<BaseNode, T>,
-): (node: BaseNode, options?: BaseNode.Traversal) => Sequence<T>;
+export function getDescendants<T extends Node>(
+  refinement: Refinement<Node, T>,
+): (node: Node, options?: Node.Traversal) => Sequence<T>;
 
 /**
  * Get all descendants of a node that satisfy a given predicate.
@@ -34,12 +35,12 @@ export function getDescendants<T extends BaseNode>(
  * @public
  */
 export function getDescendants(
-  predicate: Predicate<BaseNode>,
-): (node: BaseNode, options?: BaseNode.Traversal) => Sequence<BaseNode>;
+  predicate: Predicate<Node>,
+): (node: Node, options?: Node.Traversal) => Sequence<Node>;
 
 export function getDescendants(
-  predicate: Predicate<BaseNode>,
-): (node: BaseNode, options?: BaseNode.Traversal) => Sequence<BaseNode> {
+  predicate: Predicate<Node>,
+): (node: Node, options?: Node.Traversal) => Sequence<Node> {
   return (node, options = BaseNode.Traversal.empty) => {
     const optionsMap = _descendantsCache
       .get(predicate, Cache.empty)
@@ -63,14 +64,14 @@ export const getElementDescendants = getDescendants(Element.isElement);
  */
 export function getInclusiveElementDescendants(
   node: Element,
-  options: BaseNode.Traversal = BaseNode.Traversal.empty,
+  options: Node.Traversal = BaseNode.Traversal.empty,
 ): Sequence<Element> {
   return getElementDescendants(node, options).prepend(node);
 }
 
 const _textCache = Cache.empty<
   TextGroupOptions<any>,
-  Cache<BaseNode, Array<Sequence<Text | TextGroup>>>
+  Cache<Node, Array<Sequence<Text | TextGroup>>>
 >();
 
 /**
@@ -79,7 +80,7 @@ const _textCache = Cache.empty<
  * @public
  */
 export interface TextGroup {
-  node: BaseNode;
+  node: Node;
   label: string;
   text: Sequence<Text>;
 }
@@ -89,8 +90,8 @@ export interface TextGroup {
  *
  * @public
  */
-export interface TextGroupOptions<N extends BaseNode = BaseNode> {
-  startsGroup: Refinement<BaseNode, N>;
+export interface TextGroupOptions<N extends Node = Node> {
+  startsGroup: Refinement<Node, N>;
   getLabel: (node: N) => string;
 }
 
@@ -112,12 +113,9 @@ const defaultTextOptions: TextGroupOptions<any> = {
  *
  * @public
  */
-export function getTextDescendants<N extends BaseNode = BaseNode>(
+export function getTextDescendants<N extends Node = Node>(
   textOptions: TextGroupOptions<N> = defaultTextOptions,
-): (
-  node: BaseNode,
-  options?: BaseNode.Traversal,
-) => Sequence<Text | TextGroup> {
+): (node: Node, options?: Node.Traversal) => Sequence<Text | TextGroup> {
   return (node, options = BaseNode.Traversal.empty) => {
     const optionsMap = _textCache
       .get(textOptions, Cache.empty)
@@ -133,10 +131,10 @@ export function getTextDescendants<N extends BaseNode = BaseNode>(
   };
 }
 
-function* _getTextDescendants<N extends BaseNode = BaseNode>(
-  node: BaseNode,
+function* _getTextDescendants<N extends Node = Node>(
+  node: Node,
   textOptions: TextGroupOptions<N>,
-  traversalOptions: BaseNode.Traversal,
+  traversalOptions: Node.Traversal,
 ): Generator<Text | TextGroup> {
   const { startsGroup, getLabel } = textOptions;
 
