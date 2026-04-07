@@ -1,5 +1,11 @@
 # @siteimprove/alfa-dom
 
+## 0.114.0
+
+### Minor Changes
+
+- **Breaking:** Functions no longer accept injected default traversal. Defaults are set in the function signatures. ([#2049](https://github.com/Siteimprove/alfa/pull/2049))
+
 ## 0.113.0
 
 ### Minor Changes

@@ -135,14 +135,12 @@ export namespace Node {
     }
   }
 
-  export const getNodesBetween = traversal.getNodesBetween(Traversal.empty);
+  export const getNodesBetween = traversal.getNodesBetween;
 
   export const { hasBox, isRoot } = predicate;
 
-  export const hasChild = predicate.hasChild(Traversal.empty);
-  export const hasDescendant = predicate.hasDescendant(Traversal.empty);
-  export const hasInclusiveDescendant = predicate.hasInclusiveDescendant(
-    Traversal.empty,
-  );
-  export const hasTextContent = predicate.hasTextContent(Traversal.empty);
+  export const hasChild = predicate.hasChild;
+  export const hasDescendant = predicate.hasDescendant;
+  export const hasInclusiveDescendant = predicate.hasInclusiveDescendant;
+  export const hasTextContent = predicate.hasTextContent;
 }

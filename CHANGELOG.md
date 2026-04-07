@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.114.0](../../compare/v0.113.0...v0.114.0) (2026-04-01)
+
+### Breaking
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01140): Functions no longer accept injected default traversal. Defaults are set in the function signatures. ([#2049](https://github.com/Siteimprove/alfa/pull/2049))
+
 ## [0.113.0](../../compare/v0.112.0...v0.113.0) (2026-03-31)
 
 ### Breaking

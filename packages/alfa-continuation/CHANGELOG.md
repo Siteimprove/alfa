@@ -1,5 +1,7 @@
 # @siteimprove/alfa-continuation
 
+## 0.114.0
+
 ## 0.113.0
 
 ### Minor Changes

@@ -381,7 +381,7 @@ namespace Element {
     const // (undocumented)
     isActuallyDisabled: Predicate<Element<string>>;
     const // (undocumented)
-    isContent: (options?: BaseNode.Traversal) => Predicate<BaseNode>;
+    isContent: (options: Node_2.Traversal) => Predicate<BaseNode>;
     const // (undocumented)
     isDocumentElement: Refinement<unknown, Element<"html">>;
     const // (undocumented)
@@ -561,24 +561,23 @@ namespace Node_2 {
     type JSON = Attribute.JSON | Comment_2.JSON | Document_2.JSON | Element_2.JSON | Fragment.JSON | Shadow.JSON | Type.JSON | Text_2.JSON;
     // (undocumented)
     type SerializationOptions = BaseNode.SerializationOptions;
-    const // (undocumented)
-    getNodesBetween: (node1: Node_2, node2: Node_2, includeOptions?: {
-        includeFirst: boolean;
-        includeSecond: boolean;
-    }) => Sequence<Node_2>;
+    const // Warning: (ae-forgotten-export) The symbol "traversal" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    getNodesBetween: typeof traversal.getNodesBetween;
     const // Warning: (ae-forgotten-export) The symbol "predicate_2" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     hasBox: typeof predicate_2.hasBox, // (undocumented)
     isRoot: typeof predicate_2.isRoot;
     const // (undocumented)
-    hasChild: (predicate: Predicate<Node_2>, options?: Node_2.Traversal) => Predicate<Node_2>;
+    hasChild: typeof predicate_2.hasChild;
     const // (undocumented)
-    hasDescendant: (predicate: Predicate<Node_2>, options?: Node_2.Traversal) => Predicate<Node_2>;
+    hasDescendant: typeof predicate_2.hasDescendant;
     const // (undocumented)
-    hasInclusiveDescendant: (predicate: Predicate<Node_2>, options?: Node_2.Traversal) => Predicate<Node_2>;
+    hasInclusiveDescendant: typeof predicate_2.hasInclusiveDescendant;
     const // (undocumented)
-    hasTextContent: (predicate?: Predicate<string>, options?: Node_2.Traversal) => Predicate<Node_2>;
+    hasTextContent: typeof predicate_2.hasTextContent;
 }
 export { Node_2 as Node }
 
@@ -589,7 +588,7 @@ export namespace Query {
     // (undocumented)
     getDescendants: typeof descendants.getDescendants;
     const // (undocumented)
-    getElementDescendants: (node: BaseNode, options?: BaseNode.Traversal) => Sequence<Element_3<string>>;
+    getElementDescendants: (node: Node_2, options?: Node_2.Traversal) => Sequence<Element_3<string>>;
     const // (undocumented)
     getInclusiveElementDescendants: typeof descendants.getInclusiveElementDescendants;
     const // (undocumented)
@@ -601,7 +600,7 @@ export namespace Query {
     // (undocumented)
     export type TextGroup = descendants.TextGroup;
     // (undocumented)
-    export type TextGroupOptions<N extends BaseNode = BaseNode> = descendants.TextGroupOptions<N>;
+    export type TextGroupOptions<N extends Node_2 = Node_2> = descendants.TextGroupOptions<N>;
 }
 
 // @public (undocumented)
