@@ -47,7 +47,7 @@
   },
   "comment-resolution": "Circumventing https://github.com/vitest-dev/vitest/issues/9876 until it is fixed upstream.",
   "resolutions": {
-    "vite": "7.3.1"
+    "vite": "7.3.2"
   },
   "packageManager": "yarn@4.13.0"
 }
