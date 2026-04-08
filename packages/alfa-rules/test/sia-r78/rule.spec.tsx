@@ -163,6 +163,20 @@ test(`evaluate() ignores headings inside summary of closed details`, async (t) =
   t.deepEqual(await evaluate(R78, { document }), [inapplicable(R78)]);
 });
 
+test(`evaluate() passes a heading whose inter-heading content is in a shadow root`, async (t) => {
+  const heading1 = <h1>Introduction</h1>;
+  const heading2 = <h1>Conclusion</h1>;
+
+  const shadow = h.shadow([<p>Some content</p>]);
+
+  const document = h.document([heading1, <div>{shadow}</div>, heading2]);
+
+  t.deepEqual(await evaluate(R78, { document }), [
+    passed(R78, heading1, { 1: Outcomes.hasContent(Some.of(heading2), 1, 1) }),
+    failed(R78, heading2, { 1: Outcomes.hasNoContent(None, 1, -1) }),
+  ]);
+});
+
 test(`evaluate() consider headings inside summary of open details`, async (t) => {
   const target = <h1>Is this an accordion?</h1>;
   const document = h.document([
