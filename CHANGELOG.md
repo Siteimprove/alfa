@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.114.1](../../compare/v0.114.0...v0.114.1) (2026-04-08)
+
+### Fixed
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01141): `fullTree` as default traversal in getNodesBetween has been restored after being changed to `Traversal.empty` in #2040. ([#2050](https://github.com/Siteimprove/alfa/pull/2050))
+
 ## [0.114.0](../../compare/v0.113.0...v0.114.0) (2026-04-01)
 
 ### Breaking
