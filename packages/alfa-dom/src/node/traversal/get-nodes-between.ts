@@ -73,7 +73,7 @@ function getNodesInclusivelyBetween(
 ): Sequence<Node> {
   const isFrontier = or(equals(node1), equals(node2));
 
-  return lowestCommonAncestor(node1, node2)
+  return lowestCommonAncestor(node1, node2, treeOptions)
     .map((context) =>
       context
         .inclusiveDescendants(treeOptions)
