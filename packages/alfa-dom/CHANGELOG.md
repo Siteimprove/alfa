@@ -1,5 +1,11 @@
 # @siteimprove/alfa-dom
 
+## 0.114.2
+
+### Patch Changes
+
+- **Fixed:** `getNodesInclusivelyBetween` now again correctly passes `treeOptions` to `lowestCommonAncestor`. ([#2056](https://github.com/Siteimprove/alfa/pull/2056))
+
 ## 0.114.1
 
 ### Patch Changes

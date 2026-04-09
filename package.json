@@ -36,7 +36,7 @@
     "@changesets/cli": "^2.30.0",
     "@microsoft/api-documenter": "^7.29.10",
     "@microsoft/api-extractor": "^7.52.10",
-    "@siteimprove/alfa-toolchain": "workspace:^0.114.1",
+    "@siteimprove/alfa-toolchain": "workspace:^0.114.2",
     "@types/node": "^25.5.2",
     "@vitest/coverage-v8": "^4.1.2",
     "knip": "^6.3.0",
