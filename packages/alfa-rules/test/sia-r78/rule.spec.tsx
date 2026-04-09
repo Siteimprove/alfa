@@ -189,3 +189,20 @@ test(`evaluate() consider headings inside summary of open details`, async (t) =>
     failed(R78, target, { 1: Outcomes.hasNoContent(None, 1, -1) }),
   ]);
 });
+
+test(`evaluate() passes a heading in a shadow root when content exists before the next heading`, async (t) => {
+  const heading1 = <h1>Introduction</h1>;
+  const heading2 = <h1>Conclusion</h1>;
+
+  // heading1 and content are inside a shadow root; heading2 is in the document.
+  // lowestCommonAncestor must use fullTree traversal to cross the shadow boundary
+  // and find the document as the common ancestor of heading1 and heading2.
+  const shadow = h.shadow([heading1, <p>Some content</p>]);
+
+  const document = h.document([<div>{shadow}</div>, heading2, <p>More content</p>]);
+
+  t.deepEqual(await evaluate(R78, { document }), [
+    passed(R78, heading1, { 1: Outcomes.hasContent(Some.of(heading2), 1, 1) }),
+    passed(R78, heading2, { 1: Outcomes.hasContent(None, 1, -1) }),
+  ]);
+});
