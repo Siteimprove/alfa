@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.07% </span>
+                <span class="strong">35.29% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/13</span>
+                <span class='fraction'>6/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">25% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>2/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">22.22% </span>
+                <span class="strong">41.17% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/9</span>
+                <span class='fraction'>7/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.07% </span>
+                <span class="strong">28.57% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/13</span>
+                <span class='fraction'>4/14</span>
             </div>
         
             
@@ -166,33 +166,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 &nbsp;
-import { Block } from "../block.js";
-import type { Declaration } from "../declaration.js";
-import { BaseRule } from "./rule.js";
+import { Block } from "../block.ts";
+import type { Declaration } from "../declaration.ts";
+import { BaseRule } from "./rule.ts";
 &nbsp;
 /**
  * @public
@@ -204,7 +204,7 @@ export class FontFaceRule extends BaseRule&lt;"font-face"&gt; {
 &nbsp;
   private readonly _style: Block;
 &nbsp;
-<span class="fstat-no" title="function not covered" >  protected constructor(d</span>eclarations: Array&lt;Declaration&gt;) {
+<span class="fstat-no" title="function not covered" >  protected <span class="fstat-no" title="function not covered" >constructor(d</span></span>eclarations: Array&lt;Declaration&gt;) {
 <span class="cstat-no" title="statement not covered" >    super("font-face");</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this._style = Block.of(</span>
@@ -212,19 +212,19 @@ export class FontFaceRule extends BaseRule&lt;"font-face"&gt; {
     );
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >style(</span>): Block {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >style(</span>): Block {</span>
 <span class="cstat-no" title="statement not covered" >    return this._style;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): FontFaceRule.JSON {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): FontFaceRule.JSON {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       ...super.toJSON(),
       style: this._style.toJSON(),
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
-    const style = <span class="cstat-no" title="statement not covered" >this._style.toString();</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
+    const style = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._style.toString();</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return `@font-face {${style === "" ? "" : `\n${String.indent(style)}\n`}}`;</span>
   }
@@ -233,12 +233,12 @@ export class FontFaceRule extends BaseRule&lt;"font-face"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >FontFaceRule {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >FontFaceRule {</span></span>
   export interface JSON extends BaseRule.JSON&lt;"font-face"&gt; {
     style: Block.JSON | string;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isFontFaceRule(</span>value: unknown): value is FontFaceRule {
+  export function isFontFaceRule(value: unknown): value is FontFaceRule {
 <span class="cstat-no" title="statement not covered" >    return value instanceof FontFaceRule;</span>
   }
 &nbsp;
@@ -256,7 +256,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >F
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:29.276Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.57% </span>
+                <span class="strong">77.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>55/70</span>
+                <span class='fraction'>62/80</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.78% </span>
+                <span class="strong">74.19% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>39/46</span>
+                <span class='fraction'>46/62</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">67.85% </span>
+                <span class="strong">70.83% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>19/28</span>
+                <span class='fraction'>34/48</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.59% </span>
+                <span class="strong">80.88% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>54/67</span>
+                <span class='fraction'>55/68</span>
             </div>
         
             
@@ -575,9 +575,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">31x</span>
-<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -815,7 +815,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -959,8 +959,8 @@ import * as json from "@siteimprove/alfa-json";
 import type * as sarif from "@siteimprove/alfa-sarif";
 import * as tree from "@siteimprove/alfa-tree";
 &nbsp;
-import type { Element, Node, Shadow, Slotable, Text } from "./index.js";
-import type { Slot } from "./slotable/slot.js";
+import type { Element, Node, Shadow, Slotable, Text } from "./index.ts";
+import type { Slot } from "./slotable/slot.ts";
 &nbsp;
 /**
  * @public
@@ -985,8 +985,8 @@ export abstract class BaseNode&lt;T extends string = string&gt;
   /**
    * {@link https://dom.spec.whatwg.org/#concept-descendant-text-content}
    */
-  public <span class="fstat-no" title="function not covered" >textContent(</span>
-    options: BaseNode.Traversal = <span class="branch-0 cbranch-no" title="branch not covered" >BaseNode.Traversal.empty,</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >textContent(</span></span>
+    options: BaseNode.Traversal = <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >BaseNode.Traversal.empty,</span></span>
   ): string {
 <span class="cstat-no" title="statement not covered" >    return String.flatten(this.descendants(options).filter(isText).join(""));</span>
   }
@@ -1064,7 +1064,7 @@ export abstract class BaseNode&lt;T extends string = string&gt;
      * as 0 (insert in DOM order), rather than smaller than actual indexes
      * (insert at start). Therefore, we cannot use Option.compareWith.
      */
-    const comparer: Comparer&lt;[Element, Option&lt;number&gt;]&gt; = ([, a], [, b]) =&gt; {
+    const comparer: Comparer&lt;[Element, Option&lt;number&gt;]&gt; = <span class="cstat-no" title="statement not covered" >([, a], [, b]) =&gt; {</span>
       const aValue = a.getOr(0);
       const bValue = b.getOr(0);
 &nbsp;
@@ -1136,9 +1136,9 @@ export abstract class BaseNode&lt;T extends string = string&gt;
    * to extends the one in `alfa-tree/Node`.
    */
   public parent(
-    options: BaseNode.Traversal = BaseNode.Traversal.empty,
+    options: BaseNode.Traversal = <span class="branch-0 cbranch-no" title="branch not covered" >BaseNode.Traversal.empty,</span>
   ): Option&lt;Node&gt; {
-    const parent = this._parent as Option&lt;Node&gt;;
+    const parent = <span class="cstat-no" title="statement not covered" >this._parent as Option&lt;Node&gt;;</span>
 &nbsp;
     // If we traverse the flat tree, we want to jump over shadow roots.
     if (options.isSet(BaseNode.Traversal.flattened)) {
@@ -1152,7 +1152,7 @@ export abstract class BaseNode&lt;T extends string = string&gt;
         if (
           isElement(parent) &amp;&amp;
           parent.shadow.isSome() &amp;&amp;
-          isSlotable(this as unknown as Node)
+<span class="branch-2 cbranch-no" title="branch not covered" >          isSlotable(this as unknown as Node)</span>
         ) {
           return (this as unknown as Slotable)
             .assignedSlot()
@@ -1171,8 +1171,8 @@ export abstract class BaseNode&lt;T extends string = string&gt;
   /**
    * @internal
    */
-  protected <span class="fstat-no" title="function not covered" >_internalPath(</span>options?: BaseNode.Traversal): string {
-    let path = <span class="cstat-no" title="statement not covered" >this.parent(options)</span>
+  protected <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >_internalPath(</span>o</span>ptions?: BaseNode.Traversal): string {
+    let path = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.parent(options)</span></span>
       .map(<span class="fstat-no" title="function not covered" >(p</span>arent) =&gt; <span class="cstat-no" title="statement not covered" >parent.path(options))</span>
       .getOr("/");
 &nbsp;
@@ -1194,7 +1194,7 @@ export abstract class BaseNode&lt;T extends string = string&gt;
   // For the sake of simplicity, and until we encounter errors due to this,
   // we accept the risk of caching the value assuming that it will only be
   // computed on fully frozen trees.
-  public path(options: BaseNode.Traversal = BaseNode.Traversal.empty): string {
+  public path(options: BaseNode.Traversal = <span class="branch-0 cbranch-no" title="branch not covered" >BaseNode.Traversal.empty): string {</span>
     if (this._path[options.value] == undefined) {
       this._path[options.value] = this._internalPath(options);
     }
@@ -1229,7 +1229,7 @@ export abstract class BaseNode&lt;T extends string = string&gt;
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toEARL(</span>): BaseNode.EARL {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toEARL(</span>): BaseNode.EARL {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       "@context": {
         ptr: "http://www.w3.org/2009/pointers#",
@@ -1244,7 +1244,7 @@ export abstract class BaseNode&lt;T extends string = string&gt;
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toSARIF(</span>): sarif.Location {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toSARIF(</span>): sarif.Location {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       logicalLocations: [
         {
@@ -1299,7 +1299,7 @@ export interface BaseNode {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >BaseNode {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >BaseNode {</span></span>
   export interface JSON&lt;T extends string = string&gt; extends tree.Node.JSON&lt;T&gt; {
     path?: string;
     children?: Array&lt;Node.JSON&gt;;
@@ -1374,7 +1374,7 @@ function isSlotable(node: Node): node is Slotable {
   return isElement(node) || <span class="branch-1 cbranch-no" title="branch not covered" >isText(node);</span>
 }
 &nbsp;
-function <span class="fstat-no" title="function not covered" >isText(</span>node: Node): node is Text {
+function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isText(</span>n</span>ode: Node): node is Text {
 <span class="cstat-no" title="statement not covered" >  return node.type === "text";</span>
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -1384,7 +1384,7 @@ function <span class="fstat-no" title="function not covered" >isText(</span>node
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:29.276Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

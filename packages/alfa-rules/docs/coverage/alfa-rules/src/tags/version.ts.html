@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/10</span>
+                <span class='fraction'>8/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">25% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>2/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">31.25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/8</span>
+                <span class='fraction'>5/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70% </span>
+                <span class="strong">72.72% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/10</span>
+                <span class='fraction'>8/11</span>
             </div>
         
             
@@ -157,7 +157,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">102x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -179,22 +179,22 @@
  * @public
  */
 export class Version&lt;N extends number = number&gt; extends Tag&lt;"version"&gt; {
-  public static of&lt;N extends number&gt;(version: N): Version&lt;N&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>N extends number&gt;(version: N): Version&lt;N&gt; {
     return new Version(version);
   }
 &nbsp;
   private readonly _version: N;
 &nbsp;
-  protected constructor(version: N) {
+<span class="fstat-no" title="function not covered" >  protected constructor(v</span>ersion: N) {
     super();
     this._version = version;
   }
 &nbsp;
-  public get type(): "version" {
+  public get <span class="fstat-no" title="function not covered" >type(</span>): "version" {
     return "version";
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >version(</span>): N {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >version(</span>): N {</span>
 <span class="cstat-no" title="statement not covered" >    return this._version;</span>
   }
 &nbsp;
@@ -202,11 +202,11 @@ export class Version&lt;N extends number = number&gt; extends Tag&lt;"version"&g
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Version &amp;&amp; value._version === this._version;</span>
   }
 &nbsp;
-  public toJSON(): Version.JSON&lt;N&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Version.JSON&lt;N&gt; {
     return {
       ...super.toJSON(),
       version: this._version,
@@ -217,12 +217,12 @@ export class Version&lt;N extends number = number&gt; extends Tag&lt;"version"&g
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Version {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >V</span>ersion {</span></span>
   export interface JSON&lt;N extends number = number&gt; extends Tag.JSON&lt;"version"&gt; {
     version: N;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isVersion&lt;</span>T extends string&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isVersion&lt;</span>T extends string&gt;(</span></span>
     value: unknown,
   ): value is Version {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Version;</span>
@@ -235,7 +235,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >V
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:36:26.756Z
+                at 2026-04-10T09:31:39.916Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

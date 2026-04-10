@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.88% </span>
+                <span class="strong">79.62% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>48/54</span>
+                <span class='fraction'>43/54</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">73.52% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>17/34</span>
+                <span class='fraction'>25/34</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70.96% </span>
+                <span class="strong">48.38% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>22/31</span>
+                <span class='fraction'>15/31</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.84% </span>
+                <span class="strong">84.21% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>33/38</span>
+                <span class='fraction'>32/38</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -255,7 +255,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -311,12 +311,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -369,7 +369,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
@@ -399,15 +399,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -419,15 +419,15 @@
 import type { Element } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Context } from "../../../context.js";
-import { Specificity } from "../../../specificity.js";
+import { Context } from "../../../context.ts";
+import { Specificity } from "../../../specificity.ts";
 &nbsp;
-import type { Compound } from "../../compound.js";
-import type { Selector } from "../../index.js";
-import { BaseSelector } from "../../selector.js";
-import type { Simple } from "../../simple/index.js";
+import type { Compound } from "../../compound.ts";
+import type { Selector } from "../../index.ts";
+import { BaseSelector } from "../../selector.ts";
+import type { Simple } from "../../simple/index.ts";
 &nbsp;
-import { PseudoElementSelector } from "./pseudo-element.js";
+import { PseudoElementSelector } from "./pseudo-element.ts";
 &nbsp;
 const { filter, map, right, take } = Parser;
 &nbsp;
@@ -437,13 +437,13 @@ const { filter, map, right, take } = Parser;
  * @public
  */
 export class Slotted extends PseudoElementSelector&lt;"slotted"&gt; {
-  public static of(selector: Compound | Simple): Slotted {
+  public static <span class="fstat-no" title="function not covered" >of(</span>selector: Compound | Simple): Slotted {
     return new Slotted(selector);
   }
 &nbsp;
   private readonly _selector: Compound | Simple;
 &nbsp;
-  protected constructor(selector: Compound | Simple) {
+<span class="fstat-no" title="function not covered" >  protected constructor(s</span>elector: Compound | Simple) {
     super(
       "slotted",
       Specificity.sum(selector.specificity, Specificity.of(0, 0, 1)),
@@ -451,7 +451,7 @@ export class Slotted extends PseudoElementSelector&lt;"slotted"&gt; {
     this._selector = selector;
   }
 &nbsp;
-  public get selector(): Compound | Simple {
+  public get <span class="fstat-no" title="function not covered" >selector(</span>): Compound | Simple {
     return this._selector;
   }
 &nbsp;
@@ -459,7 +459,7 @@ export class Slotted extends PseudoElementSelector&lt;"slotted"&gt; {
    * @remarks
    * `::slotted` never aliases an element in its own tree.
    */
-  public matches(): boolean {
+  public <span class="fstat-no" title="function not covered" >matches(</span>): boolean {
     return false;
   }
 &nbsp;
@@ -490,12 +490,12 @@ export class Slotted extends PseudoElementSelector&lt;"slotted"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Slotted {</span></span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >S</span>lotted {</span></span>
   export interface JSON extends PseudoElementSelector.JSON&lt;"slotted"&gt; {
     selector: Compound.JSON | Simple.JSON;
   }
 &nbsp;
-  export function isSlotted(value: unknown): value is Slotted {
+  export function <span class="cstat-no" title="statement not covered" >isSlotted(value: unknown): value is Slotted {</span>
     return value instanceof Slotted;
   }
 &nbsp;
@@ -518,10 +518,10 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
    * There is a potential circular dependency: Slotted -&gt; Compound -&gt; Simple -&gt; Slotted.
    * We avoid this by checking `selector.type` rather than using Compound.isCompound.
    */
-  export function matchSlotted(
+  export function <span class="cstat-no" title="statement not covered" >matchSlotted(</span>
     element: Element,
     selector: Compound | Simple,
-    context: Context = <span class="branch-0 cbranch-no" title="branch not covered" >Context.empty(),</span>
+    context: Context = Context.empty(),
   ): boolean {
     // The part of `selector` that must match the slot.
     const slotSelectors: Array&lt;Simple&gt; = [];
@@ -552,7 +552,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
 &nbsp;
     const slot = element.assignedSlot();
 &nbsp;
-    return (
+<span class="cstat-no" title="statement not covered" >    return (</span>
       // `element` must be slotted.
       slot.some((slot) =&gt;
         // The slot must match the slot selectors, if any.
@@ -568,19 +568,19 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
     );
   }
 &nbsp;
-  export function parse(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >parse(</span></span>
     parseSelector: Selector.Parser.Component,
-    withColon = <span class="branch-0 cbranch-no" title="branch not covered" >true,</span>
+    withColon = true,
   ): CSSParser&lt;Slotted&gt; {
     const parser = Function.parse("slotted", () =&gt;
       filter(
         parseSelector(),
         BaseSelector.hasCompoundType,
-<span class="fstat-no" title="function not covered" >        () =</span>&gt; <span class="cstat-no" title="statement not covered" >"::slotted() only accepts compound selectors",</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >        () =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >"</span>::slotted() only accepts compound selectors",</span></span>
       ),
     );
     return map(
-      withColon ? <span class="branch-0 cbranch-no" title="branch not covered" >right(take(Token.parseColon, 2), parser) </span>: parser,
+      withColon ? <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >right(take(Token.parseColon, 2), parser) </span>: p</span>arser,
       ([_, selector]) =&gt; Slotted.of(selector),
     );
   }
@@ -592,7 +592,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:35:03.293Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

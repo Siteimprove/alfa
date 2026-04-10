@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.1% </span>
+                <span class="strong">81.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>35/38</span>
+                <span class='fraction'>31/38</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.66% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>11/12</span>
+                <span class='fraction'>9/12</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -305,8 +305,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -345,7 +345,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -384,11 +384,9 @@
 <span class="cline-any cline-yes">170x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -409,7 +407,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">70x</span>
@@ -439,14 +439,14 @@
 <span class="cline-any cline-yes">100x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">127x</span>
+<span class="cline-any cline-yes">100x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">100x</span>
-<span class="cline-any cline-yes">100x</span>
-<span class="cline-any cline-yes">100x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
 <span class="cline-any cline-yes">70x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -475,39 +475,39 @@
 import { Err } from "@siteimprove/alfa-result";
 import { Parser } from "@siteimprove/alfa-parser";
 &nbsp;
-import { type Selector } from "../../index.js";
+import { type Selector } from "../../index.ts";
 &nbsp;
-import { Active } from "./active.js";
-import { AnyLink } from "./any-link.js";
-import { Checked } from "./checked.js";
-import { Disabled } from "./disabled.js";
-import { Empty } from "./empty.js";
-import { Enabled } from "./enabled.js";
-import { FirstChild } from "./first-child.js";
-import { FirstOfType } from "./first-of-type.js";
-import { Focus } from "./focus.js";
-import { FocusVisible } from "./focus-visible.js";
-import { FocusWithin } from "./focus-within.js";
-import { Has } from "./has.js";
-import { Host } from "./host.js";
-import { HostContext } from "./host-context.js";
-import { Hover } from "./hover.js";
-import { Is } from "./is.js";
-import { LastChild } from "./last-child.js";
-import { LastOfType } from "./last-of-type.js";
-import { Link } from "./link.js";
-import { Not } from "./not.js";
-import { NthChild } from "./nth-child.js";
-import { NthLastChild } from "./nth-last-child.js";
-import { NthLastOfType } from "./nth-last-of-type.js";
-import { NthOfType } from "./nth-of-type.js";
-import { OnlyChild } from "./only-child.js";
-import { OnlyOfType } from "./only-of-type.js";
-import { Root } from "./root.js";
-import { Visited } from "./visited.js";
-import { Where } from "./where.js";
+import { Active } from "./active.ts";
+import { AnyLink } from "./any-link.ts";
+import { Checked } from "./checked.ts";
+import { Disabled } from "./disabled.ts";
+import { Empty } from "./empty.ts";
+import { Enabled } from "./enabled.ts";
+import { FirstChild } from "./first-child.ts";
+import { FirstOfType } from "./first-of-type.ts";
+import { Focus } from "./focus.ts";
+import { FocusVisible } from "./focus-visible.ts";
+import { FocusWithin } from "./focus-within.ts";
+import { Has } from "./has.ts";
+import { Host } from "./host.ts";
+import { HostContext } from "./host-context.ts";
+import { Hover } from "./hover.ts";
+import { Is } from "./is.ts";
+import { LastChild } from "./last-child.ts";
+import { LastOfType } from "./last-of-type.ts";
+import { Link } from "./link.ts";
+import { Not } from "./not.ts";
+import { NthChild } from "./nth-child.ts";
+import { NthLastChild } from "./nth-last-child.ts";
+import { NthLastOfType } from "./nth-last-of-type.ts";
+import { NthOfType } from "./nth-of-type.ts";
+import { OnlyChild } from "./only-child.ts";
+import { OnlyOfType } from "./only-of-type.ts";
+import { Root } from "./root.ts";
+import { Visited } from "./visited.ts";
+import { Where } from "./where.ts";
 &nbsp;
-import { PseudoClassSelector } from "./pseudo-class.js";
+import { PseudoClassSelector } from "./pseudo-class.ts";
 &nbsp;
 const { right } = Parser;
 const { parseNonFunctional } = PseudoClassSelector;
@@ -549,7 +549,7 @@ export type PseudoClass =
 /**
  * @public
  */
-export namespace PseudoClass {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace PseudoClass {</span>
   export type JSON =
     | Active.JSON
     | AnyLink.JSON
@@ -581,7 +581,7 @@ export namespace PseudoClass {
     | Visited.JSON
     | Where.JSON;
 &nbsp;
-  export function isPseudoClass(value: unknown): value is PseudoClass {
+  export function <span class="cstat-no" title="statement not covered" >isPseudoClass(value: unknown): value is PseudoClass {</span>
     // Note: this is not totally true as we could extend PseudoClassSelector
     // without making it a PseudoClass. We're likely having other problems in
     // that case…
@@ -636,7 +636,7 @@ export namespace PseudoClass {
    * of the `either` parser combinator to avoid backtracking. Any changes to
    * this function should be benchmarked.
    */
-  export function parseWithoutColon(
+  export function <span class="cstat-no" title="statement not covered" >parseWithoutColon(</span>
     parseSelector: Selector.Parser.Component,
   ): CSSParser&lt;PseudoClass&gt; {
     return (input) =&gt; {
@@ -669,7 +669,7 @@ export namespace PseudoClass {
     };
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >parse(</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >parse(</span></span></span>
     parseSelector: Selector.Parser.Component,
   ): CSSParser&lt;PseudoClass&gt; {
 <span class="cstat-no" title="statement not covered" >    return right(Token.parseColon, parseWithoutColon(parseSelector));</span>
@@ -682,7 +682,7 @@ export namespace PseudoClass {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:35:03.293Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

@@ -30,9 +30,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.4% </span>
+                <span class="strong">57.95% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>47/88</span>
+                <span class='fraction'>51/88</span>
             </div>
         
             
@@ -390,7 +390,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -418,7 +418,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -427,7 +427,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -437,7 +437,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -455,7 +455,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -464,7 +464,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -473,7 +473,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -506,7 +506,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -561,14 +561,14 @@ import type { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 &nbsp;
-import { Shorthand } from "../shorthand.js";
+import { Shorthand } from "../shorthand.ts";
 &nbsp;
-import Caps from "./font-variant-caps.js";
-import * as EastAsian from "./font-variant-east-asian.js";
-import * as Ligatures from "./font-variant-ligatures.js";
+import Caps from "./font-variant-caps.ts";
+import * as EastAsian from "./font-variant-east-asian.ts";
+import * as Ligatures from "./font-variant-ligatures.ts";
 &nbsp;
-import * as Numeric from "./font-variant-numeric.js";
-import type { Longhand } from "../longhand.js";
+import * as Numeric from "./font-variant-numeric.ts";
+import type { Longhand } from "../longhand.ts";
 &nbsp;
 const parse: Parser&lt;
   Slice&lt;Token&gt;,
@@ -731,10 +731,10 @@ const parse: Parser&lt;
   }
 &nbsp;
   <span class="missing-if-branch" title="if path not taken" >I</span>if (
-<span class="branch-0 cbranch-no" title="branch not covered" >    caps === undefined &amp;&amp;</span>
+    caps === undefined &amp;&amp;
     variant === undefined &amp;&amp;
-<span class="branch-2 cbranch-no" title="branch not covered" >    width === undefined &amp;&amp;</span>
-<span class="branch-3 cbranch-no" title="branch not covered" >    ruby === undefined &amp;&amp;</span>
+    width === undefined &amp;&amp;
+    ruby === undefined &amp;&amp;
 <span class="branch-4 cbranch-no" title="branch not covered" ><span class="branch-4 cbranch-no" title="branch not covered" >    common === undefined </span>&amp;&amp;</span>
 <span class="branch-5 cbranch-no" title="branch not covered" ><span class="branch-5 cbranch-no" title="branch not covered" >    discretionary === undefined </span>&amp;&amp;</span>
 <span class="branch-6 cbranch-no" title="branch not covered" ><span class="branch-6 cbranch-no" title="branch not covered" >    historical === undefined </span>&amp;&amp;</span>
@@ -754,7 +754,7 @@ const parse: Parser&lt;
     // filter doesn't narrow so we need to do it manually
     const cleaned = values.filter((value) =&gt; value !== undefined) as Array&lt;T&gt;;
 &nbsp;
-    return cleaned.length &gt; 0 ? List.of(cleaned, " ") : <span class="branch-1 cbranch-no" title="branch not covered" >Keyword.of("initial");</span>
+    return cleaned.length &gt; 0 ? List.of(cleaned, " ") : <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Keyword.of("initial");</span></span>
   }
 &nbsp;
   return Result.of([
@@ -808,7 +808,7 @@ export default Shorthand.of(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:36:22.122Z
+                at 2026-04-10T09:31:34.530Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

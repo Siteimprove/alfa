@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">80.15% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>176/176</span>
+                <span class='fraction'>206/257</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>41/41</span>
+                <span class='fraction'>59/59</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">98.11% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>54/54</span>
+                <span class='fraction'>104/106</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -1082,7 +1082,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import type { Reducer } from "@siteimprove/alfa-reducer";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 &nbsp;
-import * as builtin from "./builtin.js";
+import * as builtin from "./builtin.ts";
 &nbsp;
 const { not } = Predicate;
 const { compareComparable } = Comparable;
@@ -1099,24 +1099,24 @@ export type Array&lt;T&gt; = globalThis.Array&lt;T&gt;;
 /**
  * @public
  */
-export namespace Array {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Array {</span>
   export function isArray&lt;T&gt;(value: Iterable&lt;T&gt;): value is Array&lt;T&gt;;
 &nbsp;
   export function isArray&lt;T&gt;(value: unknown): value is Array&lt;T&gt;;
 &nbsp;
-  export function isArray&lt;T&gt;(value: unknown): value is Array&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >isArray&lt;T&gt;(value: unknown): value is Array&lt;T&gt; {</span>
     return builtin.Array.isArray(value);
   }
 &nbsp;
-  export function of&lt;T&gt;(...values: Array&lt;T&gt;): Array&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >of&lt;T&gt;(...values: Array&lt;T&gt;): Array&lt;T&gt; {</span>
     return values;
   }
 &nbsp;
-  export function empty&lt;T = never&gt;(): Array&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >empty&lt;T = never&gt;(): Array&lt;T&gt; {</span>
     return [];
   }
 &nbsp;
-  export function allocate&lt;T&gt;(capacity: number): Array&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >allocate&lt;T&gt;(capacity: number): Array&lt;T&gt; {</span>
     return new builtin.Array&lt;T&gt;(capacity);
   }
 &nbsp;
@@ -1125,7 +1125,7 @@ export namespace Array {
    * Unlike the built-in function of the same name, this function will pass
    * along existing arrays as-is instead of returning a copy.
    */
-  export function from&lt;T&gt;(iterable: Iterable&lt;T&gt;): Array&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >from&lt;T&gt;(iterable: Iterable&lt;T&gt;): Array&lt;T&gt; {</span>
     if (isArray(iterable)) {
       return iterable;
     }
@@ -1133,48 +1133,48 @@ export namespace Array {
     return [...iterable];
   }
 &nbsp;
-  export function size&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): number {
+  export function <span class="cstat-no" title="statement not covered" >size&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): number {</span>
     return array.length;
   }
 &nbsp;
-  export function isEmpty&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): array is Array&lt;never&gt; {
+  export function <span class="cstat-no" title="statement not covered" >isEmpty&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): array is Array&lt;never&gt; {</span>
     return array.length === 0;
   }
 &nbsp;
-  export function copy&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): Array&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >copy&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): Array&lt;T&gt; {</span>
     return array.slice(0);
   }
 &nbsp;
-  export function clone&lt;T extends Clone&lt;T&gt;&gt;(array: ReadonlyArray&lt;T&gt;): Array&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >clone&lt;T extends Clone&lt;T&gt;&gt;(array: ReadonlyArray&lt;T&gt;): Array&lt;T&gt; {</span>
     return array.map(Clone.clone);
   }
 &nbsp;
-  export function forEach&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >forEach&lt;T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     callback: Callback&lt;T, void, [index: number]&gt;,
   ): void {
     array.forEach(callback);
   }
 &nbsp;
-  export function map&lt;T, U = T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >map&lt;T, U = T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     mapper: Mapper&lt;T, U, [index: number]&gt;,
   ): Array&lt;U&gt; {
     return array.map(mapper);
   }
 &nbsp;
-  export function flatMap&lt;T, U = T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >flatMap&lt;T, U = T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     mapper: Mapper&lt;T, ReadonlyArray&lt;U&gt;, [index: number]&gt;,
   ): Array&lt;U&gt; {
     return array.flatMap(mapper);
   }
 &nbsp;
-  export function flatten&lt;T&gt;(array: ReadonlyArray&lt;ReadonlyArray&lt;T&gt;&gt;): Array&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >flatten&lt;T&gt;(array: ReadonlyArray&lt;ReadonlyArray&lt;T&gt;&gt;): Array&lt;T&gt; {</span>
     return array.flat();
   }
 &nbsp;
-  export function reduce&lt;T, U = T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >reduce&lt;T, U = T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     reducer: Reducer&lt;T, U, [index: number]&gt;,
     accumulator: U,
@@ -1182,7 +1182,7 @@ export namespace Array {
     return array.reduce(reducer, accumulator);
   }
 &nbsp;
-  export function reduceWhile&lt;T, U = T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >reduceWhile&lt;T, U = T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     predicate: Predicate&lt;T, [index: number]&gt;,
     reducer: Reducer&lt;T, U, [index: number]&gt;,
@@ -1201,7 +1201,7 @@ export namespace Array {
     return accumulator;
   }
 &nbsp;
-  export function reduceUntil&lt;T, U = T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >reduceUntil&lt;T, U = T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     predicate: Predicate&lt;T, [index: number]&gt;,
     reducer: Reducer&lt;T, U, [index: number]&gt;,
@@ -1210,7 +1210,7 @@ export namespace Array {
     return reduceWhile(array, not(predicate), reducer, accumulator);
   }
 &nbsp;
-  export function apply&lt;T, U&gt;(
+  export function <span class="cstat-no" title="statement not covered" >apply&lt;T, U&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     mapper: ReadonlyArray&lt;Mapper&lt;T, U&gt;&gt;,
   ): Array&lt;U&gt; {
@@ -1227,7 +1227,7 @@ export namespace Array {
     predicate: Predicate&lt;T, [index: number]&gt;,
   ): Array&lt;T&gt;;
 &nbsp;
-  export function filter&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >filter&lt;T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     predicate: Predicate&lt;T, [index: number]&gt;,
   ): Array&lt;T&gt; {
@@ -1244,7 +1244,7 @@ export namespace Array {
     predicate: Predicate&lt;T, [index: number]&gt;,
   ): Array&lt;T&gt;;
 &nbsp;
-  export function reject&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >reject&lt;T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     predicate: Predicate&lt;T, [index: number]&gt;,
   ): Array&lt;T&gt; {
@@ -1261,7 +1261,7 @@ export namespace Array {
     predicate: Predicate&lt;T, [index: number]&gt;,
   ): Option&lt;T&gt;;
 &nbsp;
-  export function find&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >find&lt;T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     predicate: Predicate&lt;T, [index: number]&gt;,
   ): Option&lt;T&gt; {
@@ -1278,7 +1278,7 @@ export namespace Array {
     predicate: Predicate&lt;T, [index: number]&gt;,
   ): Option&lt;T&gt;;
 &nbsp;
-  export function findLast&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >findLast&lt;T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     predicate: Predicate&lt;T, [index: number]&gt;,
   ): Option&lt;T&gt; {
@@ -1295,11 +1295,11 @@ export namespace Array {
     return None;
   }
 &nbsp;
-  export function includes&lt;T&gt;(array: ReadonlyArray&lt;T&gt;, value: T): boolean {
+  export function <span class="cstat-no" title="statement not covered" >includes&lt;T&gt;(array: ReadonlyArray&lt;T&gt;, value: T): boolean {</span>
     return array.some(Predicate.equals(value));
   }
 &nbsp;
-  export function collect&lt;T, U&gt;(
+  export function <span class="cstat-no" title="statement not covered" >collect&lt;T, U&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     mapper: Mapper&lt;T, Option&lt;U&gt;, [index: number]&gt;,
   ): Array&lt;U&gt; {
@@ -1314,7 +1314,7 @@ export namespace Array {
     return result;
   }
 &nbsp;
-  export function collectFirst&lt;T, U&gt;(
+  export function <span class="cstat-no" title="statement not covered" >collectFirst&lt;T, U&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     mapper: Mapper&lt;T, Option&lt;U&gt;, [index: number]&gt;,
   ): Option&lt;U&gt; {
@@ -1329,14 +1329,14 @@ export namespace Array {
     return None;
   }
 &nbsp;
-  export function some&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >some&lt;T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     predicate: Predicate&lt;T, [index: number]&gt;,
   ): boolean {
     return array.some(predicate);
   }
 &nbsp;
-  export function none&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >none&lt;T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     predicate: Predicate&lt;T, [index: number]&gt;,
   ): boolean {
@@ -1353,14 +1353,14 @@ export namespace Array {
     predicate: Predicate&lt;T, [index: number]&gt;,
   ): boolean;
 &nbsp;
-  export function every&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >every&lt;T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     predicate: Predicate&lt;T, [index: number]&gt;,
   ): boolean {
     return array.every(predicate);
   }
 &nbsp;
-  export function count&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >count&lt;T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     predicate: Predicate&lt;T, [index: number]&gt;,
   ): number {
@@ -1371,7 +1371,7 @@ export namespace Array {
     );
   }
 &nbsp;
-  export function distinct&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): Array&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >distinct&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): Array&lt;T&gt; {</span>
     const result = empty&lt;T&gt;();
 &nbsp;
     for (let i = 0, n = array.length; i &lt; n; i++) {
@@ -1387,15 +1387,15 @@ export namespace Array {
     return result;
   }
 &nbsp;
-  export function get&lt;T&gt;(array: ReadonlyArray&lt;T&gt;, index: number): Option&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >get&lt;T&gt;(array: ReadonlyArray&lt;T&gt;, index: number): Option&lt;T&gt; {</span>
     return 0 &lt;= index &amp;&amp; index &lt; array.length ? Option.of(array[index]) : None;
   }
 &nbsp;
-  export function has&lt;T&gt;(array: ReadonlyArray&lt;T&gt;, index: number): boolean {
+  export function <span class="cstat-no" title="statement not covered" >has&lt;T&gt;(array: ReadonlyArray&lt;T&gt;, index: number): boolean {</span>
     return 0 &lt;= index &amp;&amp; index &lt; array.length;
   }
 &nbsp;
-  export function set&lt;T&gt;(array: Array&lt;T&gt;, index: number, value: T): Array&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >set&lt;T&gt;(array: Array&lt;T&gt;, index: number, value: T): Array&lt;T&gt; {</span>
     if (0 &lt;= index &amp;&amp; index &lt; array.length) {
       array[index] = value;
     }
@@ -1403,7 +1403,7 @@ export namespace Array {
     return array;
   }
 &nbsp;
-  export function insert&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >insert&lt;T&gt;(</span>
     array: Array&lt;T&gt;,
     index: number,
     value: T,
@@ -1415,38 +1415,38 @@ export namespace Array {
     return array;
   }
 &nbsp;
-  export function append&lt;T&gt;(array: Array&lt;T&gt;, value: T): [...Array&lt;T&gt;, T] {
+  export function <span class="cstat-no" title="statement not covered" >append&lt;T&gt;(array: Array&lt;T&gt;, value: T): [...Array&lt;T&gt;, T] {</span>
     array.push(value);
     return array as [...Array&lt;T&gt;, T];
   }
 &nbsp;
-  export function prepend&lt;T&gt;(array: Array&lt;T&gt;, value: T): [T, ...Array&lt;T&gt;] {
+  export function <span class="cstat-no" title="statement not covered" >prepend&lt;T&gt;(array: Array&lt;T&gt;, value: T): [T, ...Array&lt;T&gt;] {</span>
     array.unshift(value);
     return array as [T, ...Array&lt;T&gt;];
   }
 &nbsp;
-  export function concat&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >concat&lt;T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     ...iterables: Array&lt;Iterable&lt;T&gt;&gt;
   ): Array&lt;T&gt; {
     return [...Iterable.concat(array, ...iterables)];
   }
 &nbsp;
-  export function subtract&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >subtract&lt;T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     ...iterables: Array&lt;Iterable&lt;T&gt;&gt;
   ): Array&lt;T&gt; {
     return [...Iterable.subtract(array, ...iterables)];
   }
 &nbsp;
-  export function intersect&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >intersect&lt;T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     ...iterables: Array&lt;Iterable&lt;T&gt;&gt;
   ): Array&lt;T&gt; {
     return [...Iterable.intersect(array, ...iterables)];
   }
 &nbsp;
-  export function zip&lt;T, U = T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >zip&lt;T, U = T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     iterable: Iterable&lt;U&gt;,
   ): Array&lt;[T, U]&gt; {
@@ -1466,15 +1466,15 @@ export namespace Array {
     return result;
   }
 &nbsp;
-  export function first&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): Option&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >first&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): Option&lt;T&gt; {</span>
     return array.length &gt; 0 ? Option.of(array[0]) : None;
   }
 &nbsp;
-  export function last&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): Option&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >last&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): Option&lt;T&gt; {</span>
     return array.length &gt; 0 ? Option.of(array[array.length - 1]) : None;
   }
 &nbsp;
-  export function sort&lt;T extends Comparable&lt;T&gt;&gt;(array: Array&lt;T&gt;): Array&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >sort&lt;T extends Comparable&lt;T&gt;&gt;(array: Array&lt;T&gt;): Array&lt;T&gt; {</span>
     return sortWith(array, compareComparable);
   }
 &nbsp;
@@ -1485,21 +1485,21 @@ export namespace Array {
     comparer: Comparer&lt;T&gt;,
   ): Array&lt;U&gt;;
 &nbsp;
-  export function sortWith&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >sortWith&lt;T&gt;(</span>
     array: Array&lt;T&gt;,
     comparer: Comparer&lt;T&gt;,
   ): Array&lt;T&gt; {
     return array.sort(comparer);
   }
 &nbsp;
-  export function compare&lt;T extends Comparable&lt;U&gt;, U = T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >compare&lt;T extends Comparable&lt;U&gt;, U = T&gt;(</span>
     a: ReadonlyArray&lt;T&gt;,
     b: Iterable&lt;U&gt;,
   ): Comparison {
     return compareWith(a, b, compareComparable);
   }
 &nbsp;
-  export function compareWith&lt;T, U = T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >compareWith&lt;T, U = T&gt;(</span>
     a: ReadonlyArray&lt;T&gt;,
     b: Iterable&lt;U&gt;,
     comparer: Comparer&lt;T, U, [index: number]&gt;,
@@ -1507,7 +1507,7 @@ export namespace Array {
     return Iterable.compareWith(a, b, comparer);
   }
 &nbsp;
-  export function search&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >search&lt;T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     value: T,
     comparer: Comparer&lt;T&gt;,
@@ -1533,7 +1533,7 @@ export namespace Array {
     return lower;
   }
 &nbsp;
-  export function equals&lt;T&gt;(a: ReadonlyArray&lt;T&gt;, b: ReadonlyArray&lt;T&gt;): boolean {
+  export function <span class="cstat-no" title="statement not covered" >equals&lt;T&gt;(a: ReadonlyArray&lt;T&gt;, b: ReadonlyArray&lt;T&gt;): boolean {</span>
     if (a.length !== b.length) {
       return false;
     }
@@ -1547,7 +1547,7 @@ export namespace Array {
     return true;
   }
 &nbsp;
-  export function hash&lt;T&gt;(array: ReadonlyArray&lt;T&gt;, hash: Hash): void {
+  export function <span class="cstat-no" title="statement not covered" >hash&lt;T&gt;(array: ReadonlyArray&lt;T&gt;, hash: Hash): void {</span>
     for (let i = 0, n = array.length; i &lt; n; i++) {
       hash.writeUnknown(array[i]);
     }
@@ -1555,11 +1555,11 @@ export namespace Array {
     hash.writeUint32(array.length);
   }
 &nbsp;
-  export function iterator&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): Iterator&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >iterator&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): Iterator&lt;T&gt; {</span>
     return array[Symbol.iterator]();
   }
 &nbsp;
-  export function toJSON&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >toJSON&lt;</span>T&gt;(</span>
     array: ReadonlyArray&lt;T&gt;,
     options?: Serializable.Options,
   ): Array&lt;Serializable.ToJSON&lt;T&gt;&gt; {
@@ -1573,7 +1573,7 @@ export namespace Array {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:01.950Z
+                at 2026-04-10T09:29:16.845Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

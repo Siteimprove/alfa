@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">73.91% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>28/36</span>
+                <span class='fraction'>34/46</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">70% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>15/21</span>
+                <span class='fraction'>28/40</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">36.17% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>16/24</span>
+                <span class='fraction'>17/47</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">78.94% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>28/36</span>
+                <span class='fraction'>30/38</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -471,7 +471,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -594,7 +594,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -637,9 +637,9 @@ import { Style } from "@siteimprove/alfa-style";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import type { Contrast } from "../common/diagnostic/contrast.js";
+import type { Contrast } from "../common/diagnostic/contrast.ts";
 &nbsp;
-import { Serialise } from "./serialise.js";
+import { Serialise } from "./serialise.ts";
 &nbsp;
 type Name = Longhands.Name | Shorthands.Name;
 &nbsp;
@@ -649,7 +649,7 @@ type Name = Longhands.Name | Shorthands.Name;
 export class ElementDistinguishable
   implements Equatable, Hashable, Serializable
 {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     distinguishingProperties: Iterable&lt;ElementDistinguishable.Property&gt; = [],
     style: Iterable&lt;readonly [Name, string]&gt; = [],
     pairings: Iterable&lt;Contrast.Pairing&lt;["container", "link"]&gt;&gt; = [],
@@ -667,7 +667,7 @@ export class ElementDistinguishable
     Contrast.Pairing&lt;["container", "link"]&gt;
   &gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     distinguishingProperties: ReadonlyArray&lt;ElementDistinguishable.Property&gt;,
     style: Map&lt;Name, string&gt;,
     pairings: ReadonlyArray&lt;Contrast.Pairing&lt;["container", "link"]&gt;&gt;,
@@ -677,21 +677,21 @@ export class ElementDistinguishable
     this._pairings = pairings;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >distinguishingProperties(</span>): ReadonlyArray&lt;ElementDistinguishable.Property&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >distinguishingProperties(</span>): ReadonlyArray&lt;ElementDistinguishable.Property&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._distinguishingProperties;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >style(</span>): Map&lt;Name, string&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >style(</span>): Map&lt;Name, string&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._style;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >pairings(</span>): ReadonlyArray&lt;
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >pairings(</span>): ReadonlyArray&lt;</span>
     Contrast.Pairing&lt;["container", "link"]&gt;
   &gt; {
 <span class="cstat-no" title="statement not covered" >    return this._pairings;</span>
   }
 &nbsp;
-  public withDistinguishingProperties(
+  public <span class="fstat-no" title="function not covered" >withDistinguishingProperties(</span>
     distinguishingProperties: ReadonlyArray&lt;ElementDistinguishable.Property&gt;,
   ): ElementDistinguishable {
     return ElementDistinguishable.of(
@@ -701,7 +701,7 @@ export class ElementDistinguishable
     );
   }
 &nbsp;
-  public withStyle(
+  public <span class="fstat-no" title="function not covered" >withStyle(</span>
     ...styles: ReadonlyArray&lt;readonly [Name, string]&gt;
   ): ElementDistinguishable {
     return ElementDistinguishable.of(
@@ -711,7 +711,7 @@ export class ElementDistinguishable
     );
   }
 &nbsp;
-  public withPairings(
+  public <span class="fstat-no" title="function not covered" >withPairings(</span>
     pairings: ReadonlyArray&lt;Contrast.Pairing&lt;["container", "link"]&gt;&gt;,
   ): ElementDistinguishable {
     return ElementDistinguishable.of(
@@ -725,8 +725,8 @@ export class ElementDistinguishable
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public equals(value: unknown): boolean {
-    return (
+  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
+<span class="cstat-no" title="statement not covered" >    return (</span>
       value instanceof ElementDistinguishable &amp;&amp;
       value._style.equals(this._style) &amp;&amp;
       Array.equals(value._pairings, this._pairings) &amp;&amp;
@@ -737,13 +737,13 @@ export class ElementDistinguishable
     );
   }
 &nbsp;
-  public hash(hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
     Array.hash(this._distinguishingProperties, hash);
     this._style.hash(hash);
     Array.hash(this._pairings, hash);
   }
 &nbsp;
-  public toJSON(): ElementDistinguishable.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): ElementDistinguishable.JSON {
     return {
       distinguishingProperties: Array.toJSON(this._distinguishingProperties),
       style: this._style.toJSON(),
@@ -755,7 +755,7 @@ export class ElementDistinguishable
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >ElementDistinguishable {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >E</span>lementDistinguishable {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     distinguishingProperties: Array&lt;ElementDistinguishable.Property&gt;;
@@ -765,7 +765,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >E
 &nbsp;
   export type Property = Name | "contrast";
 &nbsp;
-  export function from(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >from(</span></span>
     element: Element,
     device: Device,
     target: Element,
@@ -808,7 +808,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >E
  * @public
  */
 export class DistinguishingStyles extends Diagnostic {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     message: string,
     defaultStyles: Iterable&lt;Result&lt;ElementDistinguishable&gt;&gt; = Sequence.empty(),
     hoverStyles: Iterable&lt;Result&lt;ElementDistinguishable&gt;&gt; = Sequence.empty(),
@@ -826,7 +826,7 @@ export class DistinguishingStyles extends Diagnostic {
   private readonly _hoverStyles: Sequence&lt;Result&lt;ElementDistinguishable&gt;&gt;;
   private readonly _focusStyles: Sequence&lt;Result&lt;ElementDistinguishable&gt;&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     message: string,
     defaultStyles: Sequence&lt;Result&lt;ElementDistinguishable&gt;&gt;,
     hoverStyles: Sequence&lt;Result&lt;ElementDistinguishable&gt;&gt;,
@@ -838,15 +838,15 @@ export class DistinguishingStyles extends Diagnostic {
     this._focusStyles = focusStyles;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >defaultStyles(</span>): Iterable&lt;Result&lt;ElementDistinguishable&gt;&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >defaultStyles(</span>): Iterable&lt;Result&lt;ElementDistinguishable&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._defaultStyles;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >hoverStyles(</span>): Iterable&lt;Result&lt;ElementDistinguishable&gt;&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hoverStyles(</span>): Iterable&lt;Result&lt;ElementDistinguishable&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._hoverStyles;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >focusStyles(</span>): Iterable&lt;Result&lt;ElementDistinguishable&gt;&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >focusStyles(</span>): Iterable&lt;Result&lt;ElementDistinguishable&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._focusStyles;</span>
   }
 &nbsp;
@@ -854,8 +854,8 @@ export class DistinguishingStyles extends Diagnostic {
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof DistinguishingStyles &amp;&amp;
       value._defaultStyles.equals(this._defaultStyles) &amp;&amp;
       value._hoverStyles.equals(this._hoverStyles) &amp;&amp;
@@ -863,7 +863,7 @@ export class DistinguishingStyles extends Diagnostic {
     );
   }
 &nbsp;
-  public toJSON(
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>
     options?: Node.SerializationOptions,
   ): DistinguishingStyles.JSON {
     return {
@@ -878,7 +878,7 @@ export class DistinguishingStyles extends Diagnostic {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >DistinguishingStyles {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >D</span>istinguishingStyles {</span></span>
   export interface JSON extends Diagnostic.JSON {
     defaultStyle: Sequence.JSON&lt;Result&lt;ElementDistinguishable&gt;&gt;;
     hoverStyle: Sequence.JSON&lt;Result&lt;ElementDistinguishable&gt;&gt;;
@@ -894,7 +894,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >D
   ): value is DistinguishingStyles;
 &nbsp;
   /**@public */
-  export function <span class="fstat-no" title="function not covered" >isDistinguishingStyles(</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isDistinguishingStyles(</span></span></span>
     value: unknown,
   ): value is DistinguishingStyles {
 <span class="cstat-no" title="statement not covered" >    return value instanceof DistinguishingStyles;</span>
@@ -907,7 +907,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >D
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

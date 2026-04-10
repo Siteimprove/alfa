@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">56.66% </span>
+                <span class="strong">45.94% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>34/60</span>
+                <span class='fraction'>34/74</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">14.28% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/14</span>
+                <span class='fraction'>4/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">47.72% </span>
+                <span class="strong">71.59% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>21/44</span>
+                <span class='fraction'>63/88</span>
             </div>
         
             
@@ -686,7 +686,7 @@ import type { Serializable } from "@siteimprove/alfa-json";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import type { Name } from "./name.js";
+import type { Name } from "./name.ts";
 &nbsp;
 /**
  * @public
@@ -701,7 +701,7 @@ export type Source =
 /**
  * @public
  */
-export namespace Source {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Source {</span>
   export type JSON =
     | Data.JSON
     | Descendant.JSON
@@ -709,7 +709,7 @@ export namespace Source {
     | Label.JSON
     | Reference.JSON;
 &nbsp;
-  export class Data implements Equatable, Serializable&lt;Data.JSON&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Data implements Equatable, Serializable&lt;Data.JSON&gt; {</span>
     public static of(text: Text): Data {
       return new Data(text);
     }
@@ -720,15 +720,15 @@ export namespace Source {
       this._text = text;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "data" {
+    public get <span class="fstat-no" title="function not covered" >type(): "data" {</span>
 <span class="cstat-no" title="statement not covered" >      return "data";</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >text(</span>): Text {
+    public get <span class="fstat-no" title="function not covered" >text(): Text {</span>
 <span class="cstat-no" title="statement not covered" >      return this._text;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Data &amp;&amp; value._text.equals(this._text);</span>
     }
 &nbsp;
@@ -752,11 +752,11 @@ export namespace Source {
     }
   }
 &nbsp;
-  export function data(text: Text): Data {
+  export function <span class="cstat-no" title="statement not covered" >data(text: Text): Data {</span>
     return Data.of(text);
   }
 &nbsp;
-  export class Descendant implements Equatable, Serializable&lt;Descendant.JSON&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Descendant implements Equatable, Serializable&lt;Descendant.JSON&gt; {</span>
     public static of(element: Element, name: Name): Descendant {
       return new Descendant(element, name);
     }
@@ -769,20 +769,20 @@ export namespace Source {
       this._name = name;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "descendants" {
+    public get <span class="fstat-no" title="function not covered" >type(): "descendants" {</span>
 <span class="cstat-no" title="statement not covered" >      return "descendants";</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >element(</span>): Element {
+    public get <span class="fstat-no" title="function not covered" >element(): Element {</span>
 <span class="cstat-no" title="statement not covered" >      return this._element;</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >name(</span>): Name {
+    public get <span class="fstat-no" title="function not covered" >name(): Name {</span>
 <span class="cstat-no" title="statement not covered" >      return this._name;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >      return (</span>
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      return (</span></span>
         value instanceof Descendant &amp;&amp;
         value._element.equals(this._element) &amp;&amp;
         value._name.equals(this._name)
@@ -812,11 +812,11 @@ export namespace Source {
     }
   }
 &nbsp;
-  export function descendant(element: Element, name: Name): Descendant {
+  export function <span class="cstat-no" title="statement not covered" >descendant(element: Element, name: Name): Descendant {</span>
     return Descendant.of(element, name);
   }
 &nbsp;
-  export class Ancestor implements Equatable, Serializable&lt;Ancestor.JSON&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Ancestor implements Equatable, Serializable&lt;Ancestor.JSON&gt; {</span>
     public static of(element: Element, name: Name): Ancestor {
       return new Ancestor(element, name);
     }
@@ -829,20 +829,20 @@ export namespace Source {
       this._name = name;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "ancestor" {
+    public get <span class="fstat-no" title="function not covered" >type(): "ancestor" {</span>
 <span class="cstat-no" title="statement not covered" >      return "ancestor";</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >element(</span>): Element {
+    public get <span class="fstat-no" title="function not covered" >element(): Element {</span>
 <span class="cstat-no" title="statement not covered" >      return this._element;</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >name(</span>): Name {
+    public get <span class="fstat-no" title="function not covered" >name(): Name {</span>
 <span class="cstat-no" title="statement not covered" >      return this._name;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >      return (</span>
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      return (</span></span>
         value instanceof Ancestor &amp;&amp;
         value._element.equals(this._element) &amp;&amp;
         value._name.equals(this._name)
@@ -872,11 +872,11 @@ export namespace Source {
     }
   }
 &nbsp;
-  export function ancestor(element: Element, name: Name): Ancestor {
+  export function <span class="cstat-no" title="statement not covered" >ancestor(element: Element, name: Name): Ancestor {</span>
     return Ancestor.of(element, name);
   }
 &nbsp;
-  export class Label implements Equatable, Serializable&lt;Label.JSON&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Label implements Equatable, Serializable&lt;Label.JSON&gt; {</span>
     public static of(attribute: Attribute): Label {
       return new Label(attribute);
     }
@@ -887,15 +887,15 @@ export namespace Source {
       this._attribute = attribute;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "label" {
+    public get <span class="fstat-no" title="function not covered" >type(): "label" {</span>
 <span class="cstat-no" title="statement not covered" >      return "label";</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >attribute(</span>): Attribute {
+    public get <span class="fstat-no" title="function not covered" >attribute(): Attribute {</span>
 <span class="cstat-no" title="statement not covered" >      return this._attribute;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Label &amp;&amp; value._attribute.equals(this._attribute);</span>
     }
 &nbsp;
@@ -919,11 +919,11 @@ export namespace Source {
     }
   }
 &nbsp;
-  export function label(attribute: Attribute): Label {
+  export function <span class="cstat-no" title="statement not covered" >label(attribute: Attribute): Label {</span>
     return Label.of(attribute);
   }
 &nbsp;
-  export class Reference implements Equatable, Serializable&lt;Reference.JSON&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Reference implements Equatable, Serializable&lt;Reference.JSON&gt; {</span>
     public static of(attribute: Attribute, name: Name): Reference {
       return new Reference(attribute, name);
     }
@@ -936,20 +936,20 @@ export namespace Source {
       this._name = name;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "reference" {
+    public get <span class="fstat-no" title="function not covered" >type(): "reference" {</span>
 <span class="cstat-no" title="statement not covered" >      return "reference";</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >attribute(</span>): Attribute {
+    public get <span class="fstat-no" title="function not covered" >attribute(): Attribute {</span>
 <span class="cstat-no" title="statement not covered" >      return this._attribute;</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >name(</span>): Name {
+    public get <span class="fstat-no" title="function not covered" >name(): Name {</span>
 <span class="cstat-no" title="statement not covered" >      return this._name;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >      return (</span>
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      return (</span></span>
         value instanceof Reference &amp;&amp; value._attribute.equals(this._attribute)
       );
     }
@@ -977,7 +977,7 @@ export namespace Source {
     }
   }
 &nbsp;
-  export function reference(attribute: Attribute, name: Name): Reference {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >reference(</span>attribute: Attribute, name: Name): Reference {</span>
     return Reference.of(attribute, name);
   }
 }
@@ -988,7 +988,7 @@ export namespace Source {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:09.309Z
+                at 2026-04-10T09:29:24.679Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

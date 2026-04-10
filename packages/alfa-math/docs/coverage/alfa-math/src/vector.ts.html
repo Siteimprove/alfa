@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.11% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>31/36</span>
+                <span class='fraction'>36/54</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/6</span>
+                <span class='fraction'>8/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.19% </span>
+                <span class="strong">80.55% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>16/21</span>
+                <span class='fraction'>29/36</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -235,7 +235,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Real } from "./real.js";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Real } from "./real.ts";
 &nbsp;
 const { sqrt } = Math;
 &nbsp;
@@ -249,36 +249,36 @@ export type Vector = Array&lt;number&gt;;
 /**
  * @public
  */
-export namespace Vector {
-  export function isVector(value: unknown): value is Vector {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Vector {</span>
+  export function <span class="cstat-no" title="statement not covered" >isVector(value: unknown): value is Vector {</span>
     return Array.isArray(value) &amp;&amp; value.every((n) =&gt; typeof n === "number");
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >clone(</span>v: Vector): Vector {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >clone(v</span>: Vector): Vector {</span>
 <span class="cstat-no" title="statement not covered" >    return v.slice(0);</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >equals(</span>v: Vector, u: Vector, e: number): boolean {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >equals(v</span>: Vector, u: Vector, e: number): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return v.length === u.length &amp;&amp; v.every(<span class="fstat-no" title="function not covered" >(n</span>, i) =&gt; <span class="cstat-no" title="statement not covered" >Real.equals(n, u[i], e))</span>;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >size(</span>v: Vector): number {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >size(v</span>: Vector): number {</span>
 <span class="cstat-no" title="statement not covered" >    return v.length;</span>
   }
 &nbsp;
-  export function add(v: Vector, u: Vector): Vector {
+  export function <span class="cstat-no" title="statement not covered" >add(v: Vector, u: Vector): Vector {</span>
     return v.map((n, i) =&gt; n + u?.[i]);
   }
 &nbsp;
-  export function subtract(v: Vector, u: Vector): Vector {
+  export function <span class="cstat-no" title="statement not covered" >subtract(v: Vector, u: Vector): Vector {</span>
     return v.map((n, i) =&gt; n - u?.[i]);
   }
 &nbsp;
-  export function multiply(v: Vector, s: number): Vector {
+  export function <span class="cstat-no" title="statement not covered" >multiply(v: Vector, s: number): Vector {</span>
     return v.map((n) =&gt; n * s);
   }
 &nbsp;
-  export function divide(v: Vector, d: number): Vector {
+  export function <span class="cstat-no" title="statement not covered" >divide(v: Vector, d: number): Vector {</span>
     return v.map((n) =&gt; n / d);
   }
 &nbsp;
@@ -287,7 +287,7 @@ export namespace Vector {
    *
    * {@link https://en.wikipedia.org/wiki/Dot_product}
    */
-  export function dot(v: Vector, u: Vector): number {
+  export function <span class="cstat-no" title="statement not covered" >dot(v: Vector, u: Vector): number {</span>
     return v.reduce((s, n, i) =&gt; s + n * u?.[i], 0);
   }
 &nbsp;
@@ -296,7 +296,7 @@ export namespace Vector {
    *
    * {@link https://en.wikipedia.org/wiki/Cross_product}
    */
-  export function cross(v: Vector, u: Vector): Vector {
+  export function <span class="cstat-no" title="statement not covered" >cross(v: Vector, u: Vector): Vector {</span>
     const [vx, vy, vz] = v;
     const [ux, uy, uz] = u;
 &nbsp;
@@ -308,7 +308,7 @@ export namespace Vector {
    *
    * {@link https://en.wikipedia.org/wiki/Norm_(mathematics)}
    */
-  export function norm(v: Vector): number {
+  export function <span class="cstat-no" title="statement not covered" >norm(v: Vector): number {</span>
     return sqrt(v.reduce((s, n) =&gt; s + n ** 2, 0));
   }
 &nbsp;
@@ -317,7 +317,7 @@ export namespace Vector {
    *
    * {@link https://en.wikipedia.org/wiki/Unit_vector}
    */
-  export function <span class="fstat-no" title="function not covered" >normalize(</span>v: Vector): Vector {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >normalize(</span>v</span>: Vector): Vector {</span>
 <span class="cstat-no" title="statement not covered" >    return divide(v, norm(v));</span>
   }
 }
@@ -328,7 +328,7 @@ export namespace Vector {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:43.251Z
+                at 2026-04-10T09:29:59.365Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

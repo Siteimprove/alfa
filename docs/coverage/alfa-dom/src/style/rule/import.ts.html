@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.57% </span>
+                <span class="strong">82% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>31/38</span>
+                <span class='fraction'>41/50</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.14% </span>
+                <span class="strong">35.71% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/7</span>
+                <span class='fraction'>5/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">78.43% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>21/28</span>
+                <span class='fraction'>40/51</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.55% </span>
+                <span class="strong">81.08% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>29/36</span>
+                <span class='fraction'>30/37</span>
             </div>
         
             
@@ -293,13 +293,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -361,19 +361,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-yes">3683x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -385,19 +385,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">118975x</span>
+<span class="cline-any cline-yes">118975x</span>
 <span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-yes">118975x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -421,9 +421,9 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 &nbsp;
-import type { Rule } from "./index.js";
-import type { Sheet } from "../sheet.js";
-import { ConditionRule } from "./condition.js";
+import type { Rule } from "./index.ts";
+import type { Sheet } from "../sheet.ts";
+import { ConditionRule } from "./condition.ts";
 &nbsp;
 const { and } = Predicate;
 &nbsp;
@@ -434,9 +434,9 @@ export class ImportRule extends ConditionRule&lt;"import"&gt; {
   public static of(
     href: string,
     sheet: Sheet,
-    mediaCondition: Option&lt;string&gt; = None,
-    supportCondition: Option&lt;string&gt; = None,
-    layer: Option&lt;string&gt; = None,
+    mediaCondition: Option&lt;string&gt; = <span class="branch-0 cbranch-no" title="branch not covered" >None,</span>
+    supportCondition: Option&lt;string&gt; = <span class="branch-0 cbranch-no" title="branch not covered" >None,</span>
+    layer: Option&lt;string&gt; = <span class="branch-0 cbranch-no" title="branch not covered" >None,</span>
   ): ImportRule {
     return new ImportRule(href, sheet, mediaCondition, supportCondition, layer);
   }
@@ -486,7 +486,7 @@ export class ImportRule extends ConditionRule&lt;"import"&gt; {
     );
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >supportCondition(</span>): Option&lt;string&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >supportCondition(</span>): Option&lt;string&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._supportCondition;</span>
   }
 &nbsp;
@@ -506,7 +506,7 @@ export class ImportRule extends ConditionRule&lt;"import"&gt; {
     return this._sheet.rules;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >href(</span>): string {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >href(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return this._href;</span>
   }
 &nbsp;
@@ -528,8 +528,8 @@ export class ImportRule extends ConditionRule&lt;"import"&gt; {
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       `@import url(${this._href}) ` +
       `${this._layer.map(<span class="fstat-no" title="function not covered" >(l</span>ayer) =&gt; <span class="cstat-no" title="statement not covered" >`layer${layer === "" ? "" : `(${layer}) `}`)</span>}` +
       `${this._supportCondition.map(<span class="fstat-no" title="function not covered" >(c</span>ondition) =&gt; <span class="cstat-no" title="statement not covered" >`supports(${condition}) `)</span>.getOr("")}` +
@@ -541,7 +541,7 @@ export class ImportRule extends ConditionRule&lt;"import"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >ImportRule {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >ImportRule {</span></span>
   export interface JSON extends ConditionRule.JSON&lt;"import"&gt; {
     href: string;
     supportText: string | null;
@@ -577,8 +577,8 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >I
     fromRule: (json: Rule.JSON) =&gt; Trampoline&lt;Rule&gt;,
     sheetFactory: (rules: Iterable&lt;Rule&gt;) =&gt; Sheet,
   ): Trampoline&lt;ImportRule&gt; {
-<span class="cstat-no" title="statement not covered" >    return Trampoline.traverse(json.rules, fromRule).map(<span class="fstat-no" title="function not covered" >(r</span>ules) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      ImportRule.of(</span>
+<span class="cstat-no" title="statement not covered" >    return Trampoline.traverse(json.rules, fromRule).map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(r</span></span>ules) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      ImportRule.of(</span></span>
         json.href,
         sheetFactory(rules),
         Option.of(json.condition),
@@ -595,7 +595,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >I
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

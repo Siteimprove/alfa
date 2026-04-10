@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.33% </span>
+                <span class="strong">75.43% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>33/45</span>
+                <span class='fraction'>43/57</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/14</span>
+                <span class='fraction'>12/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68% </span>
+                <span class="strong">71.11% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>17/25</span>
+                <span class='fraction'>32/45</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">74.41% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>32/43</span>
+                <span class='fraction'>33/44</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -259,14 +259,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5122x</span>
+<span class="cline-any cline-yes">5121x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5122x</span>
-<span class="cline-any cline-yes">6154x</span>
+<span class="cline-any cline-yes">5121x</span>
+<span class="cline-any cline-yes">6151x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6154x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6151x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -277,9 +275,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8624x</span>
-<span class="cline-any cline-yes">8624x</span>
-<span class="cline-any cline-yes">8624x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8623x</span>
+<span class="cline-any cline-yes">8623x</span>
+<span class="cline-any cline-yes">8623x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -381,25 +381,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">276x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">276x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">275x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">276x</span>
+<span class="cline-any cline-yes">275x</span>
 <span class="cline-any cline-yes">3955x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3955x</span>
@@ -432,7 +432,7 @@ export class Record&lt;T&gt;
     Serializable&lt;Record.JSON&lt;T&gt;&gt;
 {
   public static of&lt;T&gt;(properties: T): Record&lt;T&gt; {
-    const keys = Object.keys(properties ?? <span class="branch-1 cbranch-no" title="branch not covered" >{})</span>.sort() as Array&lt;Record.Key&lt;T&gt;&gt;;
+    const keys = Object.keys(properties ?? <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >{})</span></span>.sort() as Array&lt;Record.Key&lt;T&gt;&gt;;
 &nbsp;
     return new Record(
       new Map(Iterable.map(keys, (key, i) =&gt; [key, i])),
@@ -455,7 +455,7 @@ export class Record&lt;T&gt;
     this._values = values;
   }
 &nbsp;
-  public has(key: string): key is Record.Key&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >has(</span>key: string): key is Record.Key&lt;T&gt; {
     return this._indices.has(key);
   }
 &nbsp;
@@ -494,7 +494,7 @@ export class Record&lt;T&gt;
     return Iterable.some(this, ([key, value]) =&gt; predicate(value, key));
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >every(</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >every(</span></span>
     predicate: Predicate&lt;Record.Value&lt;T&gt;, [Record.Key&lt;T&gt;]&gt;,
   ): boolean {
 <span class="cstat-no" title="statement not covered" >    return Iterable.every(this, <span class="fstat-no" title="function not covered" >([</span>key, value]) =&gt; <span class="cstat-no" title="statement not covered" >predicate(value, key))</span>;</span>
@@ -513,7 +513,7 @@ export class Record&lt;T&gt;
     );
   }
 &nbsp;
-  public *<span class="fstat-no" title="function not covered" >keys(</span>): Iterable&lt;Record.Key&lt;T&gt;&gt; {
+  public *<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >keys(</span>): Iterable&lt;Record.Key&lt;T&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    yield* this._keys;</span>
   }
 &nbsp;
@@ -521,7 +521,7 @@ export class Record&lt;T&gt;
     yield* this._values;
   }
 &nbsp;
-  public *<span class="fstat-no" title="function not covered" >entries(</span>): Iterable&lt;Record.Entry&lt;T&gt;&gt; {
+  public *<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >entries(</span>): Iterable&lt;Record.Entry&lt;T&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    yield* this;</span>
   }
 &nbsp;
@@ -537,8 +537,8 @@ export class Record&lt;T&gt;
     return [...this];
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Serializable.Options): Record.JSON&lt;T&gt; {
-    const json: { [key: string]: json.JSON } = <span class="cstat-no" title="statement not covered" >{};</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>o</span>ptions?: Serializable.Options): Record.JSON&lt;T&gt; {
+    const json: { [key: string]: json.JSON } = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >{};</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    for (const [key, value] of this) {</span>
 <span class="cstat-no" title="statement not covered" >      json[key] = Serializable.toJSON(value, options);</span>
@@ -547,8 +547,8 @@ export class Record&lt;T&gt;
 <span class="cstat-no" title="statement not covered" >    return json as Record.JSON&lt;T&gt;;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
-    const entries = <span class="cstat-no" title="statement not covered" >this.toArray()</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
+    const entries = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.toArray()</span></span>
       .map(<span class="fstat-no" title="function not covered" >([</span>key, value]) =&gt; <span class="cstat-no" title="statement not covered" >`${key}: ${value}`)</span>
       .join(", ");
 &nbsp;
@@ -559,7 +559,7 @@ export class Record&lt;T&gt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Record {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Record {</span></span>
   export type Key&lt;T&gt; = Extract&lt;keyof T, string&gt;;
 &nbsp;
   export type Value&lt;T&gt; = T[Key&lt;T&gt;];
@@ -568,7 +568,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
 &nbsp;
   export type JSON&lt;T&gt; = { [K in Key&lt;T&gt;]: Serializable.ToJSON&lt;T[K]&gt; };
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isRecord&lt;</span>T&gt;(value: unknown): value is Record&lt;T&gt; {
+  export function isRecord&lt;T&gt;(value: unknown): value is Record&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Record;</span>
   }
 &nbsp;
@@ -589,7 +589,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

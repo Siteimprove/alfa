@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.29% </span>
+                <span class="strong">92.2% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>153/164</span>
+                <span class='fraction'>213/231</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.27% </span>
+                <span class="strong">86.04% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>96/110</span>
+                <span class='fraction'>148/172</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.77% </span>
+                <span class="strong">83.43% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>77/83</span>
+                <span class='fraction'>131/157</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.2% </span>
+                <span class="strong">93.29% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>151/162</span>
+                <span class='fraction'>153/164</span>
             </div>
         
             
@@ -994,7 +994,7 @@
 <span class="cline-any cline-yes">69x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1340,7 +1340,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">63x</span>
-<span class="cline-any cline-yes">63x</span>
+<span class="cline-any cline-yes">68x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1630,7 +1630,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1714,9 +1714,9 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 &nbsp;
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/expectation.ts";
 &nbsp;
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 &nbsp;
 const { isHeight, isWidth } = Feature.Media.Feature;
 const { Discrete, Range } = Feature.Media.Value;
@@ -1738,7 +1738,7 @@ export default Rule.Atomic.of&lt;Page, Text&gt;({
   uri: "https://alfa.siteimprove.com/rules/sia-r83",
   requirements: [Criterion.of("1.4.4")],
   tags: [Scope.Component, Stability.Stable],
-  evaluate({ device, document }) {
+<span class="fstat-no" title="function not covered" >  evaluate(</span>{ device, document }) {
     return {
       applicability() {
         return document
@@ -1839,13 +1839,13 @@ export default Rule.Atomic.of&lt;Page, Text&gt;({
   },
 });
 &nbsp;
-enum Overflow {
+<span class="fstat-no" title="function not covered" >enum O</span>verflow {
   Clip = "Clip", // The element clips its overflow.
   Handle = "Handle", // The element definitely handles its overflow.
   Overflow = "Overflow", // The element overflows into its parent.
 }
 &nbsp;
-function overflow(
+function <span class="fstat-no" title="function not covered" >overflow(</span>
   element: Element,
   device: Device,
   dimension: "x" | "y",
@@ -1870,7 +1870,7 @@ function overflow(
 /**
  * Return the box of a text, or its parent element.
  */
-function textBox(text: Text, device: Device): Option&lt;Rectangle&gt; {
+function <span class="fstat-no" title="function not covered" >textBox(</span>text: Text, device: Device): Option&lt;Rectangle&gt; {
   return text.getBoundingBox(device).orElse(() =&gt;
     text
       .parent(Node.fullTree)
@@ -1899,7 +1899,7 @@ const isWrappingFlexContainer = (device: Device) =&gt;
  * already in its post-wrapping position), but the validity for using it in our
  * case becomes a bit dubious.
  */
-function lineBox(text: Text, device: Device): Rectangle {
+function <span class="fstat-no" title="function not covered" >lineBox(</span>text: Text, device: Device): Rectangle {
   const isBlockContainer = (element: Element) =&gt;
     Style.isBlockContainer(Style.from(element, device));
   const hasFlexWrapParent = (element: Element) =&gt;
@@ -1924,7 +1924,7 @@ function lineBox(text: Text, device: Device): Rectangle {
  * Create a predicate (generator), testing if a container is twice as big as
  * the target text; uses the text layout if present, else its parent layout.
  */
-function isTwiceAsBig(
+function <span class="fstat-no" title="function not covered" >isTwiceAsBig(</span>
   target: Text,
   device: Device,
 ): (dimension: "width" | "height") =&gt; Predicate&lt;Element&gt; {
@@ -1936,7 +1936,7 @@ function isTwiceAsBig(
     );
 }
 &nbsp;
-namespace ClippingAncestor {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >namespace C</span>lippingAncestor {</span>
   export const vertical = clipper("height", localVerticalOverflow);
   // This is eta-expanded to avoid premature evaluation of the localHorizontalOverflow function.
   export const horizontal = (device: Device, text: Text) =&gt;
@@ -2251,7 +2251,7 @@ namespace ClippingAncestor {
  * Calculated values cannot be resolved at cascad time. So we just accept them
  * (consider they are font relative) to avoid more false positives.
  */
-function hasFontRelativeValue(
+function <span class="fstat-no" title="function not covered" >hasFontRelativeValue(</span>
   device: Device,
   property: "height" | "width",
 ): Predicate&lt;Element&gt; {
@@ -2284,8 +2284,8 @@ function hasFontRelativeValue(
  * bounds will not trigger when text size increase, so they cannot control
  * overflow.
  */
-namespace Media {
-  export function usesFontRelativeMediaRule(
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >namespace M</span>edia {</span>
+  export function <span class="cstat-no" title="statement not covered" >usesFontRelativeMediaRule(</span>
     device: Device,
     predicate: Predicate&lt;Feature.Media.Feature&gt;,
     context: Context = Context.empty(),
@@ -2336,7 +2336,7 @@ namespace Media {
   }
 &nbsp;
   function usesMediaRule(
-    predicate: Predicate&lt;StyleRule.Media&gt; = <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >true,</span></span>
+    predicate: Predicate&lt;StyleRule.Media&gt; = <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >t</span>rue,</span></span></span></span>
     device: Device,
     context: Context = Context.empty(),
   ): Predicate&lt;Element&gt; {
@@ -2371,7 +2371,7 @@ namespace Media {
                         (min.value.hasCalculation() ||
                           min.value.isFontRelative()),
                     )
-                  : <span class="branch-1 cbranch-no" title="branch not covered" >Discrete.isDiscrete&lt;Length&gt;(value) &amp;&amp;</span>
+                  : <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Discrete.isDiscrete&lt;Length&gt;(value) &amp;&amp;</span></span>
                     (value.value.hasCalculation() ||
                       value.value.isFontRelative()),
               ),
@@ -2385,7 +2385,7 @@ namespace Media {
  * @public
  */
 export class ClippingAncestors extends Diagnostic {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     message: string,
     horizontal: Option&lt;Element&gt; = None,
     vertical: Option&lt;Element&gt; = None,
@@ -2396,7 +2396,7 @@ export class ClippingAncestors extends Diagnostic {
   private readonly _horizontal: Option&lt;Element&gt;;
   private readonly _vertical: Option&lt;Element&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     message: string,
     horizontal: Option&lt;Element&gt;,
     vertical: Option&lt;Element&gt;,
@@ -2406,11 +2406,11 @@ export class ClippingAncestors extends Diagnostic {
     this._vertical = vertical;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >horizontal(</span>): Option&lt;Element&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >horizontal(</span>): Option&lt;Element&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._horizontal;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >vertical(</span>): Option&lt;Element&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >vertical(</span>): Option&lt;Element&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._vertical;</span>
   }
 &nbsp;
@@ -2418,8 +2418,8 @@ export class ClippingAncestors extends Diagnostic {
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       super.equals(value) &amp;&amp;
       value instanceof ClippingAncestors &amp;&amp;
       value._horizontal.equals(this._horizontal) &amp;&amp;
@@ -2427,13 +2427,13 @@ export class ClippingAncestors extends Diagnostic {
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    super.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    this._vertical.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    this._horizontal.hash(hash);</span>
   }
 &nbsp;
-  public toJSON(options?: Node.SerializationOptions): ClippingAncestors.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Node.SerializationOptions): ClippingAncestors.JSON {
     return {
       ...super.toJSON(options),
       horizontal: this._horizontal.toJSON(options),
@@ -2445,7 +2445,7 @@ export class ClippingAncestors extends Diagnostic {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >ClippingAncestors {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >C</span>lippingAncestors {</span></span>
   export interface JSON extends Diagnostic.JSON {
     horizontal: Option.JSON&lt;Element&gt;;
     vertical: Option.JSON&lt;Element&gt;;
@@ -2460,7 +2460,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
   ): value is ClippingAncestors;
 &nbsp;
   /**@public */
-  export function <span class="fstat-no" title="function not covered" >isClippingAncestors(</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isClippingAncestors(</span></span></span>
     value: unknown,
   ): value is ClippingAncestors {
 <span class="cstat-no" title="statement not covered" >    return value instanceof ClippingAncestors;</span>
@@ -2470,7 +2470,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
 /**
  * @public
  */
-export namespace Outcomes {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Outcomes {</span>
   export const WrapsText = Ok.of(
     ClippingAncestors.of(`The text is wrapped without being clipped`),
   );
@@ -2500,7 +2500,7 @@ export namespace Outcomes {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

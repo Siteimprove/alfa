@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.15% </span>
+                <span class="strong">63.63% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>74/104</span>
+                <span class='fraction'>84/132</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">26.08% </span>
+                <span class="strong">21.42% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/23</span>
+                <span class='fraction'>9/42</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">59.42% </span>
+                <span class="strong">77.77% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>41/69</span>
+                <span class='fraction'>105/135</span>
             </div>
         
             
@@ -969,7 +969,7 @@ export type Token =
 /**
  * @public
  */
-export namespace Token {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Token {</span>
   export type JSON =
     | Integer.JSON
     | Decimal.JSON
@@ -991,7 +991,7 @@ export namespace Token {
     return filter(parseFirst, refinement, () =&gt; "Mismatching token");
   }
 &nbsp;
-  export class Integer implements Equatable, Serializable&lt;Integer.JSON&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Integer implements Equatable, Serializable&lt;Integer.JSON&gt; {</span>
     public static of(value: number): Integer {
       return new Integer(value);
     }
@@ -1002,7 +1002,7 @@ export namespace Token {
       this._value = value;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "integer" {
+    public get <span class="fstat-no" title="function not covered" >type(): "integer" {</span>
 <span class="cstat-no" title="statement not covered" >      return "integer";</span>
     }
 &nbsp;
@@ -1010,7 +1010,7 @@ export namespace Token {
       return this._value;
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Integer &amp;&amp; value._value === this._value;</span>
     }
 &nbsp;
@@ -1021,7 +1021,7 @@ export namespace Token {
       };
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+    public <span class="fstat-no" title="function not covered" >toString(): string {</span>
 <span class="cstat-no" title="statement not covered" >      return `${this._value}`;</span>
     }
   }
@@ -1034,13 +1034,13 @@ export namespace Token {
     }
   }
 &nbsp;
-  export function isInteger(value: unknown): value is Integer {
+  export function <span class="cstat-no" title="statement not covered" >isInteger(value: unknown): value is Integer {</span>
     return value instanceof Integer;
   }
 &nbsp;
   export const parseInteger = parseToken(isInteger);
 &nbsp;
-  export class Decimal implements Equatable, Serializable&lt;Decimal.JSON&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Decimal implements Equatable, Serializable&lt;Decimal.JSON&gt; {</span>
     public static of(value: number): Decimal {
       return new Decimal(value);
     }
@@ -1051,15 +1051,15 @@ export namespace Token {
       this._value = value;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "decimal" {
+    public get <span class="fstat-no" title="function not covered" >type(): "decimal" {</span>
 <span class="cstat-no" title="statement not covered" >      return "decimal";</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >value(</span>): number {
+    public get <span class="fstat-no" title="function not covered" >value(): number {</span>
 <span class="cstat-no" title="statement not covered" >      return this._value;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Decimal &amp;&amp; value._value === this._value;</span>
     }
 &nbsp;
@@ -1070,7 +1070,7 @@ export namespace Token {
       };
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+    public <span class="fstat-no" title="function not covered" >toString(): string {</span>
 <span class="cstat-no" title="statement not covered" >      return `${this._value}`;</span>
     }
   }
@@ -1083,13 +1083,13 @@ export namespace Token {
     }
   }
 &nbsp;
-  export function isDecimal(value: unknown): value is Decimal {
+  export function <span class="cstat-no" title="statement not covered" >isDecimal(value: unknown): value is Decimal {</span>
     return value instanceof Decimal;
   }
 &nbsp;
   export const parseDecimal = parseToken(isDecimal);
 &nbsp;
-  export class Double implements Equatable, Serializable&lt;Double.JSON&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Double implements Equatable, Serializable&lt;Double.JSON&gt; {</span>
     public static of(value: number): Double {
       return new Double(value);
     }
@@ -1100,15 +1100,15 @@ export namespace Token {
       this._value = value;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "double" {
+    public get <span class="fstat-no" title="function not covered" >type(): "double" {</span>
 <span class="cstat-no" title="statement not covered" >      return "double";</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >value(</span>): number {
+    public get <span class="fstat-no" title="function not covered" >value(): number {</span>
 <span class="cstat-no" title="statement not covered" >      return this._value;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Double &amp;&amp; value._value === this._value;</span>
     }
 &nbsp;
@@ -1119,7 +1119,7 @@ export namespace Token {
       };
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+    public <span class="fstat-no" title="function not covered" >toString(): string {</span>
 <span class="cstat-no" title="statement not covered" >      return `${this._value}`;</span>
     }
   }
@@ -1132,13 +1132,13 @@ export namespace Token {
     }
   }
 &nbsp;
-  export function isDouble(value: unknown): value is Double {
+  export function <span class="cstat-no" title="statement not covered" >isDouble(value: unknown): value is Double {</span>
     return value instanceof Double;
   }
 &nbsp;
   export const parseDouble = parseToken(isDouble);
 &nbsp;
-  export class String implements Equatable, Serializable&lt;String.JSON&gt; {
+  export class <span class="cstat-no" title="statement not covered" >String implements Equatable, Serializable&lt;String.JSON&gt; {</span>
     public static of(value: string): String {
       return new String(value);
     }
@@ -1149,15 +1149,15 @@ export namespace Token {
       this._value = value;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "string" {
+    public get <span class="fstat-no" title="function not covered" >type(): "string" {</span>
 <span class="cstat-no" title="statement not covered" >      return "string";</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >value(</span>): string {
+    public get <span class="fstat-no" title="function not covered" >value(): string {</span>
 <span class="cstat-no" title="statement not covered" >      return this._value;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >      return value instanceof String &amp;&amp; value._value === this._value;</span>
     }
 &nbsp;
@@ -1168,7 +1168,7 @@ export namespace Token {
       };
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+    public <span class="fstat-no" title="function not covered" >toString(): string {</span>
 <span class="cstat-no" title="statement not covered" >      return `"${this._value}"`;</span>
     }
   }
@@ -1181,13 +1181,13 @@ export namespace Token {
     }
   }
 &nbsp;
-  export function isString(value: unknown): value is String {
+  export function <span class="cstat-no" title="statement not covered" >isString(value: unknown): value is String {</span>
     return value instanceof String;
   }
 &nbsp;
   export const parseString = parseToken(isString);
 &nbsp;
-  export class Comment implements Equatable, Serializable&lt;Comment.JSON&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Comment implements Equatable, Serializable&lt;Comment.JSON&gt; {</span>
     public static of(value: string): Comment {
       return new Comment(value);
     }
@@ -1198,15 +1198,15 @@ export namespace Token {
       this._value = value;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "comment" {
+    public get <span class="fstat-no" title="function not covered" >type(): "comment" {</span>
 <span class="cstat-no" title="statement not covered" >      return "comment";</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >value(</span>): string {
+    public get <span class="fstat-no" title="function not covered" >value(): string {</span>
 <span class="cstat-no" title="statement not covered" >      return this._value;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Comment &amp;&amp; value._value === this._value;</span>
     }
 &nbsp;
@@ -1217,7 +1217,7 @@ export namespace Token {
       };
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+    public <span class="fstat-no" title="function not covered" >toString(): string {</span>
 <span class="cstat-no" title="statement not covered" >      return this._value;</span>
     }
   }
@@ -1230,13 +1230,13 @@ export namespace Token {
     }
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isComment(</span>value: unknown): value is Comment {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isComment(v</span>alue: unknown): value is Comment {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Comment;</span>
   }
 &nbsp;
   export const parseComment = parseToken(isComment);
 &nbsp;
-  export class Name implements Equatable, Serializable&lt;Name.JSON&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Name implements Equatable, Serializable&lt;Name.JSON&gt; {</span>
     public static of(prefix: Option&lt;string&gt;, value: string): Name {
       return new Name(prefix, value);
     }
@@ -1249,7 +1249,7 @@ export namespace Token {
       this._value = value;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "name" {
+    public get <span class="fstat-no" title="function not covered" >type(): "name" {</span>
 <span class="cstat-no" title="statement not covered" >      return "name";</span>
     }
 &nbsp;
@@ -1261,8 +1261,8 @@ export namespace Token {
       return this._value;
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >      return (</span>
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      return (</span></span>
         value instanceof Name &amp;&amp;
         value._prefix.equals(this._prefix) &amp;&amp;
         value._value === this._value
@@ -1277,8 +1277,8 @@ export namespace Token {
       };
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toString(</span>): string {
-      const prefix = <span class="cstat-no" title="statement not covered" >this._prefix.map(<span class="fstat-no" title="function not covered" >(p</span>refix) =&gt; <span class="cstat-no" title="statement not covered" >`${prefix}:`)</span>.getOr("");</span>
+    public <span class="fstat-no" title="function not covered" >toString(): string {</span>
+      const prefix = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._prefix.map(<span class="fstat-no" title="function not covered" >(p</span>refix) =&gt; <span class="cstat-no" title="statement not covered" >`${prefix}:`)</span>.getOr("");</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      return `${prefix}${this._value}`;</span>
     }
@@ -1293,7 +1293,7 @@ export namespace Token {
     }
   }
 &nbsp;
-  export function isName(value: unknown): value is Name {
+  export function <span class="cstat-no" title="statement not covered" >isName(value: unknown): value is Name {</span>
     return value instanceof Name;
   }
 &nbsp;
@@ -1311,7 +1311,7 @@ export namespace Token {
     return parseToken(and(isName, predicate));
   };
 &nbsp;
-  export class Character implements Equatable, Serializable&lt;Character.JSON&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Character implements Equatable, Serializable&lt;Character.JSON&gt; {</span>
     public static of(value: number): Character {
       return new Character(value);
     }
@@ -1322,7 +1322,7 @@ export namespace Token {
       this._value = value;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "character" {
+    public get <span class="fstat-no" title="function not covered" >type(): "character" {</span>
 <span class="cstat-no" title="statement not covered" >      return "character";</span>
     }
 &nbsp;
@@ -1330,7 +1330,7 @@ export namespace Token {
       return this._value;
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Character &amp;&amp; value._value === this._value;</span>
     }
 &nbsp;
@@ -1341,7 +1341,7 @@ export namespace Token {
       };
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+    public <span class="fstat-no" title="function not covered" >toString(): string {</span>
 <span class="cstat-no" title="statement not covered" >      return fromCharCode(this._value);</span>
     }
   }
@@ -1354,12 +1354,12 @@ export namespace Token {
     }
   }
 &nbsp;
-  export function isCharacter(value: unknown): value is Character {
+  export function <span class="cstat-no" title="statement not covered" >isCharacter(value: unknown): value is Character {</span>
     return value instanceof Character;
   }
 &nbsp;
   export const parseCharacter = (
-    query: string | Predicate&lt;Character&gt; = <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >true,</span></span>
+    query: string | Predicate&lt;Character&gt; = <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >t</span>rue,</span></span></span></span>
   ) =&gt; {
     let predicate: Predicate&lt;Character&gt;;
 &nbsp;
@@ -1381,7 +1381,7 @@ export namespace Token {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:36:35.425Z
+                at 2026-04-10T09:31:48.278Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

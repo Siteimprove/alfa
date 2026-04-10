@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">47.05% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/14</span>
+                <span class='fraction'>8/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">42.85% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/7</span>
+                <span class='fraction'>6/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">44.44% </span>
+                <span class="strong">22.22% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/9</span>
+                <span class='fraction'>4/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">53.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/14</span>
+                <span class='fraction'>8/15</span>
             </div>
         
             
@@ -211,7 +211,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -242,7 +242,7 @@ import { Map } from "@siteimprove/alfa-map";
  * @public
  */
 export class MatchingClasses extends Diagnostic {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     message: string,
     matchingTargets: Map&lt;string, number&gt; = Map.empty(),
     matchingNonTargets: Map&lt;string, number&gt; = Map.empty(),
@@ -253,7 +253,7 @@ export class MatchingClasses extends Diagnostic {
   private readonly _matchingTargets: Map&lt;string, number&gt;;
   private readonly _matchingNonTargets: Map&lt;string, number&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     message: string,
     matchingTargets: Map&lt;string, number&gt;,
     matchingNonTargets: Map&lt;string, number&gt;,
@@ -263,11 +263,11 @@ export class MatchingClasses extends Diagnostic {
     this._matchingNonTargets = matchingNonTargets;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >matchingTargets(</span>): Map&lt;string, number&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >matchingTargets(</span>): Map&lt;string, number&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._matchingTargets;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >matchingNonTargets(</span>): Map&lt;string, number&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >matchingNonTargets(</span>): Map&lt;string, number&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._matchingNonTargets;</span>
   }
 &nbsp;
@@ -275,21 +275,21 @@ export class MatchingClasses extends Diagnostic {
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof MatchingClasses &amp;&amp;
       value._matchingTargets.equals(this._matchingTargets) &amp;&amp;
       value._matchingNonTargets.equals(this._matchingNonTargets)
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    super.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    this._matchingTargets.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    this._matchingNonTargets.hash(hash);</span>
   }
 &nbsp;
-  public toJSON(options?: Node.SerializationOptions): MatchingClasses.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Node.SerializationOptions): MatchingClasses.JSON {
     return {
       ...super.toJSON(options),
       matchingTargets: this._matchingTargets.toJSON(options),
@@ -301,7 +301,7 @@ export class MatchingClasses extends Diagnostic {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >MatchingClasses {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >M</span>atchingClasses {</span></span>
   export interface JSON extends Diagnostic.JSON {
     matchingTargets: Map.JSON&lt;string, number&gt;;
     matchingNonTargets: Map.JSON&lt;string, number&gt;;
@@ -314,7 +314,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >M
   export function isMatchingClasses(value: unknown): value is MatchingClasses;
 &nbsp;
   /**@public */
-  export function <span class="fstat-no" title="function not covered" >isMatchingClasses(</span>value: unknown): value is MatchingClasses {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isMatchingClasses(</span>v</span>alue: unknown): value is MatchingClasses {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof MatchingClasses;</span>
   }
 }
@@ -325,7 +325,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >M
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:36:26.756Z
+                at 2026-04-10T09:31:39.916Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

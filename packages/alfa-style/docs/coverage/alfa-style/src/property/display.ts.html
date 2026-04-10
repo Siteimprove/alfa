@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.74% </span>
+                <span class="strong">89.15% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>72/83</span>
+                <span class='fraction'>74/83</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.3% </span>
+                <span class="strong">53.84% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>12/13</span>
+                <span class='fraction'>7/13</span>
             </div>
         
             
@@ -534,7 +534,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1637x</span>
-<span class="cline-any cline-yes">1626x</span>
+<span class="cline-any cline-yes">952x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">952x</span>
 <span class="cline-any cline-yes">669x</span>
@@ -543,7 +543,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">968x</span>
-<span class="cline-any cline-yes">968x</span>
+<span class="cline-any cline-yes">941x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">941x</span>
 <span class="cline-any cline-yes">25x</span>
@@ -552,7 +552,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">943x</span>
-<span class="cline-any cline-yes">943x</span>
+<span class="cline-any cline-yes">938x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">938x</span>
 <span class="cline-any cline-yes">5x</span>
@@ -729,10 +729,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 &nbsp;
-import { Longhand } from "../longhand.js";
+import { Longhand } from "../longhand.ts";
 &nbsp;
-import type Position from "./position.js";
-import type Float from "./float.js";
+import type Position from "./position.ts";
+import type Float from "./float.ts";
 &nbsp;
 const { map, either } = Parser;
 &nbsp;
@@ -854,7 +854,7 @@ const parseLegacy = Keyword.parse(
 );
 &nbsp;
 const parse = either&lt;Slice&lt;Token&gt;, Specified, string&gt;(
-  (input) =&gt; {
+<span class="fstat-no" title="function not covered" >  (i</span>nput) =&gt; {
     let outside: Specified.Outside | undefined;
     let inside: Specified.Inside | undefined;
     let listItem: Specified.ListItem | undefined;
@@ -896,7 +896,7 @@ const parse = either&lt;Slice&lt;Token&gt;, Specified, string&gt;(
     if (
       outside === undefined &amp;&amp;
       inside === undefined &amp;&amp;
-<span class="branch-2 cbranch-no" title="branch not covered" >      listItem === undefined</span>
+      listItem === undefined
     ) {
       return Err.of(`Expected an outer or inner display type or a list marker`);
     }
@@ -907,7 +907,7 @@ const parse = either&lt;Slice&lt;Token&gt;, Specified, string&gt;(
 &nbsp;
     if (outside === undefined) {
       outside =
-        inside.value === "ruby" ? <span class="branch-0 cbranch-no" title="branch not covered" >Keyword.of("inline") </span>: Keyword.of("block");
+        inside.value === "ruby" ? <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >Keyword.of("inline") </span>: K</span>eyword.of("block");
     }
 &nbsp;
     if (listItem === undefined) {
@@ -924,7 +924,7 @@ const parse = either&lt;Slice&lt;Token&gt;, Specified, string&gt;(
 &nbsp;
     return Result.of([input, Tuple.of(outside, inside, listItem)]);
   },
-  map(parseInternal, (keyword) =&gt; {
+  map(parseInternal, <span class="fstat-no" title="function not covered" >(k</span>eyword) =&gt; {
     switch (keyword.value) {
       case "table-row-group":
       case "table-header-group":
@@ -944,7 +944,7 @@ const parse = either&lt;Slice&lt;Token&gt;, Specified, string&gt;(
     }
   }),
   map(parseBox, (keyword) =&gt; Tuple.of(keyword)),
-  map(parseLegacy, (keyword) =&gt; {
+  map(parseLegacy, <span class="fstat-no" title="function not covered" >(k</span>eyword) =&gt; {
     const inline = Keyword.of("inline");
 &nbsp;
     switch (keyword.value) {
@@ -995,13 +995,13 @@ export default Longhand.of&lt;Specified, Computed&gt;(
 /**
  * {@link https://drafts.csswg.org/css2/#dis-pos-flo}
  */
-function displayTable(value: Specified): Computed {
+function <span class="fstat-no" title="function not covered" >displayTable(</span>value: Specified): Computed {
   // Boxes are not changed by this.
   <span class="missing-if-branch" title="if path not taken" >I</span>if (value.values.length === 1) {
 <span class="cstat-no" title="statement not covered" >    return value;</span>
   }
 &nbsp;
-  const [outside, inside] = <span class="cstat-no" title="statement not covered" >value.values;</span>
+  const [outside, inside] = value.values;
 &nbsp;
   switch (outside.value) {
     case "inline":
@@ -1032,8 +1032,8 @@ function displayTable(value: Specified): Computed {
 /**
  * {@link https://html.spec.whatwg.org/multipage/rendering.html#button-layout}
  */
-function buttonLayout(value: Specified): Computed {
-  const [outside, inside] = <span class="cstat-no" title="statement not covered" >value.values;</span>
+function <span class="fstat-no" title="function not covered" >buttonLayout(</span>value: Specified): Computed {
+  const [outside, inside] = value.values;
 &nbsp;
   <span class="missing-if-branch" title="if path not taken" >I</span>if (inside?.is("flex", "grid")) {
     // flex, inline-flex, grid, inline-grid
@@ -1060,7 +1060,7 @@ function buttonLayout(value: Specified): Computed {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:36:22.122Z
+                at 2026-04-10T09:31:34.530Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

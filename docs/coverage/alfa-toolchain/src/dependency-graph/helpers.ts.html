@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.44% </span>
+                <span class="strong">36.45% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>31/58</span>
+                <span class='fraction'>35/96</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.23% </span>
+                <span class="strong">87.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>15/17</span>
+                <span class='fraction'>28/32</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.15% </span>
+                <span class="strong">46.8% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>12/26</span>
+                <span class='fraction'>22/47</span>
             </div>
         
             
@@ -522,7 +522,7 @@ import { Map } from "@siteimprove/alfa-map";
 &nbsp;
 import type { Package, Packages } from "@manypkg/get-packages";
 import madge from "madge";
-import { DependencyGraph } from "./dependency-graph.js";
+import { DependencyGraph } from "./dependency-graph.ts";
 &nbsp;
 import * as path from "node:path";
 &nbsp;
@@ -531,7 +531,7 @@ import * as path from "node:path";
  *
  * @public
  */
-export namespace GraphFactory {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace GraphFactory {</span>
   /**
    * Generates a dependency graph from a package.
    *
@@ -547,20 +547,20 @@ export namespace GraphFactory {
    *
    * @public
    */
-  export async function <span class="fstat-no" title="function not covered" >fromPackage(</span>
+  export async function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >fromPackage(</span></span>
     pkg: Package,
   ): Promise&lt;DependencyGraph&lt;string, string&gt;&gt; {
     // Exclude files that are not inside the base directory.
     // These are in other packages, which we don't care about here.
-    const notPkg = <span class="cstat-no" title="statement not covered" >new RegExp(`^../`);</span>
+    const notPkg = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >new RegExp(`^../`);</span></span>
 &nbsp;
-    const fullDepTree = <span class="cstat-no" title="statement not covered" >await madge(path.join(pkg.dir, "src"), {</span>
+    const fullDepTree = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >await madge(path.join(pkg.dir, "src"), {</span></span>
       fileExtensions: ["ts", "tsx"],
       excludeRegExp: [/[.]d[.]ts/, notPkg],
       baseDir: pkg.dir,
     });
 &nbsp;
-    const noTypeDepTree = <span class="cstat-no" title="statement not covered" >await madge(path.join(pkg.dir, "src"), {</span>
+    const noTypeDepTree = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >await madge(path.join(pkg.dir, "src"), {</span></span>
       fileExtensions: ["ts", "tsx"],
       excludeRegExp: [/[.]d[.]ts/, notPkg],
       detectiveOptions: { ts: { skipTypeImports: true } },
@@ -579,7 +579,7 @@ export namespace GraphFactory {
     });
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >fromPackagesList(</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >fromPackagesList(</span></span>
     packages: Packages,
     {
       clusters,
@@ -591,32 +591,32 @@ export namespace GraphFactory {
       scope: string;
     },
   ) {
-    const fullGraph = <span class="cstat-no" title="statement not covered" >Map.from(</span>
-      packages.packages.map(<span class="fstat-no" title="function not covered" >({</span> packageJson }) =&gt; <span class="cstat-no" title="statement not covered" >[</span>
+    const fullGraph = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Map.from(</span></span>
+      packages.packages.map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >({</span></span> packageJson }) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[</span></span>
         packageJson.name,
         Global.getAllWorkspaceDependencies(packageJson),
       ]),
     );
 &nbsp;
-    const heavyGraph = <span class="cstat-no" title="statement not covered" >Map.from(</span>
-      packages.packages.map(<span class="fstat-no" title="function not covered" >({</span> packageJson }) =&gt; <span class="cstat-no" title="statement not covered" >[</span>
+    const heavyGraph = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Map.from(</span></span>
+      packages.packages.map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >({</span></span> packageJson }) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[</span></span>
         packageJson.name,
         Global.getWorkspaceProdDependencies(packageJson),
       ]),
     );
 &nbsp;
-    const modules = <span class="cstat-no" title="statement not covered" >[...Global.getClusters(clusters)];</span>
+    const modules = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[...Global.getClusters(clusters)];</span></span>
 &nbsp;
-    const circular: Array&lt;string&gt; = <span class="cstat-no" title="statement not covered" >[];</span>
+    const circular: Array&lt;string&gt; = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[];</span></span>
 &nbsp;
-    const clusterize = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(m</span>odule: string) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      modules.find(<span class="fstat-no" title="function not covered" >(m</span>) =&gt; <span class="cstat-no" title="statement not covered" >m.id === module)</span>?.clusters ?? [];</span>
-    const clusterId = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(c</span>luster: string) =&gt; <span class="cstat-no" title="statement not covered" >cluster;</span></span>
-    const clusterLabel = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(c</span>luster: string) =&gt; <span class="cstat-no" title="statement not covered" >cluster;</span></span>
+    const clusterize = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(m</span></span>odule: string) =&gt;</span></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      modules.find(<span class="fstat-no" title="function not covered" >(m</span>) =&gt; <span class="cstat-no" title="statement not covered" >m.id === module)</span>?.clusters ?? [];</span></span>
+    const clusterId = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(c</span></span>luster: string) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >cluster;</span></span></span></span>
+    const clusterLabel = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(c</span></span>luster: string) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >cluster;</span></span></span></span>
 &nbsp;
-    const moduleId = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(m</span>odule: string) =&gt; <span class="cstat-no" title="statement not covered" >module;</span></span>
-    const moduleName = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(m</span>odule: string) =&gt; <span class="cstat-no" title="statement not covered" >module.replace(scope + "/", "");</span></span>
-    const isEntryPoint = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >false;</span></span>
+    const moduleId = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(m</span></span>odule: string) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >module;</span></span></span></span>
+    const moduleName = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(m</span></span>odule: string) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >module.replace(scope + "/", "");</span></span></span></span>
+    const isEntryPoint = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >f</span>alse;</span></span></span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return DependencyGraph.of&lt;string, string&gt;({</span>
       name,
@@ -634,7 +634,7 @@ export namespace GraphFactory {
   }
 &nbsp;
   /** @internal */
-  export namespace Individual {
+<span class="cstat-no" title="statement not covered" >  export namespace Individual {</span>
     /**
      * Returns the clusters (directories) a module (file) belongs to.
      *
@@ -645,7 +645,7 @@ export namespace GraphFactory {
      *
      * @interal
      */
-    export function clusterize(module: string): Array&lt;string&gt; {
+    export function <span class="cstat-no" title="statement not covered" >clusterize(module: string): Array&lt;string&gt; {</span>
       const clustersList = module.split(path.sep);
       let clusters: Array&lt;string&gt; = [];
 &nbsp;
@@ -661,7 +661,7 @@ export namespace GraphFactory {
      *
      * @internal
      */
-    export function <span class="fstat-no" title="function not covered" >clusterId(</span>cluster: string): string {
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >clusterId(c</span>luster: string): string {</span>
 <span class="cstat-no" title="statement not covered" >      return cluster;</span>
     }
 &nbsp;
@@ -670,7 +670,7 @@ export namespace GraphFactory {
      *
      * @internal
      */
-    export function lastSegment(str: string): string {
+    export function <span class="cstat-no" title="statement not covered" >lastSegment(str: string): string {</span>
       const parts = str.split(path.sep);
       return parts[parts.length - 1];
     }
@@ -680,7 +680,7 @@ export namespace GraphFactory {
      *
      * @internal
      */
-    export function <span class="fstat-no" title="function not covered" >moduleId(</span>module: string): string {
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >moduleId(m</span>odule: string): string {</span>
 <span class="cstat-no" title="statement not covered" >      return module;</span>
     }
 &nbsp;
@@ -690,13 +690,13 @@ export namespace GraphFactory {
      *
      * @internal
      */
-    export function <span class="fstat-no" title="function not covered" >isEntryPoint(</span>module: string): boolean {
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isEntryPoint(m</span>odule: string): boolean {</span>
 <span class="cstat-no" title="statement not covered" >      return module.endsWith("index.ts");</span>
     }
   }
 &nbsp;
   /** @internal */
-  export namespace Global {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  export namespace G</span>lobal {</span>
     /** @internal */
     export type ClusterDefinition =
       | string
@@ -710,7 +710,7 @@ export namespace GraphFactory {
      *
      * @internal
      */
-    export function* getClusters(
+    export function* <span class="cstat-no" title="statement not covered" >getClusters(</span>
       clusters: Array&lt;ClusterDefinition&gt;,
       acc: Array&lt;string&gt; = [],
     ): Iterable&lt;Module&gt; {
@@ -724,7 +724,7 @@ export namespace GraphFactory {
     }
 &nbsp;
     /** @internal */
-    export function getAllWorkspaceDependencies(pkg: {
+    export function <span class="cstat-no" title="statement not covered" >getAllWorkspaceDependencies(pkg: {</span>
       dependencies?: { [key: string]: string };
       devDependencies?: { [key: string]: string };
     }): Array&lt;string&gt; {
@@ -735,7 +735,7 @@ export namespace GraphFactory {
     }
 &nbsp;
     /** @internal */
-    export function getWorkspaceProdDependencies(pkg: {
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >getWorkspaceProdDependencies(</span>pkg: {</span>
       dependencies?: { [key: string]: string };
     }): Array&lt;string&gt; {
       return Object.entries(pkg.dependencies ?? {})
@@ -751,7 +751,7 @@ export namespace GraphFactory {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

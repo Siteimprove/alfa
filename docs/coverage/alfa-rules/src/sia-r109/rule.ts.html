@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75.75% </span>
+                <span class="strong">76.59% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>25/33</span>
+                <span class='fraction'>36/47</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">44.44% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/9</span>
+                <span class='fraction'>8/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">63.82% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>18/24</span>
+                <span class='fraction'>30/47</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.12% </span>
+                <span class="strong">78.78% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>25/32</span>
+                <span class='fraction'>26/33</span>
             </div>
         
             
@@ -407,7 +407,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -438,11 +438,11 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 &nbsp;
-import { expectation } from "../common/act/expectation.js";
-import { Question } from "../common/act/question.js";
+import { expectation } from "../common/act/expectation.ts";
+import { Question } from "../common/act/question.ts";
 &nbsp;
-import { Scope, Stability } from "../tags/index.js";
-import { withDocumentElement } from "../common/applicability/with-document-element.js";
+import { Scope, Stability } from "../tags/index.ts";
+import { withDocumentElement } from "../common/applicability/with-document-element.ts";
 &nbsp;
 const { hasAttribute } = Element;
 &nbsp;
@@ -455,7 +455,7 @@ export default Rule.Atomic.of&lt;Page, Document, Question.Metadata&gt;({
   uri: "https://alfa.siteimprove.com/rules/sia-r109",
   requirements: [Criterion.of("3.1.1"), EAA.of("9.3.1.1"), Technique.of("H57")],
   tags: [Scope.Page, Stability.Experimental],
-  evaluate({ document }) {
+<span class="fstat-no" title="function not covered" >  evaluate(</span>{ document }) {
     let programmaticLanguage: Language;
 &nbsp;
     return {
@@ -502,7 +502,7 @@ export default Rule.Atomic.of&lt;Page, Document, Question.Metadata&gt;({
 /**
  * @public
  */
-export namespace Outcomes {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Outcomes {</span>
   export const HasCorrectLang = (programmatic: Language, natural: Language) =&gt;
     Ok.of(
       Languages.of(
@@ -534,7 +534,7 @@ export namespace Outcomes {
  * @public
  */
 export class Languages extends Diagnostic {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     message: string,
     programmatic: Language = Language.of(Language.Primary.of("en")),
     natural?: Language,
@@ -545,7 +545,7 @@ export class Languages extends Diagnostic {
   private readonly _programmatic: Language;
   private readonly _natural: Option&lt;Language&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     message: string,
     programmatic: Language,
     natural: Option&lt;Language&gt;,
@@ -555,11 +555,11 @@ export class Languages extends Diagnostic {
     this._natural = natural;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >programmatic(</span>): Language {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >programmatic(</span>): Language {</span>
 <span class="cstat-no" title="statement not covered" >    return this._programmatic;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >natural(</span>): Option&lt;Language&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >natural(</span>): Option&lt;Language&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._natural;</span>
   }
 &nbsp;
@@ -567,8 +567,8 @@ export class Languages extends Diagnostic {
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Languages &amp;&amp;
       value._message === this._message &amp;&amp;
       value._programmatic.equals(this._programmatic) &amp;&amp;
@@ -576,13 +576,13 @@ export class Languages extends Diagnostic {
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    super.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    hash.writeString(this._programmatic.primary.name);</span>
 <span class="cstat-no" title="statement not covered" >    this._natural.forEach(<span class="fstat-no" title="function not covered" >(l</span>ang) =&gt; <span class="cstat-no" title="statement not covered" >hash.writeString(lang.primary.name))</span>;</span>
   }
 &nbsp;
-  public toJSON(options?: Node.SerializationOptions): Languages.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Node.SerializationOptions): Languages.JSON {
     return {
       ...super.toJSON(options),
       programmatic: this._programmatic.toJSON(),
@@ -594,7 +594,7 @@ export class Languages extends Diagnostic {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Languages {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >L</span>anguages {</span></span>
   export interface JSON extends Diagnostic.JSON {
     programmatic: Language.JSON;
     natural: Option.JSON&lt;Language&gt;;
@@ -605,7 +605,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
   export function isLanguages(value: unknown): value is Languages;
 &nbsp;
   /**@public */
-  export function <span class="fstat-no" title="function not covered" >isLanguages(</span>value: unknown): value is Languages {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isLanguages(</span>v</span>alue: unknown): value is Languages {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Languages;</span>
   }
 }
@@ -616,7 +616,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

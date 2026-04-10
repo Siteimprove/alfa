@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.38% </span>
+                <span class="strong">46.15% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/21</span>
+                <span class='fraction'>12/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">44.44% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/9</span>
+                <span class='fraction'>8/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">69.23% </span>
+                <span class="strong">34.61% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>9/13</span>
+                <span class='fraction'>9/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.38% </span>
+                <span class="strong">54.54% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/21</span>
+                <span class='fraction'>12/22</span>
             </div>
         
             
@@ -297,7 +297,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -360,9 +360,9 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { Attributes } from "./attribute/data.js";
-import { Role } from "./role.js";
-import type { Roles } from "./role/data.js";
+import { Attributes } from "./attribute/data.ts";
+import { Role } from "./role.ts";
+import type { Roles } from "./role/data.ts";
 &nbsp;
 /**
  * @public
@@ -370,7 +370,7 @@ import type { Roles } from "./role/data.js";
 export class Attribute&lt;N extends Attribute.Name = Attribute.Name&gt;
   implements Equatable, Serializable
 {
-  public static of&lt;N extends Attribute.Name&gt;(
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>N extends Attribute.Name&gt;(
     name: N,
     value: string,
   ): Attribute&lt;N&gt; {
@@ -380,29 +380,29 @@ export class Attribute&lt;N extends Attribute.Name = Attribute.Name&gt;
   private readonly _name: N;
   private readonly _value: string;
 &nbsp;
-  protected constructor(name: N, value: string) {
+<span class="fstat-no" title="function not covered" >  protected constructor(n</span>ame: N, value: string) {
     this._name = name;
     this._value = value;
   }
 &nbsp;
-  public get name(): N {
+  public get <span class="fstat-no" title="function not covered" >name(</span>): N {
     return this._name;
   }
 &nbsp;
-  public get value(): string {
+  public get <span class="fstat-no" title="function not covered" >value(</span>): string {
     return this._value;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >kind(</span>): Attribute.Kind&lt;N&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >kind(</span>): Attribute.Kind&lt;N&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return Attributes[this._name].kind;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >type(</span>): Attribute.Type&lt;N&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >type(</span>): Attribute.Type&lt;N&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return Attributes[this._name].type;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >default(</span>): Option&lt;Attribute.Default&lt;N&gt;&gt; {
-    const value = <span class="cstat-no" title="statement not covered" >Attributes[this._name].default;</span>
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >default(</span>): Option&lt;Attribute.Default&lt;N&gt;&gt; {</span>
+    const value = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Attributes[this._name].default;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (value === null) {</span>
 <span class="cstat-no" title="statement not covered" >      return None;</span>
@@ -411,8 +411,8 @@ export class Attribute&lt;N extends Attribute.Name = Attribute.Name&gt;
 <span class="cstat-no" title="statement not covered" >    return Option.of(value as Attribute.Default&lt;N&gt;);</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >options(</span>): Sequence&lt;Attribute.Option&lt;N&gt;&gt; {
-    const options = <span class="cstat-no" title="statement not covered" >Attributes[this._name].options;</span>
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >options(</span>): Sequence&lt;Attribute.Option&lt;N&gt;&gt; {</span>
+    const options = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Attributes[this._name].options;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (options === null) {</span>
 <span class="cstat-no" title="statement not covered" >      return Sequence.empty();</span>
@@ -424,19 +424,19 @@ export class Attribute&lt;N extends Attribute.Name = Attribute.Name&gt;
   /**
    * {@link https://www.w3.org/TR/wai-aria/#global_states}
    */
-  public isGlobal(): this is Attribute&lt;Attribute.Global&gt; {
+  public <span class="fstat-no" title="function not covered" >isGlobal(</span>): this is Attribute&lt;Attribute.Global&gt; {
     return Role.of("roletype").isAttributeSupported(this._name);
   }
 &nbsp;
-  public equals(value: unknown): value is this {
-    return (
+  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+<span class="cstat-no" title="statement not covered" >    return (</span>
       value instanceof Attribute &amp;&amp;
       value._name === this._name &amp;&amp;
       value._value === this._value
     );
   }
 &nbsp;
-  public toJSON(): Attribute.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Attribute.JSON {
     return {
       name: this._name,
       value: this._value,
@@ -447,7 +447,7 @@ export class Attribute&lt;N extends Attribute.Name = Attribute.Name&gt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Attribute {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >A</span>ttribute {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     name: Name;
@@ -456,7 +456,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >A
 &nbsp;
   export type Name = keyof Attributes;
 &nbsp;
-  export function isName(value: string): value is Name {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isName(</span>value: string): value is Name {</span>
     return value in Attributes;
   }
 &nbsp;
@@ -505,7 +505,7 @@ type Members&lt;T&gt; = T extends Iterable&lt;infer T&gt; ? T : never;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:09.309Z
+                at 2026-04-10T09:29:24.679Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

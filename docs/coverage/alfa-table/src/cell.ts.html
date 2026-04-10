@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.48% </span>
+                <span class="strong">93.65% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>43/47</span>
+                <span class='fraction'>59/63</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">60% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>12/20</span>
+                <span class='fraction'>24/40</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.09% </span>
+                <span class="strong">96.72% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>27/31</span>
+                <span class='fraction'>59/61</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.48% </span>
+                <span class="strong">91.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>43/47</span>
+                <span class='fraction'>44/48</span>
             </div>
         
             
@@ -459,28 +459,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">90x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">90x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
+<span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -540,14 +540,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
+<span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">90x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
+<span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -624,7 +624,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
+<span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-yes">202x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -641,11 +641,11 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { Anchored } from "./anchored.js";
-import type { Slot } from "./slot.js";
-import type { Scope } from "./scope.js";
+import { Anchored } from "./anchored.ts";
+import type { Slot } from "./slot.ts";
+import type { Scope } from "./scope.ts";
 &nbsp;
-import * as predicate from "./cell/predicate.js";
+import * as predicate from "./cell/predicate.ts";
 &nbsp;
 const { and, or } = Refinement;
 const { isElement } = Element;
@@ -735,10 +735,10 @@ export abstract class Cell
     return (
       value instanceof Cell &amp;&amp;
       value._element.equals(this._element) &amp;&amp;
-<span class="branch-2 cbranch-no" title="branch not covered" >      value._anchor.equals(this._anchor) </span>&amp;&amp;
-<span class="branch-3 cbranch-no" title="branch not covered" >      value._width === this._width </span>&amp;&amp;
-<span class="branch-4 cbranch-no" title="branch not covered" >      value._height === this._height </span>&amp;&amp;
-<span class="branch-5 cbranch-no" title="branch not covered" >      Array.equals(value._headers, this._headers)</span>
+<span class="branch-2 cbranch-no" title="branch not covered" ><span class="branch-2 cbranch-no" title="branch not covered" >      value._anchor.equals(this._anchor) </span>&amp;&amp;</span>
+<span class="branch-3 cbranch-no" title="branch not covered" ><span class="branch-3 cbranch-no" title="branch not covered" >      value._width === this._width </span>&amp;&amp;</span>
+<span class="branch-4 cbranch-no" title="branch not covered" ><span class="branch-4 cbranch-no" title="branch not covered" >      value._height === this._height </span>&amp;&amp;</span>
+<span class="branch-5 cbranch-no" title="branch not covered" ><span class="branch-5 cbranch-no" title="branch not covered" >      Array.equals(value._headers, this._headers)</span></span>
     );
   }
 &nbsp;
@@ -748,7 +748,7 @@ export abstract class Cell
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Cell {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Cell {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     element: string;
@@ -758,7 +758,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
     headers: Array&lt;Slot.JSON&gt;;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isCell(</span>value: unknown): value is Cell {
+  export function isCell(value: unknown): value is Cell {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Cell;</span>
   }
 &nbsp;
@@ -791,7 +791,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
       super(element, anchor, width, height, headers);
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >isData(</span>): this is Data {
+    public <span class="fstat-no" title="function not covered" >isData(): this is Data {</span>
 <span class="cstat-no" title="statement not covered" >      return true;</span>
     }
 &nbsp;
@@ -819,12 +819,12 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
     }
   }
 &nbsp;
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Data {</span>
+  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Data {</span></span>
     export interface JSON extends Cell.JSON {
       type: "data";
     }
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >isData(</span>value: unknown): value is Data {
+    export function isData(value: unknown): value is Data {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Data;</span>
     }
   }
@@ -869,7 +869,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
       return this._scope;
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >isData(</span>): this is never {
+    public <span class="fstat-no" title="function not covered" >isData(): this is never {</span>
 <span class="cstat-no" title="statement not covered" >      return false;</span>
     }
 &nbsp;
@@ -885,7 +885,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
       return (
         value instanceof Header &amp;&amp;
         super.equals(value) &amp;&amp;
-<span class="branch-2 cbranch-no" title="branch not covered" >        value._scope === this._scope</span>
+<span class="branch-2 cbranch-no" title="branch not covered" ><span class="branch-2 cbranch-no" title="branch not covered" >        value._scope === this._scope</span></span>
       );
     }
 &nbsp;
@@ -902,7 +902,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
     }
   }
 &nbsp;
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Header {</span>
+  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Header {</span></span>
     export interface JSON extends Cell.JSON {
       type: "header";
       scope: Scope;
@@ -922,7 +922,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

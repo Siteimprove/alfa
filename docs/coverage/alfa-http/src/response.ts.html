@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">54.16% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/24</span>
+                <span class='fraction'>18/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/14</span>
+                <span class='fraction'>16/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">54.16% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>13/24</span>
+                <span class='fraction'>15/25</span>
             </div>
         
             
@@ -338,33 +338,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">106x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">106x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">105x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -373,7 +373,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">106x</span>
+<span class="cline-any cline-yes">105x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -384,8 +384,8 @@ import type * as earl from "@siteimprove/alfa-earl";
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
 import type { Result } from "@siteimprove/alfa-result";
-import type { Body } from "./body.js";
-import { Headers } from "./headers.js";
+import type { Body } from "./body.ts";
+import { Headers } from "./headers.ts";
 &nbsp;
 /**
  * {@link https://fetch.spec.whatwg.org/#response-class}
@@ -440,21 +440,21 @@ export class Response
   /**
    * {@link https://fetch.spec.whatwg.org/#dom-response-status}
    */
-  public get <span class="fstat-no" title="function not covered" >status(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >status(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return this._status;</span>
   }
 &nbsp;
   /**
    * {@link https://fetch.spec.whatwg.org/#dom-response-headers}
    */
-  public get <span class="fstat-no" title="function not covered" >headers(</span>): Headers {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >headers(</span>): Headers {</span>
 <span class="cstat-no" title="statement not covered" >    return this._headers;</span>
   }
 &nbsp;
   /**
    * {@link https://fetch.spec.whatwg.org/#dom-body-body}
    */
-  public get <span class="fstat-no" title="function not covered" >body(</span>): ArrayBuffer {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >body(</span>): ArrayBuffer {</span>
 <span class="cstat-no" title="statement not covered" >    return this._body;</span>
   }
 &nbsp;
@@ -467,7 +467,7 @@ export class Response
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toEARL(</span>): Response.EARL {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toEARL(</span>): Response.EARL {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       "@context": {
         http: "http://www.w3.org/2011/http#",
@@ -486,8 +486,8 @@ export class Response
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
-    let response = <span class="cstat-no" title="statement not covered" >`HTTP/1.1 ${this._status}`;</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
+    let response = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >`HTTP/1.1 ${this._status}`;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    response += "\n" + this._headers.toString();</span>
 <span class="cstat-no" title="statement not covered" >    response += "\n";</span>
@@ -500,7 +500,7 @@ export class Response
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Response {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Response {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     url: string;
@@ -541,7 +541,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

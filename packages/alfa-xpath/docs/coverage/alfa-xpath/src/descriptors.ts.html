@@ -32,14 +32,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10% </span>
+                <span class="strong">5% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/10</span>
+                <span class='fraction'>1/20</span>
             </div>
         
             
@@ -402,65 +402,65 @@ export namespace Descriptors {
 /**
  * @internal
  */
-export function <span class="fstat-no" title="function not covered" >string(</span>): Descriptors.String {
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >string(</span>): Descriptors.String {</span>
 <span class="cstat-no" title="statement not covered" >  return { type: "string", properties: {} };</span>
 }
 &nbsp;
 /**
  * @internal
  */
-export function <span class="fstat-no" title="function not covered" >numeric(</span>): Descriptors.Numeric {
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >numeric(</span>): Descriptors.Numeric {</span>
 <span class="cstat-no" title="statement not covered" >  return { type: "numeric", properties: {} };</span>
 }
 &nbsp;
 /**
  * @internal
  */
-export function <span class="fstat-no" title="function not covered" >integer(</span>): Descriptors.Integer {
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >integer(</span>): Descriptors.Integer {</span>
 <span class="cstat-no" title="statement not covered" >  return { type: "integer", properties: {} };</span>
 }
 &nbsp;
 /**
  * @internal
  */
-export function <span class="fstat-no" title="function not covered" >decimal(</span>): Descriptors.Decimal {
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >decimal(</span>): Descriptors.Decimal {</span>
 <span class="cstat-no" title="statement not covered" >  return { type: "decimal", properties: {} };</span>
 }
 &nbsp;
 /**
  * @internal
  */
-export function <span class="fstat-no" title="function not covered" >double(</span>): Descriptors.Double {
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >double(</span>): Descriptors.Double {</span>
 <span class="cstat-no" title="statement not covered" >  return { type: "double", properties: {} };</span>
 }
 &nbsp;
 /**
  * @internal
  */
-export function <span class="fstat-no" title="function not covered" >boolean(</span>): Descriptors.Boolean {
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >boolean(</span>): Descriptors.Boolean {</span>
 <span class="cstat-no" title="statement not covered" >  return { type: "boolean", properties: {} };</span>
 }
 &nbsp;
 /**
  * @internal
  */
-export function node(): Descriptors.Node {
+export function <span class="fstat-no" title="function not covered" >node(</span>): Descriptors.Node {
   return { type: "node", properties: {} };
 }
 &nbsp;
 /**
  * @internal
  */
-export function <span class="fstat-no" title="function not covered" >element(</span>): Descriptors.Element {
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >element(</span>): Descriptors.Element {</span>
 <span class="cstat-no" title="statement not covered" >  return { type: "element", properties: {} };</span>
 }
 &nbsp;
 /**
  * @internal
  */
-export function <span class="fstat-no" title="function not covered" >sequence&lt;</span>D extends Descriptor&gt;(
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >sequence&lt;</span>D extends Descriptor&gt;(</span>
   descriptor: D,
-  options: { required?: boolean } = <span class="branch-0 cbranch-no" title="branch not covered" >{},</span>
+  options: { required?: boolean } = <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >{},</span></span>
 ): Descriptors.Sequence&lt;D&gt; {
 <span class="cstat-no" title="statement not covered" >  return {</span>
     type: options.required === true ? "+" : "*",
@@ -473,7 +473,7 @@ export function <span class="fstat-no" title="function not covered" >sequence&lt
 /**
  * @internal
  */
-export function <span class="fstat-no" title="function not covered" >optional&lt;</span>D extends Descriptor&gt;(
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >optional&lt;</span>D extends Descriptor&gt;(</span>
   descriptor: D,
 ): Descriptors.Optional&lt;D&gt; {
 <span class="cstat-no" title="statement not covered" >  return {</span>
@@ -490,7 +490,7 @@ export function <span class="fstat-no" title="function not covered" >optional&lt
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:36:35.425Z
+                at 2026-04-10T09:31:48.278Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

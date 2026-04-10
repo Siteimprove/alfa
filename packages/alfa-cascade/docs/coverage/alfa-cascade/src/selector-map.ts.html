@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.11% </span>
+                <span class="strong">94.96% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>99/103</span>
+                <span class='fraction'>132/139</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.88% </span>
+                <span class="strong">90.74% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>32/36</span>
+                <span class='fraction'>49/54</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">97.43% </span>
+                <span class="strong">81.42% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>38/39</span>
+                <span class='fraction'>57/70</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.87% </span>
+                <span class="strong">96.9% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>93/96</span>
+                <span class='fraction'>94/97</span>
             </div>
         
             
@@ -810,7 +810,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1126,9 +1126,9 @@ import { Combinator, Complex, Selector } from "@siteimprove/alfa-selector";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import type { AncestorFilter } from "./ancestor-filter.js";
-import { Block } from "./block.js";
-import { Layer, type Order } from "./precedence/index.js";
+import type { AncestorFilter } from "./ancestor-filter.ts";
+import { Block } from "./block.ts";
+import { Layer, type Order } from "./precedence/index.ts";
 &nbsp;
 const { equals, property } = Predicate;
 const { and } = Refinement;
@@ -1193,7 +1193,7 @@ const {
  * @internal
  */
 export class SelectorMap implements Serializable {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     ids: SelectorMap.Bucket,
     classes: SelectorMap.Bucket,
     types: SelectorMap.Bucket,
@@ -1209,7 +1209,7 @@ export class SelectorMap implements Serializable {
   private readonly _other: Array&lt;Block&lt;Block.Source&gt;&gt;;
   private readonly _shadow: Array&lt;Block&lt;Block.Source&gt;&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     ids: SelectorMap.Bucket,
     classes: SelectorMap.Bucket,
     types: SelectorMap.Bucket,
@@ -1231,7 +1231,7 @@ export class SelectorMap implements Serializable {
    * Blocks whose layers haven't been ordered are discarded at that point.
    * Under normal flow, this should only be called once layers have been ordered.
    */
-  public *get(
+  public *<span class="fstat-no" title="function not covered" >get(</span>
     element: Element,
     context: Context,
     filter: AncestorFilter,
@@ -1286,7 +1286,7 @@ export class SelectorMap implements Serializable {
    * host, we cannot use the ancestor filter that does not escape its tree.
    * This is therefore fairly costly, and hopefully not too frequent.
    */
-  public *getForHost(
+  public *<span class="fstat-no" title="function not covered" >getForHost(</span>
     host: Element,
     context: Context,
   ): Iterable&lt;Block&lt;Block.Source, true&gt;&gt; {
@@ -1312,7 +1312,7 @@ export class SelectorMap implements Serializable {
    * Because this navigates (partly) in the flat tree rather than the normal DOM
    * tree, we cannot easily re-use the ancestor filter.
    */
-  public *getForSlotted(
+  public *<span class="fstat-no" title="function not covered" >getForSlotted(</span>
     slotted: Element,
     context: Context,
   ): Iterable&lt;Block&lt;Block.Source, true&gt;&gt; {
@@ -1324,7 +1324,7 @@ export class SelectorMap implements Serializable {
     );
   }
 &nbsp;
-  public toJSON(): SelectorMap.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): SelectorMap.JSON {
     return {
       ids: this._ids.toJSON(),
       classes: this._classes.toJSON(),
@@ -1338,7 +1338,7 @@ export class SelectorMap implements Serializable {
 /**
  * @internal
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >SelectorMap {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >S</span>electorMap {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     ids: Bucket.JSON;
@@ -1348,7 +1348,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
     shadow: Array&lt;Block.JSON&gt;;
   }
 &nbsp;
-  export function from(
+  export function <span class="cstat-no" title="statement not covered" >from(</span>
     sheets: Iterable&lt;Sheet&gt;,
     device: Device,
     encapsulationDepth: number,
@@ -1561,7 +1561,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
     for (const sheet of Iterable.reject(sheets, (sheet) =&gt; sheet.disabled)) {
       <span class="missing-if-branch" title="if path not taken" >I</span>if (sheet.condition.isSome()) {
         // If the sheet is conditional and the query doesn't match, skip the sheet.
-        const query = <span class="cstat-no" title="statement not covered" >Feature.parseMediaQuery(Lexer.lex(sheet.condition.get()));</span>
+        const query = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Feature.parseMediaQuery(Lexer.lex(sheet.condition.get()));</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        if (query.every(<span class="fstat-no" title="function not covered" >([</span>, query]) =&gt; <span class="cstat-no" title="statement not covered" >!query.matches(device))</span>) {</span>
 <span class="cstat-no" title="statement not covered" >          continue;</span>
@@ -1586,18 +1586,18 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
    *
    * @internal
    */
-  export class Bucket implements Serializable {
-    public static empty(): Bucket {
+  export class <span class="cstat-no" title="statement not covered" >Bucket implements Serializable {</span>
+    public static <span class="fstat-no" title="function not covered" >empty(</span>): Bucket {
       return new Bucket(new Map());
     }
 &nbsp;
     private readonly _nodes: Map&lt;string, Array&lt;Block&lt;Block.Source&gt;&gt;&gt;;
 &nbsp;
-    protected constructor(nodes: Map&lt;string, Array&lt;Block&lt;Block.Source&gt;&gt;&gt;) {
+<span class="fstat-no" title="function not covered" >    protected constructor(n</span>odes: Map&lt;string, Array&lt;Block&lt;Block.Source&gt;&gt;&gt;) {
       this._nodes = nodes;
     }
 &nbsp;
-    public add(key: string, node: Block&lt;Block.Source&gt;): void {
+    public <span class="fstat-no" title="function not covered" >add(</span>key: string, node: Block&lt;Block.Source&gt;): void {
       const nodes = this._nodes.get(key);
 &nbsp;
       if (nodes === undefined) {
@@ -1607,7 +1607,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
       }
     }
 &nbsp;
-    public get(key: string): Array&lt;Block&lt;Block.Source&gt;&gt; {
+    public <span class="fstat-no" title="function not covered" >get(</span>key: string): Array&lt;Block&lt;Block.Source&gt;&gt; {
       const nodes = this._nodes.get(key);
 &nbsp;
       if (nodes === undefined) {
@@ -1617,7 +1617,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
       return nodes;
     }
 &nbsp;
-    public toJSON(): Bucket.JSON {
+    public <span class="fstat-no" title="function not covered" >toJSON(</span>): Bucket.JSON {
       return [...this._nodes].map(([key, nodes]) =&gt; [
         key,
         nodes.map((node) =&gt; node.toJSON()),
@@ -1639,7 +1639,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:13.066Z
+                at 2026-04-10T09:29:28.174Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
