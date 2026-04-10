@@ -16,7 +16,7 @@ import { Scope, Stability, Version } from "../tags/index.ts";
 
 const { hasName, hasNamespace, hasTabIndex } = Element;
 const { and, test } = Predicate;
-const { isTabbable, isVisible } = Style;
+const { isInert, isTabbable, isVisible } = Style;
 const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -38,6 +38,7 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return getElementDescendants(document, Node.fullTree)
           .filter(and(hasNamespace(Namespace.HTML), hasName("iframe")))
+          .reject(isInert(device))
           .filter((iframe) =>
             iframe.content
               .map((contentDocument) =>
