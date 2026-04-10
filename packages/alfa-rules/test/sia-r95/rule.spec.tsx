@@ -101,11 +101,3 @@ test("evaluate() is inapplicable to inheritedly inert iframe", async (t) => {
 
   t.deepEqual(await evaluate(R95, { document }), [inapplicable(R95)]);
 });
-
-// test("evaluate() is inapplicable to iframe made inert by an open modal", async (t) => {
-//   const document = h.document([
-//     <iframe hidden>{h.document([<button>Hello World!</button>])}</iframe>,
-//   ]);
-//
-//   t.deepEqual(await evaluate(R95, { document }), [inapplicable(R95)]);
-// });
