@@ -6,10 +6,10 @@ import { Map } from "@siteimprove/alfa-map";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { Display } from "./display.js";
-import { Preference } from "./preference.js";
-import { Scripting } from "./scripting.js";
-import { Viewport } from "./viewport.js";
+import { Display } from "./display.ts";
+import { Preference } from "./preference.ts";
+import { Scripting } from "./scripting.ts";
+import { Viewport } from "./viewport.ts";
 
 /**
  * @public

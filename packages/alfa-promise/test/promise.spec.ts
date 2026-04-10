@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Promise } from "../dist/promise.js";
+import { Promise } from "../src/promise.ts";
 
 test(`.isPromise() tests if a value is a promise`, (t) => {
   t.equal(Promise.isPromise(Promise.resolve(42)), true);

@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { None } from "../dist/none.js";
-import { Option } from "../dist/option.js";
-import { Some } from "../dist/some.js";
+import { None } from "../src/none.ts";
+import { Option } from "../src/option.ts";
+import { Some } from "../src/some.ts";
 
 const n: Option<number> = Some.of(1);
 const m: Option<number> = None;

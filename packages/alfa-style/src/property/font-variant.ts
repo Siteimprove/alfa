@@ -4,14 +4,14 @@ import type { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Shorthand } from "../shorthand.js";
+import { Shorthand } from "../shorthand.ts";
 
-import Caps from "./font-variant-caps.js";
-import * as EastAsian from "./font-variant-east-asian.js";
-import * as Ligatures from "./font-variant-ligatures.js";
+import Caps from "./font-variant-caps.ts";
+import * as EastAsian from "./font-variant-east-asian.ts";
+import * as Ligatures from "./font-variant-ligatures.ts";
 
-import * as Numeric from "./font-variant-numeric.js";
-import type { Longhand } from "../longhand.js";
+import * as Numeric from "./font-variant-numeric.ts";
+import type { Longhand } from "../longhand.ts";
 
 const parse: Parser<
   Slice<Token>,

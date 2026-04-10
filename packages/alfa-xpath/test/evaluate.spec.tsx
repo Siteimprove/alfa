@@ -1,7 +1,7 @@
 import { h, Node } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { evaluate } from "../dist/evaluate.js";
+import { evaluate } from "../src/evaluate.ts";
 
 test("evaluate() should respect traversal options", (t) => {
   const div = (

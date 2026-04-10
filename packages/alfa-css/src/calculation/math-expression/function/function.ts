@@ -1,7 +1,7 @@
 import { Array } from "@siteimprove/alfa-array";
 
-import { Expression } from "../expression.js";
-import type { Kind } from "../kind.js";
+import { Expression } from "../expression.ts";
+import type { Kind } from "../kind.ts";
 
 /**
  * @public

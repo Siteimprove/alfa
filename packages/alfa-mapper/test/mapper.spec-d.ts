@@ -1,6 +1,6 @@
 import { describe, it, expectTypeOf } from "vitest";
 
-import type { Mapper } from "../dist/mapper.d.ts";
+import type { Mapper } from "../src/mapper.ts";
 
 describe("Mapper", () => {
   it("defaults to identity function with no extra args", () => {

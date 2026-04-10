@@ -2,13 +2,13 @@ import type { Nth } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 import { Maybe, None, Option } from "@siteimprove/alfa-option";
 
-import type { Context } from "../../../context.js";
+import type { Context } from "../../../context.ts";
 // We cannot simplify that import as it would create a circular dependency
-import { Universal } from "../../simple/universal.js";
+import { Universal } from "../../simple/universal.ts";
 
-import type { Absolute, Selector } from "../../index.js";
+import type { Absolute, Selector } from "../../index.ts";
 
-import { WithIndexAndSelector } from "./pseudo-class.js";
+import { WithIndexAndSelector } from "./pseudo-class.ts";
 
 const { isElement } = Element;
 

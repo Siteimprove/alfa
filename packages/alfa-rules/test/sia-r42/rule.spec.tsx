@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R42, { Outcomes } from "../../dist/sia-r42/rule.js";
+import R42, { Outcomes } from "../../src/sia-r42/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test(`evaluates() passes an implicit listitem inside a list`, async (t) => {
   const target = <li>Foo</li>;

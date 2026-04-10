@@ -22,18 +22,18 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import * as element from "./element/element.js";
-import * as node from "./node/node.js";
-import * as predicates from "./predicate/index.js";
-import * as text from "./text/text.js";
+import * as element from "./element/element.ts";
+import * as node from "./node/node.ts";
+import * as predicates from "./predicate/index.ts";
+import * as text from "./text/text.ts";
 
-import { Longhand } from "./longhand.js";
-import { Longhands } from "./longhands.js";
-import type { Shorthand } from "./shorthand.js";
-import { Shorthands } from "./shorthands.js";
+import { Longhand } from "./longhand.ts";
+import { Longhands } from "./longhands.ts";
+import type { Shorthand } from "./shorthand.ts";
+import { Shorthands } from "./shorthands.ts";
 
-import { Value } from "./value.js";
-import { Variable } from "./variable.js";
+import { Value } from "./value.ts";
+import { Variable } from "./variable.ts";
 
 type Name = Longhands.Name;
 

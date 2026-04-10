@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 import { None, Option } from "@siteimprove/alfa-option";
-import { EAA } from "../dist/eaa.js";
+import { EAA } from "../src/eaa.ts";
 
 const chapter = "9.1.1.1" as const; // Non-text content
 

@@ -5,11 +5,11 @@ import type { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import type { Context } from "../context.js";
-import { Specificity } from "../specificity.js";
-import type { Selector } from "./index.js";
+import type { Context } from "../context.ts";
+import { Specificity } from "../specificity.ts";
+import type { Selector } from "./index.ts";
 
-import { BaseSelector } from "./selector.js";
+import { BaseSelector } from "./selector.ts";
 import {
   Class,
   Id,
@@ -17,7 +17,7 @@ import {
   PseudoElement,
   Simple,
   Type,
-} from "./simple/index.js";
+} from "./simple/index.ts";
 
 const { map, oneOrMore } = Parser;
 const { or, not } = Predicate;

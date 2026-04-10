@@ -1,2 +1,2 @@
-export * from "./list.js";
-export * from "./tuple.js";
+export * from "./list.ts";
+export * from "./tuple.ts";

@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Matrix } from "../dist/matrix.js";
+import { Matrix } from "../src/matrix.ts";
 
 test(".identity() constructs an identity matrix of a given size", (t) => {
   t.deepEqual(Matrix.identity(0), []);

@@ -29,6 +29,9 @@
     "./native": "./dist/native.js",
     "./native.js": "./dist/native.js"
   },
+  "imports": {
+    "@/jsx-dev-runtime": "./src/jsx-runtime.ts"
+  },
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*.js",

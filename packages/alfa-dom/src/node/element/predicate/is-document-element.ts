@@ -1,10 +1,10 @@
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import type { Element } from "../../slotable/element.js";
-import { Namespace } from "../../../namespace.js";
+import type { Element } from "../../slotable/element.ts";
+import { Namespace } from "../../../namespace.ts";
 
-import { hasName } from "./has-name.js";
-import { hasNamespace } from "./has-namespace.js";
+import { hasName } from "./has-name.ts";
+import { hasNamespace } from "./has-namespace.ts";
 
 const { and, test } = Refinement;
 

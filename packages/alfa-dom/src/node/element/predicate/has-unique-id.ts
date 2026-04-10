@@ -3,10 +3,10 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import type { Element } from "../../slotable/element.js";
-import type { BaseNode } from "../../node.js";
+import type { Element } from "../../slotable/element.ts";
+import type { BaseNode } from "../../node.ts";
 
-import { hasId } from "./has-id.js";
+import { hasId } from "./has-id.ts";
 
 const { and } = Predicate;
 

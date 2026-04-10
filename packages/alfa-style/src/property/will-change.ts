@@ -6,7 +6,7 @@ import {
   type Parser as CSSParser,
 } from "@siteimprove/alfa-css";
 
-import { Longhand } from "../longhand.js";
+import { Longhand } from "../longhand.ts";
 
 const { either } = Parser;
 

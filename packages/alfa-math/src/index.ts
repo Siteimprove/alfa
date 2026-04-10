@@ -1,3 +1,3 @@
-export * from "./matrix.js";
-export * from "./real.js";
-export * from "./vector.js";
+export * from "./matrix.ts";
+export * from "./real.ts";
+export * from "./vector.ts";

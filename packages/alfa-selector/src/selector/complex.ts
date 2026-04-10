@@ -3,14 +3,14 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Context } from "../context.js";
-import type { Selector } from "./index.js";
-import { Specificity } from "../specificity.js";
+import { Context } from "../context.ts";
+import type { Selector } from "./index.ts";
+import { Specificity } from "../specificity.ts";
 
-import { Combinator } from "./combinator.js";
-import { Compound } from "./compound.js";
-import { BaseSelector } from "./selector.js";
-import type { Class, Id, Simple, Type } from "./simple/index.js";
+import { Combinator } from "./combinator.ts";
+import { Compound } from "./compound.ts";
+import { BaseSelector } from "./selector.ts";
+import type { Class, Id, Simple, Type } from "./simple/index.ts";
 
 const { map, pair, zeroOrMore } = Parser;
 

@@ -2,12 +2,12 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Context } from "../../../context.js";
-import { Specificity } from "../../../specificity.js";
-import type { Compound, Selector, Simple } from "../../index.js";
-import { BaseSelector } from "../../selector.js";
+import { Context } from "../../../context.ts";
+import { Specificity } from "../../../specificity.ts";
+import type { Compound, Selector, Simple } from "../../index.ts";
+import { BaseSelector } from "../../selector.ts";
 
-import { WithSelector } from "./pseudo-class.js";
+import { WithSelector } from "./pseudo-class.ts";
 
 const { filter } = Parser;
 

@@ -9,9 +9,9 @@ import { Slice } from "@siteimprove/alfa-slice";
 import type * as json from "@siteimprove/alfa-json";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import { Component } from "./component.js";
-import type { Parser as CSSParser } from "./parser.js";
-import { Token } from "./token.js";
+import { Component } from "./component.ts";
+import type { Parser as CSSParser } from "./parser.ts";
+import { Token } from "./token.ts";
 
 const {
   delimited,

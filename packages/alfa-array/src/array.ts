@@ -15,7 +15,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import type { Reducer } from "@siteimprove/alfa-reducer";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import * as builtin from "./builtin.js";
+import * as builtin from "./builtin.ts";
 
 const { not } = Predicate;
 const { compareComparable } = Comparable;

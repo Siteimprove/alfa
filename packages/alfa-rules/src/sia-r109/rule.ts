@@ -9,11 +9,11 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
-import { Question } from "../common/act/question.js";
+import { expectation } from "../common/act/expectation.ts";
+import { Question } from "../common/act/question.ts";
 
-import { Scope, Stability } from "../tags/index.js";
-import { withDocumentElement } from "../common/applicability/with-document-element.js";
+import { Scope, Stability } from "../tags/index.ts";
+import { withDocumentElement } from "../common/applicability/with-document-element.ts";
 
 const { hasAttribute } = Element;
 

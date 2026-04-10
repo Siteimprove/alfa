@@ -5,13 +5,13 @@
  */
 import { getPackages } from "@manypkg/get-packages";
 import * as path from "node:path";
-import { loadJSON } from "../common.js";
+import { loadJSON } from "../common.ts";
 
-import { hasExtractorConfig } from "./has-extractor-config.js";
-import { isInClusters } from "./is-in-clusters.js";
-import { validateChangesets } from "./validate-changesets.js";
-import { validatePackageJson } from "./validate-package-json.js";
-import { validateWorkspaceTsconfig } from "./validate-workspace-tsconfig.js";
+import { hasExtractorConfig } from "./has-extractor-config.ts";
+import { isInClusters } from "./is-in-clusters.ts";
+import { validateChangesets } from "./validate-changesets.ts";
+import { validatePackageJson } from "./validate-package-json.ts";
+import { validateWorkspaceTsconfig } from "./validate-workspace-tsconfig.ts";
 
 const targetPath = process.argv[2] ?? ".";
 

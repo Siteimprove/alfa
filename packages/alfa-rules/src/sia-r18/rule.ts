@@ -10,10 +10,10 @@ import type { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
-import { expectation } from "../common/act/index.js";
-import { ARIA } from "../requirements/index.js";
+import { expectation } from "../common/act/index.ts";
+import { ARIA } from "../requirements/index.ts";
 
-import { Scope, Stability, Version } from "../tags/index.js";
+import { Scope, Stability, Version } from "../tags/index.ts";
 
 const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { test, property } = Predicate;

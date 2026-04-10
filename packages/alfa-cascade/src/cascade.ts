@@ -8,11 +8,11 @@ import { Context } from "@siteimprove/alfa-selector";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { AncestorFilter } from "./ancestor-filter.js";
-import { Block } from "./block.js";
-import { RuleTree } from "./rule-tree.js";
-import { SelectorMap } from "./selector-map.js";
-import { UserAgent } from "./user-agent.js";
+import { AncestorFilter } from "./ancestor-filter.ts";
+import { Block } from "./block.ts";
+import { RuleTree } from "./rule-tree.ts";
+import { SelectorMap } from "./selector-map.ts";
+import { UserAgent } from "./user-agent.ts";
 
 /**
  * {@link https://drafts.csswg.org/css-cascade-5/}

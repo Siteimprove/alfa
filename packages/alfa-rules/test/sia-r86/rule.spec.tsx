@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R86, { Outcomes } from "../../dist/sia-r86/rule.js";
+import R86, { Outcomes } from "../../src/sia-r86/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test(`evaluate() passes an <img> element that is marked as decorative and not
       included in the accessibility tree`, async (t) => {

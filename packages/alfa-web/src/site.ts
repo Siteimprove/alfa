@@ -2,7 +2,7 @@ import type { Graph } from "@siteimprove/alfa-graph";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import type { Resource } from "./resource.js";
+import type { Resource } from "./resource.ts";
 
 /**
  * {@link https://en.wikipedia.org/wiki/Web_site}

@@ -1,3 +1,3 @@
-export * from "./predicate/is-large-text.js";
-export * from "./predicate/is-at-the-start.js";
-export * from "./predicate/reference-same-resource.js";
+export * from "./predicate/is-large-text.ts";
+export * from "./predicate/is-at-the-start.ts";
+export * from "./predicate/reference-same-resource.ts";

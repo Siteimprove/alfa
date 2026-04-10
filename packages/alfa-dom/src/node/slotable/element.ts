@@ -10,21 +10,21 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import type { Namespace } from "../../namespace.js";
-import { BaseNode } from "../node.js";
+import type { Namespace } from "../../namespace.ts";
+import { BaseNode } from "../node.ts";
 
-import { Block } from "../../style/index.js";
+import { Block } from "../../style/index.ts";
 
-import { Attribute } from "../attribute.js";
-import { Document } from "../document.js";
-import { Shadow } from "../shadow.js";
-import type { Slot } from "./slot.js";
-import { Slotable } from "./slotable.js";
+import { Attribute } from "../attribute.ts";
+import { Document } from "../document.ts";
+import { Shadow } from "../shadow.ts";
+import type { Slot } from "./slot.ts";
+import { Slotable } from "./slotable.ts";
 
-import type { Node } from "../index.js";
+import type { Node } from "../index.ts";
 
-import type * as helpers from "../element/input-type.js";
-import * as predicate from "../element/predicate/index.js";
+import type * as helpers from "../element/input-type.ts";
+import * as predicate from "../element/predicate/index.ts";
 
 const { isEmpty } = Iterable;
 const { and, not, or, test } = Predicate;

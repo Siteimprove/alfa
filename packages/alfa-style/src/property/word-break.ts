@@ -1,4 +1,4 @@
-import { Longhand } from "../longhand.js";
+import { Longhand } from "../longhand.ts";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/word-break}

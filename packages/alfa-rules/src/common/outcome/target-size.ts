@@ -3,7 +3,7 @@ import { Either } from "@siteimprove/alfa-either";
 import type { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Err, Ok } from "@siteimprove/alfa-result";
 
-import { WithBoundingBox } from "../diagnostic.js";
+import { WithBoundingBox } from "../diagnostic.ts";
 
 export namespace TargetSize {
   export const IsUserAgentControlled = (name: string, box: Rectangle) =>

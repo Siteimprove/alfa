@@ -1,6 +1,6 @@
 import { Box, List, Keyword } from "@siteimprove/alfa-css";
 
-import { Longhand } from "../longhand.js";
+import { Longhand } from "../longhand.ts";
 
 type Specified = List<Specified.Item>;
 

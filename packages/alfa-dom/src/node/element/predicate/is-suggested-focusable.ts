@@ -1,7 +1,7 @@
-import type { Element } from "../../slotable/element.js";
+import type { Element } from "../../slotable/element.ts";
 
-import { isBrowsingContextContainer } from "./is-browsing-context-container.js";
-import { isEditingHost } from "./is-editing-host.js";
+import { isBrowsingContextContainer } from "./is-browsing-context-container.ts";
+import { isEditingHost } from "./is-editing-host.ts";
 
 /**
  * {@link https://html.spec.whatwg.org/multipage/#tabindex-value}

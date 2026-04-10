@@ -6,14 +6,14 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { test } from "@siteimprove/alfa-test";
 import { URL } from "@siteimprove/alfa-url";
 
-import R41, { Outcomes } from "../../dist/sia-r41/rule.js";
+import R41, { Outcomes } from "../../src/sia-r41/rule.ts";
 
-import { Group } from "../../dist/index.js";
+import { Group } from "../../src/index.ts";
 
-import { WithName } from "../../dist/common/diagnostic.js";
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
+import { WithName } from "../../src/common/diagnostic.ts";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.ts";
 
 test(`evaluate() passes two links that have the same name and reference the same
       resource`, async (t) => {

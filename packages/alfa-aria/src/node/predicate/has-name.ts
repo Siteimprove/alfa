@@ -1,7 +1,7 @@
 import type { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Name } from "../../name/index.js";
-import type { Node } from "../../node.js";
+import { Name } from "../../name/index.ts";
+import type { Node } from "../../node.ts";
 
 /**
  * @public

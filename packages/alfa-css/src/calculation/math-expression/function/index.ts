@@ -1,13 +1,13 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../../syntax/index.js";
+import { type Parser as CSSParser, Token } from "../../../syntax/index.ts";
 
-import { Expression } from "../expression.js";
+import { Expression } from "../expression.ts";
 
-import { Calculation } from "./calc.js";
-import { Clamp } from "./clamp.js";
-import { Max } from "./max.js";
-import { Min } from "./min.js";
+import { Calculation } from "./calc.ts";
+import { Clamp } from "./clamp.ts";
+import { Max } from "./max.ts";
+import { Min } from "./min.ts";
 
 const { exclusive } = Parser;
 

@@ -8,9 +8,9 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
-import { WithRole } from "../common/diagnostic/with-role.js";
-import { Scope, Stability } from "../tags/index.js";
+import { expectation } from "../common/act/expectation.ts";
+import { WithRole } from "../common/diagnostic/with-role.ts";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { hasRole, isIncludedInTheAccessibilityTree, isPerceivableForAll } = DOM;
 const { isElement, hasName, hasNamespace } = Element;

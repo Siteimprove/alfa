@@ -4,9 +4,9 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { test } from "@siteimprove/alfa-test";
 
-import R83, { Outcomes } from "../../dist/sia-r83/rule.js";
-import { evaluate } from "../common/evaluate.js";
-import { failed, inapplicable, passed } from "../common/outcome.js";
+import R83, { Outcomes } from "../../src/sia-r83/rule.ts";
+import { evaluate } from "../common/evaluate.ts";
+import { failed, inapplicable, passed } from "../common/outcome.ts";
 
 // We create a new sheet for each test to avoid mess with static trees
 const theSheet = () =>

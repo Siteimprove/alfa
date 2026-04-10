@@ -4,11 +4,11 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Language } from "@siteimprove/alfa-iana";
 
-import R109, { Outcomes } from "../../dist/sia-r109/rule.js";
+import R109, { Outcomes } from "../../src/sia-r109/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.ts";
 
 const english = Language.parse("en").getUnsafe();
 const french = Language.parse("fr").getUnsafe();

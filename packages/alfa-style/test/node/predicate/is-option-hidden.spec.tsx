@@ -2,7 +2,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { isOptionHidden } from "../../../dist/node/predicate/is-option-hidden.js";
+import { isOptionHidden } from "../../../src/node/predicate/is-option-hidden.ts";
 
 const device = Device.standard();
 

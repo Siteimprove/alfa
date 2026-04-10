@@ -3,7 +3,7 @@ import type { Element, Text } from "@siteimprove/alfa-dom";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import * as predicate from "../../../dist/node/predicate/is-clipped.js";
+import * as predicate from "../../../src/node/predicate/is-clipped.ts";
 
 const device = Device.standard();
 const isClipped = predicate.isClipped(device);

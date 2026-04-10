@@ -2,13 +2,13 @@ import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 
-import type { Parser as CSSParser } from "../../syntax/index.js";
-import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import type { Parser as CSSParser } from "../../syntax/index.ts";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.ts";
 
-import { Value } from "../value.js";
+import { Value } from "../value.ts";
 
-import { URL } from "../textual/url.js";
-import { Gradient } from "./gradient/index.js";
+import { URL } from "../textual/url.ts";
+import { Gradient } from "./gradient/index.ts";
 
 const { map, either } = Parser;
 

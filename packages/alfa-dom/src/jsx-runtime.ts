@@ -1,6 +1,6 @@
-import { jsx as _jsx } from "./jsx.js";
+import { jsx as _jsx } from "./jsx.ts";
 
-import type { Element } from "./index.js";
+import type { Element } from "./index.ts";
 
 export namespace JSX {
   export type Element<N extends string = string> = _jsx.JSX.Element<N>;

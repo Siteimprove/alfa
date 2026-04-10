@@ -1,1 +1,1 @@
-export * from "./eaa.js";
+export * from "./eaa.ts";

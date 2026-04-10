@@ -26,7 +26,7 @@ import type {
   Sheet,
   Text,
   Type,
-} from "./index.js";
+} from "./index.ts";
 
 /**
  * The type of logs.

@@ -4,8 +4,8 @@ import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import type { Option } from "./option.js";
-import type { Some } from "./some.js";
+import type { Option } from "./option.ts";
+import type { Some } from "./some.ts";
 
 const { compareComparable } = Comparable;
 

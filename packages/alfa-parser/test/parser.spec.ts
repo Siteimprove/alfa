@@ -2,7 +2,7 @@ import type { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
-import { Parser } from "../src/parser.js";
+import { Parser } from "../src/parser.ts";
 
 type Token = string;
 type Input = Array<Token>;

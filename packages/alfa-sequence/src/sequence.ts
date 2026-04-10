@@ -15,8 +15,8 @@ import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Reducer } from "@siteimprove/alfa-reducer";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Cons } from "./cons.js";
-import { Nil } from "./nil.js";
+import { Cons } from "./cons.ts";
+import { Nil } from "./nil.ts";
 
 /**
  * @public

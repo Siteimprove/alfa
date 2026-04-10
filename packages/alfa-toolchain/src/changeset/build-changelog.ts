@@ -7,14 +7,14 @@ import type {
 } from "@changesets/types";
 import type { Package, Packages } from "@manypkg/get-packages";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
-import { Changeset } from "./get-changeset-details.js";
+import { Changeset } from "./get-changeset-details.ts";
 import {
   type ChangelogFunctions,
   Error,
   getConfigOption,
   getOrDie,
   getPackagesShim,
-} from "./helpers.js";
+} from "./helpers.ts";
 
 const NON_UNIQUE_VERSION = Error.freeFrom + 1;
 const INVALID_CHANGESETS = Error.freeFrom + 2;

@@ -1,1 +1,1 @@
-export * from "./tree.js";
+export * from "./tree.ts";

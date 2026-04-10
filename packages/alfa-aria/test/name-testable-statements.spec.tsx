@@ -9,7 +9,7 @@ import type { Document} from "@siteimprove/alfa-dom";
 import { Declaration, Element, h } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Name } from "../dist/index.js";
+import { Name } from "../src/index.ts";
 
 const { and } = Refinement;
 const { hasId, isElement } = Element;

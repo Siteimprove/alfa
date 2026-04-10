@@ -19,8 +19,8 @@ import type { Reducer } from "@siteimprove/alfa-reducer";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Set } from "@siteimprove/alfa-set";
 
-import { Sequence } from "./sequence.js";
-import { Nil } from "./nil.js";
+import { Sequence } from "./sequence.ts";
+import { Nil } from "./nil.ts";
 
 const { not, equals } = Predicate;
 const { compareComparable } = Comparable;

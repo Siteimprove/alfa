@@ -1,1 +1,1 @@
-export * from "./clone.js";
+export * from "./clone.ts";

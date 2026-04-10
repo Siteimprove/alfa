@@ -1,7 +1,7 @@
 import type { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { hasExplicitRole } from "./has-explicit-role.js";
-import { hasImplicitRole } from "./has-implicit-role.js";
+import { hasExplicitRole } from "./has-explicit-role.ts";
+import { hasImplicitRole } from "./has-implicit-role.ts";
 
 const { not, test } = Predicate;
 

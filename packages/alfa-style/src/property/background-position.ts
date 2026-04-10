@@ -1,10 +1,10 @@
 import { List, Position } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Shorthand } from "../shorthand.js";
+import { Shorthand } from "../shorthand.ts";
 
-import type * as X from "./background-position-x.js";
-import type * as Y from "./background-position-y.js";
+import type * as X from "./background-position-x.ts";
+import type * as Y from "./background-position-y.ts";
 
 const { map } = Parser;
 

@@ -3,11 +3,11 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Shorthand } from "../shorthand.js";
+import { Shorthand } from "../shorthand.ts";
 
-import Direction from "./flex-direction.js";
-import Wrap from "./flex-wrap.js";
-import type { Longhand } from "../longhand.js";
+import Direction from "./flex-direction.ts";
+import Wrap from "./flex-wrap.ts";
+import type { Longhand } from "../longhand.ts";
 
 const { map } = Parser;
 

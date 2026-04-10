@@ -1,7 +1,7 @@
 import { RNG } from "@siteimprove/alfa-rng";
 import { test } from "@siteimprove/alfa-test";
 
-import { Comparable, Comparison } from "../dist/index.js";
+import { Comparable, Comparison } from "../src/index.ts";
 
 test(
   "compareLexicographically compares couple of integers",

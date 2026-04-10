@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { URL } from "../dist/url.js";
+import { URL } from "../src/url.ts";
 
 test(".parse() parses an absolute URL", (t) => {
   t.deepEqual(URL.parse("https://example.com/page.html").getUnsafe().toJSON(), {

@@ -1,8 +1,8 @@
 import { Keyword } from "@siteimprove/alfa-css";
 import { Option } from "@siteimprove/alfa-option";
 
-import { Longhand } from "../longhand.js";
-import { isBlockContainer } from "../predicate/index.js";
+import { Longhand } from "../longhand.ts";
+import { isBlockContainer } from "../predicate/index.ts";
 
 type Specified = Keyword<"clip"> | Keyword<"ellipsis">;
 

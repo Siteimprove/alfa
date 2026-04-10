@@ -2,8 +2,8 @@ import { Keyword } from "@siteimprove/alfa-css";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Longhand } from "../longhand.js";
-import { isFlexItem, isInlineLevelBox } from "../predicate/index.js";
+import { Longhand } from "../longhand.ts";
+import { isFlexItem, isInlineLevelBox } from "../predicate/index.ts";
 
 const { or, test } = Predicate;
 

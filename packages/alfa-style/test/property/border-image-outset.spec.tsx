@@ -3,8 +3,8 @@ import { h } from "@siteimprove/alfa-dom/h";
 
 import type { Serializable } from "@siteimprove/alfa-json";
 
-import type * as Outset from "../../dist/property/border-image-outset.js";
-import { cascaded } from "../common.js";
+import type * as Outset from "../../src/property/border-image-outset.ts";
+import { cascaded } from "../common.ts";
 
 function outset(
   top: number,

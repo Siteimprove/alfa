@@ -1,1 +1,1 @@
-export * from "./branched.js";
+export * from "./branched.ts";

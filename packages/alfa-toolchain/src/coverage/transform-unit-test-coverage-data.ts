@@ -71,7 +71,6 @@ export function toCoverageData([pkg, summary]: [
  * another location.
  *
  * @internal
- * @knipignore used in tests
  */
 export function toLink(name: string, relativePath: string) {
   // We need to go up the destination path, and then down the relative path before
@@ -95,7 +94,6 @@ export function toLink(name: string, relativePath: string) {
  * This adds classnames according to watermarks.
  *
  * @internal
- * @knipignore used in tests
  */
 export function toTableRow({ name, relativePath, lineCoverage }: CoverageData) {
   const getClass = (coverage: number) =>
@@ -119,7 +117,6 @@ export function toTableRow({ name, relativePath, lineCoverage }: CoverageData) {
  * Turns an array of coverage data into an HTML table.
  *
  * @internal
- * @knipignore used in tests
  */
 export function toHtmlTable(data: Array<CoverageData>): string {
   const header = `<table>

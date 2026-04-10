@@ -5,7 +5,7 @@ import type { Option } from "@siteimprove/alfa-option";
 import type * as earl from "@siteimprove/alfa-earl";
 import type * as json from "@siteimprove/alfa-json";
 
-import { Header } from "./header.js";
+import { Header } from "./header.ts";
 
 /**
  * @public

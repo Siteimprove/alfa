@@ -1,6 +1,6 @@
 import { Either } from "@siteimprove/alfa-either";
 
-import type { Diagnostic } from "./diagnostic.js";
+import type { Diagnostic } from "./diagnostic.ts";
 
 /**
  * The result of an Interview: either a Conclusive finding (a final answer was

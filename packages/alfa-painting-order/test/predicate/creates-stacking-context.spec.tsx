@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 
-import { createsStackingContext } from "../../dist/predicate/creates-stacking-context.js";
+import { createsStackingContext } from "../../src/predicate/creates-stacking-context.ts";
 
 const device = Device.standard();
 

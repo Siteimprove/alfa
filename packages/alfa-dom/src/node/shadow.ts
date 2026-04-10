@@ -6,11 +6,11 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Sheet } from "../style/sheet.js";
-import { BaseNode } from "./node.js";
-import type { Element } from "./slotable/index.js";
+import { Sheet } from "../style/sheet.ts";
+import { BaseNode } from "./node.ts";
+import type { Element } from "./slotable/index.ts";
 
-import type { Node } from "./index.js";
+import type { Node } from "./index.ts";
 
 /**
  * @public

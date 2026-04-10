@@ -1,7 +1,7 @@
 import { Array } from "@siteimprove/alfa-array";
 
-import type { Rule } from "./index.js";
-import { BaseRule } from "./rule.js";
+import type { Rule } from "./index.ts";
+import { BaseRule } from "./rule.ts";
 
 /**
  * @public

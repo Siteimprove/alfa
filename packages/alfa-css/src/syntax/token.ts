@@ -8,7 +8,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import type { Parser as CSSParser } from "./parser.js";
+import type { Parser as CSSParser } from "./parser.ts";
 
 const { map, zeroOrMore } = Parser;
 const { fromCharCode } = String;

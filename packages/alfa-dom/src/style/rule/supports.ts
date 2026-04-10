@@ -4,9 +4,9 @@ import type { Option } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import type { Rule } from "./index.js";
-import type { BaseRule } from "./rule.js";
-import { ConditionRule } from "./condition.js";
+import type { Rule } from "./index.ts";
+import type { BaseRule } from "./rule.ts";
+import { ConditionRule } from "./condition.ts";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 

@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Record } from "../dist/record.js";
+import { Record } from "../src/record.ts";
 
 test(".of() constructs a record from a set of properties", (t) => {
   const record = Record.of({ foo: "foo", bar: 1 });

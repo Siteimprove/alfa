@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R2, { Outcomes } from "../../dist/sia-r2/rule.js";
+import R2, { Outcomes } from "../../src/sia-r2/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test("evaluate() passes an <img> element with an accessible name", async (t) => {
   const target = <img alt="Hello world" src="foo.jpg" />;

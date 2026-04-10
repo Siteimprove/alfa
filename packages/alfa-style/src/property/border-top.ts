@@ -1,13 +1,13 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
-import type { Longhand } from "../longhand.js";
+import type { Longhand } from "../longhand.ts";
 
-import { Shorthand } from "../shorthand.js";
+import { Shorthand } from "../shorthand.ts";
 
-import * as Color from "./border-top-color.js";
-import Style from "./border-top-style.js";
-import * as Width from "./border-top-width.js";
+import * as Color from "./border-top-color.ts";
+import Style from "./border-top-style.ts";
+import * as Width from "./border-top-width.ts";
 
 const { doubleBar, map } = Parser;
 

@@ -1,7 +1,7 @@
 import type { Option } from "@siteimprove/alfa-option";
 
-import { BaseNode } from "../node.js";
-import type { Slot } from "./slot.js";
+import { BaseNode } from "../node.ts";
+import type { Slot } from "./slot.ts";
 
 /**
  * @public

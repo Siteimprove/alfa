@@ -1,1 +1,1 @@
-export * from "./record.js";
+export * from "./record.ts";

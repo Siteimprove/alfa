@@ -2,7 +2,7 @@ import type { Device } from "@siteimprove/alfa-device";
 import type { Element } from "@siteimprove/alfa-dom";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 
-import { getClickableRegion } from "../dom/get-clickable-region.js";
+import { getClickableRegion } from "../dom/get-clickable-region.ts";
 
 /**
  * Returns a predicate testing that the clickable region of an element contains a sufficiently large rectangle.

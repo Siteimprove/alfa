@@ -1,1 +1,1 @@
-export * from "./has-value.js";
+export * from "./has-value.ts";

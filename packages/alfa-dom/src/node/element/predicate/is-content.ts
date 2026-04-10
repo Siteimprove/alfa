@@ -1,11 +1,11 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import type { Element } from "../../slotable/element.js";
+import type { Element } from "../../slotable/element.ts";
 import type { Node } from "../../index.js";
-import { BaseNode } from "../../node.js";
+import { BaseNode } from "../../node.ts";
 
-import { isReplaced } from "./is-replaced.js";
+import { isReplaced } from "./is-replaced.ts";
 
 const { or } = Predicate;
 const { and } = Refinement;

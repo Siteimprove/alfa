@@ -1,9 +1,9 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Selector } from "../src/index.js";
-import { Relative } from "../src/selector/relative.js";
+import { Selector } from "../src/index.ts";
+import { Relative } from "../src/selector/relative.ts";
 
-import { parse, serialize } from "./parser.js";
+import { parse, serialize } from "./parser.ts";
 
 const parser = Relative.parse(Selector.parseSelector);
 

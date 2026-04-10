@@ -1,12 +1,12 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
-import type { Longhand } from "../longhand.js";
+import type { Longhand } from "../longhand.ts";
 
-import { Shorthand } from "../shorthand.js";
+import { Shorthand } from "../shorthand.ts";
 
-import Mode from "./text-wrap-mode.js";
-import Style from "./text-wrap-style.js";
+import Mode from "./text-wrap-mode.ts";
+import Style from "./text-wrap-style.ts";
 
 const { map, doubleBar } = Parser;
 

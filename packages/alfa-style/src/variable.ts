@@ -8,7 +8,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Set } from "@siteimprove/alfa-set";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Value } from "./value.js";
+import { Value } from "./value.ts";
 
 const { delimited, left, map, option, pair, right, takeUntil } = Parser;
 
@@ -22,7 +22,6 @@ export namespace Variable {
    * mapping each variable name to its declared value.
    *
    * @internal
-   * @knipignore used in tests
    */
   export type DefinitionMap = Map<string, Value<Slice<Token>>>;
 

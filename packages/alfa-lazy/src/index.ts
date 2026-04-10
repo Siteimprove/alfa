@@ -1,1 +1,1 @@
-export * from "./lazy.js";
+export * from "./lazy.ts";

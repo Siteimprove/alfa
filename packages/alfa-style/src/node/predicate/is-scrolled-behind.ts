@@ -7,8 +7,8 @@ import { Rectangle } from "@siteimprove/alfa-rectangle";
 import {
   hasComputedStyle,
   hasPositioningParent,
-} from "../../element/element.js";
-import type { Longhands } from "../../longhands.js";
+} from "../../element/element.ts";
+import type { Longhands } from "../../longhands.ts";
 
 const { isElement } = Element;
 const { hasBox } = Node;

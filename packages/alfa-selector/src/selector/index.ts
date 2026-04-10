@@ -3,25 +3,25 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Context } from "../context.js";
+import { Context } from "../context.ts";
 
-import { Complex } from "./complex.js";
-import { Compound } from "./compound.js";
-import { List } from "./list.js";
-import { Relative as BaseRelative } from "./relative.js";
-import type { Simple } from "./simple/index.js";
+import { Complex } from "./complex.ts";
+import { Compound } from "./compound.ts";
+import { List } from "./list.ts";
+import { Relative as BaseRelative } from "./relative.ts";
+import type { Simple } from "./simple/index.ts";
 
-import { Host } from "./pseudo/pseudo-class/host.js";
-import { HostContext } from "./pseudo/pseudo-class/host-context.js";
-import { Slotted } from "./pseudo/pseudo-element/slotted.js";
+import { Host } from "./pseudo/pseudo-class/host.ts";
+import { HostContext } from "./pseudo/pseudo-class/host-context.ts";
+import { Slotted } from "./pseudo/pseudo-element/slotted.ts";
 
 // Re-export for further users
-export * from "./combinator.js";
-export * from "./complex.js";
-export * from "./compound.js";
-export * from "./list.js";
-export * from "./relative.js";
-export * from "./simple/index.js";
+export * from "./combinator.ts";
+export * from "./complex.ts";
+export * from "./compound.ts";
+export * from "./list.ts";
+export * from "./relative.ts";
+export * from "./simple/index.ts";
 
 const { end, left } = Parser;
 const { and, or, test } = Refinement;

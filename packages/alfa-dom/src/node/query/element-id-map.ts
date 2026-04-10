@@ -1,11 +1,11 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Map } from "@siteimprove/alfa-map";
 
-import type { Node } from "../index.js";
-import { Document } from "../document.js";
-import type { Element } from "../slotable/element.js";
+import type { Node } from "../index.ts";
+import { Document } from "../document.ts";
+import type { Element } from "../slotable/element.ts";
 
-import { getElementDescendants } from "./descendants.js";
+import { getElementDescendants } from "./descendants.ts";
 
 const elementMapCache = Cache.empty<Document, Map<string, Element>>();
 

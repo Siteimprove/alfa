@@ -8,10 +8,10 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
-import { WithBadElements } from "../common/diagnostic/with-bad-elements.js";
+import { expectation } from "../common/act/expectation.ts";
+import { WithBadElements } from "../common/diagnostic/with-bad-elements.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { hasRole } = DOM;
 const { isElement, hasNamespace } = Element;

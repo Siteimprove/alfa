@@ -22,16 +22,16 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/expectation.ts";
 
-import { Contrast } from "../common/diagnostic/contrast.js";
+import { Contrast } from "../common/diagnostic/contrast.ts";
 
-import { getForeground } from "../common/dom/get-colors.js";
-import { contrast } from "../common/expectation/contrast.js";
+import { getForeground } from "../common/dom/get-colors.ts";
+import { contrast } from "../common/expectation/contrast.ts";
 
-import { Scope, Stability, Version } from "../tags/index.js";
+import { Scope, Stability, Version } from "../tags/index.ts";
 
-import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics.js";
+import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics.ts";
 
 const { hasRole } = DOM;
 const { isElement } = Element;

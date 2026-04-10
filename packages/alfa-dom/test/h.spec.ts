@@ -4,13 +4,13 @@ import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 
-import { h } from "../dist/index.js";
+import { h } from "../src/index.ts";
 
-import { Namespace } from "../dist/namespace.js";
+import { Namespace } from "../src/namespace.ts";
 
-import { Document } from "../dist/node/document.js";
-import { Element } from "../dist/node/slotable/element.js";
-import { Type } from "../dist/node/type.js";
+import { Document } from "../src/node/document.ts";
+import { Element } from "../src/node/slotable/element.ts";
+import { Type } from "../src/node/type.ts";
 
 test("h() constructs an element", (t) => {
   t.deepEqual(

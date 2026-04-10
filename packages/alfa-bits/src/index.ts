@@ -1,1 +1,1 @@
-export * from "./bits.js";
+export * from "./bits.ts";

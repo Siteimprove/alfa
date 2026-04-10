@@ -3,7 +3,7 @@ import { Map } from "@siteimprove/alfa-map";
 
 import type { Package, Packages } from "@manypkg/get-packages";
 import madge from "madge";
-import { DependencyGraph } from "./dependency-graph.js";
+import { DependencyGraph } from "./dependency-graph.ts";
 
 import * as path from "node:path";
 

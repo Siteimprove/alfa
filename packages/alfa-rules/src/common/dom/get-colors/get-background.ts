@@ -10,8 +10,8 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
-import { ColorError, ColorErrors } from "./color-error.js";
-import { Layer } from "./get-layers.js";
+import { ColorError, ColorErrors } from "./color-error.ts";
+import { Layer } from "./get-layers.ts";
 
 const { isVisibleShadow } = Style;
 

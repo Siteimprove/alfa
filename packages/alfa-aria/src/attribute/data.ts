@@ -1,6 +1,6 @@
 // This file has been automatically generated based on the WAI-ARIA specification.
 // Do therefore not modify it directly! If you wish to make changes, do so in
-// `scripts/attributes.js` and run `yarn generate` to rebuild this file.
+// `scripts/attributes.ts` and run `yarn generate` to rebuild this file.
 
 /**
  * @internal

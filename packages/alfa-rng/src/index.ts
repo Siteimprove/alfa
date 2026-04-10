@@ -1,1 +1,1 @@
-export * from "./rng.js";
+export * from "./rng.ts";

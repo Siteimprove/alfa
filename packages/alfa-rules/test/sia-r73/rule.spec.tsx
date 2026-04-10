@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R73, { Outcomes } from "../../dist/sia-r73/rule.js";
+import R73, { Outcomes } from "../../src/sia-r73/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test("evaluate() passes a paragraph whose line height is at least 1.5", async (t) => {
   const target = <p style={{ lineHeight: "1.5" }}>Hello world</p>;

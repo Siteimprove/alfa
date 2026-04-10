@@ -2,11 +2,11 @@ import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R48, { Outcomes } from "../../dist/sia-r48/rule.js";
+import R48, { Outcomes } from "../../src/sia-r48/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { cantTell, passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { cantTell, passed, failed, inapplicable } from "../common/outcome.ts";
 
 test("evaluate() passes videos with less than 3 second of audio", async (t) => {
   const target = <video autoplay controls src="foo.mp4" />;

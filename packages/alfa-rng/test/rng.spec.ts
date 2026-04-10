@@ -5,7 +5,7 @@
  */
 
 import { assert, describe, it } from "vitest";
-import { RNG, RNGFactory } from "../dist/rng.js";
+import { RNG, RNGFactory } from "../src/rng.ts";
 
 describe("RNG.standard", () => {
   it("should generate random numbers between 0 and 1", () => {

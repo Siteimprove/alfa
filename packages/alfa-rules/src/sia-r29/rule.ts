@@ -2,13 +2,13 @@ import { Rule } from "@siteimprove/alfa-act";
 import type { Element } from "@siteimprove/alfa-dom";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { audio } from "../common/applicability/audio.js";
+import { audio } from "../common/applicability/audio.ts";
 
-import { audioTextAlternative } from "../common/expectation/media-text-alternative.js";
+import { audioTextAlternative } from "../common/expectation/media-text-alternative.ts";
 
-import type { Question } from "../common/act/question.js";
+import type { Question } from "../common/act/question.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r29",

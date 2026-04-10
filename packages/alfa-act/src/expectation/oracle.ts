@@ -2,8 +2,8 @@ import type { Future } from "@siteimprove/alfa-future";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import type { Option } from "@siteimprove/alfa-option";
 
-import type { Question } from "./question.js";
-import type { Rule } from "../rule.js";
+import type { Question } from "./question.ts";
+import type { Rule } from "../rule.ts";
 
 /**
  * @public

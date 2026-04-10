@@ -3,17 +3,17 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
-import { getApplicableTargets } from "../common/applicability/targets-of-pointer-events.js";
-import { getClickableRegion } from "../common/dom/get-clickable-region.js";
+import { expectation } from "../common/act/expectation.ts";
+import { getApplicableTargets } from "../common/applicability/targets-of-pointer-events.ts";
+import { getClickableRegion } from "../common/dom/get-clickable-region.ts";
 
-import { WithName } from "../common/diagnostic.js";
+import { WithName } from "../common/diagnostic.ts";
 
-import { TargetSize } from "../common/outcome/target-size.js";
+import { TargetSize } from "../common/outcome/target-size.ts";
 
 import { Rectangle } from "@siteimprove/alfa-rectangle";
-import { hasSufficientSize } from "../common/predicate/has-sufficient-size.js";
-import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled.js";
+import { hasSufficientSize } from "../common/predicate/has-sufficient-size.ts";
+import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled.ts";
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r111",

@@ -1,1 +1,1 @@
-export type * from "./mapper.js";
+export type * from "./mapper.ts";

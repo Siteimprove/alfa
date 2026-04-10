@@ -1,2 +1,2 @@
-export * from "./sarif.js";
-export * from "./serializable.js";
+export * from "./sarif.ts";
+export * from "./serializable.ts";

@@ -3,25 +3,25 @@ import { Parser, type Parser as CSSParser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import type { Selector } from "../index.js";
+import type { Selector } from "../index.ts";
 
 // Import the various simple selectors for use in that file.
-import { Attribute } from "./attribute.js";
-import { Class } from "./class.js";
-import { Id } from "./id.js";
-import { PseudoClass } from "../pseudo/pseudo-class/index.js";
-import { PseudoElement } from "../pseudo/pseudo-element/index.js";
-import { Type } from "./type.js";
-import { Universal } from "./universal.js";
+import { Attribute } from "./attribute.ts";
+import { Class } from "./class.ts";
+import { Id } from "./id.ts";
+import { PseudoClass } from "../pseudo/pseudo-class/index.ts";
+import { PseudoElement } from "../pseudo/pseudo-element/index.ts";
+import { Type } from "./type.ts";
+import { Universal } from "./universal.ts";
 
 // Re-export the various selectors for use by others
-export * from "./attribute.js";
-export * from "./class.js";
-export * from "./id.js";
-export * from "../pseudo/pseudo-class/index.js";
-export * from "../pseudo/pseudo-element/index.js";
-export * from "./type.js";
-export * from "./universal.js";
+export * from "./attribute.ts";
+export * from "./class.ts";
+export * from "./id.ts";
+export * from "../pseudo/pseudo-class/index.ts";
+export * from "../pseudo/pseudo-element/index.ts";
+export * from "./type.ts";
+export * from "./universal.ts";
 
 const { either } = Parser;
 

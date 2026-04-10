@@ -1,3 +1,3 @@
-export * from "./err.js";
-export * from "./ok.js";
-export * from "./result.js";
+export * from "./err.ts";
+export * from "./ok.ts";
+export * from "./result.ts";

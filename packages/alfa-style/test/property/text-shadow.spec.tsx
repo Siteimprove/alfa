@@ -1,8 +1,8 @@
 import { Device } from "@siteimprove/alfa-device";
 import { test } from "@siteimprove/alfa-test";
 
-import { cascaded, color } from "../common.js";
-import { Style } from "../../dist/index.js";
+import { cascaded, color } from "../common.ts";
+import { Style } from "../../src/index.ts";
 
 const black = color(0, 0, 0);
 const red = color(1, 0, 0);

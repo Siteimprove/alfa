@@ -1,1 +1,1 @@
-export type * from "./foldable.js";
+export type * from "./foldable.ts";

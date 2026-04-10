@@ -5,10 +5,10 @@ import { List } from "@siteimprove/alfa-list";
 import { None } from "@siteimprove/alfa-option";
 import type { Performance } from "@siteimprove/alfa-performance";
 
-import { Cache } from "./cache.js";
-import type { Oracle, Question } from "./expectation/index.js";
-import type { Outcome } from "./outcome.js";
-import type { Rule } from "./rule.js";
+import { Cache } from "./cache.ts";
+import type { Oracle, Question } from "./expectation/index.ts";
+import type { Outcome } from "./outcome.ts";
+import type { Rule } from "./rule.ts";
 
 /**
  * An Audit is built from an input (usually a page), a set of rules that apply

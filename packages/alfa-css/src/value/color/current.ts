@@ -1,6 +1,6 @@
-import { type Parser as CSSParser } from "../../syntax/index.js";
+import { type Parser as CSSParser } from "../../syntax/index.ts";
 
-import { Keyword } from "../textual/keyword.js";
+import { Keyword } from "../textual/keyword.ts";
 
 /**
  * {@link https://drafts.csswg.org/css-color/#currentcolor-color}

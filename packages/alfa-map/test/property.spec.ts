@@ -4,7 +4,7 @@ import { RNG } from "@siteimprove/alfa-rng";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 
-import { Map } from "../dist/map.js";
+import { Map } from "../src/map.ts";
 
 /**
  * Turning a float between 0 and 1 into a 32 bits int, and keeping only

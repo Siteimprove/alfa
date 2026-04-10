@@ -5,7 +5,7 @@ import type { Iterable } from "@siteimprove/alfa-iterable";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 
-import { Status } from "./status.js";
+import { Status } from "./status.ts";
 
 const { bit, take, skip, test, set, clear, popCount } = Bits;
 

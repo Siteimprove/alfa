@@ -1,2 +1,2 @@
-export * from "./time.js";
-export * from "./timeout.js";
+export * from "./time.ts";
+export * from "./timeout.ts";

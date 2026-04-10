@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Selective } from "../dist/selective.js";
+import { Selective } from "../src/selective.ts";
 
 const isFoo: Refinement<string, "foo"> = (string): string is "foo" =>
   string === "foo";

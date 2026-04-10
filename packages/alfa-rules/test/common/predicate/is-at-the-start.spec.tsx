@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
-import { isAtTheStart } from "../../../dist/common/predicate/is-at-the-start.js";
+import { isAtTheStart } from "../../../src/common/predicate/is-at-the-start.ts";
 
 test("isAtTheStart() returns true on an element itself", (t) => {
   const target = <div />;

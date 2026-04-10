@@ -9,7 +9,7 @@ import type { Serializable } from "@siteimprove/alfa-json";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import type { Name } from "./name.js";
+import type { Name } from "./name.ts";
 
 /**
  * @public

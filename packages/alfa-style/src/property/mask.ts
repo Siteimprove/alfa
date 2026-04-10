@@ -6,16 +6,16 @@ import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 import { Option } from "@siteimprove/alfa-option";
 
-import { Shorthand } from "../shorthand.js";
+import { Shorthand } from "../shorthand.ts";
 
-import * as Reference from "./mask-image.js";
-import * as Size from "./mask-size.js";
-import * as Repeat from "./mask-repeat.js";
-import * as Mode from "./mask-mode.js";
-import * as Position from "./mask-position.js";
-import * as Origin from "./mask-origin.js";
-import * as Clip from "./mask-clip.js";
-import * as Composite from "./mask-composite.js";
+import * as Reference from "./mask-image.ts";
+import * as Size from "./mask-size.ts";
+import * as Repeat from "./mask-repeat.ts";
+import * as Mode from "./mask-mode.ts";
+import * as Position from "./mask-position.ts";
+import * as Origin from "./mask-origin.ts";
+import * as Clip from "./mask-clip.ts";
+import * as Composite from "./mask-composite.ts";
 
 const { doubleBar, map, option, pair, right, delimited, separatedList } =
   Parser;

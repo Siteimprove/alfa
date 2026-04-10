@@ -1,7 +1,7 @@
 import { Real } from "@siteimprove/alfa-math";
 
-import { LengthPercentage } from "../numeric/index.js";
-import { Value } from "../value.js";
+import { LengthPercentage } from "../numeric/index.ts";
+import { Value } from "../value.ts";
 
 type Radius = LengthPercentage;
 

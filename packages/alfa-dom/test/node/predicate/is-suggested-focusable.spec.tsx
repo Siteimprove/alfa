@@ -1,5 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
-import { h, type Element } from "../../../dist/index.js";
+import { h } from "../../../dist/index.js";
 import { isSuggestedFocusable } from "../../../dist/node/element/predicate/is-suggested-focusable.js";
 
 test("isSuggestedFocusable() returns false for inert elements", (t) => {

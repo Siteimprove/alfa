@@ -8,9 +8,9 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
-import { getInterposedDescendant } from "../get-interposed-descendant.js";
+import { getInterposedDescendant } from "../get-interposed-descendant.ts";
 
-import { ColorError, ColorErrors } from "./color-error.js";
+import { ColorError, ColorErrors } from "./color-error.ts";
 
 const { isElement } = Element;
 const { hasTransparentBackground, isPositioned } = Style;

@@ -8,7 +8,7 @@ import {
   Viewport,
 } from "@siteimprove/alfa-device";
 
-import { Feature } from "../dist/index.js";
+import { Feature } from "../src/index.ts";
 
 function parse(input: string) {
   return Feature.parseMediaQuery(Lexer.lex(input)).map(([, query]) => query);

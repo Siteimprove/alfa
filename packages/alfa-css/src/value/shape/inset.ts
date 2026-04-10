@@ -8,15 +8,15 @@ import {
   Function,
   type Parser as CSSParser,
   Token,
-} from "../../syntax/index.js";
+} from "../../syntax/index.ts";
 
-import { Keyword } from "../textual/keyword.js";
-import { LengthPercentage } from "../numeric/index.js";
-import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
-import { Value } from "../value.js";
+import { Keyword } from "../textual/keyword.ts";
+import { LengthPercentage } from "../numeric/index.ts";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.ts";
+import { Value } from "../value.ts";
 
-import { BasicShape } from "./basic-shape.js";
-import { Corner } from "./corner.js";
+import { BasicShape } from "./basic-shape.ts";
+import { Corner } from "./corner.ts";
 
 const { delimited, filter, map, option, pair, right, separatedList } = Parser;
 const { parseDelim, parseWhitespace } = Token;

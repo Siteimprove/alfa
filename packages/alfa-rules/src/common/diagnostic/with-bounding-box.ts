@@ -5,7 +5,7 @@ import type { Hash } from "@siteimprove/alfa-hash";
 import type { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import { WithName } from "./with-name.js";
+import { WithName } from "./with-name.ts";
 
 import type * as json from "@siteimprove/alfa-json";
 

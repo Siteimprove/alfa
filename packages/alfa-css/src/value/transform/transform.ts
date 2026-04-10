@@ -1,22 +1,22 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import type { Token } from "../../syntax/index.js";
+import type { Token } from "../../syntax/index.ts";
 
-import { List } from "../collection/index.js";
+import { List } from "../collection/index.ts";
 import type {
   Angle,
   Length,
   LengthPercentage,
   Number,
-} from "../numeric/index.js";
+} from "../numeric/index.ts";
 
-import { Matrix } from "./matrix.js";
-import { Perspective } from "./perspective.js";
-import { Rotate } from "./rotate.js";
-import { Scale } from "./scale.js";
-import { Skew } from "./skew.js";
-import { Translate } from "./translate.js";
+import { Matrix } from "./matrix.ts";
+import { Perspective } from "./perspective.ts";
+import { Rotate } from "./rotate.ts";
+import { Scale } from "./scale.ts";
+import { Skew } from "./skew.ts";
+import { Translate } from "./translate.ts";
 
 const { either } = Parser;
 

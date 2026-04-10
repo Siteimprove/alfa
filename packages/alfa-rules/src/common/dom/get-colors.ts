@@ -1,7 +1,7 @@
 /**
  * @internal
  */
-export * from "./get-colors/color-error.js";
-export * from "./get-colors/get-background.js";
-export * from "./get-colors/get-foreground.js";
-export * from "./get-colors/get-layers.js";
+export * from "./get-colors/color-error.ts";
+export * from "./get-colors/get-background.ts";
+export * from "./get-colors/get-foreground.ts";
+export * from "./get-colors/get-layers.ts";

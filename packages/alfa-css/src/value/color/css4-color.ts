@@ -39,11 +39,11 @@ import {
   Function,
   type Parser as CSSParser,
   Token,
-} from "../../syntax/index.js";
-import { Angle, Number, Percentage } from "../numeric/index.js";
+} from "../../syntax/index.ts";
+import { Angle, Number, Percentage } from "../numeric/index.ts";
 
-import type { Resolvable } from "../resolvable.js";
-import { Value } from "../value.js";
+import type { Resolvable } from "../resolvable.ts";
+import { Value } from "../value.ts";
 
 const { either, map, mapResult, zeroOrMore } = Parser;
 

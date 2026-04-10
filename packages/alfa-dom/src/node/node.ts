@@ -18,8 +18,8 @@ import * as json from "@siteimprove/alfa-json";
 import type * as sarif from "@siteimprove/alfa-sarif";
 import * as tree from "@siteimprove/alfa-tree";
 
-import type { Element, Node, Shadow, Slotable, Text } from "./index.js";
-import type { Slot } from "./slotable/slot.js";
+import type { Element, Node, Shadow, Slotable, Text } from "./index.ts";
+import type { Slot } from "./slotable/slot.ts";
 
 /**
  * @public

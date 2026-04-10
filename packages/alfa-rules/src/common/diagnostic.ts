@@ -1,10 +1,10 @@
 /**
  * @internal
  */
-export * from "./diagnostic/contrast.js";
-export * from "./diagnostic/text-spacing.js";
-export * from "./diagnostic/with-bad-elements.js";
-export * from "./diagnostic/with-role.js";
-export * from "./diagnostic/with-name.js";
-export * from "./diagnostic/with-other-heading.js";
-export * from "./diagnostic/with-bounding-box.js";
+export * from "./diagnostic/contrast.ts";
+export * from "./diagnostic/text-spacing.ts";
+export * from "./diagnostic/with-bad-elements.ts";
+export * from "./diagnostic/with-role.ts";
+export * from "./diagnostic/with-name.ts";
+export * from "./diagnostic/with-other-heading.ts";
+export * from "./diagnostic/with-bounding-box.ts";

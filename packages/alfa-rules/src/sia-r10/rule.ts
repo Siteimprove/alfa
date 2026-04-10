@@ -11,9 +11,9 @@ import type { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/expectation.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { hasRole, isPerceivableForAll } = DOM;
 const { hasAttribute, hasInputType, hasName, hasNamespace } = Element;

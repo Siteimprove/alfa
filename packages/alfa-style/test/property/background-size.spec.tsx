@@ -1,6 +1,6 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-import { cascaded } from "../common.js";
+import { cascaded } from "../common.ts";
 
 test("#cascaded() parses `background-size: cover`", (t) => {
   const element = <div style={{ backgroundSize: `cover` }} />;

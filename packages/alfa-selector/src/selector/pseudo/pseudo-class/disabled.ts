@@ -1,8 +1,8 @@
 import { Element } from "@siteimprove/alfa-dom";
 
-import { Context } from "../../../context.js";
+import { Context } from "../../../context.ts";
 
-import { PseudoClassSelector } from "./pseudo-class.js";
+import { PseudoClassSelector } from "./pseudo-class.ts";
 
 /**
  * {@link https://drafts.csswg.org/selectors/#enableddisabled}

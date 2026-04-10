@@ -15,14 +15,14 @@ import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { Feature } from "../feature.js";
-import { Role } from "../role.js";
+import { Feature } from "../feature.ts";
+import { Role } from "../role.ts";
 
-import * as predicate from "./predicate/index.js";
-import { Source } from "./source.js";
-import { State } from "./state.js";
+import * as predicate from "./predicate/index.ts";
+import { Source } from "./source.ts";
+import { State } from "./state.ts";
 
-import { isProgrammaticallyHidden } from "../dom/predicate/is-programmatically-hidden.js";
+import { isProgrammaticallyHidden } from "../dom/predicate/is-programmatically-hidden.ts";
 
 const { isElement } = Element;
 const { isText } = Text;

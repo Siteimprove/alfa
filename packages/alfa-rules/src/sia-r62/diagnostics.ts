@@ -14,9 +14,9 @@ import { Style } from "@siteimprove/alfa-style";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import type { Contrast } from "../common/diagnostic/contrast.js";
+import type { Contrast } from "../common/diagnostic/contrast.ts";
 
-import { Serialise } from "./serialise.js";
+import { Serialise } from "./serialise.ts";
 
 type Name = Longhands.Name | Shorthands.Name;
 

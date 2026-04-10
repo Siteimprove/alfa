@@ -5,8 +5,8 @@ import type { Serializable } from "@siteimprove/alfa-json";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { Anchored } from "./anchored.js";
-import { Slot } from "./slot.js";
+import { Anchored } from "./anchored.ts";
+import { Slot } from "./slot.ts";
 
 /**
  * {@link https://html.spec.whatwg.org/#concept-row}

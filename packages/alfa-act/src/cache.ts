@@ -2,9 +2,9 @@ import type { Future } from "@siteimprove/alfa-future";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Outcome } from "./outcome.js";
-import type { Question } from "./expectation/index.js";
-import type { Rule } from "./rule.js";
+import type { Outcome } from "./outcome.ts";
+import type { Question } from "./expectation/index.ts";
+import type { Rule } from "./rule.ts";
 
 /**
  * Cache from rules to outcomes.

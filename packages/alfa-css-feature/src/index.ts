@@ -1,6 +1,6 @@
-import * as condition from "./condition/index.js";
-import * as media from "./media/index.js";
-import * as supports from "./supports/index.js";
+import * as condition from "./condition/index.ts";
+import * as media from "./media/index.ts";
+import * as supports from "./supports/index.ts";
 
 /**
  * @public

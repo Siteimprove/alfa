@@ -1,3 +1,3 @@
-export * from "./page.js";
-export * from "./resource.js";
-export * from "./site.js";
+export * from "./page.ts";
+export * from "./resource.ts";
+export * from "./site.ts";

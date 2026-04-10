@@ -1,9 +1,9 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Image } from "../../../dist/index.js";
+import { Image } from "../../../src/index.ts";
 
-import { color } from "../../common/color.js";
-import { serializer } from "../../common/parse.js";
+import { color } from "../../common/color.ts";
+import { serializer } from "../../common/parse.ts";
 
 const serialize = serializer(Image.parse);
 

@@ -4,10 +4,10 @@ import { test } from "@siteimprove/alfa-test";
 
 import { expect, vitest } from "vitest";
 
-import R44, { Outcomes } from "../../dist/sia-r44/rule.js";
+import R44, { Outcomes } from "../../src/sia-r44/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { failed, inapplicable, passed } from "../common/outcome.ts";
 
 test("evaluate() passes a page with conditional rotation (transform) that does not restrict orientation", async (t) => {
   const target = <div>Hello</div>;

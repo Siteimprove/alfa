@@ -15,9 +15,9 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
-import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional.js";
+import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { hasNonDefaultRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasNamespace } = Element;

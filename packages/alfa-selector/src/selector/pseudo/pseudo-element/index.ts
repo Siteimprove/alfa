@@ -2,26 +2,26 @@ import { Token, type Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Err } from "@siteimprove/alfa-result";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import type { Selector } from "../../index.js";
+import type { Selector } from "../../index.ts";
 
-import { After } from "./after.js";
-import { Backdrop } from "./backdrop.js";
-import { Before } from "./before.js";
-import { Cue } from "./cue.js";
-import { CueRegion } from "./cue-region.js";
-import { FileSelectorButton } from "./file-selector-button.js";
-import { FirstLetter } from "./first-letter.js";
-import { FirstLine } from "./first-line.js";
-import { GrammarError } from "./grammar-error.js";
-import { Marker } from "./marker.js";
-import { Part } from "./part.js";
-import { Placeholder } from "./placeholder.js";
-import { Selection } from "./selection.js";
-import { Slotted } from "./slotted.js";
-import { SpellingError } from "./spelling-error.js";
-import { TargetText } from "./target-text.js";
+import { After } from "./after.ts";
+import { Backdrop } from "./backdrop.ts";
+import { Before } from "./before.ts";
+import { Cue } from "./cue.ts";
+import { CueRegion } from "./cue-region.ts";
+import { FileSelectorButton } from "./file-selector-button.ts";
+import { FirstLetter } from "./first-letter.ts";
+import { FirstLine } from "./first-line.ts";
+import { GrammarError } from "./grammar-error.ts";
+import { Marker } from "./marker.ts";
+import { Part } from "./part.ts";
+import { Placeholder } from "./placeholder.ts";
+import { Selection } from "./selection.ts";
+import { Slotted } from "./slotted.ts";
+import { SpellingError } from "./spelling-error.ts";
+import { TargetText } from "./target-text.ts";
 
-import { PseudoElementSelector } from "./pseudo-element.js";
+import { PseudoElementSelector } from "./pseudo-element.ts";
 
 const { right } = Parser;
 const { parseLegacy, parseNonLegacy } = PseudoElementSelector;

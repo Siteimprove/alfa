@@ -1,19 +1,19 @@
-import * as languages from "../../sia-r109/rule.js";
-import * as labelAndName from "../../sia-r14/rule.js";
-import * as roleAndRequiredAttributes from "../../sia-r16/rule.js";
-import * as withRoleAndName from "../../sia-r55/rule.js";
-import * as sameNames from "../../sia-r56/rule.js";
-import * as withFirstHeading from "../../sia-r61/rule.js";
-import * as distinguishingStyles from "../../sia-r62/diagnostics.js";
-import * as matchingClasses from "../../sia-r65/diagnostics.js";
-import * as withDeclaration from "../../sia-r75/rule.js";
-import * as clippingAncestors from "../../sia-r83/rule.js";
+import * as languages from "../../sia-r109/rule.ts";
+import * as labelAndName from "../../sia-r14/rule.ts";
+import * as roleAndRequiredAttributes from "../../sia-r16/rule.ts";
+import * as withRoleAndName from "../../sia-r55/rule.ts";
+import * as sameNames from "../../sia-r56/rule.ts";
+import * as withFirstHeading from "../../sia-r61/rule.ts";
+import * as distinguishingStyles from "../../sia-r62/diagnostics.ts";
+import * as matchingClasses from "../../sia-r65/diagnostics.ts";
+import * as withDeclaration from "../../sia-r75/rule.ts";
+import * as clippingAncestors from "../../sia-r83/rule.ts";
 
 // R66, R69
-import * as colorError from "../dom/get-colors.js";
+import * as colorError from "../dom/get-colors.ts";
 
 // R17, R70, R90, R95, R42, R60, R68, R76, R91, R92, R93
-import * as diagnostic from "../../common/diagnostic.js";
+import * as diagnostic from "../../common/diagnostic.ts";
 
 /**
  * @public

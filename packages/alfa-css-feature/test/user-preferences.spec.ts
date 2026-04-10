@@ -8,7 +8,7 @@ import {
 } from "@siteimprove/alfa-device";
 import { test } from "@siteimprove/alfa-test";
 
-import { Feature } from "../dist/index.js";
+import { Feature } from "../src/index.ts";
 import Type = Device.Type;
 
 const names = Object.keys(Preference.preferences) as Array<Preference.Name>;

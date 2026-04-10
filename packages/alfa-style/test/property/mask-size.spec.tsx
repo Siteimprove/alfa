@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom";
 
-import { computed } from "../common.js";
+import { computed } from "../common.ts";
 
 test("initial value is auto", (t) => {
   t.deepEqual(

@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom";
 
-import { color, computed } from "../common.js";
+import { color, computed } from "../common.ts";
 
 test("initial value is none", (t) => {
   t.deepEqual(computed(<div></div>, "mask-image"), {

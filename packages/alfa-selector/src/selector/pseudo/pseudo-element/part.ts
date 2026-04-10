@@ -2,7 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Function, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { PseudoElementSelector } from "./pseudo-element.js";
+import { PseudoElementSelector } from "./pseudo-element.ts";
 
 const { map, separatedList } = Parser;
 

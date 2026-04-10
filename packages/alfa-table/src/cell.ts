@@ -8,11 +8,11 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { Anchored } from "./anchored.js";
-import type { Slot } from "./slot.js";
-import type { Scope } from "./scope.js";
+import { Anchored } from "./anchored.ts";
+import type { Slot } from "./slot.ts";
+import type { Scope } from "./scope.ts";
 
-import * as predicate from "./cell/predicate.js";
+import * as predicate from "./cell/predicate.ts";
 
 const { and, or } = Refinement;
 const { isElement } = Element;

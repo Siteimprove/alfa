@@ -1,13 +1,13 @@
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Function as CSSFunction } from "../../syntax/index.js";
-import { List } from "../collection/index.js";
+import { Function as CSSFunction } from "../../syntax/index.ts";
+import { List } from "../collection/index.ts";
 
-import { Angle, Number } from "../numeric/index.js";
-import type { Resolvable } from "../resolvable.js";
+import { Angle, Number } from "../numeric/index.ts";
+import type { Resolvable } from "../resolvable.ts";
 
-import { Function } from "./function.js";
+import { Function } from "./function.ts";
 
 const { map, either } = Parser;
 

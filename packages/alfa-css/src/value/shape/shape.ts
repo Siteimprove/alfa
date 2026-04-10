@@ -3,19 +3,19 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
-import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.ts";
 
-import { Value } from "../value.js";
-import { type Parser as CSSParser, Token } from "../../syntax/index.js";
+import { Value } from "../value.ts";
+import { type Parser as CSSParser, Token } from "../../syntax/index.ts";
 
-import { Box } from "../box.js";
-import { Keyword } from "../textual/keyword.js";
+import { Box } from "../box.ts";
+import { Keyword } from "../textual/keyword.ts";
 
-import { Circle } from "./circle.js";
-import { Inset } from "./inset.js";
-import { Rectangle } from "./rectangle.js";
-import { Ellipse } from "./ellipse.js";
-import { Polygon } from "./polygon.js";
+import { Circle } from "./circle.ts";
+import { Inset } from "./inset.ts";
+import { Rectangle } from "./rectangle.ts";
+import { Ellipse } from "./ellipse.ts";
+import { Polygon } from "./polygon.ts";
 
 const { either } = Parser;
 

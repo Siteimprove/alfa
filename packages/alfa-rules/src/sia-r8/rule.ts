@@ -8,10 +8,10 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/expectation.ts";
 
-import { Scope, Stability } from "../tags/index.js";
-import { WithRole } from "../common/diagnostic.js";
+import { Scope, Stability } from "../tags/index.ts";
+import { WithRole } from "../common/diagnostic.ts";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;

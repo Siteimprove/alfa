@@ -1,1 +1,1 @@
-export * from "./predicate/has-name.js";
+export * from "./predicate/has-name.ts";
