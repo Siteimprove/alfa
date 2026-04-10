@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.57% </span>
+                <span class="strong">72.22% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>33/42</span>
+                <span class='fraction'>39/54</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>15/18</span>
+                <span class='fraction'>24/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.19% </span>
+                <span class="strong">74.35% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>16/21</span>
+                <span class='fraction'>29/39</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.04% </span>
+                <span class="strong">78.57% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>32/41</span>
+                <span class='fraction'>33/42</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -394,31 +394,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-yes">8967x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -440,11 +440,11 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 &nbsp;
 import * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { BaseNode } from "../node.js";
+import { BaseNode } from "../node.ts";
 &nbsp;
-import { Element } from "./element.js";
-import type { Slot } from "./slot.js";
-import { Slotable } from "./slotable.js";
+import { Element } from "./element.ts";
+import type { Slot } from "./slot.ts";
+import { Slotable } from "./slotable.ts";
 &nbsp;
 /**
  * @public
@@ -489,14 +489,14 @@ export class Text extends Slotable&lt;"text"&gt; {
     return this._data;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >assignedSlot(</span>): Option&lt;Slot&gt; {
-    const name = <span class="cstat-no" title="statement not covered" >this.slotableName();</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >assignedSlot(</span>): Option&lt;Slot&gt; {</span>
+    const name = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.slotableName();</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return this.parent()</span>
       .filter(Element.isElement)
-      .flatMap(<span class="fstat-no" title="function not covered" >(p</span>arent) =&gt;
-<span class="cstat-no" title="statement not covered" >        parent.shadow.flatMap(<span class="fstat-no" title="function not covered" >(s</span>hadow) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >          shadow</span>
+      .flatMap(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(p</span></span>arent) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        parent.shadow.flatMap(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(s</span></span>hadow) =&gt;</span></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >          shadow</span></span>
             .descendants()
             .filter(Element.isSlot)
             .find(<span class="fstat-no" title="function not covered" >(s</span>lot) =&gt; <span class="cstat-no" title="statement not covered" >slot.slotName() === name)</span>,
@@ -504,7 +504,7 @@ export class Text extends Slotable&lt;"text"&gt; {
       );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >slotableName(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >slotableName(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return "";</span>
   }
 &nbsp;
@@ -512,7 +512,7 @@ export class Text extends Slotable&lt;"text"&gt; {
     return this._boxes.get(device);
   }
 &nbsp;
-  public is(predicate: Predicate&lt;string&gt;) {
+  public <span class="fstat-no" title="function not covered" >is(</span>predicate: Predicate&lt;string&gt;) {
     return predicate(this._data);
   }
 &nbsp;
@@ -520,14 +520,14 @@ export class Text extends Slotable&lt;"text"&gt; {
    * @internal
    **/
   protected _internalPath(options?: BaseNode.Traversal): string {
-    let path = this.parent(options)
+    let path = <span class="cstat-no" title="statement not covered" >this.parent(options)</span>
       .map((parent) =&gt; parent.path(options))
       .getOr("/");
 &nbsp;
     path += path === "/" ? "" : "/";
     path += "text()";
 &nbsp;
-    const index = this.index(options, Text.isText);
+    const index = <span class="cstat-no" title="statement not covered" >this.index(options, Text.isText);</span>
 &nbsp;
     path += `[${index + 1}]`;
 &nbsp;
@@ -569,7 +569,7 @@ export class Text extends Slotable&lt;"text"&gt; {
   }
 &nbsp;
   public toString(): string {
-    const value = this.data;
+    const value = <span class="cstat-no" title="statement not covered" >this.data;</span>
 &nbsp;
     // If the child is only spaces, we do not want to trim them to nothingness.
     <span class="missing-if-branch" title="else path not taken" >E</span>if (value.match(/\s+/) !== null) {
@@ -583,7 +583,7 @@ export class Text extends Slotable&lt;"text"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Text {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Text {</span></span>
   export interface MinimalJSON extends BaseNode.JSON&lt;"text"&gt; {}
 &nbsp;
   export interface JSON extends BaseNode.JSON&lt;"text"&gt; {
@@ -622,7 +622,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >T
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

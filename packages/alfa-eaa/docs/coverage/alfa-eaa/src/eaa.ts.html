@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">81.25% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>13/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>10/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -168,7 +168,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -206,7 +206,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Requirement } from "@siteimprove/alfa-act";
 import { None, Option } from "@siteimprove/alfa-option";
 &nbsp;
-import { Criteria } from "./criterion/data.js";
+import { Criteria } from "./criterion/data.ts";
 &nbsp;
 /**
  * @public
@@ -214,13 +214,13 @@ import { Criteria } from "./criterion/data.js";
 export class EAA&lt;
   C extends EAA.Chapter = EAA.Chapter,
 &gt; extends Requirement&lt;"eaa"&gt; {
-  public static of&lt;C extends EAA.Chapter&gt;(chapter: C): EAA&lt;C&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>C extends EAA.Chapter&gt;(chapter: C): EAA&lt;C&gt; {
     return new EAA(chapter);
   }
 &nbsp;
   private readonly _chapter: C;
 &nbsp;
-  protected constructor(chapter: C) {
+<span class="fstat-no" title="function not covered" >  protected constructor(c</span>hapter: C) {
     super("eaa", "");
     this._chapter = chapter;
   }
@@ -228,14 +228,14 @@ export class EAA&lt;
   /**
    * The chapter of this criterion.
    */
-  public get chapter(): C {
+  public get <span class="fstat-no" title="function not covered" >chapter(</span>): C {
     return this._chapter;
   }
 &nbsp;
   /**
    * The title of this criterion.
    */
-  public get title(): EAA.Title&lt;C&gt; {
+  public get <span class="fstat-no" title="function not covered" >title(</span>): EAA.Title&lt;C&gt; {
     return Criteria[this._chapter].title;
   }
 }
@@ -243,7 +243,7 @@ export class EAA&lt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >EAA {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >E</span>AA {</span></span>
   export interface JSON&lt;C extends EAA.Chapter = EAA.Chapter&gt;
     extends Requirement.JSON&lt;"eaa"&gt; {
     chapter: C;
@@ -256,7 +256,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >E
    */
   export type Chapter = keyof Criteria;
 &nbsp;
-  export function isChapter(value: string): value is Chapter {
+  export function <span class="cstat-no" title="statement not covered" >isChapter(value: string): value is Chapter {</span>
     return value in Criteria;
   }
 &nbsp;
@@ -265,11 +265,11 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >E
    */
   export type Title&lt;C extends Chapter = Chapter&gt; = Criteria[C]["title"];
 &nbsp;
-  export function isEAA(value: unknown): value is EAA {
+  export function <span class="cstat-no" title="statement not covered" >isEAA(value: unknown): value is EAA {</span>
     return value instanceof EAA;
   }
 &nbsp;
-  export function fromChapter(chapter: string): Option&lt;EAA&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >fromChapter(</span>chapter: string): Option&lt;EAA&gt; {</span>
     return isChapter(chapter) ? Option.of(EAA.of(chapter)) : None;
   }
 }
@@ -280,7 +280,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >E
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:30.800Z
+                at 2026-04-10T09:29:46.385Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

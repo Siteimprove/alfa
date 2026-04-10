@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.12% </span>
+                <span class="strong">79.41% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>25/32</span>
+                <span class='fraction'>27/34</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">77.41% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>24/31</span>
+                <span class='fraction'>48/62</span>
             </div>
         
             
@@ -244,7 +244,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">316x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">327909x</span>
+<span class="cline-any cline-yes">327912x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -389,8 +389,8 @@ import type { Thunk } from "@siteimprove/alfa-thunk";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import type { Option } from "./option.js";
-import type { Some } from "./some.js";
+import type { Option } from "./option.ts";
+import type { Some } from "./some.ts";
 &nbsp;
 const { compareComparable } = Comparable;
 &nbsp;
@@ -423,7 +423,7 @@ export const None: None = new (class None {
     return;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >apply(</span>): None {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >apply(</span>): None {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
@@ -431,7 +431,7 @@ export const None: None = new (class None {
     return this;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >flatten(</span>): None {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >flatten(</span>): None {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
@@ -463,7 +463,7 @@ export const None: None = new (class None {
     return true;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >and(</span>): None {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >and(</span>): None {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
@@ -482,7 +482,7 @@ export const None: None = new (class None {
   /**
    * @internal
    */
-  public <span class="fstat-no" title="function not covered" >getUnsafe(</span>message = <span class="branch-0 cbranch-no" title="branch not covered" >"Attempted to .getUnsafe() from None")</span>: never {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getUnsafe(</span>m</span>essage = <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >"Attempted to .getUnsafe() from None")</span>: never {</span>
 <span class="cstat-no" title="statement not covered" >    throw new Error(message);</span>
   }
 &nbsp;
@@ -498,14 +498,14 @@ export const None: None = new (class None {
     return this;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >compare&lt;</span>T&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >compare&lt;</span>T&gt;(</span>
     this: Option&lt;Comparable&lt;T&gt;&gt;,
     option: Option&lt;T&gt;,
   ): Comparison {
 <span class="cstat-no" title="statement not covered" >    return this.compareWith(option, compareComparable);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >compareWith&lt;</span>T&gt;(option: Option&lt;T&gt;): Comparison {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >compareWith&lt;</span>T&gt;(o</span>ption: Option&lt;T&gt;): Comparison {
 <span class="cstat-no" title="statement not covered" >    return option.isNone() ? Comparison.Equal : Comparison.Less;</span>
   }
 &nbsp;
@@ -519,7 +519,7 @@ export const None: None = new (class None {
 &nbsp;
   public *[Symbol.iterator](): Iterator&lt;never&gt; {}
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toArray(</span>): Array&lt;never&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toArray(</span>): Array&lt;never&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return [];</span>
   }
 &nbsp;
@@ -550,7 +550,7 @@ export namespace None {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

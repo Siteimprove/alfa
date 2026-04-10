@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-toolchain",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.114.2",
+  "version": "0.114.3",
   "license": "MIT",
   "description": "Toolchain for developing Alfa and related projects",
   "repository": {
@@ -66,7 +66,7 @@
     "@siteimprove/alfa-string": "workspace:^",
     "@svitejs/changesets-changelog-github-compact": "^1.1.0",
     "@ts-graphviz/adapter": "^3.0.6",
-    "axios": "^1.14.0",
+    "axios": "^1.15.0",
     "json-stringify-pretty-compact": "^4.0.0",
     "madge": "^8.0.0",
     "resolve-from": "^5.0.0",

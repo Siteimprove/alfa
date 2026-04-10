@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64.28% </span>
+                <span class="strong">75.55% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>18/28</span>
+                <span class='fraction'>34/45</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">68.18% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/12</span>
+                <span class='fraction'>15/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64.28% </span>
+                <span class="strong">82.14% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>18/28</span>
+                <span class='fraction'>23/28</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -289,7 +289,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -310,7 +310,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -327,8 +327,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">75x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-yes">60x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -336,8 +336,8 @@
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
@@ -427,7 +427,7 @@ export namespace Autocomplete {
   /**
    * Checks if the provided string contains a valid autocomplete string according to {@link https://html.spec.whatwg.org/multipage/#autofill-detail-tokens}
    */
-  export const isValid: Predicate&lt;string&gt; = <span class="fstat-no" title="function not covered" >(a</span>utocomplete) =&gt; {
+  export const isValid: Predicate&lt;string&gt; = (autocomplete) =&gt; {
     // The following line comments each refers to the corresponding position in the HTML specification linked above at the time of writing
     const parse = <span class="cstat-no" title="statement not covered" >right(</span>
       option(section), // 1.
@@ -450,14 +450,14 @@ export namespace Autocomplete {
 <span class="cstat-no" title="statement not covered" >    return parse(Slice.of(tokenize(autocomplete))).isOk();</span>
   };
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >tokenize(</span>autocomplete: string): Array&lt;string&gt; {
+  export function tokenize(autocomplete: string): Array&lt;string&gt; {
 <span class="cstat-no" title="statement not covered" >    return Array.from(autocomplete.toLowerCase().trim().split(/\s+/));</span>
   }
 &nbsp;
   const parseFirst: Parser&lt;Slice&lt;string&gt;, string, string&gt; = <span class="fstat-no" title="function not covered" >(</span>
     input: Slice&lt;string&gt;,
   ) =&gt;
-<span class="cstat-no" title="statement not covered" >    input</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    input</span></span>
       .first()
       .map(<span class="fstat-no" title="function not covered" >(t</span>oken) =&gt; <span class="cstat-no" title="statement not covered" >Ok.of&lt;[Slice&lt;string&gt;, string]&gt;([input.rest(), token]))</span>
       .getOr(Err.of("No token left"));
@@ -490,7 +490,7 @@ export namespace Autocomplete {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:29.276Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

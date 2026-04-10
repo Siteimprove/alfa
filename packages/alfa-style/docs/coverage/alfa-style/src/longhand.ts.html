@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.54% </span>
+                <span class="strong">90.32% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>29/31</span>
+                <span class='fraction'>28/31</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.29% </span>
+                <span class="strong">51.85% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>26/27</span>
+                <span class='fraction'>14/27</span>
             </div>
         
             
@@ -443,7 +443,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">101x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">80x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -560,7 +560,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">80x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -568,7 +568,7 @@
 <span class="cline-any cline-yes">2320x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2520x</span>
+<span class="cline-any cline-yes">1123x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -580,8 +580,8 @@ import type { Slice } from "@siteimprove/alfa-slice";
 &nbsp;
 import * as parser from "@siteimprove/alfa-parser";
 &nbsp;
-import type { Style } from "./style.js";
-import type { Value } from "./value.js";
+import type { Style } from "./style.ts";
+import type { Value } from "./value.ts";
 &nbsp;
 const { left, either, end } = parser.Parser;
 &nbsp;
@@ -598,13 +598,13 @@ export class Longhand&lt;
   COMPUTED = SPECIFIED,
   USED = COMPUTED,
 &gt; {
-  public static of&lt;SPECIFIED, COMPUTED = SPECIFIED, USED = COMPUTED&gt;(
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>SPECIFIED, COMPUTED = SPECIFIED, USED = COMPUTED&gt;(
     initial: COMPUTED,
     parse: parser.Parser&lt;Slice&lt;Token&gt;, SPECIFIED, string&gt;,
     compute: Mapper&lt;Value&lt;SPECIFIED&gt;, Value&lt;COMPUTED&gt;, [style: Style]&gt;,
     options: Partial&lt;Longhand.Options&lt;COMPUTED, USED&gt;&gt; = {},
   ): Longhand&lt;SPECIFIED, COMPUTED, USED&gt; {
-    const { inherits = false, use = <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >(v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >value </span></span>}</span></span> = options;
+    const { inherits = false, use = <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >(v</span></span>alue) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >value </span></span>}</span></span> = options;
 &nbsp;
     return new Longhand(
       initial,
@@ -619,7 +619,7 @@ export class Longhand&lt;
     );
   }
 &nbsp;
-  public static extend&lt;SPECIFIED, COMPUTED = SPECIFIED, USED = COMPUTED&gt;(
+  public static <span class="fstat-no" title="function not covered" >extend&lt;</span>SPECIFIED, COMPUTED = SPECIFIED, USED = COMPUTED&gt;(
     property: Longhand&lt;SPECIFIED, COMPUTED, USED&gt;,
     overrides: {
       initial?: COMPUTED;
@@ -651,7 +651,7 @@ export class Longhand&lt;
   private readonly _inherits: boolean;
   private readonly _use: Mapper&lt;Value&lt;COMPUTED&gt;, Value&lt;USED&gt;, [style: Style]&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     initial: COMPUTED,
     parseBase: parser.Parser&lt;Slice&lt;Token&gt;, SPECIFIED, string&gt;,
     compute: Mapper&lt;Value&lt;SPECIFIED&gt;, Value&lt;COMPUTED&gt;, [style: Style]&gt;,
@@ -669,11 +669,11 @@ export class Longhand&lt;
     this._use = use;
   }
 &nbsp;
-  get initial(): COMPUTED {
+  get <span class="fstat-no" title="function not covered" >initial(</span>): COMPUTED {
     return this._initial;
   }
 &nbsp;
-  get parse(): Longhand.Parser&lt;SPECIFIED&gt; {
+  get <span class="fstat-no" title="function not covered" >parse(</span>): Longhand.Parser&lt;SPECIFIED&gt; {
     return this._parse;
   }
 &nbsp;
@@ -683,19 +683,19 @@ export class Longhand&lt;
    *
    * @internal
    */
-  get parseBase(): parser.Parser&lt;Slice&lt;Token&gt;, SPECIFIED, string&gt; {
+  get <span class="fstat-no" title="function not covered" >parseBase(</span>): parser.Parser&lt;Slice&lt;Token&gt;, SPECIFIED, string&gt; {
     return this._parseBase;
   }
 &nbsp;
-  get compute(): Mapper&lt;Value&lt;SPECIFIED&gt;, Value&lt;COMPUTED&gt;, [style: Style]&gt; {
+  get <span class="fstat-no" title="function not covered" >compute(</span>): Mapper&lt;Value&lt;SPECIFIED&gt;, Value&lt;COMPUTED&gt;, [style: Style]&gt; {
     return this._compute;
   }
 &nbsp;
-  get inherits(): boolean {
+  get <span class="fstat-no" title="function not covered" >inherits(</span>): boolean {
     return this._inherits;
   }
 &nbsp;
-  get use(): Mapper&lt;Value&lt;COMPUTED&gt;, Value&lt;USED&gt;, [style: Style]&gt; {
+  get <span class="fstat-no" title="function not covered" >use(</span>): Mapper&lt;Value&lt;COMPUTED&gt;, Value&lt;USED&gt;, [style: Style]&gt; {
     return this._use;
   }
 }
@@ -703,7 +703,7 @@ export class Longhand&lt;
 /**
  * @internal
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Longhand {</span></span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >L</span>onghand {</span></span>
   export interface Options&lt;COMPUTED, USED = COMPUTED&gt; {
     readonly inherits: boolean;
     readonly use: Mapper&lt;Value&lt;COMPUTED&gt;, Value&lt;USED&gt;, [style: Style]&gt;;
@@ -815,7 +815,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
    *
    * @internal
    */
-  export function fromKeywords&lt;K extends string, USED = Keyword.ToKeywords&lt;K&gt;&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >fromKeywords&lt;</span>K extends string, USED = Keyword.ToKeywords&lt;K&gt;&gt;(</span>
     options: Partial&lt;Options&lt;Keyword.ToKeywords&lt;K&gt;, USED&gt;&gt;,
     initial: K,
     ...other: Array&lt;K&gt;
@@ -835,7 +835,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:36:22.122Z
+                at 2026-04-10T09:31:34.530Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

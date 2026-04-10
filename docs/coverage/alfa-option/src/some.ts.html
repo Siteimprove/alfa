@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.92% </span>
+                <span class="strong">84.44% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>34/41</span>
+                <span class='fraction'>38/45</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">42.85% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/8</span>
+                <span class='fraction'>6/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.08% </span>
+                <span class="strong">80.82% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>30/37</span>
+                <span class='fraction'>59/73</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85% </span>
+                <span class="strong">85.36% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>34/40</span>
+                <span class='fraction'>35/41</span>
             </div>
         
             
@@ -322,7 +322,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">380089x</span>
+<span class="cline-any cline-yes">380095x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -487,23 +487,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">316x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">316x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">314x</span>
 <span class="cline-any cline-yes">3221x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -523,8 +523,8 @@ import type { Refinement } from "@siteimprove/alfa-refinement";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import type { Option } from "./option.js";
-import { None } from "./none.js";
+import type { Option } from "./option.ts";
+import { None } from "./none.ts";
 &nbsp;
 const { not, test } = Predicate;
 const { compareComparable } = Comparable;
@@ -563,7 +563,7 @@ export class Some&lt;T&gt; implements Option&lt;T&gt; {
     mapper(this._value);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >apply&lt;</span>U&gt;(mapper: Option&lt;Mapper&lt;T, U&gt;&gt;): Option&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >apply&lt;</span>U&gt;(m</span>apper: Option&lt;Mapper&lt;T, U&gt;&gt;): Option&lt;U&gt; {
 <span class="cstat-no" title="statement not covered" >    return mapper.map(<span class="fstat-no" title="function not covered" >(m</span>apper) =&gt; <span class="cstat-no" title="statement not covered" >mapper(this._value))</span>;</span>
   }
 &nbsp;
@@ -571,7 +571,7 @@ export class Some&lt;T&gt; implements Option&lt;T&gt; {
     return mapper(this._value);
   }
 &nbsp;
-  public flatten&lt;T&gt;(this: Some&lt;Option&lt;T&gt;&gt;): Option&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >flatten&lt;</span>T&gt;(this: Some&lt;Option&lt;T&gt;&gt;): Option&lt;T&gt; {
     return this._value;
   }
 &nbsp;
@@ -627,7 +627,7 @@ export class Some&lt;T&gt; implements Option&lt;T&gt; {
     return test(predicate, this._value);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >and&lt;</span>U&gt;(option: Option&lt;U&gt;): Option&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >and&lt;</span>U&gt;(o</span>ption: Option&lt;U&gt;): Option&lt;U&gt; {
 <span class="cstat-no" title="statement not covered" >    return option;</span>
   }
 &nbsp;
@@ -667,14 +667,14 @@ export class Some&lt;T&gt; implements Option&lt;T&gt; {
     return this;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >compare&lt;</span>T&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >compare&lt;</span>T&gt;(</span>
     this: Option&lt;Comparable&lt;T&gt;&gt;,
     option: Option&lt;T&gt;,
   ): Comparison {
 <span class="cstat-no" title="statement not covered" >    return this.compareWith(option, compareComparable);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >compareWith&lt;</span>U = T&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >compareWith&lt;</span>U = T&gt;(</span>
     option: Option&lt;U&gt;,
     comparer: Comparer&lt;T, U&gt;,
   ): Comparison {
@@ -695,7 +695,7 @@ export class Some&lt;T&gt; implements Option&lt;T&gt; {
     yield this._value;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toArray(</span>): [T] {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toArray(</span>): [T] {</span>
 <span class="cstat-no" title="statement not covered" >    return [this._value];</span>
   }
 &nbsp;
@@ -706,7 +706,7 @@ export class Some&lt;T&gt; implements Option&lt;T&gt; {
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `Some { ${this._value} }`;</span>
   }
 }
@@ -714,7 +714,7 @@ export class Some&lt;T&gt; implements Option&lt;T&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Some {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Some {</span></span>
   export interface JSON&lt;T&gt; {
     [key: string]: json.JSON;
     type: "some";
@@ -736,7 +736,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

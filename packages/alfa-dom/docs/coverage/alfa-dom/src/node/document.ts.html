@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">81.39% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>28/35</span>
+                <span class='fraction'>35/43</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">61.76% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>15/21</span>
+                <span class='fraction'>21/34</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.21% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>16/19</span>
+                <span class='fraction'>30/35</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.41% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>27/34</span>
+                <span class='fraction'>28/35</span>
             </div>
         
             
@@ -377,26 +377,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">422x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -422,11 +422,11 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 &nbsp;
 import * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { BaseNode } from "./node.js";
-import { Sheet } from "../style/sheet.js";
-import type { Element } from "./slotable/index.js";
+import { BaseNode } from "./node.ts";
+import { Sheet } from "../style/sheet.ts";
+import type { Element } from "./slotable/index.ts";
 &nbsp;
-import type { Node } from "./index.js";
+import type { Node } from "./index.ts";
 &nbsp;
 /**
  * @public
@@ -476,7 +476,7 @@ export class Document extends BaseNode&lt;"document"&gt; {
   }
 &nbsp;
   public parent(
-    options: BaseNode.Traversal = BaseNode.Traversal.empty,
+    options: BaseNode.Traversal = <span class="branch-0 cbranch-no" title="branch not covered" >BaseNode.Traversal.empty,</span>
   ): Option&lt;Node&gt; {
     return options.isSet(BaseNode.Traversal.nested)
       ? this.frame
@@ -487,7 +487,7 @@ export class Document extends BaseNode&lt;"document"&gt; {
    * @internal
    **/
   protected _internalPath(
-    options: BaseNode.Traversal = BaseNode.Traversal.empty,
+    options: BaseNode.Traversal = <span class="branch-0 cbranch-no" title="branch not covered" >BaseNode.Traversal.empty,</span>
   ): string {
     <span class="missing-if-branch" title="else path not taken" >E</span>if (options.isSet(BaseNode.Traversal.nested)) {
       return this._frame
@@ -524,8 +524,8 @@ export class Document extends BaseNode&lt;"document"&gt; {
     return result;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
-    const children = <span class="cstat-no" title="statement not covered" >this._children</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
+    const children = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._children</span></span>
       .map(<span class="fstat-no" title="function not covered" >(c</span>hild) =&gt; <span class="cstat-no" title="statement not covered" >String.indent(child.toString()))</span>
       .join("\n");
 &nbsp;
@@ -535,7 +535,7 @@ export class Document extends BaseNode&lt;"document"&gt; {
   /**
    * @internal
    */
-  public <span class="fstat-no" title="function not covered" >_attachParent(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >_attachParent(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
@@ -557,7 +557,7 @@ export class Document extends BaseNode&lt;"document"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Document {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Document {</span></span>
   export interface MinimalJSON extends BaseNode.JSON&lt;"document"&gt; {}
 &nbsp;
   export interface JSON extends BaseNode.JSON&lt;"document"&gt; {
@@ -595,7 +595,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >D
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:29.276Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

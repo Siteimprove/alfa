@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">68.42% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/15</span>
+                <span class='fraction'>13/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">25% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>2/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">45.83% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/12</span>
+                <span class='fraction'>11/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/15</span>
+                <span class='fraction'>10/16</span>
             </div>
         
             
@@ -200,16 +200,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">238x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">238x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">235x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -218,7 +218,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">238x</span>
+<span class="cline-any cline-yes">235x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -237,9 +237,9 @@ import { Parser } from "@siteimprove/alfa-parser";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import type { Feature } from "../feature.js";
+import type { Feature } from "../feature.ts";
 &nbsp;
-import type { Condition } from "./condition.js";
+import type { Condition } from "./condition.ts";
 &nbsp;
 const { delimited, map, option, right } = Parser;
 &nbsp;
@@ -250,50 +250,50 @@ export class Not&lt;F extends Feature&lt;F&gt;&gt; implements Feature&lt;F, Not.
 &nbsp;
   private readonly _condition: Condition&lt;F&gt;;
 &nbsp;
-  protected constructor(condition: Condition&lt;F&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(c</span>ondition: Condition&lt;F&gt;) {
     this._condition = condition;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >condition(</span>): Condition&lt;F&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >condition(</span>): Condition&lt;F&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._condition;</span>
   }
 &nbsp;
-  public matches(device: Device): boolean {
+  public <span class="fstat-no" title="function not covered" >matches(</span>device: Device): boolean {
     return !this._condition.matches(device);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Not &amp;&amp; value._condition.equals(this._condition);</span>
   }
 &nbsp;
-  private *<span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;F&gt; {
+  private *<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;F&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    yield* this._condition;</span>
   }
 &nbsp;
-  public [<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;F&gt; {
+  public [<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.iterator]</span></span>(): Iterator&lt;F&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.iterator();</span>
   }
 &nbsp;
-  public toJSON(): Not.JSON&lt;F&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Not.JSON&lt;F&gt; {
     return {
       type: "not",
       condition: this._condition.toJSON(),
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `not (${this._condition})`;</span>
   }
 }
 &nbsp;
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Not {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Not {</span></span>
   export interface JSON&lt;F extends Feature&lt;F&gt;&gt; {
     [key: string]: json.JSON;
     type: "not";
     condition: Condition.JSON&lt;F&gt;;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isNot&lt;</span>T extends Feature&lt;T&gt;&gt;(value: unknown): value is Not&lt;T&gt; {
+  export function isNot&lt;T extends Feature&lt;T&gt;&gt;(value: unknown): value is Not&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Not;</span>
   }
 &nbsp;
@@ -322,7 +322,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >N
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

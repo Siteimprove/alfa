@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">51.61% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>28/42</span>
+                <span class='fraction'>32/62</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.84% </span>
+                <span class="strong">51.35% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/19</span>
+                <span class='fraction'>19/37</span>
             </div>
         
             
@@ -300,8 +300,8 @@ export type Predicate&lt;T, A extends Array&lt;unknown&gt; = []&gt; = (
 /**
  * @public
  */
-export namespace Predicate {
-  export function test&lt;T, A extends Array&lt;unknown&gt; = []&gt;(
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Predicate {</span>
+  export function <span class="cstat-no" title="statement not covered" >test&lt;T, A extends Array&lt;unknown&gt; = []&gt;(</span>
     predicate: Predicate&lt;T, A&gt;,
     value: T,
     ...args: A
@@ -309,7 +309,7 @@ export namespace Predicate {
     return predicate(value, ...args);
   }
 &nbsp;
-  export function fold&lt;T, A extends Array&lt;unknown&gt; = [], V = T, W = T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >fold&lt;T, A extends Array&lt;unknown&gt; = [], V = T, W = T&gt;(</span>
     predicate: Predicate&lt;T, A&gt;,
     ifTrue: Mapper&lt;T, V&gt;,
     ifFalse: Mapper&lt;T, W&gt;,
@@ -319,13 +319,13 @@ export namespace Predicate {
     return predicate(value, ...args) ? ifTrue(value) : ifFalse(value);
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >not&lt;</span>T, A extends Array&lt;unknown&gt; = []&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >not&lt;T, A extends Array&lt;unknown&gt; = []&gt;(</span></span>
     predicate: Predicate&lt;T, A&gt;,
   ): Predicate&lt;T, A&gt; {
-<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >(v</span>alue, ...args) =&gt; <span class="cstat-no" title="statement not covered" >!predicate(value, ...args);</span></span>
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(v</span></span>alue, ...args) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >!predicate(value, ...args);</span></span></span>
   }
 &nbsp;
-  export function and&lt;T, A extends Array&lt;unknown&gt; = []&gt;(
+  export function <span class="cstat-no" title="statement not covered" >and&lt;T, A extends Array&lt;unknown&gt; = []&gt;(</span>
     ...predicates: Array&lt;Predicate&lt;T, A&gt;&gt;
   ): Predicate&lt;T, A&gt; {
     return (value, ...args) =&gt; {
@@ -339,7 +339,7 @@ export namespace Predicate {
     };
   }
 &nbsp;
-  export function or&lt;T, A extends Array&lt;unknown&gt; = []&gt;(
+  export function <span class="cstat-no" title="statement not covered" >or&lt;T, A extends Array&lt;unknown&gt; = []&gt;(</span>
     ...predicates: Array&lt;Predicate&lt;T, A&gt;&gt;
   ): Predicate&lt;T, A&gt; {
     return (value, ...args) =&gt; {
@@ -353,42 +353,42 @@ export namespace Predicate {
     };
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >xor&lt;</span>T, A extends Array&lt;unknown&gt; = []&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >xor&lt;T, A extends Array&lt;unknown&gt; = []&gt;(</span></span>
     ...predicates: Array&lt;Predicate&lt;T, A&gt;&gt;
   ): Predicate&lt;T, A&gt; {
 <span class="cstat-no" title="statement not covered" >    return and(or(...predicates), not(and(...predicates)));</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >nor&lt;</span>T, A extends Array&lt;unknown&gt; = []&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >nor&lt;T, A extends Array&lt;unknown&gt; = []&gt;(</span></span>
     ...predicates: Array&lt;Predicate&lt;T, A&gt;&gt;
   ): Predicate&lt;T, A&gt; {
 <span class="cstat-no" title="statement not covered" >    return not(or(...predicates));</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >nand&lt;</span>T, A extends Array&lt;unknown&gt; = []&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >nand&lt;T, A extends Array&lt;unknown&gt; = []&gt;(</span></span>
     ...predicates: Array&lt;Predicate&lt;T, A&gt;&gt;
   ): Predicate&lt;T, A&gt; {
 <span class="cstat-no" title="statement not covered" >    return not(and(...predicates));</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >equals&lt;</span>T&gt;(...values: Array&lt;T&gt;): Predicate&lt;unknown&gt; {
-<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >(o</span>ther) =&gt; <span class="cstat-no" title="statement not covered" >values.some(<span class="fstat-no" title="function not covered" >(v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" >Equatable.equals(other, value))</span>;</span></span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >equals&lt;T&gt;(...v</span>alues: Array&lt;T&gt;): Predicate&lt;unknown&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(o</span></span>ther) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >values.some(<span class="fstat-no" title="function not covered" >(v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" >Equatable.equals(other, value))</span>;</span></span></span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >property&lt;</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >property&lt;</span></span>
     T,
     K extends keyof T = keyof T,
     A extends Array&lt;unknown&gt; = [],
   &gt;(property: K, predicate: Predicate&lt;T[K], A&gt;): Predicate&lt;T, A&gt; {
-<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >(v</span>alue, ...args) =&gt; <span class="cstat-no" title="statement not covered" >predicate(value[property], ...args);</span></span>
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(v</span></span>alue, ...args) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >predicate(value[property], ...args);</span></span></span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >tee&lt;</span>T, A extends Array&lt;unknown&gt; = []&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >tee&lt;</span>T, A extends Array&lt;unknown&gt; = []&gt;(</span></span>
     predicate: Predicate&lt;T, A&gt;,
     callback: Callback&lt;T, void, [result: boolean, ...args: A]&gt;,
   ): Predicate&lt;T, A&gt; {
-<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >(v</span>alue, ...args) =&gt; {</span>
-      const result = <span class="cstat-no" title="statement not covered" >predicate(value, ...args);</span>
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(v</span></span>alue, ...args) =&gt; {</span>
+      const result = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >predicate(value, ...args);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      callback(value, result, ...args);</span>
 &nbsp;
@@ -403,7 +403,7 @@ export namespace Predicate {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:47.959Z
+                at 2026-04-10T09:30:03.694Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

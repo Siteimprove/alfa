@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.95% </span>
+                <span class="strong">87.03% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>40/46</span>
+                <span class='fraction'>47/54</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.96% </span>
+                <span class="strong">58.82% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>17/27</span>
+                <span class='fraction'>20/34</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">53.57% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>14/14</span>
+                <span class='fraction'>15/28</span>
             </div>
         
             
@@ -631,7 +631,7 @@ import type * as json from "@siteimprove/alfa-json";
  * @internal
  */
 export class AncestorFilter implements Serializable&lt;AncestorFilter.JSON&gt; {
-  public static empty(): AncestorFilter {
+  public static <span class="fstat-no" title="function not covered" >empty(</span>): AncestorFilter {
     return new AncestorFilter();
   }
 &nbsp;
@@ -639,9 +639,9 @@ export class AncestorFilter implements Serializable&lt;AncestorFilter.JSON&gt; {
   private readonly _classes = Bucket.empty();
   private readonly _types = Bucket.empty();
 &nbsp;
-  protected constructor() {}
+<span class="fstat-no" title="function not covered" >  protected constructor() {}</span>
 &nbsp;
-  public add(element: Element): void {
+  public <span class="fstat-no" title="function not covered" >add(</span>element: Element): void {
     for (const id of element.id) {
       this._ids.add(id);
     }
@@ -653,7 +653,7 @@ export class AncestorFilter implements Serializable&lt;AncestorFilter.JSON&gt; {
     }
   }
 &nbsp;
-  public remove(element: Element): void {
+  public <span class="fstat-no" title="function not covered" >remove(</span>element: Element): void {
     for (const id of element.id) {
       this._ids.remove(id);
     }
@@ -668,7 +668,7 @@ export class AncestorFilter implements Serializable&lt;AncestorFilter.JSON&gt; {
   /**
    * @internal
    */
-  public matches(selector: Simple): boolean {
+  public <span class="fstat-no" title="function not covered" >matches(</span>selector: Simple): boolean {
     if (Id.isId(selector)) {
       return this._ids.has(selector.name);
     }
@@ -687,7 +687,7 @@ export class AncestorFilter implements Serializable&lt;AncestorFilter.JSON&gt; {
   /**
    * Check if a selector can be rejected based on the ancestor filter.
    */
-  public canReject(selector: Selector): boolean {
+  public <span class="fstat-no" title="function not covered" >canReject(</span>selector: Selector): boolean {
     // If the selector is a simple selector, it must be in the filter in order to match.
     if (Id.isId(selector) || Class.isClass(selector) || Type.isType(selector)) {
       return !this.matches(selector);
@@ -707,7 +707,7 @@ export class AncestorFilter implements Serializable&lt;AncestorFilter.JSON&gt; {
     // one side of the combinator is enough to reject the full selector.
     // Sibling combinator are not handled by ancestor filters.
 <span class="cstat-no" title="statement not covered" >    if (Complex.isComplex(selector)) {</span>
-      const { combinator } = <span class="cstat-no" title="statement not covered" >selector;</span>
+      const { combinator } = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >selector;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (</span>
         combinator === Combinator.Descendant ||
@@ -722,7 +722,7 @@ export class AncestorFilter implements Serializable&lt;AncestorFilter.JSON&gt; {
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public toJSON(): AncestorFilter.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): AncestorFilter.JSON {
     return {
       ids: this._ids.toJSON(),
       classes: this._classes.toJSON(),
@@ -763,19 +763,19 @@ export namespace AncestorFilter {
  * @internal
  */
 export class Bucket implements Serializable&lt;Bucket.JSON&gt; {
-  public static empty(): Bucket {
+  public static <span class="fstat-no" title="function not covered" >empty(</span>): Bucket {
     return new Bucket();
   }
 &nbsp;
   private readonly _entries = new Map&lt;string, number&gt;();
 &nbsp;
-  protected constructor() {}
+<span class="fstat-no" title="function not covered" >  protected constructor() {}</span>
 &nbsp;
-  public has(entry: string): boolean {
+  public <span class="fstat-no" title="function not covered" >has(</span>entry: string): boolean {
     return this._entries.has(entry);
   }
 &nbsp;
-  public add(entry: string): void {
+  public <span class="fstat-no" title="function not covered" >add(</span>entry: string): void {
     const count = this._entries.get(entry);
 &nbsp;
     if (count === undefined) {
@@ -785,7 +785,7 @@ export class Bucket implements Serializable&lt;Bucket.JSON&gt; {
     }
   }
 &nbsp;
-  public remove(entry: string): void {
+  public <span class="fstat-no" title="function not covered" >remove(</span>entry: string): void {
     const count = this._entries.get(entry);
 &nbsp;
     if (count === undefined) {
@@ -799,7 +799,7 @@ export class Bucket implements Serializable&lt;Bucket.JSON&gt; {
     }
   }
 &nbsp;
-  public toJSON(): Bucket.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Bucket.JSON {
     return [...this._entries];
   }
 }
@@ -817,7 +817,7 @@ export namespace Bucket {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:13.066Z
+                at 2026-04-10T09:29:28.174Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

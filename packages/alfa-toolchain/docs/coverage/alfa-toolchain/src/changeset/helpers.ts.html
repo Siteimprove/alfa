@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">21.42% </span>
+                <span class="strong">18.18% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/28</span>
+                <span class='fraction'>6/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
+                <span class="strong">28.57% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/12</span>
+                <span class='fraction'>4/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">12.5% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>1/8</span>
             </div>
         
             
@@ -251,7 +251,7 @@ import type { Result } from "@siteimprove/alfa-result";
  * @public
  */
 &nbsp;
-export namespace Error {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Error {</span>
   export const INVALID_CHANGESET_CONFIG = 1;
   export const NO_GLOBAL_CHANGELOG_PROVIDER = 2;
   export const NO_ROOT_PACKAGE = 3;
@@ -275,7 +275,7 @@ export interface ChangelogFunctions {
 /**
  * @internal
  */
-export function <span class="fstat-no" title="function not covered" >getOrDie&lt;</span>T&gt;(result: Result&lt;T, string&gt;, code: number): T {
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getOrDie&lt;</span>T&gt;(r</span>esult: Result&lt;T, string&gt;, code: number): T {
 <span class="cstat-no" title="statement not covered" >  if (result.isErr()) {</span>
 <span class="cstat-no" title="statement not covered" >    console.error(result.getErr());</span>
 <span class="cstat-no" title="statement not covered" >    process.exit(code);</span>
@@ -287,15 +287,15 @@ export function <span class="fstat-no" title="function not covered" >getOrDie&lt
 /**
  * @public
  */
-export function <span class="fstat-no" title="function not covered" >getConfigOption(</span>config: Config, option: string): string {
-  const changelog = <span class="cstat-no" title="statement not covered" >config.changelog;</span>
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getConfigOption(</span>c</span>onfig: Config, option: string): string {
+  const changelog = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >config.changelog;</span></span>
 <span class="cstat-no" title="statement not covered" >  if (changelog === false) {</span>
 <span class="cstat-no" title="statement not covered" >    console.error(</span>
       "Changeset config.changelog is not in the correct format (missing options)",
     );
 <span class="cstat-no" title="statement not covered" >    process.exit(Error.INVALID_CHANGESET_CONFIG);</span>
   }
-  const value = <span class="cstat-no" title="statement not covered" >changelog[1]?.[option];</span>
+  const value = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >changelog[1]?.[option];</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  if (typeof value !== "string") {</span>
 <span class="cstat-no" title="statement not covered" >    console.error(</span>
@@ -310,9 +310,9 @@ export function <span class="fstat-no" title="function not covered" >getConfigOp
 /**
  * @internal
  */
-export function <span class="fstat-no" title="function not covered" >getPackagesShim(</span>packages: Packages) {
-  const rootPackage = <span class="cstat-no" title="statement not covered" >packages.rootPackage;</span>
-  const tool = <span class="cstat-no" title="statement not covered" >packages.tool.type;</span>
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getPackagesShim(</span>p</span>ackages: Packages) {
+  const rootPackage = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >packages.rootPackage;</span></span>
+  const tool = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >packages.tool.type;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  if (rootPackage === undefined) {</span>
 <span class="cstat-no" title="statement not covered" >    console.error("Could not resolve root package");</span>
@@ -337,7 +337,7 @@ export function <span class="fstat-no" title="function not covered" >getPackages
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:36:29.918Z
+                at 2026-04-10T09:31:42.470Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

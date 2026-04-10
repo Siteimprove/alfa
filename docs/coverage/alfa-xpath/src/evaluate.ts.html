@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">54.23% </span>
+                <span class="strong">58.62% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>64/118</span>
+                <span class='fraction'>85/145</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">32.94% </span>
+                <span class="strong">35.1% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>28/85</span>
+                <span class='fraction'>33/94</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.72% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/11</span>
+                <span class='fraction'>11/22</span>
             </div>
         
             
@@ -832,22 +832,22 @@
   Node,
 } from "@siteimprove/alfa-dom";
 &nbsp;
-import { Builder } from "./builder.js";
-import { coerceItems } from "./coerce.js";
-import * as d from "./descriptors.js";
-import { type Environment, type Focus, withFocus } from "./environment.js";
-import { lookupFunction } from "./function.js";
-import { functions } from "./functions/index.js";
-import { matches } from "./matches.js";
-import type { Expression } from "./expression.js";
-import type { Item, Type, Value } from "./types.js";
-import { walk } from "./walk.js";
-import { Parser } from "./syntax/parser.js";
+import { Builder } from "./builder.ts";
+import { coerceItems } from "./coerce.ts";
+import * as d from "./descriptors.ts";
+import { type Environment, type Focus, withFocus } from "./environment.ts";
+import { lookupFunction } from "./function.ts";
+import { functions } from "./functions/index.ts";
+import { matches } from "./matches.ts";
+import type { Expression } from "./expression.ts";
+import type { Item, Type, Value } from "./types.ts";
+import { walk } from "./walk.ts";
+import { Parser } from "./syntax/parser.ts";
 &nbsp;
 /**
  * @public
  */
-export function* evaluate(
+export function* <span class="fstat-no" title="function not covered" >evaluate(</span>
   scope: Node,
   expression: string | Expression | Builder,
   options: evaluate.Options = Node.Traversal.empty,
@@ -891,7 +891,7 @@ export namespace evaluate {
   export interface Options extends Node.Traversal {}
 }
 &nbsp;
-function* evaluateExpression&lt;T extends Item.Value&gt;(
+function* <span class="fstat-no" title="function not covered" >evaluateExpression&lt;</span>T extends Item.Value&gt;(
   expression: Expression,
   environment: Environment&lt;T&gt;,
   options: evaluate.Options,
@@ -925,7 +925,7 @@ function* evaluateExpression&lt;T extends Item.Value&gt;(
   }
 }
 &nbsp;
-function* evaluatePathExpression&lt;T extends Item.Value&gt;(
+function* <span class="fstat-no" title="function not covered" >evaluatePathExpression&lt;</span>T extends Item.Value&gt;(
   expression: Expression.Path,
   environment: Environment&lt;T&gt;,
   options: evaluate.Options,
@@ -977,7 +977,7 @@ function* evaluatePathExpression&lt;T extends Item.Value&gt;(
   }
 }
 &nbsp;
-function* evaluateAxisExpression&lt;T extends Item.Value&gt;(
+function* <span class="fstat-no" title="function not covered" >evaluateAxisExpression&lt;</span>T extends Item.Value&gt;(
   expression: Expression.Axis,
   environment: Environment&lt;T&gt;,
   options: evaluate.Options,
@@ -1055,7 +1055,7 @@ function* evaluateAxisExpression&lt;T extends Item.Value&gt;(
     const focus = { ...item, position: position++ };
 &nbsp;
     for (const predicate of expression.predicates) {
-      const keep = <span class="cstat-no" title="statement not covered" >evaluatePredicate(</span>
+      const keep = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >evaluatePredicate(</span></span>
         predicate,
         withFocus(environment, focus),
         options,
@@ -1070,7 +1070,7 @@ function* evaluateAxisExpression&lt;T extends Item.Value&gt;(
   }
 }
 &nbsp;
-function* evaluateFunctionCallExpression&lt;T extends Item.Value&gt;(
+function* <span class="fstat-no" title="function not covered" >evaluateFunctionCallExpression&lt;</span>T extends Item.Value&gt;(
   expression: Expression.FunctionCall,
   environment: Environment&lt;T&gt;,
   options: evaluate.Options,
@@ -1119,7 +1119,7 @@ function* evaluateFunctionCallExpression&lt;T extends Item.Value&gt;(
   switch (fn.result.type) {
 <span class="branch-0 cbranch-no" title="branch not covered" >    case "*":</span>
 <span class="branch-1 cbranch-no" title="branch not covered" >    case "+": {</span>
-      const result = <span class="cstat-no" title="statement not covered" >as(</span>
+      const result = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >as(</span></span>
         fn.apply(environment, options, ...parameters),
         fn.result,
       );
@@ -1132,7 +1132,7 @@ function* evaluateFunctionCallExpression&lt;T extends Item.Value&gt;(
     }
 &nbsp;
 <span class="branch-2 cbranch-no" title="branch not covered" >    case "?": {</span>
-      const result = <span class="cstat-no" title="statement not covered" >as(</span>
+      const result = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >as(</span></span>
         fn.apply(environment, options, ...parameters),
         fn.result,
       );
@@ -1154,7 +1154,7 @@ function* evaluateFunctionCallExpression&lt;T extends Item.Value&gt;(
   }
 }
 &nbsp;
-function* <span class="fstat-no" title="function not covered" >evaluateLiteralExpression&lt;</span>T extends Item.Value&gt;(
+function* <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >evaluateLiteralExpression&lt;</span>T extends Item.Value&gt;(</span>
   expression: Expression.Literal,
   environment: Environment&lt;T&gt;,
   options: evaluate.Options,
@@ -1165,19 +1165,19 @@ function* <span class="fstat-no" title="function not covered" >evaluateLiteralEx
   }
 }
 &nbsp;
-function <span class="fstat-no" title="function not covered" >evaluatePredicate&lt;</span>T extends Item.Value&gt;(
+function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >evaluatePredicate&lt;</span>T extends Item.Value&gt;(</span>
   expression: Expression,
   environment: Environment&lt;T&gt;,
   options: evaluate.Options,
 ): boolean {
-  const result = <span class="cstat-no" title="statement not covered" >[...evaluateExpression(expression, environment, options)];</span>
+  const result = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[...evaluateExpression(expression, environment, options)];</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  switch (result.length) {</span>
     case 0:
 <span class="cstat-no" title="statement not covered" >      return false;</span>
 &nbsp;
     case 1:
-      const [item] = <span class="cstat-no" title="statement not covered" >result;</span>
+      const [item] = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >result;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (matches(item, d.boolean())) {</span>
 <span class="cstat-no" title="statement not covered" >        return item.value;</span>
@@ -1195,12 +1195,12 @@ function <span class="fstat-no" title="function not covered" >evaluatePredicate&
 <span class="cstat-no" title="statement not covered" >  return matches(result[0], d.node());</span>
 }
 &nbsp;
-function* <span class="fstat-no" title="function not covered" >evaluateContextItemExpression&lt;</span>T extends Item.Value&gt;(
+function* <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >evaluateContextItemExpression&lt;</span>T extends Item.Value&gt;(</span>
   expression: Expression.ContextItem,
   environment: Environment&lt;T&gt;,
   options: evaluate.Options,
 ): Iterable&lt;Item&gt; {
-  const { type, value } = <span class="cstat-no" title="statement not covered" >environment.focus;</span>
+  const { type, value } = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >environment.focus;</span></span>
 <span class="cstat-no" title="statement not covered" >  yield { type, value };</span>
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -1210,7 +1210,7 @@ function* <span class="fstat-no" title="function not covered" >evaluateContextIt
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

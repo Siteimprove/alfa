@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.07% </span>
+                <span class="strong">5.92% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/99</span>
+                <span class='fraction'>8/135</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">8.1% </span>
+                <span class="strong">10.71% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/37</span>
+                <span class='fraction'>6/56</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.11% </span>
+                <span class="strong">5.88% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/27</span>
+                <span class='fraction'>3/51</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.14% </span>
+                <span class="strong">8.08% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/98</span>
+                <span class='fraction'>8/99</span>
             </div>
         
             
@@ -1068,7 +1068,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1139,7 +1139,7 @@ import { Set } from "@siteimprove/alfa-set";
 &nbsp;
 import * as gv from "ts-graphviz";
 &nbsp;
-import { Rainbow } from "./rainbow.js";
+import { Rainbow } from "./rainbow.ts";
 &nbsp;
 /**
  * Parameters for building a dependency graph.
@@ -1180,7 +1180,7 @@ interface GraphParameters&lt;C, M&gt; {
  * @public
  */
 export class DependencyGraph&lt;C, M&gt; {
-  public static of&lt;Cluster, Module&gt;(
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>Cluster, Module&gt;(
     graph: GraphParameters&lt;Cluster, Module&gt;,
   ): DependencyGraph&lt;Cluster, Module&gt; {
 <span class="cstat-no" title="statement not covered" >    return new DependencyGraph(graph);</span>
@@ -1203,21 +1203,21 @@ export class DependencyGraph&lt;C, M&gt; {
   private readonly _moduleName: (module: M) =&gt; string;
   private readonly _isEntryPoint: (module: M) =&gt; boolean;
 &nbsp;
-  private _gvEdges: Map&lt;C | M, Set&lt;C | M&gt;&gt; = <span class="cstat-no" title="statement not covered" >Map.empty();</span>
+  private _gvEdges: Map&lt;C | M, Set&lt;C | M&gt;&gt; = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Map.empty();</span></span>
   private readonly _clusterColors: Map&lt;C, gv.Color&gt;;
 &nbsp;
   // Prefixes for GV elements existing on each cluster.
-  private readonly _clusterPrefix = <span class="cstat-no" title="statement not covered" >"cluster_";</span>
-  private readonly _gvClusterId = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(c</span>luster: C) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >    `${this._clusterPrefix}${this._clusterId(cluster)}`;</span>
-  private readonly _namePrefix = <span class="cstat-no" title="statement not covered" >"name_";</span>
-  private readonly _gvNameNodeId = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(c</span>luster: C) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >    `${this._namePrefix}${this._clusterId(cluster)}`;</span>
-  private readonly _exitPrefix = <span class="cstat-no" title="statement not covered" >"exit_";</span>
-  private readonly _gvExitNodeId = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(c</span>luster: C) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >    `${this._exitPrefix}${this._clusterId(cluster)}`;</span>
+  private readonly _clusterPrefix = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >"cluster_";</span></span>
+  private readonly _gvClusterId = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(c</span></span>luster: C) =&gt;</span></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    `${this._clusterPrefix}${this._clusterId(cluster)}`;</span></span>
+  private readonly _namePrefix = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >"name_";</span></span>
+  private readonly _gvNameNodeId = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(c</span></span>luster: C) =&gt;</span></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    `${this._namePrefix}${this._clusterId(cluster)}`;</span></span>
+  private readonly _exitPrefix = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >"exit_";</span></span>
+  private readonly _gvExitNodeId = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(c</span></span>luster: C) =&gt;</span></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    `${this._exitPrefix}${this._clusterId(cluster)}`;</span></span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >  protected constructor({</span>
+<span class="fstat-no" title="function not covered" >  protected <span class="fstat-no" title="function not covered" >constructor({</span></span>
     name,
     fullGraph,
     heavyGraph,
@@ -1253,21 +1253,21 @@ export class DependencyGraph&lt;C, M&gt; {
 <span class="cstat-no" title="statement not covered" >    this.createGraph();</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >gvGraph(</span>): gv.RootGraphModel {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >gvGraph(</span>): gv.RootGraphModel {</span>
 <span class="cstat-no" title="statement not covered" >    return this._gvGraph;</span>
   }
 &nbsp;
   /**
    * Find all clusters, and assign a random color to each.
    */
-  private <span class="fstat-no" title="function not covered" >clustersColors(</span>): Array&lt;[C, gv.Color]&gt; {
-    let clusters = <span class="cstat-no" title="statement not covered" >Set.empty&lt;C&gt;().add(this._baseCluster);</span>
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >clustersColors(</span>): Array&lt;[C, gv.Color]&gt; {</span>
+    let clusters = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Set.empty&lt;C&gt;().add(this._baseCluster);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    for (const module of this._fullGraph.keys()) {</span>
 <span class="cstat-no" title="statement not covered" >      clusters = clusters.concat(this._clusterize(module));</span>
     }
 &nbsp;
-    const colors = <span class="cstat-no" title="statement not covered" >Rainbow.rainbow(clusters.size);</span>
+    const colors = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Rainbow.rainbow(clusters.size);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return clusters.toArray().map(<span class="fstat-no" title="function not covered" >(c</span>, i) =&gt; <span class="cstat-no" title="statement not covered" >[c, colors[i]])</span>;</span>
   }
@@ -1275,14 +1275,14 @@ export class DependencyGraph&lt;C, M&gt; {
   /**
    * Get the color of a given cluster.
    */
-  private <span class="fstat-no" title="function not covered" >clusterColor(</span>cluster: C): gv.Color {
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >clusterColor(</span>c</span>luster: C): gv.Color {
 <span class="cstat-no" title="statement not covered" >    return this._clusterColors.get(cluster).getOr("black");</span>
   }
 &nbsp;
   /**
    * Create the options for the "name" node of a cluster.
    */
-  private <span class="fstat-no" title="function not covered" >nameOptions(</span>cluster: C): gv.NodeAttributesObject {
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >nameOptions(</span>c</span>luster: C): gv.NodeAttributesObject {
 <span class="cstat-no" title="statement not covered" >    return DependencyGraph.Options.name(</span>
       this._clusterLabel(cluster),
       this.clusterColor(cluster),
@@ -1292,7 +1292,7 @@ export class DependencyGraph&lt;C, M&gt; {
   /**
    * Create the options for a module node.
    */
-  private <span class="fstat-no" title="function not covered" >moduleOptions(</span>module: M): gv.NodeAttributesObject {
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >moduleOptions(</span>m</span>odule: M): gv.NodeAttributesObject {
     let options: gv.NodeAttributesObject = <span class="cstat-no" title="statement not covered" >{</span>
       label: this._moduleName(module),
     };
@@ -1316,9 +1316,9 @@ export class DependencyGraph&lt;C, M&gt; {
    * Get the light dependencies of a module, i.e. its dependencies in the full
    * graph minus the ones in the heavy graph.
    */
-  private <span class="fstat-no" title="function not covered" >getLightDependencies(</span>dep: M): Array&lt;M&gt; {
-    const allDeps = <span class="cstat-no" title="statement not covered" >this._fullGraph.get(dep).getOr([]);</span>
-    const heavyDeps = <span class="cstat-no" title="statement not covered" >this._heavyGraph.get(dep).getOr([]);</span>
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getLightDependencies(</span>d</span>ep: M): Array&lt;M&gt; {
+    const allDeps = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._fullGraph.get(dep).getOr([]);</span></span>
+    const heavyDeps = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._heavyGraph.get(dep).getOr([]);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return Array.subtract(allDeps, heavyDeps);</span>
   }
@@ -1326,12 +1326,12 @@ export class DependencyGraph&lt;C, M&gt; {
   /**
    * Check if an edge has already been registered in the Graphviz graph.
    */
-  private <span class="fstat-no" title="function not covered" >hasGVEdge(</span>origin: C | M, destination: C | M): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hasGVEdge(</span>o</span>rigin: C | M, destination: C | M): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       this._gvEdges
         .get(origin)
         // eta-expansion is needed to avoid binding issues
-        .getOrElse(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >Set.empty())</span>
+        .getOrElse(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >S</span>et.empty())</span>
         .has(destination)
     );
   }
@@ -1339,13 +1339,13 @@ export class DependencyGraph&lt;C, M&gt; {
   /**
    * Register an edge in the Graphviz graph.
    */
-  private <span class="fstat-no" title="function not covered" >addGVEdge(</span>origin: C | M, destination: C | M): void {
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >addGVEdge(</span>o</span>rigin: C | M, destination: C | M): void {
 <span class="cstat-no" title="statement not covered" >    this._gvEdges = this._gvEdges.set(</span>
       origin,
       this._gvEdges
         .get(origin)
         // eta-expansion is needed to avoid binding issues
-        .getOrElse(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >Set.empty&lt;C | M&gt;())</span>
+        .getOrElse(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >S</span>et.empty&lt;C | M&gt;())</span>
         .add(destination),
     );
   }
@@ -1354,7 +1354,7 @@ export class DependencyGraph&lt;C, M&gt; {
    * Get or create a GV cluster corresponding to a given cluster, inside the
    * gvParent.
    */
-  private <span class="fstat-no" title="function not covered" >getGVCluster(</span>
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getGVCluster(</span></span>
     parent: gv.GraphBaseModel,
     cluster: C,
   ): DependencyGraph.Cluster&lt;C&gt; {
@@ -1370,7 +1370,7 @@ export class DependencyGraph&lt;C, M&gt; {
   /**
    * Get or create the "name" node of a cluster.
    */
-  private <span class="fstat-no" title="function not covered" >getNameNode(</span>[
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getNameNode(</span>[</span>
     cluster,
     gvCluster,
   ]: DependencyGraph.Cluster&lt;C&gt;): gv.NodeModel {
@@ -1383,7 +1383,7 @@ export class DependencyGraph&lt;C, M&gt; {
   /**
    * Get or create the "exit" node of a cluster.
    */
-  private <span class="fstat-no" title="function not covered" >getExitNode(</span>[
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getExitNode(</span>[</span>
     cluster,
     gvCluster,
   ]: DependencyGraph.Cluster&lt;C&gt;): gv.NodeModel {
@@ -1400,16 +1400,16 @@ export class DependencyGraph&lt;C, M&gt; {
    * @remarks
    * The order of parameters allows for easier Array.reduce.
    */
-  private <span class="fstat-no" title="function not covered" >createGVCluster(</span>
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >createGVCluster(</span></span>
     [parent, gvParent]: DependencyGraph.Cluster&lt;C&gt;,
     cluster: C,
   ): DependencyGraph.Cluster&lt;C&gt; {
-    const graphCluster = <span class="cstat-no" title="statement not covered" >this.getGVCluster(gvParent, cluster);</span>
+    const graphCluster = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.getGVCluster(gvParent, cluster);</span></span>
 &nbsp;
     // Creates the "name" node.
 <span class="cstat-no" title="statement not covered" >    this.getNameNode(graphCluster);</span>
 &nbsp;
-    const exit = <span class="cstat-no" title="statement not covered" >this.getExitNode(graphCluster);</span>
+    const exit = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.getExitNode(graphCluster);</span></span>
 &nbsp;
     // Create an invisible edge fron the (new) exit node to the (parent) exit node
     // This rigidifies the graph vertically.
@@ -1424,7 +1424,7 @@ export class DependencyGraph&lt;C, M&gt; {
   /**
    * Creates nested GV clusters, under the given cluster.
    */
-  private <span class="fstat-no" title="function not covered" >nestedClusters(</span>
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >nestedClusters(</span></span>
     clusters: Array&lt;C&gt;,
     parent: DependencyGraph.Cluster&lt;C&gt;,
   ): DependencyGraph.Cluster&lt;C&gt; {
@@ -1435,15 +1435,15 @@ export class DependencyGraph&lt;C, M&gt; {
    * Create (or fetch) a GV node corresponding to a module, including all nested
    * clusters.
    */
-  private <span class="fstat-no" title="function not covered" >createGVNode(</span>
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >createGVNode(</span></span>
     module: M,
     rootCluster: DependencyGraph.Cluster&lt;C&gt;,
   ): [DependencyGraph.Cluster&lt;C&gt;, node: gv.NodeModel] {
-    const [cluster, gvCluster] = <span class="cstat-no" title="statement not covered" >this.nestedClusters(</span>
+    const [cluster, gvCluster] = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.nestedClusters(</span></span>
       this._clusterize(module),
       rootCluster,
     );
-    const node = <span class="cstat-no" title="statement not covered" >gvCluster.node(</span>
+    const node = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >gvCluster.node(</span></span>
       this._moduleId(module),
       this.moduleOptions(module),
     );
@@ -1461,14 +1461,14 @@ export class DependencyGraph&lt;C, M&gt; {
   /**
    * Find the first different clusters between two modules.
    */
-  private <span class="fstat-no" title="function not covered" >firstDifferentClusters(</span>
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >firstDifferentClusters(</span></span>
     moduleA: M,
     moduleB: M,
   ): [Option&lt;C&gt;, Option&lt;C&gt;] {
-    const clustersA = <span class="cstat-no" title="statement not covered" >this._clusterize(moduleA);</span>
-    const clustersB = <span class="cstat-no" title="statement not covered" >this._clusterize(moduleB);</span>
+    const clustersA = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._clusterize(moduleA);</span></span>
+    const clustersB = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._clusterize(moduleB);</span></span>
 &nbsp;
-    let i = <span class="cstat-no" title="statement not covered" >0;</span>
+    let i = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    while (</span>
       clustersA[i] === clustersB[i] &amp;&amp;
@@ -1478,8 +1478,8 @@ export class DependencyGraph&lt;C, M&gt; {
 <span class="cstat-no" title="statement not covered" >      i++;</span>
     }
 &nbsp;
-    const firstA = <span class="cstat-no" title="statement not covered" >i === clustersA.length ? None : Option.of(clustersA[i]);</span>
-    const firstB = <span class="cstat-no" title="statement not covered" >i === clustersB.length ? None : Option.of(clustersB[i]);</span>
+    const firstA = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >i === clustersA.length ? None : Option.of(clustersA[i]);</span></span>
+    const firstB = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >i === clustersB.length ? None : Option.of(clustersB[i]);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return [firstA, firstB];</span>
   }
@@ -1487,9 +1487,9 @@ export class DependencyGraph&lt;C, M&gt; {
   /**
    * Creates the full Graphviz graph.
    */
-  private <span class="fstat-no" title="function not covered" >createGraph(</span>) {
+  private <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >createGraph(</span>) {</span>
     // Create the base cluster to seed the graph.
-    const baseCluster: DependencyGraph.Cluster&lt;C&gt; = <span class="cstat-no" title="statement not covered" >this.getGVCluster(</span>
+    const baseCluster: DependencyGraph.Cluster&lt;C&gt; = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.getGVCluster(</span></span>
       this._gvGraph,
       this._baseCluster,
     );
@@ -1497,27 +1497,27 @@ export class DependencyGraph&lt;C, M&gt; {
     // For each module in the graph
 <span class="cstat-no" title="statement not covered" >    for (const module of this._fullGraph.keys()) {</span>
       // Create (or fetch) the corresponding node, including nested clusters.
-      const [[cluster], gvNode] = <span class="cstat-no" title="statement not covered" >this.createGVNode(module, baseCluster);</span>
+      const [[cluster], gvNode] = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.createGVNode(module, baseCluster);</span></span>
 &nbsp;
-      const lightDeps = <span class="cstat-no" title="statement not covered" >this.getLightDependencies(module);</span>
+      const lightDeps = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.getLightDependencies(module);</span></span>
 &nbsp;
       // for each dependency of the module, create an outward edge.
 <span class="cstat-no" title="statement not covered" >      for (const dep of this._fullGraph.get(module).getOr([])) {</span>
         // First, make sure the dependency (node) exist in the GV graph.
-        const gvDep = <span class="cstat-no" title="statement not covered" >this._gvGraph.node(this._moduleId(dep));</span>
+        const gvDep = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._gvGraph.node(this._moduleId(dep));</span></span>
 &nbsp;
         // The actual edge lives in the last common cluster, and is thus cut
         // at the first different clusters. These are called the "true" origin
         // and destination. They may be clusters, or the modules themselves in
         // case of intra-cluster edges.
 &nbsp;
-        const [clusterOrigin, clusterDestination] = <span class="cstat-no" title="statement not covered" >this.firstDifferentClusters(</span>
+        const [clusterOrigin, clusterDestination] = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.firstDifferentClusters(</span></span>
           module,
           dep,
         );
 &nbsp;
-        const trueOrigin = <span class="cstat-no" title="statement not covered" >clusterOrigin.getOr(module);</span>
-        const trueDestination = <span class="cstat-no" title="statement not covered" >clusterDestination.getOr(dep);</span>
+        const trueOrigin = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >clusterOrigin.getOr(module);</span></span>
+        const trueDestination = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >clusterDestination.getOr(dep);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        if (clusterDestination.isNone()) {</span>
           // The destination is inside the last common cluster. So, the edge
@@ -1539,14 +1539,14 @@ export class DependencyGraph&lt;C, M&gt; {
         // If we have an origin cluster, i.e. the module is in a nested cluster
         // inside the last common one, we move the origin of the edge to the
         // exit node of that cluster.
-        const gvEdgeOrigin = <span class="cstat-no" title="statement not covered" >clusterOrigin.isSome()</span>
+        const gvEdgeOrigin = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >clusterOrigin.isSome()</span></span>
           ? this._gvGraph.node(this._gvExitNodeId(clusterOrigin.get()))
           : gvNode;
 &nbsp;
         // If we have a destination cluster, i.e. the dependency is in a nested
         // cluster inside the last common one, we move the destination of the
         // edge to the name node of that cluster.
-        const gvEdgeDestination = <span class="cstat-no" title="statement not covered" >clusterDestination.isSome()</span>
+        const gvEdgeDestination = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >clusterDestination.isSome()</span></span>
           ? this._gvGraph.node(this._gvNameNodeId(clusterDestination.get()))
           : gvDep;
 &nbsp;
@@ -1593,7 +1593,7 @@ export class DependencyGraph&lt;C, M&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >DependencyGraph {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >D</span>ependencyGraph {</span></span>
   /**
    * @internal
    */
@@ -1602,7 +1602,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >D
   /**
    * @internal
    */
-  export namespace Options {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  export namespace O</span>ptions {</span>
     export const circular: gv.NodeAttributesObject = {
       fillcolor: "#ff6c60",
       style: "rounded,filled",
@@ -1615,7 +1615,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >D
 &nbsp;
     export const exit = invisible;
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >name(</span>
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >name(</span></span></span>
       label: string,
       color: gv.Color,
     ): gv.NodeAttributesObject {
@@ -1630,7 +1630,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >D
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

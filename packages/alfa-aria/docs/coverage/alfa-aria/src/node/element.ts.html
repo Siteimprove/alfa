@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">38.88% </span>
+                <span class="strong">34.14% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/36</span>
+                <span class='fraction'>14/41</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">27.77% </span>
+                <span class="strong">40.9% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/18</span>
+                <span class='fraction'>9/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.15% </span>
+                <span class="strong">29.26% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>12/26</span>
+                <span class='fraction'>12/41</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.17% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/34</span>
+                <span class='fraction'>14/35</span>
             </div>
         
             
@@ -254,9 +254,7 @@
 <a name='L189'></a><a href='#L189'>189</a>
 <a name='L190'></a><a href='#L190'>190</a>
 <a name='L191'></a><a href='#L191'>191</a>
-<a name='L192'></a><a href='#L192'>192</a>
-<a name='L193'></a><a href='#L193'>193</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L192'></a><a href='#L192'>192</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -418,7 +416,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -452,24 +450,23 @@ import type { Option } from "@siteimprove/alfa-option";
 import { None } from "@siteimprove/alfa-option";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
+import { Set } from "@siteimprove/alfa-set";
+import { Selective } from "@siteimprove/alfa-selective";
 import { String } from "@siteimprove/alfa-string";
 &nbsp;
+import { Element as DomElement } from "@siteimprove/alfa-dom";
 import type * as dom from "@siteimprove/alfa-dom";
 &nbsp;
-import type { Attribute } from "../attribute.js";
-import type { Name } from "../name/index.js";
-import { Node } from "../node.js";
-import { Set } from "@siteimprove/alfa-set";
-import { Role } from "../role.js";
-import type { InputType } from "../../../alfa-dom/src/node/element/input-type.js";
-import { Element as DomElement } from "@siteimprove/alfa-dom";
-import { Selective } from "@siteimprove/alfa-selective";
+import type { Attribute } from "../attribute.ts";
+import type { Name } from "../name/index.ts";
+import { Node } from "../node.ts";
+import { Role } from "../role.ts";
 &nbsp;
 /**
  * @public
  */
 export class Element extends Node&lt;"element"&gt; {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     owner: dom.Node,
     role: Option&lt;Role&gt; = None,
     name: Option&lt;Name&gt; = None,
@@ -489,7 +486,7 @@ export class Element extends Node&lt;"element"&gt; {
   private readonly _name: Option&lt;Name&gt;;
   private readonly _attributes: Array&lt;Attribute&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     owner: dom.Node,
     role: Option&lt;Role&gt;,
     name: Option&lt;Name&gt;,
@@ -503,15 +500,15 @@ export class Element extends Node&lt;"element"&gt; {
     this._attributes = attributes;
   }
 &nbsp;
-  public get role(): Option&lt;Role&gt; {
+  public get <span class="fstat-no" title="function not covered" >role(</span>): Option&lt;Role&gt; {
     return this._role;
   }
 &nbsp;
-  public get name(): Option&lt;Name&gt; {
+  public get <span class="fstat-no" title="function not covered" >name(</span>): Option&lt;Name&gt; {
     return this._name;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >attributes(</span>): ReadonlyArray&lt;Attribute&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >attributes(</span>): ReadonlyArray&lt;Attribute&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._attributes;</span>
   }
 &nbsp;
@@ -525,7 +522,7 @@ export class Element extends Node&lt;"element"&gt; {
     predicate: N,
   ): Option&lt;Attribute&lt;N&gt;&gt;;
 &nbsp;
-  public attribute(
+  public <span class="fstat-no" title="function not covered" >attribute(</span>
     predicate: Attribute.Name | Predicate&lt;Attribute&gt;,
   ): Option&lt;Attribute&gt; {
     return Iterable.find(
@@ -536,7 +533,7 @@ export class Element extends Node&lt;"element"&gt; {
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >clone(</span>): Element {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >clone(</span>): Element {</span>
 <span class="cstat-no" title="statement not covered" >    return new Element(</span>
       this._node,
       this._role,
@@ -546,11 +543,11 @@ export class Element extends Node&lt;"element"&gt; {
     );
   }
 &nbsp;
-  public isIgnored(): boolean {
+  public <span class="fstat-no" title="function not covered" >isIgnored(</span>): boolean {
     return false;
   }
 &nbsp;
-  public toJSON(): Element.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Element.JSON {
     return {
       ...super.toJSON(),
       role: this._role.map((role) =&gt; role.name).getOr(null),
@@ -559,7 +556,7 @@ export class Element extends Node&lt;"element"&gt; {
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return [</span>
       [
         this._role.map(<span class="fstat-no" title="function not covered" >(r</span>ole) =&gt; <span class="cstat-no" title="statement not covered" >role.name)</span>.getOr("element"),
@@ -569,8 +566,8 @@ export class Element extends Node&lt;"element"&gt; {
     ].join("\n");
   }
 &nbsp;
-  private static allowedAttributesForInputType(
-    inputType: InputType
+  private static <span class="fstat-no" title="function not covered" >allowedAttributesForInputType(</span>
+    inputType: DomElement.InputType,
   ): ReadonlyArray&lt;Attribute.Name&gt; {
 <span class="cstat-no" title="statement not covered" >    switch (inputType) {</span>
       // https://www.w3.org/TR/html-aria/#el-input-color
@@ -603,28 +600,28 @@ export class Element extends Node&lt;"element"&gt; {
    * The attributes that are allowed on this element, taking into consideration ARIA in HTML conformance requirements.
    * See {@link https://w3c.github.io/html-aria/#docconformance}
    */
-  public <span class="fstat-no" title="function not covered" >allowedAttributes(</span>): ReadonlyArray&lt;Attribute.Name&gt; {
-    const global = <span class="cstat-no" title="statement not covered" >Role.of("roletype").supportedAttributes;</span>
-    const fromRole = <span class="cstat-no" title="statement not covered" >this.role.map(<span class="fstat-no" title="function not covered" >role </span>=&gt; <span class="cstat-no" title="statement not covered" >role.supportedAttributes)</span>.getOr([]);</span>
-    const additional = <span class="cstat-no" title="statement not covered" >Selective.of(this.node)</span>
-      .if(DomElement.hasName("input"), <span class="fstat-no" title="function not covered" >input </span>=&gt;
-<span class="cstat-no" title="statement not covered" >        Element.allowedAttributesForInputType(input.inputType())</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >allowedAttributes(</span>): ReadonlyArray&lt;Attribute.Name&gt; {</span>
+    const global = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Role.of("roletype").supportedAttributes;</span></span>
+    const fromRole = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.role</span></span>
+      .map(<span class="fstat-no" title="function not covered" >(r</span>ole) =&gt; <span class="cstat-no" title="statement not covered" >role.supportedAttributes)</span>
+      .getOr([]);
+    const additional = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Selective.of(this.node)</span></span>
+      .if(DomElement.hasName("input"), <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(i</span></span>nput) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        Element.allowedAttributesForInputType(input.inputType()),</span></span>
       )
       // https://www.w3.org/TR/html-aria/#el-select
-      .if(
-        DomElement.hasName("select"),
-<span class="fstat-no" title="function not covered" >        select </span>=&gt;
-<span class="cstat-no" title="statement not covered" >          DomElement.hasDisplaySize(<span class="fstat-no" title="function not covered" >(s</span>ize: Number) =&gt; <span class="cstat-no" title="statement not covered" >size !== 1)</span>(select)</span>
-            ? Role.of("combobox").supportedAttributes
-            : Role.of("menu").supportedAttributes
+      .if(DomElement.hasName("select"), <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(s</span></span>elect) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        DomElement.hasDisplaySize(<span class="fstat-no" title="function not covered" >(s</span>ize: Number) =&gt; <span class="cstat-no" title="statement not covered" >size !== 1)</span>(select)</span></span>
+          ? Role.of("combobox").supportedAttributes
+          : Role.of("menu").supportedAttributes,
       )
-      .else(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >[])</span>
+      .else(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >[</span>])</span>
       .get();
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return Array.from(Set.from([... global, ...fromRole, ...additional]));</span>
+<span class="cstat-no" title="statement not covered" >    return Array.from(Set.from([...global, ...fromRole, ...additional]));</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isAttributeAllowed(</span>attribute: Attribute.Name): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isAttributeAllowed(</span>a</span>ttribute: Attribute.Name): boolean {
 <span class="cstat-no" title="statement not covered" >    return this.allowedAttributes().includes(attribute);</span>
   }
 }
@@ -646,7 +643,7 @@ export namespace Element {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:09.309Z
+                at 2026-04-10T09:29:24.679Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.56% </span>
+                <span class="strong">69.56% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>82/113</span>
+                <span class='fraction'>96/138</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">70% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>9/12</span>
+                <span class='fraction'>14/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64.28% </span>
+                <span class="strong">44.23% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>54/84</span>
+                <span class='fraction'>69/156</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.27% </span>
+                <span class="strong">73.07% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>73/101</span>
+                <span class='fraction'>76/104</span>
             </div>
         
             
@@ -531,7 +531,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -678,7 +678,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">200014x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -768,7 +768,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">600025x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -841,7 +841,7 @@ export abstract class Future&lt;T&gt;
 {
   protected abstract step(): Future&lt;T&gt;;
 &nbsp;
-  public then(callback: Callback&lt;T&gt;): void {
+  public <span class="fstat-no" title="function not covered" >then(</span>callback: Callback&lt;T&gt;): void {
     let step: Future&lt;T&gt; = this;
 &nbsp;
     while (true) {
@@ -855,7 +855,7 @@ export abstract class Future&lt;T&gt;
     }
   }
 &nbsp;
-  public get(): T {
+  public <span class="fstat-no" title="function not covered" >get(</span>): T {
     let step: Future&lt;T&gt; = this;
 &nbsp;
     while (true) {
@@ -875,36 +875,36 @@ export abstract class Future&lt;T&gt;
 &nbsp;
   public abstract isSuspended(): boolean;
 &nbsp;
-  public map&lt;U&gt;(mapper: Mapper&lt;T, U&gt;): Future&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U&gt;): Future&lt;U&gt; {
     return this.flatMap((value) =&gt; Now.of(mapper(value)));
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >apply&lt;</span>U&gt;(mapper: Future&lt;Mapper&lt;T, U&gt;&gt;): Future&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >apply&lt;</span>U&gt;(m</span>apper: Future&lt;Mapper&lt;T, U&gt;&gt;): Future&lt;U&gt; {
 <span class="cstat-no" title="statement not covered" >    return mapper.flatMap(<span class="fstat-no" title="function not covered" >(m</span>apper) =&gt; <span class="cstat-no" title="statement not covered" >this.map(mapper))</span>;</span>
   }
 &nbsp;
   public abstract flatMap&lt;U&gt;(mapper: Mapper&lt;T, Future&lt;U&gt;&gt;): Future&lt;U&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >flatten&lt;</span>T&gt;(this: Future&lt;Future&lt;T&gt;&gt;): Future&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >flatten&lt;</span>T&gt;(this: Future&lt;Future&lt;T&gt;&gt;): Future&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this.flatMap(<span class="fstat-no" title="function not covered" >(f</span>uture) =&gt; <span class="cstat-no" title="statement not covered" >future)</span>;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >tee(</span>callback: Callback&lt;T&gt;): Future&lt;T&gt; {
-<span class="cstat-no" title="statement not covered" >    return this.map(<span class="fstat-no" title="function not covered" >(v</span>alue) =&gt; {</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >tee(</span>c</span>allback: Callback&lt;T&gt;): Future&lt;T&gt; {
+<span class="cstat-no" title="statement not covered" >    return this.map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(v</span></span>alue) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      callback(value);</span>
 <span class="cstat-no" title="statement not covered" >      return value;</span>
     });
   }
 &nbsp;
-  public async *<span class="fstat-no" title="function not covered" >asyncIterator(</span>): AsyncIterator&lt;T&gt; {
+  public async *<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >asyncIterator(</span>): AsyncIterator&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    yield this.toPromise();</span>
   }
 &nbsp;
-  public [<span class="fstat-no" title="function not covered" >Symbol.asyncIterator]</span>(): AsyncIterator&lt;T&gt; {
+  public [<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.asyncIterator]</span></span>(): AsyncIterator&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.asyncIterator();</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toPromise(</span>): Promise&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toPromise(</span>): Promise&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve) =&gt; <span class="cstat-no" title="statement not covered" >this.then(resolve))</span>;</span>
   }
 }
@@ -912,44 +912,44 @@ export abstract class Future&lt;T&gt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Future {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >F</span>uture {</span></span>
   export type Maybe&lt;T&gt; = T | Future&lt;T&gt;;
 &nbsp;
   export function isFuture&lt;T&gt;(value: AsyncIterable&lt;T&gt;): value is Future&lt;T&gt;;
 &nbsp;
   export function isFuture&lt;T&gt;(value: unknown): value is Future&lt;T&gt;;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isFuture&lt;</span>T&gt;(value: unknown): value is Future&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isFuture&lt;T&gt;(v</span>alue: unknown): value is Future&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Future;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >empty(</span>): Future&lt;void&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >empty(): Future&lt;void&gt; {</span></span>
 <span class="cstat-no" title="statement not covered" >    return now(undefined);</span>
   }
 &nbsp;
-  export function now&lt;T&gt;(value: T): Future&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >now&lt;T&gt;(value: T): Future&lt;T&gt; {</span>
     return Now.of(value);
   }
 &nbsp;
-  export function defer&lt;T&gt;(continuation: Continuation&lt;T&gt;): Future&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >defer&lt;T&gt;(continuation: Continuation&lt;T&gt;): Future&lt;T&gt; {</span>
     return Defer.of(continuation);
   }
 &nbsp;
-  export function suspend&lt;T&gt;(thunk: Thunk&lt;Future&lt;T&gt;&gt;): Future&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >suspend&lt;T&gt;(thunk: Thunk&lt;Future&lt;T&gt;&gt;): Future&lt;T&gt; {</span>
     return Suspend.of(thunk);
   }
 &nbsp;
-  export function delay&lt;T&gt;(thunk: Thunk&lt;T&gt;): Future&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >delay&lt;T&gt;(thunk: Thunk&lt;T&gt;): Future&lt;T&gt; {</span>
     return suspend(() =&gt; now(thunk()));
   }
 &nbsp;
-  export function from&lt;T&gt;(promise: Promise&lt;T&gt; | Thunk&lt;Promise&lt;T&gt;&gt;): Future&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >from&lt;T&gt;(promise: Promise&lt;T&gt; | Thunk&lt;Promise&lt;T&gt;&gt;): Future&lt;T&gt; {</span>
     return Future.defer((callback) =&gt;
       (typeof promise === "function" ? promise() : promise).then(callback),
     );
   }
 &nbsp;
-  export function traverse&lt;T, U&gt;(
+  export function <span class="cstat-no" title="statement not covered" >traverse&lt;T, U&gt;(</span>
     values: Iterable&lt;T&gt;,
     mapper: Mapper&lt;T, Future&lt;U&gt;, [index: number]&gt;,
   ): Future&lt;Iterable&lt;U&gt;&gt; {
@@ -963,7 +963,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >F
     );
   }
 &nbsp;
-  export function sequence&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >sequence&lt;</span>T&gt;(</span>
     futures: Iterable&lt;Future&lt;T&gt;&gt;,
   ): Future&lt;Iterable&lt;T&gt;&gt; {
     return traverse(futures, (value) =&gt; value);
@@ -971,94 +971,94 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >F
 }
 &nbsp;
 class Now&lt;T&gt; extends Future&lt;T&gt; {
-  public static of&lt;T&gt;(value: T): Now&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T&gt;(value: T): Now&lt;T&gt; {
     return new Now(value);
   }
 &nbsp;
   private readonly _value: T;
 &nbsp;
-  protected constructor(value: T) {
+<span class="fstat-no" title="function not covered" >  protected constructor(v</span>alue: T) {
     super();
     this._value = value;
   }
 &nbsp;
-  protected step(): Future&lt;T&gt; {
+  protected <span class="fstat-no" title="function not covered" >step(</span>): Future&lt;T&gt; {
     return this;
   }
 &nbsp;
-  public then(callback: Callback&lt;T&gt;): void {
+  public <span class="fstat-no" title="function not covered" >then(</span>callback: Callback&lt;T&gt;): void {
     callback(this._value);
   }
 &nbsp;
-  public get(): T {
+  public <span class="fstat-no" title="function not covered" >get(</span>): T {
     return this._value;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isNow(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isNow(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return true;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isDeferred(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isDeferred(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public map&lt;U&gt;(mapper: Mapper&lt;T, U&gt;): Future&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U&gt;): Future&lt;U&gt; {
     return new Now(mapper(this._value));
   }
 &nbsp;
-  public flatMap&lt;U&gt;(mapper: Mapper&lt;T, Future&lt;U&gt;&gt;): Future&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >flatMap&lt;</span>U&gt;(mapper: Mapper&lt;T, Future&lt;U&gt;&gt;): Future&lt;U&gt; {
     return Suspend.of(() =&gt; mapper(this._value));
   }
 }
 &nbsp;
 class Defer&lt;T&gt; extends Future&lt;T&gt; {
-  public static of&lt;T&gt;(continuation: Continuation&lt;T&gt;): Defer&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T&gt;(continuation: Continuation&lt;T&gt;): Defer&lt;T&gt; {
     return new Defer(continuation);
   }
 &nbsp;
   private readonly _continuation: Continuation&lt;T&gt;;
 &nbsp;
-  protected constructor(continuation: Continuation&lt;T&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(c</span>ontinuation: Continuation&lt;T&gt;) {
     super();
     this._continuation = continuation;
   }
 &nbsp;
-  protected <span class="fstat-no" title="function not covered" >step(</span>): Future&lt;T&gt; {
+  protected <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >step(</span>): Future&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public then(callback: Callback&lt;T&gt;): void {
+  public <span class="fstat-no" title="function not covered" >then(</span>callback: Callback&lt;T&gt;): void {
     this._continuation((value) =&gt; defer(() =&gt; callback(value)));
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >get(</span>): never {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >get(</span>): never {</span>
 <span class="cstat-no" title="statement not covered" >    throw new Error("Attempted to .get() from deferred future");</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isNow(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isNow(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isDeferred(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isDeferred(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return true;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public flatMap&lt;U&gt;(mapper: Mapper&lt;T, Future&lt;U&gt;&gt;): Future&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >flatMap&lt;</span>U&gt;(mapper: Mapper&lt;T, Future&lt;U&gt;&gt;): Future&lt;U&gt; {
     return Defer.Bind.of(this._continuation, mapper);
   }
 }
 &nbsp;
-namespace <span class="branch-1 cbranch-no" title="branch not covered" >Defer {</span>
-  export class Bind&lt;S, T&gt; extends Future&lt;T&gt; {
-    public static of&lt;S, T&gt;(
+<span class="fstat-no" title="function not covered" >namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >D</span>efer {</span></span>
+  export class <span class="cstat-no" title="statement not covered" >Bind&lt;S, T&gt; extends Future&lt;T&gt; {</span>
+    public static <span class="fstat-no" title="function not covered" >of&lt;</span>S, T&gt;(
       continuation: Continuation&lt;S&gt;,
       mapper: Mapper&lt;S, Future&lt;T&gt;&gt;,
     ): Bind&lt;S, T&gt; {
@@ -1068,7 +1068,7 @@ namespace <span class="branch-1 cbranch-no" title="branch not covered" >Defer {<
     private readonly _continuation: Continuation&lt;S&gt;;
     private readonly _mapper: Mapper&lt;S, Future&lt;T&gt;&gt;;
 &nbsp;
-    protected constructor(
+<span class="fstat-no" title="function not covered" >    protected constructor(</span>
       continuation: Continuation&lt;S&gt;,
       mapper: Mapper&lt;S, Future&lt;T&gt;&gt;,
     ) {
@@ -1077,33 +1077,33 @@ namespace <span class="branch-1 cbranch-no" title="branch not covered" >Defer {<
       this._mapper = mapper;
     }
 &nbsp;
-    protected step(): Future&lt;T&gt; {
+    protected <span class="fstat-no" title="function not covered" >step(</span>): Future&lt;T&gt; {
       return this;
     }
 &nbsp;
-    public then(callback: Callback&lt;T&gt;): void {
+    public <span class="fstat-no" title="function not covered" >then(</span>callback: Callback&lt;T&gt;): void {
       this._continuation((value) =&gt;
         defer(() =&gt; this._mapper(value).then(callback)),
       );
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >get(</span>): never {
+    public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >get(</span>): never {</span>
 <span class="cstat-no" title="statement not covered" >      throw new Error("Attempted to .get() from deferred future");</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >isNow(</span>): boolean {
+    public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isNow(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >      return false;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >isDeferred(</span>): boolean {
+    public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isDeferred(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >      return true;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {
+    public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >      return false;</span>
     }
 &nbsp;
-    public flatMap&lt;U&gt;(mapper: Mapper&lt;T, Future&lt;U&gt;&gt;): Future&lt;U&gt; {
+    public <span class="fstat-no" title="function not covered" >flatMap&lt;</span>U&gt;(mapper: Mapper&lt;T, Future&lt;U&gt;&gt;): Future&lt;U&gt; {
       return Suspend.of(() =&gt;
         Bind.of(this._continuation, (value) =&gt;
           this._mapper(value).flatMap(mapper),
@@ -1114,41 +1114,41 @@ namespace <span class="branch-1 cbranch-no" title="branch not covered" >Defer {<
 }
 &nbsp;
 class Suspend&lt;T&gt; extends Future&lt;T&gt; {
-  public static of&lt;T&gt;(thunk: Thunk&lt;Future&lt;T&gt;&gt;): Suspend&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T&gt;(thunk: Thunk&lt;Future&lt;T&gt;&gt;): Suspend&lt;T&gt; {
     return new Suspend(thunk);
   }
 &nbsp;
   private readonly _thunk: Thunk&lt;Future&lt;T&gt;&gt;;
 &nbsp;
-  protected constructor(thunk: Thunk&lt;Future&lt;T&gt;&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(t</span>hunk: Thunk&lt;Future&lt;T&gt;&gt;) {
     super();
     this._thunk = thunk;
   }
 &nbsp;
-  protected step(): Future&lt;T&gt; {
+  protected <span class="fstat-no" title="function not covered" >step(</span>): Future&lt;T&gt; {
     return this._thunk();
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isNow(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isNow(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isDeferred(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isDeferred(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return true;</span>
   }
 &nbsp;
-  public flatMap&lt;U&gt;(mapper: Mapper&lt;T, Future&lt;U&gt;&gt;): Future&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >flatMap&lt;</span>U&gt;(mapper: Mapper&lt;T, Future&lt;U&gt;&gt;): Future&lt;U&gt; {
     return Suspend.Bind.of(this._thunk, mapper);
   }
 }
 &nbsp;
-namespace <span class="branch-1 cbranch-no" title="branch not covered" >Suspend {</span>
-  export class Bind&lt;S, T&gt; extends Future&lt;T&gt; {
-    public static of&lt;S, T&gt;(
+<span class="fstat-no" title="function not covered" >namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >S</span>uspend {</span></span>
+  export class <span class="cstat-no" title="statement not covered" >Bind&lt;S, T&gt; extends Future&lt;T&gt; {</span>
+    public static <span class="fstat-no" title="function not covered" >of&lt;</span>S, T&gt;(
       thunk: Thunk&lt;Future&lt;S&gt;&gt;,
       mapper: Mapper&lt;S, Future&lt;T&gt;&gt;,
     ): Bind&lt;S, T&gt; {
@@ -1158,29 +1158,29 @@ namespace <span class="branch-1 cbranch-no" title="branch not covered" >Suspend 
     private readonly _thunk: Thunk&lt;Future&lt;S&gt;&gt;;
     private readonly _mapper: Mapper&lt;S, Future&lt;T&gt;&gt;;
 &nbsp;
-    protected constructor(thunk: Thunk&lt;Future&lt;S&gt;&gt;, mapper: Mapper&lt;S, Future&lt;T&gt;&gt;) {
+<span class="fstat-no" title="function not covered" >    protected constructor(t</span>hunk: Thunk&lt;Future&lt;S&gt;&gt;, mapper: Mapper&lt;S, Future&lt;T&gt;&gt;) {
       super();
       this._thunk = thunk;
       this._mapper = mapper;
     }
 &nbsp;
-    protected step(): Future&lt;T&gt; {
+    protected <span class="fstat-no" title="function not covered" >step(</span>): Future&lt;T&gt; {
       return this._thunk().flatMap(this._mapper);
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >isNow(</span>): boolean {
+    public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isNow(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >      return false;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >isDeferred(</span>): boolean {
+    public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isDeferred(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >      return false;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {
+    public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >      return true;</span>
     }
 &nbsp;
-    public flatMap&lt;U&gt;(mapper: Mapper&lt;T, Future&lt;U&gt;&gt;): Future&lt;U&gt; {
+    public <span class="fstat-no" title="function not covered" >flatMap&lt;</span>U&gt;(mapper: Mapper&lt;T, Future&lt;U&gt;&gt;): Future&lt;U&gt; {
       return Suspend.of(() =&gt;
         Bind.of(this._thunk, (value) =&gt; this._mapper(value).flatMap(mapper)),
       );
@@ -1188,7 +1188,7 @@ namespace <span class="branch-1 cbranch-no" title="branch not covered" >Suspend 
   }
 }
 &nbsp;
-async function defer&lt;T&gt;(thunk: Thunk&lt;T&gt;): Promise&lt;T&gt; {
+async function <span class="fstat-no" title="function not covered" >defer&lt;</span>T&gt;(thunk: Thunk&lt;T&gt;): Promise&lt;T&gt; {
   return Promise.resolve().then(thunk);
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -1198,7 +1198,7 @@ async function defer&lt;T&gt;(thunk: Thunk&lt;T&gt;): Promise&lt;T&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:35.951Z
+                at 2026-04-10T09:29:51.840Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

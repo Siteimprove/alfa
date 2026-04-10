@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">45% </span>
+                <span class="strong">43.47% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/20</span>
+                <span class='fraction'>10/23</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">42.3% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/14</span>
+                <span class='fraction'>11/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.36% </span>
+                <span class="strong">18.18% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/11</span>
+                <span class='fraction'>4/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">45% </span>
+                <span class="strong">47.61% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/20</span>
+                <span class='fraction'>10/21</span>
             </div>
         
             
@@ -313,7 +313,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -363,7 +363,7 @@ export class WithOtherHeading extends Diagnostic {
     otherPosition: HeadingPosition,
   ): WithOtherHeading;
 &nbsp;
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     message: string,
     otherHeading?: Option&lt;Element&gt;,
     currentLevel?: number,
@@ -389,7 +389,7 @@ export class WithOtherHeading extends Diagnostic {
   private readonly _otherLevel: number;
   private readonly _otherPosition: HeadingPosition;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     message: string,
     otherHeading: Option&lt;Element&gt;,
     currentLevel: number,
@@ -403,19 +403,19 @@ export class WithOtherHeading extends Diagnostic {
     this._otherPosition = otherPosition;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >otherHeading(</span>): Option&lt;Element&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >otherHeading(</span>): Option&lt;Element&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._otherHeading;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >currentHeadingLevel(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >currentHeadingLevel(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return this._currentLevel;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >otherHeadingLevel(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >otherHeadingLevel(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return this._otherLevel;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >otherPosition(</span>): HeadingPosition {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >otherPosition(</span>): HeadingPosition {</span>
 <span class="cstat-no" title="statement not covered" >    return this._otherPosition;</span>
   }
 &nbsp;
@@ -423,8 +423,8 @@ export class WithOtherHeading extends Diagnostic {
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof WithOtherHeading &amp;&amp;
       value._message === this._message &amp;&amp;
       value._otherHeading.equals(this._otherHeading) &amp;&amp;
@@ -434,7 +434,7 @@ export class WithOtherHeading extends Diagnostic {
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    super.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    hash.writeNumber(this._currentLevel);</span>
 <span class="cstat-no" title="statement not covered" >    hash.writeNumber(this._otherLevel);</span>
@@ -442,7 +442,7 @@ export class WithOtherHeading extends Diagnostic {
 <span class="cstat-no" title="statement not covered" >    this._otherHeading.hash(hash);</span>
   }
 &nbsp;
-  public toJSON(options?: Node.SerializationOptions): WithOtherHeading.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Node.SerializationOptions): WithOtherHeading.JSON {
     return {
       ...super.toJSON(options),
       otherHeading: this._otherHeading.toJSON(options),
@@ -456,7 +456,7 @@ export class WithOtherHeading extends Diagnostic {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >WithOtherHeading {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >W</span>ithOtherHeading {</span></span>
   export interface JSON extends Diagnostic.JSON {
     otherHeading: Option.JSON&lt;Element&gt;;
     currentHeadingLevel: number;
@@ -471,7 +471,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >W
   export function isWithOtherHeading(value: unknown): value is WithOtherHeading;
 &nbsp;
   /**@public */
-  export function <span class="fstat-no" title="function not covered" >isWithOtherHeading(</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isWithOtherHeading(</span></span></span>
     value: unknown,
   ): value is WithOtherHeading {
 <span class="cstat-no" title="statement not covered" >    return value instanceof WithOtherHeading;</span>
@@ -484,7 +484,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >W
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.92% </span>
+                <span class="strong">78.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>30/39</span>
+                <span class='fraction'>44/56</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/10</span>
+                <span class='fraction'>10/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.07% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>19/26</span>
+                <span class='fraction'>27/45</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.94% </span>
+                <span class="strong">79.48% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>30/38</span>
+                <span class='fraction'>31/39</span>
             </div>
         
             
@@ -403,7 +403,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -438,11 +438,11 @@ import type { Page } from "@siteimprove/alfa-web";
 &nbsp;
 import * as dom from "@siteimprove/alfa-dom";
 &nbsp;
-import { expectation } from "../common/act/expectation.js";
-import { Group } from "../common/act/group.js";
-import { ARIA } from "../requirements/index.js";
+import { expectation } from "../common/act/expectation.ts";
+import { Group } from "../common/act/group.ts";
+import { ARIA } from "../requirements/index.ts";
 &nbsp;
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 &nbsp;
 const {
   hasIncorrectRoleWithoutName,
@@ -461,7 +461,7 @@ export default Rule.Atomic.of&lt;Page, Group&lt;Element&gt;&gt;({
     ),
   ],
   tags: [Scope.Component, Stability.Stable],
-  evaluate({ device, document }) {
+<span class="fstat-no" title="function not covered" >  evaluate(</span>{ device, document }) {
     return {
       applicability() {
         return (
@@ -513,7 +513,7 @@ export default Rule.Atomic.of&lt;Page, Group&lt;Element&gt;&gt;({
 /**
  * @public
  */
-export namespace Outcomes {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Outcomes {</span>
   export const differentNames = (role: Role.Name) =&gt;
     Ok.of(SameNames.of(`No two \`${role}\` have the same name.`, role, []));
 &nbsp;
@@ -528,7 +528,7 @@ export namespace Outcomes {
  * @public
  */
 export class SameNames extends Diagnostic implements Iterable&lt;List&lt;Element&gt;&gt; {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     message: string,
     role: Role.Name = "none",
     errors: Iterable&lt;Iterable&lt;Element&gt;&gt; = [],
@@ -539,7 +539,7 @@ export class SameNames extends Diagnostic implements Iterable&lt;List&lt;Element
   private readonly _role: Role.Name;
   private readonly _errors: ReadonlyArray&lt;List&lt;Element&gt;&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     message: string,
     role: Role.Name,
     errors: ReadonlyArray&lt;List&lt;Element&gt;&gt;,
@@ -549,11 +549,11 @@ export class SameNames extends Diagnostic implements Iterable&lt;List&lt;Element
     this._errors = errors;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >role(</span>): Role.Name {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >role(</span>): Role.Name {</span>
 <span class="cstat-no" title="statement not covered" >    return this._role;</span>
   }
 &nbsp;
-  public *[<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;List&lt;Element&gt;&gt; {
+  public *[<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.iterator]</span></span>(): Iterator&lt;List&lt;Element&gt;&gt; {
 <span class="cstat-no" title="statement not covered" >    yield* this._errors;</span>
   }
 &nbsp;
@@ -561,8 +561,8 @@ export class SameNames extends Diagnostic implements Iterable&lt;List&lt;Element
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof SameNames &amp;&amp;
       value._message === this._message &amp;&amp;
       value._role === this._role &amp;&amp;
@@ -570,13 +570,13 @@ export class SameNames extends Diagnostic implements Iterable&lt;List&lt;Element
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    super.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    hash.writeString(this._role);</span>
 <span class="cstat-no" title="statement not covered" >    this._errors.forEach(<span class="fstat-no" title="function not covered" >(e</span>lement) =&gt; <span class="cstat-no" title="statement not covered" >element.hash(hash))</span>;</span>
   }
 &nbsp;
-  public toJSON(options?: dom.Node.SerializationOptions): SameNames.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: dom.Node.SerializationOptions): SameNames.JSON {
     return {
       ...super.toJSON(options),
       role: this._role,
@@ -588,7 +588,7 @@ export class SameNames extends Diagnostic implements Iterable&lt;List&lt;Element
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >SameNames {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >S</span>ameNames {</span></span>
   export interface JSON extends Diagnostic.JSON {
     role: string;
     errors: Array&lt;List.JSON&lt;Element&gt;&gt;;
@@ -599,7 +599,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
   export function isSameNames(value: unknown): value is SameNames;
 &nbsp;
   /**@public */
-  export function <span class="fstat-no" title="function not covered" >isSameNames(</span>value: unknown): value is SameNames {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isSameNames(</span>v</span>alue: unknown): value is SameNames {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof SameNames;</span>
   }
 }
@@ -610,7 +610,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

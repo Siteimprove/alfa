@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">98% </span>
+                <span class="strong">93.75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>49/50</span>
+                <span class='fraction'>60/64</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">80% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>8/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.15% </span>
+                <span class="strong">68% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>25/26</span>
+                <span class='fraction'>34/50</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">97.77% </span>
+                <span class="strong">97.82% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>44/45</span>
+                <span class='fraction'>45/46</span>
             </div>
         
             
@@ -459,7 +459,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2100x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -549,7 +549,7 @@ export class RNGFactory&lt;T = number&gt; implements Functor&lt;T&gt; {
   /**
    * Create a RNG that returns a number between 0 and 1.
    */
-  public static of(seed: number = (Math.random() * 2 ** 32) &gt;&gt;&gt; 0): RNGFactory {
+  public static <span class="fstat-no" title="function not covered" >of(</span>seed: number = (Math.random() * 2 ** 32) &gt;&gt;&gt; 0): RNGFactory {
     const rng = RNGFactory.seedableRNG(seed);
     return new RNGFactory(seed, rng);
   }
@@ -557,7 +557,7 @@ export class RNGFactory&lt;T = number&gt; implements Functor&lt;T&gt; {
   private readonly _rng: () =&gt; T;
   private readonly _seed: number;
 &nbsp;
-  protected constructor(seed: number, rng: () =&gt; T) {
+<span class="fstat-no" title="function not covered" >  protected constructor(s</span>eed: number, rng: () =&gt; T) {
     this._seed = seed;
     this._rng = rng;
   }
@@ -565,15 +565,15 @@ export class RNGFactory&lt;T = number&gt; implements Functor&lt;T&gt; {
   /**
    * What was the seed used to initialize the RNG.
    */
-  public get <span class="fstat-no" title="function not covered" >seed(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >seed(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return this._seed;</span>
   }
 &nbsp;
-  public map&lt;U&gt;(mapper: Mapper&lt;T, U&gt;): RNGFactory&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U&gt;): RNGFactory&lt;U&gt; {
     return new RNGFactory(this._seed, () =&gt; mapper(this._rng()));
   }
 &nbsp;
-  public group(size: number): RNGFactory&lt;Array&lt;T&gt;&gt; {
+  public <span class="fstat-no" title="function not covered" >group(</span>size: number): RNGFactory&lt;Array&lt;T&gt;&gt; {
     return new RNGFactory(this._seed, () =&gt; {
       const group: Array&lt;T&gt; = [];
 &nbsp;
@@ -585,7 +585,7 @@ export class RNGFactory&lt;T = number&gt; implements Functor&lt;T&gt; {
     });
   }
 &nbsp;
-  public zip&lt;U, V&gt;(
+  public <span class="fstat-no" title="function not covered" >zip&lt;</span>U, V&gt;(
     this: RNGFactory&lt;Array&lt;U&gt;&gt;,
     other: RNGFactory&lt;Array&lt;V&gt;&gt;,
   ): RNGFactory&lt;Array&lt;[U, V]&gt;&gt; {
@@ -605,7 +605,7 @@ export class RNGFactory&lt;T = number&gt; implements Functor&lt;T&gt; {
     });
   }
 &nbsp;
-  public create(): RNG&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >create(</span>): RNG&lt;T&gt; {
     return RNG.of(this._seed, this._rng);
   }
 &nbsp;
@@ -613,7 +613,7 @@ export class RNGFactory&lt;T = number&gt; implements Functor&lt;T&gt; {
    * Mulberry32 PRNG taken from
    * {@link https://stackoverflow.com/questions/521295/seeding-the-random-number-generator-in-javascript}
    */
-  private static seedableRNG(seed: number): () =&gt; number {
+  private static <span class="fstat-no" title="function not covered" >seedableRNG(</span>seed: number): () =&gt; number {
     return function rng() {
       let t = (seed += 0x6d2b79f5);
       t = Math.imul(t ^ (t &gt;&gt;&gt; 15), t | 1);
@@ -639,7 +639,7 @@ export class RNG&lt;T = number&gt; {
    * @remarks
    * Do not use, prefer using RNGFactory#create().
    */
-  public static of&lt;T = number&gt;(seed: number, rng: () =&gt; T): RNG&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T = number&gt;(seed: number, rng: () =&gt; T): RNG&lt;T&gt; {
     // Burning through some iterations improves the entropy of the RNG on sparse
     // seeds and similar seeds. See linked Stack Overflow article.
     for (let i = 0; i &lt; 20; i++) {
@@ -653,7 +653,7 @@ export class RNG&lt;T = number&gt; {
   private readonly _seed: number;
   private _iterations: number;
 &nbsp;
-  protected constructor(seed: number, rng: () =&gt; T) {
+<span class="fstat-no" title="function not covered" >  protected constructor(s</span>eed: number, rng: () =&gt; T) {
     this._seed = seed;
     this._iterations = 0;
 &nbsp;
@@ -670,21 +670,21 @@ export class RNG&lt;T = number&gt; {
    * This is a getter return a 0-arity function. So, it is used as `rng.rand()`
    * which matches the syntax of usual `rand()` functions.
    */
-  public get rand(): () =&gt; T {
+  public get <span class="fstat-no" title="function not covered" >rand(</span>): () =&gt; T {
     return this._rand;
   }
 &nbsp;
   /**
    * What was the seed used to initialize the RNG.
    */
-  public get seed(): number {
+  public get <span class="fstat-no" title="function not covered" >seed(</span>): number {
     return this._seed;
   }
 &nbsp;
   /**
    * How many times the RNG has been called so far
    */
-  public get iterations(): number {
+  public get <span class="fstat-no" title="function not covered" >iterations(</span>): number {
     return this._iterations;
   }
 }
@@ -692,14 +692,14 @@ export class RNG&lt;T = number&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >RNG {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >R</span>NG {</span></span>
   /**
    * Seedable RNG returning a number between 0 (included) and 1 (excluded).
    *
    * @remarks
    * This RNG is decent but not crypto-safe.
    */
-  export function standard(seed?: number): RNGFactory&lt;number&gt; {
+  export function <span class="cstat-no" title="statement not covered" >standard(seed?: number): RNGFactory&lt;number&gt; {</span>
     return RNGFactory.of(seed);
   }
 &nbsp;
@@ -722,7 +722,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
    * @remarks
    * This RNG is decent but not crypto-safe.
    */
-  export function integer(
+  export function <span class="cstat-no" title="statement not covered" >integer(</span>
     max: number = Number.MAX_SAFE_INTEGER,
     seed?: number,
   ): RNGFactory&lt;number&gt; {
@@ -739,7 +739,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
    * @remarks
    * This RNG is decent but not crypto-safe.
    */
-  export function hexString(length: number, seed?: number): RNGFactory&lt;string&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >hexString(</span>length: number, seed?: number): RNGFactory&lt;string&gt; {</span>
     return RNGFactory.of(seed)
       .map(toInteger(16))
       .map(toHex)
@@ -754,7 +754,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:52.298Z
+                at 2026-04-10T09:30:08.843Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

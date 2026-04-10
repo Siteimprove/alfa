@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">24.34% </span>
+                <span class="strong">23.95% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>37/152</span>
+                <span class='fraction'>46/192</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">48.64% </span>
+                <span class="strong">53.57% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>18/37</span>
+                <span class='fraction'>30/56</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">10.81% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>15/75</span>
+                <span class='fraction'>16/148</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.18% </span>
+                <span class="strong">23.74% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>32/138</span>
+                <span class='fraction'>33/139</span>
             </div>
         
             
@@ -1095,7 +1095,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1148,7 +1148,7 @@ const { compareComparable } = Comparable;
  * @public
  */
 export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
-  public static of&lt;T&gt;(
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T&gt;(
     array: ReadonlyArray&lt;T&gt;,
     start: number = 0,
     end: number = array.length,
@@ -1160,7 +1160,7 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 &nbsp;
   private static _empty = new Slice([], 0, 0);
 &nbsp;
-  public static empty&lt;T&gt;(): Slice&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >empty&lt;</span>T&gt;(): Slice&lt;T&gt; {
     return this._empty;
   }
 &nbsp;
@@ -1168,7 +1168,7 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
   private readonly _offset: number;
   private readonly _length: number;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     array: ReadonlyArray&lt;T&gt;,
     offset: number,
     length: number,
@@ -1178,53 +1178,53 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
     this._length = length;
   }
 &nbsp;
-  public get length(): number {
+  public get <span class="fstat-no" title="function not covered" >length(</span>): number {
     return this._length;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >size(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >size(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return this._length;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isEmpty(</span>): this is Slice&lt;never&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isEmpty(</span>): this is Slice&lt;never&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._length === 0;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >forEach(</span>callback: Callback&lt;T, void, [index: number]&gt;): void {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >forEach(</span>c</span>allback: Callback&lt;T, void, [index: number]&gt;): void {
 <span class="cstat-no" title="statement not covered" >    Iterable.forEach(this, callback);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U, [index: number]&gt;): Slice&lt;U&gt; {
-    const result = <span class="cstat-no" title="statement not covered" >Array.allocate&lt;U&gt;(this._length);</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(m</span>apper: Mapper&lt;T, U, [index: number]&gt;): Slice&lt;U&gt; {
+    const result = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Array.allocate&lt;U&gt;(this._length);</span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    for (let i = <span class="cstat-no" title="statement not covered" >0,</span> n = <span class="cstat-no" title="statement not covered" >this._length;</span> i &lt; n; i++) {</span>
+<span class="cstat-no" title="statement not covered" >    for (let i = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0,</span> n</span> = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._length;</span> i</span> &lt; n; i++) {</span>
 <span class="cstat-no" title="statement not covered" >      result[i] = mapper(this._array[this._offset + i], i);</span>
     }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(result, 0, result.length);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >apply&lt;</span>U&gt;(mapper: Slice&lt;Mapper&lt;T, U&gt;&gt;): Slice&lt;U&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >[...Iterable.apply(this, mapper)];</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >apply&lt;</span>U&gt;(m</span>apper: Slice&lt;Mapper&lt;T, U&gt;&gt;): Slice&lt;U&gt; {
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[...Iterable.apply(this, mapper)];</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >flatMap&lt;</span>U&gt;(mapper: Mapper&lt;T, Slice&lt;U&gt;, [index: number]&gt;): Slice&lt;U&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >[...Iterable.flatMap(this, mapper)];</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >flatMap&lt;</span>U&gt;(m</span>apper: Mapper&lt;T, Slice&lt;U&gt;, [index: number]&gt;): Slice&lt;U&gt; {
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[...Iterable.flatMap(this, mapper)];</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >flatten&lt;</span>T&gt;(this: Slice&lt;Slice&lt;T&gt;&gt;): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >flatten&lt;</span>T&gt;(this: Slice&lt;Slice&lt;T&gt;&gt;): Slice&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this.flatMap(<span class="fstat-no" title="function not covered" >(s</span>lice) =&gt; <span class="cstat-no" title="statement not covered" >slice)</span>;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reduce&lt;</span>U&gt;(reducer: Reducer&lt;T, U, [index: number]&gt;, accumulator: U): U {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reduce&lt;</span>U&gt;(r</span>educer: Reducer&lt;T, U, [index: number]&gt;, accumulator: U): U {
 <span class="cstat-no" title="statement not covered" >    return Iterable.reduce(this, reducer, accumulator);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reduceWhile&lt;</span>U&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reduceWhile&lt;</span>U&gt;(</span>
     predicate: Predicate&lt;T, [index: number]&gt;,
     reducer: Reducer&lt;T, U, [index: number]&gt;,
     accumulator: U,
@@ -1232,7 +1232,7 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return Iterable.reduceWhile(this, predicate, reducer, accumulator);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reduceUntil&lt;</span>U&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reduceUntil&lt;</span>U&gt;(</span>
     predicate: Predicate&lt;T, [index: number]&gt;,
     reducer: Reducer&lt;T, U, [index: number]&gt;,
     accumulator: U,
@@ -1246,8 +1246,8 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 &nbsp;
   public filter(predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >filter(</span>predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >[...Iterable.filter(this, predicate)];</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >filter(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[...Iterable.filter(this, predicate)];</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
@@ -1258,8 +1258,8 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 &nbsp;
   public reject(predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reject(</span>predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >[...Iterable.reject(this, predicate)];</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reject(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[...Iterable.reject(this, predicate)];</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
@@ -1270,49 +1270,49 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 &nbsp;
   public find(predicate: Predicate&lt;T, [index: number]&gt;): Option&lt;T&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >find(</span>predicate: Predicate&lt;T, [index: number]&gt;): Option&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >find(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Option&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return Iterable.find(this, predicate);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >includes(</span>value: T): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >includes(</span>v</span>alue: T): boolean {
 <span class="cstat-no" title="statement not covered" >    return Iterable.includes(this, value);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >collect&lt;</span>U&gt;(mapper: Mapper&lt;T, Option&lt;U&gt;, [index: number]&gt;): Slice&lt;U&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >[...Iterable.collect(this, mapper)];</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >collect&lt;</span>U&gt;(m</span>apper: Mapper&lt;T, Option&lt;U&gt;, [index: number]&gt;): Slice&lt;U&gt; {
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[...Iterable.collect(this, mapper)];</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >collectFirst&lt;</span>U&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >collectFirst&lt;</span>U&gt;(</span>
     mapper: Mapper&lt;T, Option&lt;U&gt;, [index: number]&gt;,
   ): Option&lt;U&gt; {
 <span class="cstat-no" title="statement not covered" >    return Iterable.collectFirst(this, mapper);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >some(</span>predicate: Predicate&lt;T, [index: number]&gt;): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >some(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): boolean {
 <span class="cstat-no" title="statement not covered" >    return Iterable.some(this, predicate);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >none(</span>predicate: Predicate&lt;T, [index: number]&gt;): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >none(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): boolean {
 <span class="cstat-no" title="statement not covered" >    return Iterable.none(this, predicate);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >every(</span>predicate: Predicate&lt;T, [index: number]&gt;): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >every(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): boolean {
 <span class="cstat-no" title="statement not covered" >    return Iterable.every(this, predicate);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >count(</span>predicate: Predicate&lt;T, [index: number]&gt;): number {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >count(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): number {
 <span class="cstat-no" title="statement not covered" >    return Iterable.count(this, predicate);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >distinct(</span>): Slice&lt;T&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >[...Iterable.distinct(this)];</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >distinct(</span>): Slice&lt;T&gt; {</span>
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[...Iterable.distinct(this)];</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
 &nbsp;
-  public get(index: number): Option&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >get(</span>index: number): Option&lt;T&gt; {
     if (index &lt; 0 || index &gt;= this._length) {
       return None;
     }
@@ -1326,46 +1326,46 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
    *
    * @internal
    */
-  public <span class="fstat-no" title="function not covered" >getUnsafe(</span>index: number): T {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getUnsafe(</span>i</span>ndex: number): T {
 <span class="cstat-no" title="statement not covered" >    return this._array[this._offset + index];</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >has(</span>index: number): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >has(</span>i</span>ndex: number): boolean {
 <span class="cstat-no" title="statement not covered" >    return index &gt;= 0 &amp;&amp; index &lt; this._length;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >set(</span>index: number, value: T): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >set(</span>i</span>ndex: number, value: T): Slice&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    if (index &lt; 0 || index &gt;= this._length) {</span>
 <span class="cstat-no" title="statement not covered" >      return this;</span>
     }
 &nbsp;
-    const array = <span class="cstat-no" title="statement not covered" >this.toArray();</span>
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.toArray();</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    array[index] = value;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >insert(</span>index: number, value: T): Slice&lt;T&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >Array.insert(this.toArray(), index, value);</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >insert(</span>i</span>ndex: number, value: T): Slice&lt;T&gt; {
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Array.insert(this.toArray(), index, value);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >append(</span>value: T): Slice&lt;T&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >Array.append(this.toArray(), value);</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >append(</span>v</span>alue: T): Slice&lt;T&gt; {
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Array.append(this.toArray(), value);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >prepend(</span>value: T): Slice&lt;T&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >Array.prepend(this.toArray(), value);</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >prepend(</span>v</span>alue: T): Slice&lt;T&gt; {
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Array.prepend(this.toArray(), value);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >concat(</span>iterable: Iterable&lt;T&gt;): Slice&lt;T&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >this.toArray();</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >concat(</span>i</span>terable: Iterable&lt;T&gt;): Slice&lt;T&gt; {
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.toArray();</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    for (const value of iterable) {</span>
 <span class="cstat-no" title="statement not covered" >      array.push(value);</span>
@@ -1374,19 +1374,19 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >subtract(</span>iterable: Iterable&lt;T&gt;): Slice&lt;T&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >[...Iterable.subtract(this, iterable)];</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >subtract(</span>i</span>terable: Iterable&lt;T&gt;): Slice&lt;T&gt; {
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[...Iterable.subtract(this, iterable)];</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >intersect(</span>iterable: Iterable&lt;T&gt;): Slice&lt;T&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >[...Iterable.intersect(this, iterable)];</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >intersect(</span>i</span>terable: Iterable&lt;T&gt;): Slice&lt;T&gt; {
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[...Iterable.intersect(this, iterable)];</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >tee&lt;</span>A extends Array&lt;unknown&gt; = []&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >tee&lt;</span>A extends Array&lt;unknown&gt; = []&gt;(</span>
     callback: Callback&lt;this, void, [...args: A]&gt;,
     ...args: A
   ): this {
@@ -1394,21 +1394,21 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >zip&lt;</span>U&gt;(iterable: Iterable&lt;U&gt;): Slice&lt;[T, U]&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >[...Iterable.zip(this, iterable)];</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >zip&lt;</span>U&gt;(i</span>terable: Iterable&lt;U&gt;): Slice&lt;[T, U]&gt; {
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[...Iterable.zip(this, iterable)];</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >first(</span>): Option&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >first(</span>): Option&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this.get(0);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >last(</span>): Option&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >last(</span>): Option&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this.get(this._length - 1);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >take(</span>count: number): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >take(</span>c</span>ount: number): Slice&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.slice(0, count);</span>
   }
 &nbsp;
@@ -1418,10 +1418,10 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 &nbsp;
   public takeWhile(predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >takeWhile(</span>predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
-    let count = <span class="cstat-no" title="statement not covered" >0;</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >takeWhile(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
+    let count = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0;</span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    for (let i = <span class="cstat-no" title="statement not covered" >0,</span> n = <span class="cstat-no" title="statement not covered" >this._length;</span> i &lt; n; i++) {</span>
+<span class="cstat-no" title="statement not covered" >    for (let i = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0,</span> n</span> = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._length;</span> i</span> &lt; n; i++) {</span>
 <span class="cstat-no" title="statement not covered" >      if (predicate(this._array[this._offset + i], i)) {</span>
 <span class="cstat-no" title="statement not covered" >        count++;</span>
       } else {
@@ -1432,11 +1432,11 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.take(count);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >takeUntil(</span>predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >takeUntil(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.takeWhile(not(predicate));</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >takeLast(</span>count: number): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >takeLast(</span>c</span>ount: number): Slice&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.slice(this._length - count);</span>
   }
 &nbsp;
@@ -1446,10 +1446,10 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 &nbsp;
   public takeLastWhile(predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >takeLastWhile(</span>predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
-    let count = <span class="cstat-no" title="statement not covered" >0;</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >takeLastWhile(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
+    let count = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0;</span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    for (let i = <span class="cstat-no" title="statement not covered" >this._length - 1;</span> i &gt;= 0; i--) {</span>
+<span class="cstat-no" title="statement not covered" >    for (let i = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._length - 1;</span> i</span> &gt;= 0; i--) {</span>
 <span class="cstat-no" title="statement not covered" >      if (predicate(this._array[this._offset + i], i)) {</span>
 <span class="cstat-no" title="statement not covered" >        count++;</span>
       } else {
@@ -1460,18 +1460,18 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.takeLast(count);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >takeLastUntil(</span>predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >takeLastUntil(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.takeLastWhile(not(predicate));</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skip(</span>count: number): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skip(</span>c</span>ount: number): Slice&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.slice(count);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skipWhile(</span>predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
-    let count = <span class="cstat-no" title="statement not covered" >0;</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skipWhile(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
+    let count = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0;</span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    for (let i = <span class="cstat-no" title="statement not covered" >0,</span> n = <span class="cstat-no" title="statement not covered" >this._length;</span> i &lt; n; i++) {</span>
+<span class="cstat-no" title="statement not covered" >    for (let i = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0,</span> n</span> = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._length;</span> i</span> &lt; n; i++) {</span>
 <span class="cstat-no" title="statement not covered" >      if (predicate(this._array[this._offset + i], i)) {</span>
 <span class="cstat-no" title="statement not covered" >        count++;</span>
       } else {
@@ -1482,18 +1482,18 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.skip(count);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skipUntil(</span>predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skipUntil(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.skipWhile(not(predicate));</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skipLast(</span>count: number): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skipLast(</span>c</span>ount: number): Slice&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.slice(0, this._length - count);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skipLastWhile(</span>predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
-    let count = <span class="cstat-no" title="statement not covered" >0;</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skipLastWhile(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
+    let count = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0;</span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    for (let i = <span class="cstat-no" title="statement not covered" >this._length - 1;</span> i &gt;= 0; i--) {</span>
+<span class="cstat-no" title="statement not covered" >    for (let i = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._length - 1;</span> i</span> &gt;= 0; i--) {</span>
 <span class="cstat-no" title="statement not covered" >      if (predicate(this._array[this._offset + i], i)) {</span>
 <span class="cstat-no" title="statement not covered" >        count++;</span>
       } else {
@@ -1504,27 +1504,27 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.skipLast(count);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skipLastUntil(</span>predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skipLastUntil(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.skipLastWhile(not(predicate));</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >trim(</span>predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >trim(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.trimLeading(predicate).trimTrailing(predicate);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >trimLeading(</span>predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >trimLeading(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.skipWhile(predicate);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >trimTrailing(</span>predicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >trimTrailing(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Slice&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.skipLastWhile(predicate);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >rest(</span>): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >rest(</span>): Slice&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this.slice(1);</span>
   }
 &nbsp;
-  public slice(start: number, end: number = this._length): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >slice(</span>start: number, end: number = this._length): Slice&lt;T&gt; {
     start = clamp(start, this._length);
 &nbsp;
     return new Slice(
@@ -1534,17 +1534,17 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reverse(</span>): Slice&lt;T&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >this.toArray().reverse();</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reverse(</span>): Slice&lt;T&gt; {</span>
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.toArray().reverse();</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >join(</span>separator: string): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >join(</span>s</span>eparator: string): string {
 <span class="cstat-no" title="statement not covered" >    return Iterable.join(this, separator);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >sort&lt;</span>T extends Comparable&lt;T&gt;&gt;(this: Slice&lt;T&gt;): Slice&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >sort&lt;</span>T extends Comparable&lt;T&gt;&gt;(this: Slice&lt;T&gt;): Slice&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this.sortWith(compareComparable);</span>
   }
 &nbsp;
@@ -1555,33 +1555,33 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
     comparer: Comparer&lt;T&gt;,
   ): Slice&lt;U&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >sortWith(</span>comparer: Comparer&lt;T&gt;): Slice&lt;T&gt; {
-    const array = <span class="cstat-no" title="statement not covered" >Array.sortWith(this.toArray(), comparer);</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >sortWith(</span>c</span>omparer: Comparer&lt;T&gt;): Slice&lt;T&gt; {
+    const array = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Array.sortWith(this.toArray(), comparer);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return new Slice(array, 0, array.length);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >compare&lt;</span>T&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >compare&lt;</span>T&gt;(</span>
     this: Slice&lt;Comparable&lt;T&gt;&gt;,
     iterable: Iterable&lt;T&gt;,
   ): Comparison {
 <span class="cstat-no" title="statement not covered" >    return this.compareWith(iterable, compareComparable);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >compareWith&lt;</span>U = T&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >compareWith&lt;</span>U = T&gt;(</span>
     iterable: Iterable&lt;U&gt;,
     comparer: Comparer&lt;T, U, [index: number]&gt;,
   ): Comparison {
 <span class="cstat-no" title="statement not covered" >    return Iterable.compareWith(this, iterable, comparer);</span>
   }
 &nbsp;
-  public *iterator(): Iterator&lt;T&gt; {
+  public *<span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;T&gt; {
     for (let i = this._offset, n = i + this._length; i &lt; n; i++) {
       yield this._array[i];
     }
   }
 &nbsp;
-  public [Symbol.iterator](): Iterator&lt;T&gt; {
+  public [<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;T&gt; {
     return this.iterator();
   }
 &nbsp;
@@ -1589,7 +1589,7 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public equals(value: unknown): boolean {
+  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
     if (value instanceof Slice &amp;&amp; value._length === this._length) {
       for (let i = 0, n = value._length; i &lt; n; i++) {
         if (
@@ -1608,19 +1608,19 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
     return false;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash): void {
 <span class="cstat-no" title="statement not covered" >    Iterable.hash(this, hash);</span>
   }
 &nbsp;
-  public toArray(): Array&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >toArray(</span>): Array&lt;T&gt; {
     return this._array.slice(this._offset, this._offset + this._length);
   }
 &nbsp;
-  public toJSON(options?: Serializable.Options): Slice.JSON&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Serializable.Options): Slice.JSON&lt;T&gt; {
     return this.toArray().map((value) =&gt; Serializable.toJSON(value, options));
   }
 &nbsp;
-  public toString(): string {
+  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
     const values = this.toArray().join(", ");
 &nbsp;
     return `Slice [${values === "" ? "" : ` ${values} `}]`;
@@ -1630,10 +1630,10 @@ export class Slice&lt;T&gt; implements Collection.Indexed&lt;T&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Slice {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >S</span>lice {</span></span>
   export type JSON&lt;T&gt; = Array&lt;Serializable.ToJSON&lt;T&gt;&gt;;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >from&lt;</span>T&gt;(iterable: Iterable&lt;T&gt;): Slice&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >from&lt;T&gt;(i</span>terable: Iterable&lt;T&gt;): Slice&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    if (isSlice(iterable)) {</span>
 <span class="cstat-no" title="statement not covered" >      return iterable;</span>
     }
@@ -1645,13 +1645,13 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
 &nbsp;
   export function isSlice&lt;T&gt;(value: unknown): value is Slice&lt;T&gt;;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isSlice&lt;</span>T&gt;(value: unknown): value is Slice&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isSlice&lt;</span>T&gt;(v</span>alue: unknown): value is Slice&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Slice;</span>
   }
 }
 &nbsp;
-function clamp(value: number, length: number): number {
-  return value &lt; 0 ? <span class="branch-0 cbranch-no" title="branch not covered" >0 </span>: value &gt; length ? <span class="branch-0 cbranch-no" title="branch not covered" >length </span>: value;
+function <span class="fstat-no" title="function not covered" >clamp(</span>value: number, length: number): number {
+  return value &lt; 0 ? <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >0 </span>: v</span>alue &gt; length ? <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >length </span>: v</span>alue;
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -1660,7 +1660,7 @@ function clamp(value: number, length: number): number {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:35:09.857Z
+                at 2026-04-10T09:30:26.452Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -30,16 +30,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">35.71% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/14</span>
+                <span class='fraction'>7/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.2% </span>
+                <span class="strong">82.75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>25/29</span>
+                <span class='fraction'>24/29</span>
             </div>
         
             
@@ -202,7 +202,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">206x</span>
+<span class="cline-any cline-yes">204x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -216,7 +216,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">206x</span>
+<span class="cline-any cline-yes">204x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -252,8 +252,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">206x</span>
-<span class="cline-any cline-yes">206x</span>
+<span class="cline-any cline-yes">204x</span>
+<span class="cline-any cline-yes">204x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -283,7 +283,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -295,25 +295,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">206x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">204x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">194x</span>
 <span class="cline-any cline-yes">272696x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">206x</span>
+<span class="cline-any cline-yes">204x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12738x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12738x</span>
+<span class="cline-any cline-yes">12681x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -323,12 +323,12 @@
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
 &nbsp;
-import { Context } from "../../../context.js";
-import { Specificity } from "../../../specificity.js";
-import type { Compound, Selector, Simple } from "../../index.js";
-import { BaseSelector } from "../../selector.js";
+import { Context } from "../../../context.ts";
+import { Specificity } from "../../../specificity.ts";
+import type { Compound, Selector, Simple } from "../../index.ts";
+import { BaseSelector } from "../../selector.ts";
 &nbsp;
-import { WithSelector } from "./pseudo-class.js";
+import { WithSelector } from "./pseudo-class.ts";
 &nbsp;
 const { filter } = Parser;
 &nbsp;
@@ -369,7 +369,7 @@ export class HostContext extends WithSelector&lt;
    * @remarks
    * `:host-context` never matches anything in its own tree.
    */
-  public matches(element: Element, context?: Context): boolean {
+  public <span class="fstat-no" title="function not covered" >matches(</span>element: Element, context?: Context): boolean {
     return false;
   }
 &nbsp;
@@ -397,7 +397,7 @@ export class HostContext extends WithSelector&lt;
    */
   public matchHost(
     element: Element,
-    context: Context = <span class="branch-0 cbranch-no" title="branch not covered" >Context.empty(),</span>
+    context: Context = Context.empty(),
   ): boolean {
     return this.useContext
       ? <span class="branch-0 cbranch-no" title="branch not covered" >this._matchHost(element, context)</span>
@@ -433,7 +433,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
 &nbsp;
   export const parse = (
     parseSelector: Selector.Parser.Component,
-    withColon = <span class="branch-0 cbranch-no" title="branch not covered" >true,</span>
+    withColon = true,
   ) =&gt;
     WithSelector.parseWithSelector(
       "host-context",
@@ -454,7 +454,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

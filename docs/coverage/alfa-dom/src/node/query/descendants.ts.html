@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.29% </span>
+                <span class="strong">94.59% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>26/27</span>
+                <span class='fraction'>35/37</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.66% </span>
+                <span class="strong">72.22% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>11/12</span>
+                <span class='fraction'>13/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>9/10</span>
+                <span class='fraction'>15/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.29% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>26/27</span>
+                <span class='fraction'>27/27</span>
             </div>
         
             
@@ -316,8 +316,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">233x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">230x</span>
+<span class="cline-any cline-yes">230x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -360,13 +360,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
@@ -379,8 +379,8 @@ import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 &nbsp;
 import type { Node } from "../index.js";
-import { BaseNode } from "../node.js";
-import { Element, Text } from "../slotable/index.js";
+import { BaseNode } from "../node.ts";
+import { Element, Text } from "../slotable/index.ts";
 &nbsp;
 const _descendantsCache = Cache.empty&lt;
   Predicate&lt;Node&gt;,
@@ -416,7 +416,7 @@ export function getDescendants(
 export function getDescendants(
   predicate: Predicate&lt;Node&gt;,
 ): (node: Node, options?: Node.Traversal) =&gt; Sequence&lt;Node&gt; {
-  return (node, options = BaseNode.Traversal.empty) =&gt; {
+  return (node, options = <span class="branch-0 cbranch-no" title="branch not covered" >BaseNode.Traversal.empty) =&gt; {</span>
     const optionsMap = _descendantsCache
       .get(predicate, Cache.empty)
       .get(node, () =&gt; []);
@@ -439,7 +439,7 @@ export const getElementDescendants = getDescendants(Element.isElement);
  */
 export function getInclusiveElementDescendants(
   node: Element,
-  options: Node.Traversal = BaseNode.Traversal.empty,
+  options: Node.Traversal = <span class="branch-0 cbranch-no" title="branch not covered" >BaseNode.Traversal.empty,</span>
 ): Sequence&lt;Element&gt; {
   return getElementDescendants(node, options).prepend(node);
 }
@@ -471,8 +471,8 @@ export interface TextGroupOptions&lt;N extends Node = Node&gt; {
 }
 &nbsp;
 const defaultTextOptions: TextGroupOptions&lt;any&gt; = {
-  startsGroup: (node): node is any =&gt; false,
-  getLabel: <span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >"",</span>
+  startsGroup: <span class="fstat-no" title="function not covered" >(n</span>ode): node is any =&gt; false,
+  getLabel: <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >"</span>",</span>
 };
 &nbsp;
 /**
@@ -489,9 +489,9 @@ const defaultTextOptions: TextGroupOptions&lt;any&gt; = {
  * @public
  */
 export function getTextDescendants&lt;N extends Node = Node&gt;(
-  textOptions: TextGroupOptions&lt;N&gt; = defaultTextOptions,
+  textOptions: TextGroupOptions&lt;N&gt; = <span class="branch-0 cbranch-no" title="branch not covered" >defaultTextOptions,</span>
 ): (node: Node, options?: Node.Traversal) =&gt; Sequence&lt;Text | TextGroup&gt; {
-  return (node, options = BaseNode.Traversal.empty) =&gt; {
+  return (node, options = <span class="branch-0 cbranch-no" title="branch not covered" >BaseNode.Traversal.empty) =&gt; {</span>
     const optionsMap = _textCache
       .get(textOptions, Cache.empty)
       .get(node, () =&gt; []);
@@ -511,7 +511,7 @@ function* _getTextDescendants&lt;N extends Node = Node&gt;(
   textOptions: TextGroupOptions&lt;N&gt;,
   traversalOptions: Node.Traversal,
 ): Generator&lt;Text | TextGroup&gt; {
-  const { startsGroup, getLabel } = textOptions;
+  const { startsGroup, getLabel } = <span class="cstat-no" title="statement not covered" >textOptions;</span>
 &nbsp;
   for (const child of node.children(traversalOptions)) {
     if (startsGroup(child)) {
@@ -535,7 +535,7 @@ function* _getTextDescendants&lt;N extends Node = Node&gt;(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

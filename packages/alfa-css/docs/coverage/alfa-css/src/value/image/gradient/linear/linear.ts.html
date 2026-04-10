@@ -30,16 +30,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.18% </span>
+                <span class="strong">27.27% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/22</span>
+                <span class='fraction'>6/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">45.71% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>16/35</span>
+                <span class='fraction'>14/35</span>
             </div>
         
             
@@ -253,7 +253,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -360,41 +360,41 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -415,15 +415,15 @@ import {
   Comma,
   Function,
   type Parser as CSSParser,
-} from "../../../../syntax/index.js";
-import type { PartiallyResolvable, Resolvable } from "../../../resolvable.js";
+} from "../../../../syntax/index.ts";
+import type { PartiallyResolvable, Resolvable } from "../../../resolvable.ts";
 &nbsp;
-import { Value } from "../../../value.js";
+import { Value } from "../../../value.ts";
 &nbsp;
-import { Item } from "../item/index.js";
+import { Item } from "../item/index.ts";
 &nbsp;
-import { Direction } from "./direction.js";
-import { Side } from "./side.js";
+import { Direction } from "./direction.ts";
+import { Side } from "./side.ts";
 &nbsp;
 const { map, pair, option, left } = Parser;
 &nbsp;
@@ -450,7 +450,7 @@ export class Linear&lt;I extends Item = Item, D extends Direction = Direction&gt
   private readonly _items: Array&lt;I&gt;;
   private readonly _repeats: boolean;
 &nbsp;
-  protected constructor(direction: D, items: Array&lt;I&gt;, repeats: boolean) {
+<span class="fstat-no" title="function not covered" >  protected constructor(d</span>irection: D, items: Array&lt;I&gt;, repeats: boolean) {
     super("gradient", Value.hasCalculation(direction, ...items));
     this._direction = direction;
     this._items = items;
@@ -517,7 +517,7 @@ export class Linear&lt;I extends Item = Item, D extends Direction = Direction&gt
 <span class="cstat-no" title="statement not covered" >    hash.writeUint32(this._items.length).writeBoolean(this._repeats);</span>
   }
 &nbsp;
-  public toJSON(): Linear.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Linear.JSON {
     return {
       ...super.toJSON(),
       kind: "linear",
@@ -586,7 +586,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:29.267Z
+                at 2026-04-10T09:29:45.085Z
             </div>
         <script src="../../../../../../prettify.js"></script>
         <script>

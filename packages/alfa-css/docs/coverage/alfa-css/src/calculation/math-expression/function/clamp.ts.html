@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">89.28% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>48/56</span>
+                <span class='fraction'>50/56</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">69.44% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>27/36</span>
+                <span class='fraction'>25/36</span>
             </div>
         
             
@@ -235,12 +235,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -344,16 +344,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
 <span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
 <span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -362,7 +362,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Real } from "@siteimprove/alfa-math";
@@ -374,17 +374,17 @@ import {
   Function as CSSFunction,
   type Parser as CSSParser,
   Token,
-} from "../../../syntax/index.js";
+} from "../../../syntax/index.ts";
 &nbsp;
-import { Unit } from "../../../unit/index.js";
+import { Unit } from "../../../unit/index.ts";
 &nbsp;
-import { Angle, Length, Number, type Numeric } from "../../numeric/index.js";
+import { Angle, Length, Number, type Numeric } from "../../numeric/index.ts";
 &nbsp;
-import { Expression } from "../expression.js";
-import type { Kind } from "../kind.js";
-import { Value } from "../value.js";
+import { Expression } from "../expression.ts";
+import type { Kind } from "../kind.ts";
+import { Value } from "../value.ts";
 &nbsp;
-import { Function } from "./function.js";
+import { Function } from "./function.ts";
 &nbsp;
 const { isAngle } = Angle;
 const { isLength } = Length;
@@ -408,7 +408,7 @@ export class Clamp extends Function&lt;
     max: Expression,
   ): Result&lt;Clamp, string&gt; {
     // {@see https://drafts.csswg.org/css-values/#determine-the-type-of-a-calculation}
-    const kind = <span class="cstat-no" title="statement not covered" >[min, value, max].reduce(</span>
+    const kind = [min, value, max].reduce(
       (old, cur) =&gt; old.flatMap((kind) =&gt; kind.add(cur.kind)),
       Result.of&lt;Kind, string&gt;(min.kind),
     );
@@ -416,7 +416,7 @@ export class Clamp extends Function&lt;
     return kind.map((kind) =&gt; new Clamp(min, value, max, kind));
   }
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     min: Expression,
     value: Expression,
     max: Expression,
@@ -437,13 +437,13 @@ export class Clamp extends Function&lt;
 <span class="cstat-no" title="statement not covered" >    return this._args[2];</span>
   }
 &nbsp;
-  public reduce&lt;
+  public <span class="fstat-no" title="function not covered" >reduce&lt;</span>
     L extends Unit.Length = Unit.Length.Canonical,
     P extends Numeric = Numeric,
   &gt;(resolver: Expression.Resolver&lt;L, P&gt;): Expression {
     // We know from the guard in Clamp.of that all args have the same kind.
 &nbsp;
-    const reduced = <span class="cstat-no" title="statement not covered" >Tuple.map(this._args, (expr) =&gt; expr.reduce(resolver));</span>
+    const reduced = Tuple.map(this._args, (expr) =&gt; expr.reduce(resolver));
 &nbsp;
     if (Tuple.every(reduced, isValueExpression)) {
       const values = reduced.map((expr) =&gt; expr.value);
@@ -523,7 +523,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:29.267Z
+                at 2026-04-10T09:29:45.085Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.45% </span>
+                <span class="strong">77.02% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>47/57</span>
+                <span class='fraction'>57/74</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">65% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/12</span>
+                <span class='fraction'>13/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.37% </span>
+                <span class="strong">43.83% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>29/37</span>
+                <span class='fraction'>32/73</span>
             </div>
         
             
@@ -534,20 +534,20 @@ export interface Node&lt;T&gt; extends Functor&lt;T&gt;, Iterable&lt;T&gt;, Equa
 /**
  * @internal
  */
-export namespace Node {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Node {</span>
   export const Bits = 5;
 &nbsp;
   export const Capacity = bit(Bits);
 &nbsp;
-  export function fragment(index: number, shift: number): number {
+  export function <span class="cstat-no" title="statement not covered" >fragment(index: number, shift: number): number {</span>
     return take(skip(index, shift), Bits);
   }
 &nbsp;
-  export function overflow(shift: number): number {
+  export function <span class="cstat-no" title="statement not covered" >overflow(shift: number): number {</span>
     return Capacity &lt;&lt; (shift - Bits);
   }
 &nbsp;
-  export function underflow(shift: number): number {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >underflow(</span>shift: number): number {</span>
     return Capacity &lt;&lt; (shift - Bits * 2);
   }
 }
@@ -561,70 +561,70 @@ export interface Empty extends Node&lt;never&gt; {}
  * @internal
  */
 export const Empty: Empty = new (class Empty {
-  public isEmpty(): this is Empty {
+  public <span class="fstat-no" title="function not covered" >isEmpty(</span>): this is Empty {
     return true;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isLeaf(</span>): this is Leaf&lt;never&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isLeaf(</span>): this is Leaf&lt;never&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >get(</span>): None {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >get(</span>): None {</span>
 <span class="cstat-no" title="statement not covered" >    return None;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >set(</span>): Empty {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >set(</span>): Empty {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public map(): Empty {
+  public <span class="fstat-no" title="function not covered" >map(</span>): Empty {
     return this;
   }
 &nbsp;
-  public equals(value: unknown): value is this {
+  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
     return value instanceof Empty;
   }
 &nbsp;
-  public *[Symbol.iterator](): Iterator&lt;never&gt; {}
+  public *[<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;never&gt; {}
 })();
 &nbsp;
 /**
  * @internal
  */
 export class Leaf&lt;T&gt; implements Node&lt;T&gt; {
-  public static of&lt;T&gt;(values: Array&lt;T&gt;): Leaf&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T&gt;(values: Array&lt;T&gt;): Leaf&lt;T&gt; {
     return new Leaf(values);
   }
 &nbsp;
   private readonly _values: Array&lt;T&gt;;
 &nbsp;
-  protected constructor(values: Array&lt;T&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(v</span>alues: Array&lt;T&gt;) {
     this._values = values;
   }
 &nbsp;
-  public get values(): Array&lt;T&gt; {
+  public get <span class="fstat-no" title="function not covered" >values(</span>): Array&lt;T&gt; {
     return this._values;
   }
 &nbsp;
-  public isEmpty(): this is Empty {
+  public <span class="fstat-no" title="function not covered" >isEmpty(</span>): this is Empty {
     return false;
   }
 &nbsp;
-  public isLeaf(): this is Leaf&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >isLeaf(</span>): this is Leaf&lt;T&gt; {
     return true;
   }
 &nbsp;
-  public hasCapacity(): boolean {
+  public <span class="fstat-no" title="function not covered" >hasCapacity(</span>): boolean {
     return this._values.length &lt; Node.Capacity;
   }
 &nbsp;
-  public get(index: number): Option&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >get(</span>index: number): Option&lt;T&gt; {
     const fragment = take(index, Node.Bits);
 &nbsp;
     return Option.of(this._values[fragment]);
   }
 &nbsp;
-  public set(index: number, value: T): Leaf&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >set(</span>index: number, value: T): Leaf&lt;T&gt; {
     const fragment = take(index, Node.Bits);
 &nbsp;
     if (Equatable.equals(value, this._values[fragment])) {
@@ -638,12 +638,12 @@ export class Leaf&lt;T&gt; implements Node&lt;T&gt; {
     return Leaf.of(values);
   }
 &nbsp;
-  public map&lt;U&gt;(mapper: Mapper&lt;T, U&gt;): Leaf&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U&gt;): Leaf&lt;U&gt; {
     return Leaf.of(this._values.map(mapper));
   }
 &nbsp;
-  public equals(value: unknown): value is this {
-    return (
+  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+<span class="cstat-no" title="statement not covered" >    return (</span>
       value instanceof Leaf &amp;&amp;
       value._values.length === this._values.length &amp;&amp;
       value._values.every((value, i) =&gt;
@@ -652,7 +652,7 @@ export class Leaf&lt;T&gt; implements Node&lt;T&gt; {
     );
   }
 &nbsp;
-  public *[Symbol.iterator](): Iterator&lt;T&gt; {
+  public *[<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;T&gt; {
     yield* this._values;
   }
 }
@@ -661,43 +661,43 @@ export class Leaf&lt;T&gt; implements Node&lt;T&gt; {
  * @internal
  */
 export class Branch&lt;T&gt; implements Node&lt;T&gt; {
-  public static of&lt;T&gt;(nodes: Array&lt;Branch&lt;T&gt; | Leaf&lt;T&gt;&gt;): Branch&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T&gt;(nodes: Array&lt;Branch&lt;T&gt; | Leaf&lt;T&gt;&gt;): Branch&lt;T&gt; {
     return new Branch(nodes);
   }
 &nbsp;
-  public static empty&lt;T&gt;(): Branch&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >empty&lt;</span>T&gt;(): Branch&lt;T&gt; {
     return new Branch([]);
   }
 &nbsp;
   private readonly _nodes: Array&lt;Branch&lt;T&gt; | Leaf&lt;T&gt;&gt;;
 &nbsp;
-  protected constructor(nodes: Array&lt;Branch&lt;T&gt; | Leaf&lt;T&gt;&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(n</span>odes: Array&lt;Branch&lt;T&gt; | Leaf&lt;T&gt;&gt;) {
     this._nodes = nodes;
   }
 &nbsp;
-  public get nodes(): Array&lt;Branch&lt;T&gt; | Leaf&lt;T&gt;&gt; {
+  public get <span class="fstat-no" title="function not covered" >nodes(</span>): Array&lt;Branch&lt;T&gt; | Leaf&lt;T&gt;&gt; {
     return this._nodes;
   }
 &nbsp;
-  public isEmpty(): this is Empty {
+  public <span class="fstat-no" title="function not covered" >isEmpty(</span>): this is Empty {
     return false;
   }
 &nbsp;
-  public isLeaf(): this is Leaf&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >isLeaf(</span>): this is Leaf&lt;T&gt; {
     return false;
   }
 &nbsp;
-  public clone(): Branch&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >clone(</span>): Branch&lt;T&gt; {
     return Branch.of(this._nodes.slice(0));
   }
 &nbsp;
-  public get(index: number, shift: number): Option&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >get(</span>index: number, shift: number): Option&lt;T&gt; {
     const fragment = Node.fragment(index, shift);
 &nbsp;
     return this._nodes[fragment].get(index, shift - Node.Bits);
   }
 &nbsp;
-  public set(index: number, value: T, shift: number): Branch&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >set(</span>index: number, value: T, shift: number): Branch&lt;T&gt; {
     const fragment = Node.fragment(index, shift);
 &nbsp;
     const node = this._nodes[fragment].set(index, value, shift - Node.Bits);
@@ -713,23 +713,23 @@ export class Branch&lt;T&gt; implements Node&lt;T&gt; {
     return Branch.of(nodes);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U&gt;): Branch&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(m</span>apper: Mapper&lt;T, U&gt;): Branch&lt;U&gt; {
 <span class="cstat-no" title="statement not covered" >    return Branch.of(</span>
       this._nodes.map(
-<span class="fstat-no" title="function not covered" >        (n</span>ode) =&gt; (<span class="cstat-no" title="statement not covered" >node as Node&lt;T&gt;).map(mapper) as Branch&lt;U&gt; | Leaf&lt;U&gt;,</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >        (n</span></span>ode) =&gt; (<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >node as Node&lt;T&gt;).map(mapper) as Branch&lt;U&gt; | Leaf&lt;U&gt;,</span></span>
       ),
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Branch &amp;&amp;
       value._nodes.length === this._nodes.length &amp;&amp;
       value._nodes.every(<span class="fstat-no" title="function not covered" >(n</span>ode, i) =&gt; <span class="cstat-no" title="statement not covered" >node.equals(this._nodes[i]))</span>
     );
   }
 &nbsp;
-  public *[<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;T&gt; {
+  public *[<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.iterator]</span></span>(): Iterator&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    for (const node of this._nodes) {</span>
 <span class="cstat-no" title="statement not covered" >      yield* node;</span>
     }
@@ -742,7 +742,7 @@ export class Branch&lt;T&gt; implements Node&lt;T&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:41.222Z
+                at 2026-04-10T09:29:57.321Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

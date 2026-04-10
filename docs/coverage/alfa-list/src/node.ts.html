@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.96% </span>
+                <span class="strong">86.48% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>49/57</span>
+                <span class='fraction'>64/74</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">65% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/12</span>
+                <span class='fraction'>13/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.08% </span>
+                <span class="strong">71.23% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>30/37</span>
+                <span class='fraction'>52/73</span>
             </div>
         
             
@@ -315,15 +315,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">278x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">278x</span>
+<span class="cline-any cline-yes">277x</span>
 <span class="cline-any cline-yes">24978x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">278x</span>
+<span class="cline-any cline-yes">277x</span>
 <span class="cline-any cline-yes">6273x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">278x</span>
+<span class="cline-any cline-yes">277x</span>
 <span class="cline-any cline-yes">3123x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -369,13 +369,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">306996x</span>
+<span class="cline-any cline-yes">306995x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">306996x</span>
+<span class="cline-any cline-yes">306995x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -547,7 +547,7 @@ export namespace Node {
     return Capacity &lt;&lt; (shift - Bits);
   }
 &nbsp;
-  export function underflow(shift: number): number {
+  export function <span class="fstat-no" title="function not covered" >underflow(</span>shift: number): number {
     return Capacity &lt;&lt; (shift - Bits * 2);
   }
 }
@@ -565,19 +565,19 @@ export const Empty: Empty = new (class Empty {
     return true;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isLeaf(</span>): this is Leaf&lt;never&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isLeaf(</span>): this is Leaf&lt;never&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >get(</span>): None {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >get(</span>): None {</span>
 <span class="cstat-no" title="statement not covered" >    return None;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >set(</span>): Empty {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >set(</span>): Empty {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public map(): Empty {
+  public <span class="fstat-no" title="function not covered" >map(</span>): Empty {
     return this;
   }
 &nbsp;
@@ -638,7 +638,7 @@ export class Leaf&lt;T&gt; implements Node&lt;T&gt; {
     return Leaf.of(values);
   }
 &nbsp;
-  public map&lt;U&gt;(mapper: Mapper&lt;T, U&gt;): Leaf&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U&gt;): Leaf&lt;U&gt; {
     return Leaf.of(this._values.map(mapper));
   }
 &nbsp;
@@ -679,25 +679,25 @@ export class Branch&lt;T&gt; implements Node&lt;T&gt; {
     return this._nodes;
   }
 &nbsp;
-  public isEmpty(): this is Empty {
+  public <span class="fstat-no" title="function not covered" >isEmpty(</span>): this is Empty {
     return false;
   }
 &nbsp;
-  public isLeaf(): this is Leaf&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >isLeaf(</span>): this is Leaf&lt;T&gt; {
     return false;
   }
 &nbsp;
-  public clone(): Branch&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >clone(</span>): Branch&lt;T&gt; {
     return Branch.of(this._nodes.slice(0));
   }
 &nbsp;
-  public get(index: number, shift: number): Option&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >get(</span>index: number, shift: number): Option&lt;T&gt; {
     const fragment = Node.fragment(index, shift);
 &nbsp;
     return this._nodes[fragment].get(index, shift - Node.Bits);
   }
 &nbsp;
-  public set(index: number, value: T, shift: number): Branch&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >set(</span>index: number, value: T, shift: number): Branch&lt;T&gt; {
     const fragment = Node.fragment(index, shift);
 &nbsp;
     const node = this._nodes[fragment].set(index, value, shift - Node.Bits);
@@ -713,16 +713,16 @@ export class Branch&lt;T&gt; implements Node&lt;T&gt; {
     return Branch.of(nodes);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U&gt;): Branch&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(m</span>apper: Mapper&lt;T, U&gt;): Branch&lt;U&gt; {
 <span class="cstat-no" title="statement not covered" >    return Branch.of(</span>
       this._nodes.map(
-<span class="fstat-no" title="function not covered" >        (n</span>ode) =&gt; (<span class="cstat-no" title="statement not covered" >node as Node&lt;T&gt;).map(mapper) as Branch&lt;U&gt; | Leaf&lt;U&gt;,</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >        (n</span></span>ode) =&gt; (<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >node as Node&lt;T&gt;).map(mapper) as Branch&lt;U&gt; | Leaf&lt;U&gt;,</span></span>
       ),
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Branch &amp;&amp;
       value._nodes.length === this._nodes.length &amp;&amp;
       value._nodes.every(<span class="fstat-no" title="function not covered" >(n</span>ode, i) =&gt; <span class="cstat-no" title="statement not covered" >node.equals(this._nodes[i]))</span>
@@ -742,7 +742,7 @@ export class Branch&lt;T&gt; implements Node&lt;T&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

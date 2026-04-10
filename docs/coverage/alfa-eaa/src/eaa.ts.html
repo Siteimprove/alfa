@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>16/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">81.25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>13/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
@@ -168,25 +168,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">75x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">75x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">74x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -195,18 +195,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">75x</span>
+<span class="cline-any cline-yes">74x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">75x</span>
+<span class="cline-any cline-yes">74x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Requirement } from "@siteimprove/alfa-act";
 import { None, Option } from "@siteimprove/alfa-option";
 &nbsp;
-import { Criteria } from "./criterion/data.js";
+import { Criteria } from "./criterion/data.ts";
 &nbsp;
 /**
  * @public
@@ -228,14 +228,14 @@ export class EAA&lt;
   /**
    * The chapter of this criterion.
    */
-  public get chapter(): C {
+  public get <span class="fstat-no" title="function not covered" >chapter(</span>): C {
     return this._chapter;
   }
 &nbsp;
   /**
    * The title of this criterion.
    */
-  public get title(): EAA.Title&lt;C&gt; {
+  public get <span class="fstat-no" title="function not covered" >title(</span>): EAA.Title&lt;C&gt; {
     return Criteria[this._chapter].title;
   }
 }
@@ -243,7 +243,7 @@ export class EAA&lt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >EAA {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >EAA {</span></span>
   export interface JSON&lt;C extends EAA.Chapter = EAA.Chapter&gt;
     extends Requirement.JSON&lt;"eaa"&gt; {
     chapter: C;
@@ -269,7 +269,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >E
     return value instanceof EAA;
   }
 &nbsp;
-  export function fromChapter(chapter: string): Option&lt;EAA&gt; {
+  export function <span class="fstat-no" title="function not covered" >fromChapter(</span>chapter: string): Option&lt;EAA&gt; {
     return isChapter(chapter) ? Option.of(EAA.of(chapter)) : None;
   }
 }
@@ -280,7 +280,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >E
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

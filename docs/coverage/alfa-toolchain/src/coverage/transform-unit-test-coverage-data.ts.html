@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">68.42% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>18/21</span>
+                <span class='fraction'>26/38</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/6</span>
+                <span class='fraction'>4/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">52.94% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/9</span>
+                <span class='fraction'>9/17</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -286,10 +286,7 @@
 <a name='L221'></a><a href='#L221'>221</a>
 <a name='L222'></a><a href='#L222'>222</a>
 <a name='L223'></a><a href='#L223'>223</a>
-<a name='L224'></a><a href='#L224'>224</a>
-<a name='L225'></a><a href='#L225'>225</a>
-<a name='L226'></a><a href='#L226'>226</a>
-<a name='L227'></a><a href='#L227'>227</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L224'></a><a href='#L224'>224</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -366,7 +363,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">24x</span>
@@ -388,7 +384,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -399,7 +394,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -563,15 +557,15 @@ export const destinationPath = path.join("docs", "coverage");
  *
  * @internal
  */
-export function <span class="fstat-no" title="function not covered" >toCoverageData(</span>[pkg, summary]: [
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toCoverageData(</span>[</span>pkg, summary]: [
   pkg: Package,
   summary?: CoverageSummary,
 ]): Option&lt;CoverageData&gt; {
   // We still use nullish coalescing in case something went wrong and
   // the type assertion when reading the file was incorrect.
-  const coverage = <span class="cstat-no" title="statement not covered" >summary?.total?.lines?.pct;</span>
+  const coverage = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >summary?.total?.lines?.pct;</span></span>
 <span class="cstat-no" title="statement not covered" >  return Option.from(typeof coverage === "number" ? coverage : undefined).map(</span>
-<span class="fstat-no" title="function not covered" >    (c</span>ov) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >    (c</span></span>ov) =&gt; (<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >{</span></span>
       name: pkg.packageJson.name,
       relativePath: pkg.relativeDir,
       lineCoverage: cov,
@@ -588,9 +582,8 @@ export function <span class="fstat-no" title="function not covered" >toCoverageD
  * another location.
  *
  * @internal
- * @knipignore used in tests
  */
-export function toLink(name: string, relativePath: string) {
+export function <span class="fstat-no" title="function not covered" >toLink(</span>name: string, relativePath: string) {
   // We need to go up the destination path, and then down the relative path before
   // finally finding the report.
   const upPath = destinationPath
@@ -612,9 +605,8 @@ export function toLink(name: string, relativePath: string) {
  * This adds classnames according to watermarks.
  *
  * @internal
- * @knipignore used in tests
  */
-export function toTableRow({ name, relativePath, lineCoverage }: CoverageData) {
+export function <span class="fstat-no" title="function not covered" >toTableRow(</span>{ name, relativePath, lineCoverage }: CoverageData) {
   const getClass = (coverage: number) =&gt;
     coverage &gt;= 85
       ? "high"
@@ -624,7 +616,7 @@ export function toTableRow({ name, relativePath, lineCoverage }: CoverageData) {
         ? "medium"
         : "low";
 &nbsp;
-  return `    &lt;tr class="${getClass(lineCoverage)}"&gt;
+<span class="cstat-no" title="statement not covered" >  return `    &lt;tr class="${getClass(lineCoverage)}"&gt;</span>
       &lt;td&gt;${toLink(name, relativePath)}&lt;/td&gt;
       &lt;td style="text-align: right;"&gt;${lineCoverage
         .toFixed(2)
@@ -636,10 +628,9 @@ export function toTableRow({ name, relativePath, lineCoverage }: CoverageData) {
  * Turns an array of coverage data into an HTML table.
  *
  * @internal
- * @knipignore used in tests
  */
-export function toHtmlTable(data: Array&lt;CoverageData&gt;): string {
-  const header = `&lt;table&gt;
+export function <span class="fstat-no" title="function not covered" >toHtmlTable(</span>data: Array&lt;CoverageData&gt;): string {
+  const header = <span class="cstat-no" title="statement not covered" >`&lt;table&gt;</span>
   &lt;thead&gt;
     &lt;tr&gt;
       &lt;th&gt;Package&lt;/th&gt;
@@ -649,7 +640,7 @@ export function toHtmlTable(data: Array&lt;CoverageData&gt;): string {
   &lt;tbody&gt;
 `;
   const rows = data.map(toTableRow).join("\n");
-  const footer = `
+  const footer = <span class="cstat-no" title="statement not covered" >`</span>
   &lt;/tbody&gt;
 &lt;/table&gt;`;
   return header + rows + footer;
@@ -660,12 +651,12 @@ export function toHtmlTable(data: Array&lt;CoverageData&gt;): string {
  *
  * @internal
  */
-export function toHtml(data: Array&lt;CoverageData&gt;): string {
+export function <span class="fstat-no" title="function not covered" >toHtml(</span>data: Array&lt;CoverageData&gt;): string {
   // The colors are stolen from Vitest `base.css`.
   // We could probably try and reuse more styling and scripting from vitest
   // reports, especially since we live in the same directory.
 &nbsp;
-  const style = `&lt;style&gt;
+  const style = <span class="cstat-no" title="statement not covered" >`&lt;style&gt;</span>
     body {
       margin: 2rem;
     }
@@ -703,14 +694,14 @@ export function toHtml(data: Array&lt;CoverageData&gt;): string {
     }
   &lt;/style&gt;`;
 &nbsp;
-  const head = `&lt;head&gt;
+  const head = <span class="cstat-no" title="statement not covered" >`&lt;head&gt;</span>
   &lt;meta charset="UTF-8"&gt;
   &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
   &lt;title&gt;Alfa Packages Unit Test Coverage&lt;/title&gt;
   ${style}
 &lt;/head&gt;`;
 &nbsp;
-  const disclaimer = `&lt;div class="disclaimer"&gt;
+  const disclaimer = <span class="cstat-no" title="statement not covered" >`&lt;div class="disclaimer"&gt;</span>
   &lt;p class="warning"&gt;
     This is for internal documentation only,
     see &lt;a href="./index.html"&gt;the global coverage report&lt;/a&gt;.
@@ -730,7 +721,7 @@ export function toHtml(data: Array&lt;CoverageData&gt;): string {
   &lt;/p&gt;
 &lt;/div&gt;`;
 &nbsp;
-  return `&lt;!DOCTYPE html&gt;
+<span class="cstat-no" title="statement not covered" >  return `&lt;!DOCTYPE html&gt;</span>
 &lt;!-- Autogenerated by packages/alfa-toolchain/src/coverage/gather-unit-test-coverage.ts, do not edit directly. --&gt;
 &lt;html lang="en"&gt;
 ${head}
@@ -748,7 +739,7 @@ ${head}
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

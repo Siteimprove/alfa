@@ -30,16 +30,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">84.21% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>19/19</span>
+                <span class='fraction'>16/19</span>
             </div>
         
             
@@ -214,26 +214,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">95x</span>
-<span class="cline-any cline-yes">95x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">40x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -243,6 +228,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">38x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -260,7 +260,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">76x</span>
-<span class="cline-any cline-yes">76x</span>
+<span class="cline-any cline-yes">69x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">69x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -306,9 +306,9 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
 &nbsp;
-import { hasComputedStyle } from "../../element/predicate/has-computed-style.js";
-import { Longhands } from "../../longhands.js";
-import { Style } from "../../style.js";
+import { hasComputedStyle } from "../../element/predicate/has-computed-style.ts";
+import { Longhands } from "../../longhands.ts";
+import { Style } from "../../style.ts";
 &nbsp;
 const { or, test } = Predicate;
 &nbsp;
@@ -326,9 +326,9 @@ const cache = Cache.empty&lt;Device, Cache&lt;Context, Cache&lt;Text, boolean&gt
  *
  * @internal
  */
-export function hasSameForegroundAsBackground(
+export function <span class="fstat-no" title="function not covered" >hasSameForegroundAsBackground(</span>
   device: Device,
-  context: Context = <span class="branch-0 cbranch-no" title="branch not covered" >Context.empty(),</span>
+  context: Context = Context.empty(),
 ): Predicate&lt;Text&gt; {
   return (text) =&gt;
     cache
@@ -372,9 +372,9 @@ export function hasSameForegroundAsBackground(
       );
 }
 &nbsp;
-function hasNonColorBackgroundProperty(
+function <span class="fstat-no" title="function not covered" >hasNonColorBackgroundProperty(</span>
   device: Device,
-  context: Context = <span class="branch-0 cbranch-no" title="branch not covered" >Context.empty(),</span>
+  context: Context = Context.empty(),
 ): Predicate&lt;Element&gt; {
   return (element) =&gt; {
     const style = Style.from(element, device, context);
@@ -405,9 +405,9 @@ function hasNonColorBackgroundProperty(
   };
 }
 &nbsp;
-function hasNonTransparentBackgroundColor(
+function <span class="fstat-no" title="function not covered" >hasNonTransparentBackgroundColor(</span>
   device: Device,
-  context: Context = <span class="branch-0 cbranch-no" title="branch not covered" >Context.empty(),</span>
+  context: Context = Context.empty(),
 ): Predicate&lt;Element&gt; {
   return (element) =&gt;
     !Color.isTransparent(
@@ -421,7 +421,7 @@ function hasNonTransparentBackgroundColor(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:36:22.122Z
+                at 2026-04-10T09:31:34.530Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

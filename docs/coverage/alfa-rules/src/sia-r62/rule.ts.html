@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">97.94% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>129/129</span>
+                <span class='fraction'>191/195</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">98.3% </span>
+                <span class="strong">98.88% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>58/59</span>
+                <span class='fraction'>89/90</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">96% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>56/56</span>
+                <span class='fraction'>96/100</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>127/127</span>
+                <span class='fraction'>128/128</span>
             </div>
         
             
@@ -845,7 +845,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">50x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46x</span>
 <span class="cline-any cline-yes">46x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1072,7 +1072,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">223x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">22x</span>
@@ -1379,16 +1379,16 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 &nbsp;
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/expectation.ts";
 &nbsp;
-import { Contrast } from "../common/diagnostic/contrast.js";
+import { Contrast } from "../common/diagnostic/contrast.ts";
 &nbsp;
-import { getForeground } from "../common/dom/get-colors.js";
-import { contrast } from "../common/expectation/contrast.js";
+import { getForeground } from "../common/dom/get-colors.ts";
+import { contrast } from "../common/expectation/contrast.ts";
 &nbsp;
-import { Scope, Stability, Version } from "../tags/index.js";
+import { Scope, Stability, Version } from "../tags/index.ts";
 &nbsp;
-import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics.js";
+import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics.ts";
 &nbsp;
 const { hasRole } = DOM;
 const { isElement } = Element;
@@ -1413,7 +1413,7 @@ export default Rule.Atomic.of&lt;Page, Element&gt;({
   uri: "https://alfa.siteimprove.com/rules/sia-r62",
   requirements: [Criterion.of("1.4.1"), EAA.of("9.1.4.1")],
   tags: [Scope.Component, Stability.Stable, Version.of(2)],
-  evaluate({ device, document }) {
+<span class="fstat-no" title="function not covered" >  evaluate(</span>{ device, document }) {
     // Contains links (key) and their containing paragraph (value)
     let containers: Map&lt;Element, Element&gt; = Map.empty();
 &nbsp;
@@ -1649,7 +1649,7 @@ export default Rule.Atomic.of&lt;Page, Element&gt;({
 /**
  * @public
  */
-export namespace Outcomes {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Outcomes {</span>
   // We could tweak typing to ensure that isDistinguishable only accepts Ok and
   // that isNotDistinguishable has at least one Err.
   // This would requires changing the expectation since it does not refine
@@ -1685,7 +1685,7 @@ export namespace Outcomes {
 &nbsp;
 const hasNonLinkTextCache = Cache.empty&lt;Element, boolean&gt;();
 &nbsp;
-function hasNonLinkText(device: Device): Predicate&lt;Element&gt; {
+function <span class="fstat-no" title="function not covered" >hasNonLinkText(</span>device: Device): Predicate&lt;Element&gt; {
   return function hasNonLinkText(element) {
     return hasNonLinkTextCache.get(element, () =&gt; {
       //  If we are already below a link, escape.
@@ -1733,8 +1733,8 @@ function hasNonLinkText(device: Device): Predicate&lt;Element&gt; {
   };
 }
 &nbsp;
-namespace Distinguishable {
-  export function isDistinguishable(
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >namespace D</span>istinguishable {</span>
+  export function <span class="cstat-no" title="statement not covered" >isDistinguishable(</span>
     container: Element,
     target: Element,
     device: Device,
@@ -1874,7 +1874,7 @@ namespace Distinguishable {
     };
   }
 &nbsp;
-  export function getPairwiseContrast(
+  export function <span class="cstat-no" title="statement not covered" >getPairwiseContrast(</span>
     container: Element,
     link: Element,
     device: Device,
@@ -2008,7 +2008,7 @@ namespace Distinguishable {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

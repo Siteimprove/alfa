@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">34.21% </span>
+                <span class="strong">30% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/38</span>
+                <span class='fraction'>15/50</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/12</span>
+                <span class='fraction'>4/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.53% </span>
+                <span class="strong">32.69% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/26</span>
+                <span class='fraction'>17/52</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">34.21% </span>
+                <span class="strong">37.5% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>13/38</span>
+                <span class='fraction'>15/40</span>
             </div>
         
             
@@ -294,7 +294,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -410,7 +410,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -465,7 +465,7 @@ import { Option, None } from "@siteimprove/alfa-option";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { Expression } from "./expression.js";
+import { Expression } from "./expression.ts";
 &nbsp;
 /**
  * @public
@@ -475,21 +475,21 @@ export class Builder&lt;T extends Expression = Expression&gt;
 {
   public readonly expression: T;
 &nbsp;
-<span class="fstat-no" title="function not covered" >  public constructor(e</span>xpression: T) {
+<span class="fstat-no" title="function not covered" >  public <span class="fstat-no" title="function not covered" >constructor(e</span></span>xpression: T) {
 <span class="cstat-no" title="statement not covered" >    this.expression = expression;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Builder &amp;&amp; value.expression.equals(this.expression);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Builder.JSON {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): Builder.JSON {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       expression: this.expression.toJSON(),
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `${this.expression}`;</span>
   }
 }
@@ -497,7 +497,7 @@ export class Builder&lt;T extends Expression = Expression&gt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Builder {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >B</span>uilder {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     expression: Expression.JSON;
@@ -507,40 +507,40 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >B
     Base: new (expression: T) =&gt; Builder&lt;T&gt;,
   ) {
     return class PathOperand extends Base {
-      public <span class="fstat-no" title="function not covered" >child(</span>name?: string): Path {
+      public <span class="fstat-no" title="function not covered" >child(n</span>ame?: string): Path {
 <span class="cstat-no" title="statement not covered" >        return step(this, axis.child(name));</span>
       }
 &nbsp;
-      public <span class="fstat-no" title="function not covered" >parent(</span>name?: string): Path {
+      public <span class="fstat-no" title="function not covered" >parent(n</span>ame?: string): Path {
 <span class="cstat-no" title="statement not covered" >        return step(this, axis.parent(name));</span>
       }
 &nbsp;
-      public <span class="fstat-no" title="function not covered" >descendant(</span>name?: string): Path {
+      public <span class="fstat-no" title="function not covered" >descendant(n</span>ame?: string): Path {
 <span class="cstat-no" title="statement not covered" >        return step(this, axis.descendant(name));</span>
       }
 &nbsp;
-      public <span class="fstat-no" title="function not covered" >ancestor(</span>name?: string): Path {
+      public <span class="fstat-no" title="function not covered" >ancestor(n</span>ame?: string): Path {
 <span class="cstat-no" title="statement not covered" >        return step(this, axis.ancestor(name));</span>
       }
 &nbsp;
-      public <span class="fstat-no" title="function not covered" >attribute(</span>name?: string): Path {
+      public <span class="fstat-no" title="function not covered" >attribute(n</span>ame?: string): Path {
 <span class="cstat-no" title="statement not covered" >        return step(this, axis.attribute(name));</span>
       }
     };
   }
 &nbsp;
-  export class ContextItem extends PathOperand&lt;Expression.ContextItem&gt;(
+  export class <span class="cstat-no" title="statement not covered" >ContextItem extends PathOperand&lt;Expression.ContextItem&gt;(</span>
     Builder,
   ) {
-    public <span class="fstat-no" title="function not covered" >where(</span>predicate: Builder): Filter {
+    public <span class="fstat-no" title="function not covered" >where(p</span>redicate: Builder): Filter {
 <span class="cstat-no" title="statement not covered" >      return new Filter(</span>
         Expression.Filter.of(this.expression, [predicate.expression]),
       );
     }
   }
 &nbsp;
-  export class Filter extends PathOperand&lt;Expression.Filter&gt;(Builder) {
-    public <span class="fstat-no" title="function not covered" >where(</span>predicate: Builder): Filter {
+  export class <span class="cstat-no" title="statement not covered" >Filter extends PathOperand&lt;Expression.Filter&gt;(Builder) {</span>
+    public <span class="fstat-no" title="function not covered" >where(p</span>redicate: Builder): Filter {
 <span class="cstat-no" title="statement not covered" >      return new Filter(</span>
         Expression.Filter.of(this.expression.base, [
           ...this.expression.predicates,
@@ -550,8 +550,8 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >B
     }
   }
 &nbsp;
-  export class Axis extends PathOperand&lt;Expression.Axis&gt;(Builder) {
-    public <span class="fstat-no" title="function not covered" >where(</span>predicate: Builder): Axis {
+  export class <span class="cstat-no" title="statement not covered" >Axis extends PathOperand&lt;Expression.Axis&gt;(Builder) {</span>
+    public <span class="fstat-no" title="function not covered" >where(p</span>redicate: Builder): Axis {
 <span class="cstat-no" title="statement not covered" >      return new Axis(</span>
         Expression.Axis.of(this.expression.axis, this.expression.test, [
           ...this.expression.predicates,
@@ -561,8 +561,8 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >B
     }
   }
 &nbsp;
-  export class Path extends PathOperand&lt;Expression.Path&gt;(Builder) {
-    public <span class="fstat-no" title="function not covered" >where(</span>predicate: Builder): Path {
+  export class <span class="cstat-no" title="statement not covered" >Path extends PathOperand&lt;Expression.Path&gt;(Builder) {</span>
+    public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >where(</span>p</span>redicate: Builder): Path {
 <span class="cstat-no" title="statement not covered" >      if (</span>
         this.expression.right.type === "filter" ||
         this.expression.right.type === "axis"
@@ -591,14 +591,14 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >B
 /**
  * @public
  */
-export function <span class="fstat-no" title="function not covered" >context(</span>): Builder.ContextItem {
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >context(</span>): Builder.ContextItem {</span>
 <span class="cstat-no" title="statement not covered" >  return new Builder.ContextItem(Expression.ContextItem.of());</span>
 }
 &nbsp;
 /**
  * @public
  */
-export function <span class="fstat-no" title="function not covered" >axis(</span>axis: Expression.Axis.Type, name?: string): Builder.Axis {
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >axis(</span>a</span>xis: Expression.Axis.Type, name?: string): Builder.Axis {
 <span class="cstat-no" title="statement not covered" >  return new Builder.Axis(</span>
     Expression.Axis.of(
       axis,
@@ -613,28 +613,28 @@ export function <span class="fstat-no" title="function not covered" >axis(</span
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >axis {</span>
-  export function <span class="fstat-no" title="function not covered" >self(</span>name?: string): Builder.Axis {
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >a</span>xis {</span></span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >self(n</span>ame?: string): Builder.Axis {</span>
 <span class="cstat-no" title="statement not covered" >    return axis("self", name);</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >child(</span>name?: string): Builder.Axis {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >child(n</span>ame?: string): Builder.Axis {</span>
 <span class="cstat-no" title="statement not covered" >    return axis("child", name);</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >parent(</span>name?: string): Builder.Axis {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >parent(n</span>ame?: string): Builder.Axis {</span>
 <span class="cstat-no" title="statement not covered" >    return axis("parent", name);</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >descendant(</span>name?: string): Builder.Axis {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >descendant(n</span>ame?: string): Builder.Axis {</span>
 <span class="cstat-no" title="statement not covered" >    return axis("descendant", name);</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >ancestor(</span>name?: string): Builder.Axis {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >ancestor(n</span>ame?: string): Builder.Axis {</span>
 <span class="cstat-no" title="statement not covered" >    return axis("ancestor", name);</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >attribute(</span>name?: string): Builder.Axis {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >attribute(</span>n</span>ame?: string): Builder.Axis {</span>
 <span class="cstat-no" title="statement not covered" >    return axis("attribute", name);</span>
   }
 }
@@ -642,7 +642,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >a
 /**
  * @public
  */
-export function <span class="fstat-no" title="function not covered" >step(</span>
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >step(</span></span>
   left: Builder&lt;Expression.Step | Expression.Path&gt;,
   right: Builder&lt;Expression.Step&gt;,
 ): Builder.Path {
@@ -654,7 +654,7 @@ export function <span class="fstat-no" title="function not covered" >step(</span
 /**
  * @public
  */
-export function <span class="fstat-no" title="function not covered" >nth(</span>i: number): Builder&lt;Expression.Integer&gt; {
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >nth(</span>i</span>: number): Builder&lt;Expression.Integer&gt; {
 <span class="cstat-no" title="statement not covered" >  return new Builder(Expression.Integer.of(i));</span>
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -664,7 +664,7 @@ export function <span class="fstat-no" title="function not covered" >nth(</span>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:36:35.425Z
+                at 2026-04-10T09:31:48.278Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

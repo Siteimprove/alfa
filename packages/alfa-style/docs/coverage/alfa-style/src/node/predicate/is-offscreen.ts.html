@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.7% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>55/62</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">97.05% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>33/34</span>
+                <span class='fraction'>62/62</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>34/34</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>24/24</span>
+                <span class='fraction'>20/24</span>
             </div>
         
             
@@ -288,9 +288,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">71x</span>
+<span class="cline-any cline-yes">62x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">71x</span>
+<span class="cline-any cline-yes">62x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">62x</span>
@@ -333,7 +333,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -442,9 +442,9 @@ import type { Trilean } from "@siteimprove/alfa-trilean";
 import {
   hasComputedStyle,
   hasPositioningParent,
-} from "../../element/element.js";
+} from "../../element/element.ts";
 &nbsp;
-import { Style } from "../../style.js";
+import { Style } from "../../style.ts";
 &nbsp;
 const { isElement } = Element;
 const { abs } = Math;
@@ -456,9 +456,9 @@ const cache = Cache.empty&lt;Device, Cache&lt;Context, Cache&lt;Node, boolean&gt
 /**
  * @internal
  */
-export function isOffscreen(
+export function <span class="fstat-no" title="function not covered" >isOffscreen(</span>
   device: Device,
-  context: Context = <span class="branch-0 cbranch-no" title="branch not covered" >Context.empty(),</span>
+  context: Context = Context.empty(),
 ): Predicate&lt;Node&gt; {
   return function isOffscreen(node): boolean {
     return cache
@@ -501,11 +501,11 @@ const scrollableQuadrant = Rectangle.of(0, 0, Infinity, Infinity);
  * be scrolled to. We assume there is always a way to scroll to the bottom, but
  * we do search for explicit scroll bar on ancestors' overflow for right.
  */
-function isOnscreenLayout(element: Element, device: Device): boolean {
+function <span class="fstat-no" title="function not covered" >isOnscreenLayout(</span>element: Element, device: Device): boolean {
   // By definition, the viewport top-left corner is (0, 0).
   // We assume that most elements are on screen and order tests to try and
   // avoid unnecessarily work.
-  const extendedViewport = <span class="cstat-no" title="statement not covered" >Rectangle.of(0, 0, device.viewport.width, Infinity);</span>
+  const extendedViewport = Rectangle.of(0, 0, device.viewport.width, Infinity);
 &nbsp;
   return or(
     // At first, we check whether the element's box intersects an infinitely high
@@ -532,8 +532,8 @@ const onscreenAndScrollingCache = Cache.empty&lt;
  * Checks if an element is on the (extended) viewport and creates or inherits
  * a horizontal scrollbar to see its offscreen (to the right) content.
  */
-function isOnscreenAndScrolling(device: Device): Predicate&lt;Element&gt; {
-  const extendedViewport = <span class="cstat-no" title="statement not covered" >Rectangle.of(0, 0, device.viewport.width, Infinity);</span>
+function <span class="fstat-no" title="function not covered" >isOnscreenAndScrolling(</span>device: Device): Predicate&lt;Element&gt; {
+  const extendedViewport = Rectangle.of(0, 0, device.viewport.width, Infinity);
 &nbsp;
   return function predicate(element): boolean {
     return onscreenAndScrollingCache.get(device, Cache.empty).get(element, () =&gt;
@@ -578,12 +578,12 @@ function isOnscreenAndScrolling(device: Device): Predicate&lt;Element&gt; {
  * Content moved to the bottom simply creates scrolling on vertical pages and is
  * not considered here.
  */
-function isOffscreenFallback(style: Style): Trilean {
-  const { value: position } = <span class="cstat-no" title="statement not covered" >style.computed("position");</span>
-  const { value: left } = <span class="cstat-no" title="statement not covered" >style.computed("left");</span>
-  const { value: right } = <span class="cstat-no" title="statement not covered" >style.computed("right");</span>
-  const { value: top } = <span class="cstat-no" title="statement not covered" >style.computed("top");</span>
-  const { value: marginLeft } = <span class="cstat-no" title="statement not covered" >style.computed("margin-left");</span>
+function <span class="fstat-no" title="function not covered" >isOffscreenFallback(</span>style: Style): Trilean {
+  const { value: position } = style.computed("position");
+  const { value: left } = style.computed("left");
+  const { value: right } = style.computed("right");
+  const { value: top } = style.computed("top");
+  const { value: marginLeft } = style.computed("margin-left");
 &nbsp;
   // margin-left affects also statically positioned elements.
   // margin-left could possibly hide further sibling of the element
@@ -622,7 +622,7 @@ function isOffscreenFallback(style: Style): Trilean {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:36:22.122Z
+                at 2026-04-10T09:31:34.530Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
