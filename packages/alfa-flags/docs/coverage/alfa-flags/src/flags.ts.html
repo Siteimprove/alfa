@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.44% </span>
+                <span class="strong">92.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>51/54</span>
+                <span class='fraction'>74/80</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.84% </span>
+                <span class="strong">45.45% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/13</span>
+                <span class='fraction'>10/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92% </span>
+                <span class="strong">77.55% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>23/25</span>
+                <span class='fraction'>38/49</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.87% </span>
+                <span class="strong">94% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>46/49</span>
+                <span class='fraction'>47/50</span>
             </div>
         
             
@@ -543,7 +543,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -844,7 +844,7 @@ export class Flags&lt;
   // Same here, should be `protected`, with a getter.
   public readonly kind: K;
 &nbsp;
-  protected constructor(kind: K, value: number) {
+<span class="fstat-no" title="function not covered" >  protected constructor(k</span>ind: K, value: number) {
     this.kind = kind;
     this.value = value;
   }
@@ -852,7 +852,7 @@ export class Flags&lt;
   /**
    * Test whether a given flag is present (or set) in the set of flags
    */
-  public has(flag: F): boolean {
+  public <span class="fstat-no" title="function not covered" >has(</span>flag: F): boolean {
     // If the flag is 0, we are testing for the absence of any flag.
     // Otherwise, we are testing for the presence of the flag.
     return flag === 0 ? this.value === 0 : (this.value &amp; flag) === flag;
@@ -866,7 +866,7 @@ export class Flags&lt;
   /**
    * Adds a list of flags to the set, and return a new one.
    */
-  public add(...flags: Array&lt;F&gt;): this {
+  public <span class="fstat-no" title="function not covered" >add(</span>...flags: Array&lt;F&gt;): this {
     return new (&lt;typeof Flags&gt;this.constructor)(
       this.kind,
       this.value | Flags.reduce(...flags),
@@ -881,7 +881,7 @@ export class Flags&lt;
   /**
    * Removes a list of flags from the set, and return a new one.
    */
-  public remove(...flags: Array&lt;F&gt;): this {
+  public <span class="fstat-no" title="function not covered" >remove(</span>...flags: Array&lt;F&gt;): this {
     return new (&lt;typeof Flags&gt;this.constructor)(
       this.kind,
       this.value &amp; ~Flags.reduce(...flags),
@@ -897,21 +897,21 @@ export class Flags&lt;
   /**
    * Test whether a set of flags exactly contains the listed flags.
    */
-  public is(...flags: Array&lt;F&gt;): boolean {
+  public <span class="fstat-no" title="function not covered" >is(</span>...flags: Array&lt;F&gt;): boolean {
     return this.value === Flags.reduce(...flags);
   }
 &nbsp;
   public equals(value: Flags): boolean;
   public equals(value: unknown): value is this;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Flags &amp;&amp;
       this.kind === value.kind &amp;&amp;
       this.value === value.value
     );
   }
 &nbsp;
-  public toJSON(): Flags.JSON&lt;K&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Flags.JSON&lt;K&gt; {
     return { type: "flags", kind: this.kind, value: this.value };
   }
 }
@@ -919,14 +919,14 @@ export class Flags&lt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Flags {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >F</span>lags {</span></span>
   /**
    * Reduces a list of flags into a single number representing all of them
    * (with only the corresponding bits set to 1).
    *
    * @internal
    */
-  export function reduce(...flags: Array&lt;number&gt;): number {
+  export function <span class="cstat-no" title="statement not covered" >reduce(...flags: Array&lt;number&gt;): number {</span>
     return Array.reduce(flags, (prev: number, cur) =&gt; prev | cur, 0);
   }
 &nbsp;
@@ -1004,7 +1004,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >F
         : T[key];
   };
 &nbsp;
-  export function named&lt;K extends string, A extends Array&lt;string&gt;&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >named&lt;</span>K extends string, A extends Array&lt;string&gt;&gt;(</span>
     kind: K,
     ...flags: A
   ) {
@@ -1116,7 +1116,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >F
 &nbsp;
       public equals(value: Named): boolean;
       public equals(value: unknown): value is this;
-      public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
+      public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): boolean {
 <span class="cstat-no" title="statement not covered" >        return value instanceof Named &amp;&amp; super.equals(value);</span>
       }
 &nbsp;
@@ -1183,7 +1183,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >F
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:33.002Z
+                at 2026-04-10T09:29:48.955Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

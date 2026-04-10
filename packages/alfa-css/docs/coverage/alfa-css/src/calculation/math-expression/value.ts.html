@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.75% </span>
+                <span class="strong">68.75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>45/48</span>
+                <span class='fraction'>33/48</span>
             </div>
         
             
@@ -327,12 +327,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -489,36 +489,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1693x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-yes">1332x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-yes">117x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">699x</span>
-<span class="cline-any cline-yes">699x</span>
+<span class="cline-any cline-yes">328x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -526,7 +526,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -556,19 +556,19 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
 &nbsp;
-import { Token, type Parser as CSSParser } from "../../syntax/index.js";
-import { Unit } from "../../unit/index.js";
+import { Token, type Parser as CSSParser } from "../../syntax/index.ts";
+import { Unit } from "../../unit/index.ts";
 import {
   Angle,
   Length,
   Number,
   type Numeric,
   Percentage,
-} from "../numeric/index.js";
+} from "../numeric/index.ts";
 &nbsp;
-import { Expression } from "./expression.js";
-import type { Function } from "./function/index.js";
-import { Kind } from "./kind.js";
+import { Expression } from "./expression.ts";
+import type { Function } from "./function/index.ts";
+import { Kind } from "./kind.ts";
 &nbsp;
 const { isAngle } = Angle;
 const { isLength } = Length;
@@ -585,7 +585,7 @@ export class Value&lt;N extends Numeric = Numeric&gt; extends Expression {
     value: N,
     kindHint?: Kind,
   ): Value&lt;N&gt; {
-    const kind = <span class="cstat-no" title="statement not covered" >Selective.of(value)</span>
+    const kind = Selective.of(value)
       .if(isPercentage, () =&gt; Kind.of("percentage"))
       .if(isLength, () =&gt; Kind.of("length"))
       .if(isAngle, () =&gt; Kind.of("angle"))
@@ -597,13 +597,13 @@ export class Value&lt;N extends Numeric = Numeric&gt; extends Expression {
 &nbsp;
   private readonly _value: N;
 &nbsp;
-  protected constructor(value: N, kind: Kind) {
+<span class="fstat-no" title="function not covered" >  protected constructor(v</span>alue: N, kind: Kind) {
     super("value", kind);
 &nbsp;
     this._value = value;
   }
 &nbsp;
-  public get value(): N {
+  public get <span class="fstat-no" title="function not covered" >value(</span>): N {
     return this._value;
   }
 &nbsp;
@@ -627,7 +627,7 @@ export class Value&lt;N extends Numeric = Numeric&gt; extends Expression {
     P extends Numeric = Numeric,
   &gt;(this: Value&lt;Percentage&gt;, resolver: Expression.Resolver&lt;L, P&gt;): Value&lt;P&gt;;
 &nbsp;
-  public reduce&lt;
+  public <span class="fstat-no" title="function not covered" >reduce&lt;</span>
     L extends Unit.Length = Unit.Length.Canonical,
     P extends Numeric = Numeric,
   &gt;(resolver: Expression.Resolver&lt;L, P&gt;): Value {
@@ -647,7 +647,7 @@ export class Value&lt;N extends Numeric = Numeric&gt; extends Expression {
     ).simplify();
   }
 &nbsp;
-  public toAngle(): Result&lt;Angle, string&gt; {
+  public <span class="fstat-no" title="function not covered" >toAngle(</span>): Result&lt;Angle, string&gt; {
     if (isAngle(this._value)) {
       return Ok.of(this._value);
     }
@@ -659,7 +659,7 @@ export class Value&lt;N extends Numeric = Numeric&gt; extends Expression {
     return Err.of(`${this} is not an angle`);
   }
 &nbsp;
-  public toLength(): Result&lt;Length, string&gt; {
+  public <span class="fstat-no" title="function not covered" >toLength(</span>): Result&lt;Length, string&gt; {
     if (isLength(this.value)) {
       return Ok.of(this.value);
     }
@@ -675,7 +675,7 @@ export class Value&lt;N extends Numeric = Numeric&gt; extends Expression {
 &nbsp;
   public toNumber(this: Value&lt;Exclude&lt;Numeric, Number&gt;&gt;): Err&lt;string&gt;;
 &nbsp;
-  public toNumber(): Result&lt;Number, string&gt; {
+  public <span class="fstat-no" title="function not covered" >toNumber(</span>): Result&lt;Number, string&gt; {
     <span class="missing-if-branch" title="else path not taken" >E</span>if (isNumber(this.value)) {
       return Ok.of(this.value);
     }
@@ -683,7 +683,7 @@ export class Value&lt;N extends Numeric = Numeric&gt; extends Expression {
 <span class="cstat-no" title="statement not covered" >    return Err.of(`${this} is not a number`);</span>
   }
 &nbsp;
-  public toPercentage(): Result&lt;Percentage, string&gt; {
+  public <span class="fstat-no" title="function not covered" >toPercentage(</span>): Result&lt;Percentage, string&gt; {
     if (isPercentage(this.value)) {
       return Ok.of(this.value);
     }
@@ -695,7 +695,7 @@ export class Value&lt;N extends Numeric = Numeric&gt; extends Expression {
     return Err.of(`${this} is not a percentage`);
   }
 &nbsp;
-  public simplify(): Value {
+  public <span class="fstat-no" title="function not covered" >simplify(</span>): Value {
     return this.toAngle()
       .orElse(this.toLength.bind(this))
       .orElse(this.toPercentage.bind(this))
@@ -704,8 +704,8 @@ export class Value&lt;N extends Numeric = Numeric&gt; extends Expression {
       .getOr(this);
   }
 &nbsp;
-  public isCanonical(): boolean {
-    return (
+  public <span class="fstat-no" title="function not covered" >isCanonical(</span>): boolean {
+<span class="cstat-no" title="statement not covered" >    return (</span>
       Selective.of(this._value)
         .if(isAngle, (angle) =&gt; Unit.Angle.isCanonical(angle.unit))
         .if(isLength, (length) =&gt; Unit.Length.isCanonical(length.unit))
@@ -722,14 +722,14 @@ export class Value&lt;N extends Numeric = Numeric&gt; extends Expression {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Value &amp;&amp; value._value.equals(this._value);</span>
   }
 &nbsp;
-  public toJSON(): Value.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Value.JSON {
     return {
       type: "value",
       value: this._value.toJSON(),
     };
   }
 &nbsp;
-  public toString(): string {
+  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
     return `${this._value}`;
   }
 }
@@ -769,7 +769,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
   /**
    * {@link https://drafts.csswg.org/css-values/#typedef-calc-value}
    */
-  export function parse(
+  export function <span class="fstat-no" title="function not covered" >parse(</span>
     parseFunction: (parseSum: CSSParser&lt;Expression&gt;) =&gt; CSSParser&lt;Function&gt;,
     parseSum: CSSParser&lt;Expression&gt;,
   ): CSSParser&lt;Expression&gt; {
@@ -799,7 +799,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:29.267Z
+                at 2026-04-10T09:29:45.085Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

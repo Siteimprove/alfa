@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.9% </span>
+                <span class="strong">87.93% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>40/44</span>
+                <span class='fraction'>51/58</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.53% </span>
+                <span class="strong">55% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/13</span>
+                <span class='fraction'>11/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.21% </span>
+                <span class="strong">54.28% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>16/19</span>
+                <span class='fraction'>19/35</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.69% </span>
+                <span class="strong">90.9% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>39/43</span>
+                <span class='fraction'>40/44</span>
             </div>
         
             
@@ -464,7 +464,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -644,13 +644,13 @@ import type * as json from "@siteimprove/alfa-json";
 export class Layer&lt;ORDERED extends boolean = boolean&gt;
   implements Serializable&lt;Layer.JSON&gt;, Equatable, Comparable&lt;Layer&lt;true&gt;&gt;
 {
-  public static of(name: string, importance: boolean): Layer&lt;false&gt; {
+  public static <span class="fstat-no" title="function not covered" >of(</span>name: string, importance: boolean): Layer&lt;false&gt; {
     return new Layer(false, name, importance, NaN);
   }
 &nbsp;
   private static _empty = new Layer(true, "", false, -Infinity);
 &nbsp;
-  public static empty(): Layer&lt;true&gt; {
+  public static <span class="fstat-no" title="function not covered" >empty(</span>): Layer&lt;true&gt; {
     return this._empty;
   }
 &nbsp;
@@ -661,7 +661,7 @@ export class Layer&lt;ORDERED extends boolean = boolean&gt;
   private _ordered: ORDERED;
   private _order: number;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     ordered: ORDERED,
     name: string,
     importance: boolean,
@@ -673,19 +673,19 @@ export class Layer&lt;ORDERED extends boolean = boolean&gt;
     this._order = order;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >name(</span>): string {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >name(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return this._name;</span>
   }
 &nbsp;
-  public get order(): number {
+  public get <span class="fstat-no" title="function not covered" >order(</span>): number {
     return this._order;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >importance(</span>): boolean {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >importance(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return this._importance;</span>
   }
 &nbsp;
-  public get isOrdered(): ORDERED {
+  public get <span class="fstat-no" title="function not covered" >isOrdered(</span>): ORDERED {
     return this._ordered;
   }
 &nbsp;
@@ -696,7 +696,7 @@ export class Layer&lt;ORDERED extends boolean = boolean&gt;
    * This actually mutates the layer, it does not create a new one.
    * This is on purpose to automatically update all blocks using this layer.
    */
-  public withOrder(this: Layer&lt;false&gt;, order: number): Layer&lt;true&gt; {
+  public <span class="fstat-no" title="function not covered" >withOrder(</span>this: Layer&lt;false&gt;, order: number): Layer&lt;true&gt; {
     // Since we mutate the boolean that fixes the type, TS is out of its
     // league and we need some weird type assertion.
     const that = this as unknown as Layer&lt;true&gt;;
@@ -705,7 +705,7 @@ export class Layer&lt;ORDERED extends boolean = boolean&gt;
     return that;
   }
 &nbsp;
-  public compare(this: Layer&lt;true&gt;, value: Layer&lt;true&gt;): Comparison {
+  public <span class="fstat-no" title="function not covered" >compare(</span>this: Layer&lt;true&gt;, value: Layer&lt;true&gt;): Comparison {
     return Comparable.compareNumber(this._order, value._order);
   }
 &nbsp;
@@ -713,15 +713,15 @@ export class Layer&lt;ORDERED extends boolean = boolean&gt;
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Layer &amp;&amp;
       value._name === this._name &amp;&amp;
       value._order === this._order
     );
   }
 &nbsp;
-  public toJSON(): Layer.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Layer.JSON {
     return {
       name: this._name,
       order: this._order,
@@ -732,7 +732,7 @@ export class Layer&lt;ORDERED extends boolean = boolean&gt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Layer {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >L</span>ayer {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     name: string;
@@ -769,7 +769,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
    *    foo.bar.lorem and foo.bar.dolor
    * 3. compare them according to order in the initial array, which is the declaration order.
    */
-  export function sortUnordered(
+  export function <span class="cstat-no" title="statement not covered" >sortUnordered(</span>
     layers: ReadonlyArray&lt;Pair&lt;false&gt;&gt;,
   ): Array&lt;Pair&lt;true&gt;&gt; {
     return Array.copy(layers)
@@ -803,7 +803,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
    *
    * @internal
    */
-  export function compareUnordered(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >compareUnordered(</span></span>
     layers: ReadonlyArray&lt;Pair&lt;false&gt;&gt;,
   ): Comparer&lt;Pair&lt;false&gt;&gt; {
     return (a, b) =&gt; {
@@ -859,7 +859,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:13.066Z
+                at 2026-04-10T09:29:28.174Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

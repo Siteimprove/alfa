@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.66% </span>
+                <span class="strong">72.97% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>43/60</span>
+                <span class='fraction'>54/74</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">14.28% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/14</span>
+                <span class='fraction'>4/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.36% </span>
+                <span class="strong">80.68% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>27/44</span>
+                <span class='fraction'>71/88</span>
             </div>
         
             
@@ -403,7 +403,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-yes">81x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1033x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -446,11 +446,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-yes">81x</span>
 <span class="cline-any cline-yes">1033x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-yes">81x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1010x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -506,11 +506,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-yes">81x</span>
 <span class="cline-any cline-yes">1010x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-yes">81x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -566,11 +566,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-yes">81x</span>
 <span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-yes">81x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">208x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -613,11 +613,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-yes">81x</span>
 <span class="cline-any cline-yes">208x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-yes">81x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">138x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -671,7 +671,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-yes">81x</span>
 <span class="cline-any cline-yes">138x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -686,7 +686,7 @@ import type { Serializable } from "@siteimprove/alfa-json";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import type { Name } from "./name.js";
+import type { Name } from "./name.ts";
 &nbsp;
 /**
  * @public
@@ -720,15 +720,15 @@ export namespace Source {
       this._text = text;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "data" {
+    public get <span class="fstat-no" title="function not covered" >type(): "data" {</span>
 <span class="cstat-no" title="statement not covered" >      return "data";</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >text(</span>): Text {
+    public get <span class="fstat-no" title="function not covered" >text(): Text {</span>
 <span class="cstat-no" title="statement not covered" >      return this._text;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Data &amp;&amp; value._text.equals(this._text);</span>
     }
 &nbsp;
@@ -769,20 +769,20 @@ export namespace Source {
       this._name = name;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "descendants" {
+    public get <span class="fstat-no" title="function not covered" >type(): "descendants" {</span>
 <span class="cstat-no" title="statement not covered" >      return "descendants";</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >element(</span>): Element {
+    public get <span class="fstat-no" title="function not covered" >element(): Element {</span>
 <span class="cstat-no" title="statement not covered" >      return this._element;</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >name(</span>): Name {
+    public get <span class="fstat-no" title="function not covered" >name(): Name {</span>
 <span class="cstat-no" title="statement not covered" >      return this._name;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >      return (</span>
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      return (</span></span>
         value instanceof Descendant &amp;&amp;
         value._element.equals(this._element) &amp;&amp;
         value._name.equals(this._name)
@@ -829,20 +829,20 @@ export namespace Source {
       this._name = name;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "ancestor" {
+    public get <span class="fstat-no" title="function not covered" >type(): "ancestor" {</span>
 <span class="cstat-no" title="statement not covered" >      return "ancestor";</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >element(</span>): Element {
+    public get <span class="fstat-no" title="function not covered" >element(): Element {</span>
 <span class="cstat-no" title="statement not covered" >      return this._element;</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >name(</span>): Name {
+    public get <span class="fstat-no" title="function not covered" >name(): Name {</span>
 <span class="cstat-no" title="statement not covered" >      return this._name;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >      return (</span>
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      return (</span></span>
         value instanceof Ancestor &amp;&amp;
         value._element.equals(this._element) &amp;&amp;
         value._name.equals(this._name)
@@ -891,11 +891,11 @@ export namespace Source {
       return "label";
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >attribute(</span>): Attribute {
+    public get <span class="fstat-no" title="function not covered" >attribute(): Attribute {</span>
 <span class="cstat-no" title="statement not covered" >      return this._attribute;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Label &amp;&amp; value._attribute.equals(this._attribute);</span>
     }
 &nbsp;
@@ -940,16 +940,16 @@ export namespace Source {
       return "reference";
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >attribute(</span>): Attribute {
+    public get <span class="fstat-no" title="function not covered" >attribute(): Attribute {</span>
 <span class="cstat-no" title="statement not covered" >      return this._attribute;</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >name(</span>): Name {
+    public get <span class="fstat-no" title="function not covered" >name(): Name {</span>
 <span class="cstat-no" title="statement not covered" >      return this._name;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >      return (</span>
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      return (</span></span>
         value instanceof Reference &amp;&amp; value._attribute.equals(this._attribute)
       );
     }
@@ -988,7 +988,7 @@ export namespace Source {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

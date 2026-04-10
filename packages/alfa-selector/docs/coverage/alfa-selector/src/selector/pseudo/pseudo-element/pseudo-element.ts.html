@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>18/20</span>
+                <span class='fraction'>16/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/20</span>
+                <span class='fraction'>12/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.81% </span>
+                <span class="strong">63.63% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>18/22</span>
+                <span class='fraction'>14/22</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -151,7 +151,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -185,9 +185,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -199,7 +199,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">103x</span>
+<span class="cline-any cline-yes">87x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -218,7 +218,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">49x</span>
+<span class="cline-any cline-yes">41x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -236,17 +236,17 @@ import { Parser } from "@siteimprove/alfa-parser";
 &nbsp;
 const { map, right, take, takeBetween } = Parser;
 &nbsp;
-import { Specificity } from "../../../specificity.js";
+import { Specificity } from "../../../specificity.ts";
 &nbsp;
-import { WithName } from "../../selector.js";
+import { WithName } from "../../selector.ts";
 &nbsp;
 export abstract class PseudoElementSelector&lt;
   N extends string = string,
 &gt; extends WithName&lt;"pseudo-element", N&gt; {
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     name: N,
-    specificity: Specificity = <span class="branch-0 cbranch-no" title="branch not covered" >Specificity.of(0, 0, 1),</span>
-    useContext: boolean = <span class="branch-0 cbranch-no" title="branch not covered" >false,</span>
+    specificity: Specificity = Specificity.of(0, 0, 1),
+    useContext: boolean = false,
   ) {
     super("pseudo-element", name, specificity, useContext);
   }
@@ -259,7 +259,7 @@ export abstract class PseudoElementSelector&lt;
 <span class="cstat-no" title="statement not covered" >    return value instanceof PseudoElementSelector &amp;&amp; super.equals(value);</span>
   }
 &nbsp;
-  public toJSON(): PseudoElementSelector.JSON&lt;N&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): PseudoElementSelector.JSON&lt;N&gt; {
     return {
       ...super.toJSON(),
     };
@@ -270,14 +270,14 @@ export abstract class PseudoElementSelector&lt;
   }
 }
 &nbsp;
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >PseudoElementSelector {</span></span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >P</span>seudoElementSelector {</span></span>
   export interface JSON&lt;N extends string = string&gt;
     extends WithName.JSON&lt;"pseudo-element", N&gt; {}
 &nbsp;
   /**
    * Parses a non-functional, non-legacy pseudo-element (`::&lt;name&gt;`)
    */
-  export function parseNonLegacy&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >parseNonLegacy&lt;T&gt;(</span>
     name: string,
     of: Thunk&lt;T&gt;,
     withColon = true,
@@ -296,7 +296,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
   /**
    * Parses a non-functional, legacy pseudo-element (`::&lt;name&gt;` or `:&lt;name&gt;`)
    */
-  export function parseLegacy&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >parseLegacy&lt;</span>T&gt;(</span>
     name: string,
     of: Thunk&lt;T&gt;,
     withColon = true,
@@ -319,7 +319,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:35:03.293Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

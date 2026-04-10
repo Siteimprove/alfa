@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.52% </span>
+                <span class="strong">58.76% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>50/68</span>
+                <span class='fraction'>57/97</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">39.13% </span>
+                <span class="strong">34.14% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>9/23</span>
+                <span class='fraction'>14/41</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.22% </span>
+                <span class="strong">71.23% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>28/45</span>
+                <span class='fraction'>52/73</span>
             </div>
         
             
@@ -443,8 +443,8 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Real } from "./real.js";
-import { Vector } from "./vector.js";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Real } from "./real.ts";
+import { Vector } from "./vector.ts";
 &nbsp;
 /**
  * {@link https://en.wikipedia.org/wiki/Matrix_(mathematics)}
@@ -456,36 +456,36 @@ export type Matrix = Array&lt;Array&lt;number&gt;&gt;;
 /**
  * @public
  */
-export namespace Matrix {
-  export function <span class="fstat-no" title="function not covered" >isMatrix(</span>value: unknown): value is Matrix {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Matrix {</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isMatrix(v</span>alue: unknown): value is Matrix {</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       Array.isArray(value) &amp;&amp;
       value.every(
-<span class="fstat-no" title="function not covered" >        (r</span>) =&gt; <span class="cstat-no" title="statement not covered" >Array.isArray(r) &amp;&amp; r.every(<span class="fstat-no" title="function not covered" >(v</span>) =&gt; <span class="cstat-no" title="statement not covered" >typeof v === "number")</span>,</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >        (r</span></span>) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Array.isArray(r) &amp;&amp; r.every(<span class="fstat-no" title="function not covered" >(v</span>) =&gt; <span class="cstat-no" title="statement not covered" >typeof v === "number")</span>,</span></span>
       )
     );
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isSquare(</span>m: Matrix): boolean {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isSquare(m</span>: Matrix): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return rows(m) === columns(m);</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >clone(</span>m: Matrix): Matrix {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >clone(m</span>: Matrix): Matrix {</span>
 <span class="cstat-no" title="statement not covered" >    return m.map(<span class="fstat-no" title="function not covered" >(r</span>) =&gt; <span class="cstat-no" title="statement not covered" >r.slice(0))</span>;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >equals(</span>m: Matrix, n: Matrix, e?: number): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >equals(m</span>: Matrix, n: Matrix, e?: number): boolean {</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       m.length === n.length &amp;&amp;
       m.every(
-<span class="fstat-no" title="function not covered" >        (r</span>, i) =&gt;
-<span class="cstat-no" title="statement not covered" >          r.length === n[i].length &amp;&amp;</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >        (r</span></span>, i) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >          r.length === n[i].length &amp;&amp;</span></span>
           r.every(<span class="fstat-no" title="function not covered" >(v</span>, j) =&gt; <span class="cstat-no" title="statement not covered" >Real.equals(v, n[i][j], e))</span>,
       )
     );
   }
 &nbsp;
-  export function identity(n: number): Matrix {
+  export function <span class="cstat-no" title="statement not covered" >identity(n: number): Matrix {</span>
     return new Array&lt;Array&lt;number&gt;&gt;(n).fill([]).map((_, i) =&gt; {
       const r = new Array&lt;number&gt;(n).fill(0);
       r[i] = 1;
@@ -493,47 +493,47 @@ export namespace Matrix {
     });
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >size(</span>m: Matrix): [number, number] {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >size(m</span>: Matrix): [number, number] {</span>
 <span class="cstat-no" title="statement not covered" >    return [rows(m), columns(m)];</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >rows(</span>m: Matrix): number {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >rows(m</span>: Matrix): number {</span>
 <span class="cstat-no" title="statement not covered" >    return m.length;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >columns(</span>m: Matrix): number {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >columns(m</span>: Matrix): number {</span>
 <span class="cstat-no" title="statement not covered" >    return m.length === 0 ? 0 : m[0].length;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >row(</span>m: Matrix, i: number): Array&lt;number&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >row(m</span>: Matrix, i: number): Array&lt;number&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return m[i];</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >column(</span>m: Matrix, i: number): Array&lt;number&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >column(m</span>: Matrix, i: number): Array&lt;number&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return m.map(<span class="fstat-no" title="function not covered" >(r</span>) =&gt; <span class="cstat-no" title="statement not covered" >r[i])</span>;</span>
   }
 &nbsp;
-  export function add(m: Matrix, n: Matrix): Matrix {
+  export function <span class="cstat-no" title="statement not covered" >add(m: Matrix, n: Matrix): Matrix {</span>
     return m.map((r, i) =&gt; r.map((v, j) =&gt; v + n?.[i]?.[j]));
   }
 &nbsp;
-  export function subtract(m: Matrix, n: Matrix): Matrix {
+  export function <span class="cstat-no" title="statement not covered" >subtract(m: Matrix, n: Matrix): Matrix {</span>
     return m.map((r, i) =&gt; r.map((v, j) =&gt; v - n?.[i]?.[j]));
   }
 &nbsp;
   /**
    * {@link https://en.wikipedia.org/wiki/Matrix_multiplication}
    */
-  export function multiply(
+  export function <span class="cstat-no" title="statement not covered" >multiply(</span>
     m: Matrix | Vector,
     n: number | Matrix | Vector,
   ): Matrix {
     // If m is a vector, treat it as a single row matrix.
     // [a, b, c]  =&gt;  [[a, b, c]]
-    const left: Matrix = Vector.isVector(m) ? <span class="branch-0 cbranch-no" title="branch not covered" >[m] </span>: m;
+    const left: Matrix = Vector.isVector(m) ? <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >[m] </span>: m</span>;
     // If n is a vector, treat it as a single column matrix.
     // [a, b, c]  =&gt;  [[a], [b], [c]]
-    const right: number | Matrix = Vector.isVector(n) ? <span class="branch-0 cbranch-no" title="branch not covered" >n.map(<span class="fstat-no" title="function not covered" >(x</span>) =&gt; <span class="cstat-no" title="statement not covered" >[x])</span> </span>: n;
+    const right: number | Matrix = Vector.isVector(n) ? <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >n.map(<span class="fstat-no" title="function not covered" >(x</span>) =&gt; <span class="cstat-no" title="statement not covered" >[x])</span> </span>: n</span>;
 &nbsp;
     return typeof right === "number"
       ? left.map((r) =&gt; r.map((v) =&gt; v * right))
@@ -549,8 +549,8 @@ export namespace Matrix {
    *
    * {@link https://en.wikipedia.org/wiki/Transpose}
    */
-  export function transpose(m: Matrix): Matrix {
-    return m.length === 0 ? <span class="branch-0 cbranch-no" title="branch not covered" >m </span>: m[0].map((_, i) =&gt; m.map((row) =&gt; row[i]));
+  export function <span class="cstat-no" title="statement not covered" >transpose(m: Matrix): Matrix {</span>
+    return m.length === 0 ? <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >m </span>: m</span>[0].map((_, i) =&gt; m.map((row) =&gt; row[i]));
   }
 &nbsp;
   /**
@@ -564,7 +564,7 @@ export namespace Matrix {
    * has a time complexity of O(n!) and is therefore not practical for large
    * matrices.
    */
-  export function determinant(m: Matrix): number {
+  export function <span class="cstat-no" title="statement not covered" >determinant(m: Matrix): number {</span>
     switch (m.length) {
       // The determinant of a 1x1 matrix is the single value of the matrix.
       case 1:
@@ -576,7 +576,7 @@ export namespace Matrix {
         return m[0]?.[0] * m[1]?.[1] - m[0]?.[1] * m[1]?.[0];
 &nbsp;
 <span class="branch-2 cbranch-no" title="branch not covered" >      default:</span>
-<span class="cstat-no" title="statement not covered" >        return m.reduce(<span class="fstat-no" title="function not covered" >(d</span>, _, i) =&gt; <span class="cstat-no" title="statement not covered" >d + m[0]?.[i] * cofactor(m, 0, i),</span> 0);</span>
+<span class="cstat-no" title="statement not covered" >        return m.reduce(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(d</span></span>, _, i) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >d + m[0]?.[i] * cofactor(m, 0, i),</span> 0</span>);</span>
     }
   }
 &nbsp;
@@ -590,7 +590,7 @@ export namespace Matrix {
    * This function uses Cramer's rule for computing the inverse which has a time
    * complexity of O(n!) and is therefore not practical for large matrices.
    */
-  export function inverse(m: Matrix): Matrix {
+  export function <span class="cstat-no" title="statement not covered" >inverse(m: Matrix): Matrix {</span>
     return multiply(adjugate(m), 1 / determinant(m));
   }
 &nbsp;
@@ -640,7 +640,7 @@ export namespace Matrix {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:43.251Z
+                at 2026-04-10T09:29:59.365Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.81% </span>
+                <span class="strong">71.42% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/11</span>
+                <span class='fraction'>10/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">46.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/8</span>
+                <span class='fraction'>7/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">81.81% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/10</span>
+                <span class='fraction'>9/11</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -164,7 +164,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -204,7 +204,7 @@ export class WithName extends Diagnostic {
 &nbsp;
   public static of(message: string, name: string): Diagnostic;
 &nbsp;
-  public static of(message: string, name?: string): Diagnostic {
+  public static <span class="fstat-no" title="function not covered" >of(</span>message: string, name?: string): Diagnostic {
     return name === undefined
       ? <span class="branch-0 cbranch-no" title="branch not covered" >new Diagnostic(message)</span>
       : new WithName(message, name);
@@ -212,16 +212,16 @@ export class WithName extends Diagnostic {
 &nbsp;
   protected readonly _name: string;
 &nbsp;
-  protected constructor(message: string, name: string) {
+<span class="fstat-no" title="function not covered" >  protected constructor(m</span>essage: string, name: string) {
     super(message);
     this._name = name;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >name(</span>): string {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >name(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return this._name;</span>
   }
 &nbsp;
-  public toJSON(options?: dom.Node.SerializationOptions): WithName.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: dom.Node.SerializationOptions): WithName.JSON {
     return {
       ...super.toJSON(options),
       name: this._name,
@@ -232,7 +232,7 @@ export class WithName extends Diagnostic {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >WithName {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >W</span>ithName {</span></span>
   export interface JSON extends Diagnostic.JSON {
     name: string;
   }
@@ -244,11 +244,11 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >W
   /**
    * @public
    */
-  export function <span class="fstat-no" title="function not covered" >isWithName(</span>value: unknown): value is WithName {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isWithName(v</span>alue: unknown): value is WithName {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof WithName;</span>
   }
 &nbsp;
-  export function getName(element: Element, device: Device): Option&lt;string&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >getName(</span>element: Element, device: Device): Option&lt;string&gt; {</span>
     return Node.from(element, device).name.map((x) =&gt; x.value);
   }
 }
@@ -259,7 +259,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >W
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

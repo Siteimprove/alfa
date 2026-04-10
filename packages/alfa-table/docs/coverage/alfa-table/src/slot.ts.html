@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.21% </span>
+                <span class="strong">77.27% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/19</span>
+                <span class='fraction'>17/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.53% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/13</span>
+                <span class='fraction'>9/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">38.88% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/9</span>
+                <span class='fraction'>7/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.21% </span>
+                <span class="strong">85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>16/19</span>
+                <span class='fraction'>17/20</span>
             </div>
         
             
@@ -227,7 +227,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -258,27 +258,27 @@ import type * as json from "@siteimprove/alfa-json";
 export class Slot
   implements Comparable&lt;Slot&gt;, Equatable, Serializable&lt;Slot.JSON&gt;
 {
-  public static of(x: number, y: number): Slot {
+  public static <span class="fstat-no" title="function not covered" >of(</span>x: number, y: number): Slot {
     return new Slot(x, y);
   }
 &nbsp;
   private readonly _x: number;
   private readonly _y: number;
 &nbsp;
-  protected constructor(x: number, y: number) {
+<span class="fstat-no" title="function not covered" >  protected constructor(x</span>: number, y: number) {
     this._x = x;
     this._y = y;
   }
 &nbsp;
-  public get x(): number {
+  public get <span class="fstat-no" title="function not covered" >x(</span>): number {
     return this._x;
   }
 &nbsp;
-  public get y(): number {
+  public get <span class="fstat-no" title="function not covered" >y(</span>): number {
     return this._y;
   }
 &nbsp;
-  public compare(slot: Slot): Comparison {
+  public <span class="fstat-no" title="function not covered" >compare(</span>slot: Slot): Comparison {
     // Slots are compared first by y-coordinate, then by x-coordinate. This way,
     // cells will be ordered as they appear in tree-order.
 &nbsp;
@@ -305,13 +305,13 @@ export class Slot
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Slot &amp;&amp; value._x === this._x &amp;&amp; value._y === this._y
     );
   }
 &nbsp;
-  public toJSON(): Slot.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Slot.JSON {
     return {
       x: this._x,
       y: this._y,
@@ -322,14 +322,14 @@ export class Slot
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Slot {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >S</span>lot {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     x: number;
     y: number;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isSlot(</span>value: unknown): value is Slot {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isSlot(</span>v</span>alue: unknown): value is Slot {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Slot;</span>
   }
 }
@@ -340,7 +340,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:36:24.881Z
+                at 2026-04-10T09:31:37.491Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

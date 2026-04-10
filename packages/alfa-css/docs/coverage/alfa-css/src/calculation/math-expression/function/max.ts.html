@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.19% </span>
+                <span class="strong">94.11% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>46/51</span>
+                <span class='fraction'>48/51</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>27/30</span>
+                <span class='fraction'>25/30</span>
             </div>
         
             
@@ -217,12 +217,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -311,16 +311,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
 <span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
 <span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -328,7 +328,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Array } from "@siteimprove/alfa-array";
@@ -339,17 +339,17 @@ import {
   Function as CSSFunction,
   type Parser as CSSParser,
   Token,
-} from "../../../syntax/index.js";
+} from "../../../syntax/index.ts";
 &nbsp;
-import { Unit } from "../../../unit/index.js";
+import { Unit } from "../../../unit/index.ts";
 &nbsp;
-import { Angle, Length, Number, type Numeric } from "../../numeric/index.js";
+import { Angle, Length, Number, type Numeric } from "../../numeric/index.ts";
 &nbsp;
-import { Expression } from "../expression.js";
-import type { Kind } from "../kind.js";
-import { Value } from "../value.js";
+import { Expression } from "../expression.ts";
+import type { Kind } from "../kind.ts";
+import { Value } from "../value.ts";
 &nbsp;
-import { Function } from "./function.js";
+import { Function } from "./function.ts";
 &nbsp;
 const { isAngle } = Angle;
 const { isLength } = Length;
@@ -369,7 +369,7 @@ export class Max extends Function&lt;"max", [Expression, ...Array&lt;Expression&
     ...expressions: ReadonlyArray&lt;Expression&gt;
   ): Result&lt;Max, string&gt; {
     // {@see https://drafts.csswg.org/css-values/#determine-the-type-of-a-calculation}
-    const kind = <span class="cstat-no" title="statement not covered" >expressions.reduce(</span>
+    const kind = expressions.reduce(
       (old, cur) =&gt; old.flatMap((kind) =&gt; kind.add(cur.kind)),
       Result.of&lt;Kind, string&gt;(first.kind),
     );
@@ -377,17 +377,17 @@ export class Max extends Function&lt;"max", [Expression, ...Array&lt;Expression&
     return kind.map((kind) =&gt; new Max([first, ...expressions], kind));
   }
 &nbsp;
-  protected constructor(args: [Expression, ...Array&lt;Expression&gt;], kind: Kind) {
+<span class="fstat-no" title="function not covered" >  protected constructor(a</span>rgs: [Expression, ...Array&lt;Expression&gt;], kind: Kind) {
     super("max", args, kind);
   }
 &nbsp;
-  public reduce&lt;
+  public <span class="fstat-no" title="function not covered" >reduce&lt;</span>
     L extends Unit.Length = Unit.Length.Canonical,
     P extends Numeric = Numeric,
   &gt;(resolver: Expression.Resolver&lt;L, P&gt;): Expression {
     // We know from the guard in Max.of that all args have the same kind.
 &nbsp;
-    const reduced = <span class="cstat-no" title="statement not covered" >this._args.map((expr) =&gt; expr.reduce(resolver));</span>
+    const reduced = this._args.map((expr) =&gt; expr.reduce(resolver));
 &nbsp;
     if (Array.every(reduced, isValueExpression)) {
       const values = reduced.map((expr) =&gt; expr.value);
@@ -472,7 +472,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:29.267Z
+                at 2026-04-10T09:29:45.085Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

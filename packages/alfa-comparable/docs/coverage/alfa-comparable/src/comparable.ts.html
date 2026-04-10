@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">59.57% </span>
+                <span class="strong">48.43% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>28/47</span>
+                <span class='fraction'>31/64</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">44.44% </span>
+                <span class="strong">45.45% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/18</span>
+                <span class='fraction'>10/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/15</span>
+                <span class='fraction'>18/30</span>
             </div>
         
             
@@ -461,11 +461,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">103x</span>
-<span class="cline-any cline-yes">54x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">49x</span>
-<span class="cline-any cline-yes">47x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">54x</span>
+<span class="cline-any cline-yes">52x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -528,9 +528,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Refinement } from "@siteimprove/alfa-refinement";
-import type { Comparer, TupleComparer } from "./comparer.js";
+import type { Comparer, TupleComparer } from "./comparer.ts";
 &nbsp;
-import { Comparison } from "./comparison.js";
+import { Comparison } from "./comparison.ts";
 &nbsp;
 const { isString, isNumber, isBigInt, isBoolean, isFunction, isObject } =
   Refinement;
@@ -577,12 +577,12 @@ export interface Comparable&lt;T&gt; {
  *
  * @public
  */
-export namespace Comparable {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Comparable {</span>
   /**
    * Check if an unknown value implements the {@link (Comparable:interface)}
    * interface.
    */
-  export function <span class="fstat-no" title="function not covered" >isComparable&lt;</span>T&gt;(value: unknown): value is Comparable&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isComparable&lt;T&gt;(v</span>alue: unknown): value is Comparable&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return isObject(value) &amp;&amp; isFunction(value.compare);</span>
   }
 &nbsp;
@@ -614,7 +614,7 @@ export namespace Comparable {
     b: U,
   ): Comparison;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >compare(</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >compare(</span></span>
     a: string | number | bigint | boolean | Comparable&lt;unknown&gt;,
     b: unknown,
   ): Comparison {
@@ -642,7 +642,7 @@ export namespace Comparable {
    * This should only be used in cases where branch mispredictions caused by the
    * more general {@link (Comparable:namespace).(compare:1)} are undesired.
    */
-  export function compareString(a: string, b: string): Comparison {
+  export function <span class="cstat-no" title="statement not covered" >compareString(a: string, b: string): Comparison {</span>
     return comparePrimitive(a, b);
   }
 &nbsp;
@@ -651,7 +651,7 @@ export namespace Comparable {
    * This should only be used in cases where branch mispredictions caused by the
    * more general {@link (Comparable:namespace).(compare:2)} are undesired.
    */
-  export function compareNumber(a: number, b: number): Comparison {
+  export function <span class="cstat-no" title="statement not covered" >compareNumber(a: number, b: number): Comparison {</span>
     return comparePrimitive(a, b);
   }
 &nbsp;
@@ -660,7 +660,7 @@ export namespace Comparable {
    * This should only be used in cases where branch mispredictions caused by the
    * more general {@link (Comparable:namespace).(compare:3)} are undesired.
    */
-  export function <span class="fstat-no" title="function not covered" >compareBigInt(</span>a: bigint, b: bigint): Comparison {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >compareBigInt(a</span>: bigint, b: bigint): Comparison {</span>
 <span class="cstat-no" title="statement not covered" >    return comparePrimitive(a, b);</span>
   }
 &nbsp;
@@ -669,7 +669,7 @@ export namespace Comparable {
    * This should only be used in cases where branch mispredictions caused by the
    * more general {@link (Comparable:namespace).(compare:4)} are undesired.
    */
-  export function <span class="fstat-no" title="function not covered" >compareBoolean(</span>a: boolean, b: boolean): Comparison {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >compareBoolean(a</span>: boolean, b: boolean): Comparison {</span>
 <span class="cstat-no" title="statement not covered" >    return comparePrimitive(a, b);</span>
   }
 &nbsp;
@@ -678,7 +678,7 @@ export namespace Comparable {
    * This should only be used in cases where branch mispredictions caused by the
    * more general {@link (Comparable:namespace).(compare:5)} are undesired.
    */
-  export function <span class="fstat-no" title="function not covered" >compareComparable&lt;</span>T extends Comparable&lt;U&gt;, U = T&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >compareComparable&lt;T extends Comparable&lt;U&gt;, U = T&gt;(</span></span>
     a: T,
     b: U,
   ): Comparison {
@@ -708,7 +708,7 @@ export namespace Comparable {
    *
    * {@link https://en.wikipedia.org/wiki/Lexicographic_order}
    */
-  export function compareLexicographically&lt;T extends Array&lt;unknown&gt;&gt;(
+  export function <span class="cstat-no" title="statement not covered" >compareLexicographically&lt;T extends Array&lt;unknown&gt;&gt;(</span>
     a: T,
     b: T,
     comparer: TupleComparer&lt;T&gt;,
@@ -727,35 +727,35 @@ export namespace Comparable {
   /**
    * Check if one value is less than another.
    */
-  export function <span class="fstat-no" title="function not covered" >isLessThan&lt;</span>T&gt;(a: Comparable&lt;T&gt;, b: T): boolean {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isLessThan&lt;T&gt;(a</span>: Comparable&lt;T&gt;, b: T): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return a.compare(b) &lt; 0;</span>
   }
 &nbsp;
   /**
    * Check if one value is less than or equal to another.
    */
-  export function <span class="fstat-no" title="function not covered" >isLessThanOrEqual&lt;</span>T&gt;(a: Comparable&lt;T&gt;, b: T): boolean {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isLessThanOrEqual&lt;T&gt;(a</span>: Comparable&lt;T&gt;, b: T): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return a.compare(b) &lt;= 0;</span>
   }
 &nbsp;
   /**
    * Check if one value is equal to another
    */
-  export function <span class="fstat-no" title="function not covered" >isEqual&lt;</span>T&gt;(a: Comparable&lt;T&gt;, b: T): boolean {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isEqual&lt;T&gt;(a</span>: Comparable&lt;T&gt;, b: T): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return a.compare(b) === 0;</span>
   }
 &nbsp;
   /**
    * Check if one value is greater than another.
    */
-  export function <span class="fstat-no" title="function not covered" >isGreaterThan&lt;</span>T&gt;(a: Comparable&lt;T&gt;, b: T): boolean {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isGreaterThan&lt;T&gt;(a</span>: Comparable&lt;T&gt;, b: T): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return a.compare(b) &gt; 0;</span>
   }
 &nbsp;
   /**
    * Check if one value is greater than or equal to another.
    */
-  export function <span class="fstat-no" title="function not covered" >isGreaterThanOrEqual&lt;</span>T&gt;(a: Comparable&lt;T&gt;, b: T): boolean {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isGreaterThanOrEqual&lt;</span>T&gt;(a</span>: Comparable&lt;T&gt;, b: T): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return a.compare(b) &gt;= 0;</span>
   }
 }
@@ -766,7 +766,7 @@ export namespace Comparable {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:12.486Z
+                at 2026-04-10T09:29:27.826Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

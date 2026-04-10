@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">26.08% </span>
+                <span class="strong">29.62% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/23</span>
+                <span class='fraction'>8/27</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">14.28% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/20</span>
+                <span class='fraction'>5/35</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">31.81% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/21</span>
+                <span class='fraction'>7/22</span>
             </div>
         
             
@@ -252,7 +252,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -282,7 +282,7 @@ import type { Option } from "@siteimprove/alfa-option";
 import type * as earl from "@siteimprove/alfa-earl";
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { Header } from "./header.js";
+import { Header } from "./header.ts";
 &nbsp;
 /**
  * @public
@@ -298,7 +298,7 @@ export class Headers
    * If the iterable contains headers with duplicate names, the last header with
    * a given name will take precedence.
    */
-  public static of(headers: Iterable&lt;Header&gt;): Headers {
+  public static <span class="fstat-no" title="function not covered" >of(</span>headers: Iterable&lt;Header&gt;): Headers {
 <span class="cstat-no" title="statement not covered" >    return new Headers(</span>
       Map.from(Iterable.map(headers, <span class="fstat-no" title="function not covered" >(h</span>eader) =&gt; <span class="cstat-no" title="statement not covered" >[header.name, header])</span>),
     );
@@ -306,45 +306,45 @@ export class Headers
 &nbsp;
   private static _empty = new Headers(Map.empty());
 &nbsp;
-  public static empty(): Headers {
+  public static <span class="fstat-no" title="function not covered" >empty(</span>): Headers {
     return this._empty;
   }
 &nbsp;
   private readonly _headers: Map&lt;string, Header&gt;;
 &nbsp;
-  protected constructor(headers: Map&lt;string, Header&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(h</span>eaders: Map&lt;string, Header&gt;) {
     this._headers = headers;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >get(</span>name: string): Option&lt;Header&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >get(</span>n</span>ame: string): Option&lt;Header&gt; {
 <span class="cstat-no" title="statement not covered" >    return this._headers.get(name);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >has(</span>name: string): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >has(</span>n</span>ame: string): boolean {
 <span class="cstat-no" title="statement not covered" >    return this._headers.has(name);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >add(</span>header: Header): Headers {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >add(</span>h</span>eader: Header): Headers {
 <span class="cstat-no" title="statement not covered" >    return new Headers(this._headers.set(header.name, header));</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >delete(</span>name: string): Headers {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >delete(</span>n</span>ame: string): Headers {
 <span class="cstat-no" title="statement not covered" >    return new Headers(this._headers.delete(name));</span>
   }
 &nbsp;
-  public *[<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;Header&gt; {
+  public *[<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.iterator]</span></span>(): Iterator&lt;Header&gt; {
 <span class="cstat-no" title="statement not covered" >    yield* this._headers.values();</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toArray(</span>): Array&lt;Header&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toArray(</span>): Array&lt;Header&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return [...this];</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: json.Serializable.Options): Headers.JSON {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>o</span>ptions?: json.Serializable.Options): Headers.JSON {
 <span class="cstat-no" title="statement not covered" >    return this.toArray().map(<span class="fstat-no" title="function not covered" >(h</span>eader) =&gt; <span class="cstat-no" title="statement not covered" >header.toJSON(options))</span>;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toEARL(</span>): Headers.EARL {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toEARL(</span>): Headers.EARL {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       "@context": {
         http: "http://www.w3.org/2011/http#",
@@ -353,7 +353,7 @@ export class Headers
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return this.toArray()</span>
       .map(<span class="fstat-no" title="function not covered" >(h</span>eader) =&gt; <span class="cstat-no" title="statement not covered" >header.toString())</span>
       .join("\n");
@@ -363,7 +363,7 @@ export class Headers
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Headers {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >H</span>eaders {</span></span>
   export interface JSON extends Array&lt;Header.JSON&gt; {}
 &nbsp;
   export interface EARL extends earl.EARL {
@@ -373,11 +373,11 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >H
     "@list": Array&lt;Header.EARL&gt;;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >from(</span>json: JSON): Headers {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >from(j</span>son: JSON): Headers {</span>
 <span class="cstat-no" title="statement not covered" >    return Headers.of(json.map(<span class="fstat-no" title="function not covered" >(h</span>eader) =&gt; <span class="cstat-no" title="statement not covered" >Header.from(header))</span>);</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isHeaders(</span>value: unknown): value is Headers {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isHeaders(</span>v</span>alue: unknown): value is Headers {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Headers;</span>
   }
 }
@@ -388,7 +388,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >H
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:37.813Z
+                at 2026-04-10T09:29:53.429Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

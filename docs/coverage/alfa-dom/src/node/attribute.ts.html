@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.22% </span>
+                <span class="strong">87.14% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>52/57</span>
+                <span class='fraction'>61/70</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.33% </span>
+                <span class="strong">65.85% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>22/30</span>
+                <span class='fraction'>27/41</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.6% </span>
+                <span class="strong">84.09% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>19/23</span>
+                <span class='fraction'>37/44</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.9% </span>
+                <span class="strong">92.85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>50/55</span>
+                <span class='fraction'>52/56</span>
             </div>
         
             
@@ -416,7 +416,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4266x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4266x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -549,31 +549,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4241x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">19x</span>
@@ -594,7 +594,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -615,12 +615,12 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 &nbsp;
 import * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { Namespace } from "../namespace.js";
-import { BaseNode } from "./node.js";
-import type { Element } from "./slotable/element.js";
+import { Namespace } from "../namespace.ts";
+import { BaseNode } from "./node.ts";
+import type { Element } from "./slotable/element.ts";
 &nbsp;
-import * as predicate from "./attribute/predicate.js";
-import * as autocomplete from "./attribute/autocomplete.js";
+import * as predicate from "./attribute/predicate.ts";
+import * as autocomplete from "./attribute/autocomplete.ts";
 &nbsp;
 const { isEmpty } = Iterable;
 const { equals, not } = Predicate;
@@ -674,11 +674,11 @@ export class Attribute&lt;
     this._value = value;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >namespace(</span>): Option&lt;Namespace&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >namespace(</span>): Option&lt;Namespace&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._namespace;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >prefix(</span>): Option&lt;string&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >prefix(</span>): Option&lt;string&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._prefix;</span>
   }
 &nbsp;
@@ -725,7 +725,7 @@ export class Attribute&lt;
    * @internal
    **/
   protected _internalPath(options?: BaseNode.Traversal): string {
-    let path = this.owner.map((owner) =&gt; owner.path(options)).getOr("/");
+    let path = <span class="cstat-no" title="statement not covered" >this.owner.map((owner) =&gt; owner.path(options)).getOr("/");</span>
 &nbsp;
     path += path === "/" ? <span class="branch-0 cbranch-no" title="branch not covered" >"" </span>: "/";
     path += `@${this.name}`;
@@ -753,7 +753,7 @@ export class Attribute&lt;
   public enumerate&lt;T extends string&gt;(valid: T, ...rest: Array&lt;T&gt;): Option&lt;T&gt;;
 &nbsp;
   public enumerate(...valid: Array&lt;string&gt;): Option&lt;string&gt; {
-    const value = this._value.toLowerCase();
+    const value = <span class="cstat-no" title="statement not covered" >this._value.toLowerCase();</span>
 &nbsp;
     return valid.length === 0 || valid.includes(value)
       ? Option.of(value)
@@ -777,7 +777,7 @@ export class Attribute&lt;
 &nbsp;
     delete result.children;
 &nbsp;
-    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
+    const verbosity = <span class="cstat-no" title="statement not covered" >options?.verbosity ?? json.Serializable.Verbosity.Medium;</span>
 &nbsp;
     if (verbosity &lt; json.Serializable.Verbosity.Medium) {
       return result;
@@ -792,7 +792,7 @@ export class Attribute&lt;
   }
 &nbsp;
   public toString(): string {
-    const name = this.qualifiedName;
+    const name = <span class="cstat-no" title="statement not covered" >this.qualifiedName;</span>
 &nbsp;
     if (this.isBoolean()) {
       return name;
@@ -804,7 +804,7 @@ export class Attribute&lt;
   /**
    * @internal
    */
-  public <span class="fstat-no" title="function not covered" >_attachParent(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >_attachParent(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
@@ -812,7 +812,7 @@ export class Attribute&lt;
    * @internal
    */
   public _attachOwner(owner: Element): boolean {
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (this._frozen || this._owner.isSome()) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (<span class="branch-0 cbranch-no" title="branch not covered" >this._frozen || t</span>his._owner.isSome()) {
 <span class="cstat-no" title="statement not covered" >      return false;</span>
     }
 &nbsp;
@@ -826,7 +826,7 @@ export class Attribute&lt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Attribute {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Attribute {</span></span>
   export interface MinimalJSON extends BaseNode.JSON&lt;"attribute"&gt; {}
 &nbsp;
   export interface JSON&lt;
@@ -886,7 +886,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >A
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

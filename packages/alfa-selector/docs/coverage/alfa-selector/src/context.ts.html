@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.24% </span>
+                <span class="strong">75.6% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>37/41</span>
+                <span class='fraction'>31/41</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88% </span>
+                <span class="strong">48% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>44/50</span>
+                <span class='fraction'>24/50</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -182,7 +182,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">114x</span>
@@ -191,7 +191,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">26x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -265,18 +265,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Element } from "@siteimprove/alfa-dom";
@@ -286,19 +286,19 @@ import { Map } from "@siteimprove/alfa-map";
  * @public
  */
 export class Context {
-  public static of(state: Iterable&lt;[Element, Context.State]&gt;): Context {
+  public static <span class="fstat-no" title="function not covered" >of(</span>state: Iterable&lt;[Element, Context.State]&gt;): Context {
 <span class="cstat-no" title="statement not covered" >    return new Context(Map.from(state));</span>
   }
 &nbsp;
   private static _empty = new Context(Map.empty());
 &nbsp;
-  public static empty(): Context {
+  public static <span class="fstat-no" title="function not covered" >empty(</span>): Context {
     return this._empty;
   }
 &nbsp;
   private readonly _state: Map&lt;Element, Context.State&gt;;
 &nbsp;
-  protected constructor(state: Map&lt;Element, Context.State&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(s</span>tate: Map&lt;Element, Context.State&gt;) {
     this._state = state;
   }
 &nbsp;
@@ -306,31 +306,31 @@ export class Context {
 <span class="cstat-no" title="statement not covered" >    return this._state.isEmpty();</span>
   }
 &nbsp;
-  public hasState(element: Element, state: Context.State): boolean {
+  public <span class="fstat-no" title="function not covered" >hasState(</span>element: Element, state: Context.State): boolean {
     return this._state.get(element).some((found) =&gt; (found &amp; state) !== 0);
   }
 &nbsp;
-  public getState(element: Element): Context.State {
+  public <span class="fstat-no" title="function not covered" >getState(</span>element: Element): Context.State {
     return this._state.get(element).getOr(Context.State.None);
   }
 &nbsp;
-  public setState(element: Element, state: Context.State): Context {
+  public <span class="fstat-no" title="function not covered" >setState(</span>element: Element, state: Context.State): Context {
     return new Context(this._state.set(element, state));
   }
 &nbsp;
-  public addState(element: Element, state: Context.State): Context {
+  public <span class="fstat-no" title="function not covered" >addState(</span>element: Element, state: Context.State): Context {
     return this.setState(element, this.getState(element) | state);
   }
 &nbsp;
-  public *withState(state: Context.State): Iterable&lt;Element&gt; {
+  public *<span class="fstat-no" title="function not covered" >withState(</span>state: Context.State): Iterable&lt;Element&gt; {
     yield* this._state.filter((found) =&gt; (found &amp; state) !== 0).keys();
   }
 &nbsp;
-  public hover(element: Element): Context {
+  public <span class="fstat-no" title="function not covered" >hover(</span>element: Element): Context {
     return this.addState(element, Context.State.Hover);
   }
 &nbsp;
-  public static hover(element: Element): Context {
+  public static <span class="fstat-no" title="function not covered" >hover(</span>element: Element): Context {
     return this.empty().hover(element);
   }
 &nbsp;
@@ -338,35 +338,35 @@ export class Context {
 <span class="cstat-no" title="statement not covered" >    return this.hasState(element, Context.State.Hover);</span>
   }
 &nbsp;
-  public active(element: Element): Context {
+  public <span class="fstat-no" title="function not covered" >active(</span>element: Element): Context {
     return this.addState(element, Context.State.Active);
   }
 &nbsp;
-  public static active(element: Element): Context {
+  public static <span class="fstat-no" title="function not covered" >active(</span>element: Element): Context {
     return this.empty().active(element);
   }
 &nbsp;
-  public isActive(element: Element): boolean {
+  public <span class="fstat-no" title="function not covered" >isActive(</span>element: Element): boolean {
     return this.hasState(element, Context.State.Active);
   }
 &nbsp;
-  public focus(element: Element): Context {
+  public <span class="fstat-no" title="function not covered" >focus(</span>element: Element): Context {
     return this.addState(element, Context.State.Focus);
   }
 &nbsp;
-  public static focus(element: Element): Context {
+  public static <span class="fstat-no" title="function not covered" >focus(</span>element: Element): Context {
     return this.empty().focus(element);
   }
 &nbsp;
-  public isFocused(element: Element): boolean {
+  public <span class="fstat-no" title="function not covered" >isFocused(</span>element: Element): boolean {
     return this.hasState(element, Context.State.Focus);
   }
 &nbsp;
-  public visit(element: Element): Context {
+  public <span class="fstat-no" title="function not covered" >visit(</span>element: Element): Context {
     return this.addState(element, Context.State.Visited);
   }
 &nbsp;
-  public static visit(element: Element): Context {
+  public static <span class="fstat-no" title="function not covered" >visit(</span>element: Element): Context {
     return this.empty().visit(element);
   }
 &nbsp;
@@ -378,13 +378,13 @@ export class Context {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Context {</span></span>
-  export enum State {
-    None = 0,
-    Hover = 1,
-    Active = 1 &lt;&lt; 1,
-    Focus = 1 &lt;&lt; 2,
-    Visited = 1 &lt;&lt; 3,
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >C</span>ontext {</span></span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  export enum S</span>tate {</span>
+<span class="cstat-no" title="statement not covered" >    None = 0,</span>
+<span class="cstat-no" title="statement not covered" >    Hover = 1,</span>
+<span class="cstat-no" title="statement not covered" >    Active = 1 &lt;&lt; 1,</span>
+<span class="cstat-no" title="statement not covered" >    Focus = 1 &lt;&lt; 2,</span>
+<span class="cstat-no" title="statement not covered" >    Visited = 1 &lt;&lt; 3,</span>
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -394,7 +394,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:35:03.293Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

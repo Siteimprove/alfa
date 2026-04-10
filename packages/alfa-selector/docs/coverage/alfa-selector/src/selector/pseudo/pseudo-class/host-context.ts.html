@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.88% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>32/36</span>
+                <span class='fraction'>30/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">35.71% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/14</span>
+                <span class='fraction'>7/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.41% </span>
+                <span class="strong">48.27% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>21/29</span>
+                <span class='fraction'>14/29</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>18/20</span>
+                <span class='fraction'>17/20</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -202,7 +202,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -216,7 +216,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -252,8 +252,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -283,7 +283,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -295,7 +295,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -303,17 +303,17 @@
 <span class="cline-any cline-yes">33x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">70x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">70x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -323,12 +323,12 @@
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
 &nbsp;
-import { Context } from "../../../context.js";
-import { Specificity } from "../../../specificity.js";
-import type { Compound, Selector, Simple } from "../../index.js";
-import { BaseSelector } from "../../selector.js";
+import { Context } from "../../../context.ts";
+import { Specificity } from "../../../specificity.ts";
+import type { Compound, Selector, Simple } from "../../index.ts";
+import { BaseSelector } from "../../selector.ts";
 &nbsp;
-import { WithSelector } from "./pseudo-class.js";
+import { WithSelector } from "./pseudo-class.ts";
 &nbsp;
 const { filter } = Parser;
 &nbsp;
@@ -344,11 +344,11 @@ const { filter } = Parser;
  *
  * @public
  */
-export class HostContext extends WithSelector&lt;
+export class HostContext<span class="fstat-no" title="function not covered" > e</span>xtends WithSelector&lt;
   "host-context",
   Compound | Simple
 &gt; {
-  public static of(selector: Compound | Simple): HostContext {
+  public static <span class="fstat-no" title="function not covered" >of(</span>selector: Compound | Simple): HostContext {
     return new HostContext(selector);
   }
 &nbsp;
@@ -369,7 +369,7 @@ export class HostContext extends WithSelector&lt;
    * @remarks
    * `:host-context` never matches anything in its own tree.
    */
-  public matches(element: Element, context?: Context): boolean {
+  public <span class="fstat-no" title="function not covered" >matches(</span>element: Element, context?: Context): boolean {
     return false;
   }
 &nbsp;
@@ -381,7 +381,7 @@ export class HostContext extends WithSelector&lt;
    * as the "state of the page".
    */
   @Cache.memoize
-<span class="fstat-no" title="function not covered" >  private _</span>matchHost(element: Element, context: Context): boolean {
+<span class="fstat-no" title="function not covered" >  private <span class="fstat-no" title="function not covered" >_</span>matchHost(</span>element: Element, context: Context): boolean {
     return element
       .inclusiveAncestors(Node.Traversal.of(Node.Traversal.composed))
       .filter(Element.isElement)
@@ -395,9 +395,9 @@ export class HostContext extends WithSelector&lt;
    * This must be called with `element` being the shadow host of
    * the Document that defines the selector.
    */
-  public matchHost(
+  public <span class="fstat-no" title="function not covered" >matchHost(</span>
     element: Element,
-    context: Context = <span class="branch-0 cbranch-no" title="branch not covered" >Context.empty(),</span>
+    context: Context = Context.empty(),
   ): boolean {
     return this.useContext
       ? <span class="branch-0 cbranch-no" title="branch not covered" >this._matchHost(element, context)</span>
@@ -423,17 +423,17 @@ export class HostContext extends WithSelector&lt;
   }
 }
 &nbsp;
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >HostContext {</span></span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >H</span>ostContext {</span></span>
   export interface JSON
     extends WithSelector.JSON&lt;"host-context", Compound | Simple&gt; {}
 &nbsp;
-  export function isHostContext(value: unknown): value is HostContext {
+  export function <span class="cstat-no" title="statement not covered" >isHostContext(value: unknown): value is HostContext {</span>
     return value instanceof HostContext;
   }
 &nbsp;
   export const parse = (
     parseSelector: Selector.Parser.Component,
-    withColon = <span class="branch-0 cbranch-no" title="branch not covered" >true,</span>
+    withColon = true,
   ) =&gt;
     WithSelector.parseWithSelector(
       "host-context",
@@ -441,7 +441,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
         filter(
           parseSelector(),
           BaseSelector.hasCompoundType,
-<span class="fstat-no" title="function not covered" >          () =</span>&gt; <span class="cstat-no" title="statement not covered" >":host-context() only accepts compound selectors",</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >          () =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >"</span>:host-context() only accepts compound selectors",</span></span>
         ),
       HostContext.of,
       withColon,
@@ -454,7 +454,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:35:03.293Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

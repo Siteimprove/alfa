@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.92% </span>
+                <span class="strong">53.37% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>66/112</span>
+                <span class='fraction'>79/148</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">37.2% </span>
+                <span class="strong">34.21% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>16/43</span>
+                <span class='fraction'>26/76</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.53% </span>
+                <span class="strong">59.67% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>27/65</span>
+                <span class='fraction'>74/124</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.92% </span>
+                <span class="strong">59.29% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>66/112</span>
+                <span class='fraction'>67/113</span>
             </div>
         
             
@@ -652,7 +652,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1057,13 +1057,13 @@ import { Slice } from "@siteimprove/alfa-slice";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { Languages } from "./language/data.js";
+import { Languages } from "./language/data.ts";
 &nbsp;
 /**
  * @public
  */
 export class Language implements Equatable, Serializable {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     primary: Language.Primary,
     extended: Option&lt;Language.Extended&gt; = None,
     script: Option&lt;Language.Script&gt; = None,
@@ -1079,7 +1079,7 @@ export class Language implements Equatable, Serializable {
   private readonly _region: Option&lt;Language.Region&gt;;
   private readonly _variants: Array&lt;Language.Variant&gt;;
 &nbsp;
-  constructor(
+<span class="fstat-no" title="function not covered" >  constructor(</span>
     primary: Language.Primary,
     extended: Option&lt;Language.Extended&gt;,
     script: Option&lt;Language.Script&gt;,
@@ -1093,28 +1093,28 @@ export class Language implements Equatable, Serializable {
     this._variants = variants;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >primary(</span>): Language.Primary {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >primary(</span>): Language.Primary {</span>
 <span class="cstat-no" title="statement not covered" >    return this._primary;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >extended(</span>): Option&lt;Language.Extended&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >extended(</span>): Option&lt;Language.Extended&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._extended;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >script(</span>): Option&lt;Language.Script&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >script(</span>): Option&lt;Language.Script&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._script;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >region(</span>): Option&lt;Language.Region&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >region(</span>): Option&lt;Language.Region&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._region;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >variants(</span>): Iterable&lt;Language.Variant&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >variants(</span>): Iterable&lt;Language.Variant&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._variants;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Language &amp;&amp;
       value._primary.equals(this._primary) &amp;&amp;
       value._extended.equals(this._extended) &amp;&amp;
@@ -1125,7 +1125,7 @@ export class Language implements Equatable, Serializable {
     );
   }
 &nbsp;
-  public toJSON(): Language.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Language.JSON {
     return {
       type: "language",
       primary: this._primary.toJSON(),
@@ -1136,7 +1136,7 @@ export class Language implements Equatable, Serializable {
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return [</span>
       this._primary,
       ...this._extended,
@@ -1150,7 +1150,7 @@ export class Language implements Equatable, Serializable {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Language {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >L</span>anguage {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     type: "language";
@@ -1172,7 +1172,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-3.1.2}
    */
-  export abstract class Subtag&lt;
+  export abstract class <span class="cstat-no" title="statement not covered" >Subtag&lt;</span>
     T extends string = string,
     N extends string = string,
   &gt;
@@ -1192,7 +1192,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
     /**
      * {@link https://tools.ietf.org/html/bcp47#section-3.1.4}
      */
-    public get <span class="fstat-no" title="function not covered" >name(</span>): N {
+    public get <span class="fstat-no" title="function not covered" >name(): N {</span>
 <span class="cstat-no" title="statement not covered" >      return this._name;</span>
     }
 &nbsp;
@@ -1204,7 +1204,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
 &nbsp;
     public abstract toJSON(): Subtag.JSON&lt;T, N&gt;;
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+    public <span class="fstat-no" title="function not covered" >toString(): string {</span>
 <span class="cstat-no" title="statement not covered" >      return this._name;</span>
     }
   }
@@ -1223,7 +1223,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.1}
    */
-  export class Primary extends Subtag&lt;"primary", Primary.Name&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Primary extends Subtag&lt;"primary", Primary.Name&gt; {</span>
     public static of(name: Primary.Name): Primary {
       return new Primary(name);
     }
@@ -1232,7 +1232,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
       super(name);
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "primary" {
+    public get <span class="fstat-no" title="function not covered" >type(): "primary" {</span>
 <span class="cstat-no" title="statement not covered" >      return "primary";</span>
     }
 &nbsp;
@@ -1247,7 +1247,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
 &nbsp;
     public equals(value: unknown): value is this;
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): boolean {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Primary &amp;&amp; value._name === this._name;</span>
     }
 &nbsp;
@@ -1260,18 +1260,18 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
     }
   }
 &nbsp;
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Primary {</span>
+<span class="cstat-no" title="statement not covered" >  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Primary {</span></span></span>
     export type Name = keyof Languages["primary"];
 &nbsp;
     export interface JSON extends Subtag.JSON&lt;"primary", Name&gt; {
       scope: Scope | null;
     }
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >isPrimary(</span>value: unknown): value is Primary {
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isPrimary(v</span>alue: unknown): value is Primary {</span>
 <span class="cstat-no" title="statement not covered" >      return value instanceof Primary;</span>
     }
 &nbsp;
-    export function isName(name: string): name is Name {
+    export function <span class="cstat-no" title="statement not covered" >isName(name: string): name is Name {</span>
       return name in Languages.primary;
     }
   }
@@ -1281,23 +1281,23 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.2}
    */
-  export class Extended extends Subtag&lt;"extended", Extended.Name&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Extended extends Subtag&lt;"extended", Extended.Name&gt; {</span>
     public static of(name: Extended.Name): Extended {
 <span class="cstat-no" title="statement not covered" >      return new Extended(name);</span>
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    protected constructor(n</span>ame: Extended.Name) {
+    protected <span class="fstat-no" title="function not covered" >constructor(n</span>ame: Extended.Name) {
 <span class="cstat-no" title="statement not covered" >      super(name);</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "extended" {
+    public get <span class="fstat-no" title="function not covered" >type(): "extended" {</span>
 <span class="cstat-no" title="statement not covered" >      return "extended";</span>
     }
 &nbsp;
     /**
      * {@link https://tools.ietf.org/html/bcp47#section-3.1.8}
      */
-    public get <span class="fstat-no" title="function not covered" >prefix(</span>): Primary.Name {
+    public get <span class="fstat-no" title="function not covered" >prefix(): Primary.Name {</span>
 <span class="cstat-no" title="statement not covered" >      return Languages.extended[this._name].prefix;</span>
     }
 &nbsp;
@@ -1305,11 +1305,11 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
 &nbsp;
     public equals(value: unknown): value is this;
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): boolean {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Extended &amp;&amp; value._name === this._name;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toJSON(</span>): Extended.JSON {
+    public <span class="fstat-no" title="function not covered" >toJSON(): Extended.JSON {</span>
 <span class="cstat-no" title="statement not covered" >      return {</span>
         type: "extended",
         name: this._name,
@@ -1318,18 +1318,18 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
     }
   }
 &nbsp;
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Extended {</span>
+<span class="cstat-no" title="statement not covered" >  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Extended {</span></span></span>
     export type Name = keyof Languages["extended"];
 &nbsp;
     export interface JSON extends Subtag.JSON&lt;"extended", Name&gt; {
       prefix: Primary.Name;
     }
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >isExtended(</span>value: unknown): value is Extended {
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isExtended(v</span>alue: unknown): value is Extended {</span>
 <span class="cstat-no" title="statement not covered" >      return value instanceof Extended;</span>
     }
 &nbsp;
-    export function isName(name: string): name is Name {
+    export function <span class="cstat-no" title="statement not covered" >isName(name: string): name is Name {</span>
       return name in Languages.extended;
     }
   }
@@ -1339,16 +1339,16 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.3}
    */
-  export class Script extends Subtag&lt;"script", Script.Name&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Script extends Subtag&lt;"script", Script.Name&gt; {</span>
     public static of(name: Script.Name): Script {
 <span class="cstat-no" title="statement not covered" >      return new Script(name);</span>
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    protected constructor(n</span>ame: Script.Name) {
+    protected <span class="fstat-no" title="function not covered" >constructor(n</span>ame: Script.Name) {
 <span class="cstat-no" title="statement not covered" >      super(name);</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "script" {
+    public get <span class="fstat-no" title="function not covered" >type(): "script" {</span>
 <span class="cstat-no" title="statement not covered" >      return "script";</span>
     }
 &nbsp;
@@ -1356,11 +1356,11 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
 &nbsp;
     public equals(value: unknown): value is this;
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): boolean {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Script &amp;&amp; value._name === this._name;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toJSON(</span>): Script.JSON {
+    public <span class="fstat-no" title="function not covered" >toJSON(): Script.JSON {</span>
 <span class="cstat-no" title="statement not covered" >      return {</span>
         type: "script",
         name: this._name,
@@ -1368,16 +1368,16 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
     }
   }
 &nbsp;
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Script {</span>
+<span class="cstat-no" title="statement not covered" >  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Script {</span></span></span>
     export type Name = keyof Languages["script"];
 &nbsp;
     export interface JSON extends Subtag.JSON&lt;"script", Name&gt; {}
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >isScript(</span>value: unknown): value is Script {
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isScript(v</span>alue: unknown): value is Script {</span>
 <span class="cstat-no" title="statement not covered" >      return value instanceof Script;</span>
     }
 &nbsp;
-    export function isName(name: string): name is Name {
+    export function <span class="cstat-no" title="statement not covered" >isName(name: string): name is Name {</span>
       return name in Languages.script;
     }
   }
@@ -1387,7 +1387,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.4}
    */
-  export class Region extends Subtag&lt;"region", Region.Name&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Region extends Subtag&lt;"region", Region.Name&gt; {</span>
     public static of(name: Region.Name): Region {
       return new Region(name);
     }
@@ -1396,7 +1396,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
       super(name);
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "region" {
+    public get <span class="fstat-no" title="function not covered" >type(): "region" {</span>
 <span class="cstat-no" title="statement not covered" >      return "region";</span>
     }
 &nbsp;
@@ -1404,7 +1404,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
 &nbsp;
     public equals(value: unknown): value is this;
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): boolean {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Region &amp;&amp; value._name === this._name;</span>
     }
 &nbsp;
@@ -1416,16 +1416,16 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
     }
   }
 &nbsp;
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Region {</span>
+<span class="cstat-no" title="statement not covered" >  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Region {</span></span></span>
     export type Name = keyof Languages["region"];
 &nbsp;
     export interface JSON extends Subtag.JSON&lt;"region", Name&gt; {}
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >isRegion(</span>value: unknown): value is Region {
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isRegion(v</span>alue: unknown): value is Region {</span>
 <span class="cstat-no" title="statement not covered" >      return value instanceof Region;</span>
     }
 &nbsp;
-    export function isName(name: string): name is Name {
+    export function <span class="cstat-no" title="statement not covered" >isName(name: string): name is Name {</span>
       return name in Languages.region;
     }
   }
@@ -1435,23 +1435,23 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
   /**
    * {@link https://tools.ietf.org/html/bcp47#section-2.2.5}
    */
-  export class Variant extends Subtag&lt;"variant", Variant.Name&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Variant extends Subtag&lt;"variant", Variant.Name&gt; {</span>
     public static of(name: Variant.Name): Variant {
 <span class="cstat-no" title="statement not covered" >      return new Variant(name);</span>
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    protected constructor(n</span>ame: Variant.Name) {
+    protected <span class="fstat-no" title="function not covered" >constructor(n</span>ame: Variant.Name) {
 <span class="cstat-no" title="statement not covered" >      super(name);</span>
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >type(</span>): "variant" {
+    public get <span class="fstat-no" title="function not covered" >type(): "variant" {</span>
 <span class="cstat-no" title="statement not covered" >      return "variant";</span>
     }
 &nbsp;
     /**
      * {@link https://tools.ietf.org/html/bcp47#section-3.1.8}
      */
-    public get <span class="fstat-no" title="function not covered" >prefixes(</span>): ReadonlyArray&lt;string&gt; {
+    public get <span class="fstat-no" title="function not covered" >prefixes(): ReadonlyArray&lt;string&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      return Languages.variant[this._name].prefixes;</span>
     }
 &nbsp;
@@ -1459,11 +1459,11 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
 &nbsp;
     public equals(value: unknown): value is this;
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): boolean {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Variant &amp;&amp; value._name === this._name;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toJSON(</span>): Variant.JSON {
+    public <span class="fstat-no" title="function not covered" >toJSON(): Variant.JSON {</span>
 <span class="cstat-no" title="statement not covered" >      return {</span>
         type: "variant",
         name: this._name,
@@ -1472,25 +1472,25 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
     }
   }
 &nbsp;
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Variant {</span>
+<span class="cstat-no" title="statement not covered" >  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Variant {</span></span></span>
     export type Name = keyof Languages["variant"];
 &nbsp;
     export interface JSON extends Subtag.JSON&lt;"variant", Name&gt; {
       prefixes: Array&lt;string&gt;;
     }
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >isVariant(</span>value: unknown): value is Variant {
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isVariant(v</span>alue: unknown): value is Variant {</span>
 <span class="cstat-no" title="statement not covered" >      return value instanceof Variant;</span>
     }
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >isName(</span>name: string): name is Name {
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isName(n</span>ame: string): name is Name {</span>
 <span class="cstat-no" title="statement not covered" >      return name in Languages.variant;</span>
     }
   }
 &nbsp;
   export const { of: variant, isVariant, isName: isVariantName } = Variant;
 &nbsp;
-  export function parse(input: string): Result&lt;Language, string&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >parse(</span>input: string): Result&lt;Language, string&gt; {</span>
     let parts = Slice.of(input.toLowerCase().split("-"));
 &nbsp;
     return parts
@@ -1539,7 +1539,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
           Language.of(primary, extended, script, region, variants),
         );
       })
-      .getOrElse(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >Err.of(`Expected a primary language name`))</span>;
+      .getOrElse(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >E</span>rr.of(`Expected a primary language name`))</span>;
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -1549,7 +1549,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:38.801Z
+                at 2026-04-10T09:29:54.738Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

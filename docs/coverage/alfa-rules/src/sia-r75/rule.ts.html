@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.17% </span>
+                <span class="strong">89.28% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>31/34</span>
+                <span class='fraction'>50/56</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/8</span>
+                <span class='fraction'>8/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">70.73% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>18/21</span>
+                <span class='fraction'>29/41</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.17% </span>
+                <span class="strong">91.42% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>31/34</span>
+                <span class='fraction'>32/35</span>
             </div>
         
             
@@ -376,7 +376,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -410,10 +410,10 @@ import type { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import type { Page } from "@siteimprove/alfa-web";
 &nbsp;
-import { expectation } from "../common/act/expectation.js";
-import { BestPractice } from "../requirements/index.js";
+import { expectation } from "../common/act/expectation.ts";
+import { BestPractice } from "../requirements/index.ts";
 &nbsp;
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 &nbsp;
 const { hasNamespace, hasName } = Element;
 const { isText } = Text;
@@ -427,7 +427,7 @@ export default Rule.Atomic.of&lt;Page, Element&gt;({
   uri: "https://alfa.siteimprove.com/rules/sia-r75",
   requirements: [BestPractice.of("font-size-above-minimum")],
   tags: [Scope.Component, Stability.Stable],
-  evaluate({ device, document }) {
+<span class="fstat-no" title="function not covered" >  evaluate(</span>{ device, document }) {
     const visibleTextCache = Cache.empty&lt;Element&lt;string&gt;, Sequence&lt;Text&gt;&gt;();
 &nbsp;
     return {
@@ -494,7 +494,7 @@ export default Rule.Atomic.of&lt;Page, Element&gt;({
 /**
  * @public
  */
-export namespace Outcomes {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Outcomes {</span>
   export const IsSufficient = (declaration: Option&lt;Declaration&gt;) =&gt;
     Ok.of(
       WithDeclaration.of(`The font size is greater than 9 pixels`, declaration),
@@ -510,18 +510,18 @@ export namespace Outcomes {
  * @public
  */
 export class WithDeclaration extends Diagnostic {
-  public static of(message: string, declaration: Option&lt;Declaration&gt; = None) {
+  public static <span class="fstat-no" title="function not covered" >of(</span>message: string, declaration: Option&lt;Declaration&gt; = None) {
     return new WithDeclaration(message, declaration);
   }
 &nbsp;
   private readonly _declaration: Option&lt;Declaration&gt;;
 &nbsp;
-  constructor(message: string, declaration: Option&lt;Declaration&gt;) {
+<span class="fstat-no" title="function not covered" >  constructor(m</span>essage: string, declaration: Option&lt;Declaration&gt;) {
     super(message);
     this._declaration = declaration;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >declaration(</span>): Option&lt;Declaration&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >declaration(</span>): Option&lt;Declaration&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._declaration;</span>
   }
 &nbsp;
@@ -529,15 +529,15 @@ export class WithDeclaration extends Diagnostic {
 &nbsp;
   equals(value: unknown): value is this;
 &nbsp;
-<span class="fstat-no" title="function not covered" >  equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >  equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof WithDeclaration &amp;&amp;
       value._message === this.message &amp;&amp;
       value._declaration === this._declaration
     );
   }
 &nbsp;
-  toJSON(options?: Node.SerializationOptions): WithDeclaration.JSON {
+<span class="fstat-no" title="function not covered" >  toJSON(</span>options?: Node.SerializationOptions): WithDeclaration.JSON {
     return {
       ...super.toJSON(options),
       declaration: this._declaration.toJSON(),
@@ -548,7 +548,7 @@ export class WithDeclaration extends Diagnostic {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >WithDeclaration {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >W</span>ithDeclaration {</span></span>
   export interface JSON extends Diagnostic.JSON {
     declaration: Option.JSON&lt;Declaration&gt;;
   }
@@ -560,7 +560,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >W
   export function isWithDeclaration(value: unknown): value is WithDeclaration;
 &nbsp;
   /**@public */
-  export function <span class="fstat-no" title="function not covered" >isWithDeclaration(</span>value: unknown): value is WithDeclaration {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isWithDeclaration(</span>v</span>alue: unknown): value is WithDeclaration {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof WithDeclaration;</span>
   }
 }
@@ -571,7 +571,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >W
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

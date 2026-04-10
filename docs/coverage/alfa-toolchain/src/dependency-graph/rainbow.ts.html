@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
+                <span class="strong">10.52% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/12</span>
+                <span class='fraction'>2/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/3</span>
+                <span class='fraction'>4/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/6</span>
+                <span class='fraction'>4/12</span>
             </div>
         
             
@@ -166,7 +166,7 @@
 /**
  * @internal
  */
-export namespace Rainbow {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Rainbow {</span>
   /**
    * Return a color x% along the rainbow spectrum.
    * {@link http://blog.adamcole.ca/2011/11/simple-javascript-rainbow-color.html}
@@ -177,11 +177,11 @@ export namespace Rainbow {
    * HSL colors instead) to ensure the contrast is at least 3:1 with white,
    * preferably 4.5:1.
    */
-  function <span class="fstat-no" title="function not covered" >rainbowStop(</span>percentage: number): Color.RGB_RGBA {
-    const f: (n: number, k?: number) =&gt; number = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(</span></span>
+  function <span class="fstat-no" title="function not covered" >rainbowStop(p</span>ercentage: number): Color.RGB_RGBA {
+    const f: (n: number, k?: number) =&gt; number = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(</span></span></span></span>
       n,
-      k = <span class="branch-0 cbranch-no" title="branch not covered" >(n + percentage * 12) % 12,</span>
-    ) =&gt; <span class="cstat-no" title="statement not covered" >0.5 - 0.5 * Math.max(Math.min(k - 3, 9 - k, 1), -1);</span>
+<span class="branch-0 cbranch-no" title="branch not covered" >      k = <span class="branch-0 cbranch-no" title="branch not covered" >(n + percentage * 12) % 12,</span></span>
+    ) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0.5 - 0.5 * Math.max(Math.min(k - 3, 9 - k, 1), -1);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return rgb2hex(f(0), f(8), f(4));</span>
   }
@@ -189,21 +189,21 @@ export namespace Rainbow {
   /**
    * Return a set of n colors evenly spaced along the rainbow spectrum.
    */
-  export function <span class="fstat-no" title="function not covered" >rainbow(</span>n: number): Array&lt;Color.RGB_RGBA&gt; {
-    const result: Array&lt;Color.RGB_RGBA&gt; = <span class="cstat-no" title="statement not covered" >[];</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >rainbow(n</span>: number): Array&lt;Color.RGB_RGBA&gt; {</span>
+    const result: Array&lt;Color.RGB_RGBA&gt; = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[];</span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    for (let i = <span class="cstat-no" title="statement not covered" >0;</span> i &lt; n; i++) {</span>
+<span class="cstat-no" title="statement not covered" >    for (let i = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0;</span> i</span> &lt; n; i++) {</span>
 <span class="cstat-no" title="statement not covered" >      result.push(rainbowStop(i / n));</span>
     }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return result;</span>
   }
 &nbsp;
-  function <span class="fstat-no" title="function not covered" >rgb2hex(</span>r: number, g: number, b: number): Color.RGB_RGBA {
+  function <span class="fstat-no" title="function not covered" >rgb2hex(r</span>: number, g: number, b: number): Color.RGB_RGBA {
 <span class="cstat-no" title="statement not covered" >    return ("#" +</span>
       [r, g, b]
-        .map(<span class="fstat-no" title="function not covered" >(x</span>) =&gt;
-<span class="cstat-no" title="statement not covered" >          Math.round(x * 255)</span>
+        .map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(x</span></span>) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >          Math.round(x * 255)</span></span>
             .toString(16)
             .padStart(2, "0"),
         )
@@ -217,7 +217,7 @@ export namespace Rainbow {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:33:57.733Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

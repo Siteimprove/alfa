@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">30% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/15</span>
+                <span class='fraction'>6/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">16.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/6</span>
+                <span class='fraction'>2/12</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">40.9% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>9/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">25% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>3/12</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/15</span>
+                <span class='fraction'>4/16</span>
             </div>
         
             
@@ -210,7 +210,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -218,14 +218,14 @@
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -240,9 +240,9 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 &nbsp;
-import { BaseNode } from "./node.js";
+import { BaseNode } from "./node.ts";
 &nbsp;
-import type { Node } from "./index.js";
+import type { Node } from "./index.ts";
 &nbsp;
 /**
  * @public
@@ -266,7 +266,7 @@ export class Fragment extends BaseNode&lt;"fragment"&gt; {
 <span class="cstat-no" title="statement not covered" >    return new Fragment([]);</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  protected constructor(</span>
+<span class="fstat-no" title="function not covered" >  protected <span class="fstat-no" title="function not covered" >constructor(</span></span>
     children: Array&lt;Node&gt;,
     externalId?: string,
     internalId?: string,
@@ -278,12 +278,12 @@ export class Fragment extends BaseNode&lt;"fragment"&gt; {
   /**
    * @internal
    **/
-  protected <span class="fstat-no" title="function not covered" >_internalPath(</span>): string {
+  protected <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >_internalPath(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return "/";</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
-    const children = <span class="cstat-no" title="statement not covered" >this._children</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
+    const children = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._children</span></span>
       .map(<span class="fstat-no" title="function not covered" >(c</span>hild) =&gt; <span class="cstat-no" title="statement not covered" >String.indent(child.toString()))</span>
       .join("\n");
 &nbsp;
@@ -293,7 +293,7 @@ export class Fragment extends BaseNode&lt;"fragment"&gt; {
   /**
    * @internal
    */
-  public <span class="fstat-no" title="function not covered" >_attachParent(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >_attachParent(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 }
@@ -301,10 +301,10 @@ export class Fragment extends BaseNode&lt;"fragment"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Fragment {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Fragment {</span></span>
   export interface JSON extends BaseNode.JSON&lt;"fragment"&gt; {}
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isFragment(</span>value: unknown): value is Fragment {
+  export function isFragment(value: unknown): value is Fragment {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Fragment;</span>
   }
 &nbsp;
@@ -316,8 +316,8 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >F
     fromNode: (json: Node.JSON, device?: Device) =&gt; Trampoline&lt;Node&gt;,
     device?: Device,
   ): Trampoline&lt;Fragment&gt; {
-<span class="cstat-no" title="statement not covered" >    return Trampoline.traverse(json.children ?? [], <span class="fstat-no" title="function not covered" >(c</span>hild) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      fromNode(child, device),</span>
+<span class="cstat-no" title="statement not covered" >    return Trampoline.traverse(json.children ?? [], <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(c</span></span>hild) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      fromNode(child, device),</span></span>
     ).map(<span class="fstat-no" title="function not covered" >(c</span>hildren) =&gt; <span class="cstat-no" title="statement not covered" >Fragment.of(children))</span>;
   }
 }
@@ -328,7 +328,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >F
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:29.276Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

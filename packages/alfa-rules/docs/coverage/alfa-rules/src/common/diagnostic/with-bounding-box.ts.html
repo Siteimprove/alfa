@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.17% </span>
+                <span class="strong">53.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/23</span>
+                <span class='fraction'>15/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">38.46% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/15</span>
+                <span class='fraction'>10/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/12</span>
+                <span class='fraction'>8/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.17% </span>
+                <span class="strong">54.16% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/23</span>
+                <span class='fraction'>13/24</span>
             </div>
         
             
@@ -365,7 +365,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -402,7 +402,7 @@ import type { Hash } from "@siteimprove/alfa-hash";
 import type { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Sequence } from "@siteimprove/alfa-sequence";
 &nbsp;
-import { WithName } from "./with-name.js";
+import { WithName } from "./with-name.ts";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
@@ -422,7 +422,7 @@ export class WithBoundingBox extends WithName {
     tooCloseNeighbors: Iterable&lt;Element&gt;,
   ): WithBoundingBox;
 &nbsp;
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     message: string,
     name?: string,
     box?: Rectangle,
@@ -460,7 +460,7 @@ export class WithBoundingBox extends WithName {
   &gt;;
   protected readonly _tooCloseNeighbors: Sequence&lt;Element&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     message: string,
     name: string,
     box: Rectangle,
@@ -486,18 +486,18 @@ export class WithBoundingBox extends WithName {
     this._tooCloseNeighbors = Sequence.from(tooCloseNeighbors);
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >box(</span>): Rectangle {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >box(</span>): Rectangle {</span>
 <span class="cstat-no" title="statement not covered" >    return this._box;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >condition(</span>): Either&lt;
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >condition(</span>): Either&lt;</span>
     WithBoundingBox.UACondition,
     WithBoundingBox.SizeAndSpacingCondition
   &gt; {
 <span class="cstat-no" title="statement not covered" >    return this._condition;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >tooCloseNeighbors(</span>): Iterable&lt;Element&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >tooCloseNeighbors(</span>): Iterable&lt;Element&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._tooCloseNeighbors;</span>
   }
 &nbsp;
@@ -505,8 +505,8 @@ export class WithBoundingBox extends WithName {
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof WithBoundingBox &amp;&amp;
       value._message === this._message &amp;&amp;
       value._name === this._name &amp;&amp;
@@ -516,14 +516,14 @@ export class WithBoundingBox extends WithName {
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    super.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    this._box.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    this._condition.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    this._tooCloseNeighbors.hash(hash);</span>
   }
 &nbsp;
-  public toJSON(options?: Node.SerializationOptions): WithBoundingBox.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Node.SerializationOptions): WithBoundingBox.JSON {
     return {
       ...super.toJSON(options),
       box: this._box.toJSON(),
@@ -533,7 +533,7 @@ export class WithBoundingBox extends WithName {
   }
 }
 &nbsp;
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >WithBoundingBox {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >W</span>ithBoundingBox {</span></span>
   export interface JSON extends WithName.JSON {
     box: Rectangle.JSON;
     condition: json.JSON;
@@ -557,7 +557,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >W
   /** @public */
   export function isWithBoundingBox(value: unknown): value is WithBoundingBox;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isWithBoundingBox(</span>value: unknown): value is WithBoundingBox {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isWithBoundingBox(</span>v</span>alue: unknown): value is WithBoundingBox {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof WithBoundingBox;</span>
   }
 }
@@ -568,7 +568,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >W
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:36:26.756Z
+                at 2026-04-10T09:31:39.916Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

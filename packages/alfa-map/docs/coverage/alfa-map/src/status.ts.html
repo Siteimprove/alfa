@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">84.37% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>23/23</span>
+                <span class='fraction'>27/32</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">96.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>15/15</span>
+                <span class='fraction'>29/30</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -171,11 +171,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5810x</span>
+<span class="cline-any cline-yes">5815x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5810x</span>
+<span class="cline-any cline-yes">5815x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -183,15 +183,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2421x</span>
+<span class="cline-any cline-yes">2425x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2421x</span>
+<span class="cline-any cline-yes">2425x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2421x</span>
+<span class="cline-any cline-yes">2425x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -215,15 +215,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3377x</span>
+<span class="cline-any cline-yes">3378x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3377x</span>
+<span class="cline-any cline-yes">3378x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3377x</span>
+<span class="cline-any cline-yes">3378x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -257,7 +257,7 @@ export type Status&lt;T&gt; =
 /**
  * @internal
  */
-export namespace Status {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Status {</span>
   abstract class Status&lt;T&gt; {
     protected readonly _result: T;
 &nbsp;
@@ -272,7 +272,7 @@ export namespace Status {
     public abstract get status(): string;
   }
 &nbsp;
-  export class Created&lt;T&gt; extends Status&lt;T&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Created&lt;T&gt; extends Status&lt;T&gt; {</span>
     public static of&lt;T&gt;(result: T): Created&lt;T&gt; {
       return new Created(result);
     }
@@ -288,7 +288,7 @@ export namespace Status {
 &nbsp;
   export const { of: created } = Created;
 &nbsp;
-  export class Updated&lt;T&gt; extends Status&lt;T&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Updated&lt;T&gt; extends Status&lt;T&gt; {</span>
     public static of&lt;T&gt;(result: T): Updated&lt;T&gt; {
       return new Updated(result);
     }
@@ -304,7 +304,7 @@ export namespace Status {
 &nbsp;
   export const { of: updated } = Updated;
 &nbsp;
-  export class Deleted&lt;T&gt; extends Status&lt;T&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Deleted&lt;T&gt; extends Status&lt;T&gt; {</span>
     public static of&lt;T&gt;(result: T): Deleted&lt;T&gt; {
       return new Deleted(result);
     }
@@ -320,7 +320,7 @@ export namespace Status {
 &nbsp;
   export const { of: deleted } = Deleted;
 &nbsp;
-  export class Unchanged&lt;T&gt; extends Status&lt;T&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Unchanged&lt;T&gt; extends Status&lt;T&gt; {</span>
     public static of&lt;T&gt;(result: T): Unchanged&lt;T&gt; {
       return new Unchanged(result);
     }
@@ -343,7 +343,7 @@ export namespace Status {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:43.171Z
+                at 2026-04-10T09:29:58.716Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

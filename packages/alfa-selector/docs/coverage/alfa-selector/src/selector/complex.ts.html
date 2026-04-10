@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.75% </span>
+                <span class="strong">65.62% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>22/32</span>
+                <span class='fraction'>21/32</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>18/30</span>
+                <span class='fraction'>12/30</span>
             </div>
         
             
@@ -223,7 +223,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -317,12 +317,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -338,8 +338,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">130x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">128x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -349,7 +349,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">291x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">43x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -360,14 +360,14 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 &nbsp;
-import { Context } from "../context.js";
-import type { Selector } from "./index.js";
-import { Specificity } from "../specificity.js";
+import { Context } from "../context.ts";
+import type { Selector } from "./index.ts";
+import { Specificity } from "../specificity.ts";
 &nbsp;
-import { Combinator } from "./combinator.js";
-import { Compound } from "./compound.js";
-import { BaseSelector } from "./selector.js";
-import type { Class, Id, Simple, Type } from "./simple/index.js";
+import { Combinator } from "./combinator.ts";
+import { Compound } from "./compound.ts";
+import { BaseSelector } from "./selector.ts";
+import type { Class, Id, Simple, Type } from "./simple/index.ts";
 &nbsp;
 const { map, pair, zeroOrMore } = Parser;
 &nbsp;
@@ -377,7 +377,7 @@ const { map, pair, zeroOrMore } = Parser;
  * @public
  */
 export class Complex extends BaseSelector&lt;"complex"&gt; {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     combinator: Combinator,
     left: Simple | Compound | Complex,
     right: Simple | Compound,
@@ -390,7 +390,7 @@ export class Complex extends BaseSelector&lt;"complex"&gt; {
   private readonly _right: Simple | Compound;
   protected readonly _key: Option&lt;Id | Class | Type&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     combinator: Combinator,
     left: Simple | Compound | Complex,
     right: Simple | Compound,
@@ -419,7 +419,7 @@ export class Complex extends BaseSelector&lt;"complex"&gt; {
 <span class="cstat-no" title="statement not covered" >    return this._right;</span>
   }
 &nbsp;
-  public matches(element: Element, context?: Context): boolean {
+  public <span class="fstat-no" title="function not covered" >matches(</span>element: Element, context?: Context): boolean {
     return Combinator.matcher(
       this._left,
       this._combinator,
@@ -446,7 +446,7 @@ export class Complex extends BaseSelector&lt;"complex"&gt; {
 <span class="cstat-no" title="statement not covered" >    yield this;</span>
   }
 &nbsp;
-  public toJSON(): Complex.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Complex.JSON {
     return {
       ...super.toJSON(),
       combinator: this._combinator,
@@ -468,14 +468,14 @@ export class Complex extends BaseSelector&lt;"complex"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Complex {</span></span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >C</span>omplex {</span></span>
   export interface JSON extends BaseSelector.JSON&lt;"complex"&gt; {
     combinator: Combinator;
     left: Simple.JSON | Compound.JSON | Complex.JSON;
     right: Simple.JSON | Compound.JSON;
   }
 &nbsp;
-  export function isComplex(value: unknown): value is Complex {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isComplex(v</span>alue: unknown): value is Complex {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Complex;</span>
   }
 &nbsp;
@@ -508,7 +508,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:35:03.293Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

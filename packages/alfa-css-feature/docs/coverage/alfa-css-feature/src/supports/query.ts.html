@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">61.11% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/15</span>
+                <span class='fraction'>11/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">25% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>2/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">30.43% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/12</span>
+                <span class='fraction'>7/23</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/15</span>
+                <span class='fraction'>10/16</span>
             </div>
         
             
@@ -203,7 +203,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -232,10 +232,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { Condition } from "../condition/index.js";
-import type { Feature } from "../feature.js";
+import { Condition } from "../condition/index.ts";
+import type { Feature } from "../feature.ts";
 &nbsp;
-import { Property } from "./feature/index.js";
+import { Property } from "./feature/index.ts";
 &nbsp;
 const { end, left, map } = Parser;
 &nbsp;
@@ -248,41 +248,41 @@ const { end, left, map } = Parser;
  * @public
  */
 export class Query implements Feature&lt;Condition&lt;Property&gt;, Query.JSON&gt; {
-  public static of(condition: Condition&lt;Property&gt;): Query {
+  public static <span class="fstat-no" title="function not covered" >of(</span>condition: Condition&lt;Property&gt;): Query {
     return new Query(condition);
   }
 &nbsp;
   private readonly _condition: Condition&lt;Property&gt;;
 &nbsp;
-  protected constructor(condition: Condition&lt;Property&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(c</span>ondition: Condition&lt;Property&gt;) {
     this._condition = condition;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >condition(</span>): Condition&lt;Property&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >condition(</span>): Condition&lt;Property&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._condition;</span>
   }
 &nbsp;
-  public matches(device: Device): boolean {
+  public <span class="fstat-no" title="function not covered" >matches(</span>device: Device): boolean {
     return this._condition.matches(device);
   }
 &nbsp;
-  private *<span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;Condition&lt;Property&gt;&gt; {
+  private *<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;Condition&lt;Property&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    yield* this._condition;</span>
   }
 &nbsp;
-  public [<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;Condition&lt;Property&gt;&gt; {
+  public [<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.iterator]</span></span>(): Iterator&lt;Condition&lt;Property&gt;&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.iterator();</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Query &amp;&amp; value._condition.equals(this._condition);</span>
   }
 &nbsp;
-  public toJSON(): Query.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Query.JSON {
     return { condition: this._condition.toJSON() };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return this._condition.toString();</span>
   }
 }
@@ -290,14 +290,14 @@ export class Query implements Feature&lt;Condition&lt;Property&gt;, Query.JSON&g
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Query {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Q</span>uery {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
 &nbsp;
     condition: Condition.JSON&lt;Property&gt;;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isQuery(</span>value: unknown): value is Query {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isQuery(v</span>alue: unknown): value is Query {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Query;</span>
   }
 &nbsp;
@@ -316,7 +316,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Q
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:34:17.783Z
+                at 2026-04-10T09:29:32.705Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

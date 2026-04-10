@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/20</span>
+                <span class='fraction'>8/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">37.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/16</span>
+                <span class='fraction'>6/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">14.28% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/21</span>
+                <span class='fraction'>3/21</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">43.75% </span>
+                <span class="strong">37.5% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/16</span>
+                <span class='fraction'>6/16</span>
             </div>
         
             
@@ -155,7 +155,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -200,9 +200,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -215,7 +215,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -231,9 +231,9 @@
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 &nbsp;
-import type { Selector } from "../../index.js";
+import type { Selector } from "../../index.ts";
 &nbsp;
-import { PseudoElementSelector } from "./pseudo-element.js";
+import { PseudoElementSelector } from "./pseudo-element.ts";
 &nbsp;
 const { either, map, right, take } = Parser;
 &nbsp;
@@ -241,7 +241,7 @@ const { either, map, right, take } = Parser;
  * {@link https://w3c.github.io/webvtt/#the-cue-region-pseudo-element}
  */
 export class CueRegion extends PseudoElementSelector&lt;"cue-region"&gt; {
-  public static of(selector?: Selector): CueRegion {
+  public static <span class="fstat-no" title="function not covered" >of(</span>selector?: Selector): CueRegion {
 <span class="cstat-no" title="statement not covered" >    return new CueRegion(Option.from(selector));</span>
   }
 &nbsp;
@@ -282,25 +282,25 @@ export class CueRegion extends PseudoElementSelector&lt;"cue-region"&gt; {
   }
 }
 &nbsp;
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >CueRegion {</span></span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >C</span>ueRegion {</span></span>
   export interface JSON extends PseudoElementSelector.JSON&lt;"cue-region"&gt; {
     selector: Option.JSON&lt;Selector&gt;;
   }
 &nbsp;
-  export function parse(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >parse(</span></span>
     parseSelector: Selector.Parser.Component,
-    withColon = <span class="branch-0 cbranch-no" title="branch not covered" >true,</span>
+    withColon = true,
   ): CSSParser&lt;CueRegion&gt; {
     // We need to try and fail the functional notation first to avoid accepting
     // the `::cue-region` prefix of a `::cue-region(selector)`.
     const parser = either(
-      map(Function.parse("cue-region", parseSelector), <span class="fstat-no" title="function not covered" >([</span>_, selector]) =&gt;
-<span class="cstat-no" title="statement not covered" >        CueRegion.of(selector),</span>
+      map(Function.parse("cue-region", parseSelector), <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >([</span></span>_, selector]) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        CueRegion.of(selector),</span></span>
       ),
       // We need to eta-expand in order to discard the result of parseIdent.
-      map(Token.parseIdent("cue-region"), <span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >CueRegion.of())</span>,
+      map(Token.parseIdent("cue-region"), <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >C</span>ueRegion.of())</span>,
     );
-    return withColon ? <span class="branch-0 cbranch-no" title="branch not covered" >right(take(Token.parseColon, 2), parser) </span>: parser;
+    return withColon ? <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >right(take(Token.parseColon, 2), parser) </span>: p</span>arser;
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -310,7 +310,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:35:03.293Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

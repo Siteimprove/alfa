@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.15% </span>
+                <span class="strong">43.75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/13</span>
+                <span class='fraction'>7/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">33.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/6</span>
+                <span class='fraction'>4/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">21.05% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/10</span>
+                <span class='fraction'>4/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">53.84% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/12</span>
+                <span class='fraction'>7/13</span>
             </div>
         
             
@@ -193,7 +193,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -223,7 +223,7 @@ import type { Iterable } from "@siteimprove/alfa-iterable";
  * @public
  */
 export class WithBadElements extends Diagnostic implements Iterable&lt;Element&gt; {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     message: string,
     errors: Iterable&lt;Element&gt; = [],
   ): WithBadElements {
@@ -232,12 +232,12 @@ export class WithBadElements extends Diagnostic implements Iterable&lt;Element&g
 &nbsp;
   private readonly _errors: ReadonlyArray&lt;Element&gt;;
 &nbsp;
-  protected constructor(message: string, errors: Array&lt;Element&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(m</span>essage: string, errors: Array&lt;Element&gt;) {
     super(message);
     this._errors = errors;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >errors(</span>): ReadonlyArray&lt;Element&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >errors(</span>): ReadonlyArray&lt;Element&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._errors;</span>
   }
 &nbsp;
@@ -245,24 +245,24 @@ export class WithBadElements extends Diagnostic implements Iterable&lt;Element&g
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof WithBadElements &amp;&amp;
       value._message === this._message &amp;&amp;
       Array.equals(value._errors, this._errors)
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    super.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    this._errors.forEach(<span class="fstat-no" title="function not covered" >(e</span>lement) =&gt; <span class="cstat-no" title="statement not covered" >element.hash(hash))</span>;</span>
   }
 &nbsp;
-  public *[<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;Element&gt; {
+  public *[<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.iterator]</span></span>(): Iterator&lt;Element&gt; {
 <span class="cstat-no" title="statement not covered" >    yield* this._errors;</span>
   }
 &nbsp;
-  public toJSON(options?: Node.SerializationOptions): WithBadElements.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Node.SerializationOptions): WithBadElements.JSON {
     return {
       ...super.toJSON(options),
       errors: Array.toJSON(this._errors, options),
@@ -273,7 +273,7 @@ export class WithBadElements extends Diagnostic implements Iterable&lt;Element&g
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >WithBadElements {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >W</span>ithBadElements {</span></span>
   export interface JSON extends Diagnostic.JSON {
     errors: Array&lt;Element.JSON&gt;;
   }
@@ -284,7 +284,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >W
 &nbsp;
   export function isWithBadElements(value: unknown): value is WithBadElements;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isWithBadElements(</span>value: unknown): value is WithBadElements {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isWithBadElements(</span>v</span>alue: unknown): value is WithBadElements {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof WithBadElements;</span>
   }
 }
@@ -295,7 +295,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >W
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-09T07:36:26.756Z
+                at 2026-04-10T09:31:39.916Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
