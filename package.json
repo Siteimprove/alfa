@@ -34,14 +34,14 @@
   ],
   "devDependencies": {
     "@changesets/cli": "^2.30.0",
-    "@microsoft/api-documenter": "^7.29.10",
+    "@microsoft/api-documenter": "^7.30.0",
     "@microsoft/api-extractor": "^7.52.10",
     "@siteimprove/alfa-toolchain": "workspace:^0.114.3",
-    "@types/node": "^25.5.2",
+    "@types/node": "^25.6.0",
     "@vitest/coverage-v8": "^4.1.4",
-    "knip": "^6.3.0",
+    "knip": "^6.4.1",
     "minimist": "^1.2.6",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.2",
     "typescript": "^6.0.2",
     "vitest": "^4.1.4"
   },

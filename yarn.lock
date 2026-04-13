@@ -795,20 +795,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-documenter@npm:^7.29.10":
-  version: 7.29.10
-  resolution: "@microsoft/api-documenter@npm:7.29.10"
+"@microsoft/api-documenter@npm:^7.30.0":
+  version: 7.30.0
+  resolution: "@microsoft/api-documenter@npm:7.30.0"
   dependencies:
-    "@microsoft/api-extractor-model": "npm:7.33.5"
+    "@microsoft/api-extractor-model": "npm:7.33.6"
     "@microsoft/tsdoc": "npm:~0.16.0"
-    "@rushstack/node-core-library": "npm:5.21.0"
-    "@rushstack/terminal": "npm:0.22.4"
-    "@rushstack/ts-command-line": "npm:5.3.4"
+    "@rushstack/node-core-library": "npm:5.22.0"
+    "@rushstack/terminal": "npm:0.22.5"
+    "@rushstack/ts-command-line": "npm:5.3.5"
     js-yaml: "npm:~4.1.0"
     resolve: "npm:~1.22.1"
   bin:
     api-documenter: bin/api-documenter
-  checksum: 10c0/63dea5820a847019f03a37467cef946c51aad93cca7feccc8daa66e1c5a04aa184a459b4e68263f269c5636a839bf0a36949852809063692e9fcd86ebb658150
+  checksum: 10c0/f14ce24432711b78dff810f9034be2a3808634d0c9d0f9cdb968f5f7109c9a7169e24d77bfba98c869bce356778f1019a568f4474bc5a87e33453fce5c432dbb
   languageName: node
   linkType: hard
 
@@ -823,14 +823,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-extractor-model@npm:7.33.5":
-  version: 7.33.5
-  resolution: "@microsoft/api-extractor-model@npm:7.33.5"
+"@microsoft/api-extractor-model@npm:7.33.6":
+  version: 7.33.6
+  resolution: "@microsoft/api-extractor-model@npm:7.33.6"
   dependencies:
     "@microsoft/tsdoc": "npm:~0.16.0"
     "@microsoft/tsdoc-config": "npm:~0.18.1"
-    "@rushstack/node-core-library": "npm:5.21.0"
-  checksum: 10c0/57a5f7f091e4a22621039c6953baff09c57822408351293d537f5c830c2b0b38b36ff1c47931f23981a1e5eeb6a744d4aee706a9c9008f0d8fd495bc2744c131
+    "@rushstack/node-core-library": "npm:5.22.0"
+  checksum: 10c0/3d2a615ed10f28c6ca64a69eb57611f7081c489905dd62a8ccdc49652431a7252a2cef3d15a28e6359834a320ea25aae227305b8185687995553903552544284
   languageName: node
   linkType: hard
 
@@ -1459,9 +1459,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/node-core-library@npm:5.21.0":
-  version: 5.21.0
-  resolution: "@rushstack/node-core-library@npm:5.21.0"
+"@rushstack/node-core-library@npm:5.22.0":
+  version: 5.22.0
+  resolution: "@rushstack/node-core-library@npm:5.22.0"
   dependencies:
     ajv: "npm:~8.18.0"
     ajv-draft-04: "npm:~1.0.0"
@@ -1476,7 +1476,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 10c0/c5968d743101b581f45b73c58d02bd446a918bffd178098b3c660c8661ec7c62ed30229dd46dc5c3e8bf6172a6ece757503bc40a696d940aabb52d26aca40c45
+  checksum: 10c0/59949efefbda31f2c3bbc33e19e53dbac215dffff20cbf02e72fc1765ecb08eaf9c3e250515b2cab6c90ca0d6089741680b65b1f560d3a243168c34472703698
   languageName: node
   linkType: hard
 
@@ -1517,11 +1517,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/terminal@npm:0.22.4":
-  version: 0.22.4
-  resolution: "@rushstack/terminal@npm:0.22.4"
+"@rushstack/terminal@npm:0.22.5":
+  version: 0.22.5
+  resolution: "@rushstack/terminal@npm:0.22.5"
   dependencies:
-    "@rushstack/node-core-library": "npm:5.21.0"
+    "@rushstack/node-core-library": "npm:5.22.0"
     "@rushstack/problem-matcher": "npm:0.2.1"
     supports-color: "npm:~8.1.1"
   peerDependencies:
@@ -1529,7 +1529,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 10c0/952049a620c1f1bff51adab157e2f4c623c76a9935192cc3473bf131aa7a9c91b82a39f8b661768367c062d1d76741c74e9c7294dbd32c7eaa11089116b1b4b7
+  checksum: 10c0/d4beb37df3b56da28359c4c7157459241d99162f43487eb52b73bf08ba328363c5a1a30d0753181f2e11ec4a96af05127767fe60ade2746cdf24ad0dbdecfea7
   languageName: node
   linkType: hard
 
@@ -1545,15 +1545,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/ts-command-line@npm:5.3.4":
-  version: 5.3.4
-  resolution: "@rushstack/ts-command-line@npm:5.3.4"
+"@rushstack/ts-command-line@npm:5.3.5":
+  version: 5.3.5
+  resolution: "@rushstack/ts-command-line@npm:5.3.5"
   dependencies:
-    "@rushstack/terminal": "npm:0.22.4"
+    "@rushstack/terminal": "npm:0.22.5"
     "@types/argparse": "npm:1.0.38"
     argparse: "npm:~1.0.9"
     string-argv: "npm:~0.3.1"
-  checksum: 10c0/35d16d139fa5c9125a148d14a66490926c9acc1c8c276ebe5306ede7be88cf08d5ad83c8e3c33d3c6092ac3c12c397b45a35af89a15b38d39017f05f08a3f937
+  checksum: 10c0/f65cf629e64e853cc99d6dcc2ebfcdfe1c17e58d1d4de4ebf10e36c0b850712f394eb0d4d7651a5fc5936d24ad0da30cd3364ab96c1b4f5f4aadb6a5146574fb
   languageName: node
   linkType: hard
 
@@ -1655,7 +1655,7 @@ __metadata:
     "@siteimprove/alfa-test": "workspace:^"
     "@siteimprove/alfa-thunk": "workspace:^"
     "@siteimprove/alfa-tree": "workspace:^"
-    prettier: "npm:^3.8.1"
+    prettier: "npm:^3.8.2"
     puppeteer: "npm:^24.40.0"
   languageName: unknown
   linkType: soft
@@ -2084,7 +2084,7 @@ __metadata:
     "@siteimprove/alfa-slice": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
     axios: "npm:^1.15.0"
-    prettier: "npm:^3.8.1"
+    prettier: "npm:^3.8.2"
   languageName: unknown
   linkType: soft
 
@@ -2640,7 +2640,7 @@ __metadata:
   resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
   dependencies:
     "@siteimprove/alfa-rng": "workspace:^"
-    "@types/node": "npm:^25.5.2"
+    "@types/node": "npm:^25.6.0"
     vitest: "npm:^4.1.4"
   languageName: unknown
   linkType: soft
@@ -2799,7 +2799,7 @@ __metadata:
     "@siteimprove/alfa-option": "workspace:^"
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
-    prettier: "npm:^3.8.1"
+    prettier: "npm:^3.8.2"
     puppeteer: "npm:^24.40.0"
   languageName: unknown
   linkType: soft
@@ -2845,14 +2845,14 @@ __metadata:
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.30.0"
-    "@microsoft/api-documenter": "npm:^7.29.10"
+    "@microsoft/api-documenter": "npm:^7.30.0"
     "@microsoft/api-extractor": "npm:^7.52.10"
     "@siteimprove/alfa-toolchain": "workspace:^0.114.3"
-    "@types/node": "npm:^25.5.2"
+    "@types/node": "npm:^25.6.0"
     "@vitest/coverage-v8": "npm:^4.1.4"
-    knip: "npm:^6.3.0"
+    knip: "npm:^6.4.1"
     minimist: "npm:^1.2.6"
-    prettier: "npm:^3.8.1"
+    prettier: "npm:^3.8.2"
     typescript: "npm:^6.0.2"
     vitest: "npm:^4.1.4"
   languageName: unknown
@@ -3013,12 +3013,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^25.5.2":
-  version: 25.5.2
-  resolution: "@types/node@npm:25.5.2"
+"@types/node@npm:*, @types/node@npm:^25.6.0":
+  version: 25.6.0
+  resolution: "@types/node@npm:25.6.0"
   dependencies:
-    undici-types: "npm:~7.18.0"
-  checksum: 10c0/11e41a85401724cd1a4de6fb7bd4264ec46db10c09fc8cf8d41de4ede0a7063db458348f859ead4ec0929906aa26aaf45a5fef3aa59742ca0521cda9cee52377
+    undici-types: "npm:~7.19.0"
+  checksum: 10c0/d2d2015630ff098a201407f55f5077a20270ae4f465c739b40865cd9933b91b9c5d2b85568eadaf3db0801b91e267333ca7eb39f007428b173d1cdab4b339ac5
   languageName: node
   linkType: hard
 
@@ -5218,9 +5218,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:^6.3.0":
-  version: 6.3.0
-  resolution: "knip@npm:6.3.0"
+"knip@npm:^6.4.1":
+  version: 6.4.1
+  resolution: "knip@npm:6.4.1"
   dependencies:
     "@nodelib/fs.walk": "npm:^1.2.3"
     fast-glob: "npm:^3.3.3"
@@ -5240,7 +5240,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10c0/213ea157b9728895f173e05cac1bda736e142ffe185816302d81bf050bc78d9c49c35229ba48f279453b08381ff8212baf0539601914ffbeb4735170aa5f342b
+  checksum: 10c0/e98060d7bba6a40387d588a07f0dd95c249108ff3f3995f6b24458f0de74b33df764638640f34e88845b81fd897c6ef9d1aab04fbf127f0ccc04618722830a15
   languageName: node
   linkType: hard
 
@@ -6122,12 +6122,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.8.1":
-  version: 3.8.1
-  resolution: "prettier@npm:3.8.1"
+"prettier@npm:^3.8.2":
+  version: 3.8.2
+  resolution: "prettier@npm:3.8.2"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10c0/33169b594009e48f570471271be7eac7cdcf88a209eed39ac3b8d6d78984039bfa9132f82b7e6ba3b06711f3bfe0222a62a1bfb87c43f50c25a83df1b78a2c42
+  checksum: 10c0/2d64bd01d269c8dd6d8c423a2a2e1fb88230a53aac523204b327de40059ccf8bd8e6fe70b8ce6154b97ed4442e9fd878504ff8a5330f3a4f64bd13d1576f7652
   languageName: node
   linkType: hard
 
@@ -7129,10 +7129,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~7.18.0":
-  version: 7.18.2
-  resolution: "undici-types@npm:7.18.2"
-  checksum: 10c0/85a79189113a238959d7a647368e4f7c5559c3a404ebdb8fc4488145ce9426fcd82252a844a302798dfc0e37e6fb178ff481ed03bc4caf634c5757d9ef43521d
+"undici-types@npm:~7.19.0":
+  version: 7.19.2
+  resolution: "undici-types@npm:7.19.2"
+  checksum: 10c0/7159f10546f9f6c47d36776bb1bbf8671e87c1e587a6fee84ae1f111ae8de4f914efa8ca0dfcd224f4f4a9dfc3f6028f627ccb5ddaccf82d7fd54671b89fac3e
   languageName: node
   linkType: hard
 

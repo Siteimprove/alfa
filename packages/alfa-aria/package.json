@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.2",
     "puppeteer": "^24.40.0"
   },
   "publishConfig": {
