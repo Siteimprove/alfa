@@ -1,6 +1,5 @@
 import R1 from "./sia-r1/rule.ts";
 import R2 from "./sia-r2/rule.ts";
-import R3 from "./sia-r3/rule.ts";
 import R4 from "./sia-r4/rule.ts";
 import R5 from "./sia-r5/rule.ts";
 import R7 from "./sia-r7/rule.ts";
@@ -93,7 +92,6 @@ import R116 from "./sia-r116/rule.ts";
 export {
   R1,
   R2,
-  R3,
   R4,
   R5,
   R7,
