@@ -6,15 +6,15 @@ import {
 import type { Element } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Context } from "../../../context.js";
-import { Specificity } from "../../../specificity.js";
+import { Context } from "../../../context.ts";
+import { Specificity } from "../../../specificity.ts";
 
-import type { Compound } from "../../compound.js";
-import type { Selector } from "../../index.js";
-import { BaseSelector } from "../../selector.js";
-import type { Simple } from "../../simple/index.js";
+import type { Compound } from "../../compound.ts";
+import type { Selector } from "../../index.ts";
+import { BaseSelector } from "../../selector.ts";
+import type { Simple } from "../../simple/index.ts";
 
-import { PseudoElementSelector } from "./pseudo-element.js";
+import { PseudoElementSelector } from "./pseudo-element.ts";
 
 const { filter, map, right, take } = Parser;
 

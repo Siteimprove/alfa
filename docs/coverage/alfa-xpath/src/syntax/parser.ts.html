@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.45% </span>
+                <span class="strong">85.27% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>83/96</span>
+                <span class='fraction'>139/163</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
+                <span class="strong">86.36% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>14/16</span>
+                <span class='fraction'>19/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.79% </span>
+                <span class="strong">59.42% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>28/39</span>
+                <span class='fraction'>41/69</span>
             </div>
         
             
@@ -977,9 +977,9 @@ import { Slice } from "@siteimprove/alfa-slice";
 &nbsp;
 import * as parser from "@siteimprove/alfa-parser";
 &nbsp;
-import { Expression } from "../expression.js";
-import { Token } from "./token.js";
-import { Lexer } from "./lexer.js";
+import { Expression } from "../expression.ts";
+import { Token } from "./token.ts";
+import { Lexer } from "./lexer.ts";
 &nbsp;
 const { fromCharCode } = String;
 const { map, either, delimited, option, pair, left, right, take, zeroOrMore } =
@@ -989,8 +989,8 @@ const { equals, property } = Predicate;
 /**
  * @public
  */
-export namespace Parser {
-  export function parse(input: string): Option&lt;Expression&gt; {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Parser {</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >parse(</span>input: string): Option&lt;Expression&gt; {</span>
     return parseExpression(Slice.of(Lexer.lex(input)))
       .map(([, expression]) =&gt; expression)
       .ok();
@@ -1011,22 +1011,22 @@ const parseIntegerLiteral = map(Token.parseInteger, (integer) =&gt;
 /**
  * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-DecimalLiteral}
  */
-const parseDecimalLiteral = map(Token.parseDecimal, <span class="fstat-no" title="function not covered" >(d</span>ecimal) =&gt;
-<span class="cstat-no" title="statement not covered" >  Expression.Decimal.of(decimal.value),</span>
+const parseDecimalLiteral = map(Token.parseDecimal, <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(d</span></span>ecimal) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >  Expression.Decimal.of(decimal.value),</span></span>
 );
 &nbsp;
 /**
  * {@link https://www.w3.org/TR/xpath-31/#prod-xpath31-DoubleLiteral}
  */
-const parseDoubleLiteral = map(Token.parseDouble, <span class="fstat-no" title="function not covered" >(d</span>ouble) =&gt;
-<span class="cstat-no" title="statement not covered" >  Expression.Double.of(double.value),</span>
+const parseDoubleLiteral = map(Token.parseDouble, <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(d</span></span>ouble) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >  Expression.Double.of(double.value),</span></span>
 );
 &nbsp;
 /**
  * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-StringLiteral}
  */
-const parseStringLiteral = map(Token.parseString, <span class="fstat-no" title="function not covered" >(s</span>tring) =&gt;
-<span class="cstat-no" title="statement not covered" >  Expression.String.of(string.value),</span>
+const parseStringLiteral = map(Token.parseString, <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(s</span></span>tring) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >  Expression.String.of(string.value),</span></span>
 );
 &nbsp;
 /**
@@ -1047,7 +1047,7 @@ const parseLiteral = either(parseNumericLiteral, parseStringLiteral);
  */
 const parseParenthesizedExpression = delimited(
   Token.parseCharacter("("),
-<span class="fstat-no" title="function not covered" >  (i</span>nput) =&gt; <span class="cstat-no" title="statement not covered" >parseExpression(input),</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >  (i</span></span>nput) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >parseExpression(input),</span></span>
   Token.parseCharacter(")"),
 );
 &nbsp;
@@ -1105,7 +1105,7 @@ const parseDocumentTest = map(
     Token.parseName("document-node"),
     pair(Token.parseCharacter("("), Token.parseCharacter(")")),
   ),
-<span class="fstat-no" title="function not covered" >  () =</span>&gt; <span class="cstat-no" title="statement not covered" >Expression.Test.Document.of(),</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >  () =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >E</span>xpression.Test.Document.of(),</span></span>
 );
 &nbsp;
 /**
@@ -1144,7 +1144,7 @@ const parseCommentTest = map(
     Token.parseName("comment"),
     pair(Token.parseCharacter("("), Token.parseCharacter(")")),
   ),
-<span class="fstat-no" title="function not covered" >  () =</span>&gt; <span class="cstat-no" title="statement not covered" >Expression.Test.Comment.of(),</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >  () =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >E</span>xpression.Test.Comment.of(),</span></span>
 );
 &nbsp;
 /**
@@ -1155,7 +1155,7 @@ const parseTextTest = map(
     Token.parseName("text"),
     pair(Token.parseCharacter("("), Token.parseCharacter(")")),
   ),
-<span class="fstat-no" title="function not covered" >  () =</span>&gt; <span class="cstat-no" title="statement not covered" >Expression.Test.Text.of(),</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >  () =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >E</span>xpression.Test.Text.of(),</span></span>
 );
 &nbsp;
 /**
@@ -1220,7 +1220,7 @@ const parseReverseAxis = left(
         ),
       ),
     ),
-<span class="fstat-no" title="function not covered" >    (n</span>ame) =&gt; <span class="cstat-no" title="statement not covered" >name.value as Expression.Axis.Type,</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >    (n</span></span>ame) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >name.value as Expression.Axis.Type,</span></span>
   ),
   take(Token.parseCharacter(":"), 2),
 );
@@ -1237,8 +1237,8 @@ const parseAbbreviatedReverseStep = map(
  * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-ReverseStep}
  */
 const parseReverseStep = either(
-  map(pair(parseReverseAxis, parseNodeTest), <span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {
-    const [axis, test] = <span class="cstat-no" title="statement not covered" >result;</span>
+  map(pair(parseReverseAxis, parseNodeTest), <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(r</span></span>esult) =&gt; {
+    const [axis, test] = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >result;</span></span>
 <span class="cstat-no" title="statement not covered" >    return Expression.Axis.of(axis, test);</span>
   }),
   parseAbbreviatedReverseStep,
@@ -1274,7 +1274,7 @@ const parseForwardAxis = left(
  */
 const parseAbbreviatedForwardStep = map(
   pair(option(Token.parseCharacter("@")), parseNodeTest),
-  (result) =&gt; {
+<span class="fstat-no" title="function not covered" >  (r</span>esult) =&gt; {
     const [attribute, test] = result;
 &nbsp;
     if (attribute.isSome()) {
@@ -1282,7 +1282,7 @@ const parseAbbreviatedForwardStep = map(
     }
 &nbsp;
     <span class="missing-if-branch" title="if path not taken" >I</span>if (
-      test.some((test) =&gt; test.type === "kind" &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >test.kind === "attribute")</span>
+      test.some((test) =&gt; test.type === "kind" &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >test.kind === "attribute")</span></span>
     ) {
 <span class="cstat-no" title="statement not covered" >      return Expression.Axis.of("attribute", test);</span>
     }
@@ -1295,7 +1295,7 @@ const parseAbbreviatedForwardStep = map(
  * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-ForwardStep}
  */
 const parseForwardStep = either(
-  map(pair(parseForwardAxis, parseNodeTest), (result) =&gt; {
+  map(pair(parseForwardAxis, parseNodeTest), <span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {
     const [axis, test] = result;
     return Expression.Axis.of(axis, test);
   }),
@@ -1321,7 +1321,7 @@ const parsePredicateList = zeroOrMore(parsePredicate);
  */
 const parseAxisStep = map(
   pair(either(parseReverseStep, parseForwardStep), parsePredicateList),
-  (result) =&gt; {
+<span class="fstat-no" title="function not covered" >  (r</span>esult) =&gt; {
     const [axis, predicates] = result;
     return Expression.Axis.of(axis.axis, axis.test, Array.from(predicates));
   },
@@ -1332,7 +1332,7 @@ const parseAxisStep = map(
  */
 const parsePostfixExpression = map(
   pair(parsePrimaryExpression, zeroOrMore(parsePredicate)),
-  (result) =&gt; {
+<span class="fstat-no" title="function not covered" >  (r</span>esult) =&gt; {
     const [base, [...predicates]] = result;
 &nbsp;
     if (predicates.length === 0) {
@@ -1364,7 +1364,7 @@ const parseRelativePathExpression = map(
       ),
     ),
   ),
-  (result) =&gt; {
+<span class="fstat-no" title="function not covered" >  (r</span>esult) =&gt; {
     const [left, right] = result;
     return [...right].reduce((left, [expand, right]) =&gt; {
       if (expand) {
@@ -1405,7 +1405,7 @@ const parsePathExpression = either(
     ),
     map(
       right(Token.parseCharacter("/"), option(parseRelativePathExpression)),
-      (right) =&gt; {
+<span class="fstat-no" title="function not covered" >      (r</span>ight) =&gt; {
         const left = Expression.FunctionCall.of(Option.of("fn"), "root", 1, [
           Expression.Axis.of("self", Option.of(Expression.Test.Node.of())),
         ]);
@@ -1432,7 +1432,7 @@ parseExpression = parsePathExpression;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

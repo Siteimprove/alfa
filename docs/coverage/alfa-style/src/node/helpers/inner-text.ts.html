@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.55% </span>
+                <span class="strong">83.67% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>38/49</span>
+                <span class='fraction'>41/49</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">77.77% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>12/18</span>
+                <span class='fraction'>14/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64.51% </span>
+                <span class="strong">74.19% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>20/31</span>
+                <span class='fraction'>23/31</span>
             </div>
         
             
@@ -207,7 +207,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-yes">23x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -223,7 +223,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">68x</span>
-<span class="cline-any cline-yes">68x</span>
+<span class="cline-any cline-yes">40x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -273,7 +273,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-yes">7x</span>
@@ -301,15 +301,15 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Selective } from "@siteimprove/alfa-selective";
 import { String } from "@siteimprove/alfa-string";
 &nbsp;
-import { Style } from "../../style.js";
-import { isRendered } from "../predicate/is-rendered.js";
+import { Style } from "../../style.ts";
+import { isRendered } from "../predicate/is-rendered.ts";
 &nbsp;
 const { hasName, isElement } = Element;
 const { isText } = Text;
 const { and } = Predicate;
 &nbsp;
-const isWhitespace: Predicate&lt;Text&gt; = <span class="fstat-no" title="function not covered" >(t</span>ext) =&gt;
-<span class="cstat-no" title="statement not covered" >  String.isWhitespace(text.data, false);</span>
+const isWhitespace: Predicate&lt;Text&gt; = (text) =&gt;
+  String.isWhitespace(text.data, false);
 &nbsp;
 /**
  * {@link https://alfa.siteimprove.com/terms/visible-inner-text}
@@ -336,7 +336,7 @@ function fromText(
 function fromNode(
   device: Device,
   isAcceptable: (device: Device) =&gt; Predicate&lt;Text&gt; = <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(</span>) =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >t</span>rue,</span></span></span></span></span></span>
-  wrapper: string = <span class="branch-0 cbranch-no" title="branch not covered" >"",</span>
+  wrapper: string = "",
 ): (node: Node) =&gt; string {
   return (node) =&gt;
     wrapper +
@@ -365,7 +365,7 @@ function fromNode(
  */
 function fromElement(
   device: Device,
-  isAcceptable: (device: Device) =&gt; Predicate&lt;Text&gt; = <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >() =&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(</span>) =&gt; <span class="cstat-no" title="statement not covered" >t</span>rue,</span></span></span>
+  isAcceptable: (device: Device) =&gt; Predicate&lt;Text&gt; = () =&gt; () =&gt; true,
 ): (element: Element) =&gt; string {
   return (element) =&gt; {
     if (!isRendered(device)(element)) {
@@ -418,7 +418,7 @@ export const innerText = fromElement;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

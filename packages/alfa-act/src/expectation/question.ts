@@ -10,7 +10,7 @@ import type { Result } from "@siteimprove/alfa-result";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { Diagnostic } from "./diagnostic.js";
+import { Diagnostic } from "./diagnostic.ts";
 
 const { isOption } = Option;
 const { isBoolean, isFunction } = Refinement;

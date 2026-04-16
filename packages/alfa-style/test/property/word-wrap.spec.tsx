@@ -1,9 +1,9 @@
 import { h } from "@siteimprove/alfa-dom";
 import { type Assertions, test } from "@siteimprove/alfa-test";
 
-import { Style } from "../../dist/index.js";
+import { Style } from "../../src/index.ts";
 
-import { cascaded, computed } from "../common.js";
+import { cascaded, computed } from "../common.ts";
 
 function parse(
   t: Assertions,

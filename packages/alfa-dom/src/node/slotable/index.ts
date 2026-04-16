@@ -1,10 +1,10 @@
-export * from "./element.js";
+export * from "./element.ts";
 // Load the slot augments.
 import "./slot.js";
-export * from "./text.js";
+export * from "./text.ts";
 
-import { Element } from "./element.js";
-import { Text } from "./text.js";
+import { Element } from "./element.ts";
+import { Text } from "./text.ts";
 
 /** @public */
 export type Slotable = Element | Text;

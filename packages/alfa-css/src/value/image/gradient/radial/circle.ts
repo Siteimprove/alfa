@@ -1,12 +1,12 @@
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Err, Result } from "@siteimprove/alfa-result";
 
-import { type Parser as CSSParser, Token } from "../../../../syntax/index.js";
+import { type Parser as CSSParser, Token } from "../../../../syntax/index.ts";
 
-import { Keyword } from "../../../textual/keyword.js";
-import { Length } from "../../../numeric/index.js";
-import type { Resolvable } from "../../../resolvable.js";
-import { Value } from "../../../value.js";
+import { Keyword } from "../../../textual/keyword.ts";
+import { Length } from "../../../numeric/index.ts";
+import type { Resolvable } from "../../../resolvable.ts";
+import { Value } from "../../../value.ts";
 
 /**
  * {@link https://drafts.csswg.org/css-images/#valdef-ending-shape-circle}

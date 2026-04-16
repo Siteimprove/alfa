@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.5% </span>
+                <span class="strong">96% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>85/89</span>
+                <span class='fraction'>120/125</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.33% </span>
+                <span class="strong">96.15% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>50/53</span>
+                <span class='fraction'>75/78</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">85.48% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>34/34</span>
+                <span class='fraction'>53/62</span>
             </div>
         
             
@@ -626,7 +626,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -696,9 +696,9 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 &nbsp;
-import { expectation } from "../common/act/index.js";
+import { expectation } from "../common/act/index.ts";
 &nbsp;
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 &nbsp;
 const { isElement } = Element;
 const { flatMap, some } = Iterable;
@@ -711,7 +711,7 @@ export default Rule.Atomic.of&lt;Page, Element&gt;({
   uri: "https://alfa.siteimprove.com/rules/sia-r44",
   requirements: [Criterion.of("1.3.4"), EAA.of("9.1.3.4")],
   tags: [Scope.Component, Stability.Stable],
-  evaluate({ device, document }) {
+<span class="fstat-no" title="function not covered" >  evaluate(</span>{ device, document }) {
     let landscape: Device;
     let portrait: Device;
 &nbsp;
@@ -799,7 +799,7 @@ export default Rule.Atomic.of&lt;Page, Element&gt;({
 /**
  * @public
  */
-export namespace Outcomes {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Outcomes {</span>
   export const RotationNotLocked = Ok.of(
     Diagnostic.of(`The element is not locked in orientation`),
   );
@@ -809,7 +809,7 @@ export namespace Outcomes {
   );
 }
 &nbsp;
-function hasConditionalRotation(device: Device): Predicate&lt;Element&gt; {
+function <span class="fstat-no" title="function not covered" >hasConditionalRotation(</span>device: Device): Predicate&lt;Element&gt; {
   return or(
     hasComputedStyle(
       "transform",
@@ -834,7 +834,7 @@ function hasConditionalRotation(device: Device): Predicate&lt;Element&gt; {
   );
 }
 &nbsp;
-function isOrientationConditional(declaration: Declaration): boolean {
+function <span class="fstat-no" title="function not covered" >isOrientationConditional(</span>declaration: Declaration): boolean {
   return some(
     declaration.ancestors(),
     (rule) =&gt;
@@ -845,7 +845,7 @@ function isOrientationConditional(declaration: Declaration): boolean {
   );
 }
 &nbsp;
-function hasOrientationCondition(
+function <span class="fstat-no" title="function not covered" >hasOrientationCondition(</span>
   condition: Feature.Condition&lt;Feature.Media.Feature&gt;,
 ): boolean {
   for (const feature of condition) {
@@ -864,7 +864,7 @@ function hasOrientationCondition(
   return false;
 }
 &nbsp;
-function getRotation(element: Element, device: Device): Option&lt;number&gt; {
+function <span class="fstat-no" title="function not covered" >getRotation(</span>element: Element, device: Device): Option&lt;number&gt; {
   const parent = element.parent(Node.flatTree).filter(isElement);
 &nbsp;
   const rotation = parent.isNone()
@@ -941,7 +941,7 @@ function getRotation(element: Element, device: Device): Option&lt;number&gt; {
   });
 }
 &nbsp;
-function getRelativeRotation(
+function <span class="fstat-no" title="function not covered" >getRelativeRotation(</span>
   element: Element,
   left: Device,
   right: Device,
@@ -953,7 +953,7 @@ function getRelativeRotation(
   );
 }
 &nbsp;
-function getMediaRules(node: Node): Sequence&lt;StyleRule.Media&gt; {
+function <span class="fstat-no" title="function not covered" >getMediaRules(</span>node: Node): Sequence&lt;StyleRule.Media&gt; {
   return Sequence.from(
     flatMap(
       flatMap(roots(node), (document) =&gt; document.style),
@@ -962,7 +962,7 @@ function getMediaRules(node: Node): Sequence&lt;StyleRule.Media&gt; {
   ).filter(StyleRule.isMediaRule);
 }
 &nbsp;
-function* roots(node: Node): Iterable&lt;Document | Shadow&gt; {
+function* <span class="fstat-no" title="function not covered" >roots(</span>node: Node): Iterable&lt;Document | Shadow&gt; {
   if (Document.isDocument(node) || Shadow.isShadow(node)) {
     yield node;
   }
@@ -982,7 +982,7 @@ function* roots(node: Node): Iterable&lt;Document | Shadow&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

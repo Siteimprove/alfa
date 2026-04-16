@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.3% </span>
+                <span class="strong">92.15% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>36/39</span>
+                <span class='fraction'>47/51</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>9/9</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.85% </span>
+                <span class="strong">72% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>13/14</span>
+                <span class='fraction'>18/25</span>
             </div>
         
             
@@ -581,11 +581,11 @@ import { Context } from "@siteimprove/alfa-selector";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { AncestorFilter } from "./ancestor-filter.js";
-import { Block } from "./block.js";
-import { RuleTree } from "./rule-tree.js";
-import { SelectorMap } from "./selector-map.js";
-import { UserAgent } from "./user-agent.js";
+import { AncestorFilter } from "./ancestor-filter.ts";
+import { Block } from "./block.ts";
+import { RuleTree } from "./rule-tree.ts";
+import { SelectorMap } from "./selector-map.ts";
+import { UserAgent } from "./user-agent.ts";
 &nbsp;
 /**
  * {@link https://drafts.csswg.org/css-cascade-5/}
@@ -614,7 +614,7 @@ export class Cascade implements Serializable {
     Cache&lt;Device, Cascade&gt;
   &gt;();
 &nbsp;
-  public static from(node: Document | Shadow, device: Device): Cascade {
+  public static <span class="fstat-no" title="function not covered" >from(</span>node: Document | Shadow, device: Device): Cascade {
     return this._cascades
       .get(node, Cache.empty)
       .get(device, () =&gt; new Cascade(node, device));
@@ -631,7 +631,7 @@ export class Cascade implements Serializable {
     Cache&lt;Context, RuleTree.Node&gt;
   &gt;();
 &nbsp;
-  protected constructor(root: Document | Shadow, device: Device) {
+<span class="fstat-no" title="function not covered" >  protected constructor(r</span>oot: Document | Shadow, device: Device) {
     this._root = root;
     this._depth = getDepth(root);
     this._device = device;
@@ -675,7 +675,7 @@ export class Cascade implements Serializable {
   /**
    * Adds an element to the rules tree, return the associated node.
    */
-  private add(
+  private <span class="fstat-no" title="function not covered" >add(</span>
     element: Element,
     context: Context,
     filter: AncestorFilter,
@@ -734,7 +734,7 @@ export class Cascade implements Serializable {
    * (e.g., when a link is focused we normally only need the style of the link
    * itself). Therefore, pre-building the full tree is not worth the cost.
    */
-  public get(
+  public <span class="fstat-no" title="function not covered" >get(</span>
     element: Element,
     context: Context = Context.empty(),
   ): RuleTree.Node {
@@ -743,8 +743,8 @@ export class Cascade implements Serializable {
       // If the entry hasn't been cached already, we assume we are querying
       // for a single element and pay the price of building its custom ancestor
       // filter, hopefully saving on the matching cost.
-<span class="fstat-no" title="function not covered" >      () =</span>&gt; {
-        const filter = <span class="cstat-no" title="statement not covered" >AncestorFilter.empty();</span>
+<span class="fstat-no" title="function not covered" >      () =&gt; {</span>
+        const filter = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >AncestorFilter.empty();</span></span>
         // Because CSS selectors do not cross shadow or document boundaries,
         // only get ancestors in the same tree.
         // Adding elements to the ancestor filter is commutative, so we
@@ -759,7 +759,7 @@ export class Cascade implements Serializable {
     );
   }
 &nbsp;
-  public toJSON(): Cascade.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Cascade.JSON {
     return {
       root: this._root.toJSON(),
       device: this._device.toJSON(),
@@ -803,7 +803,7 @@ const shadowDepths = Cache.empty&lt;Node, number&gt;();
  * Thus, we must do a custom traversal to both count the shadow hosts and
  * follow the slots.
  */
-function getDepth(node: Node): number {
+function <span class="fstat-no" title="function not covered" >getDepth(</span>node: Node): number {
   return shadowDepths.get(node, () =&gt; {
     // If this is a Shadow root, get the depth of its host and increase
     // it. If it is not hosted, it has the minimum depth of 1 (0 is not
@@ -832,7 +832,7 @@ function getDepth(node: Node): number {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:04.129Z
+                at 2026-04-10T09:29:28.174Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

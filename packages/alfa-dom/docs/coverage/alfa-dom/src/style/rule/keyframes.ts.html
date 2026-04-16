@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">21.42% </span>
+                <span class="strong">31.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/14</span>
+                <span class='fraction'>6/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">25% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>2/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">36.84% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/10</span>
+                <span class='fraction'>7/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">21.42% </span>
+                <span class="strong">26.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/14</span>
+                <span class='fraction'>4/15</span>
             </div>
         
             
@@ -171,24 +171,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -200,9 +200,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 &nbsp;
-import type { Rule } from "./index.js";
-import type { BaseRule } from "./rule.js";
-import { GroupingRule } from "./grouping.js";
+import type { Rule } from "./index.ts";
+import type { BaseRule } from "./rule.ts";
+import { GroupingRule } from "./grouping.ts";
 &nbsp;
 /**
  * @public
@@ -214,25 +214,25 @@ export class KeyframesRule extends GroupingRule&lt;"keyframes"&gt; {
 &nbsp;
   private readonly _name: string;
 &nbsp;
-<span class="fstat-no" title="function not covered" >  protected constructor(n</span>ame: string, rules: Array&lt;Rule&gt;) {
+<span class="fstat-no" title="function not covered" >  protected <span class="fstat-no" title="function not covered" >constructor(n</span></span>ame: string, rules: Array&lt;Rule&gt;) {
 <span class="cstat-no" title="statement not covered" >    super("keyframes", rules);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this._name = name;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >name(</span>): string {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >name(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return this._name;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): KeyframesRule.JSON {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): KeyframesRule.JSON {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       ...super.toJSON(),
       name: this._name,
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
-    const rules = <span class="cstat-no" title="statement not covered" >this._rules</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
+    const rules = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._rules</span></span>
       .map(<span class="fstat-no" title="function not covered" >(r</span>ule) =&gt; <span class="cstat-no" title="statement not covered" >String.indent(rule.toString()))</span>
       .join("\n\n");
 &nbsp;
@@ -243,12 +243,12 @@ export class KeyframesRule extends GroupingRule&lt;"keyframes"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >KeyframesRule {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >KeyframesRule {</span></span>
   export interface JSON extends GroupingRule.JSON&lt;"keyframes"&gt; {
     name: string;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isKeyframesRule(</span>value: unknown): value is KeyframesRule {
+  export function isKeyframesRule(value: unknown): value is KeyframesRule {
 <span class="cstat-no" title="statement not covered" >    return value instanceof KeyframesRule;</span>
   }
 &nbsp;
@@ -259,8 +259,8 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >K
     json: JSON,
     fromRule: (json: Rule.JSON) =&gt; Trampoline&lt;Rule&gt;,
   ): Trampoline&lt;KeyframesRule&gt; {
-<span class="cstat-no" title="statement not covered" >    return Trampoline.traverse(json.rules, fromRule).map(<span class="fstat-no" title="function not covered" >(r</span>ules) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      KeyframesRule.of(json.name, rules),</span>
+<span class="cstat-no" title="statement not covered" >    return Trampoline.traverse(json.rules, fromRule).map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(r</span></span>ules) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      KeyframesRule.of(json.name, rules),</span></span>
     );
   }
 }
@@ -271,7 +271,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >K
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:21.155Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

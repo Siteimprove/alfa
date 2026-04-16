@@ -7,9 +7,9 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation, Question } from "../common/act/index.js";
+import { expectation, Question } from "../common/act/index.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { and } = Predicate;
 

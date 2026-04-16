@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.36% </span>
+                <span class="strong">77.77% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>42/47</span>
+                <span class='fraction'>49/63</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">60% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>12/20</span>
+                <span class='fraction'>24/40</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.87% </span>
+                <span class="strong">72.13% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>26/31</span>
+                <span class='fraction'>44/61</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.36% </span>
+                <span class="strong">89.58% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>42/47</span>
+                <span class='fraction'>43/48</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -459,7 +459,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -641,11 +641,11 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { Anchored } from "./anchored.js";
-import type { Slot } from "./slot.js";
-import type { Scope } from "./scope.js";
+import { Anchored } from "./anchored.ts";
+import type { Slot } from "./slot.ts";
+import type { Scope } from "./scope.ts";
 &nbsp;
-import * as predicate from "./cell/predicate.js";
+import * as predicate from "./cell/predicate.ts";
 &nbsp;
 const { and, or } = Refinement;
 const { isElement } = Element;
@@ -665,7 +665,7 @@ export abstract class Cell
   protected readonly _height: number;
   protected readonly _headers: Array&lt;Slot&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     element: Element,
     anchor: Slot,
     width: number,
@@ -679,38 +679,38 @@ export abstract class Cell
     this._headers = headers;
   }
 &nbsp;
-  public get element(): Element {
+  public get <span class="fstat-no" title="function not covered" >element(</span>): Element {
     return this._element;
   }
 &nbsp;
-  public get anchor(): Slot {
+  public get <span class="fstat-no" title="function not covered" >anchor(</span>): Slot {
     return this._anchor;
   }
 &nbsp;
-  public get x(): number {
+  public get <span class="fstat-no" title="function not covered" >x(</span>): number {
     return this._anchor.x;
   }
 &nbsp;
-  public get y(): number {
+  public get <span class="fstat-no" title="function not covered" >y(</span>): number {
     return this._anchor.y;
   }
 &nbsp;
-  public get width(): number {
+  public get <span class="fstat-no" title="function not covered" >width(</span>): number {
     return this._width;
   }
 &nbsp;
-  public get height(): number {
+  public get <span class="fstat-no" title="function not covered" >height(</span>): number {
     return this._height;
   }
 &nbsp;
-  public get headers(): Sequence&lt;Slot&gt; {
+  public get <span class="fstat-no" title="function not covered" >headers(</span>): Sequence&lt;Slot&gt; {
     return Sequence.from(this._headers);
   }
 &nbsp;
   /**
    * {@link https://html.spec.whatwg.org/#empty-cell}
    */
-  public isEmpty(): boolean {
+  public <span class="fstat-no" title="function not covered" >isEmpty(</span>): boolean {
     return this._element.children().none(
       or(
         isElement,
@@ -723,7 +723,7 @@ export abstract class Cell
 &nbsp;
   public abstract isHeader(): this is Cell.Header;
 &nbsp;
-  public compare(anchored: Anchored): Comparison {
+  public <span class="fstat-no" title="function not covered" >compare(</span>anchored: Anchored): Comparison {
     return Anchored.compare(this, anchored);
   }
 &nbsp;
@@ -731,14 +731,14 @@ export abstract class Cell
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public equals(value: unknown): boolean {
-    return (
+  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
+<span class="cstat-no" title="statement not covered" >    return (</span>
       value instanceof Cell &amp;&amp;
       value._element.equals(this._element) &amp;&amp;
-<span class="branch-2 cbranch-no" title="branch not covered" >      value._anchor.equals(this._anchor) </span>&amp;&amp;
-<span class="branch-3 cbranch-no" title="branch not covered" >      value._width === this._width </span>&amp;&amp;
-<span class="branch-4 cbranch-no" title="branch not covered" >      value._height === this._height </span>&amp;&amp;
-<span class="branch-5 cbranch-no" title="branch not covered" >      Array.equals(value._headers, this._headers)</span>
+<span class="branch-2 cbranch-no" title="branch not covered" ><span class="branch-2 cbranch-no" title="branch not covered" >      value._anchor.equals(this._anchor) </span>&amp;&amp;</span>
+<span class="branch-3 cbranch-no" title="branch not covered" ><span class="branch-3 cbranch-no" title="branch not covered" >      value._width === this._width </span>&amp;&amp;</span>
+<span class="branch-4 cbranch-no" title="branch not covered" ><span class="branch-4 cbranch-no" title="branch not covered" >      value._height === this._height </span>&amp;&amp;</span>
+<span class="branch-5 cbranch-no" title="branch not covered" ><span class="branch-5 cbranch-no" title="branch not covered" >      Array.equals(value._headers, this._headers)</span></span>
     );
   }
 &nbsp;
@@ -748,7 +748,7 @@ export abstract class Cell
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Cell {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >C</span>ell {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     element: string;
@@ -758,13 +758,13 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
     headers: Array&lt;Slot.JSON&gt;;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isCell(</span>value: unknown): value is Cell {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isCell(v</span>alue: unknown): value is Cell {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Cell;</span>
   }
 &nbsp;
   export const { hasElement } = predicate;
 &nbsp;
-  export class Data extends Cell {
+  export class <span class="cstat-no" title="statement not covered" >Data extends Cell {</span>
     public static of(
       element: Element,
       anchor: Slot,
@@ -791,7 +791,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
       super(element, anchor, width, height, headers);
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >isData(</span>): this is Data {
+    public <span class="fstat-no" title="function not covered" >isData(): this is Data {</span>
 <span class="cstat-no" title="statement not covered" >      return true;</span>
     }
 &nbsp;
@@ -819,19 +819,19 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
     }
   }
 &nbsp;
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Data {</span>
+<span class="cstat-no" title="statement not covered" >  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Data {</span></span></span>
     export interface JSON extends Cell.JSON {
       type: "data";
     }
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >isData(</span>value: unknown): value is Data {
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isData(v</span>alue: unknown): value is Data {</span>
 <span class="cstat-no" title="statement not covered" >      return value instanceof Data;</span>
     }
   }
 &nbsp;
   export const { of: data, isData } = Data;
 &nbsp;
-  export class Header extends Cell {
+  export class <span class="cstat-no" title="statement not covered" >Header extends Cell {</span>
     public static of(
       element: Element,
       anchor: Slot,
@@ -869,7 +869,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
       return this._scope;
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >isData(</span>): this is never {
+    public <span class="fstat-no" title="function not covered" >isData(): this is never {</span>
 <span class="cstat-no" title="statement not covered" >      return false;</span>
     }
 &nbsp;
@@ -882,10 +882,10 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
     public equals(value: unknown): value is this;
 &nbsp;
     public equals(value: unknown): boolean {
-      return (
+<span class="cstat-no" title="statement not covered" >      return (</span>
         value instanceof Header &amp;&amp;
         super.equals(value) &amp;&amp;
-<span class="branch-2 cbranch-no" title="branch not covered" >        value._scope === this._scope</span>
+<span class="branch-2 cbranch-no" title="branch not covered" ><span class="branch-2 cbranch-no" title="branch not covered" >        value._scope === this._scope</span></span>
       );
     }
 &nbsp;
@@ -902,13 +902,13 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
     }
   }
 &nbsp;
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Header {</span>
+<span class="cstat-no" title="statement not covered" >  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Header {</span></span></span>
     export interface JSON extends Cell.JSON {
       type: "header";
       scope: Scope;
     }
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >isHeader(</span>value: unknown): value is Header {
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isHeader(v</span>alue: unknown): value is Header {</span>
 <span class="cstat-no" title="statement not covered" >      return value instanceof Header;</span>
     }
   }
@@ -922,7 +922,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:08:23.764Z
+                at 2026-04-10T09:31:37.491Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

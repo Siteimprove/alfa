@@ -3,23 +3,23 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Token, type Parser as CSSParser } from "../../syntax/index.js";
+import { Token, type Parser as CSSParser } from "../../syntax/index.ts";
 
-import { Unit } from "../../unit/index.js";
+import { Unit } from "../../unit/index.ts";
 
-import type { Numeric } from "../numeric/index.js";
+import type { Numeric } from "../numeric/index.ts";
 import {
   Angle,
   Dimension,
   Length,
   Number,
   Percentage,
-} from "../numeric/index.js";
+} from "../numeric/index.ts";
 
-import { Expression } from "./expression.js";
-import { Function } from "./function/index.js";
-import type { Kind } from "./kind.js";
-import { Value } from "./value.js";
+import { Expression } from "./expression.ts";
+import { Function } from "./function/index.ts";
+import type { Kind } from "./kind.ts";
+import { Value } from "./value.ts";
 
 const { isAngle } = Angle;
 const { isDimension } = Dimension;

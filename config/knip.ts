@@ -24,10 +24,6 @@ const config: KnipConfig = {
       // file and needs to be exported for that.
       ignore: ["src/ancestor-filter.ts"],
     },
-    "packages/alfa-compatibility": {
-      entry: [...entry, "scripts/**/*.ts"],
-      project,
-    },
     "packages/alfa-device": { entry: [...entry, "src/native.ts!"], project },
     "packages/alfa-dom": {
       entry: [

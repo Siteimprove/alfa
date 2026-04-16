@@ -2,7 +2,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import type { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { isRendered } from "../../node/predicate/is-rendered.js";
+import { isRendered } from "../../node/predicate/is-rendered.ts";
 
 const { hasTabIndex, isActuallyDisabled } = Element;
 const { and, not } = Predicate;

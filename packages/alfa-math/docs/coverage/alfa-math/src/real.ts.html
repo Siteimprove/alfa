@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">48% </span>
+                <span class="strong">35.13% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/25</span>
+                <span class='fraction'>13/37</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.28% </span>
+                <span class="strong">16.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/14</span>
+                <span class='fraction'>4/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/10</span>
+                <span class='fraction'>10/20</span>
             </div>
         
             
@@ -234,28 +234,28 @@
  *
  * @public
  */
-export namespace Real {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Real {</span>
   export function isReal(value: number): boolean;
 &nbsp;
   export function isReal(value: unknown): value is number;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isReal(</span>value: unknown): value is number {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isReal(v</span>alue: unknown): value is number {</span>
 <span class="cstat-no" title="statement not covered" >    return typeof value === "number" &amp;&amp; Number.isFinite(value);</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >add(</span>p: number, q: number): number {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >add(p</span>: number, q: number): number {</span>
 <span class="cstat-no" title="statement not covered" >    return p + q;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >subtract(</span>p: number, q: number): number {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >subtract(p</span>: number, q: number): number {</span>
 <span class="cstat-no" title="statement not covered" >    return p - q;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >multiply(</span>p: number, q: number): number {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >multiply(p</span>: number, q: number): number {</span>
 <span class="cstat-no" title="statement not covered" >    return p * q;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >divide(</span>p: number, d: number): number {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >divide(p</span>: number, d: number): number {</span>
 <span class="cstat-no" title="statement not covered" >    return p / d;</span>
   }
 &nbsp;
@@ -269,21 +269,21 @@ export namespace Real {
    * natively in JavaScript through the `%` operator. The modulo operation
    * always returns a result with the same sign as the divisor.
    */
-  export function <span class="fstat-no" title="function not covered" >modulo(</span>p: number, d: number): number {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >modulo(p</span>: number, d: number): number {</span>
 <span class="cstat-no" title="statement not covered" >    return ((p % d) + d) % d;</span>
   }
 &nbsp;
   /**
    * Clamp a real between a lower and an upper value.
    */
-  export function clamp(p: number, l: number, u: number): number {
+  export function <span class="cstat-no" title="statement not covered" >clamp(p: number, l: number, u: number): number {</span>
     return max(l, min(p, u));
   }
 &nbsp;
   /**
    * Round a real to a given number of decimals.
    */
-  export function <span class="fstat-no" title="function not covered" >round(</span>p: number, n: number = <span class="branch-0 cbranch-no" title="branch not covered" >0)</span>: number {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >round(p</span>: number, n: number = <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >0)</span>: number {</span></span>
 <span class="cstat-no" title="statement not covered" >    return n === 0 ? Math.round(p) : Math.round(p * 10 ** n) / 10 ** n;</span>
   }
 &nbsp;
@@ -291,16 +291,16 @@ export namespace Real {
    * Check if two reals are equal, accounting for floating-point precision
    * errors according to a given epsilon.
    */
-  export function <span class="fstat-no" title="function not covered" >equals(</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span></span></span>
     a: number,
     b: number,
-    e: number = <span class="branch-0 cbranch-no" title="branch not covered" >Number.EPSILON,</span>
+    e: number = <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >Number.EPSILON,</span></span>
   ): boolean {
 <span class="cstat-no" title="statement not covered" >    if (a === b) {</span>
 <span class="cstat-no" title="statement not covered" >      return true;</span>
     }
 &nbsp;
-    const diff = <span class="cstat-no" title="statement not covered" >abs(a - b);</span>
+    const diff = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >abs(a - b);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (a === 0 || b === 0) {</span>
 <span class="cstat-no" title="statement not covered" >      return diff &lt; e;</span>
@@ -316,7 +316,7 @@ export namespace Real {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:35.954Z
+                at 2026-04-10T09:29:59.365Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">31.91% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/30</span>
+                <span class='fraction'>15/47</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">30.76% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/13</span>
+                <span class='fraction'>8/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
+                <span class="strong">42.85% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/18</span>
+                <span class='fraction'>15/35</span>
             </div>
         
             
@@ -398,39 +398,39 @@ export type String = globalThis.String;
 /**
  * @public
  */
-export namespace String {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace String {</span>
   export type Transformer&lt;S extends string = string&gt; = Callback&lt;string, S&gt;;
 &nbsp;
-  export namespace Transformer {
+<span class="cstat-no" title="statement not covered" >  export namespace Transformer {</span>
     /**
      * Transform a string if it matches a predicate
      */
-    export function <span class="fstat-no" title="function not covered" >when(</span>
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >when(</span></span>
       predicate: Predicate&lt;string&gt;,
       transformer: Transformer,
     ): Transformer {
-<span class="cstat-no" title="statement not covered" >      return <span class="fstat-no" title="function not covered" >(i</span>nput) =&gt; (<span class="cstat-no" title="statement not covered" >predicate(input) ? transformer(input) : input)</span>;</span>
+<span class="cstat-no" title="statement not covered" >      return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(i</span></span>nput) =&gt; (<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >predicate(input) ? transformer(input) : input)</span>;</span></span>
     }
 &nbsp;
     /**
      * Chains transformers on a string.
      */
-    export function <span class="fstat-no" title="function not covered" >and(</span>...transformers: Array&lt;Transformer&gt;): Transformer {
-<span class="cstat-no" title="statement not covered" >      return <span class="fstat-no" title="function not covered" >(i</span>nput) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >        transformers.reduce(<span class="fstat-no" title="function not covered" >(i</span>nput, transformer) =&gt; <span class="cstat-no" title="statement not covered" >transformer(input),</span> input);</span>
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >and(...t</span>ransformers: Array&lt;Transformer&gt;): Transformer {</span>
+<span class="cstat-no" title="statement not covered" >      return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(i</span></span>nput) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        transformers.reduce(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(i</span></span>nput, transformer) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >transformer(input),</span> i</span>nput);</span></span>
     }
   }
   /**
    * Adds two spaces at the start of each line.
    */
-  export function <span class="fstat-no" title="function not covered" >indent(</span>input: string): string {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >indent(i</span>nput: string): string {</span>
 <span class="cstat-no" title="statement not covered" >    return input.replace(/^/gm, "  ");</span>
   }
 &nbsp;
   /**
    * Collapses adjacent whitespace into a single ASCII space
    */
-  export function <span class="fstat-no" title="function not covered" >flatten(</span>input: string): string {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >flatten(i</span>nput: string): string {</span>
 <span class="cstat-no" title="statement not covered" >    return input.replace(/\s+/g, " ");</span>
   }
 &nbsp;
@@ -438,9 +438,9 @@ export namespace String {
    * Trims, collapses adjacent whitespace into a single ASCII space, optionally
    * lowercases (default: true).
    */
-  export function <span class="fstat-no" title="function not covered" >normalize(</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >normalize(</span></span>
     input: string,
-    toLowerCase: boolean = <span class="branch-0 cbranch-no" title="branch not covered" >true,</span>
+    toLowerCase: boolean = <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >true,</span></span>
   ): string {
 <span class="cstat-no" title="statement not covered" >    return flatten(toLowerCase ? input.toLowerCase() : input).trim();</span>
   }
@@ -453,11 +453,11 @@ export namespace String {
    * This removes the Unicode classes P (punctuation), S (symbols),
    * and Cf (formatting characters).
    */
-  export function <span class="fstat-no" title="function not covered" >removePunctuation(</span>input: string): string {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >removePunctuation(i</span>nput: string): string {</span>
 <span class="cstat-no" title="statement not covered" >    return input.replace(/\p{P}|\p{S}|\p{Cf}/gu, "");</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >toLowerCase&lt;</span>T extends string = string&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >toLowerCase&lt;T extends string = string&gt;(</span></span>
     input: T,
   ): Lowercase&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return input.toLowerCase() as Lowercase&lt;T&gt;;</span>
@@ -467,9 +467,9 @@ export namespace String {
    * Checks whether the input contains only whitespace, optionally allowing
    * empty strings (default: true).
    */
-  export function <span class="fstat-no" title="function not covered" >isWhitespace(</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isWhitespace(</span></span>
     input: string,
-    allowEmpty: boolean = <span class="branch-0 cbranch-no" title="branch not covered" >true,</span>
+    allowEmpty: boolean = <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >true,</span></span>
   ): boolean {
 <span class="cstat-no" title="statement not covered" >    return (allowEmpty || input.length &gt; 0) &amp;&amp; input.trim() === "";</span>
   }
@@ -477,14 +477,14 @@ export namespace String {
   /**
    * Fallback to a default value if the input is empty or whitespace
    */
-  export function <span class="fstat-no" title="function not covered" >fallback(</span>fallback: string): Transformer {
-<span class="cstat-no" title="statement not covered" >    return Transformer.when(isWhitespace, <span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >fallback)</span>;</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >fallback(f</span>allback: string): Transformer {</span>
+<span class="cstat-no" title="statement not covered" >    return Transformer.when(isWhitespace, <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >f</span>allback)</span>;</span>
   }
 &nbsp;
   /**
    * Checks whether the input contains a whitespace
    */
-  export function <span class="fstat-no" title="function not covered" >hasWhitespace(</span>input: string): boolean {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >hasWhitespace(i</span>nput: string): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return /\s/.test(input);</span>
   }
 &nbsp;
@@ -521,7 +521,7 @@ export namespace String {
    * {@link https://www.fileformat.info/info/unicode/char/FEFF/index.htm}
    * {@link https://www.fileformat.info/info/unicode/char/200b/index.htm}
    */
-  export function hasSoftWrapOpportunity(input: string): boolean {
+  export function <span class="cstat-no" title="statement not covered" >hasSoftWrapOpportunity(input: string): boolean {</span>
     // TODO: update to use /[\\p{White_Space}--\u00a0\u202f\ufeff]/v when
     // TODO: switching to ES2024
     // The first dash is a character range. The last two are a \ protected
@@ -545,7 +545,7 @@ export namespace String {
    * not because they are always visible and are always soft wrap opportunities,
    * even when hyphenation is not allowed.
    */
-  export function <span class="fstat-no" title="function not covered" >hasHyphenationOpportunity(</span>input: string): boolean {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hasHyphenationOpportunity(</span>i</span>nput: string): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return /\u00AD/.test(input);</span>
   }
 }
@@ -556,7 +556,7 @@ export namespace String {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:07:05.473Z
+                at 2026-04-10T09:30:27.768Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

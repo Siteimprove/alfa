@@ -1,7 +1,7 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { PseudoClassSelector } from "./pseudo-class.js";
+import { PseudoClassSelector } from "./pseudo-class.ts";
 
 const { hasAttribute, hasInputType, hasName } = Element;
 const { and, or } = Predicate;

@@ -1,9 +1,9 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Mix, MixItem } from "../../../dist/value/color/mix.js";
-import { Keyword } from "../../../dist/index.js";
+import { Mix, MixItem } from "../../../src/value/color/mix.ts";
+import { Keyword } from "../../../src/index.ts";
 
-import { parserUnsafe, serializer } from "../../common/parse.js";
+import { parserUnsafe, serializer } from "../../common/parse.ts";
 
 const parse = Keyword.parse("foo", "bar", "baz", "qux");
 

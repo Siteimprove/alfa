@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">65.51% </span>
+                <span class="strong">70.73% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/29</span>
+                <span class='fraction'>29/41</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">30.76% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/13</span>
+                <span class='fraction'>8/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55% </span>
+                <span class="strong">79.48% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>11/20</span>
+                <span class='fraction'>31/39</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">65.51% </span>
+                <span class="strong">68.96% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>19/29</span>
+                <span class='fraction'>20/29</span>
             </div>
         
             
@@ -229,7 +229,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -262,25 +262,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3640x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3648x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -312,7 +312,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -327,7 +327,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
+<span class="cline-any cline-yes">232x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -336,8 +336,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">235x</span>
-<span class="cline-any cline-yes">3662x</span>
+<span class="cline-any cline-yes">232x</span>
+<span class="cline-any cline-yes">3670x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -346,9 +346,9 @@ import { Option } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 &nbsp;
-import type { Rule } from "./index.js";
-import { BaseRule } from "./rule.js";
-import { GroupingRule } from "./grouping.js";
+import type { Rule } from "./index.ts";
+import { BaseRule } from "./rule.ts";
+import { GroupingRule } from "./grouping.ts";
 &nbsp;
 /**
  * Model for CSS layers
@@ -384,24 +384,24 @@ export namespace Layer {
       return this._layers;
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toJSON(</span>): StatementRule.JSON {
+    public <span class="fstat-no" title="function not covered" >toJSON(): StatementRule.JSON {</span>
 <span class="cstat-no" title="statement not covered" >      return {</span>
         ...super.toJSON(),
         layers: this._layers,
       };
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+    public <span class="fstat-no" title="function not covered" >toString(): string {</span>
 <span class="cstat-no" title="statement not covered" >      return `@layer ${this._layers.join(", ")};`;</span>
     }
   }
 &nbsp;
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >StatementRule {</span>
+  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >StatementRule {</span></span>
     export interface JSON extends BaseRule.JSON&lt;"layer-statement"&gt; {
       layers: Array&lt;string&gt;;
     }
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >fromLayerStatementRule(</span>
+    export function fromLayerStatementRule(
       json: JSON,
     ): Trampoline&lt;StatementRule&gt; {
 <span class="cstat-no" title="statement not covered" >      return Trampoline.done(StatementRule.of(json.layers));</span>
@@ -435,22 +435,22 @@ export namespace Layer {
       return this._layer;
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >      return (</span>
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      return (</span></span>
         value instanceof BlockRule &amp;&amp;
         value._layer.equals(this._layer) &amp;&amp;
         super.equals(value)
       );
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toJSON(</span>): BlockRule.JSON {
+    public <span class="fstat-no" title="function not covered" >toJSON(): BlockRule.JSON {</span>
 <span class="cstat-no" title="statement not covered" >      return {</span>
         ...super.toJSON(),
         layer: this._layer.getOr(null),
       };
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+    public <span class="fstat-no" title="function not covered" >toString(): string {</span>
       const rules = <span class="cstat-no" title="statement not covered" >this._rules</span>
         .map(<span class="fstat-no" title="function not covered" >(r</span>ule) =&gt; <span class="cstat-no" title="statement not covered" >String.indent(rule.toString()))</span>
         .join("\n\n");
@@ -461,17 +461,17 @@ export namespace Layer {
     }
   }
 &nbsp;
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >BlockRule {</span>
+  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >BlockRule {</span></span>
     export interface JSON extends GroupingRule.JSON&lt;"layer-block"&gt; {
       layer: string | null;
     }
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >fromLayerBlockRule(</span>
+    export function fromLayerBlockRule(
       json: JSON,
       fromRule: (json: Rule.JSON) =&gt; Trampoline&lt;Rule&gt;,
     ): Trampoline&lt;BlockRule&gt; {
-<span class="cstat-no" title="statement not covered" >      return Trampoline.traverse(json.rules, fromRule).map(<span class="fstat-no" title="function not covered" >(r</span>ules) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >        BlockRule.of(rules, json.layer),</span>
+<span class="cstat-no" title="statement not covered" >      return Trampoline.traverse(json.rules, fromRule).map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(r</span></span>ules) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        BlockRule.of(rules, json.layer),</span></span>
       );
     }
 &nbsp;
@@ -487,7 +487,7 @@ export namespace Layer {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

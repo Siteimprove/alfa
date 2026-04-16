@@ -1,1 +1,1 @@
-export * from "./language.js";
+export * from "./language.ts";

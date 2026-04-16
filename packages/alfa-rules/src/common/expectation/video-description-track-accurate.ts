@@ -2,8 +2,8 @@ import { Diagnostic } from "@siteimprove/alfa-act";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 
-import { expectation } from "../act/expectation.js";
-import { Question } from "../act/question.js";
+import { expectation } from "../act/expectation.ts";
+import { Question } from "../act/question.ts";
 
 export function videoDescriptionTrackAccurate(target: Element) {
   return {

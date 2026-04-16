@@ -6,10 +6,10 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
-import { roleAttributes } from "../common/applicability/role-attributes.js";
+import { expectation } from "../common/act/expectation.ts";
+import { roleAttributes } from "../common/applicability/role-attributes.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r110",

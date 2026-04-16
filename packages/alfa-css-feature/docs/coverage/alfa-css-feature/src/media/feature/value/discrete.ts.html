@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">58.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/10</span>
+                <span class='fraction'>7/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.55% </span>
+                <span class="strong">27.77% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/9</span>
+                <span class='fraction'>5/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">63.63% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/10</span>
+                <span class='fraction'>7/11</span>
             </div>
         
             
@@ -179,7 +179,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -201,7 +201,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 &nbsp;
-import type { Value } from "./value.js";
+import type { Value } from "./value.ts";
 &nbsp;
 /**
  * A non-numerical value, e.g., orientation.
@@ -211,35 +211,35 @@ import type { Value } from "./value.js";
 export class Discrete&lt;T = unknown&gt;
   implements Value&lt;T&gt;, Serializable&lt;Discrete.JSON&lt;T&gt;&gt;
 {
-  public static of&lt;T&gt;(value: T): Discrete&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T&gt;(value: T): Discrete&lt;T&gt; {
     return new Discrete(value);
   }
 &nbsp;
   private readonly _value: T;
 &nbsp;
-  protected constructor(value: T) {
+<span class="fstat-no" title="function not covered" >  protected constructor(v</span>alue: T) {
     this._value = value;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >value(</span>): T {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >value(</span>): T {</span>
 <span class="cstat-no" title="statement not covered" >    return this._value;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U&gt;): Discrete&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(m</span>apper: Mapper&lt;T, U&gt;): Discrete&lt;U&gt; {
 <span class="cstat-no" title="statement not covered" >    return new Discrete(mapper(this._value));</span>
   }
 &nbsp;
-  public matches(value: T): boolean {
+  public <span class="fstat-no" title="function not covered" >matches(</span>value: T): boolean {
     return Equatable.equals(this._value, value);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hasValue&lt;</span>U extends T&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hasValue&lt;</span>U extends T&gt;(</span>
     refinement: Refinement&lt;T, U&gt;,
   ): this is Discrete&lt;U&gt; {
 <span class="cstat-no" title="statement not covered" >    return refinement(this._value);</span>
   }
 &nbsp;
-  public toJSON(): Discrete.JSON&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Discrete.JSON&lt;T&gt; {
     return {
       type: "discrete",
       value: Serializable.toJSON(this._value),
@@ -250,14 +250,14 @@ export class Discrete&lt;T = unknown&gt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Discrete {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >D</span>iscrete {</span></span>
   export interface JSON&lt;T&gt; {
     [key: string]: json.JSON;
     type: "discrete";
     value: Serializable.ToJSON&lt;T&gt;;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isDiscrete&lt;</span>T&gt;(value: unknown): value is Discrete&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isDiscrete&lt;</span>T&gt;(v</span>alue: unknown): value is Discrete&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Discrete;</span>
   }
 }
@@ -268,7 +268,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >D
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:08.864Z
+                at 2026-04-10T09:29:32.705Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

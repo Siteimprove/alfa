@@ -1,6 +1,6 @@
 import { describe, it, expectTypeOf } from "vitest";
 
-import { Callback } from "../dist/callback.js";
+import { Callback } from "../src/callback.ts";
 
 describe("Callback", () => {
   it("defaults to void function with no extra args", () => {

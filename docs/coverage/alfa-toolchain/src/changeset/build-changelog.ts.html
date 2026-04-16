@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">43.07% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>23/46</span>
+                <span class='fraction'>28/65</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/20</span>
+                <span class='fraction'>10/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.17% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>12/23</span>
+                <span class='fraction'>24/40</span>
             </div>
         
             
@@ -586,14 +586,14 @@ import type {
 } from "@changesets/types";
 import type { Package, Packages } from "@manypkg/get-packages";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
-import { Changeset } from "./get-changeset-details.js";
+import { Changeset } from "./get-changeset-details.ts";
 import {
   type ChangelogFunctions,
   Error,
   getConfigOption,
   getOrDie,
   getPackagesShim,
-} from "./helpers.js";
+} from "./helpers.ts";
 &nbsp;
 const NON_UNIQUE_VERSION = Error.freeFrom + 1;
 const INVALID_CHANGESETS = Error.freeFrom + 2;
@@ -601,14 +601,14 @@ const INVALID_CHANGESETS = Error.freeFrom + 2;
 /**
  * @public
  */
-export namespace Changelog {
-  export async function <span class="fstat-no" title="function not covered" >getBody(</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Changelog {</span>
+  export async function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >getBody(</span></span>
     changesets: Array&lt;NewChangesetWithCommit&gt;,
     packages: Packages,
     config: Config,
   ): Promise&lt;string&gt; {
     // Build release plan (compute old and new versions for each package)
-    const releasePlan<span class="cstat-no" title="statement not covered" > = assembleReleasePlan(</span>
+    const <span class="cstat-no" title="statement not covered" >releasePlan<span class="cstat-no" title="statement not covered" > = assembleReleasePlan(</span></span>
       changesets,
       getPackagesShim(packages),
       config,
@@ -617,21 +617,21 @@ export namespace Changelog {
     );
 &nbsp;
     // Check unicity of versions
-    const { oldVersion, newVersion }<span class="cstat-no" title="statement not covered" > = getOrDie(</span>
+    const { oldVersion, newVersion <span class="cstat-no" title="statement not covered" >}<span class="cstat-no" title="statement not covered" > = getOrDie(</span></span>
       getVersions(releasePlan),
       NON_UNIQUE_VERSION,
     );
 &nbsp;
     // Check that changeset config.changelog[1].repo exists, so we can fetch
     // the PRs.
-    const repo<span class="cstat-no" title="statement not covered" > = getConfigOption(config, "repo");</span>
+    const <span class="cstat-no" title="statement not covered" >repo<span class="cstat-no" title="statement not covered" > = getConfigOption(config, "repo");</span></span>
 &nbsp;
     // Build links to PRs, this is an array of same length as the changesets
     // with a one-to-one correspondence.
-    const prLinks = <span class="cstat-no" title="statement not covered" >await getPRlinks(changesets, repo);</span>
+    const prLinks = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >await getPRlinks(changesets, repo);</span></span>
 &nbsp;
     // Parse the changeset and extract the details.
-    const details = <span class="cstat-no" title="statement not covered" >changesets</span>
+    const details = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >changesets</span></span>
       .map(Changeset.getDetails)
       .filter&lt;Ok&lt;Changeset.Details&gt;&gt;(Result.isOk)
       .map(<span class="fstat-no" title="function not covered" >(c</span>hangeset) =&gt; <span class="cstat-no" title="statement not covered" >changeset.get())</span>;
@@ -642,7 +642,7 @@ export namespace Changelog {
     }
 &nbsp;
     // Build the body of the global changelog.
-<span class="cstat-no" title="statement not covered" >    return (</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       `## [${newVersion}](../../compare/v${oldVersion}...v${newVersion}) (${new Date(
         Date.now(),
       )
@@ -660,7 +660,7 @@ export namespace Changelog {
   /**
    * @internal
    */
-  export function mergeBodies(oldBody: string, newBody: string): string {
+  export function <span class="cstat-no" title="statement not covered" >mergeBodies(oldBody: string, newBody: string): string {</span>
     // Insert the new body as third line skipping heading and one more newline
     return oldBody.replace(/((.*\n){2})/, `$1${newBody}\n\n`);
   }
@@ -682,7 +682,7 @@ export namespace Changelog {
    * When we pre-process changesets, we do not yet know the new version number.
    * So we use a placeholder to be replaced at a later stage.
    */
-  export function buildBody(
+  export function <span class="cstat-no" title="statement not covered" >buildBody(</span>
     changesets: ReadonlyArray&lt;ChangeSetDetailsWithLink&gt;,
     packages: ReadonlyArray&lt;Package&gt;,
     newVersion: string,
@@ -706,7 +706,7 @@ export namespace Changelog {
   /**
    * @internal
    */
-  export function buildGroup(
+  export function <span class="cstat-no" title="statement not covered" >buildGroup(</span>
     kind: Changeset.Kind,
     changesets: ReadonlyArray&lt;ChangeSetDetailsWithLink&gt;,
     packages: ReadonlyArray&lt;Package&gt;,
@@ -722,7 +722,7 @@ export namespace Changelog {
    *
    * @internal
    */
-  export function buildLine(
+  export function <span class="cstat-no" title="statement not covered" >buildLine(</span>
     packages: ReadonlyArray&lt;Package&gt;,
     newVersion: string,
   ): ([changeset, prLink]: ChangeSetDetailsWithLink) =&gt; string {
@@ -769,10 +769,10 @@ export namespace Changelog {
   /**
    * Check that old and new versions are unique in a release plan, and return them.
    */
-  function <span class="fstat-no" title="function not covered" >getVersions(</span>releasePlan: ReleasePlan): Result&lt;Versions, string&gt; {
+  function <span class="fstat-no" title="function not covered" >getVersions(r</span>eleasePlan: ReleasePlan): Result&lt;Versions, string&gt; {
 <span class="cstat-no" title="statement not covered" >    return releasePlan.releases.reduce(</span>
-<span class="fstat-no" title="function not covered" >      (p</span>revious: Result&lt;Versions, string&gt;, current) =&gt; {
-<span class="cstat-no" title="statement not covered" >        return previous.flatMap(<span class="fstat-no" title="function not covered" >({</span> oldVersion, newVersion }) =&gt; {</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >      (p</span></span>revious: Result&lt;Versions, string&gt;, current) =&gt; {
+<span class="cstat-no" title="statement not covered" >        return previous.flatMap(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >({</span></span> oldVersion, newVersion }) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >          if (oldVersion !== "" &amp;&amp; oldVersion !== current.oldVersion) {</span>
 <span class="cstat-no" title="statement not covered" >            return Err.of(</span>
               "Not all packages have the same current version, aborting",
@@ -813,11 +813,11 @@ export namespace Changelog {
   function <span class="fstat-no" title="function not covered" >getPRLink(</span>
     repo: string,
   ): (commit: string | undefined) =&gt; Promise&lt;string | undefined&gt; {
-<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >async </span>(commit) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      commit === undefined</span>
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >async </span>(c</span>ommit) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      commit === undefined</span></span>
         ? undefined
         : getInfo({ commit, repo }).then(
-<span class="fstat-no" title="function not covered" >            (i</span>nfo) =&gt; <span class="cstat-no" title="statement not covered" >info?.links.pull ?? undefined,</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >            (i</span></span>nfo) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >info?.links.pull ?? undefined,</span></span>
           );
   }
 }
@@ -841,7 +841,7 @@ export default changelogFunctions;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

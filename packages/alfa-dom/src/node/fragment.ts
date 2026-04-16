@@ -3,9 +3,9 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { BaseNode } from "./node.js";
+import { BaseNode } from "./node.ts";
 
-import type { Node } from "./index.js";
+import type { Node } from "./index.ts";
 
 /**
  * @public

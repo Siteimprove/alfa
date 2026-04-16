@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.3% </span>
+                <span class="strong">88.88% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>36/39</span>
+                <span class='fraction'>48/54</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">67.85% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>19/28</span>
+                <span class='fraction'>24/40</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.21% </span>
+                <span class="strong">60.52% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>16/19</span>
+                <span class='fraction'>23/38</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.3% </span>
+                <span class="strong">92.5% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>36/39</span>
+                <span class='fraction'>37/40</span>
             </div>
         
             
@@ -473,13 +473,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2274x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2274x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2272x</span>
-<span class="cline-any cline-yes">2272x</span>
+<span class="cline-any cline-yes">2274x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2272x</span>
@@ -549,7 +549,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -705,8 +705,8 @@ import {
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { Layer, Origin, Precedence } from "./precedence/index.js";
-import { UserAgent } from "./user-agent.js";
+import { Layer, Origin, Precedence } from "./precedence/index.ts";
+import { UserAgent } from "./user-agent.ts";
 &nbsp;
 /**
  * While resolving cascade, a Block is a style rule that has been expanded with
@@ -738,7 +738,7 @@ export class Block&lt;
    * @privateRemarks
    * We need to accept unlayered blocks since this is how they are built.
    */
-  public static of&lt;
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>
     S extends Element | Block.Source = Element | Block.Source,
     LAYERED extends boolean = boolean,
   &gt;(
@@ -761,7 +761,7 @@ export class Block&lt;
   /**
    * @internal
    */
-  public static empty(): Block {
+  public static <span class="fstat-no" title="function not covered" >empty(</span>): Block {
     return this._empty;
   }
 &nbsp;
@@ -777,7 +777,7 @@ export class Block&lt;
   private readonly _declarations: Array&lt;Declaration&gt;;
   private readonly _precedence: Precedence&lt;LAYERED&gt;;
 &nbsp;
-  constructor(
+<span class="fstat-no" title="function not covered" >  constructor(</span>
     source: S,
     declarations: Array&lt;Declaration&gt;,
     precedence: Precedence&lt;LAYERED&gt;,
@@ -799,32 +799,32 @@ export class Block&lt;
     this._precedence = precedence;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >source(</span>): S {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >source(</span>): S {</span>
 <span class="cstat-no" title="statement not covered" >    return this._owner !== null</span>
       ? (this._owner as unknown as S)
       : // By construction if owner is unset, then rule and selector are set.
         ({ rule: this._rule, selector: this._selector } as S);
   }
 &nbsp;
-  public get rule(): S extends Block.Source ? Rule.Style : null {
+  public get <span class="fstat-no" title="function not covered" >rule(</span>): S extends Block.Source ? Rule.Style : null {
     return this._rule;
   }
 &nbsp;
-  public get selector(): S extends Block.Source
+  public get <span class="fstat-no" title="function not covered" >selector(</span>): S extends Block.Source
     ? Compound | Complex | Simple
     : null {
     return this._selector;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >owner(</span>): S extends Element ? Element : null {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >owner(</span>): S extends Element ? Element : null {</span>
 <span class="cstat-no" title="statement not covered" >    return this._owner;</span>
   }
 &nbsp;
-  public get declarations(): Iterable&lt;Declaration&gt; {
+  public get <span class="fstat-no" title="function not covered" >declarations(</span>): Iterable&lt;Declaration&gt; {
     return this._declarations;
   }
 &nbsp;
-  public get precedence(): Readonly&lt;Precedence&lt;LAYERED&gt;&gt; {
+  public get <span class="fstat-no" title="function not covered" >precedence(</span>): Readonly&lt;Precedence&lt;LAYERED&gt;&gt; {
     return this._precedence;
   }
 &nbsp;
@@ -832,8 +832,8 @@ export class Block&lt;
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Block &amp;&amp;
       Equatable.equals(value._rule, this._rule) &amp;&amp;
       Equatable.equals(value._selector, this._selector) &amp;&amp;
@@ -843,7 +843,7 @@ export class Block&lt;
     );
   }
 &nbsp;
-  public toJSON(): Block.JSON&lt;S&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Block.JSON&lt;S&gt; {
     return {
       source: (Element.isElement(this._owner)
         ? this._owner.toJSON()
@@ -864,7 +864,7 @@ export class Block&lt;
 /**
  * @internal
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Block {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >B</span>lock {</span></span>
   export interface JSON&lt;S extends Element | Source = Element | Source&gt; {
     [key: string]: json.JSON;
     source: S extends Element
@@ -902,7 +902,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >B
    * the exact same declarations, or non-conflicting ones (due to importance), they can
    * share the exact same order.
    */
-  export function from(
+  export function <span class="cstat-no" title="statement not covered" >from(</span>
     rule: Rule.Style,
     order: number,
     encapsulationDepth: number,
@@ -961,7 +961,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >B
    * Turns the style attribute of an element into blocks (one for important
    * declarations, one for normal declarations).
    */
-  export function fromStyle(
+  export function <span class="cstat-no" title="statement not covered" >fromStyle(</span>
     element: Element,
     encapsulationDepth: number,
   ): Iterable&lt;Block&lt;Element, true&gt;&gt; {
@@ -1003,7 +1003,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >B
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:04.129Z
+                at 2026-04-10T09:29:28.174Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

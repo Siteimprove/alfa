@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R95, { Outcomes } from "../../dist/sia-r95/rule.js";
+import R95, { Outcomes } from "../../src/sia-r95/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { failed, inapplicable, passed } from "../common/outcome.ts";
 
 test("evaluate() passes an iframe with non-negative tabindex", async (t) => {
   const button = <button>Hello World!</button>;
@@ -79,6 +79,24 @@ test("evaluate() is inapplicable to invisible iframe", async (t) => {
     <iframe tabindex="-1" hidden>
       {h.document([<button>Hello World!</button>])}
     </iframe>,
+  ]);
+
+  t.deepEqual(await evaluate(R95, { document }), [inapplicable(R95)]);
+});
+
+test("evaluate() is inapplicable to explicitly inert iframe", async (t) => {
+  const document = h.document([
+    <iframe inert>{h.document([<button>Hello World!</button>])}</iframe>,
+  ]);
+
+  t.deepEqual(await evaluate(R95, { document }), [inapplicable(R95)]);
+});
+
+test("evaluate() is inapplicable to inheritedly inert iframe", async (t) => {
+  const document = h.document([
+    <div inert>
+      <iframe>{h.document([<button>Hello World!</button>])}</iframe>
+    </div>,
   ]);
 
   t.deepEqual(await evaluate(R95, { document }), [inapplicable(R95)]);

@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.61% </span>
+                <span class="strong">72.22% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>33/39</span>
+                <span class='fraction'>39/54</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/10</span>
+                <span class='fraction'>10/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>15/18</span>
+                <span class='fraction'>30/36</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -273,7 +273,7 @@
 import type { Callback } from "@siteimprove/alfa-callback";
 import type { Continuation } from "@siteimprove/alfa-continuation";
 &nbsp;
-import * as builtin from "./builtin.js";
+import * as builtin from "./builtin.ts";
 &nbsp;
 /**
  * @remarks
@@ -287,30 +287,30 @@ export type Promise&lt;T&gt; = globalThis.Promise&lt;T&gt;;
 /**
  * @public
  */
-export namespace Promise {
-  export function isPromise&lt;T&gt;(value: unknown): value is Promise&lt;T&gt; {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Promise {</span>
+  export function <span class="cstat-no" title="statement not covered" >isPromise&lt;T&gt;(value: unknown): value is Promise&lt;T&gt; {</span>
     return resolve(value) === value;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >empty(</span>): Promise&lt;void&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >empty(): Promise&lt;void&gt; {</span></span>
 <span class="cstat-no" title="statement not covered" >    return resolve(undefined);</span>
   }
 &nbsp;
-  export function resolve&lt;T&gt;(value: T): Promise&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >resolve&lt;T&gt;(value: T): Promise&lt;T&gt; {</span>
     return builtin.Promise.resolve(value);
   }
 &nbsp;
-  export function reject&lt;T&gt;(error: unknown): Promise&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >reject&lt;T&gt;(error: unknown): Promise&lt;T&gt; {</span>
     return builtin.Promise.reject(error);
   }
 &nbsp;
-  export function defer&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >defer&lt;T&gt;(</span>
     continuation: Continuation&lt;T, void, [reject: Callback&lt;unknown&gt;]&gt;,
   ): Promise&lt;T&gt; {
     return new builtin.Promise(continuation);
   }
 &nbsp;
-  export function all&lt;T&gt;(...promises: Array&lt;Promise&lt;T&gt;&gt;): Promise&lt;Array&lt;T&gt;&gt; {
+  export function <span class="cstat-no" title="statement not covered" >all&lt;T&gt;(...promises: Array&lt;Promise&lt;T&gt;&gt;): Promise&lt;Array&lt;T&gt;&gt; {</span>
     return defer((resolve, reject) =&gt; {
       const values = Array.allocate&lt;T&gt;(promises.length);
 &nbsp;
@@ -337,7 +337,7 @@ export namespace Promise {
     });
   }
 &nbsp;
-  export function any&lt;T&gt;(...promises: Array&lt;Promise&lt;T&gt;&gt;): Promise&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >any&lt;T&gt;(...promises: Array&lt;Promise&lt;T&gt;&gt;): Promise&lt;T&gt; {</span>
     return defer((resolve, reject) =&gt; {
       const errors = Array.allocate(promises.length);
 &nbsp;
@@ -364,8 +364,8 @@ export namespace Promise {
     });
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >race&lt;</span>T&gt;(...promises: Array&lt;Promise&lt;T&gt;&gt;): Promise&lt;T&gt; {
-<span class="cstat-no" title="statement not covered" >    return defer(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >race&lt;</span>T&gt;(...p</span>romises: Array&lt;Promise&lt;T&gt;&gt;): Promise&lt;T&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return defer(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(r</span></span>esolve, reject) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      for (const promise of promises) {</span>
 <span class="cstat-no" title="statement not covered" >        promise.then(resolve, reject);</span>
       }
@@ -379,7 +379,7 @@ export namespace Promise {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

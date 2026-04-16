@@ -3,16 +3,16 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import type { Longhand } from "../longhand.js";
-import { Shorthand } from "../shorthand.js";
+import type { Longhand } from "../longhand.ts";
+import { Shorthand } from "../shorthand.ts";
 
-import LineHeight from "./line-height.js";
-import Family from "./font-family.js";
-import Size from "./font-size.js";
+import LineHeight from "./line-height.ts";
+import Family from "./font-family.ts";
+import Size from "./font-size.ts";
 // Only keyword stretch are accepted in font, so we need to import the correct parser
-import * as Stretch from "./font-stretch.js";
-import Style from "./font-style.js";
-import Weight from "./font-weight.js";
+import * as Stretch from "./font-stretch.ts";
+import Style from "./font-style.ts";
+import Weight from "./font-weight.ts";
 
 const { map, option, pair, right, delimited } = Parser;
 

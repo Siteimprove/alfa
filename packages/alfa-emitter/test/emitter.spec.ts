@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Emitter } from "../dist/emitter.js";
+import { Emitter } from "../src/emitter.ts";
 
 test(".of() constructs a new emitter", (t) => {
   t.equal(Emitter.of() instanceof Emitter, true);

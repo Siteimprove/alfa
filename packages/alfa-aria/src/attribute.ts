@@ -5,9 +5,9 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { Attributes } from "./attribute/data.js";
-import { Role } from "./role.js";
-import type { Roles } from "./role/data.js";
+import { Attributes } from "./attribute/data.ts";
+import { Role } from "./role.ts";
+import type { Roles } from "./role/data.ts";
 
 /**
  * @public

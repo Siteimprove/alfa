@@ -1,6 +1,6 @@
 // This file has been automatically generated based on the various WAI-ARIA
 // specifications. Do therefore not modify it directly! If you wish to make
-// changes, do so in `scripts/roles.js` and run `yarn generate` to rebuild this
+// changes, do so in `scripts/roles.ts` and run `yarn generate` to rebuild this
 // file.
 
 /**

@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82% </span>
+                <span class="strong">69.11% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>41/50</span>
+                <span class='fraction'>47/68</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85% </span>
+                <span class="strong">86.36% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>17/20</span>
+                <span class='fraction'>19/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">78.57% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>15/21</span>
+                <span class='fraction'>33/42</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -408,13 +408,13 @@ export type Trilean = boolean | undefined;
 /**
  * @public
  */
-export namespace Trilean {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Trilean {</span>
   export type Predicate&lt;T, A extends Array&lt;unknown&gt; = []&gt; = (
     value: T,
     ...args: A
   ) =&gt; Trilean;
 &nbsp;
-  export function test&lt;T, A extends Array&lt;unknown&gt; = []&gt;(
+  export function <span class="cstat-no" title="statement not covered" >test&lt;T, A extends Array&lt;unknown&gt; = []&gt;(</span>
     predicate: Predicate&lt;T, A&gt;,
     value: T,
     ...args: A
@@ -422,7 +422,7 @@ export namespace Trilean {
     return predicate(value, ...args);
   }
 &nbsp;
-  export function fold&lt;T, A extends Array&lt;unknown&gt; = [], V = T, W = T, X = T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >fold&lt;T, A extends Array&lt;unknown&gt; = [], V = T, W = T, X = T&gt;(</span>
     predicate: Predicate&lt;T, A&gt;,
     ifTrue: Mapper&lt;T, V&gt;,
     ifFalse: Mapper&lt;T, W&gt;,
@@ -442,10 +442,10 @@ export namespace Trilean {
     }
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >not&lt;</span>T, A extends Array&lt;unknown&gt; = []&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >not&lt;T, A extends Array&lt;unknown&gt; = []&gt;(</span></span>
     predicate: Predicate&lt;T, A&gt;,
   ): Predicate&lt;T, A&gt; {
-<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >(v</span>alue, ...args) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(v</span></span>alue, ...args) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      switch (predicate(value, ...args)) {</span>
         case true:
 <span class="cstat-no" title="statement not covered" >          return false;</span>
@@ -459,7 +459,7 @@ export namespace Trilean {
     };
   }
 &nbsp;
-  export function and&lt;T, A extends Array&lt;unknown&gt; = []&gt;(
+  export function <span class="cstat-no" title="statement not covered" >and&lt;T, A extends Array&lt;unknown&gt; = []&gt;(</span>
     ...predicates: [Predicate&lt;T, A&gt;, Predicate&lt;T, A&gt;, ...Array&lt;Predicate&lt;T, A&gt;&gt;]
   ): Predicate&lt;T, A&gt; {
     return (value, ...args) =&gt;
@@ -480,7 +480,7 @@ export namespace Trilean {
       }, true);
   }
 &nbsp;
-  export function or&lt;T, A extends Array&lt;unknown&gt; = []&gt;(
+  export function <span class="cstat-no" title="statement not covered" >or&lt;T, A extends Array&lt;unknown&gt; = []&gt;(</span>
     ...predicates: [Predicate&lt;T, A&gt;, Predicate&lt;T, A&gt;, ...Array&lt;Predicate&lt;T, A&gt;&gt;]
   ): Predicate&lt;T, A&gt; {
     return (value, ...args) =&gt;
@@ -501,28 +501,28 @@ export namespace Trilean {
       }, false);
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >xor&lt;</span>T, A extends Array&lt;unknown&gt; = []&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >xor&lt;T, A extends Array&lt;unknown&gt; = []&gt;(</span></span>
     left: Predicate&lt;T, A&gt;,
     right: Predicate&lt;T, A&gt;,
   ): Predicate&lt;T, A&gt; {
 <span class="cstat-no" title="statement not covered" >    return and(or(left, right), not(and(left, right)));</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >nor&lt;</span>T, A extends Array&lt;unknown&gt; = []&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >nor&lt;T, A extends Array&lt;unknown&gt; = []&gt;(</span></span>
     left: Predicate&lt;T, A&gt;,
     right: Predicate&lt;T, A&gt;,
   ): Predicate&lt;T, A&gt; {
 <span class="cstat-no" title="statement not covered" >    return not(or(left, right));</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >nand&lt;</span>T, A extends Array&lt;unknown&gt; = []&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >nand&lt;T, A extends Array&lt;unknown&gt; = []&gt;(</span></span>
     left: Predicate&lt;T, A&gt;,
     right: Predicate&lt;T, A&gt;,
   ): Predicate&lt;T, A&gt; {
 <span class="cstat-no" title="statement not covered" >    return not(and(left, right));</span>
   }
 &nbsp;
-  export function some&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" >some&lt;T&gt;(</span>
     iterable: Iterable&lt;T&gt;,
     predicate: Predicate&lt;T, [number]&gt;,
   ): Trilean {
@@ -538,14 +538,14 @@ export namespace Trilean {
     );
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >none&lt;</span>T&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >none&lt;T&gt;(</span></span>
     iterable: Iterable&lt;T&gt;,
     predicate: Predicate&lt;T, [number]&gt;,
   ): Trilean {
 <span class="cstat-no" title="statement not covered" >    return every(iterable, not(predicate));</span>
   }
 &nbsp;
-  export function every&lt;T&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >every&lt;</span>T&gt;(</span>
     iterable: Iterable&lt;T&gt;,
     predicate: Predicate&lt;T, [number]&gt;,
   ): Trilean {
@@ -568,7 +568,7 @@ export namespace Trilean {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:08:30.013Z
+                at 2026-04-10T09:31:44.214Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

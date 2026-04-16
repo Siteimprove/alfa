@@ -440,9 +440,6 @@ digraph "dependency-graph-Alfa" {
       "@siteimprove/alfa-device" [
         label = "alfa-device";
       ];
-      "@siteimprove/alfa-compatibility" [
-        label = "alfa-compatibility";
-      ];
       "@siteimprove/alfa-iana" [
         label = "alfa-iana";
       ];
@@ -571,9 +568,6 @@ digraph "dependency-graph-Alfa" {
         ];
       }
       "@siteimprove/alfa-device" -> "exit_Understanding the web" [
-        style = "invis";
-      ];
-      "@siteimprove/alfa-compatibility" -> "exit_Understanding the web" [
         style = "invis";
       ];
       "@siteimprove/alfa-iana" -> "exit_Understanding the web" [
@@ -971,9 +965,6 @@ digraph "dependency-graph-Alfa" {
       style = "invis";
     ];
     "exit_Performance measurements" -> "exit_Alfa" [
-      style = "invis";
-    ];
-    "exit_Understanding the web" -> "exit_Alfa" [
       style = "invis";
     ];
     "exit_Collections" -> "exit_Alfa" [
@@ -1837,18 +1828,6 @@ digraph "dependency-graph-Alfa" {
     color = "#002eff";
     lhead = "cluster_other";
     ltail = "cluster_Performance measurements";
-  ];
-  "exit_Understanding the web" -> "name_Collections" [
-    style = "invis";
-    color = "#ff4600";
-    lhead = "cluster_Collections";
-    ltail = "cluster_Understanding the web";
-  ];
-  "exit_Understanding the web" -> "name_Serialization" [
-    style = "invis";
-    color = "#ff4600";
-    lhead = "cluster_Serialization";
-    ltail = "cluster_Understanding the web";
   ];
   "@siteimprove/alfa-set" -> "name_Built ins" [
     style = "solid";

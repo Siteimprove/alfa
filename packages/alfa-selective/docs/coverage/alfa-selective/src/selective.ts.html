@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">47.36% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/30</span>
+                <span class='fraction'>18/38</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/8</span>
+                <span class='fraction'>4/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">51.72% </span>
+                <span class="strong">32.72% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>15/29</span>
+                <span class='fraction'>18/55</span>
             </div>
         
             
@@ -467,29 +467,29 @@ export class Selective&lt;S, T = never&gt;
     Hashable,
     Serializable&lt;Selective.JSON&lt;S, T&gt;&gt;
 {
-  public static of&lt;T&gt;(value: T): Selective&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T&gt;(value: T): Selective&lt;T&gt; {
     return new Selective(Left.of(value));
   }
 &nbsp;
   private readonly _value: Either&lt;S, T&gt;;
 &nbsp;
-  protected constructor(value: Either&lt;S, T&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(v</span>alue: Either&lt;S, T&gt;) {
     this._value = value;
   }
 &nbsp;
-  public map&lt;U&gt;(mapper: Mapper&lt;T, U&gt;): Selective&lt;S, U&gt; {
+  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U&gt;): Selective&lt;S, U&gt; {
     return new Selective(this._value.map(mapper));
   }
 &nbsp;
-  public apply&lt;U&gt;(mapper: Selective&lt;S, Mapper&lt;T, U&gt;&gt;): Selective&lt;S, U&gt; {
+  public <span class="fstat-no" title="function not covered" >apply&lt;</span>U&gt;(mapper: Selective&lt;S, Mapper&lt;T, U&gt;&gt;): Selective&lt;S, U&gt; {
     return mapper.flatMap((mapper) =&gt; this.map(mapper));
   }
 &nbsp;
-  public flatMap&lt;U&gt;(mapper: Mapper&lt;T, Selective&lt;S, U&gt;&gt;): Selective&lt;S, U&gt; {
+  public <span class="fstat-no" title="function not covered" >flatMap&lt;</span>U&gt;(mapper: Mapper&lt;T, Selective&lt;S, U&gt;&gt;): Selective&lt;S, U&gt; {
     return new Selective(this._value.flatMap((value) =&gt; mapper(value)._value));
   }
 &nbsp;
-  public flatten&lt;S, T&gt;(this: Selective&lt;S, Selective&lt;S, T&gt;&gt;): Selective&lt;S, T&gt; {
+  public <span class="fstat-no" title="function not covered" >flatten&lt;</span>S, T&gt;(this: Selective&lt;S, Selective&lt;S, T&gt;&gt;): Selective&lt;S, T&gt; {
     return this.flatMap((selective) =&gt; selective);
   }
 &nbsp;
@@ -503,7 +503,7 @@ export class Selective&lt;S, T = never&gt;
     mapper: Mapper&lt;S, U&gt;,
   ): Selective&lt;S, T | U&gt;;
 &nbsp;
-  public if&lt;U&gt;(
+  public <span class="fstat-no" title="function not covered" >if&lt;</span>U&gt;(
     predicate: Predicate&lt;S&gt;,
     mapper: Mapper&lt;S, U&gt;,
   ): Selective&lt;S, T | U&gt; {
@@ -535,35 +535,35 @@ export class Selective&lt;S, T = never&gt;
     ifFalse: Mapper&lt;S, U&gt;,
   ): Selective&lt;S, T | U&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >ifGuarded&lt;</span>U&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >ifGuarded&lt;</span>U&gt;(</span>
     predicate: Predicate&lt;S&gt;,
     guard: Predicate&lt;S&gt;,
     ifTrue: Mapper&lt;S, U&gt;,
     ifFalse: Mapper&lt;S, U&gt;,
   ): Selective&lt;S, T | U&gt; {
 <span class="cstat-no" title="statement not covered" >    return this._value.either(</span>
-<span class="fstat-no" title="function not covered" >      (v</span>alue) =&gt;
-<span class="cstat-no" title="statement not covered" >        predicate(value)</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >      (v</span></span>alue) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        predicate(value)</span></span>
           ? guard(value)
             ? new Selective&lt;S, U&gt;(Right.of(ifTrue(value)))
             : new Selective&lt;S, U&gt;(Right.of(ifFalse(value)))
           : this,
-<span class="fstat-no" title="function not covered" >      () =</span>&gt; <span class="cstat-no" title="statement not covered" >this,</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >      () =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >t</span>his,</span></span>
     );
   }
 &nbsp;
-  public else&lt;U&gt;(mapper: Mapper&lt;S, U&gt;): Selective&lt;never, T | U&gt; {
+  public <span class="fstat-no" title="function not covered" >else&lt;</span>U&gt;(mapper: Mapper&lt;S, U&gt;): Selective&lt;never, T | U&gt; {
     return new Selective&lt;never, T | U&gt;(
       Right.of(
         this._value.either&lt;T | U&gt;(
           (value) =&gt; mapper(value),
-<span class="fstat-no" title="function not covered" >          (v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" >value,</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >          (v</span></span>alue) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >value,</span></span>
         ),
       ),
     );
   }
 &nbsp;
-  public get(): S | T {
+  public <span class="fstat-no" title="function not covered" >get(</span>): S | T {
     return this._value.get();
   }
 &nbsp;
@@ -576,18 +576,18 @@ export class Selective&lt;S, T = never&gt;
    * {@link (Selective:class).get} is insufficient. If in doubt, assume that
    * it isn't.
    */
-  public <span class="fstat-no" title="function not covered" >exhaust&lt;</span>T&gt;(this: Selective&lt;never, T&gt;): T {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >exhaust&lt;</span>T&gt;(this: Selective&lt;never, T&gt;): T {</span>
 <span class="cstat-no" title="statement not covered" >    return this.get();</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >tee&lt;</span>A extends Array&lt;unknown&gt; = []&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >tee&lt;</span>A extends Array&lt;unknown&gt; = []&gt;(</span>
     left: Callback&lt;S, void, A&gt;,
     right: Callback&lt;T, void, A&gt;,
     ...args: A
   ): this {
 <span class="cstat-no" title="statement not covered" >    this._value.either(</span>
-<span class="fstat-no" title="function not covered" >      (v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" >left(value, ...args),</span>
-<span class="fstat-no" title="function not covered" >      (v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" >right(value, ...args),</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >      (v</span></span>alue) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >left(value, ...args),</span></span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >      (v</span></span>alue) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >right(value, ...args),</span></span>
     );
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
@@ -596,27 +596,27 @@ export class Selective&lt;S, T = never&gt;
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Selective &amp;&amp; value._value.equals(this._value);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash): void {
 <span class="cstat-no" title="statement not covered" >    hash.writeHashable(this._value);</span>
   }
 &nbsp;
-  public *<span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;S | T&gt; {
+  public *<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;S | T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    yield this._value.get();</span>
   }
 &nbsp;
-  public [<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;S | T&gt; {
+  public [<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.iterator]</span></span>(): Iterator&lt;S | T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.iterator();</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Selective.JSON&lt;S, T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): Selective.JSON&lt;S, T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._value.toJSON();</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `Selective { ${this._value} }`;</span>
   }
 }
@@ -634,7 +634,7 @@ export namespace Selective {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:47.574Z
+                at 2026-04-10T09:30:10.733Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

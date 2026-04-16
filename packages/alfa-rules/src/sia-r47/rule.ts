@@ -10,9 +10,9 @@ import { Set } from "@siteimprove/alfa-set";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/expectation.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { hasAttribute, hasName, hasNamespace } = Element;
 const { and, equals } = Predicate;

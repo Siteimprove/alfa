@@ -4,8 +4,8 @@ import { Element } from "@siteimprove/alfa-dom";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Context } from "@siteimprove/alfa-selector";
 
-import { hasComputedStyle } from "./has-computed-style.js";
-import { Longhands } from "../../longhands.js";
+import { hasComputedStyle } from "./has-computed-style.ts";
+import { Longhands } from "../../longhands.ts";
 
 /**
  * @public

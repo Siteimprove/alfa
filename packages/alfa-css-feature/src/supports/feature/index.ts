@@ -1,4 +1,4 @@
-export * from "./property.js";
+export * from "./property.ts";
 
 /**
  * @remarks

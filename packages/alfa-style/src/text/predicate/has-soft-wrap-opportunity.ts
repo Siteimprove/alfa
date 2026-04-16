@@ -4,9 +4,9 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import type { Context } from "@siteimprove/alfa-selector";
 import { String } from "@siteimprove/alfa-string";
 
-import { hasComputedStyle } from "../../element/predicate/has-computed-style.js";
+import { hasComputedStyle } from "../../element/predicate/has-computed-style.ts";
 
-import { hasHyphenationOpportunity } from "./has-hyphenation-opportunity.js";
+import { hasHyphenationOpportunity } from "./has-hyphenation-opportunity.ts";
 
 const { or } = Predicate;
 

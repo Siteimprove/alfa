@@ -1,5 +1,5 @@
 /*
  * Modelling metadata for rules.
  */
-export * from "./requirement.js";
-export * from "./tag.js";
+export * from "./requirement.ts";
+export * from "./tag.ts";

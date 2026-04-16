@@ -2,10 +2,10 @@ import { h } from "@siteimprove/alfa-dom";
 import { None, Some } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import R78, { Outcomes } from "../../dist/sia-r78/rule.js";
+import R78, { Outcomes } from "../../src/sia-r78/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test(`evaluates() passes headings with content`, async (t) => {
   const part1 = <h1>Part one</h1>;
@@ -163,6 +163,20 @@ test(`evaluate() ignores headings inside summary of closed details`, async (t) =
   t.deepEqual(await evaluate(R78, { document }), [inapplicable(R78)]);
 });
 
+test(`evaluate() passes a heading whose inter-heading content is in a shadow root`, async (t) => {
+  const heading1 = <h1>Introduction</h1>;
+  const heading2 = <h1>Conclusion</h1>;
+
+  const shadow = h.shadow([<p>Some content</p>]);
+
+  const document = h.document([heading1, <div>{shadow}</div>, heading2]);
+
+  t.deepEqual(await evaluate(R78, { document }), [
+    passed(R78, heading1, { 1: Outcomes.hasContent(Some.of(heading2), 1, 1) }),
+    failed(R78, heading2, { 1: Outcomes.hasNoContent(None, 1, -1) }),
+  ]);
+});
+
 test(`evaluate() consider headings inside summary of open details`, async (t) => {
   const target = <h1>Is this an accordion?</h1>;
   const document = h.document([
@@ -173,5 +187,22 @@ test(`evaluate() consider headings inside summary of open details`, async (t) =>
 
   t.deepEqual(await evaluate(R78, { document }), [
     failed(R78, target, { 1: Outcomes.hasNoContent(None, 1, -1) }),
+  ]);
+});
+
+test(`evaluate() passes a heading in a shadow root when content exists before the next heading`, async (t) => {
+  const heading1 = <h1>Introduction</h1>;
+  const heading2 = <h1>Conclusion</h1>;
+
+  // heading1 and content are inside a shadow root; heading2 is in the document.
+  // lowestCommonAncestor must use fullTree traversal to cross the shadow boundary
+  // and find the document as the common ancestor of heading1 and heading2.
+  const shadow = h.shadow([heading1, <p>Some content</p>]);
+
+  const document = h.document([<div>{shadow}</div>, heading2, <p>More content</p>]);
+
+  t.deepEqual(await evaluate(R78, { document }), [
+    passed(R78, heading1, { 1: Outcomes.hasContent(Some.of(heading2), 1, 1) }),
+    passed(R78, heading2, { 1: Outcomes.hasContent(None, 1, -1) }),
   ]);
 });

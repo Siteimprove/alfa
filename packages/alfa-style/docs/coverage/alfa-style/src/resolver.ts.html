@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">76.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>24/30</span>
+                <span class='fraction'>23/30</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.75% </span>
+                <span class="strong">81.25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>15/16</span>
+                <span class='fraction'>13/16</span>
             </div>
         
             
@@ -200,11 +200,11 @@
 <span class="cline-any cline-yes">1353x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">80x</span>
 <span class="cline-any cline-yes">1001x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">80x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -225,7 +225,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">80x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -233,11 +233,11 @@
 <span class="cline-any cline-yes">63x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">80x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">80x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -251,7 +251,7 @@
 import { Length, List } from "@siteimprove/alfa-css";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 &nbsp;
-import type { Style } from "./style.js";
+import type { Style } from "./style.ts";
 &nbsp;
 /**
  * Resolvers are functions that resolve values to their canonical, computed
@@ -259,7 +259,7 @@ import type { Style } from "./style.js";
  *
  * @internal
  */
-export namespace Resolver {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Resolver {</span>
   /**
    * Resolve a length in an arbitrary unit to a length in pixels.
    * Absolute lengths are left untouched, and normalised into "px".
@@ -279,21 +279,21 @@ export namespace Resolver {
   function lengthResolver(
     style: Style,
   ): Mapper&lt;Length.Fixed&lt;Unit.Length.Relative&gt;, Length.Canonical&gt; {
-    const { viewport } = <span class="cstat-no" title="statement not covered" >style.device;</span>
-    const width = <span class="cstat-no" title="statement not covered" >Length.of(viewport.width, "px");</span>
-    const height = <span class="cstat-no" title="statement not covered" >Length.of(viewport.height, "px");</span>
+    const { viewport } = style.device;
+    const width = Length.of(viewport.width, "px");
+    const height = Length.of(viewport.height, "px");
 &nbsp;
-    const fontSize = <span class="cstat-no" title="statement not covered" >style.computed("font-size").value;</span>
-    const rootFontSize = <span class="cstat-no" title="statement not covered" >style.root().computed("font-size").value;</span>
+    const fontSize = style.computed("font-size").value;
+    const rootFontSize = style.root().computed("font-size").value;
 &nbsp;
     return Length.resolver(fontSize, rootFontSize, width, height);
   }
 &nbsp;
-  export function length(style: Style): Length.Resolver {
+  export function <span class="cstat-no" title="statement not covered" >length(style: Style): Length.Resolver {</span>
     return { length: lengthResolver(style) };
   }
 &nbsp;
-  export function lengthPercentage(
+  export function <span class="cstat-no" title="statement not covered" >lengthPercentage(</span>
     base: Length.Canonical,
     style: Style,
   ): LengthPercentage.Resolver {
@@ -314,7 +314,7 @@ export namespace Resolver {
    *
    * @internal
    */
-  export function layers(
+  export function <span class="cstat-no" title="statement not covered" >layers(</span>
     style: Style,
     name: "mask-image" | "background-image",
   ) {
@@ -322,11 +322,11 @@ export namespace Resolver {
       value.cutOrExtend(Math.max(style.computed(name).value.size, 1));
   }
 &nbsp;
-  export function color(style: Style): Color.Resolver {
+  export function <span class="cstat-no" title="statement not covered" >color(style: Style): Color.Resolver {</span>
     return { currentColor: style.used("color").value };
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >shadow(</span>style: Style): Shadow.Resolver {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >shadow(</span>s</span>tyle: Style): Shadow.Resolver {</span>
 <span class="cstat-no" title="statement not covered" >    return { ...length(style), ...color(style) };</span>
   }
 }
@@ -337,7 +337,7 @@ export namespace Resolver {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:08:20.788Z
+                at 2026-04-10T09:31:34.530Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -5,15 +5,15 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Compound } from "./compound.js";
-import { BaseSelector } from "./selector.js";
+import { Compound } from "./compound.ts";
+import { BaseSelector } from "./selector.ts";
 
-import { Context } from "../context.js";
+import { Context } from "../context.ts";
 
-import { Host } from "./pseudo/pseudo-class/host.js";
-import { HostContext } from "./pseudo/pseudo-class/host-context.js";
-import { Slotted } from "./pseudo/pseudo-element/slotted.js";
-import type { Selector } from "./index.js";
+import { Host } from "./pseudo/pseudo-class/host.ts";
+import { HostContext } from "./pseudo/pseudo-class/host-context.ts";
+import { Slotted } from "./pseudo/pseudo-element/slotted.ts";
+import type { Selector } from "./index.ts";
 
 const { isElement } = Element;
 const { delimited, either, map, option } = Parser;

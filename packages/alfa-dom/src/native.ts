@@ -26,7 +26,7 @@ import type {
   Sheet,
   Text,
   Type,
-} from "./index.js";
+} from "./index.ts";
 
 /**
  * The type of logs.
@@ -552,7 +552,7 @@ export namespace Native {
      * value with the shorthand. This means that the local tests using JSDOM
      * are brittle and cannot detect a regression on this issue.
      */
-    function toBlock(block: globalThis.CSSStyleDeclaration): string {
+    function toBlock(block: globalThis.CSSStyleDeclarationBase): string {
       return block.cssText;
     }
 

@@ -7,11 +7,11 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { BaseNode } from "../node.js";
+import { BaseNode } from "../node.ts";
 
-import { Element } from "./element.js";
-import type { Slot } from "./slot.js";
-import { Slotable } from "./slotable.js";
+import { Element } from "./element.ts";
+import type { Slot } from "./slot.ts";
+import { Slotable } from "./slotable.ts";
 
 /**
  * @public

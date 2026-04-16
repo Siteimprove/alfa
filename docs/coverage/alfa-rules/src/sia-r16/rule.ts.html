@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">74.46% </span>
+                <span class="strong">76.19% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>35/47</span>
+                <span class='fraction'>48/63</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">69.56% </span>
+                <span class="strong">65.78% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>16/23</span>
+                <span class='fraction'>25/38</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.89% </span>
+                <span class="strong">41.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>11/19</span>
+                <span class='fraction'>15/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">78.26% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>35/45</span>
+                <span class='fraction'>36/46</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -504,7 +504,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -588,9 +588,9 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 &nbsp;
 import * as aria from "@siteimprove/alfa-aria";
-import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional.js";
+import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional.ts";
 &nbsp;
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 &nbsp;
 const { hasNonDefaultRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasNamespace } = Element;
@@ -609,7 +609,7 @@ export default Rule.Atomic.of&lt;Page, Element&gt;({
     Technique.of("ARIA5"),
   ],
   tags: [Scope.Component, Stability.Stable],
-  evaluate({ device, document }) {
+<span class="fstat-no" title="function not covered" >  evaluate(</span>{ device, document }) {
     return {
       applicability() {
         return getElementDescendants(document, Node.composedNested)
@@ -626,7 +626,7 @@ export default Rule.Atomic.of&lt;Page, Element&gt;({
   },
 });
 &nbsp;
-function hasRequiredValues(
+function <span class="fstat-no" title="function not covered" >hasRequiredValues(</span>
   device: Device,
   element: Element,
 ): Result&lt;RoleAndRequiredAttributes&gt; {
@@ -680,7 +680,7 @@ export class RoleAndRequiredAttributes extends Diagnostic {
     missingAttributes: ReadonlyArray&lt;aria.Attribute.Name&gt;,
   ): RoleAndRequiredAttributes;
 &nbsp;
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     message: string,
     role?: Role.Name,
     requiredAttributes?: ReadonlyArray&lt;aria.Attribute.Name&gt;,
@@ -701,7 +701,7 @@ export class RoleAndRequiredAttributes extends Diagnostic {
   private readonly _requiredAttributes: ReadonlyArray&lt;aria.Attribute.Name&gt;;
   private readonly _missingAttributes: ReadonlyArray&lt;aria.Attribute.Name&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     message: string,
     role: Role.Name,
     requiredAttributes: ReadonlyArray&lt;aria.Attribute.Name&gt;,
@@ -713,15 +713,15 @@ export class RoleAndRequiredAttributes extends Diagnostic {
     this._missingAttributes = missingAttributes;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >role(</span>): Role.Name {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >role(</span>): Role.Name {</span>
 <span class="cstat-no" title="statement not covered" >    return this._role;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >requiredAttributes(</span>): ReadonlyArray&lt;aria.Attribute.Name&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >requiredAttributes(</span>): ReadonlyArray&lt;aria.Attribute.Name&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._requiredAttributes;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >missingAttributes(</span>): ReadonlyArray&lt;aria.Attribute.Name&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >missingAttributes(</span>): ReadonlyArray&lt;aria.Attribute.Name&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._missingAttributes;</span>
   }
 &nbsp;
@@ -729,8 +729,8 @@ export class RoleAndRequiredAttributes extends Diagnostic {
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof RoleAndRequiredAttributes &amp;&amp;
       value._message === this._message &amp;&amp;
       value._role === this._role &amp;&amp;
@@ -739,14 +739,14 @@ export class RoleAndRequiredAttributes extends Diagnostic {
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    super.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    hash.writeString(this._role);</span>
 <span class="cstat-no" title="statement not covered" >    this._requiredAttributes.forEach(<span class="fstat-no" title="function not covered" >(a</span>ttr) =&gt; <span class="cstat-no" title="statement not covered" >hash.writeString(attr))</span>;</span>
 <span class="cstat-no" title="statement not covered" >    this._missingAttributes.forEach(<span class="fstat-no" title="function not covered" >(a</span>ttr) =&gt; <span class="cstat-no" title="statement not covered" >hash.writeString(attr))</span>;</span>
   }
 &nbsp;
-  public toJSON(
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>
     options?: Node.SerializationOptions,
   ): RoleAndRequiredAttributes.JSON {
     return {
@@ -763,7 +763,7 @@ export class RoleAndRequiredAttributes extends Diagnostic {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >RoleAndRequiredAttributes {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >R</span>oleAndRequiredAttributes {</span></span>
   export interface JSON extends Diagnostic.JSON {
     role: string;
     attributes: {
@@ -781,7 +781,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
   ): value is RoleAndRequiredAttributes;
 &nbsp;
   /**@public */
-  export function <span class="fstat-no" title="function not covered" >isRoleAndRequiredAttributes(</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isRoleAndRequiredAttributes(</span></span></span>
     value: unknown,
   ): value is RoleAndRequiredAttributes {
 <span class="cstat-no" title="statement not covered" >    return value instanceof RoleAndRequiredAttributes;</span>
@@ -791,7 +791,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
 /**
  * @public
  */
-export namespace Outcomes {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Outcomes {</span>
   export const HasAllStates = (
     role: Role.Name,
     required: ReadonlyArray&lt;aria.Attribute.Name&gt;,
@@ -832,7 +832,7 @@ export namespace Outcomes {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.75% </span>
+                <span class="strong">68.75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>15/16</span>
+                <span class='fraction'>11/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">96.96% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>33/33</span>
+                <span class='fraction'>32/33</span>
             </div>
         
             
@@ -255,7 +255,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">148x</span>
-<span class="cline-any cline-yes">148x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">148x</span>
@@ -268,18 +268,18 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">148x</span>
-<span class="cline-any cline-yes">148x</span>
+<span class="cline-any cline-yes">146x</span>
+<span class="cline-any cline-yes">146x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">146x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">148x</span>
-<span class="cline-any cline-yes">148x</span>
-<span class="cline-any cline-yes">148x</span>
-<span class="cline-any cline-yes">148x</span>
+<span class="cline-any cline-yes">138x</span>
+<span class="cline-any cline-yes">138x</span>
+<span class="cline-any cline-yes">138x</span>
+<span class="cline-any cline-yes">138x</span>
 <span class="cline-any cline-yes">138x</span>
 <span class="cline-any cline-yes">648x</span>
 <span class="cline-any cline-yes">138x</span>
@@ -308,7 +308,7 @@
 <span class="cline-any cline-yes">114x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">138x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -345,7 +345,7 @@
 <span class="cline-any cline-yes">150x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">150x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
@@ -392,11 +392,11 @@ const { and } = Refinement;
  *
  * @internal
  */
-export function isOptionHidden(device: Device): Predicate&lt;Node&gt; {
+export function <span class="fstat-no" title="function not covered" >isOptionHidden(</span>device: Device): Predicate&lt;Node&gt; {
   return (node) =&gt; optionAncestor(node).some(isHidden);
 &nbsp;
   function isHidden(option: Element&lt;"option"&gt;): boolean {
-    const parent = <span class="cstat-no" title="statement not covered" >namedParent(option, "select").orElse(() =&gt;</span>
+    const parent = namedParent(option, "select").orElse(() =&gt;
       namedParent(option, "optgroup").flatMap(namedParent("select")),
     );
 &nbsp;
@@ -463,7 +463,7 @@ export function isOptionHidden(device: Device): Predicate&lt;Node&gt; {
 }
 &nbsp;
 const _optionAncestorCache = Cache.empty&lt;Node, Option&lt;Element&lt;"option"&gt;&gt;&gt;();
-function optionAncestor(node: Node): Option&lt;Element&lt;"option"&gt;&gt; {
+function <span class="fstat-no" title="function not covered" >optionAncestor(</span>node: Node): Option&lt;Element&lt;"option"&gt;&gt; {
   return _optionAncestorCache.get(node, () =&gt;
     node
       .inclusiveAncestors(Node.fullTree)
@@ -480,14 +480,14 @@ function namedParent&lt;N extends string&gt;(
   name: N,
 ): (element: Element) =&gt; Option&lt;Element&lt;N&gt;&gt;;
 &nbsp;
-function namedParent&lt;N extends string&gt;(
+function <span class="fstat-no" title="function not covered" >namedParent&lt;</span>N extends string&gt;(
   elementOrName: Element | N,
   name?: N,
 ): Option&lt;Element&lt;N&gt;&gt; | ((element: Element) =&gt; Option&lt;Element&lt;N&gt;&gt;) {
   return isElement(elementOrName)
     ? elementOrName.parent().filter(and(isElement, hasName(name!)))
-    : <span class="fstat-no" title="function not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >(e</span>lement) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >        element.parent().filter(and(isElement, hasName(elementOrName)));</span>
+    : <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >(e</span></span>lement) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        element.parent().filter(and(isElement, hasName(elementOrName)));</span></span>
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -496,7 +496,7 @@ function namedParent&lt;N extends string&gt;(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:08:20.788Z
+                at 2026-04-10T09:31:34.530Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

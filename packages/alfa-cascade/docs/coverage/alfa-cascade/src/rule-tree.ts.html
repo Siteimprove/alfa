@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.75% </span>
+                <span class="strong">91.89% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>30/32</span>
+                <span class='fraction'>34/37</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.57% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>11/14</span>
+                <span class='fraction'>18/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
+                <span class="strong">46.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>14/16</span>
+                <span class='fraction'>14/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.54% </span>
+                <span class="strong">93.75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>29/31</span>
+                <span class='fraction'>30/32</span>
             </div>
         
             
@@ -452,7 +452,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -590,8 +590,8 @@ import { None, Option } from "@siteimprove/alfa-option";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { Block } from "./block.js";
-import { Precedence } from "./precedence/index.js";
+import { Block } from "./block.ts";
+import { Precedence } from "./precedence/index.ts";
 &nbsp;
 /**
  * The rule tree is a data structure used for storing the rules that match each
@@ -661,7 +661,7 @@ import { Precedence } from "./precedence/index.js";
  * @public
  */
 export class RuleTree implements Serializable {
-  public static empty(): RuleTree {
+  public static <span class="fstat-no" title="function not covered" >empty(</span>): RuleTree {
     return new RuleTree();
   }
 &nbsp;
@@ -672,7 +672,7 @@ export class RuleTree implements Serializable {
     None,
   );
 &nbsp;
-  protected constructor() {}
+<span class="fstat-no" title="function not covered" >  protected constructor() {}</span>
 &nbsp;
   /**
    * Add a bunch of items to the tree. Returns the last node created, which is
@@ -693,7 +693,7 @@ export class RuleTree implements Serializable {
    *
    * @internal
    */
-  public add(
+  public <span class="fstat-no" title="function not covered" >add(</span>
     rules: Iterable&lt;Block&lt;Element | Block.Source, true&gt;&gt;,
   ): RuleTree.Node {
     let parent = this._root;
@@ -709,7 +709,7 @@ export class RuleTree implements Serializable {
     return parent;
   }
 &nbsp;
-  public toJSON(): RuleTree.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): RuleTree.JSON {
     return this._root.children.map((node) =&gt; node.toJSON());
   }
 }
@@ -717,11 +717,11 @@ export class RuleTree implements Serializable {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >RuleTree {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >R</span>uleTree {</span></span>
   export type JSON = Array&lt;Node.JSON&gt;;
 &nbsp;
-  export class Node implements Serializable {
-    public static of(
+  export class <span class="cstat-no" title="statement not covered" >Node implements Serializable {</span>
+    public static <span class="fstat-no" title="function not covered" >of(</span>
       block: Block,
       children: Array&lt;Node&gt;,
       parent: Option&lt;Node&gt;,
@@ -733,7 +733,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
     private readonly _children: Array&lt;Node&gt;;
     private readonly _parent: Option&lt;Node&gt;;
 &nbsp;
-    protected constructor(
+<span class="fstat-no" title="function not covered" >    protected constructor(</span>
       block: Block,
       children: Array&lt;Node&gt;,
       parent: Option&lt;Node&gt;,
@@ -743,26 +743,26 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
       this._parent = parent;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >block(</span>): Block {
+    public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >block(</span>): Block {</span>
 <span class="cstat-no" title="statement not covered" >      return this._block;</span>
     }
 &nbsp;
-    public get children(): Array&lt;Node&gt; {
+    public get <span class="fstat-no" title="function not covered" >children(</span>): Array&lt;Node&gt; {
       return this._children;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >parent(</span>): Option&lt;Node&gt; {
+    public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >parent(</span>): Option&lt;Node&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      return this._parent;</span>
     }
 &nbsp;
-    public *ancestors(): Iterable&lt;Node&gt; {
+    public *<span class="fstat-no" title="function not covered" >ancestors(</span>): Iterable&lt;Node&gt; {
       for (const parent of this._parent) {
         yield parent;
         yield* parent.ancestors();
       }
     }
 &nbsp;
-    public *inclusiveAncestors(): Iterable&lt;Node&gt; {
+    public *<span class="fstat-no" title="function not covered" >inclusiveAncestors(</span>): Iterable&lt;Node&gt; {
       yield this;
       yield* this.ancestors();
     }
@@ -780,7 +780,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
      *
      * @internal
      */
-    public add(block: Block): Node {
+    public <span class="fstat-no" title="function not covered" >add(</span>block: Block): Node {
       // If we have already encountered the exact same selector (physical identity),
       // with declarations of the same importance, we're done.
       // Because blocks are split by importance, the same selector can appear
@@ -794,7 +794,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
       if (
         // We cannot simply test === between the .selector because we do not
         // want to identify two null.
-        (this._block.selector ?? <span class="branch-1 cbranch-no" title="branch not covered" >0)</span> === (block.selector ?? <span class="branch-1 cbranch-no" title="branch not covered" >1)</span> &amp;&amp;
+        (this._block.selector ?? <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >0)</span> === (b</span>lock.selector ?? <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >1)</span> &amp;&amp;</span>
         Precedence.isImportant(this._block.precedence) ===
           Precedence.isImportant(block.precedence)
       ) {
@@ -827,7 +827,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
       return node;
     }
 &nbsp;
-    public toJSON(): Node.JSON {
+    public <span class="fstat-no" title="function not covered" >toJSON(</span>): Node.JSON {
       return {
         block: this._block.toJSON(),
         children: this._children.map((node) =&gt; node.toJSON()),
@@ -850,7 +850,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:04.129Z
+                at 2026-04-10T09:29:28.174Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.72% </span>
+                <span class="strong">79.06% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>36/43</span>
+                <span class='fraction'>34/43</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/16</span>
+                <span class='fraction'>10/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">54.28% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>25/35</span>
+                <span class='fraction'>19/35</span>
             </div>
         
             
@@ -229,11 +229,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -329,12 +329,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -348,8 +348,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">260x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">256x</span>
 <span class="cline-any cline-yes">334x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -360,11 +360,11 @@ import type { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 &nbsp;
-import type { Context } from "../context.js";
-import { Specificity } from "../specificity.js";
-import type { Selector } from "./index.js";
+import type { Context } from "../context.ts";
+import { Specificity } from "../specificity.ts";
+import type { Selector } from "./index.ts";
 &nbsp;
-import { BaseSelector } from "./selector.js";
+import { BaseSelector } from "./selector.ts";
 import {
   Class,
   Id,
@@ -372,7 +372,7 @@ import {
   PseudoElement,
   Simple,
   Type,
-} from "./simple/index.js";
+} from "./simple/index.ts";
 &nbsp;
 const { map, oneOrMore } = Parser;
 const { or, not } = Predicate;
@@ -386,7 +386,7 @@ const hasKey = or(Id.isId, Class.isClass, Type.isType);
  * @public
  */
 export class Compound extends BaseSelector&lt;"compound"&gt; {
-  public static of(...selectors: Array&lt;Simple&gt;): Compound {
+  public static <span class="fstat-no" title="function not covered" >of(</span>...selectors: Array&lt;Simple&gt;): Compound {
     return new Compound(selectors);
   }
 &nbsp;
@@ -396,7 +396,7 @@ export class Compound extends BaseSelector&lt;"compound"&gt; {
   private readonly _length: number;
   protected readonly _key: Option&lt;Id | Class | Type&gt;;
 &nbsp;
-  protected constructor(selectors: Array&lt;Simple&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(s</span>electors: Array&lt;Simple&gt;) {
     super(
       "compound",
       Specificity.sum(...selectors.map((selector) =&gt; selector.specificity)),
@@ -423,7 +423,7 @@ export class Compound extends BaseSelector&lt;"compound"&gt; {
     );
   }
 &nbsp;
-  public get selectors(): Iterable&lt;Simple&gt; {
+  public get <span class="fstat-no" title="function not covered" >selectors(</span>): Iterable&lt;Simple&gt; {
     return this._selectors;
   }
 &nbsp;
@@ -431,8 +431,8 @@ export class Compound extends BaseSelector&lt;"compound"&gt; {
 <span class="cstat-no" title="statement not covered" >    return this._length;</span>
   }
 &nbsp;
-  public matches(element: Element, context?: Context): boolean {
-    return (
+  public <span class="fstat-no" title="function not covered" >matches(</span>element: Element, context?: Context): boolean {
+<span class="cstat-no" title="statement not covered" >    return (</span>
       // We match the non-pseudo- selectors in reverse order as they are usually
       // written from most generic to most precise, especially in the context of
       // nesting selectors.
@@ -464,7 +464,7 @@ export class Compound extends BaseSelector&lt;"compound"&gt; {
 <span class="cstat-no" title="statement not covered" >    yield this;</span>
   }
 &nbsp;
-  public toJSON(): Compound.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Compound.JSON {
     return {
       ...super.toJSON(),
       selectors: this._selectors.map((selector) =&gt; selector.toJSON()),
@@ -479,12 +479,12 @@ export class Compound extends BaseSelector&lt;"compound"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Compound {</span></span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >C</span>ompound {</span></span>
   export interface JSON extends BaseSelector.JSON&lt;"compound"&gt; {
     selectors: Array&lt;Simple.JSON&gt;;
   }
 &nbsp;
-  export function isCompound(value: unknown): value is Compound {
+  export function <span class="cstat-no" title="statement not covered" >isCompound(value: unknown): value is Compound {</span>
     return value instanceof Compound;
   }
 &nbsp;
@@ -505,7 +505,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:57.167Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

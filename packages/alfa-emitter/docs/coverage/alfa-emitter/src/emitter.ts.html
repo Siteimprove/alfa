@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>20/24</span>
+                <span class='fraction'>24/28</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">54.16% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>10/12</span>
+                <span class='fraction'>13/24</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -248,7 +248,7 @@ import type { Mapper } from "@siteimprove/alfa-mapper";
  * @public
  */
 export class Emitter&lt;T&gt; implements Functor.Invariant&lt;T&gt;, AsyncIterable&lt;T&gt; {
-  public static of&lt;T = void&gt;(): Emitter&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T = void&gt;(): Emitter&lt;T&gt; {
     return new Emitter(new Map());
   }
 &nbsp;
@@ -260,11 +260,11 @@ export class Emitter&lt;T&gt; implements Functor.Invariant&lt;T&gt;, AsyncIterab
    */
   private readonly _listeners: Map&lt;Callback&lt;never&gt;, Callback&lt;T&gt;&gt;;
 &nbsp;
-  protected constructor(listeners: Map&lt;Callback&lt;never&gt;, Callback&lt;T&gt;&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(l</span>isteners: Map&lt;Callback&lt;never&gt;, Callback&lt;T&gt;&gt;) {
     this._listeners = listeners;
   }
 &nbsp;
-  public contraMap&lt;U&gt;(mapper: Mapper&lt;U, T&gt;): Emitter&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >contraMap&lt;</span>U&gt;(mapper: Mapper&lt;U, T&gt;): Emitter&lt;U&gt; {
     return new Emitter(
       new Map(
         [...this._listeners].map(([key, listener]) =&gt; [
@@ -275,7 +275,7 @@ export class Emitter&lt;T&gt; implements Functor.Invariant&lt;T&gt;, AsyncIterab
     );
   }
 &nbsp;
-  public on(listener: Callback&lt;T&gt;): this {
+  public <span class="fstat-no" title="function not covered" >on(</span>listener: Callback&lt;T&gt;): this {
     this._listeners.set(listener, listener);
     return this;
   }
@@ -284,7 +284,7 @@ export class Emitter&lt;T&gt; implements Functor.Invariant&lt;T&gt;, AsyncIterab
 &nbsp;
   public once(listener: Callback&lt;T&gt;): this;
 &nbsp;
-  public once(listener?: Callback&lt;T&gt;): this | Promise&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >once(</span>listener?: Callback&lt;T&gt;): this | Promise&lt;T&gt; {
     const once: Continuation&lt;T&gt; = (done) =&gt; {
       const listener: Callback&lt;T&gt; = (event) =&gt; {
         this._listeners.delete(done);
@@ -302,12 +302,12 @@ export class Emitter&lt;T&gt; implements Functor.Invariant&lt;T&gt;, AsyncIterab
     }
   }
 &nbsp;
-  public off(listener: Callback&lt;never&gt;): this {
+  public <span class="fstat-no" title="function not covered" >off(</span>listener: Callback&lt;never&gt;): this {
     this._listeners.delete(listener);
     return this;
   }
 &nbsp;
-  public emit(event: T): boolean {
+  public <span class="fstat-no" title="function not covered" >emit(</span>event: T): boolean {
     const empty = this._listeners.size === 0;
 &nbsp;
     for (const [, listener] of this._listeners) {
@@ -317,13 +317,13 @@ export class Emitter&lt;T&gt; implements Functor.Invariant&lt;T&gt;, AsyncIterab
     return !empty;
   }
 &nbsp;
-  public async *<span class="fstat-no" title="function not covered" >asyncIterator(</span>): AsyncIterator&lt;T&gt; {
+  public async *<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >asyncIterator(</span>): AsyncIterator&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    while (true) {</span>
 <span class="cstat-no" title="statement not covered" >      yield await this.once();</span>
     }
   }
 &nbsp;
-  public [<span class="fstat-no" title="function not covered" >Symbol.asyncIterator]</span>(): AsyncIterator&lt;T&gt; {
+  public [<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.asyncIterator]</span></span>(): AsyncIterator&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.asyncIterator();</span>
   }
 }
@@ -334,7 +334,7 @@ export class Emitter&lt;T&gt; implements Functor.Invariant&lt;T&gt;, AsyncIterab
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:23.711Z
+                at 2026-04-10T09:29:47.344Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

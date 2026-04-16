@@ -4,12 +4,12 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Option, None } from "@siteimprove/alfa-option";
 
-import R24 from "../../dist/sia-r24/rule.js";
-import { Outcomes } from "../../dist/common/expectation/media-transcript.js";
+import R24 from "../../src/sia-r24/rule.ts";
+import { Outcomes } from "../../src/common/expectation/media-transcript.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { passed, failed, inapplicable, cantTell } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { passed, failed, inapplicable, cantTell } from "../common/outcome.ts";
 
 test(`evaluate() passes when non-streaming video elements have all audio and
       visual information available in a transcript`, async (t) => {

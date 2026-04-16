@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import type { Hash } from "@siteimprove/alfa-hash";
 
-import { FNV } from "../dist/index.js";
+import { FNV } from "../src/index.ts";
 
 const fnv = (hasher: (hash: Hash) => Hash): number =>
   hasher(FNV.empty()).finish();

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">97.59% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>59/59</span>
+                <span class='fraction'>81/83</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.44% </span>
+                <span class="strong">94% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>34/36</span>
+                <span class='fraction'>47/50</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">80.76% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>14/14</span>
+                <span class='fraction'>21/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>59/59</span>
+                <span class='fraction'>60/60</span>
             </div>
         
             
@@ -374,7 +374,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">303x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -603,9 +603,9 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 &nbsp;
-import { getInterposedDescendant } from "../get-interposed-descendant.js";
+import { getInterposedDescendant } from "../get-interposed-descendant.ts";
 &nbsp;
-import { ColorError, ColorErrors } from "./color-error.js";
+import { ColorError, ColorErrors } from "./color-error.ts";
 &nbsp;
 const { isElement } = Element;
 const { hasTransparentBackground, isPositioned } = Style;
@@ -614,7 +614,7 @@ const { hasTransparentBackground, isPositioned } = Style;
  * @public
  */
 export class Layer {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     colors: Iterable&lt;CSS4Color.Canonical&gt;,
     opacity: number,
   ): Layer {
@@ -624,7 +624,7 @@ export class Layer {
   private readonly _colors: ReadonlyArray&lt;CSS4Color.Canonical&gt;;
   private readonly _opacity: number;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     colors: ReadonlyArray&lt;CSS4Color.Canonical&gt;,
     opacity: number,
   ) {
@@ -632,11 +632,11 @@ export class Layer {
     this._opacity = opacity;
   }
 &nbsp;
-  public get colors(): ReadonlyArray&lt;CSS4Color.Canonical&gt; {
+  public get <span class="fstat-no" title="function not covered" >colors(</span>): ReadonlyArray&lt;CSS4Color.Canonical&gt; {
     return this._colors;
   }
 &nbsp;
-  public get opacity(): number {
+  public get <span class="fstat-no" title="function not covered" >opacity(</span>): number {
     return this._opacity;
   }
 }
@@ -644,7 +644,7 @@ export class Layer {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Layer {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >L</span>ayer {</span></span>
   const layersCacheWithFakeOpacity = Cache.empty&lt;
     Device,
     Cache&lt;
@@ -674,7 +674,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
    * Since we do not have layout information, we simply assume that the DOM tree
    * ancestry mimics the actual layout of boxes.
    */
-  export function getLayers(
+  export function <span class="cstat-no" title="statement not covered" >getLayers(</span>
     element: Element,
     device: Device,
     context: Context = Context.empty(),
@@ -772,7 +772,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
   /**
    * Merge colors in a layer with colors in an existing backdrop.
    */
-  export function merge(
+  export function <span class="cstat-no" title="statement not covered" >merge(</span>
     backdrops: Array&lt;CSS4Color.Canonical&gt;,
     layer: Layer,
   ): Array&lt;CSS4Color.Canonical&gt; {
@@ -865,7 +865,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >L
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:08:25.373Z
+                at 2026-04-10T09:31:39.916Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

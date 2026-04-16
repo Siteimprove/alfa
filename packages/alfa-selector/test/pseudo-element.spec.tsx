@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { parseErr, serialize } from "./parser.js";
+import { parseErr, serialize } from "./parser.ts";
 
 test(".parse() parses a pseudo-element selector", (t) => {
   t.deepEqual(serialize("::before"), {

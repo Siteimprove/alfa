@@ -1,1 +1,1 @@
-export * from "./get-nodes-between.js";
+export * from "./get-nodes-between.ts";

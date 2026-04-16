@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">69.33% </span>
+                <span class="strong">72.94% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>52/75</span>
+                <span class='fraction'>62/85</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86% </span>
+                <span class="strong">88.31% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>43/50</span>
+                <span class='fraction'>68/77</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.84% </span>
+                <span class="strong">56% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>14/26</span>
+                <span class='fraction'>28/50</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">69.33% </span>
+                <span class="strong">69.73% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>52/75</span>
+                <span class='fraction'>53/76</span>
             </div>
         
             
@@ -807,26 +807,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">102x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">108x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">108x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">107x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -847,9 +847,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">108x</span>
+<span class="cline-any cline-yes">107x</span>
 <span class="cline-any cline-yes">534x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">523x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -936,7 +936,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">108x</span>
+<span class="cline-any cline-yes">107x</span>
 <span class="cline-any cline-yes">529x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -961,7 +961,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import * as builtin from "./builtin.js";
+import * as builtin from "./builtin.ts";
 &nbsp;
 const { isEmpty } = Iterable;
 &nbsp;
@@ -1046,49 +1046,49 @@ export class URL implements Equatable, Hashable, Serializable&lt;URL.JSON&gt; {
   /**
    * {@link https://url.spec.whatwg.org/#concept-url-scheme}
    */
-  public get <span class="fstat-no" title="function not covered" >scheme(</span>): string {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >scheme(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return this._scheme;</span>
   }
 &nbsp;
   /**
    * {@link https://url.spec.whatwg.org/#concept-url-username}
    */
-  public get <span class="fstat-no" title="function not covered" >username(</span>): Option&lt;string&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >username(</span>): Option&lt;string&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._username;</span>
   }
 &nbsp;
   /**
    * {@link https://url.spec.whatwg.org/#concept-url-password}
    */
-  public get <span class="fstat-no" title="function not covered" >password(</span>): Option&lt;string&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >password(</span>): Option&lt;string&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._password;</span>
   }
 &nbsp;
   /**
    * {@link https://url.spec.whatwg.org/#concept-url-host}
    */
-  public get <span class="fstat-no" title="function not covered" >host(</span>): Option&lt;string&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >host(</span>): Option&lt;string&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._host;</span>
   }
 &nbsp;
   /**
    * {@link https://url.spec.whatwg.org/#concept-url-port}
    */
-  public get <span class="fstat-no" title="function not covered" >port(</span>): Option&lt;number&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >port(</span>): Option&lt;number&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._port;</span>
   }
 &nbsp;
   /**
    * {@link https://url.spec.whatwg.org/#concept-url-path}
    */
-  public get <span class="fstat-no" title="function not covered" >path(</span>): Sequence&lt;string&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >path(</span>): Sequence&lt;string&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._path;</span>
   }
 &nbsp;
   /**
    * {@link https://url.spec.whatwg.org/#concept-url-query}
    */
-  public get <span class="fstat-no" title="function not covered" >query(</span>): Option&lt;string&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >query(</span>): Option&lt;string&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._query;</span>
   }
 &nbsp;
@@ -1102,14 +1102,14 @@ export class URL implements Equatable, Hashable, Serializable&lt;URL.JSON&gt; {
   /**
    * {@link https://url.spec.whatwg.org/#url-cannot-be-a-base-url-flag}
    */
-  public get <span class="fstat-no" title="function not covered" >cannotBeABase(</span>): boolean {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >cannotBeABase(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return this._cannotBeABase;</span>
   }
 &nbsp;
   /**
    * {@link https://url.spec.whatwg.org/#is-special}
    */
-  public <span class="fstat-no" title="function not covered" >isSpecial(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isSpecial(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return URL.isSpecialScheme(this._scheme);</span>
   }
 &nbsp;
@@ -1170,7 +1170,7 @@ export class URL implements Equatable, Hashable, Serializable&lt;URL.JSON&gt; {
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash): void {
 <span class="cstat-no" title="statement not covered" >    hash</span>
       .writeString(this._scheme)
       .writeHashable(this._username)
@@ -1183,7 +1183,7 @@ export class URL implements Equatable, Hashable, Serializable&lt;URL.JSON&gt; {
       .writeBoolean(this._cannotBeABase);
   }
 &nbsp;
-  public toJSON(): URL.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): URL.JSON {
     return {
       scheme: this._scheme,
       username: this._username.getOr(null),
@@ -1231,7 +1231,7 @@ export class URL implements Equatable, Hashable, Serializable&lt;URL.JSON&gt; {
       <span class="missing-if-branch" title="if path not taken" >I</span>if (
         this._host.isNone() &amp;&amp;
         this._path.size &gt; 1 &amp;&amp;
-<span class="branch-2 cbranch-no" title="branch not covered" >        this._path.first().includes("")</span>
+<span class="branch-2 cbranch-no" title="branch not covered" ><span class="branch-2 cbranch-no" title="branch not covered" >        this._path.first().includes("")</span></span>
       ) {
 <span class="cstat-no" title="statement not covered" >        output += "/.";</span>
       }
@@ -1256,7 +1256,7 @@ export class URL implements Equatable, Hashable, Serializable&lt;URL.JSON&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >URL {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >URL {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     scheme: string;
@@ -1270,7 +1270,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >U
     cannotBeABase: boolean;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >from(</span>json: JSON): URL {
+  export function from(json: JSON): URL {
 <span class="cstat-no" title="statement not covered" >    return URL.of(</span>
       json.scheme,
       Option.from(json.username),
@@ -1402,7 +1402,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >U
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

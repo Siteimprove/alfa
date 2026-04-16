@@ -14,8 +14,8 @@ import type { Refinement } from "@siteimprove/alfa-refinement";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import type { Option } from "./option.js";
-import { None } from "./none.js";
+import type { Option } from "./option.ts";
+import { None } from "./none.ts";
 
 const { not, test } = Predicate;
 const { compareComparable } = Comparable;

@@ -7,8 +7,8 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 
 import type * as act from "@siteimprove/alfa-act";
 
-import { expectation } from "../act/expectation.js";
-import { Question } from "../act/question.js";
+import { expectation } from "../act/expectation.ts";
+import { Question } from "../act/question.ts";
 
 const { isPerceivableForAll } = DOM;
 

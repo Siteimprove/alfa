@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">13.04% </span>
+                <span class="strong">14.28% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/69</span>
+                <span class='fraction'>10/70</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">16.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>1/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.94% </span>
+                <span class="strong">5.97% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/67</span>
+                <span class='fraction'>8/134</span>
             </div>
         
             
@@ -712,8 +712,8 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { None } from "@siteimprove/alfa-option";
 &nbsp;
-import { Sequence } from "./sequence.js";
-import { Cons } from "./cons.js";
+import { Sequence } from "./sequence.ts";
+import { Cons } from "./cons.ts";
 &nbsp;
 /**
  * @public
@@ -724,37 +724,37 @@ export interface Nil extends Sequence&lt;never&gt; {}
  * @public
  */
 export const Nil: Nil = new (class Nil {
-  public get <span class="fstat-no" title="function not covered" >size(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >size(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return 0;</span>
   }
 &nbsp;
-  public isEmpty(): this is Sequence&lt;never&gt; {
+  public <span class="fstat-no" title="function not covered" >isEmpty(</span>): this is Sequence&lt;never&gt; {
     return true;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >forEach(</span>): void {}
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >forEach(</span>): void {</span>}
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >map(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >map(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >apply(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >apply(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >flatMap(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >flatMap(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >flatten(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >flatten(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reduce&lt;</span>U&gt;(reducer: unknown, accumulator: U): U {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reduce&lt;</span>U&gt;(r</span>educer: unknown, accumulator: U): U {
 <span class="cstat-no" title="statement not covered" >    return accumulator;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reduceWhile&lt;</span>U&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reduceWhile&lt;</span>U&gt;(</span>
     predicate: unknown,
     reducer: unknown,
     accumulator: U,
@@ -762,7 +762,7 @@ export const Nil: Nil = new (class Nil {
 <span class="cstat-no" title="statement not covered" >    return accumulator;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reduceUntil&lt;</span>U&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reduceUntil&lt;</span>U&gt;(</span>
     predicate: unknown,
     reducer: unknown,
     accumulator: U,
@@ -770,79 +770,79 @@ export const Nil: Nil = new (class Nil {
 <span class="cstat-no" title="statement not covered" >    return accumulator;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >filter(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >filter(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reject(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reject(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >find(</span>): None {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >find(</span>): None {</span>
 <span class="cstat-no" title="statement not covered" >    return None;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >includes(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >includes(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >collect(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >collect(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >collectFirst(</span>): None {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >collectFirst(</span>): None {</span>
 <span class="cstat-no" title="statement not covered" >    return None;</span>
   }
 &nbsp;
-  public some(): boolean {
+  public <span class="fstat-no" title="function not covered" >some(</span>): boolean {
     return false;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >none(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >none(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return true;</span>
   }
 &nbsp;
-  public every(): boolean {
+  public <span class="fstat-no" title="function not covered" >every(</span>): boolean {
     return true;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >count(</span>): number {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >count(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return 0;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >countUntil(</span>): number {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >countUntil(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return 0;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >distinct(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >distinct(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >get(</span>): None {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >get(</span>): None {</span>
 <span class="cstat-no" title="statement not covered" >    return None;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >has(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >has(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >set(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >set(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >insert&lt;</span>T&gt;(index: number, value: T): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >insert&lt;</span>T&gt;(i</span>ndex: number, value: T): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return index === 0 ? Cons.of(value) : this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >append&lt;</span>T&gt;(value: T): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >append&lt;</span>T&gt;(v</span>alue: T): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return Cons.of(value);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >prepend&lt;</span>T&gt;(value: T): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >prepend&lt;</span>T&gt;(v</span>alue: T): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return Cons.of(value);</span>
   }
 &nbsp;
-  public concat&lt;T&gt;(iterable: Iterable&lt;T&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >concat&lt;</span>T&gt;(iterable: Iterable&lt;T&gt;): Sequence&lt;T&gt; {
     <span class="missing-if-branch" title="if path not taken" >I</span>if (iterable === this) {
 <span class="cstat-no" title="statement not covered" >      return this;</span>
     }
@@ -850,15 +850,15 @@ export const Nil: Nil = new (class Nil {
     return Sequence.from(iterable);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >subtract(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >subtract(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >intersect(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >intersect(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >tee&lt;</span>A extends Array&lt;unknown&gt; = []&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >tee&lt;</span>A extends Array&lt;unknown&gt; = []&gt;(</span>
     callback: Callback&lt;this, void, [...args: A]&gt;,
     ...args: A
   ): this {
@@ -866,147 +866,147 @@ export const Nil: Nil = new (class Nil {
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >zip(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >zip(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public first(): None {
+  public <span class="fstat-no" title="function not covered" >first(</span>): None {
     return None;
   }
 &nbsp;
-  public last(): None {
+  public <span class="fstat-no" title="function not covered" >last(</span>): None {
     return None;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >take(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >take(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >takeWhile(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >takeWhile(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >takeUntil(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >takeUntil(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >preceding(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >preceding(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >takeLast(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >takeLast(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >takeLastWhile(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >takeLastWhile(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >takeLastUntil(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >takeLastUntil(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skip(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skip(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skipWhile(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skipWhile(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skipUntil(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skipUntil(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skipLast(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skipLast(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skipLastWhile(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skipLastWhile(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skipLastUntil(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skipLastUntil(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >trim(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >trim(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >trimLeading(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >trimLeading(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >trimTrailing(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >trimTrailing(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >rest(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >rest(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >slice(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >slice(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reverse(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reverse(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >join(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >join(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return "";</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >sort(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >sort(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >sortWith(</span>): Nil {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >sortWith(</span>): Nil {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >compare&lt;</span>T&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >compare&lt;</span>T&gt;(</span>
     this: Sequence&lt;Comparable&lt;T&gt;&gt;,
     iterable: Iterable&lt;T&gt;,
   ): Comparison {
 <span class="cstat-no" title="statement not covered" >    return this.compareWith(iterable, Comparable.compare);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >compareWith&lt;</span>T, U = T&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >compareWith&lt;</span>T, U = T&gt;(</span>
     iterable: Iterable&lt;U&gt;,
     comparer: Comparer&lt;T, U, [index: number]&gt;,
   ): Comparison {
 <span class="cstat-no" title="statement not covered" >    return Iterable.compareWith(this, iterable, comparer);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >groupBy&lt;</span>K, T&gt;(): Map&lt;K, Sequence&lt;T&gt;&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >groupBy&lt;</span>K, T&gt;(): Map&lt;K, Sequence&lt;T&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return Map.empty();</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Nil;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash): void {
 <span class="cstat-no" title="statement not covered" >    hash.writeUint32(0);</span>
   }
 &nbsp;
-  public *iterator(): Iterator&lt;never&gt; {}
+  public *<span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;never&gt; {}
 &nbsp;
-  public [Symbol.iterator](): Iterator&lt;never&gt; {
+  public [<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;never&gt; {
     return this.iterator();
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toArray(</span>): Array&lt;never&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toArray(</span>): Array&lt;never&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return [];</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Nil.JSON {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): Nil.JSON {</span>
 <span class="cstat-no" title="statement not covered" >    return [];</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return "Sequence []";</span>
   }
 })();
@@ -1024,7 +1024,7 @@ export namespace Nil {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:07:01.024Z
+                at 2026-04-10T09:30:23.711Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

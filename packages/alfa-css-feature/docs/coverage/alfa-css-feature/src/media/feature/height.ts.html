@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">43.75% </span>
+                <span class="strong">40.9% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/16</span>
+                <span class='fraction'>9/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>2/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">45.45% </span>
+                <span class="strong">36.84% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/11</span>
+                <span class='fraction'>7/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.66% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/15</span>
+                <span class='fraction'>8/16</span>
             </div>
         
             
@@ -165,7 +165,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -189,9 +189,9 @@
 import type { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 &nbsp;
-import { Media } from "./media.js";
-import { Resolver } from "./resolver.js";
-import type { Value } from "./value/index.js";
+import { Media } from "./media.ts";
+import { Resolver } from "./resolver.ts";
+import type { Value } from "./value/index.ts";
 &nbsp;
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#height}
@@ -199,27 +199,27 @@ import type { Value } from "./value/index.js";
  * @public
  */
 export class Height extends Media&lt;"height", Length.Fixed&gt; {
-  public static of(value: Value&lt;Length.Fixed&gt;): Height {
+  public static <span class="fstat-no" title="function not covered" >of(</span>value: Value&lt;Length.Fixed&gt;): Height {
     return new Height(Option.of(value));
   }
 &nbsp;
   private static _boolean = new Height(None);
 &nbsp;
-  protected constructor(value: Option&lt;Value&lt;Length.Fixed&gt;&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(v</span>alue: Option&lt;Value&lt;Length.Fixed&gt;&gt;) {
     super("height", value);
   }
 &nbsp;
-  public static boolean(): Height {
+  public static <span class="fstat-no" title="function not covered" >boolean(</span>): Height {
 <span class="cstat-no" title="statement not covered" >    return Height._boolean;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >matches(</span>device: Device): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >matches(</span>d</span>evice: Device): boolean {
     const {
       viewport: { height },
-    } = <span class="cstat-no" title="statement not covered" >device;</span>
+    } = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >device;</span></span>
 &nbsp;
-    const value = <span class="cstat-no" title="statement not covered" >this._value.map(<span class="fstat-no" title="function not covered" >(v</span>alue) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      value.map(<span class="fstat-no" title="function not covered" >(l</span>ength) =&gt; <span class="cstat-no" title="statement not covered" >length.resolve(Resolver.length(device)))</span>,</span>
+    const value = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._value.map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(v</span></span>alue) =&gt;</span></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      value.map(<span class="fstat-no" title="function not covered" >(l</span>ength) =&gt; <span class="cstat-no" title="statement not covered" >length.resolve(Resolver.length(device)))</span>,</span></span>
     );
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return height &gt; 0</span>
@@ -231,7 +231,7 @@ export class Height extends Media&lt;"height", Length.Fixed&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Height {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >H</span>eight {</span></span>
   function from(value: Option&lt;Value&lt;Length.Fixed&gt;&gt;): Height {
     return value.map(Height.of).getOrElse(Height.boolean);
   }
@@ -240,7 +240,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >H
 &nbsp;
   export function isHeight(value: unknown): value is Height;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isHeight(</span>value: unknown): value is Height {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isHeight(v</span>alue: unknown): value is Height {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Height;</span>
   }
 &nbsp;
@@ -253,7 +253,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >H
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:08.864Z
+                at 2026-04-10T09:29:32.705Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

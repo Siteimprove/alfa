@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Decoder, Encoder } from "../dist/index.js";
+import { Decoder, Encoder } from "../src/index.ts";
 
 test("encode() encodes ASCII characters correctly", (t) => {
   const input = "Hello";

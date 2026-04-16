@@ -9,14 +9,14 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
-import { WithBadElements } from "../common/diagnostic/with-bad-elements.js";
+import { expectation } from "../common/act/expectation.ts";
+import { WithBadElements } from "../common/diagnostic/with-bad-elements.ts";
 
-import { Scope, Stability, Version } from "../tags/index.js";
+import { Scope, Stability, Version } from "../tags/index.ts";
 
 const { hasName, hasNamespace, hasTabIndex } = Element;
 const { and, test } = Predicate;
-const { isTabbable, isVisible } = Style;
+const { isInert, isTabbable, isVisible } = Style;
 const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -38,6 +38,7 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return getElementDescendants(document, Node.fullTree)
           .filter(and(hasNamespace(Namespace.HTML), hasName("iframe")))
+          .reject(isInert(device))
           .filter((iframe) =>
             iframe.content
               .map((contentDocument) =>

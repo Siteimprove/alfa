@@ -3,9 +3,9 @@ import { Option } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import type { Rule } from "./index.js";
-import { BaseRule } from "./rule.js";
-import { GroupingRule } from "./grouping.js";
+import type { Rule } from "./index.ts";
+import { BaseRule } from "./rule.ts";
+import { GroupingRule } from "./grouping.ts";
 
 /**
  * Model for CSS layers

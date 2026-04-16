@@ -15,9 +15,9 @@ import { Combinator, Complex, Selector } from "@siteimprove/alfa-selector";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import type { AncestorFilter } from "./ancestor-filter.js";
-import { Block } from "./block.js";
-import { Layer, type Order } from "./precedence/index.js";
+import type { AncestorFilter } from "./ancestor-filter.ts";
+import { Block } from "./block.ts";
+import { Layer, type Order } from "./precedence/index.ts";
 
 const { equals, property } = Predicate;
 const { and } = Refinement;

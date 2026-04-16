@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "compilerOptions": { "outDir": "../dist" },
+  "compilerOptions": { "outDir": "../dist", "rewriteRelativeImportExtensions": true },
   "files": [
     "./common/act/diagnostic.ts",
     "./common/act/expectation.ts",
@@ -54,6 +54,7 @@
     "./requirements/best-practice.ts",
     "./requirements/index.ts",
     "./rules.ts",
+    "./sia-dr3/rule.ts",
     "./sia-dr6/rule.ts",
     "./sia-dr34/rule.ts",
     "./sia-dr36/rule.ts",
@@ -81,7 +82,6 @@
     "./sia-r27/rule.ts",
     "./sia-r28/rule.ts",
     "./sia-r29/rule.ts",
-    "./sia-r3/rule.ts",
     "./sia-r30/rule.ts",
     "./sia-r31/rule.ts",
     "./sia-r32/rule.ts",

@@ -7,11 +7,11 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Page } from "@siteimprove/alfa-web";
 import { Option } from "@siteimprove/alfa-option";
 
-import { expectation } from "../common/act/index.js";
-import { BestPractice } from "../requirements/index.js";
+import { expectation } from "../common/act/index.ts";
+import { BestPractice } from "../requirements/index.ts";
 
-import { Scope, Stability } from "../tags/index.js";
-import { WithOtherHeading } from "../common/diagnostic.js";
+import { Scope, Stability } from "../tags/index.ts";
+import { WithOtherHeading } from "../common/diagnostic.ts";
 
 const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { and, equals, tee } = Predicate;

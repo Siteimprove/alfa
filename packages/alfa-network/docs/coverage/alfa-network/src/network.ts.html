@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.46% </span>
+                <span class="strong">78.04% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>102/130</span>
+                <span class='fraction'>128/164</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.63% </span>
+                <span class="strong">58.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>28/44</span>
+                <span class='fraction'>35/60</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70.17% </span>
+                <span class="strong">51.96% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>40/57</span>
+                <span class='fraction'>53/102</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.74% </span>
+                <span class="strong">78.9% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>100/127</span>
+                <span class='fraction'>101/128</span>
             </div>
         
             
@@ -778,7 +778,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -914,50 +914,50 @@ export class Network&lt;N, E&gt;
     Hashable,
     Serializable&lt;Network.JSON&lt;N, E&gt;&gt;
 {
-  public static of&lt;N, E&gt;(nodes: Map&lt;N, Map&lt;N, Set&lt;E&gt;&gt;&gt;): Network&lt;N, E&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>N, E&gt;(nodes: Map&lt;N, Map&lt;N, Set&lt;E&gt;&gt;&gt;): Network&lt;N, E&gt; {
     return new Network(nodes);
   }
 &nbsp;
   private static _empty = new Network&lt;never, never&gt;(Map.empty());
 &nbsp;
-  public static empty&lt;N, E&gt;(): Network&lt;N, E&gt; {
+  public static <span class="fstat-no" title="function not covered" >empty&lt;</span>N, E&gt;(): Network&lt;N, E&gt; {
     return this._empty;
   }
 &nbsp;
   private readonly _nodes: Map&lt;N, Map&lt;N, Set&lt;E&gt;&gt;&gt;;
 &nbsp;
-  protected constructor(nodes: Map&lt;N, Map&lt;N, Set&lt;E&gt;&gt;&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(n</span>odes: Map&lt;N, Map&lt;N, Set&lt;E&gt;&gt;&gt;) {
     this._nodes = nodes;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >size(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >size(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return this._nodes.size;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isEmpty(</span>): this is Network&lt;N, never&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isEmpty(</span>): this is Network&lt;N, never&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._nodes.isEmpty();</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >nodes(</span>): Iterable&lt;N&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >nodes(</span>): Iterable&lt;N&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._nodes.keys();</span>
   }
 &nbsp;
-  public neighbors(node: N): Iterable&lt;[N, Iterable&lt;E&gt;]&gt; {
+  public <span class="fstat-no" title="function not covered" >neighbors(</span>node: N): Iterable&lt;[N, Iterable&lt;E&gt;]&gt; {
     return this._nodes.get(node).getOr([]);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >edges(</span>from: N, to: N): Iterable&lt;E&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >edges(</span>f</span>rom: N, to: N): Iterable&lt;E&gt; {
 <span class="cstat-no" title="statement not covered" >    return this._nodes</span>
       .get(from)
       .flatMap(<span class="fstat-no" title="function not covered" >(n</span>eighbors) =&gt; <span class="cstat-no" title="statement not covered" >neighbors.get(to))</span>
       .getOr([]);
   }
 &nbsp;
-  public has(node: N): boolean {
+  public <span class="fstat-no" title="function not covered" >has(</span>node: N): boolean {
     return this._nodes.has(node);
   }
 &nbsp;
-  public add(node: N): Network&lt;N, E&gt; {
+  public <span class="fstat-no" title="function not covered" >add(</span>node: N): Network&lt;N, E&gt; {
     if (this.has(node)) {
       return this;
     }
@@ -965,7 +965,7 @@ export class Network&lt;N, E&gt;
     return new Network(this._nodes.set(node, Map.empty()));
   }
 &nbsp;
-  public delete(node: N): Network&lt;N, E&gt; {
+  public <span class="fstat-no" title="function not covered" >delete(</span>node: N): Network&lt;N, E&gt; {
     const nodes = this._nodes;
 &nbsp;
     <span class="missing-if-branch" title="if path not taken" >I</span>if (!nodes.has(node)) {
@@ -977,7 +977,7 @@ export class Network&lt;N, E&gt;
     );
   }
 &nbsp;
-  public connect(from: N, to: N, ...edges: Array&lt;E&gt;): Network&lt;N, E&gt; {
+  public <span class="fstat-no" title="function not covered" >connect(</span>from: N, to: N, ...edges: Array&lt;E&gt;): Network&lt;N, E&gt; {
     <span class="missing-if-branch" title="if path not taken" >I</span>if (edges.length === 0) {
 <span class="cstat-no" title="statement not covered" >      return this;</span>
     }
@@ -1014,7 +1014,7 @@ export class Network&lt;N, E&gt;
     );
   }
 &nbsp;
-  public disconnect(from: N, to: N, ...edges: Array&lt;E&gt;): Network&lt;N, E&gt; {
+  public <span class="fstat-no" title="function not covered" >disconnect(</span>from: N, to: N, ...edges: Array&lt;E&gt;): Network&lt;N, E&gt; {
     <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.has(from) || !this.has(to)) {
 <span class="cstat-no" title="statement not covered" >      return this;</span>
     }
@@ -1052,14 +1052,14 @@ export class Network&lt;N, E&gt;
     );
   }
 &nbsp;
-  public traverse(
+  public <span class="fstat-no" title="function not covered" >traverse(</span>
     root: N,
     traversal: Network.Traversal = Network.DepthFirst,
   ): Sequence&lt;[node: N, edges: Iterable&lt;E&gt;, parent: N]&gt; {
     return Sequence.from(traversal(this, root));
   }
 &nbsp;
-  public path(
+  public <span class="fstat-no" title="function not covered" >path(</span>
     from: N,
     to: N,
     traversal: Network.Traversal = Network.BreadthFirst,
@@ -1084,7 +1084,7 @@ export class Network&lt;N, E&gt;
     return Sequence.from(path);
   }
 &nbsp;
-  public hasPath(from: N, to: N): boolean {
+  public <span class="fstat-no" title="function not covered" >hasPath(</span>from: N, to: N): boolean {
     <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.has(from) || !this.has(to)) {
 <span class="cstat-no" title="statement not covered" >      return false;</span>
     }
@@ -1094,7 +1094,7 @@ export class Network&lt;N, E&gt;
       .includes(to);
   }
 &nbsp;
-  public reverse(): Network&lt;N, E&gt; {
+  public <span class="fstat-no" title="function not covered" >reverse(</span>): Network&lt;N, E&gt; {
     let reversed = Network.empty&lt;N, E&gt;();
 &nbsp;
     for (const [node, neighbors] of this._nodes) {
@@ -1108,7 +1108,7 @@ export class Network&lt;N, E&gt;
     return reversed;
   }
 &nbsp;
-  public *sort(): Iterable&lt;N&gt; {
+  public *<span class="fstat-no" title="function not covered" >sort(</span>): Iterable&lt;N&gt; {
     let incoming = this.reverse();
 &nbsp;
     const queue = incoming
@@ -1135,54 +1135,54 @@ export class Network&lt;N, E&gt;
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Network &amp;&amp; value._nodes.equals(this._nodes);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash): void {
 <span class="cstat-no" title="statement not covered" >    hash.writeHashable(this._nodes);</span>
   }
 &nbsp;
-  public *iterator(): Iterator&lt;[N, Iterable&lt;[N, Iterable&lt;E&gt;]&gt;]&gt; {
+  public *<span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;[N, Iterable&lt;[N, Iterable&lt;E&gt;]&gt;]&gt; {
     yield* this._nodes;
   }
 &nbsp;
-  public [Symbol.iterator](): Iterator&lt;[N, Iterable&lt;[N, Iterable&lt;E&gt;]&gt;]&gt; {
+  public [<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;[N, Iterable&lt;[N, Iterable&lt;E&gt;]&gt;]&gt; {
     return this.iterator();
   }
 &nbsp;
-  public toArray(): Array&lt;[N, Array&lt;[N, Array&lt;E&gt;]&gt;]&gt; {
+  public <span class="fstat-no" title="function not covered" >toArray(</span>): Array&lt;[N, Array&lt;[N, Array&lt;E&gt;]&gt;]&gt; {
     return [...this].map(([node, neighbors]) =&gt; [
       node,
       [...neighbors].map(([node, edges]) =&gt; [node, [...edges]]),
     ]);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toGraph(</span>): Graph&lt;N&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toGraph(</span>): Graph&lt;N&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return Graph.from(</span>
-      Iterable.map(this, <span class="fstat-no" title="function not covered" >([</span>node, neighbors]) =&gt; <span class="cstat-no" title="statement not covered" >[</span>
+      Iterable.map(this, <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >([</span></span>node, neighbors]) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[</span></span>
         node,
         Iterable.map(neighbors, <span class="fstat-no" title="function not covered" >([</span>node]) =&gt; <span class="cstat-no" title="statement not covered" >node)</span>,
       ]),
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Network.JSON&lt;N, E&gt; {
-<span class="cstat-no" title="statement not covered" >    return this.toArray().map(<span class="fstat-no" title="function not covered" >([</span>node, neighbors]) =&gt; <span class="cstat-no" title="statement not covered" >[</span></span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): Network.JSON&lt;N, E&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return this.toArray().map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >([</span></span>node, neighbors]) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[</span></span></span>
       Serializable.toJSON(node),
-      neighbors.map(<span class="fstat-no" title="function not covered" >([</span>node, edges]) =&gt; <span class="cstat-no" title="statement not covered" >[</span>
+      neighbors.map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >([</span></span>node, edges]) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[</span></span>
         Serializable.toJSON(node),
         edges.map(<span class="fstat-no" title="function not covered" >(e</span>dge) =&gt; <span class="cstat-no" title="statement not covered" >Serializable.toJSON(edge))</span>,
       ]),
     ]);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
-    const entries = <span class="cstat-no" title="statement not covered" >this.toArray()</span>
-      .map(<span class="fstat-no" title="function not covered" >([</span>node, neighbors]) =&gt; {
-        const entries = <span class="cstat-no" title="statement not covered" >neighbors</span>
-          .map(<span class="fstat-no" title="function not covered" >([</span>node, edges]) =&gt; {
-            const entries = <span class="cstat-no" title="statement not covered" >edges.join(", ");</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
+    const entries = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.toArray()</span></span>
+      .map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >([</span></span>node, neighbors]) =&gt; {
+        const entries = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >neighbors</span></span>
+          .map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >([</span></span>node, edges]) =&gt; {
+            const entries = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >edges.join(", ");</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            return `${node}${entries === "" ? "" : ` (${entries})`}`;</span>
           })
@@ -1199,7 +1199,7 @@ export class Network&lt;N, E&gt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Network {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >N</span>etwork {</span></span>
   export type JSON&lt;N, E&gt; = Array&lt;
     [
       Serializable.ToJSON&lt;N&gt;,
@@ -1213,11 +1213,11 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >N
 &nbsp;
   export function isNetwork&lt;N, E&gt;(value: unknown): value is Network&lt;N, E&gt;;
 &nbsp;
-  export function isNetwork&lt;N, E&gt;(value: unknown): value is Network&lt;N, E&gt; {
+  export function <span class="cstat-no" title="statement not covered" >isNetwork&lt;N, E&gt;(value: unknown): value is Network&lt;N, E&gt; {</span>
     return value instanceof Network;
   }
 &nbsp;
-  export function from&lt;N, E&gt;(
+  export function <span class="cstat-no" title="statement not covered" >from&lt;N, E&gt;(</span>
     iterable: Iterable&lt;readonly [N, Iterable&lt;readonly [N, Iterable&lt;E&gt;]&gt;]&gt;,
   ): Network&lt;N, E&gt; {
     <span class="missing-if-branch" title="if path not taken" >I</span>if (isNetwork(iterable)) {
@@ -1318,7 +1318,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >N
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:37.319Z
+                at 2026-04-10T09:30:00.696Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

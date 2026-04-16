@@ -23,9 +23,9 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/index.js";
+import { expectation } from "../common/act/index.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { isElement } = Element;
 const { flatMap, some } = Iterable;

@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">78.72% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>33/33</span>
+                <span class='fraction'>37/47</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>16/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">91.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>22/24</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -486,8 +486,8 @@ import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Reducer } from "@siteimprove/alfa-reducer";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 &nbsp;
-import { Cons } from "./cons.js";
-import { Nil } from "./nil.js";
+import { Cons } from "./cons.ts";
+import { Nil } from "./nil.ts";
 &nbsp;
 /**
  * @public
@@ -593,14 +593,14 @@ export interface Sequence&lt;T&gt; extends Collection.Indexed&lt;T&gt; {
 /**
  * @public
  */
-export namespace Sequence {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Sequence {</span>
   export type JSON&lt;T&gt; = Cons.JSON&lt;T&gt; | Nil.JSON;
 &nbsp;
   export function isSequence&lt;T&gt;(value: Iterable&lt;T&gt;): value is Sequence&lt;T&gt;;
 &nbsp;
   export function isSequence&lt;T&gt;(value: unknown): value is Sequence&lt;T&gt;;
 &nbsp;
-  export function isSequence&lt;T&gt;(value: unknown): value is Sequence&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >isSequence&lt;T&gt;(value: unknown): value is Sequence&lt;T&gt; {</span>
     return isCons(value) || isNil(value);
   }
 &nbsp;
@@ -608,7 +608,7 @@ export namespace Sequence {
 &nbsp;
   export function isCons&lt;T&gt;(value: unknown): value is Cons&lt;T&gt;;
 &nbsp;
-  export function isCons&lt;T&gt;(value: unknown): value is Cons&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >isCons&lt;T&gt;(value: unknown): value is Cons&lt;T&gt; {</span>
     return Cons.isCons(value);
   }
 &nbsp;
@@ -616,19 +616,19 @@ export namespace Sequence {
 &nbsp;
   export function isNil(value: unknown): value is Nil;
 &nbsp;
-  export function isNil(value: unknown): value is Nil {
+  export function <span class="cstat-no" title="statement not covered" >isNil(value: unknown): value is Nil {</span>
     return value === Nil;
   }
 &nbsp;
-  export function of&lt;T&gt;(head: T, tail?: Lazy&lt;Sequence&lt;T&gt;&gt;): Sequence&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >of&lt;T&gt;(head: T, tail?: Lazy&lt;Sequence&lt;T&gt;&gt;): Sequence&lt;T&gt; {</span>
     return Cons.of(head, tail);
   }
 &nbsp;
-  export function empty&lt;T = never&gt;(): Sequence&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >empty&lt;T = never&gt;(): Sequence&lt;T&gt; {</span>
     return Nil;
   }
 &nbsp;
-  export function from&lt;T&gt;(iterable: Iterable&lt;T&gt;): Sequence&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >from&lt;T&gt;(iterable: Iterable&lt;T&gt;): Sequence&lt;T&gt; {</span>
     if (isSequence(iterable)) {
       return iterable;
     }
@@ -640,7 +640,7 @@ export namespace Sequence {
     return fromIterable(iterable);
   }
 &nbsp;
-  export function fromArray&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): Sequence&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >fromArray&lt;T&gt;(array: ReadonlyArray&lt;T&gt;): Sequence&lt;T&gt; {</span>
     let i = 0;
 &nbsp;
     const tail = (): Sequence&lt;T&gt; =&gt; {
@@ -654,11 +654,11 @@ export namespace Sequence {
     return tail();
   }
 &nbsp;
-  export function fromIterable&lt;T&gt;(iterable: Iterable&lt;T&gt;): Sequence&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >fromIterable&lt;T&gt;(iterable: Iterable&lt;T&gt;): Sequence&lt;T&gt; {</span>
     return fromIterator(iterable[Symbol.iterator]());
   }
 &nbsp;
-  export function fromIterator&lt;T&gt;(iterator: Iterator&lt;T&gt;): Sequence&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >fromIterator&lt;</span>T&gt;(iterator: Iterator&lt;T&gt;): Sequence&lt;T&gt; {</span>
     const tail = (): Sequence&lt;T&gt; =&gt; {
       const head = iterator.next();
 &nbsp;
@@ -679,7 +679,7 @@ export namespace Sequence {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:07:01.024Z
+                at 2026-04-10T09:30:23.711Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

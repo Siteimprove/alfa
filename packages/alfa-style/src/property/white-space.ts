@@ -3,12 +3,12 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../longhand.js";
-import { Shorthand } from "../shorthand.js";
+import { Longhand } from "../longhand.ts";
+import { Shorthand } from "../shorthand.ts";
 
-import Collapse from "./white-space-collapse.js";
-import Mode from "./text-wrap-mode.js";
-import Trim from "./white-space-trim.js";
+import Collapse from "./white-space-collapse.ts";
+import Mode from "./text-wrap-mode.ts";
+import Trim from "./white-space-trim.ts";
 
 const { doubleBar, map, mapResult, either } = Parser;
 

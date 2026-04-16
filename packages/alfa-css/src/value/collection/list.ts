@@ -7,10 +7,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import { type Parser as CSSParser, Token } from "../../syntax/index.js";
+import { type Parser as CSSParser, Token } from "../../syntax/index.ts";
 
-import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
-import { Value } from "../value.js";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.ts";
+import { Value } from "../value.ts";
 
 const { delimited, option, map, separatedList } = Parser;
 

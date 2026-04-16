@@ -4,11 +4,11 @@ import type { Attribute } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/index.js";
-import { roleAttributes } from "../common/applicability/role-attributes.js";
-import { BestPractice } from "../requirements/index.js";
+import { expectation } from "../common/act/index.ts";
+import { roleAttributes } from "../common/applicability/role-attributes.ts";
+import { BestPractice } from "../requirements/index.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r21",

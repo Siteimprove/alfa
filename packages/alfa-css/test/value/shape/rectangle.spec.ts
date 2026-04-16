@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import type { Length} from "../../../dist/index.js";
-import { Rectangle } from "../../../dist/index.js";
-import { parser, serializer } from "../../common/parse.js";
+import type { Length} from "../../../src/index.ts";
+import { Rectangle } from "../../../src/index.ts";
+import { parser, serializer } from "../../common/parse.ts";
 
 const parseErr = parser(Rectangle.parse);
 const serialize = serializer(Rectangle.parse);

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.55% </span>
+                <span class="strong">60.86% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/18</span>
+                <span class='fraction'>14/23</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">42.85% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/7</span>
+                <span class='fraction'>6/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.15% </span>
+                <span class="strong">42.3% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/13</span>
+                <span class='fraction'>11/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.55% </span>
+                <span class="strong">57.89% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/18</span>
+                <span class='fraction'>11/19</span>
             </div>
         
             
@@ -230,17 +230,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">238x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">238x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">235x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -249,7 +249,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">238x</span>
+<span class="cline-any cline-yes">235x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -265,9 +265,9 @@ import { Parser } from "@siteimprove/alfa-parser";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import type { Feature } from "../feature.js";
+import type { Feature } from "../feature.ts";
 &nbsp;
-import type { Condition } from "./condition.js";
+import type { Condition } from "./condition.ts";
 &nbsp;
 const { delimited, option, right } = Parser;
 &nbsp;
@@ -282,42 +282,42 @@ export class Or&lt;F extends Feature&lt;F&gt;&gt; implements Feature&lt;F, Or.JS
   private readonly _left: Condition&lt;F&gt;;
   private readonly _right: Condition&lt;F&gt;;
 &nbsp;
-  protected constructor(left: Condition&lt;F&gt;, right: Condition&lt;F&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(l</span>eft: Condition&lt;F&gt;, right: Condition&lt;F&gt;) {
     this._left = left;
     this._right = right;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >left(</span>): Condition&lt;F&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >left(</span>): Condition&lt;F&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._left;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >right(</span>): Condition&lt;F&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >right(</span>): Condition&lt;F&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._right;</span>
   }
 &nbsp;
-  public matches(device: Device): boolean {
+  public <span class="fstat-no" title="function not covered" >matches(</span>device: Device): boolean {
     return this._left.matches(device) || this._right.matches(device);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Or &amp;&amp;
       value._left.equals(this._left) &amp;&amp;
       value._right.equals(this._right)
     );
   }
 &nbsp;
-  private *<span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;F&gt; {
+  private *<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;F&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    for (const condition of [this._left, this._right]) {</span>
 <span class="cstat-no" title="statement not covered" >      yield* condition;</span>
     }
   }
 &nbsp;
-  public [<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;F&gt; {
+  public [<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.iterator]</span></span>(): Iterator&lt;F&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.iterator();</span>
   }
 &nbsp;
-  public toJSON(): Or.JSON&lt;F&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Or.JSON&lt;F&gt; {
     return {
       type: "or",
       left: this._left.toJSON(),
@@ -325,12 +325,12 @@ export class Or&lt;F extends Feature&lt;F&gt;&gt; implements Feature&lt;F, Or.JS
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `(${this._left}) or (${this._right})`;</span>
   }
 }
 &nbsp;
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Or {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Or {</span></span>
   export interface JSON&lt;F extends Feature&lt;F&gt;&gt; {
     [key: string]: json.JSON;
     type: "or";
@@ -338,7 +338,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >O
     right: Condition.JSON&lt;F&gt;;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isOr&lt;</span>T extends Feature&lt;T&gt;&gt;(value: unknown): value is Or&lt;T&gt; {
+  export function isOr&lt;T extends Feature&lt;T&gt;&gt;(value: unknown): value is Or&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Or;</span>
   }
 &nbsp;
@@ -364,7 +364,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >O
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

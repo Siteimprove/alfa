@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.36% </span>
+                <span class="strong">90.9% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/22</span>
+                <span class='fraction'>20/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/16</span>
+                <span class='fraction'>10/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">55% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>16/20</span>
+                <span class='fraction'>11/20</span>
             </div>
         
             
@@ -162,7 +162,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -221,12 +221,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -241,13 +241,13 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Maybe, None, Option } from "@siteimprove/alfa-option";
 &nbsp;
-import type { Context } from "../../../context.js";
+import type { Context } from "../../../context.ts";
 // We cannot simplify that import as it would create a circular dependency
-import { Universal } from "../../simple/universal.js";
+import { Universal } from "../../simple/universal.ts";
 &nbsp;
-import type { Absolute, Selector } from "../../index.js";
+import type { Absolute, Selector } from "../../index.ts";
 &nbsp;
-import { WithIndexAndSelector } from "./pseudo-class.js";
+import { WithIndexAndSelector } from "./pseudo-class.ts";
 &nbsp;
 const { isElement } = Element;
 &nbsp;
@@ -255,13 +255,13 @@ const { isElement } = Element;
  * {@link https://drafts.csswg.org/selectors/#nth-last-child-pseudo}
  */
 export class NthLastChild extends WithIndexAndSelector&lt;"nth-last-child"&gt; {
-  public static of(index: Nth, selector: Maybe&lt;Absolute&gt; = <span class="branch-0 cbranch-no" title="branch not covered" >None): NthLastChild {</span>
+  public static <span class="fstat-no" title="function not covered" >of(</span>index: Nth, selector: Maybe&lt;Absolute&gt; = None): NthLastChild {
     return new NthLastChild(index, Maybe.toOption(selector));
   }
 &nbsp;
-  private readonly _indices = <span class="cstat-no" title="statement not covered" >new WeakMap&lt;Element, number&gt;();</span>
+  private readonly _indices = new WeakMap&lt;Element, number&gt;();
 &nbsp;
-  protected constructor(nth: Nth, selector: Option&lt;Absolute&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(n</span>th: Nth, selector: Option&lt;Absolute&gt;) {
     super(
       "nth-last-child",
       nth,
@@ -274,7 +274,7 @@ export class NthLastChild extends WithIndexAndSelector&lt;"nth-last-child"&gt; {
 <span class="cstat-no" title="statement not covered" >    yield this;</span>
   }
 &nbsp;
-  public matches(element: Element, context?: Context): boolean {
+  public <span class="fstat-no" title="function not covered" >matches(</span>element: Element, context?: Context): boolean {
     if (!this._indices.has(element)) {
       element
         .inclusiveSiblings()
@@ -305,17 +305,17 @@ export class NthLastChild extends WithIndexAndSelector&lt;"nth-last-child"&gt; {
 <span class="cstat-no" title="statement not covered" >    return value instanceof NthLastChild &amp;&amp; super.equals(value);</span>
   }
 &nbsp;
-  public toJSON(): NthLastChild.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): NthLastChild.JSON {
     return super.toJSON();
   }
 }
 &nbsp;
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >NthLastChild {</span></span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >N</span>thLastChild {</span></span>
   export interface JSON extends WithIndexAndSelector.JSON&lt;"nth-last-child"&gt; {}
 &nbsp;
   export const parse = (
     parseSelector: Selector.Parser.Component,
-    withColon = <span class="branch-0 cbranch-no" title="branch not covered" >true,</span>
+    withColon = true,
   ) =&gt;
     WithIndexAndSelector.parseWithIndexAndSelector(
       "nth-last-child",
@@ -331,7 +331,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:57.167Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

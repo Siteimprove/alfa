@@ -1,8 +1,8 @@
 import type { Element } from "@siteimprove/alfa-dom";
 
-import { isLink } from "../../../common/is-link.js";
+import { isLink } from "../../../common/is-link.ts";
 
-import { PseudoClassSelector } from "./pseudo-class.js";
+import { PseudoClassSelector } from "./pseudo-class.ts";
 
 /**
  * {@link https://drafts.csswg.org/selectors/#link-pseudo}

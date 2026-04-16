@@ -12,13 +12,13 @@ import { URL } from "@siteimprove/alfa-url";
 import { Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
-import { Question } from "../common/act/question.js";
+import { expectation } from "../common/act/expectation.ts";
+import { Question } from "../common/act/question.ts";
 
-import { isAtTheStart } from "../common/predicate.js";
+import { isAtTheStart } from "../common/predicate.ts";
 
-import { withDocumentElement } from "../common/applicability/with-document-element.js";
-import { Scope, Stability, Version } from "../tags/index.js";
+import { withDocumentElement } from "../common/applicability/with-document-element.ts";
+import { Scope, Stability, Version } from "../tags/index.ts";
 
 const { hasRole, isIgnored } = DOM;
 const { hasName, isElement } = Element;

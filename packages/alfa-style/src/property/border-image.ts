@@ -5,13 +5,13 @@ import { Result } from "@siteimprove/alfa-result";
 
 import type * as slice from "@siteimprove/alfa-slice";
 
-import { Shorthand } from "../shorthand.js";
+import { Shorthand } from "../shorthand.ts";
 
-import * as Outset from "./border-image-outset.js";
-import * as Repeat from "./border-image-repeat.js";
-import * as Source from "./border-image-source.js";
-import * as Slice from "./border-image-slice.js";
-import * as Width from "./border-image-width.js";
+import * as Outset from "./border-image-outset.ts";
+import * as Repeat from "./border-image-repeat.ts";
+import * as Source from "./border-image-source.ts";
+import * as Slice from "./border-image-slice.ts";
+import * as Width from "./border-image-width.ts";
 
 const { delimited, either, map, option, pair, right } = Parser;
 

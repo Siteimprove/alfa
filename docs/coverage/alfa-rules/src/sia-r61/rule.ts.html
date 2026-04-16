@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.12% </span>
+                <span class="strong">78.26% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>25/32</span>
+                <span class='fraction'>36/46</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/12</span>
+                <span class='fraction'>11/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.68% </span>
+                <span class="strong">55.55% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>14/19</span>
+                <span class='fraction'>20/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.41% </span>
+                <span class="strong">78.12% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>24/31</span>
+                <span class='fraction'>25/32</span>
             </div>
         
             
@@ -381,7 +381,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -414,11 +414,11 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Page } from "@siteimprove/alfa-web";
 &nbsp;
-import { expectation } from "../common/act/expectation.js";
-import { BestPractice } from "../requirements/index.js";
+import { expectation } from "../common/act/expectation.ts";
+import { BestPractice } from "../requirements/index.ts";
 &nbsp;
-import { Scope, Stability } from "../tags/index.js";
-import { withDocumentElement } from "../common/applicability/with-document-element.js";
+import { Scope, Stability } from "../tags/index.ts";
+import { withDocumentElement } from "../common/applicability/with-document-element.ts";
 &nbsp;
 const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { isElement } = Element;
@@ -428,7 +428,7 @@ export default Rule.Atomic.of&lt;Page, Document&gt;({
   uri: "https://alfa.siteimprove.com/rules/sia-r61",
   requirements: [BestPractice.of("document-start-with-level-1-heading")],
   tags: [Scope.Page, Stability.Stable],
-  evaluate({ device, document }) {
+<span class="fstat-no" title="function not covered" >  evaluate(</span>{ device, document }) {
     const firstHeading = document
       .descendants(Node.flatTree)
       .filter(and(isElement, isIncludedInTheAccessibilityTree(device)))
@@ -464,7 +464,7 @@ export default Rule.Atomic.of&lt;Page, Document&gt;({
 /**
  * @public
  */
-export namespace Outcomes {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Outcomes {</span>
   export const StartWithLevel1Heading = (heading: Element, level: number) =&gt;
     Ok.of(
       WithFirstHeading.of(
@@ -499,7 +499,7 @@ export class WithFirstHeading extends Diagnostic {
     level: number,
   ): WithFirstHeading;
 &nbsp;
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     message: string,
     firstHeading?: Element,
     level?: number,
@@ -512,17 +512,17 @@ export class WithFirstHeading extends Diagnostic {
   private readonly _firstHeading: Element;
   private readonly _level: number;
 &nbsp;
-  protected constructor(message: string, firstHeading: Element, level: number) {
+<span class="fstat-no" title="function not covered" >  protected constructor(m</span>essage: string, firstHeading: Element, level: number) {
     super(message);
     this._firstHeading = firstHeading;
     this._level = level;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >firstHeading(</span>): Element {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >firstHeading(</span>): Element {</span>
 <span class="cstat-no" title="statement not covered" >    return this._firstHeading;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >firstHeadingLevel(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >firstHeadingLevel(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return this._level;</span>
   }
 &nbsp;
@@ -530,8 +530,8 @@ export class WithFirstHeading extends Diagnostic {
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof WithFirstHeading &amp;&amp;
       value._message === this._message &amp;&amp;
       value._firstHeading.equals(this._firstHeading) &amp;&amp;
@@ -539,13 +539,13 @@ export class WithFirstHeading extends Diagnostic {
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    super.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    hash.writeNumber(this._level);</span>
 <span class="cstat-no" title="statement not covered" >    this._firstHeading.hash(hash);</span>
   }
 &nbsp;
-  public toJSON(options?: Node.SerializationOptions): WithFirstHeading.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Node.SerializationOptions): WithFirstHeading.JSON {
     return {
       ...super.toJSON(options),
       firstHeading: this._firstHeading.toJSON(options),
@@ -557,7 +557,7 @@ export class WithFirstHeading extends Diagnostic {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >WithFirstHeading {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >W</span>ithFirstHeading {</span></span>
   export interface JSON extends Diagnostic.JSON {
     firstHeading: Element.JSON;
     firstHeadingLevel: number;
@@ -570,7 +570,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >W
   export function isWithFirstHeading(value: unknown): value is WithFirstHeading;
 &nbsp;
   /**@public */
-  export function <span class="fstat-no" title="function not covered" >isWithFirstHeading(</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isWithFirstHeading(</span></span></span>
     value: unknown,
   ): value is WithFirstHeading {
 <span class="cstat-no" title="statement not covered" >    return value instanceof WithFirstHeading;</span>
@@ -583,7 +583,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >W
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

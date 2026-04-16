@@ -30,16 +30,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">54.54% </span>
+                <span class="strong">59.09% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>12/22</span>
+                <span class='fraction'>13/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.66% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>26/30</span>
+                <span class='fraction'>20/30</span>
             </div>
         
             
@@ -169,7 +169,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -232,40 +232,40 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">432x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-yes">4474x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">752x</span>
 <span class="cline-any cline-yes">651x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 &nbsp;
-import { type Parser as CSSParser, Token } from "../../syntax/index.js";
+import { type Parser as CSSParser, Token } from "../../syntax/index.ts";
 &nbsp;
-import { Converter, Unit } from "../../unit/index.js";
-import { Dimension } from "./dimension.js";
+import { Converter, Unit } from "../../unit/index.ts";
+import { Dimension } from "./dimension.ts";
 &nbsp;
 const { map, either } = Parser;
 &nbsp;
@@ -286,27 +286,27 @@ export class Length&lt;U extends Unit.Length = Unit.Length&gt; extends Dimension
     super(value, unit, "length");
   }
 &nbsp;
-  public hasUnit&lt;U extends Unit.Length&gt;(unit: U): this is Length&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >hasUnit&lt;</span>U extends Unit.Length&gt;(unit: U): this is Length&lt;U&gt; {
     return (this._unit as Unit.Length) === unit;
   }
 &nbsp;
-  public withUnit&lt;U extends Unit.Length&gt;(unit: U): Length&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >withUnit&lt;</span>U extends Unit.Length&gt;(unit: U): Length&lt;U&gt; {
     if (this.hasUnit(unit)) {
       return this;
     }
 &nbsp;
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (Unit.isAbsoluteLength(unit) &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >Unit.isAbsoluteLength(this._unit)) {</span>
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (Unit.isAbsoluteLength(unit) &amp;&amp; Unit.isAbsoluteLength(this._unit)) {
       return Length.of(Converter.length(this._value, this._unit, unit), unit);
     }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    throw new Error(`Cannot convert ${this._unit} to ${unit}`);</span>
   }
 &nbsp;
-  public isRelative(): this is Length&lt;Unit.Length.Relative&gt; {
+  public <span class="fstat-no" title="function not covered" >isRelative(</span>): this is Length&lt;Unit.Length.Relative&gt; {
     return Unit.isRelativeLength(this._unit);
   }
 &nbsp;
-  public scale(factor: number): Length&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >scale(</span>factor: number): Length&lt;U&gt; {
     return new Length(this._value * factor, this._unit);
   }
 &nbsp;
@@ -323,11 +323,11 @@ export class Length&lt;U extends Unit.Length = Unit.Length&gt; extends Dimension
 <span class="cstat-no" title="statement not covered" >    hash.writeString(this._unit);</span>
   }
 &nbsp;
-  public toJSON(): Length.JSON&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Length.JSON&lt;U&gt; {
     return super.toJSON();
   }
 &nbsp;
-  public toString(): string {
+  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
     return `${this._value}${this._unit}`;
   }
 }
@@ -364,7 +364,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:21.536Z
+                at 2026-04-10T09:29:45.085Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

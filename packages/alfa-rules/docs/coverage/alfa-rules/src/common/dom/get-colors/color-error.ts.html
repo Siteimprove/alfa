@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70.31% </span>
+                <span class="strong">59.52% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>45/64</span>
+                <span class='fraction'>50/84</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">29.03% </span>
+                <span class="strong">28.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>9/31</span>
+                <span class='fraction'>17/60</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.52% </span>
+                <span class="strong">58.1% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>23/38</span>
+                <span class='fraction'>43/74</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">72.3% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>45/63</span>
+                <span class='fraction'>47/65</span>
             </div>
         
             
@@ -685,7 +685,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -788,7 +788,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1184,7 +1184,7 @@ export class ColorErrors&lt;
     errors: ReadonlyArray&lt;ColorError&lt;T&gt;&gt;,
   ): ColorErrors&lt;T&gt;;
 &nbsp;
-  public static of&lt;T extends keyof ErrorName = keyof ErrorName&gt;(
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T extends keyof ErrorName = keyof ErrorName&gt;(
     messageOrErrors: string | ReadonlyArray&lt;ColorError&lt;T&gt;&gt;,
   ): Diagnostic {
     return typeof messageOrErrors === "string"
@@ -1197,12 +1197,12 @@ export class ColorErrors&lt;
 &nbsp;
   private readonly _errors: ReadonlyArray&lt;ColorError&lt;T&gt;&gt;;
 &nbsp;
-  protected constructor(message: string, errors: ReadonlyArray&lt;ColorError&lt;T&gt;&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(m</span>essage: string, errors: ReadonlyArray&lt;ColorError&lt;T&gt;&gt;) {
     super(message);
     this._errors = errors;
   }
 &nbsp;
-  public get errors(): ReadonlyArray&lt;ColorError&lt;T&gt;&gt; {
+  public get <span class="fstat-no" title="function not covered" >errors(</span>): ReadonlyArray&lt;ColorError&lt;T&gt;&gt; {
     return this._errors;
   }
 &nbsp;
@@ -1210,20 +1210,20 @@ export class ColorErrors&lt;
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof ColorErrors &amp;&amp;
       value._message === this._message &amp;&amp;
       Array.equals(value._errors, this._errors)
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    super.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    this._errors.forEach(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; <span class="cstat-no" title="statement not covered" >error.hash(hash))</span>;</span>
   }
 &nbsp;
-  public toJSON(options?: Node.SerializationOptions): ColorErrors.JSON&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Node.SerializationOptions): ColorErrors.JSON&lt;T&gt; {
     return {
       ...super.toJSON(options),
       errors: Array.toJSON(this._errors, options),
@@ -1234,7 +1234,7 @@ export class ColorErrors&lt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >ColorErrors {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >C</span>olorErrors {</span></span>
   export interface JSON&lt;T extends keyof ErrorName = keyof ErrorName&gt;
     extends Diagnostic.JSON {
     errors: Array&lt;ColorError.JSON&lt;T&gt;&gt;;
@@ -1249,13 +1249,13 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
   ): value is ColorErrors&lt;T&gt;;
 &nbsp;
   /**@public */
-  export function <span class="fstat-no" title="function not covered" >isColorErrors&lt;</span>T extends keyof ErrorName = keyof ErrorName&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isColorErrors&lt;T extends keyof ErrorName = keyof ErrorName&gt;(</span></span>
     value: unknown,
   ): value is ColorErrors&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return value instanceof ColorErrors;</span>
   }
 &nbsp;
-  export function prepend&lt;
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >prepend&lt;</span></span>
     T extends keyof ErrorName = keyof ErrorName,
     T1 extends T = T,
     T2 extends T = T,
@@ -1284,22 +1284,22 @@ export abstract class ColorError&lt;
   protected readonly _type: T;
   protected readonly _kind: K;
 &nbsp;
-  protected constructor(message: string, element: Element, type: T, kind: K) {
+<span class="fstat-no" title="function not covered" >  protected constructor(m</span>essage: string, element: Element, type: T, kind: K) {
     super(message);
     this._element = element;
     this._type = type;
     this._kind = kind;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >element(</span>): Element {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >element(</span>): Element {</span>
 <span class="cstat-no" title="statement not covered" >    return this._element;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >type(</span>): T {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >type(</span>): T {</span>
 <span class="cstat-no" title="statement not covered" >    return this._type;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >kind(</span>): K {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >kind(</span>): K {</span>
 <span class="cstat-no" title="statement not covered" >    return this._kind;</span>
   }
 &nbsp;
@@ -1307,8 +1307,8 @@ export abstract class ColorError&lt;
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof ColorError &amp;&amp;
       value._message === this._message &amp;&amp;
       value._element.equals(this._element) &amp;&amp;
@@ -1317,14 +1317,14 @@ export abstract class ColorError&lt;
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    super.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    this._element.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    hash.writeString(this._kind);</span>
 <span class="cstat-no" title="statement not covered" >    hash.writeString(this._type);</span>
   }
 &nbsp;
-  public toJSON(options?: Node.SerializationOptions): ColorError.JSON&lt;T, K&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Node.SerializationOptions): ColorError.JSON&lt;T, K&gt; {
     return {
       ...super.toJSON(options),
       element: this._element.toJSON(options),
@@ -1337,7 +1337,7 @@ export abstract class ColorError&lt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >ColorError {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >C</span>olorError {</span></span>
   export interface JSON&lt;
     T extends keyof ErrorName = keyof ErrorName,
     K extends ErrorName[T] = ErrorName[T],
@@ -1359,7 +1359,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
   &gt;(value: unknown): value is ColorError&lt;T, K&gt;;
 &nbsp;
   /**@public */
-  export function <span class="fstat-no" title="function not covered" >isColorError&lt;</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isColorError&lt;</span></span>
     T extends keyof ErrorName = keyof ErrorName,
     K extends ErrorName[T] = ErrorName[T],
   &gt;(value: unknown): value is ColorError&lt;T, K&gt; {
@@ -1370,7 +1370,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
    * @internal
    * Most color error are just about one CSS property.
    */
-  export class WithProperty&lt;
+  export class <span class="cstat-no" title="statement not covered" >WithProperty&lt;</span>
     T extends keyof ErrorName,
     K extends ErrorName[T],
     N extends
@@ -1433,7 +1433,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
             diagnostic.property,
             diagnostic.value,
           )
-        : <span class="branch-1 cbranch-no" title="branch not covered" >Diagnostic.of(message);</span>
+        : <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Diagnostic.of(message);</span></span>
     }
 &nbsp;
     private readonly _property: N;
@@ -1452,11 +1452,11 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
       this._value = value;
     }
 &nbsp;
-    get <span class="fstat-no" title="function not covered" >property(</span>): N {
+    get <span class="fstat-no" title="function not covered" >property(): N {</span>
 <span class="cstat-no" title="statement not covered" >      return this._property;</span>
     }
 &nbsp;
-    get <span class="fstat-no" title="function not covered" >value(</span>): Style.Computed&lt;N&gt; {
+    get <span class="fstat-no" title="function not covered" >value(): Style.Computed&lt;N&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      return this._value;</span>
     }
 &nbsp;
@@ -1464,8 +1464,8 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
 &nbsp;
     public equals(value: unknown): value is this;
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >      return (</span>
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      return (</span></span>
         super.equals(value) &amp;&amp;
         value instanceof WithProperty &amp;&amp;
         value._property === this._property &amp;&amp;
@@ -1485,7 +1485,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
   /**
    * @public
    */
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >WithProperty {</span>
+<span class="cstat-no" title="statement not covered" >  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >WithProperty {</span></span></span>
     export interface JSON&lt;
       T extends keyof ErrorName,
       K extends ErrorName[T],
@@ -1501,7 +1501,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
       value: Serializable.ToJSON&lt;Style.Computed&lt;N&gt;&gt;;
     }
 &nbsp;
-    export function from&lt;
+    export function <span class="cstat-no" title="statement not covered" >from&lt;</span>
       T extends keyof ErrorName,
       K extends ErrorName[T],
       N extends
@@ -1545,7 +1545,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
         | "text-shadow",
     &gt;(value: unknown): value is WithProperty&lt;T, K, N&gt;;
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >isWithProperty&lt;</span>
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isWithProperty&lt;</span></span>
       T extends keyof ErrorName,
       K extends ErrorName[T],
       N extends
@@ -1594,7 +1594,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
    * @public
    * This one does not depend on a CSS property, but on some other elements
    */
-  export class HasInterposedDescendants extends ColorError&lt;
+  export class <span class="cstat-no" title="statement not covered" >HasInterposedDescendants extends ColorError&lt;</span>
     "layer",
     "interposed-descendant"
   &gt; {
@@ -1617,7 +1617,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
             element,
             Sequence.from(positionedDescendants),
           )
-        : <span class="branch-1 cbranch-no" title="branch not covered" >Diagnostic.of(message);</span>
+        : <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Diagnostic.of(message);</span></span>
     }
 &nbsp;
     private readonly _positionedDescendants: Sequence&lt;Element&gt;;
@@ -1639,8 +1639,8 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
 &nbsp;
     public equals(value: unknown): value is this;
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >      return (</span>
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      return (</span></span>
         super.equals(value) &amp;&amp;
         value instanceof HasInterposedDescendants &amp;&amp;
         value._positionedDescendants.equals(this._positionedDescendants)
@@ -1658,7 +1658,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
   /**
    * @public
    */
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >HasInterposedDescendants {</span>
+<span class="cstat-no" title="statement not covered" >  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >HasInterposedDescendants {</span></span></span>
     export interface JSON extends ColorError.JSON&lt;
       "layer",
       "interposed-descendant"
@@ -1666,7 +1666,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
       positionedDescendants: Sequence.JSON&lt;Element&gt;;
     }
 &nbsp;
-    export function from(
+    export function <span class="cstat-no" title="statement not covered" >from(</span>
       offsetParent: Element,
       positionedDescendants: Iterable&lt;Element&gt;,
     ): HasInterposedDescendants {
@@ -1685,7 +1685,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
       value: unknown,
     ): value is HasInterposedDescendants;
 &nbsp;
-    export function isInterposedDescendants(
+    export function <span class="cstat-no" title="statement not covered" >isInterposedDescendants(</span>
       value: unknown,
     ): value is HasInterposedDescendants {
       return value instanceof HasInterposedDescendants;
@@ -1702,7 +1702,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:08:25.373Z
+                at 2026-04-10T09:31:39.916Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

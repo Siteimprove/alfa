@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40.62% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>26/64</span>
+                <span class='fraction'>29/87</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.5% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/16</span>
+                <span class='fraction'>4/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">39.39% </span>
+                <span class="strong">48.43% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>13/33</span>
+                <span class='fraction'>31/64</span>
             </div>
         
             
@@ -440,34 +440,34 @@ export interface Thenable&lt;T, E = unknown&gt; {
 /**
  * @public
  */
-export namespace Thenable {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Thenable {</span>
   /**
    * Check if an unknown value implements the {@link (Thenable:interface)}
    * interface.
    */
-  export function <span class="fstat-no" title="function not covered" >isThenable&lt;</span>T, E = unknown&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isThenable&lt;T, E = unknown&gt;(</span></span>
     value: unknown,
   ): value is Thenable&lt;T, E&gt; {
 <span class="cstat-no" title="statement not covered" >    return isObject(value) &amp;&amp; isFunction(value.then);</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >empty(</span>): Thenable&lt;void, never&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >empty(): Thenable&lt;void, never&gt; {</span></span>
 <span class="cstat-no" title="statement not covered" >    return resolve(undefined);</span>
   }
 &nbsp;
-  export function resolve&lt;T&gt;(value: T): Thenable&lt;T, never&gt; {
+  export function <span class="cstat-no" title="statement not covered" >resolve&lt;T&gt;(value: T): Thenable&lt;T, never&gt; {</span>
     return defer((resolve) =&gt; {
       resolve(value);
     });
   }
 &nbsp;
-  export function reject&lt;E&gt;(error: E): Thenable&lt;never, E&gt; {
+  export function <span class="cstat-no" title="statement not covered" >reject&lt;E&gt;(error: E): Thenable&lt;never, E&gt; {</span>
     return defer((resolve, reject) =&gt; {
       reject(error);
     });
   }
 &nbsp;
-  export function defer&lt;T, E = unknown&gt;(
+  export function <span class="cstat-no" title="statement not covered" >defer&lt;T, E = unknown&gt;(</span>
     continuation: Continuation&lt;T, void, [reject: Callback&lt;E&gt;]&gt;,
   ): Thenable&lt;T, E&gt; {
     return new (class Thenable {
@@ -477,7 +477,7 @@ export namespace Thenable {
     })();
   }
 &nbsp;
-  export function map&lt;T, U, E = unknown&gt;(
+  export function <span class="cstat-no" title="statement not covered" >map&lt;T, U, E = unknown&gt;(</span>
     thenable: Thenable&lt;T, E&gt;,
     mapper: Mapper&lt;T, U&gt;,
   ): Thenable&lt;U, E&gt; {
@@ -486,14 +486,14 @@ export namespace Thenable {
     });
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >apply&lt;</span>T, U, E = unknown, F = E&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >apply&lt;T, U, E = unknown, F = E&gt;(</span></span>
     thenable: Thenable&lt;T, E&gt;,
     mapper: Thenable&lt;Mapper&lt;T, U&gt;, F&gt;,
   ): Thenable&lt;U, E | F&gt; {
 <span class="cstat-no" title="statement not covered" >    return flatMap(mapper, <span class="fstat-no" title="function not covered" >(m</span>apper) =&gt; <span class="cstat-no" title="statement not covered" >map(thenable, mapper))</span>;</span>
   }
 &nbsp;
-  export function flatMap&lt;T, U, E = unknown, F = E&gt;(
+  export function <span class="cstat-no" title="statement not covered" >flatMap&lt;T, U, E = unknown, F = E&gt;(</span>
     thenable: Thenable&lt;T, E&gt;,
     mapper: Mapper&lt;T, Thenable&lt;U, F&gt;&gt;,
   ): Thenable&lt;U, E | F&gt; {
@@ -505,34 +505,34 @@ export namespace Thenable {
     });
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >flatten&lt;</span>T, E = unknown, F = E&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >flatten&lt;T, E = unknown, F = E&gt;(</span></span>
     thenable: Thenable&lt;Thenable&lt;T, F&gt;, E&gt;,
   ): Thenable&lt;T, E | F&gt; {
 <span class="cstat-no" title="statement not covered" >    return flatMap(thenable, <span class="fstat-no" title="function not covered" >(t</span>henable) =&gt; <span class="cstat-no" title="statement not covered" >thenable)</span>;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >all&lt;</span>T, E = unknown&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >all&lt;T, E = unknown&gt;(</span></span>
     ...thenables: Array&lt;Thenable&lt;T, E&gt;&gt;
   ): Thenable&lt;Array&lt;T&gt;, E&gt; {
-<span class="cstat-no" title="statement not covered" >    return defer(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-      const values = <span class="cstat-no" title="statement not covered" >Array.allocate&lt;T&gt;(thenables.length);</span>
+<span class="cstat-no" title="statement not covered" >    return defer(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(r</span></span>esolve, reject) =&gt; {</span>
+      const values = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Array.allocate&lt;T&gt;(thenables.length);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (thenables.length === 0) {</span>
 <span class="cstat-no" title="statement not covered" >        return resolve(values);</span>
       }
 &nbsp;
-      let unsettled = <span class="cstat-no" title="statement not covered" >thenables.length;</span>
+      let unsettled = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >thenables.length;</span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      thenables.forEach(<span class="fstat-no" title="function not covered" >(t</span>henables, i) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >        thenables.then(</span>
-<span class="fstat-no" title="function not covered" >          (v</span>alue) =&gt; {
+<span class="cstat-no" title="statement not covered" >      thenables.forEach(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(t</span></span>henables, i) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        thenables.then(</span></span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >          (v</span></span>alue) =&gt; {
 <span class="cstat-no" title="statement not covered" >            values[i] = value;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            if (--unsettled === 0) {</span>
 <span class="cstat-no" title="statement not covered" >              resolve(values);</span>
             }
           },
-<span class="fstat-no" title="function not covered" >          (e</span>rror) =&gt; {
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >          (e</span></span>rror) =&gt; {
 <span class="cstat-no" title="statement not covered" >            reject(error);</span>
           },
         ),
@@ -540,24 +540,24 @@ export namespace Thenable {
     });
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >any&lt;</span>T, E = unknown&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >any&lt;T, E = unknown&gt;(</span></span>
     ...thenables: Array&lt;Thenable&lt;T, E&gt;&gt;
   ): Thenable&lt;T, Array&lt;E&gt;&gt; {
-<span class="cstat-no" title="statement not covered" >    return defer(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-      const errors = <span class="cstat-no" title="statement not covered" >Array.allocate&lt;E&gt;(thenables.length);</span>
+<span class="cstat-no" title="statement not covered" >    return defer(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(r</span></span>esolve, reject) =&gt; {</span>
+      const errors = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Array.allocate&lt;E&gt;(thenables.length);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (thenables.length === 0) {</span>
 <span class="cstat-no" title="statement not covered" >        return reject(errors);</span>
       }
 &nbsp;
-      let unsettled = <span class="cstat-no" title="statement not covered" >thenables.length;</span>
+      let unsettled = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >thenables.length;</span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      thenables.forEach(<span class="fstat-no" title="function not covered" >(t</span>henables, i) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >        thenables.then(</span>
-<span class="fstat-no" title="function not covered" >          (v</span>alue) =&gt; {
+<span class="cstat-no" title="statement not covered" >      thenables.forEach(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(t</span></span>henables, i) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        thenables.then(</span></span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >          (v</span></span>alue) =&gt; {
 <span class="cstat-no" title="statement not covered" >            resolve(value);</span>
           },
-<span class="fstat-no" title="function not covered" >          (e</span>rror) =&gt; {
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >          (e</span></span>rror) =&gt; {
 <span class="cstat-no" title="statement not covered" >            errors[i] = error;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            if (--unsettled === 0) {</span>
@@ -569,21 +569,21 @@ export namespace Thenable {
     });
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >race&lt;</span>T, E = unknown&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >race&lt;</span>T, E = unknown&gt;(</span></span>
     ...thenables: Array&lt;Thenable&lt;T, E&gt;&gt;
   ): Thenable&lt;T, E&gt; {
-<span class="cstat-no" title="statement not covered" >    return defer(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-      let unsettled = <span class="cstat-no" title="statement not covered" >true;</span>
+<span class="cstat-no" title="statement not covered" >    return defer(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(r</span></span>esolve, reject) =&gt; {</span>
+      let unsettled = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >true;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      for (const thenable of thenables) {</span>
 <span class="cstat-no" title="statement not covered" >        thenable.then(</span>
-<span class="fstat-no" title="function not covered" >          (v</span>alue) =&gt; {
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >          (v</span></span>alue) =&gt; {
 <span class="cstat-no" title="statement not covered" >            if (unsettled) {</span>
 <span class="cstat-no" title="statement not covered" >              unsettled = false;</span>
 <span class="cstat-no" title="statement not covered" >              resolve(value);</span>
             }
           },
-<span class="fstat-no" title="function not covered" >          (e</span>rror) =&gt; {
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >          (e</span></span>rror) =&gt; {
 <span class="cstat-no" title="statement not covered" >            if (unsettled) {</span>
 <span class="cstat-no" title="statement not covered" >              unsettled = false;</span>
 <span class="cstat-no" title="statement not covered" >              reject(error);</span>
@@ -601,7 +601,7 @@ export namespace Thenable {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

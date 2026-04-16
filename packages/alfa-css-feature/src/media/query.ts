@@ -5,12 +5,12 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { Condition } from "../condition/index.js";
-import type { Feature } from "../feature.js";
+import { Condition } from "../condition/index.ts";
+import type { Feature } from "../feature.ts";
 
-import { Media } from "./feature/index.js";
-import { Modifier } from "./modifier.js";
-import { Type } from "./type.js";
+import { Media } from "./feature/index.ts";
+import { Modifier } from "./modifier.ts";
+import { Type } from "./type.ts";
 
 const { delimited, either, end, left, map, option, pair, right } = Parser;
 

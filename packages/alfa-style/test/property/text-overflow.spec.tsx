@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { used } from "../common.js";
+import { used } from "../common.ts";
 
 test(".used() returns the computed value for a block element", (t) => {
   for (const value of ["clip", "ellipsis"] as const) {

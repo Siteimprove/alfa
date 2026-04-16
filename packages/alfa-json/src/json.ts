@@ -1,4 +1,4 @@
-import * as builtin from "./builtin.js";
+import * as builtin from "./builtin.ts";
 
 /**
  * @public

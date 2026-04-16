@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.07% </span>
+                <span class="strong">57.69% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>41/65</span>
+                <span class='fraction'>45/78</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>4/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.08% </span>
+                <span class="strong">36.36% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>25/48</span>
+                <span class='fraction'>32/88</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64.91% </span>
+                <span class="strong">65.51% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>37/57</span>
+                <span class='fraction'>38/58</span>
             </div>
         
             
@@ -360,7 +360,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -536,7 +536,7 @@ export abstract class Trampoline&lt;T&gt;
 {
   protected abstract step(): Trampoline&lt;T&gt;;
 &nbsp;
-  public run(): T {
+  public <span class="fstat-no" title="function not covered" >run(</span>): T {
     let step: Trampoline&lt;T&gt; = this;
 &nbsp;
     while (true) {
@@ -554,36 +554,36 @@ export abstract class Trampoline&lt;T&gt;
 &nbsp;
   public abstract isSuspended(): boolean;
 &nbsp;
-  public map&lt;U&gt;(mapper: Mapper&lt;T, U&gt;): Trampoline&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U&gt;): Trampoline&lt;U&gt; {
     return this.flatMap((value) =&gt; Done.of(mapper(value)));
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >apply&lt;</span>U&gt;(mapper: Trampoline&lt;Mapper&lt;T, U&gt;&gt;): Trampoline&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >apply&lt;</span>U&gt;(m</span>apper: Trampoline&lt;Mapper&lt;T, U&gt;&gt;): Trampoline&lt;U&gt; {
 <span class="cstat-no" title="statement not covered" >    return mapper.flatMap(<span class="fstat-no" title="function not covered" >(m</span>apper) =&gt; <span class="cstat-no" title="statement not covered" >this.map(mapper))</span>;</span>
   }
 &nbsp;
   public abstract flatMap&lt;U&gt;(mapper: Mapper&lt;T, Trampoline&lt;U&gt;&gt;): Trampoline&lt;U&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >flatten&lt;</span>T&gt;(this: Trampoline&lt;Trampoline&lt;T&gt;&gt;): Trampoline&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >flatten&lt;</span>T&gt;(this: Trampoline&lt;Trampoline&lt;T&gt;&gt;): Trampoline&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this.flatMap(<span class="fstat-no" title="function not covered" >(t</span>rampoline) =&gt; <span class="cstat-no" title="statement not covered" >trampoline)</span>;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reduce&lt;</span>U&gt;(reducer: Reducer&lt;T, U&gt;, accumulator: U): U {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reduce&lt;</span>U&gt;(r</span>educer: Reducer&lt;T, U&gt;, accumulator: U): U {
 <span class="cstat-no" title="statement not covered" >    return reducer(accumulator, this.run());</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >tee(</span>callback: Callback&lt;T&gt;): Trampoline&lt;T&gt; {
-<span class="cstat-no" title="statement not covered" >    return this.map(<span class="fstat-no" title="function not covered" >(v</span>alue) =&gt; {</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >tee(</span>c</span>allback: Callback&lt;T&gt;): Trampoline&lt;T&gt; {
+<span class="cstat-no" title="statement not covered" >    return this.map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(v</span></span>alue) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      callback(value);</span>
 <span class="cstat-no" title="statement not covered" >      return value;</span>
     });
   }
 &nbsp;
-  public *<span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;T&gt; {
+  public *<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    yield this.run();</span>
   }
 &nbsp;
-  public [<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;T&gt; {
+  public [<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.iterator]</span></span>(): Iterator&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.iterator();</span>
   }
 }
@@ -591,46 +591,46 @@ export abstract class Trampoline&lt;T&gt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Trampoline {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >T</span>rampoline {</span></span>
   export function isTrampoline&lt;T&gt;(value: Iterable&lt;T&gt;): value is Trampoline&lt;T&gt;;
 &nbsp;
   export function isTrampoline&lt;T&gt;(value: unknown): value is Trampoline&lt;T&gt;;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isTrampoline&lt;</span>T&gt;(value: unknown): value is Trampoline&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isTrampoline&lt;T&gt;(v</span>alue: unknown): value is Trampoline&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Trampoline;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >empty(</span>): Trampoline&lt;void&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >empty(): Trampoline&lt;void&gt; {</span></span>
 <span class="cstat-no" title="statement not covered" >    return done(undefined);</span>
   }
 &nbsp;
-  export function done&lt;T&gt;(value: T): Trampoline&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >done&lt;T&gt;(value: T): Trampoline&lt;T&gt; {</span>
     return Done.of(value);
   }
 &nbsp;
-  export function suspend&lt;T&gt;(thunk: Thunk&lt;Trampoline&lt;T&gt;&gt;): Trampoline&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >suspend&lt;T&gt;(thunk: Thunk&lt;Trampoline&lt;T&gt;&gt;): Trampoline&lt;T&gt; {</span>
     return Suspend.of(thunk);
   }
 &nbsp;
-  export function delay&lt;T&gt;(thunk: Thunk&lt;T&gt;): Trampoline&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >delay&lt;T&gt;(thunk: Thunk&lt;T&gt;): Trampoline&lt;T&gt; {</span>
     return suspend(() =&gt; done(thunk()));
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >traverse&lt;</span>T, U&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >traverse&lt;T, U&gt;(</span></span>
     values: Iterable&lt;T&gt;,
     mapper: Mapper&lt;T, Trampoline&lt;U&gt;, [index: number]&gt;,
   ): Trampoline&lt;Iterable&lt;U&gt;&gt; {
 <span class="cstat-no" title="statement not covered" >    return Iterable.reduce(</span>
       values,
-<span class="fstat-no" title="function not covered" >      (v</span>alues, value, i) =&gt;
-<span class="cstat-no" title="statement not covered" >        values.flatMap(<span class="fstat-no" title="function not covered" >(v</span>alues) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >          mapper(value, i).map(<span class="fstat-no" title="function not covered" >(v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" >Array.append(values, value))</span>,</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >      (v</span></span>alues, value, i) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        values.flatMap(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(v</span></span>alues) =&gt;</span></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >          mapper(value, i).map(<span class="fstat-no" title="function not covered" >(v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" >Array.append(values, value))</span>,</span></span>
         ),
       done(Array.empty()),
     );
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >sequence&lt;</span>T&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >sequence&lt;</span>T&gt;(</span></span>
     futures: Iterable&lt;Trampoline&lt;T&gt;&gt;,
   ): Trampoline&lt;Iterable&lt;T&gt;&gt; {
 <span class="cstat-no" title="statement not covered" >    return traverse(futures, <span class="fstat-no" title="function not covered" >(v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" >value)</span>;</span>
@@ -638,73 +638,73 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >T
 }
 &nbsp;
 class Done&lt;T&gt; extends Trampoline&lt;T&gt; {
-  public static of&lt;T&gt;(value: T): Done&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T&gt;(value: T): Done&lt;T&gt; {
     return new Done(value);
   }
 &nbsp;
   private readonly _value: T;
 &nbsp;
-  protected constructor(value: T) {
+<span class="fstat-no" title="function not covered" >  protected constructor(v</span>alue: T) {
     super();
     this._value = value;
   }
 &nbsp;
-  protected step(): Trampoline&lt;T&gt; {
+  protected <span class="fstat-no" title="function not covered" >step(</span>): Trampoline&lt;T&gt; {
     return this;
   }
 &nbsp;
-  public run(): T {
+  public <span class="fstat-no" title="function not covered" >run(</span>): T {
     return this._value;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isDone(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isDone(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return true;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public map&lt;U&gt;(mapper: Mapper&lt;T, U&gt;): Trampoline&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U&gt;): Trampoline&lt;U&gt; {
     return new Done(mapper(this._value));
   }
 &nbsp;
-  public flatMap&lt;U&gt;(mapper: Mapper&lt;T, Trampoline&lt;U&gt;&gt;): Trampoline&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >flatMap&lt;</span>U&gt;(mapper: Mapper&lt;T, Trampoline&lt;U&gt;&gt;): Trampoline&lt;U&gt; {
     return Suspend.of(() =&gt; mapper(this._value));
   }
 }
 &nbsp;
 class Suspend&lt;T&gt; extends Trampoline&lt;T&gt; {
-  public static of&lt;T&gt;(thunk: Thunk&lt;Trampoline&lt;T&gt;&gt;): Suspend&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T&gt;(thunk: Thunk&lt;Trampoline&lt;T&gt;&gt;): Suspend&lt;T&gt; {
     return new Suspend(thunk);
   }
 &nbsp;
   private readonly _thunk: Thunk&lt;Trampoline&lt;T&gt;&gt;;
 &nbsp;
-  protected constructor(thunk: Thunk&lt;Trampoline&lt;T&gt;&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(t</span>hunk: Thunk&lt;Trampoline&lt;T&gt;&gt;) {
     super();
     this._thunk = thunk;
   }
 &nbsp;
-  protected step(): Trampoline&lt;T&gt; {
+  protected <span class="fstat-no" title="function not covered" >step(</span>): Trampoline&lt;T&gt; {
     return this._thunk();
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isDone(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isDone(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return true;</span>
   }
 &nbsp;
-  public flatMap&lt;U&gt;(mapper: Mapper&lt;T, Trampoline&lt;U&gt;&gt;): Trampoline&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >flatMap&lt;</span>U&gt;(mapper: Mapper&lt;T, Trampoline&lt;U&gt;&gt;): Trampoline&lt;U&gt; {
     return Bind.of(this._thunk, mapper);
   }
 }
 &nbsp;
 class Bind&lt;S, T&gt; extends Trampoline&lt;T&gt; {
-  public static of&lt;S, T&gt;(
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>S, T&gt;(
     thunk: Thunk&lt;Trampoline&lt;S&gt;&gt;,
     mapper: Mapper&lt;S, Trampoline&lt;T&gt;&gt;,
   ): Bind&lt;S, T&gt; {
@@ -714,7 +714,7 @@ class Bind&lt;S, T&gt; extends Trampoline&lt;T&gt; {
   private readonly _thunk: Thunk&lt;Trampoline&lt;S&gt;&gt;;
   private readonly _mapper: Mapper&lt;S, Trampoline&lt;T&gt;&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     thunk: Thunk&lt;Trampoline&lt;S&gt;&gt;,
     mapper: Mapper&lt;S, Trampoline&lt;T&gt;&gt;,
   ) {
@@ -723,19 +723,19 @@ class Bind&lt;S, T&gt; extends Trampoline&lt;T&gt; {
     this._mapper = mapper;
   }
 &nbsp;
-  protected step(): Trampoline&lt;T&gt; {
+  protected <span class="fstat-no" title="function not covered" >step(</span>): Trampoline&lt;T&gt; {
     return this._thunk().flatMap(this._mapper);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isDone(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isDone(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isSuspended(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return true;</span>
   }
 &nbsp;
-  public flatMap&lt;U&gt;(mapper: Mapper&lt;T, Trampoline&lt;U&gt;&gt;): Trampoline&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >flatMap&lt;</span>U&gt;(mapper: Mapper&lt;T, Trampoline&lt;U&gt;&gt;): Trampoline&lt;U&gt; {
     return Suspend.of(() =&gt;
       Bind.of(this._thunk, (value) =&gt; this._mapper(value).flatMap(mapper)),
     );
@@ -748,7 +748,7 @@ class Bind&lt;S, T&gt; extends Trampoline&lt;T&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:08:28.945Z
+                at 2026-04-10T09:31:43.382Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

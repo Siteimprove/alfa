@@ -12,12 +12,12 @@ import { Set } from "@siteimprove/alfa-set";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import type { Attribute } from "./attribute.js";
-import { Feature } from "./feature.js";
+import type { Attribute } from "./attribute.ts";
+import { Feature } from "./feature.ts";
 
-import { Roles } from "./role/data.js";
+import { Roles } from "./role/data.ts";
 
-import * as predicate from "./role/predicate.js";
+import * as predicate from "./role/predicate.ts";
 
 const { and, not, nor } = Predicate;
 

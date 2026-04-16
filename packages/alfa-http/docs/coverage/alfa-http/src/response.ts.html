@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.66% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/24</span>
+                <span class='fraction'>12/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">35.71% </span>
+                <span class="strong">21.42% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/14</span>
+                <span class='fraction'>6/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.66% </span>
+                <span class="strong">44% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/24</span>
+                <span class='fraction'>11/25</span>
             </div>
         
             
@@ -338,7 +338,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -384,8 +384,8 @@ import type * as earl from "@siteimprove/alfa-earl";
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
 import type { Result } from "@siteimprove/alfa-result";
-import type { Body } from "./body.js";
-import { Headers } from "./headers.js";
+import type { Body } from "./body.ts";
+import { Headers } from "./headers.ts";
 &nbsp;
 /**
  * {@link https://fetch.spec.whatwg.org/#response-class}
@@ -398,7 +398,7 @@ export class Response
     json.Serializable&lt;Response.JSON&gt;,
     earl.Serializable&lt;Response.EARL&gt;
 {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     url: URL,
     status: number,
     headers: Headers = Headers.empty(),
@@ -409,7 +409,7 @@ export class Response
 &nbsp;
   private static _empty = Response.of(URL.blank(), 200);
 &nbsp;
-  public static empty(): Response {
+  public static <span class="fstat-no" title="function not covered" >empty(</span>): Response {
 <span class="cstat-no" title="statement not covered" >    return this._empty;</span>
   }
 &nbsp;
@@ -418,7 +418,7 @@ export class Response
   private readonly _headers: Headers;
   private readonly _body: ArrayBuffer;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     url: URL,
     status: number,
     headers: Headers,
@@ -433,32 +433,32 @@ export class Response
   /**
    * {@link https://fetch.spec.whatwg.org/#dom-response-url}
    */
-  public get <span class="fstat-no" title="function not covered" >url(</span>): URL {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >url(</span>): URL {</span>
 <span class="cstat-no" title="statement not covered" >    return this._url;</span>
   }
 &nbsp;
   /**
    * {@link https://fetch.spec.whatwg.org/#dom-response-status}
    */
-  public get <span class="fstat-no" title="function not covered" >status(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >status(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return this._status;</span>
   }
 &nbsp;
   /**
    * {@link https://fetch.spec.whatwg.org/#dom-response-headers}
    */
-  public get <span class="fstat-no" title="function not covered" >headers(</span>): Headers {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >headers(</span>): Headers {</span>
 <span class="cstat-no" title="statement not covered" >    return this._headers;</span>
   }
 &nbsp;
   /**
    * {@link https://fetch.spec.whatwg.org/#dom-body-body}
    */
-  public get <span class="fstat-no" title="function not covered" >body(</span>): ArrayBuffer {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >body(</span>): ArrayBuffer {</span>
 <span class="cstat-no" title="statement not covered" >    return this._body;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: json.Serializable.Options): Response.JSON {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>o</span>ptions?: json.Serializable.Options): Response.JSON {
 <span class="cstat-no" title="statement not covered" >    return {</span>
       url: this._url.toString(),
       status: this._status,
@@ -467,7 +467,7 @@ export class Response
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toEARL(</span>): Response.EARL {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toEARL(</span>): Response.EARL {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       "@context": {
         http: "http://www.w3.org/2011/http#",
@@ -486,8 +486,8 @@ export class Response
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
-    let response = <span class="cstat-no" title="statement not covered" >`HTTP/1.1 ${this._status}`;</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
+    let response = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >`HTTP/1.1 ${this._status}`;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    response += "\n" + this._headers.toString();</span>
 <span class="cstat-no" title="statement not covered" >    response += "\n";</span>
@@ -500,7 +500,7 @@ export class Response
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Response {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >R</span>esponse {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     url: string;
@@ -519,9 +519,9 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
     "http:body": Body.EARL;
   }
 &nbsp;
-  export function from(json: JSON): Result&lt;Response, string&gt; {
-    return URL.parse(json.url).map(<span class="fstat-no" title="function not covered" >(u</span>rl) =&gt;
-<span class="cstat-no" title="statement not covered" >      Response.of(</span>
+  export function <span class="cstat-no" title="statement not covered" >from(json: JSON): Result&lt;Response, string&gt; {</span>
+    return URL.parse(json.url).map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(u</span></span>rl) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      Response.of(</span></span>
         url,
         json.status,
         Headers.from(json.headers),
@@ -530,7 +530,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
     );
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isResponse(</span>value: unknown): value is Response {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isResponse(</span>v</span>alue: unknown): value is Response {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Response;</span>
   }
 }
@@ -541,7 +541,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:29.841Z
+                at 2026-04-10T09:29:53.429Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

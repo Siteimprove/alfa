@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 
-import { DOM } from "../../../dist/index.js";
+import { DOM } from "../../../src/index.ts";
 
 const device = Device.standard();
 const isProgrammaticallyHidden = DOM.isProgrammaticallyHidden(device);

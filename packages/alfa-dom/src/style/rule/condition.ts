@@ -1,5 +1,5 @@
-import type { Rule } from "./index.js";
-import { GroupingRule } from "./grouping.js";
+import type { Rule } from "./index.ts";
+import { GroupingRule } from "./grouping.ts";
 
 /**
  * @public

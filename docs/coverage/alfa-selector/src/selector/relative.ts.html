@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">74.35% </span>
+                <span class="strong">71.79% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>29/39</span>
+                <span class='fraction'>28/39</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.8% </span>
+                <span class="strong">52.38% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>31/42</span>
+                <span class='fraction'>22/42</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.41% </span>
+                <span class="strong">74.19% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>24/31</span>
+                <span class='fraction'>23/31</span>
             </div>
         
             
@@ -243,7 +243,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">206x</span>
+<span class="cline-any cline-yes">204x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -331,26 +331,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">206x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">204x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">194x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">206x</span>
-<span class="cline-any cline-yes">205x</span>
+<span class="cline-any cline-yes">204x</span>
+<span class="cline-any cline-yes">210x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -360,7 +360,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -398,16 +398,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Element } from "@siteimprove/alfa-dom";
 import { Maybe, None, type Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import type { Context } from "../context.js";
+import type { Context } from "../context.ts";
 &nbsp;
-import { Specificity } from "../specificity.js";
+import { Specificity } from "../specificity.ts";
 &nbsp;
-import type { Selector } from "./index.js";
-import { Combinator } from "./combinator.js";
-import { Complex } from "./complex.js";
-import type { Compound } from "./compound.js";
-import { BaseSelector } from "./selector.js";
-import type { Simple } from "./simple/index.js";
+import type { Selector } from "./index.ts";
+import { Combinator } from "./combinator.ts";
+import { Complex } from "./complex.ts";
+import type { Compound } from "./compound.ts";
+import { BaseSelector } from "./selector.ts";
+import type { Simple } from "./simple/index.ts";
 &nbsp;
 const { either, map, pair } = Parser;
 &nbsp;
@@ -428,7 +428,7 @@ export class Relative extends BaseSelector&lt;"relative"&gt; {
   private readonly _selector: Simple | Compound | Complex;
   private readonly _anchor: Option&lt;Exact&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     combinator: Combinator,
     selector: Simple | Compound | Complex,
     anchor: Maybe&lt;Exact&gt; = None,
@@ -439,7 +439,7 @@ export class Relative extends BaseSelector&lt;"relative"&gt; {
     this._anchor = Maybe.toOption(anchor);
   }
 &nbsp;
-  public get combinator(): Combinator {
+  public get <span class="fstat-no" title="function not covered" >combinator(</span>): Combinator {
     return this._combinator;
   }
 &nbsp;
@@ -451,7 +451,7 @@ export class Relative extends BaseSelector&lt;"relative"&gt; {
 <span class="cstat-no" title="statement not covered" >    return this._anchor;</span>
   }
 &nbsp;
-  public matches(element: Element, context?: Context): boolean {
+  public <span class="fstat-no" title="function not covered" >matches(</span>element: Element, context?: Context): boolean {
     return this._anchor.some((anchor) =&gt;
       Combinator.matcher(
         anchor,
@@ -463,7 +463,7 @@ export class Relative extends BaseSelector&lt;"relative"&gt; {
     );
   }
 &nbsp;
-  public anchoredAt(anchor: Element): Relative {
+  public <span class="fstat-no" title="function not covered" >anchoredAt(</span>anchor: Element): Relative {
     return new Relative(this._combinator, this._selector, Exact.of(anchor));
   }
 &nbsp;
@@ -479,11 +479,11 @@ export class Relative extends BaseSelector&lt;"relative"&gt; {
     );
   }
 &nbsp;
-  public *[Symbol.iterator](): Iterator&lt;Relative&gt; {
+  public *[<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;Relative&gt; {
     yield this;
   }
 &nbsp;
-  public toJSON(): Relative.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Relative.JSON {
     return {
       ...super.toJSON(),
       combinator: this._combinator,
@@ -526,7 +526,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
         // as it would turn it into a "catch all" parser.
         map(
           Complex.parse(parseSelector),
-<span class="fstat-no" title="function not covered" >          (s</span>elector) =&gt; <span class="cstat-no" title="statement not covered" >[Combinator.Descendant, selector] as const,</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >          (s</span></span>elector) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[Combinator.Descendant, selector] as const,</span></span>
         ),
       ),
       (result) =&gt; {
@@ -548,12 +548,12 @@ class Exact extends BaseSelector&lt;"exact"&gt; {
 &nbsp;
   private readonly _anchor: Element;
 &nbsp;
-  protected constructor(anchor: Element) {
+<span class="fstat-no" title="function not covered" >  protected constructor(a</span>nchor: Element) {
     super("exact", Specificity.empty(), false);
     this._anchor = anchor;
   }
 &nbsp;
-  public matches(element: Element, _: any): boolean {
+  public <span class="fstat-no" title="function not covered" >matches(</span>element: Element, _: any): boolean {
     return element === this._anchor;
   }
 &nbsp;
@@ -568,7 +568,7 @@ class Exact extends BaseSelector&lt;"exact"&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

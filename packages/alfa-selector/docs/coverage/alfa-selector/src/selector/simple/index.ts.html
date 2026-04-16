@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.1% </span>
+                <span class="strong">86.2% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>27/29</span>
+                <span class='fraction'>25/29</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
@@ -204,7 +204,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -223,7 +223,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -253,10 +253,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">260x</span>
+<span class="cline-any cline-yes">256x</span>
 <span class="cline-any cline-yes">1024x</span>
 <span class="cline-any cline-yes">524x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -276,7 +276,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">373x</span>
-<span class="cline-any cline-yes">327x</span>
+<span class="cline-any cline-yes">127x</span>
 <span class="cline-any cline-yes">127x</span>
 <span class="cline-any cline-yes">127x</span>
 <span class="cline-any cline-yes">26x</span>
@@ -300,25 +300,25 @@ import { Parser, type Parser as CSSParser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 &nbsp;
-import type { Selector } from "../index.js";
+import type { Selector } from "../index.ts";
 &nbsp;
 // Import the various simple selectors for use in that file.
-import { Attribute } from "./attribute.js";
-import { Class } from "./class.js";
-import { Id } from "./id.js";
-import { PseudoClass } from "../pseudo/pseudo-class/index.js";
-import { PseudoElement } from "../pseudo/pseudo-element/index.js";
-import { Type } from "./type.js";
-import { Universal } from "./universal.js";
+import { Attribute } from "./attribute.ts";
+import { Class } from "./class.ts";
+import { Id } from "./id.ts";
+import { PseudoClass } from "../pseudo/pseudo-class/index.ts";
+import { PseudoElement } from "../pseudo/pseudo-element/index.ts";
+import { Type } from "./type.ts";
+import { Universal } from "./universal.ts";
 &nbsp;
 // Re-export the various selectors for use by others
-export * from "./attribute.js";
-export * from "./class.js";
-export * from "./id.js";
-export * from "../pseudo/pseudo-class/index.js";
-export * from "../pseudo/pseudo-element/index.js";
-export * from "./type.js";
-export * from "./universal.js";
+export * from "./attribute.ts";
+export * from "./class.ts";
+export * from "./id.ts";
+export * from "../pseudo/pseudo-class/index.ts";
+export * from "../pseudo/pseudo-element/index.ts";
+export * from "./type.ts";
+export * from "./universal.ts";
 &nbsp;
 const { either } = Parser;
 &nbsp;
@@ -339,7 +339,7 @@ export type Simple =
 /**
  * @public
  */
-export namespace Simple {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Simple {</span>
   export type JSON =
     | Type.JSON
     | Universal.JSON
@@ -349,7 +349,7 @@ export namespace Simple {
     | PseudoClass.JSON
     | PseudoElement.JSON;
 &nbsp;
-  export function isSimple(value: unknown): value is Simple {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isSimple(v</span>alue: unknown): value is Simple {</span>
 <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       Type.isType(value) ||
       Universal.isUniversal(value) ||
@@ -418,7 +418,7 @@ export namespace Simple {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:57.167Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

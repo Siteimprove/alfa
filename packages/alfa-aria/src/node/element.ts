@@ -3,18 +3,17 @@ import type { Option } from "@siteimprove/alfa-option";
 import { None } from "@siteimprove/alfa-option";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
+import { Set } from "@siteimprove/alfa-set";
+import { Selective } from "@siteimprove/alfa-selective";
 import { String } from "@siteimprove/alfa-string";
 
+import { Element as DomElement } from "@siteimprove/alfa-dom";
 import type * as dom from "@siteimprove/alfa-dom";
 
-import type { Attribute } from "../attribute.js";
-import type { Name } from "../name/index.js";
-import { Node } from "../node.js";
-import { Set } from "@siteimprove/alfa-set";
-import { Role } from "../role.js";
-import type { InputType } from "../../../alfa-dom/src/node/element/input-type.js";
-import { Element as DomElement } from "@siteimprove/alfa-dom";
-import { Selective } from "@siteimprove/alfa-selective";
+import type { Attribute } from "../attribute.ts";
+import type { Name } from "../name/index.ts";
+import { Node } from "../node.ts";
+import { Role } from "../role.ts";
 
 /**
  * @public
@@ -121,7 +120,7 @@ export class Element extends Node<"element"> {
   }
 
   private static allowedAttributesForInputType(
-    inputType: InputType
+    inputType: DomElement.InputType,
   ): ReadonlyArray<Attribute.Name> {
     switch (inputType) {
       // https://www.w3.org/TR/html-aria/#el-input-color
@@ -156,23 +155,23 @@ export class Element extends Node<"element"> {
    */
   public allowedAttributes(): ReadonlyArray<Attribute.Name> {
     const global = Role.of("roletype").supportedAttributes;
-    const fromRole = this.role.map(role => role.supportedAttributes).getOr([]);
+    const fromRole = this.role
+      .map((role) => role.supportedAttributes)
+      .getOr([]);
     const additional = Selective.of(this.node)
-      .if(DomElement.hasName("input"), input =>
-        Element.allowedAttributesForInputType(input.inputType())
+      .if(DomElement.hasName("input"), (input) =>
+        Element.allowedAttributesForInputType(input.inputType()),
       )
       // https://www.w3.org/TR/html-aria/#el-select
-      .if(
-        DomElement.hasName("select"),
-        select =>
-          DomElement.hasDisplaySize((size: Number) => size !== 1)(select)
-            ? Role.of("combobox").supportedAttributes
-            : Role.of("menu").supportedAttributes
+      .if(DomElement.hasName("select"), (select) =>
+        DomElement.hasDisplaySize((size: Number) => size !== 1)(select)
+          ? Role.of("combobox").supportedAttributes
+          : Role.of("menu").supportedAttributes,
       )
       .else(() => [])
       .get();
 
-    return Array.from(Set.from([... global, ...fromRole, ...additional]));
+    return Array.from(Set.from([...global, ...fromRole, ...additional]));
   }
 
   public isAttributeAllowed(attribute: Attribute.Name): boolean {

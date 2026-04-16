@@ -10,10 +10,10 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/index.js";
-import { WithRole } from "../common/diagnostic/with-role.js";
-import { BestPractice } from "../requirements/index.js";
-import { Scope, Stability } from "../tags/index.js";
+import { expectation } from "../common/act/index.ts";
+import { WithRole } from "../common/diagnostic/with-role.ts";
+import { BestPractice } from "../requirements/index.ts";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;

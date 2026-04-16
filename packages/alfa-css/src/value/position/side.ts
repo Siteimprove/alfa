@@ -1,14 +1,14 @@
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { type Parser as CSSParser, Token } from "../../syntax/index.js";
+import { type Parser as CSSParser, Token } from "../../syntax/index.ts";
 
-import type { Keyword } from "../textual/keyword.js";
-import { LengthPercentage } from "../numeric/index.js";
-import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
-import { Value } from "../value.js";
+import type { Keyword } from "../textual/keyword.ts";
+import { LengthPercentage } from "../numeric/index.ts";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.ts";
+import { Value } from "../value.ts";
 
-import { Keywords } from "./keywords.js";
+import { Keywords } from "./keywords.ts";
 
 const { either, map, pair, right } = Parser;
 

@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.55% </span>
+                <span class="strong">83.67% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>38/49</span>
+                <span class='fraction'>41/49</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">77.77% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>12/18</span>
+                <span class='fraction'>14/18</span>
             </div>
         
             
@@ -207,7 +207,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">28x</span>
-<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -223,7 +223,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">46x</span>
-<span class="cline-any cline-yes">46x</span>
+<span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -273,7 +273,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-yes">5x</span>
@@ -301,15 +301,15 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Selective } from "@siteimprove/alfa-selective";
 import { String } from "@siteimprove/alfa-string";
 &nbsp;
-import { Style } from "../../style.js";
-import { isRendered } from "../predicate/is-rendered.js";
+import { Style } from "../../style.ts";
+import { isRendered } from "../predicate/is-rendered.ts";
 &nbsp;
 const { hasName, isElement } = Element;
 const { isText } = Text;
 const { and } = Predicate;
 &nbsp;
-const isWhitespace: Predicate&lt;Text&gt; = <span class="fstat-no" title="function not covered" >(t</span>ext) =&gt;
-<span class="cstat-no" title="statement not covered" >  String.isWhitespace(text.data, false);</span>
+const isWhitespace: Predicate&lt;Text&gt; = (text) =&gt;
+  String.isWhitespace(text.data, false);
 &nbsp;
 /**
  * {@link https://alfa.siteimprove.com/terms/visible-inner-text}
@@ -318,7 +318,7 @@ const isWhitespace: Predicate&lt;Text&gt; = <span class="fstat-no" title="functi
  * depending on use cases, we may want the visible or perceivable text, hence
  * this is parametric with a predicate.
  */
-function fromText(
+function <span class="fstat-no" title="function not covered" >fromText(</span>
   device: Device,
   isAcceptable: (device: Device) =&gt; Predicate&lt;Text&gt; = <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(</span>) =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >t</span>rue,</span></span></span></span></span></span>
 ): (text: Text) =&gt; string {
@@ -333,10 +333,10 @@ function fromText(
 /**
  * {@link https://alfa.siteimprove.com/terms/visible-inner-text}
  */
-function fromNode(
+function <span class="fstat-no" title="function not covered" >fromNode(</span>
   device: Device,
   isAcceptable: (device: Device) =&gt; Predicate&lt;Text&gt; = <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(</span>) =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >t</span>rue,</span></span></span></span></span></span>
-  wrapper: string = <span class="branch-0 cbranch-no" title="branch not covered" >"",</span>
+  wrapper: string = "",
 ): (node: Node) =&gt; string {
   return (node) =&gt;
     wrapper +
@@ -363,9 +363,9 @@ function fromNode(
  * normalise the string afterward, so this is OK. But we will need to update
  * that if we need to more closely reflect the HTML algorithm.
  */
-function fromElement(
+function <span class="fstat-no" title="function not covered" >fromElement(</span>
   device: Device,
-  isAcceptable: (device: Device) =&gt; Predicate&lt;Text&gt; = <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >() =&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(</span>) =&gt; <span class="cstat-no" title="statement not covered" >t</span>rue,</span></span></span>
+  isAcceptable: (device: Device) =&gt; Predicate&lt;Text&gt; = () =&gt; () =&gt; true,
 ): (element: Element) =&gt; string {
   return (element) =&gt; {
     if (!isRendered(device)(element)) {
@@ -418,7 +418,7 @@ export const innerText = fromElement;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:08:20.788Z
+                at 2026-04-10T09:31:34.530Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

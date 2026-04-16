@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.69% </span>
+                <span class="strong">63.63% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/26</span>
+                <span class='fraction'>21/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">20% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/10</span>
+                <span class='fraction'>4/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">65% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>10/20</span>
+                <span class='fraction'>26/40</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.69% </span>
+                <span class="strong">59.25% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/26</span>
+                <span class='fraction'>16/27</span>
             </div>
         
             
@@ -255,25 +255,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">90x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
+<span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -338,7 +338,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
+<span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -352,8 +352,8 @@ import type { Serializable } from "@siteimprove/alfa-json";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { Anchored } from "./anchored.js";
-import { Slot } from "./slot.js";
+import { Anchored } from "./anchored.ts";
+import { Slot } from "./slot.ts";
 &nbsp;
 /**
  * {@link https://html.spec.whatwg.org/#concept-row}
@@ -367,19 +367,19 @@ export class Row implements Anchored, Equatable, Serializable&lt;Row.JSON&gt; {
 &nbsp;
   private readonly _y: number;
 &nbsp;
-<span class="fstat-no" title="function not covered" >  protected constructor(y</span>: number) {
+<span class="fstat-no" title="function not covered" >  protected <span class="fstat-no" title="function not covered" >constructor(y</span></span>: number) {
 <span class="cstat-no" title="statement not covered" >    this._y = y;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >y(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >y(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return this._y;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >anchor(</span>): Slot {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >anchor(</span>): Slot {</span>
 <span class="cstat-no" title="statement not covered" >    return Slot.of(0, this._y);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >compare(</span>anchored: Anchored): Comparison {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >compare(</span>a</span>nchored: Anchored): Comparison {
 <span class="cstat-no" title="statement not covered" >    return Anchored.compare(this, anchored);</span>
   }
 &nbsp;
@@ -387,11 +387,11 @@ export class Row implements Anchored, Equatable, Serializable&lt;Row.JSON&gt; {
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Row &amp;&amp; value._y === this._y;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Row.JSON {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): Row.JSON {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       y: this._y,
     };
@@ -401,13 +401,13 @@ export class Row implements Anchored, Equatable, Serializable&lt;Row.JSON&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Row {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Row {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     y: number;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isRow(</span>value: unknown): value is Row {
+  export function isRow(value: unknown): value is Row {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Row;</span>
   }
 &nbsp;
@@ -429,7 +429,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
       this._height = height;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >element(</span>): Element {
+    public get <span class="fstat-no" title="function not covered" >element(): Element {</span>
 <span class="cstat-no" title="statement not covered" >      return this._element;</span>
     }
 &nbsp;
@@ -453,8 +453,8 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
 &nbsp;
     public equals(value: unknown): value is this;
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >      return (</span>
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      return (</span></span>
         value instanceof Group &amp;&amp;
         value._element.equals(this._element) &amp;&amp;
         value._y === this._y &amp;&amp;
@@ -471,7 +471,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
     }
   }
 &nbsp;
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Group {</span>
+  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Group {</span></span>
     export interface JSON {
       [key: string]: json.JSON;
       element: string;
@@ -479,7 +479,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
       height: number;
     }
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >isGroup(</span>value: unknown): value is Group {
+    export function isGroup(value: unknown): value is Group {
 <span class="cstat-no" title="statement not covered" >      return value instanceof Group;</span>
     }
   }
@@ -493,7 +493,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

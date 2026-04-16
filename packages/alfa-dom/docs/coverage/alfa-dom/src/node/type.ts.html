@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70.83% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/24</span>
+                <span class='fraction'>21/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">78.57% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/8</span>
+                <span class='fraction'>11/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">54.54% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/11</span>
+                <span class='fraction'>12/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70.83% </span>
+                <span class="strong">72% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/24</span>
+                <span class='fraction'>18/25</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -292,30 +292,30 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -334,7 +334,7 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 &nbsp;
 import * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { BaseNode } from "./node.js";
+import { BaseNode } from "./node.ts";
 &nbsp;
 /**
  * @public
@@ -366,7 +366,7 @@ export class Type&lt;N extends string = string&gt; extends BaseNode&lt;"type"&gt
   private readonly _publicId: Option&lt;string&gt;;
   private readonly _systemId: Option&lt;string&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     name: N,
     publicId: Option&lt;string&gt;,
     systemId: Option&lt;string&gt;,
@@ -381,15 +381,15 @@ export class Type&lt;N extends string = string&gt; extends BaseNode&lt;"type"&gt
     this._systemId = systemId;
   }
 &nbsp;
-  public get name(): N {
+  public get <span class="fstat-no" title="function not covered" >name(</span>): N {
     return this._name;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >publicId(</span>): Option&lt;string&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >publicId(</span>): Option&lt;string&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._publicId;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >systemId(</span>): Option&lt;string&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >systemId(</span>): Option&lt;string&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._systemId;</span>
   }
 &nbsp;
@@ -401,7 +401,7 @@ export class Type&lt;N extends string = string&gt; extends BaseNode&lt;"type"&gt
     },
   ): Type.MinimalJSON;
   public toJSON(options?: BaseNode.SerializationOptions): Type.JSON&lt;N&gt;;
-  public toJSON(
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>
     options?: BaseNode.SerializationOptions,
   ): Type.MinimalJSON | Type.JSON&lt;N&gt; {
     const result = {
@@ -422,7 +422,7 @@ export class Type&lt;N extends string = string&gt; extends BaseNode&lt;"type"&gt
     return result;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `&lt;!doctype ${this._name}&gt;`;</span>
   }
 }
@@ -430,7 +430,7 @@ export class Type&lt;N extends string = string&gt; extends BaseNode&lt;"type"&gt
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Type {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Type {</span></span>
   export interface MinimalJSON extends BaseNode.JSON&lt;"type"&gt; {}
 &nbsp;
   export interface JSON&lt;
@@ -441,7 +441,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >T
     systemId: string | null;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isType(</span>value: unknown): value is Type {
+  export function isType(value: unknown): value is Type {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Type;</span>
   }
 &nbsp;
@@ -469,7 +469,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >T
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:21.155Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

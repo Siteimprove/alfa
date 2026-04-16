@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">74.19% </span>
+                <span class="strong">72.72% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>23/31</span>
+                <span class='fraction'>24/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">37.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/16</span>
+                <span class='fraction'>9/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.11% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>11/18</span>
+                <span class='fraction'>11/33</span>
             </div>
         
             
@@ -474,7 +474,7 @@ import type * as json from "@siteimprove/alfa-json";
 export class State implements Equatable, Serializable&lt;State.JSON&gt; {
   private static _empty = new State([], None, None, false, false);
 &nbsp;
-  public static empty(): State {
+  public static <span class="fstat-no" title="function not covered" >empty(</span>): State {
     return this._empty;
   }
 &nbsp;
@@ -486,7 +486,7 @@ export class State implements Equatable, Serializable&lt;State.JSON&gt; {
   private readonly _isRecursing: boolean;
   private readonly _isDescending: boolean;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     visited: Array&lt;Element&gt;,
     referrer: Option&lt;Element&gt;,
     referred: Option&lt;Element&gt;,
@@ -506,7 +506,7 @@ export class State implements Equatable, Serializable&lt;State.JSON&gt; {
    * `aria-labelledby` attribute and form controls that get their name from
    * a containing `&lt;label&gt;` element.
    */
-  public get <span class="fstat-no" title="function not covered" >visited(</span>): Iterable&lt;Element&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >visited(</span>): Iterable&lt;Element&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._visited;</span>
   }
 &nbsp;
@@ -514,7 +514,7 @@ export class State implements Equatable, Serializable&lt;State.JSON&gt; {
    * The element that referenced the name computation.
    * (this is the element on which aria-labelledby is set)
    */
-  public get referrer(): Option&lt;Element&gt; {
+  public get <span class="fstat-no" title="function not covered" >referrer(</span>): Option&lt;Element&gt; {
     return this._referrer;
   }
 &nbsp;
@@ -522,36 +522,36 @@ export class State implements Equatable, Serializable&lt;State.JSON&gt; {
    * The element that is referenced during the name computation.
    * (this is the target of the aria-labelledby attribute)
    */
-  public get referred(): Option&lt;Element&gt; {
+  public get <span class="fstat-no" title="function not covered" >referred(</span>): Option&lt;Element&gt; {
     return this._referred;
   }
 &nbsp;
   /**
    * Whether the name computation is the result of recursion.
    */
-  public get <span class="fstat-no" title="function not covered" >isRecursing(</span>): boolean {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isRecursing(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return this._isRecursing;</span>
   }
 &nbsp;
   /**
    * Whether the name computation is the result of a reference.
    */
-  public get isReferencing(): boolean {
+  public get <span class="fstat-no" title="function not covered" >isReferencing(</span>): boolean {
     return this._referrer.isSome();
   }
 &nbsp;
   /**
    * Whether the name computation is descending into a subtree.
    */
-  public get isDescending(): boolean {
+  public get <span class="fstat-no" title="function not covered" >isDescending(</span>): boolean {
     return this._isDescending;
   }
 &nbsp;
-  public hasVisited(element: Element): boolean {
+  public <span class="fstat-no" title="function not covered" >hasVisited(</span>element: Element): boolean {
     return this._visited.includes(element);
   }
 &nbsp;
-  public visit(element: Element): State {
+  public <span class="fstat-no" title="function not covered" >visit(</span>element: Element): State {
     if (this._visited.includes(element)) {
       return this;
     }
@@ -565,7 +565,7 @@ export class State implements Equatable, Serializable&lt;State.JSON&gt; {
     );
   }
 &nbsp;
-  public recurse(isRecursing: boolean): State {
+  public <span class="fstat-no" title="function not covered" >recurse(</span>isRecursing: boolean): State {
     if (this._isRecursing === isRecursing) {
       return this;
     }
@@ -587,10 +587,10 @@ export class State implements Equatable, Serializable&lt;State.JSON&gt; {
    * We currently have no way to clear references since we currently have no
    * use for it.
    */
-  public reference(referrer: Element, referred: Element): State {
+  public <span class="fstat-no" title="function not covered" >reference(</span>referrer: Element, referred: Element): State {
     <span class="missing-if-branch" title="if path not taken" >I</span>if (
       this._referrer.includes(referrer) &amp;&amp;
-<span class="branch-1 cbranch-no" title="branch not covered" >      this._referred.includes(referred)</span>
+<span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >      this._referred.includes(referred)</span></span>
     ) {
 <span class="cstat-no" title="statement not covered" >      return this;</span>
     }
@@ -604,7 +604,7 @@ export class State implements Equatable, Serializable&lt;State.JSON&gt; {
     );
   }
 &nbsp;
-  public descend(isDescending: boolean): State {
+  public <span class="fstat-no" title="function not covered" >descend(</span>isDescending: boolean): State {
     if (this._isDescending === isDescending) {
       return this;
     }
@@ -622,8 +622,8 @@ export class State implements Equatable, Serializable&lt;State.JSON&gt; {
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof State &amp;&amp;
       Array.equals(value._visited, this._visited) &amp;&amp;
       value._referrer.equals(this._referrer) &amp;&amp;
@@ -633,7 +633,7 @@ export class State implements Equatable, Serializable&lt;State.JSON&gt; {
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): State.JSON {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): State.JSON {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       visited: this._visited.map(<span class="fstat-no" title="function not covered" >(e</span>lement) =&gt; <span class="cstat-no" title="statement not covered" >element.path())</span>,
       referrer: this._referrer.map(<span class="fstat-no" title="function not covered" >(e</span>lement) =&gt; <span class="cstat-no" title="statement not covered" >element.path())</span>.getOr(null),
@@ -664,7 +664,7 @@ export namespace State {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:00.559Z
+                at 2026-04-10T09:29:24.679Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

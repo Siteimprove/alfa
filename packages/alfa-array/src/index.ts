@@ -4,4 +4,4 @@
  * @packageDocumentation
  */
 
-export * from "./array.js";
+export * from "./array.ts";

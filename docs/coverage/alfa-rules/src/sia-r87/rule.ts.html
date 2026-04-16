@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.22% </span>
+                <span class="strong">94.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>51/53</span>
+                <span class='fraction'>86/91</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.85% </span>
+                <span class="strong">87.03% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>26/28</span>
+                <span class='fraction'>47/54</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96% </span>
+                <span class="strong">96.07% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>48/50</span>
+                <span class='fraction'>49/51</span>
             </div>
         
             
@@ -390,7 +390,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -492,14 +492,14 @@ import { URL } from "@siteimprove/alfa-url";
 import { Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 &nbsp;
-import { expectation } from "../common/act/index.js";
+import { expectation } from "../common/act/index.ts";
 &nbsp;
-import { Question } from "../common/act/question.js";
-import { withDocumentElement } from "../common/applicability/with-document-element.js";
+import { Question } from "../common/act/question.ts";
+import { withDocumentElement } from "../common/applicability/with-document-element.ts";
 &nbsp;
-import { isAtTheStart } from "../common/predicate.js";
-import { BestPractice } from "../requirements/index.js";
-import { Scope, Stability } from "../tags/index.js";
+import { isAtTheStart } from "../common/predicate.ts";
+import { BestPractice } from "../requirements/index.ts";
+import { Scope, Stability } from "../tags/index.ts";
 &nbsp;
 const { hasRole, isIgnored } = DOM;
 const { hasName, isElement } = Element;
@@ -514,7 +514,7 @@ export default Rule.Atomic.of&lt;Page, Document, Question.Metadata&gt;({
     BestPractice.of("first-focusable-is-skip-link"),
   ],
   tags: [Scope.Page, Stability.Stable],
-  evaluate({ device, document, response }) {
+<span class="fstat-no" title="function not covered" >  evaluate(</span>{ device, document, response }) {
     return {
       applicability() {
         return withDocumentElement(document);
@@ -576,7 +576,7 @@ export default Rule.Atomic.of&lt;Page, Document, Question.Metadata&gt;({
                 expectation(
                   isMain,
                   () =&gt; Outcomes.FirstTabbableIsLinkToContent,
-<span class="fstat-no" title="function not covered" >                  () =</span>&gt; <span class="cstat-no" title="statement not covered" >Outcomes.FirstTabbableIsNotLinkToContent,</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >                  () =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >O</span>utcomes.FirstTabbableIsNotLinkToContent,</span></span>
                 ),
               ),
           );
@@ -586,7 +586,7 @@ export default Rule.Atomic.of&lt;Page, Document, Question.Metadata&gt;({
             expectation&lt;Question.Metadata, Document, Document, 1&gt;(
               isInternalLink,
               () =&gt; askReference.map(isAtTheStartOfMain),
-<span class="fstat-no" title="function not covered" >              () =</span>&gt; <span class="cstat-no" title="statement not covered" >Outcomes.FirstTabbableIsNotInternalLink,</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >              () =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >O</span>utcomes.FirstTabbableIsNotInternalLink,</span></span>
             ),
           );
 &nbsp;
@@ -632,7 +632,7 @@ export default Rule.Atomic.of&lt;Page, Document, Question.Metadata&gt;({
 /**
  * @public
  */
-export namespace Outcomes {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Outcomes {</span>
   export const HasNoTabbable = Err.of(
     Diagnostic.of(`The document has no tabbable descendants`),
   );
@@ -679,7 +679,7 @@ export namespace Outcomes {
   );
 }
 &nbsp;
-function isInternalURL(base: URL): Predicate&lt;URL&gt; {
+function <span class="fstat-no" title="function not covered" >isInternalURL(</span>base: URL): Predicate&lt;URL&gt; {
   return (url) =&gt;
     url.fragment.isSome() &amp;&amp;
     url.withoutFragment().equals(base.withoutFragment());
@@ -691,7 +691,7 @@ function isInternalURL(base: URL): Predicate&lt;URL&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

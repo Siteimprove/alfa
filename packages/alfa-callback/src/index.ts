@@ -1,1 +1,1 @@
-export * from "./callback.js";
+export * from "./callback.ts";

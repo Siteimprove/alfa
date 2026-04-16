@@ -1,7 +1,7 @@
 import { RNG } from "@siteimprove/alfa-rng";
 import { assert, it, type TestOptions } from "vitest";
 
-import type { Assertions } from "./types.js";
+import type { Assertions } from "./types.ts";
 
 /**
  * @public

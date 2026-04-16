@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.71% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/28</span>
+                <span class='fraction'>16/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/14</span>
+                <span class='fraction'>7/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64% </span>
+                <span class="strong">36% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>16/25</span>
+                <span class='fraction'>9/25</span>
             </div>
         
             
@@ -172,7 +172,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -184,7 +184,7 @@
 <span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -193,8 +193,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">38x</span>
+<span class="cline-any cline-yes">38x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -237,12 +237,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -254,9 +254,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Token } from "@siteimprove/alfa-css";
@@ -264,11 +264,11 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { None, type Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 &nbsp;
-import { Specificity } from "../../specificity.js";
+import { Specificity } from "../../specificity.ts";
 &nbsp;
-import { BaseSelector } from "../selector.js";
+import { BaseSelector } from "../selector.ts";
 &nbsp;
-import { parseNamespace } from "./parser.js";
+import { parseNamespace } from "./parser.ts";
 &nbsp;
 const { left, map, option } = Parser;
 &nbsp;
@@ -278,19 +278,19 @@ const { left, map, option } = Parser;
  * @public
  */
 export class Universal extends BaseSelector&lt;"universal"&gt; {
-  public static of(namespace: Option&lt;string&gt;): Universal {
+  public static <span class="fstat-no" title="function not covered" >of(</span>namespace: Option&lt;string&gt;): Universal {
     return new Universal(namespace);
   }
 &nbsp;
   private static readonly _empty = new Universal(None);
 &nbsp;
-  public static empty(): Universal {
+  public static <span class="fstat-no" title="function not covered" >empty(</span>): Universal {
 <span class="cstat-no" title="statement not covered" >    return this._empty;</span>
   }
 &nbsp;
   private readonly _namespace: Option&lt;string&gt;;
 &nbsp;
-  protected constructor(namespace: Option&lt;string&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(n</span>amespace: Option&lt;string&gt;) {
     super("universal", Specificity.empty(), false);
     this._namespace = namespace;
   }
@@ -299,8 +299,8 @@ export class Universal extends BaseSelector&lt;"universal"&gt; {
 <span class="cstat-no" title="statement not covered" >    return this._namespace;</span>
   }
 &nbsp;
-  public matches(element: Element): boolean {
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (this._namespace.isNone() || <span class="branch-1 cbranch-no" title="branch not covered" >this._namespace.includes("*")) {</span>
+  public <span class="fstat-no" title="function not covered" >matches(</span>element: Element): boolean {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (this._namespace.isNone() || this._namespace.includes("*")) {
       return true;
     }
 &nbsp;
@@ -321,7 +321,7 @@ export class Universal extends BaseSelector&lt;"universal"&gt; {
 <span class="cstat-no" title="statement not covered" >    yield this;</span>
   }
 &nbsp;
-  public toJSON(): Universal.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Universal.JSON {
     return {
       ...super.toJSON(),
       namespace: this._namespace.getOr(null),
@@ -340,12 +340,12 @@ export class Universal extends BaseSelector&lt;"universal"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Universal {</span></span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >U</span>niversal {</span></span>
   export interface JSON extends BaseSelector.JSON&lt;"universal"&gt; {
     namespace: string | null;
   }
 &nbsp;
-  export function isUniversal(value: unknown): value is Universal {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isUniversal(v</span>alue: unknown): value is Universal {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Universal;</span>
   }
 &nbsp;
@@ -364,7 +364,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:57.167Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

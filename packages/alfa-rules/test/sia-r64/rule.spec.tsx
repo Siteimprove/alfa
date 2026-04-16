@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R64, { Outcomes } from "../../dist/sia-r64/rule.js";
+import R64, { Outcomes } from "../../src/sia-r64/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test("evaluate() passes a heading that has an accessible name", async (t) => {
   const target = <h1>Hello world</h1>;

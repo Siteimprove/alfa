@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.59% </span>
+                <span class="strong">91.89% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>25/27</span>
+                <span class='fraction'>34/37</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/12</span>
+                <span class='fraction'>12/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">72.22% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/10</span>
+                <span class='fraction'>13/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.59% </span>
+                <span class="strong">96.29% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>25/27</span>
+                <span class='fraction'>26/27</span>
             </div>
         
             
@@ -218,9 +218,8 @@
 <a name='L153'></a><a href='#L153'>153</a>
 <a name='L154'></a><a href='#L154'>154</a>
 <a name='L155'></a><a href='#L155'>155</a>
-<a name='L156'></a><a href='#L156'>156</a>
-<a name='L157'></a><a href='#L157'>157</a>
-<a name='L158'></a><a href='#L158'>158</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L156'></a><a href='#L156'>156</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -263,7 +262,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -317,11 +316,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -364,13 +360,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
@@ -382,12 +378,13 @@ import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 &nbsp;
-import { BaseNode } from "../node.js";
-import { Element, Text } from "../slotable/index.js";
+import type { Node } from "../index.js";
+import { BaseNode } from "../node.ts";
+import { Element, Text } from "../slotable/index.ts";
 &nbsp;
 const _descendantsCache = Cache.empty&lt;
-  Predicate&lt;BaseNode&gt;,
-  Cache&lt;BaseNode, Array&lt;Sequence&lt;BaseNode&gt;&gt;&gt;
+  Predicate&lt;Node&gt;,
+  Cache&lt;Node, Array&lt;Sequence&lt;Node&gt;&gt;&gt;
 &gt;();
 &nbsp;
 /**
@@ -399,9 +396,9 @@ const _descendantsCache = Cache.empty&lt;
  *
  * @public
  */
-export function getDescendants&lt;T extends BaseNode&gt;(
-  refinement: Refinement&lt;BaseNode, T&gt;,
-): (node: BaseNode, options?: BaseNode.Traversal) =&gt; Sequence&lt;T&gt;;
+export function getDescendants&lt;T extends Node&gt;(
+  refinement: Refinement&lt;Node, T&gt;,
+): (node: Node, options?: Node.Traversal) =&gt; Sequence&lt;T&gt;;
 &nbsp;
 /**
  * Get all descendants of a node that satisfy a given predicate.
@@ -413,13 +410,13 @@ export function getDescendants&lt;T extends BaseNode&gt;(
  * @public
  */
 export function getDescendants(
-  predicate: Predicate&lt;BaseNode&gt;,
-): (node: BaseNode, options?: BaseNode.Traversal) =&gt; Sequence&lt;BaseNode&gt;;
+  predicate: Predicate&lt;Node&gt;,
+): (node: Node, options?: Node.Traversal) =&gt; Sequence&lt;Node&gt;;
 &nbsp;
 export function getDescendants(
-  predicate: Predicate&lt;BaseNode&gt;,
-): (node: BaseNode, options?: BaseNode.Traversal) =&gt; Sequence&lt;BaseNode&gt; {
-  return (node, options = BaseNode.Traversal.empty) =&gt; {
+  predicate: Predicate&lt;Node&gt;,
+): (node: Node, options?: Node.Traversal) =&gt; Sequence&lt;Node&gt; {
+  return (node, options = <span class="branch-0 cbranch-no" title="branch not covered" >BaseNode.Traversal.empty) =&gt; {</span>
     const optionsMap = _descendantsCache
       .get(predicate, Cache.empty)
       .get(node, () =&gt; []);
@@ -440,16 +437,16 @@ export const getElementDescendants = getDescendants(Element.isElement);
 /**
  * @public
  */
-export function <span class="fstat-no" title="function not covered" >getInclusiveElementDescendants(</span>
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getInclusiveElementDescendants(</span></span>
   node: Element,
-  options: BaseNode.Traversal = <span class="branch-0 cbranch-no" title="branch not covered" >BaseNode.Traversal.empty,</span>
+  options: Node.Traversal = <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >BaseNode.Traversal.empty,</span></span>
 ): Sequence&lt;Element&gt; {
 <span class="cstat-no" title="statement not covered" >  return getElementDescendants(node, options).prepend(node);</span>
 }
 &nbsp;
 const _textCache = Cache.empty&lt;
   TextGroupOptions&lt;any&gt;,
-  Cache&lt;BaseNode, Array&lt;Sequence&lt;Text | TextGroup&gt;&gt;&gt;
+  Cache&lt;Node, Array&lt;Sequence&lt;Text | TextGroup&gt;&gt;&gt;
 &gt;();
 &nbsp;
 /**
@@ -458,7 +455,7 @@ const _textCache = Cache.empty&lt;
  * @public
  */
 export interface TextGroup {
-  node: BaseNode;
+  node: Node;
   label: string;
   text: Sequence&lt;Text&gt;;
 }
@@ -468,14 +465,14 @@ export interface TextGroup {
  *
  * @public
  */
-export interface TextGroupOptions&lt;N extends BaseNode = BaseNode&gt; {
-  startsGroup: Refinement&lt;BaseNode, N&gt;;
+export interface TextGroupOptions&lt;N extends Node = Node&gt; {
+  startsGroup: Refinement&lt;Node, N&gt;;
   getLabel: (node: N) =&gt; string;
 }
 &nbsp;
 const defaultTextOptions: TextGroupOptions&lt;any&gt; = {
-  startsGroup: (node): node is any =&gt; false,
-  getLabel: <span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >"",</span>
+  startsGroup: <span class="fstat-no" title="function not covered" >(n</span>ode): node is any =&gt; false,
+  getLabel: <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >"</span>",</span>
 };
 &nbsp;
 /**
@@ -491,13 +488,10 @@ const defaultTextOptions: TextGroupOptions&lt;any&gt; = {
  *
  * @public
  */
-export function getTextDescendants&lt;N extends BaseNode = BaseNode&gt;(
-  textOptions: TextGroupOptions&lt;N&gt; = defaultTextOptions,
-): (
-  node: BaseNode,
-  options?: BaseNode.Traversal,
-) =&gt; Sequence&lt;Text | TextGroup&gt; {
-  return (node, options = BaseNode.Traversal.empty) =&gt; {
+export function getTextDescendants&lt;N extends Node = Node&gt;(
+  textOptions: TextGroupOptions&lt;N&gt; = <span class="branch-0 cbranch-no" title="branch not covered" >defaultTextOptions,</span>
+): (node: Node, options?: Node.Traversal) =&gt; Sequence&lt;Text | TextGroup&gt; {
+  return (node, options = <span class="branch-0 cbranch-no" title="branch not covered" >BaseNode.Traversal.empty) =&gt; {</span>
     const optionsMap = _textCache
       .get(textOptions, Cache.empty)
       .get(node, () =&gt; []);
@@ -512,12 +506,12 @@ export function getTextDescendants&lt;N extends BaseNode = BaseNode&gt;(
   };
 }
 &nbsp;
-function* _getTextDescendants&lt;N extends BaseNode = BaseNode&gt;(
-  node: BaseNode,
+function* _getTextDescendants&lt;N extends Node = Node&gt;(
+  node: Node,
   textOptions: TextGroupOptions&lt;N&gt;,
-  traversalOptions: BaseNode.Traversal,
+  traversalOptions: Node.Traversal,
 ): Generator&lt;Text | TextGroup&gt; {
-  const { startsGroup, getLabel } = textOptions;
+  const { startsGroup, getLabel } = <span class="cstat-no" title="statement not covered" >textOptions;</span>
 &nbsp;
   for (const child of node.children(traversalOptions)) {
     if (startsGroup(child)) {
@@ -541,7 +535,7 @@ function* _getTextDescendants&lt;N extends BaseNode = BaseNode&gt;(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:21.155Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

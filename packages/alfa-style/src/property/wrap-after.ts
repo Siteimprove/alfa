@@ -1,6 +1,6 @@
-import { Longhand } from "../longhand.js";
+import { Longhand } from "../longhand.ts";
 
-import Base from "./wrap-before.js";
+import Base from "./wrap-before.ts";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/wrap-after}

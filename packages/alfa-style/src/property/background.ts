@@ -4,20 +4,20 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhands } from "../longhands.js";
-import { Shorthand } from "../shorthand.js";
+import { Longhands } from "../longhands.ts";
+import { Shorthand } from "../shorthand.ts";
 
-import * as Attachment from "./background-attachment.js";
-import * as Clip from "./background-clip.js";
-import * as Color from "./background-color.js";
-import * as Image from "./background-image.js";
-import * as Origin from "./background-origin.js";
-import * as Position from "./background-position.js";
-import * as PositionX from "./background-position-x.js";
-import * as PositionY from "./background-position-y.js";
-import * as Repeat from "./background-repeat.js";
-import * as RepeatX from "./background-repeat-x.js";
-import * as Size from "./background-size.js";
+import * as Attachment from "./background-attachment.ts";
+import * as Clip from "./background-clip.ts";
+import * as Color from "./background-color.ts";
+import * as Image from "./background-image.ts";
+import * as Origin from "./background-origin.ts";
+import * as Position from "./background-position.ts";
+import * as PositionX from "./background-position-x.ts";
+import * as PositionY from "./background-position-y.ts";
+import * as Repeat from "./background-repeat.ts";
+import * as RepeatX from "./background-repeat-x.ts";
+import * as Size from "./background-size.ts";
 
 /**
  * background-repeat-x and background-repeat-y are identical.

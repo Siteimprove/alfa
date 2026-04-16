@@ -2,8 +2,8 @@ import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import type { Option } from "@siteimprove/alfa-option";
 
-import { getOffsetParent } from "./get-offset-parent.js";
-import { isPositioned } from "../predicate/is-positioned.js";
+import { getOffsetParent } from "./get-offset-parent.ts";
+import { isPositioned } from "../predicate/is-positioned.ts";
 
 const { isElement } = Element;
 

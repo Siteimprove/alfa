@@ -5,7 +5,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import type { Err } from "@siteimprove/alfa-result";
 import { Result } from "@siteimprove/alfa-result";
 
-import { Changeset } from "../changeset/get-changeset-details.js";
+import { Changeset } from "../changeset/get-changeset-details.ts";
 
 /**
  * Validate that all changesets have the expected structure.

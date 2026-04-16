@@ -10,10 +10,10 @@ import type { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { expectation } from "../common/act/index.js";
-import { ARIA } from "../requirements/index.js";
+import { expectation } from "../common/act/index.ts";
+import { ARIA } from "../requirements/index.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 const {
   hasIncorrectRoleWithoutName,

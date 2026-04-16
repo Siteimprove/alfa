@@ -2,7 +2,7 @@ import { Encoder } from "@siteimprove/alfa-encoding";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { JSON } from "@siteimprove/alfa-json";
 
-import { Hashable } from "./hashable.js";
+import { Hashable } from "./hashable.ts";
 
 const { keys } = Object;
 

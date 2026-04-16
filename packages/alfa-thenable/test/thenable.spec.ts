@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Thenable } from "../dist/thenable.js";
+import { Thenable } from "../src/thenable.ts";
 
 test("await a resolving thenable", async (t) => {
   t.equal(await Thenable.resolve(42), 42);

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">38.88% </span>
+                <span class="strong">34.61% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/18</span>
+                <span class='fraction'>9/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">14.28% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/7</span>
+                <span class='fraction'>2/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">37.5% </span>
+                <span class="strong">21.87% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/16</span>
+                <span class='fraction'>7/32</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">38.88% </span>
+                <span class="strong">42.1% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/18</span>
+                <span class='fraction'>8/19</span>
             </div>
         
             
@@ -257,7 +257,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -301,66 +301,66 @@ export class Group&lt;T extends Hashable&gt;
     earl.Serializable&lt;Group.EARL&gt;,
     sarif.Serializable&lt;sarif.Location&gt;
 {
-  public static of&lt;T extends Hashable&gt;(members: Iterable&lt;T&gt;): Group&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T extends Hashable&gt;(members: Iterable&lt;T&gt;): Group&lt;T&gt; {
     return new Group(Array.from(members));
   }
 &nbsp;
   private readonly _members: ReadonlyArray&lt;T&gt;;
 &nbsp;
-  protected constructor(members: ReadonlyArray&lt;T&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(m</span>embers: ReadonlyArray&lt;T&gt;) {
     this._members = members;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >size(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >size(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return this._members.length;</span>
   }
 &nbsp;
-  public *[Symbol.iterator](): Iterator&lt;T&gt; {
+  public *[<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;T&gt; {
     yield* this._members;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Group &amp;&amp;
       value._members.length === this._members.length &amp;&amp;
-      value._members.every(<span class="fstat-no" title="function not covered" >(m</span>ember, i) =&gt;
-<span class="cstat-no" title="statement not covered" >        Equatable.equals(member, this._members[i]),</span>
+      value._members.every(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(m</span></span>ember, i) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        Equatable.equals(member, this._members[i]),</span></span>
       )
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    for (const member of this._members) {</span>
 <span class="cstat-no" title="statement not covered" >      member.hash(hash);</span>
     }
   }
 &nbsp;
-  public toJSON(options?: json.Serializable.Options): Group.JSON&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: json.Serializable.Options): Group.JSON&lt;T&gt; {
     return this._members.map((member) =&gt;
       json.Serializable.toJSON(member, options),
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toEARL(</span>): Group.EARL {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toEARL(</span>): Group.EARL {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       "@context": {
         ptr: "http://www.w3.org/2009/pointers#",
       },
       "@type": ["ptr:Pointer", "ptr:PointersGroup", "ptr:RelatedPointers"],
       "ptr:groupPointer": {
-        "@list": Array.collect(this._members, <span class="fstat-no" title="function not covered" >(m</span>ember) =&gt;
-<span class="cstat-no" title="statement not covered" >          earl.Serializable.toEARL(member),</span>
+        "@list": Array.collect(this._members, <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(m</span></span>ember) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >          earl.Serializable.toEARL(member),</span></span>
         ),
       },
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toSARIF(</span>): sarif.Location {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toSARIF(</span>): sarif.Location {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
-      logicalLocations: Array.flatMap(this._members, <span class="fstat-no" title="function not covered" >(m</span>ember) =&gt;
-<span class="cstat-no" title="statement not covered" >        sarif.Serializable.toSARIF(member)</span>
+      logicalLocations: Array.flatMap(this._members, <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(m</span></span>ember) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        sarif.Serializable.toSARIF(member)</span></span>
           .map(
-<span class="fstat-no" title="function not covered" >            (l</span>ocation) =&gt; (<span class="cstat-no" title="statement not covered" >location as sarif.Location).logicalLocations ?? [],</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >            (l</span></span>ocation) =&gt; (<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >location as sarif.Location).logicalLocations ?? [],</span></span>
           )
           .getOr([]),
       ),
@@ -371,7 +371,7 @@ export class Group&lt;T extends Hashable&gt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Group {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >G</span>roup {</span></span>
   export type JSON&lt;T&gt; = Array&lt;json.Serializable.ToJSON&lt;T&gt;&gt;;
 &nbsp;
   export interface EARL extends earl.EARL {
@@ -384,7 +384,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >G
     };
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isGroup&lt;</span>T extends Hashable&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isGroup&lt;</span>T extends Hashable&gt;(</span></span>
     value: unknown,
   ): value is Group&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Group;</span>
@@ -397,7 +397,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >G
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

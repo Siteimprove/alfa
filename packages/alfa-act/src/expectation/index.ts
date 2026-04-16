@@ -9,8 +9,8 @@
  * Error meaning a Failed one. Both cases contain a Diagnostic.
  */
 
-export * from "./diagnostic.js";
-export * from "./finding.js";
-export * from "./interview.js";
-export * from "./oracle.js";
-export * from "./question.js";
+export * from "./diagnostic.ts";
+export * from "./finding.ts";
+export * from "./interview.ts";
+export * from "./oracle.ts";
+export * from "./question.ts";

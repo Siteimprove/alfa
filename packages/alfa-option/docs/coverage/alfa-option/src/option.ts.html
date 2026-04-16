@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">52.17% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/15</span>
+                <span class='fraction'>12/23</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">40% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/10</span>
+                <span class='fraction'>8/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">68.75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/8</span>
+                <span class='fraction'>11/16</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -309,8 +309,8 @@ import type { Reducer } from "@siteimprove/alfa-reducer";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 &nbsp;
-import { None } from "./none.js";
-import { Some } from "./some.js";
+import { None } from "./none.ts";
+import { Some } from "./some.ts";
 &nbsp;
 /**
  * @public
@@ -368,14 +368,14 @@ export interface Option&lt;T&gt;
 /**
  * @public
  */
-export namespace Option {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Option {</span>
   export type JSON&lt;T&gt; = Some.JSON&lt;T&gt; | None.JSON;
 &nbsp;
   export function isOption&lt;T&gt;(value: Iterable&lt;T&gt;): value is Option&lt;T&gt;;
 &nbsp;
   export function isOption&lt;T&gt;(value: unknown): value is Option&lt;T&gt;;
 &nbsp;
-  export function isOption&lt;T&gt;(value: unknown): value is Option&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >isOption&lt;T&gt;(value: unknown): value is Option&lt;T&gt; {</span>
     return isSome(value) || isNone(value);
   }
 &nbsp;
@@ -383,7 +383,7 @@ export namespace Option {
 &nbsp;
   export function isSome&lt;T&gt;(value: unknown): value is Some&lt;T&gt;;
 &nbsp;
-  export function isSome&lt;T&gt;(value: unknown): value is Some&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >isSome&lt;T&gt;(value: unknown): value is Some&lt;T&gt; {</span>
     return Some.isSome(value);
   }
 &nbsp;
@@ -391,23 +391,23 @@ export namespace Option {
 &nbsp;
   export function isNone(value: unknown): value is None;
 &nbsp;
-  export function isNone(value: unknown): value is None {
+  export function <span class="cstat-no" title="statement not covered" >isNone(value: unknown): value is None {</span>
     return value === None;
   }
 &nbsp;
-  export function of&lt;T&gt;(value: T): Some&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" >of&lt;T&gt;(value: T): Some&lt;T&gt; {</span>
     return Some.of(value);
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >empty&lt;</span>T&gt;(): None {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >empty&lt;T&gt;(): None {</span></span>
 <span class="cstat-no" title="statement not covered" >    return None;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >from&lt;</span>T&gt;(value: T | null | undefined): Option&lt;NonNullable&lt;T&gt;&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >from&lt;T&gt;(v</span>alue: T | null | undefined): Option&lt;NonNullable&lt;T&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return value === null || value === undefined ? None : Some.of(value!);</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >conditional&lt;</span>T&gt;(value: T, predicate: Predicate&lt;T&gt;): Option&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >conditional&lt;</span>T&gt;(v</span>alue: T, predicate: Predicate&lt;T&gt;): Option&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return predicate(value) ? Some.of(value) : None;</span>
   }
 }
@@ -418,7 +418,7 @@ export namespace Option {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:37.188Z
+                at 2026-04-10T09:30:00.548Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

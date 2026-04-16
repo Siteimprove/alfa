@@ -4,15 +4,15 @@ import type { Result } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import type { Token } from "../../syntax/index.js";
-import { Number, Percentage } from "../numeric/index.js";
+import type { Token } from "../../syntax/index.ts";
+import { Number, Percentage } from "../numeric/index.ts";
 
-import { Keyword } from "../textual/keyword.js";
-import { ColorMix } from "./color-mix.js";
+import { Keyword } from "../textual/keyword.ts";
+import { ColorMix } from "./color-mix.ts";
 
-import { CSS4Color } from "./css4-color.js";
-import { Current } from "./current.js";
-import { System } from "./system.js";
+import { CSS4Color } from "./css4-color.ts";
+import { Current } from "./current.ts";
+import { System } from "./system.ts";
 
 const { either } = Parser;
 const { or } = Refinement;

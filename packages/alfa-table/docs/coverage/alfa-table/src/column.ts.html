@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">45.45% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/26</span>
+                <span class='fraction'>15/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">20% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/10</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>8/20</span>
+                <span class='fraction'>4/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">50% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>20/40</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">51.85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>13/26</span>
+                <span class='fraction'>14/27</span>
             </div>
         
             
@@ -255,7 +255,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -352,8 +352,8 @@ import type { Serializable } from "@siteimprove/alfa-json";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { Anchored } from "./anchored.js";
-import { Slot } from "./slot.js";
+import { Anchored } from "./anchored.ts";
+import { Slot } from "./slot.ts";
 &nbsp;
 /**
  * {@link https://html.spec.whatwg.org/#concept-column}
@@ -361,25 +361,25 @@ import { Slot } from "./slot.js";
  * @public
  */
 export class Column implements Anchored, Equatable, Serializable&lt;Column.JSON&gt; {
-  public static of(x: number): Column {
+  public static <span class="fstat-no" title="function not covered" >of(</span>x: number): Column {
 <span class="cstat-no" title="statement not covered" >    return new Column(x);</span>
   }
 &nbsp;
   private readonly _x: number;
 &nbsp;
-<span class="fstat-no" title="function not covered" >  protected constructor(x</span>: number) {
+<span class="fstat-no" title="function not covered" >  protected <span class="fstat-no" title="function not covered" >constructor(x</span></span>: number) {
 <span class="cstat-no" title="statement not covered" >    this._x = x;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >x(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >x(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return this._x;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >anchor(</span>): Slot {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >anchor(</span>): Slot {</span>
 <span class="cstat-no" title="statement not covered" >    return Slot.of(this._x, 0);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >compare(</span>anchored: Anchored): Comparison {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >compare(</span>a</span>nchored: Anchored): Comparison {
 <span class="cstat-no" title="statement not covered" >    return Anchored.compare(this, anchored);</span>
   }
 &nbsp;
@@ -387,11 +387,11 @@ export class Column implements Anchored, Equatable, Serializable&lt;Column.JSON&
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Column &amp;&amp; value._x === this._x;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Column.JSON {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): Column.JSON {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       x: this._x,
     };
@@ -401,20 +401,20 @@ export class Column implements Anchored, Equatable, Serializable&lt;Column.JSON&
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Column {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >C</span>olumn {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     x: number;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isColumn(</span>value: unknown): value is Column {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isColumn(v</span>alue: unknown): value is Column {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Column;</span>
   }
 &nbsp;
   /**
    * {@link https://html.spec.whatwg.org/#concept-column-group}
    */
-  export class Group implements Anchored, Equatable, Serializable&lt;Group.JSON&gt; {
+  export class <span class="cstat-no" title="statement not covered" >Group implements Anchored, Equatable, Serializable&lt;Group.JSON&gt; {</span>
     public static of(element: Element, x: number, width: number): Group {
       return new Group(element, x, width);
     }
@@ -429,7 +429,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
       this._width = width;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >element(</span>): Element {
+    public get <span class="fstat-no" title="function not covered" >element(): Element {</span>
 <span class="cstat-no" title="statement not covered" >      return this._element;</span>
     }
 &nbsp;
@@ -437,7 +437,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
       return this._x;
     }
 &nbsp;
-    public get <span class="fstat-no" title="function not covered" >anchor(</span>): Slot {
+    public get <span class="fstat-no" title="function not covered" >anchor(): Slot {</span>
 <span class="cstat-no" title="statement not covered" >      return Slot.of(this._x, 0);</span>
     }
 &nbsp;
@@ -445,7 +445,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
       return this._width;
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >compare(</span>anchored: Anchored): Comparison {
+    public <span class="fstat-no" title="function not covered" >compare(a</span>nchored: Anchored): Comparison {
 <span class="cstat-no" title="statement not covered" >      return Anchored.compare(this, anchored);</span>
     }
 &nbsp;
@@ -453,8 +453,8 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
 &nbsp;
     public equals(value: unknown): value is this;
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >      return (</span>
+    public <span class="fstat-no" title="function not covered" >equals(v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      return (</span></span>
         value instanceof Group &amp;&amp;
         value._element.equals(this._element) &amp;&amp;
         value._x === this._x &amp;&amp;
@@ -471,7 +471,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
     }
   }
 &nbsp;
-  export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Group {</span>
+<span class="cstat-no" title="statement not covered" >  export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Group {</span></span></span>
     export interface JSON {
       [key: string]: json.JSON;
       element: string;
@@ -479,7 +479,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
       width: number;
     }
 &nbsp;
-    export function <span class="fstat-no" title="function not covered" >isGroup(</span>value: unknown): value is Group {
+    export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isGroup(v</span>alue: unknown): value is Group {</span>
 <span class="cstat-no" title="statement not covered" >      return value instanceof Group;</span>
     }
   }
@@ -493,7 +493,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:08:23.764Z
+                at 2026-04-10T09:31:37.491Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

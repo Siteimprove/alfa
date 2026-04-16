@@ -1,1 +1,1 @@
-export * from "./network.js";
+export * from "./network.ts";

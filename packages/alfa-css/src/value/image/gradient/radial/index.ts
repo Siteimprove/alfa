@@ -1,1 +1,1 @@
-export * from "./radial.js";
+export * from "./radial.ts";

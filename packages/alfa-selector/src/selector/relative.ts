@@ -1,16 +1,16 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Maybe, None, type Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import type { Context } from "../context.js";
+import type { Context } from "../context.ts";
 
-import { Specificity } from "../specificity.js";
+import { Specificity } from "../specificity.ts";
 
-import type { Selector } from "./index.js";
-import { Combinator } from "./combinator.js";
-import { Complex } from "./complex.js";
-import type { Compound } from "./compound.js";
-import { BaseSelector } from "./selector.js";
-import type { Simple } from "./simple/index.js";
+import type { Selector } from "./index.ts";
+import { Combinator } from "./combinator.ts";
+import { Complex } from "./complex.ts";
+import type { Compound } from "./compound.ts";
+import { BaseSelector } from "./selector.ts";
+import type { Simple } from "./simple/index.ts";
 
 const { either, map, pair } = Parser;
 

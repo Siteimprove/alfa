@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">27.27% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/15</span>
+                <span class='fraction'>6/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/5</span>
+                <span class='fraction'>3/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">26.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/15</span>
+                <span class='fraction'>4/15</span>
             </div>
         
             
@@ -134,7 +134,7 @@
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -168,10 +168,10 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 &nbsp;
-import type { Element } from "../../slotable/element.js";
-import type { BaseNode } from "../../node.js";
+import type { Element } from "../../slotable/element.ts";
+import type { BaseNode } from "../../node.ts";
 &nbsp;
-import { hasId } from "./has-id.js";
+import { hasId } from "./has-id.ts";
 &nbsp;
 const { and } = Predicate;
 &nbsp;
@@ -185,13 +185,13 @@ export function hasUniqueId(
 &nbsp;
   return and(hasId(), <span class="fstat-no" title="function not covered" >(e</span>lement) =&gt;
 <span class="cstat-no" title="statement not covered" >    uniques</span>
-      .get(element.root(), <span class="fstat-no" title="function not covered" >() =</span>&gt; {
-        const counts = <span class="cstat-no" title="statement not covered" >new Map&lt;string, number&gt;();</span>
+      .get(element.root(), <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >() =</span>&gt; {</span>
+        const counts = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >new Map&lt;string, number&gt;();</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        for (const node of element.root().descendants()) {</span>
 <span class="cstat-no" title="statement not covered" >          if (isElement(node) &amp;&amp; node.id.isSome()) {</span>
-            const id = <span class="cstat-no" title="statement not covered" >node.id.get();</span>
-            const count = <span class="cstat-no" title="statement not covered" >counts.get(id);</span>
+            const id = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >node.id.get();</span></span>
+            const count = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >counts.get(id);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            if (count === undefined) {</span>
 <span class="cstat-no" title="statement not covered" >              counts.set(id, 1);</span>
@@ -204,7 +204,7 @@ export function hasUniqueId(
 <span class="cstat-no" title="statement not covered" >        return new Set(</span>
           Iterable.map(
             Iterable.filter(counts, <span class="fstat-no" title="function not covered" >([</span>, count]) =&gt; <span class="cstat-no" title="statement not covered" >count === 1)</span>,
-<span class="fstat-no" title="function not covered" >            ([</span>id]) =&gt; <span class="cstat-no" title="statement not covered" >id,</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >            ([</span></span>id]) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >id,</span></span>
           ),
         );
       })
@@ -220,7 +220,7 @@ export function hasUniqueId(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:21.155Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

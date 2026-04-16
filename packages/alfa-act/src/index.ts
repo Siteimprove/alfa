@@ -5,9 +5,9 @@
  * @packageDocumentation
  */
 
-export * from "./audit.js";
-export * from "./cache.js";
-export * from "./expectation/index.js";
-export * from "./metadata/index.js";
-export * from "./outcome.js";
-export * from "./rule.js";
+export * from "./audit.ts";
+export * from "./cache.ts";
+export * from "./expectation/index.ts";
+export * from "./metadata/index.ts";
+export * from "./outcome.ts";
+export * from "./rule.ts";

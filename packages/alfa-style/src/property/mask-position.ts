@@ -5,8 +5,8 @@ import {
   Position,
 } from "@siteimprove/alfa-css";
 
-import { Longhand } from "../longhand.js";
-import { Resolver } from "../resolver.js";
+import { Longhand } from "../longhand.ts";
+import { Resolver } from "../resolver.ts";
 
 type Specified = List<Specified.Item>;
 

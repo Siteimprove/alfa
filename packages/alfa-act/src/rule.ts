@@ -19,11 +19,11 @@ import type * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import type * as sarif from "@siteimprove/alfa-sarif";
 
-import { Cache } from "./cache.js";
-import { Finding, Interview } from "./expectation/index.js";
-import type { Diagnostic, Oracle, Question } from "./expectation/index.js";
-import { Outcome } from "./outcome.js";
-import { Requirement, Tag } from "./metadata/index.js";
+import { Cache } from "./cache.ts";
+import { Finding, Interview } from "./expectation/index.ts";
+import type { Diagnostic, Oracle, Question } from "./expectation/index.ts";
+import { Outcome } from "./outcome.ts";
+import { Requirement, Tag } from "./metadata/index.ts";
 
 const { flatten, reduce } = Iterable;
 

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">95.74% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>33/33</span>
+                <span class='fraction'>45/47</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.75% </span>
+                <span class="strong">91.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>15/16</span>
+                <span class='fraction'>22/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">69.23% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>13/13</span>
+                <span class='fraction'>18/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>33/33</span>
+                <span class='fraction'>34/34</span>
             </div>
         
             
@@ -407,7 +407,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -576,13 +576,13 @@ export class Cache&lt;K extends Cache.Key, V&gt; {
   /**
    * Creates an empty cache.
    */
-  public static empty&lt;K extends Cache.Key, V&gt;(): Cache&lt;K, V&gt; {
+  public static <span class="fstat-no" title="function not covered" >empty&lt;</span>K extends Cache.Key, V&gt;(): Cache&lt;K, V&gt; {
     return new Cache();
   }
 &nbsp;
   private readonly _storage = new WeakMap&lt;K, V&gt;();
 &nbsp;
-  protected constructor() {}
+<span class="fstat-no" title="function not covered" >  protected constructor() {}</span>
 &nbsp;
   /**
    * Returns the value (if it exists) associated with the given key.
@@ -595,7 +595,7 @@ export class Cache&lt;K extends Cache.Key, V&gt; {
    */
   public get&lt;U extends V = V&gt;(key: K, ifMissing: Mapper&lt;this, U&gt;): V;
 &nbsp;
-  public get&lt;U extends V = V&gt;(
+  public <span class="fstat-no" title="function not covered" >get&lt;</span>U extends V = V&gt;(
     key: K,
     ifMissing?: Mapper&lt;this, U&gt;,
   ): V | Option&lt;V&gt; {
@@ -623,7 +623,7 @@ export class Cache&lt;K extends Cache.Key, V&gt; {
   /**
    * Tests whether a given key exists in the cache.
    */
-  public has(key: K): boolean {
+  public <span class="fstat-no" title="function not covered" >has(</span>key: K): boolean {
     return this._storage.has(key);
   }
 &nbsp;
@@ -633,7 +633,7 @@ export class Cache&lt;K extends Cache.Key, V&gt; {
    * @remarks
    * Avoid using this. Prefer using the `ifMissing` parameter of `get()` instead.
    */
-  public set(key: K, value: V): this {
+  public <span class="fstat-no" title="function not covered" >set(</span>key: K, value: V): this {
     this._storage.set(key, value);
     return this;
   }
@@ -641,7 +641,7 @@ export class Cache&lt;K extends Cache.Key, V&gt; {
   /**
    * Merges a cache with an iterable of key-value pairs.
    */
-  public merge(iterable: Iterable&lt;readonly [K, V]&gt;): this {
+  public <span class="fstat-no" title="function not covered" >merge(</span>iterable: Iterable&lt;readonly [K, V]&gt;): this {
     return Iterable.reduce(
       iterable,
       (cache, [key, value]) =&gt; cache.set(key, value),
@@ -653,7 +653,7 @@ export class Cache&lt;K extends Cache.Key, V&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Cache {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >C</span>ache {</span></span>
   /**
    * Allowed keys in a Cache.
    */
@@ -662,7 +662,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
   /**
    * Creates a new cache from an iterable of key-value pairs.
    */
-  export function from&lt;K extends Key, V&gt;(
+  export function <span class="cstat-no" title="statement not covered" >from&lt;K extends Key, V&gt;(</span>
     iterable: Iterable&lt;readonly [K, V]&gt;,
   ): Cache&lt;K, V&gt; {
     return Cache.empty&lt;K, V&gt;().merge(iterable);
@@ -704,7 +704,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
     target: (...args: Args) =&gt; Return,
   ): (...args: Args) =&gt; Return;
 &nbsp;
-  export function memoize&lt;This, Args extends Array&lt;Key&gt;, Return&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >memoize&lt;</span>This, Args extends Array&lt;Key&gt;, Return&gt;(</span>
     // When called on an instance's method `target`, `this` is the instance.
     target: (this: This, ...args: Args) =&gt; Return,
   ): (this: This, ...args: Args) =&gt; Return {
@@ -793,7 +793,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:56.206Z
+                at 2026-04-10T09:29:20.833Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

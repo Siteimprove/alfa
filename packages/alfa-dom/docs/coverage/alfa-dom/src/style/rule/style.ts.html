@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.15% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/19</span>
+                <span class='fraction'>16/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">30% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/5</span>
+                <span class='fraction'>3/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">65.21% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/12</span>
+                <span class='fraction'>15/23</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.15% </span>
+                <span class="strong">65% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/19</span>
+                <span class='fraction'>13/20</span>
             </div>
         
             
@@ -213,38 +213,38 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 &nbsp;
-import { Block } from "../block.js";
-import type { Declaration } from "../declaration.js";
-import { BaseRule } from "./rule.js";
+import { Block } from "../block.ts";
+import type { Declaration } from "../declaration.ts";
+import { BaseRule } from "./rule.ts";
 &nbsp;
 /**
  * @public
@@ -253,7 +253,7 @@ export class StyleRule extends BaseRule&lt;"style"&gt; {
   public static of(
     selector: string,
     declarations: Iterable&lt;Declaration&gt;,
-    hint = false,
+    hint = <span class="branch-0 cbranch-no" title="branch not covered" >false,</span>
   ): StyleRule {
     return new StyleRule(selector, Array.from(declarations), hint);
   }
@@ -276,15 +276,15 @@ export class StyleRule extends BaseRule&lt;"style"&gt; {
     this._hint = hint;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >selector(</span>): string {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >selector(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return this._selector;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >style(</span>): Block {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >style(</span>): Block {</span>
 <span class="cstat-no" title="statement not covered" >    return this._style;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >hint(</span>): boolean {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hint(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return this._hint;</span>
   }
 &nbsp;
@@ -296,8 +296,8 @@ export class StyleRule extends BaseRule&lt;"style"&gt; {
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
-    const style = <span class="cstat-no" title="statement not covered" >this._style.toString();</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
+    const style = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._style.toString();</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return `${this._selector} {${style === "" ? "" : `\n${String.indent(style)}\n`}}`;</span>
   }
@@ -306,17 +306,17 @@ export class StyleRule extends BaseRule&lt;"style"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >StyleRule {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >StyleRule {</span></span>
   export interface JSON extends BaseRule.JSON&lt;"style"&gt; {
     selector: string;
     style: Block.JSON | string;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isStyleRule(</span>value: unknown): value is StyleRule {
+  export function isStyleRule(value: unknown): value is StyleRule {
 <span class="cstat-no" title="statement not covered" >    return value instanceof StyleRule;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isEmpty(</span>rule: StyleRule): boolean {
+  export function isEmpty(rule: StyleRule): boolean {
 <span class="cstat-no" title="statement not covered" >    return rule.style.isEmpty();</span>
   }
 &nbsp;
@@ -334,7 +334,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:21.155Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

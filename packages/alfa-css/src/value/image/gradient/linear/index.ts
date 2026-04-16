@@ -1,1 +1,1 @@
-export * from "./linear.js";
+export * from "./linear.ts";

@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.69% </span>
+                <span class="strong">55.17% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/26</span>
+                <span class='fraction'>16/29</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/8</span>
+                <span class='fraction'>6/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.1% </span>
+                <span class="strong">27.77% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/19</span>
+                <span class='fraction'>10/36</span>
             </div>
         
             
@@ -327,21 +327,21 @@ export class Lazy&lt;T&gt;
    * The Lazy will contain a frozen copy of the Thunk, ensuring it always produces
    * the same value and thus can indeed be lazily evaluated.
    */
-  public static of&lt;T&gt;(thunk: Thunk&lt;T&gt;): Lazy&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T&gt;(thunk: Thunk&lt;T&gt;): Lazy&lt;T&gt; {
     return new Lazy(Trampoline.delay(Thunk.freeze(thunk)));
   }
 &nbsp;
-  public static force&lt;T&gt;(value: T): Lazy&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >force&lt;</span>T&gt;(value: T): Lazy&lt;T&gt; {
     return new Lazy(Trampoline.done(value));
   }
 &nbsp;
   private _value: Trampoline&lt;T&gt;;
 &nbsp;
-  protected constructor(value: Trampoline&lt;T&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(v</span>alue: Trampoline&lt;T&gt;) {
     this._value = value;
   }
 &nbsp;
-  public force(): T {
+  public <span class="fstat-no" title="function not covered" >force(</span>): T {
     const value = this._value.run();
 &nbsp;
     if (this._value.isSuspended()) {
@@ -351,7 +351,7 @@ export class Lazy&lt;T&gt;
     return value;
   }
 &nbsp;
-  public map&lt;U&gt;(mapper: Mapper&lt;T, U&gt;): Lazy&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U&gt;): Lazy&lt;U&gt; {
     return new Lazy(
       this._value.flatMap((value) =&gt; {
         if (this._value.isSuspended()) {
@@ -363,11 +363,11 @@ export class Lazy&lt;T&gt;
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >apply&lt;</span>U&gt;(mapper: Lazy&lt;Mapper&lt;T, U&gt;&gt;): Lazy&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >apply&lt;</span>U&gt;(m</span>apper: Lazy&lt;Mapper&lt;T, U&gt;&gt;): Lazy&lt;U&gt; {
 <span class="cstat-no" title="statement not covered" >    return mapper.map(<span class="fstat-no" title="function not covered" >(m</span>apper) =&gt; <span class="cstat-no" title="statement not covered" >mapper(this.force()))</span>;</span>
   }
 &nbsp;
-  public flatMap&lt;U&gt;(mapper: Mapper&lt;T, Lazy&lt;U&gt;&gt;): Lazy&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >flatMap&lt;</span>U&gt;(mapper: Mapper&lt;T, Lazy&lt;U&gt;&gt;): Lazy&lt;U&gt; {
     return new Lazy(
       this._value.flatMap((value) =&gt; {
         if (this._value.isSuspended()) {
@@ -379,7 +379,7 @@ export class Lazy&lt;T&gt;
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >flatten&lt;</span>T&gt;(this: Lazy&lt;Lazy&lt;T&gt;&gt;): Lazy&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >flatten&lt;</span>T&gt;(this: Lazy&lt;Lazy&lt;T&gt;&gt;): Lazy&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this.flatMap(<span class="fstat-no" title="function not covered" >(l</span>azy) =&gt; <span class="cstat-no" title="statement not covered" >lazy)</span>;</span>
   }
 &nbsp;
@@ -387,29 +387,29 @@ export class Lazy&lt;T&gt;
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Lazy &amp;&amp; Equatable.equals(value.force(), this.force())
     );
   }
 &nbsp;
-  public *<span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;T&gt; {
+  public *<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    yield this.force();</span>
   }
 &nbsp;
-  public [<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;T&gt; {
+  public [<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.iterator]</span></span>(): Iterator&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.iterator();</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toThunk(</span>): Thunk&lt;T&gt; {
-<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >this.force();</span></span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toThunk(</span>): Thunk&lt;T&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >t</span>his.force();</span></span></span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Serializable.Options): Lazy.JSON&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>o</span>ptions?: Serializable.Options): Lazy.JSON&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return Serializable.toJSON(this.force(), options);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `Lazy { ${this.force()} }`;</span>
   }
 }
@@ -427,7 +427,7 @@ export namespace Lazy {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:32.550Z
+                at 2026-04-10T09:29:56.006Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

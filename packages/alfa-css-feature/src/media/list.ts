@@ -4,9 +4,9 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import type { Feature } from "../feature.js";
+import type { Feature } from "../feature.ts";
 
-import { Query } from "./query.js";
+import { Query } from "./query.ts";
 
 const { either, end, map, separatedList, takeUntil } = Parser;
 

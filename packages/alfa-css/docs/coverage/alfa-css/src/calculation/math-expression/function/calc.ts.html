@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.47% </span>
+                <span class="strong">95.23% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/21</span>
+                <span class='fraction'>20/21</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/8</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">82.35% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>17/17</span>
+                <span class='fraction'>14/17</span>
             </div>
         
             
@@ -141,9 +141,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -173,35 +173,35 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">46x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
 <span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">318x</span>
+<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">321x</span>
 <span class="cline-any cline-yes">636x</span>
-<span class="cline-any cline-yes">318x</span>
+<span class="cline-any cline-yes">304x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Parser } from "@siteimprove/alfa-parser";
 import {
   Function as CSSFunction,
   type Parser as CSSParser,
-} from "../../../syntax/index.js";
+} from "../../../syntax/index.ts";
 &nbsp;
-import { Unit } from "../../../unit/index.js";
+import { Unit } from "../../../unit/index.ts";
 &nbsp;
-import type { Numeric } from "../../numeric/index.js";
+import type { Numeric } from "../../numeric/index.ts";
 &nbsp;
-import { Expression } from "../expression.js";
-import type { Kind } from "../kind.js";
-import { Value } from "../value.js";
+import { Expression } from "../expression.ts";
+import type { Kind } from "../kind.ts";
+import { Value } from "../value.ts";
 &nbsp;
-import { Function } from "./function.js";
+import { Function } from "./function.ts";
 &nbsp;
 const { isValueExpression } = Value;
 &nbsp;
@@ -217,22 +217,22 @@ export class Calculation extends Function&lt;"calculation", [Expression]&gt; {
     return new Calculation([expression], expression.kind);
   }
 &nbsp;
-  protected constructor(args: [Expression], kind: Kind) {
+<span class="fstat-no" title="function not covered" >  protected constructor(a</span>rgs: [Expression], kind: Kind) {
     super("calculation", args, kind);
   }
 &nbsp;
-  public reduce&lt;
+  public <span class="fstat-no" title="function not covered" >reduce&lt;</span>
     L extends Unit.Length = Unit.Length.Canonical,
     P extends Numeric = Numeric,
   &gt;(resolver: Expression.Resolver&lt;L, P&gt;): Expression {
-    const reduced = <span class="cstat-no" title="statement not covered" >this._args[0].reduce(resolver);</span>
+    const reduced = this._args[0].reduce(resolver);
 &nbsp;
     // If the calculation reduces to a value, no need to keep
     // the `calc()` wrapper.
     return isValueExpression(reduced) ? reduced : Calculation.of(reduced);
   }
 &nbsp;
-  public toString(): string {
+  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
     return `calc(${this._args[0]})`;
   }
 }
@@ -256,7 +256,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:21.536Z
+                at 2026-04-10T09:29:45.085Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

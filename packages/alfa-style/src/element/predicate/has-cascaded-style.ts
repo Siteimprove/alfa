@@ -5,9 +5,9 @@ import type { Option } from "@siteimprove/alfa-option";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Context } from "@siteimprove/alfa-selector";
 
-import type { Longhands } from "../../longhands.js";
+import type { Longhands } from "../../longhands.ts";
 
-import { Style } from "../../style.js";
+import { Style } from "../../style.ts";
 
 const { isElement } = Element;
 

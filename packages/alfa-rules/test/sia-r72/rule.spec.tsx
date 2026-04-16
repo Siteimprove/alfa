@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R72, { Outcomes } from "../../dist/sia-r72/rule.js";
+import R72, { Outcomes } from "../../src/sia-r72/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test("evaluate() passes a paragraph whose text is not uppercased", async (t) => {
   const target = <p>Hello world</p>;

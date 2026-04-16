@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.84% </span>
+                <span class="strong">42.3% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/19</span>
+                <span class='fraction'>11/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">25% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>2/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">21.42% </span>
+                <span class="strong">44% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/14</span>
+                <span class='fraction'>11/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.17% </span>
+                <span class="strong">44.44% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/17</span>
+                <span class='fraction'>8/18</span>
             </div>
         
             
@@ -187,7 +187,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -195,11 +195,11 @@
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -208,7 +208,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -223,9 +223,9 @@ import type { Option } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 &nbsp;
-import type { Rule } from "./index.js";
-import type { BaseRule } from "./rule.js";
-import { ConditionRule } from "./condition.js";
+import type { Rule } from "./index.ts";
+import type { BaseRule } from "./rule.ts";
+import { ConditionRule } from "./condition.ts";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 &nbsp;
@@ -247,16 +247,16 @@ export class SupportsRule extends ConditionRule&lt;"supports"&gt; {
       .ok();
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >query(</span>): Option&lt;Feature.Supports.Query&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >query(</span>): Option&lt;Feature.Supports.Query&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._query;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): SupportsRule.JSON {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): SupportsRule.JSON {</span>
 <span class="cstat-no" title="statement not covered" >    return super.toJSON();</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
-    const rules = <span class="cstat-no" title="statement not covered" >this._rules</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
+    const rules = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._rules</span></span>
       .map(<span class="fstat-no" title="function not covered" >(r</span>ule) =&gt; <span class="cstat-no" title="statement not covered" >String.indent(rule.toString()))</span>
       .join("\n\n");
 &nbsp;
@@ -269,17 +269,17 @@ export class SupportsRule extends ConditionRule&lt;"supports"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >SupportsRule {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >SupportsRule {</span></span>
   export interface JSON extends ConditionRule.JSON&lt;"supports"&gt; {}
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isSupportsRule(</span>value: unknown): value is SupportsRule {
+  export function isSupportsRule(value: unknown): value is SupportsRule {
 <span class="cstat-no" title="statement not covered" >    return value instanceof SupportsRule;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >matches(</span>device: Device): Predicate&lt;SupportsRule&gt; {
+  export function matches(device: Device): Predicate&lt;SupportsRule&gt; {
     // If rule.query is None, Alfa couldn't parse the query which
     // means it does not support it.
-<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >(r</span>ule) =&gt; <span class="cstat-no" title="statement not covered" >rule.query.some(<span class="fstat-no" title="function not covered" >(q</span>uery) =&gt; <span class="cstat-no" title="statement not covered" >query.matches(device))</span>;</span></span>
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(r</span></span>ule) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >rule.query.some(<span class="fstat-no" title="function not covered" >(q</span>uery) =&gt; <span class="cstat-no" title="statement not covered" >query.matches(device))</span>;</span></span></span>
   }
 &nbsp;
   /**
@@ -289,8 +289,8 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
     json: JSON,
     fromRule: (json: Rule.JSON) =&gt; Trampoline&lt;Rule&gt;,
   ): Trampoline&lt;SupportsRule&gt; {
-<span class="cstat-no" title="statement not covered" >    return Trampoline.traverse(json.rules, fromRule).map(<span class="fstat-no" title="function not covered" >(r</span>ules) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      SupportsRule.of(json.condition, rules),</span>
+<span class="cstat-no" title="statement not covered" >    return Trampoline.traverse(json.rules, fromRule).map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(r</span></span>ules) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      SupportsRule.of(json.condition, rules),</span></span>
     );
   }
 }
@@ -301,7 +301,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:21.155Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

@@ -1,4 +1,4 @@
-import type { Element } from "../../slotable/element.js";
+import type { Element } from "../../slotable/element.ts";
 
 /**
  * {@link https://html.spec.whatwg.org/#browsing-context-container}

@@ -6,11 +6,11 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/index.js";
+import { expectation } from "../common/act/index.ts";
 
-import { withDocumentElement } from "../common/applicability/with-document-element.js";
-import { BestPractice } from "../requirements/index.js";
-import { Scope, Stability } from "../tags/index.js";
+import { withDocumentElement } from "../common/applicability/with-document-element.ts";
+import { BestPractice } from "../requirements/index.ts";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { hasRole } = DOM;
 const { hasNamespace } = Element;

@@ -1,5 +1,5 @@
-import type { Style } from "../style.js";
-import { isFlexContainer } from "./is-flex-container.js";
+import type { Style } from "../style.ts";
+import { isFlexContainer } from "./is-flex-container.ts";
 
 /**
  * {@link https://drafts.csswg.org/css-flexbox-1/#flex-items}

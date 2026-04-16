@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">58.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/18</span>
+                <span class='fraction'>14/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/6</span>
+                <span class='fraction'>6/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/8</span>
+                <span class='fraction'>8/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -366,8 +366,8 @@ import type { Reducer } from "@siteimprove/alfa-reducer";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 &nbsp;
-import { Err } from "./err.js";
-import { Ok } from "./ok.js";
+import { Err } from "./err.ts";
+import { Ok } from "./ok.ts";
 &nbsp;
 /**
  * @public
@@ -442,14 +442,14 @@ export interface Result&lt;T, E = T&gt;
 /**
  * @public
  */
-export namespace Result {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Result {</span>
   export type JSON&lt;T, E = T&gt; = Ok.JSON&lt;T&gt; | Err.JSON&lt;E&gt;;
 &nbsp;
   export function isResult&lt;T, E&gt;(value: Iterable&lt;T&gt;): value is Result&lt;T, E&gt;;
 &nbsp;
   export function isResult&lt;T, E&gt;(value: unknown): value is Result&lt;T, E&gt;;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isResult&lt;</span>T, E&gt;(value: unknown): value is Result&lt;T, E&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isResult&lt;T, E&gt;(v</span>alue: unknown): value is Result&lt;T, E&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return isOk(value) || isErr(value);</span>
   }
 &nbsp;
@@ -457,7 +457,7 @@ export namespace Result {
 &nbsp;
   export function isOk&lt;T&gt;(value: unknown): value is Ok&lt;T&gt;;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isOk&lt;</span>T&gt;(value: unknown): value is Ok&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isOk&lt;T&gt;(v</span>alue: unknown): value is Ok&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return Ok.isOk(value);</span>
   }
 &nbsp;
@@ -465,11 +465,11 @@ export namespace Result {
 &nbsp;
   export function isErr&lt;E&gt;(value: unknown): value is Err&lt;E&gt;;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isErr&lt;</span>E&gt;(value: unknown): value is Err&lt;E&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isErr&lt;E&gt;(v</span>alue: unknown): value is Err&lt;E&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return Err.isErr(value);</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >of&lt;</span>T, E&gt;(value: T): Result&lt;T, E&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >of&lt;T, E&gt;(v</span>alue: T): Result&lt;T, E&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return Ok.of(value);</span>
   }
 &nbsp;
@@ -479,7 +479,7 @@ export namespace Result {
 &nbsp;
   export function from&lt;T, E = unknown&gt;(thunk: Thunk&lt;T&gt;): Result&lt;T, E&gt;;
 &nbsp;
-  export function from&lt;T, E = unknown&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >from&lt;</span>T, E = unknown&gt;(</span>
     thunk: Thunk&lt;T&gt; | Thunk&lt;Promise&lt;T&gt;&gt;,
   ): Result&lt;T, E&gt; | Promise&lt;Result&lt;T, E&gt;&gt; {
     let value: T | Promise&lt;T&gt;;
@@ -505,7 +505,7 @@ export namespace Result {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:44.835Z
+                at 2026-04-10T09:30:07.890Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

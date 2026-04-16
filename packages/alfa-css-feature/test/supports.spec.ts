@@ -2,7 +2,7 @@ import { Lexer } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { test } from "@siteimprove/alfa-test";
 
-import { Feature } from "../dist/index.js";
+import { Feature } from "../src/index.ts";
 
 const device = Device.standard();
 

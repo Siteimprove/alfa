@@ -3,11 +3,11 @@ import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import R30, { Outcomes } from "../../dist/sia-r30/rule.js";
+import R30, { Outcomes } from "../../src/sia-r30/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { oracle } from "../common/oracle.js";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { oracle } from "../common/oracle.ts";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.ts";
 
 test(`evaluate() passes when R23 passes`, async (t) => {
   const target = <audio src="foo.mp3" />;

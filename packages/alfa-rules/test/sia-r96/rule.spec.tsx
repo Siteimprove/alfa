@@ -1,11 +1,11 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R96 from "../../dist/sia-r96/rule.js";
-import { RefreshDelay as Outcomes } from "../../dist/common/outcome/refresh-delay.js";
+import R96 from "../../src/sia-r96/rule.ts";
+import { RefreshDelay as Outcomes } from "../../src/common/outcome/refresh-delay.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test("evaluates() passes when there is an immediate refresh", async (t) => {
   const target = (

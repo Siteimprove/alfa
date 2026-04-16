@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import type { Hash } from "@siteimprove/alfa-hash";
 
-import { Map } from "../dist/map.js";
+import { Map } from "../src/map.ts";
 
 const map = Map.of(["foo", 1], ["bar", 2], ["baz", 3], ["qux", 4]);
 

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.63% </span>
+                <span class="strong">62.06% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/22</span>
+                <span class='fraction'>18/29</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.66% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/15</span>
+                <span class='fraction'>10/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.63% </span>
+                <span class="strong">65.21% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/22</span>
+                <span class='fraction'>15/23</span>
             </div>
         
             
@@ -309,7 +309,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -362,7 +362,7 @@ import type * as json from "@siteimprove/alfa-json";
 import type * as sarif from "@siteimprove/alfa-sarif";
 &nbsp;
 import type { Result } from "@siteimprove/alfa-result";
-import type { Resource } from "./resource.js";
+import type { Resource } from "./resource.ts";
 &nbsp;
 /**
  * {@link https://en.wikipedia.org/wiki/Web_page}
@@ -376,7 +376,7 @@ export class Page
     earl.Serializable&lt;Page.EARL&gt;,
     sarif.Serializable&lt;sarif.Artifact&gt;
 {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     request: Request,
     response: Response,
     document: Document,
@@ -390,7 +390,7 @@ export class Page
   private readonly _document: Document;
   private readonly _device: Device;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     request: Request,
     response: Response,
     document: Document,
@@ -402,23 +402,23 @@ export class Page
     this._device = device;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >request(</span>): Request {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >request(</span>): Request {</span>
 <span class="cstat-no" title="statement not covered" >    return this._request;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >response(</span>): Response {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >response(</span>): Response {</span>
 <span class="cstat-no" title="statement not covered" >    return this._response;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >document(</span>): Document {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >document(</span>): Document {</span>
 <span class="cstat-no" title="statement not covered" >    return this._document;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >device(</span>): Device {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >device(</span>): Device {</span>
 <span class="cstat-no" title="statement not covered" >    return this._device;</span>
   }
 &nbsp;
-  public toJSON(options?: Node.SerializationOptions): Page.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Node.SerializationOptions): Page.JSON {
     return {
       request: this._request.toJSON(options),
       response: this._response.toJSON(options),
@@ -430,7 +430,7 @@ export class Page
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toEARL(</span>): Page.EARL {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toEARL(</span>): Page.EARL {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       "@context": {
         earl: "http://www.w3.org/ns/earl#",
@@ -443,7 +443,7 @@ export class Page
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toSARIF(</span>): sarif.Artifact {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toSARIF(</span>): sarif.Artifact {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       location: {
         uri: this.response.url.toString(),
@@ -458,7 +458,7 @@ export class Page
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Page {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >P</span>age {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     request: Request.JSON;
@@ -480,18 +480,18 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >P
 &nbsp;
   const cache = Cache.empty&lt;JSON, Result&lt;Page, string&gt;&gt;();
 &nbsp;
-  export function from(json: JSON): Result&lt;Page, string&gt; {
+  export function <span class="cstat-no" title="statement not covered" >from(json: JSON): Result&lt;Page, string&gt; {</span>
     return cache.get(json, () =&gt; {
       const device = Device.from(json.device);
       return Request.from(json.request).andThen((request) =&gt;
-        Response.from(json.response).map(<span class="fstat-no" title="function not covered" >(r</span>esponse) =&gt;
-<span class="cstat-no" title="statement not covered" >          Page.of(request, response, Node.from(json.document, device), device),</span>
+        Response.from(json.response).map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(r</span></span>esponse) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >          Page.of(request, response, Node.from(json.document, device), device),</span></span>
         ),
       );
     });
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isPage(</span>value: unknown): value is Page {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isPage(</span>v</span>alue: unknown): value is Page {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Page;</span>
   }
 }
@@ -502,7 +502,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >P
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:08:34.045Z
+                at 2026-04-10T09:31:48.006Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

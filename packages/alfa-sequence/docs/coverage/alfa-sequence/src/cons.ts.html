@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.06% </span>
+                <span class="strong">65.47% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>181/287</span>
+                <span class='fraction'>239/365</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">67.5% </span>
+                <span class="strong">70.94% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>81/120</span>
+                <span class='fraction'>105/148</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.43% </span>
+                <span class="strong">34.1% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>51/92</span>
+                <span class='fraction'>59/173</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.25% </span>
+                <span class="strong">63.38% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>179/283</span>
+                <span class='fraction'>180/284</span>
             </div>
         
             
@@ -1841,7 +1841,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1878,8 +1878,8 @@ import type { Reducer } from "@siteimprove/alfa-reducer";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Set } from "@siteimprove/alfa-set";
 &nbsp;
-import { Sequence } from "./sequence.js";
-import { Nil } from "./nil.js";
+import { Sequence } from "./sequence.ts";
+import { Nil } from "./nil.ts";
 &nbsp;
 const { not, equals } = Predicate;
 const { compareComparable } = Comparable;
@@ -1888,7 +1888,7 @@ const { compareComparable } = Comparable;
  * @public
  */
 export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
-  public static of&lt;T&gt;(
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T&gt;(
     head: T,
     tail: Lazy&lt;Sequence&lt;T&gt;&gt; = Lazy.force(Nil),
   ): Cons&lt;T&gt; {
@@ -1898,20 +1898,20 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
   private readonly _head: T;
   private readonly _tail: Lazy&lt;Sequence&lt;T&gt;&gt;;
 &nbsp;
-  protected constructor(head: T, tail: Lazy&lt;Sequence&lt;T&gt;&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(h</span>ead: T, tail: Lazy&lt;Sequence&lt;T&gt;&gt;) {
     this._head = head;
     this._tail = tail;
   }
 &nbsp;
-  public get size(): number {
+  public get <span class="fstat-no" title="function not covered" >size(</span>): number {
     return Iterable.size(this);
   }
 &nbsp;
-  public isEmpty(): this is Sequence&lt;never&gt; {
+  public <span class="fstat-no" title="function not covered" >isEmpty(</span>): this is Sequence&lt;never&gt; {
     return false;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >forEach(</span>callback: Callback&lt;T, void, [index: number]&gt;): void {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >forEach(</span>c</span>allback: Callback&lt;T, void, [index: number]&gt;): void {
 <span class="cstat-no" title="statement not covered" >    Iterable.forEach(this, callback);</span>
   }
 &nbsp;
@@ -1922,7 +1922,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
    */
   public map&lt;U&gt;(mapper: Mapper&lt;T, U, [index: number]&gt;, index: number): Cons&lt;U&gt;;
 &nbsp;
-  public map&lt;U&gt;(mapper: Mapper&lt;T, U, [index: number]&gt;, index = 0): Cons&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U, [index: number]&gt;, index = 0): Cons&lt;U&gt; {
     return new Cons(
       mapper(this._head, index),
       this._tail.map((tail) =&gt;
@@ -1931,7 +1931,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     );
   }
 &nbsp;
-  public apply&lt;U&gt;(mapper: Sequence&lt;Mapper&lt;T, U&gt;&gt;): Sequence&lt;U&gt; {
+  public <span class="fstat-no" title="function not covered" >apply&lt;</span>U&gt;(mapper: Sequence&lt;Mapper&lt;T, U&gt;&gt;): Sequence&lt;U&gt; {
     return mapper.flatMap((mapper) =&gt; this.map(mapper));
   }
 &nbsp;
@@ -1947,7 +1947,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     index: number,
   ): Sequence&lt;U&gt;;
 &nbsp;
-  public flatMap&lt;U&gt;(
+  public <span class="fstat-no" title="function not covered" >flatMap&lt;</span>U&gt;(
     mapper: Mapper&lt;T, Sequence&lt;U&gt;, [index: number]&gt;,
     index = 0,
   ): Sequence&lt;U&gt; {
@@ -1979,11 +1979,11 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     }
   }
 &nbsp;
-  public flatten&lt;T&gt;(this: Sequence&lt;Sequence&lt;T&gt;&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >flatten&lt;</span>T&gt;(this: Sequence&lt;Sequence&lt;T&gt;&gt;): Sequence&lt;T&gt; {
     return this.flatMap((sequence) =&gt; sequence);
   }
 &nbsp;
-  public reduce&lt;U&gt;(reducer: Reducer&lt;T, U, [index: number]&gt;, accumulator: U): U {
+  public <span class="fstat-no" title="function not covered" >reduce&lt;</span>U&gt;(reducer: Reducer&lt;T, U, [index: number]&gt;, accumulator: U): U {
     let next: Cons&lt;T&gt; = this;
     let index = 0;
 &nbsp;
@@ -2002,18 +2002,18 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     return accumulator;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reduceWhile&lt;</span>U&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reduceWhile&lt;</span>U&gt;(</span>
     predicate: Predicate&lt;T, [index: number]&gt;,
     reducer: Reducer&lt;T, U, [index: number]&gt;,
     accumulator: U,
   ): U {
-    let next: Cons&lt;T&gt; = <span class="cstat-no" title="statement not covered" >this;</span>
-    let index = <span class="cstat-no" title="statement not covered" >0;</span>
+    let next: Cons&lt;T&gt; = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this;</span></span>
+    let index = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    while (predicate(next._head, index)) {</span>
 <span class="cstat-no" title="statement not covered" >      accumulator = reducer(accumulator, next._head, index++);</span>
 &nbsp;
-      const tail = <span class="cstat-no" title="statement not covered" >next._tail.force();</span>
+      const tail = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >next._tail.force();</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (Cons.isCons(tail)) {</span>
 <span class="cstat-no" title="statement not covered" >        next = tail;</span>
@@ -2025,7 +2025,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return accumulator;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reduceUntil&lt;</span>U&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reduceUntil&lt;</span>U&gt;(</span>
     predicate: Predicate&lt;T, [index: number]&gt;,
     reducer: Reducer&lt;T, U, [index: number]&gt;,
     accumulator: U,
@@ -2047,7 +2047,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     index: number,
   ): Sequence&lt;T&gt;;
 &nbsp;
-  public filter(
+  public <span class="fstat-no" title="function not covered" >filter(</span>
     predicate: Predicate&lt;T, [index: number]&gt;,
     index = 0,
   ): Sequence&lt;T&gt; {
@@ -2079,7 +2079,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
 &nbsp;
   public reject(predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reject(</span>predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reject(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.filter(not(predicate));</span>
   }
 &nbsp;
@@ -2089,7 +2089,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
 &nbsp;
   public find(predicate: Predicate&lt;T, [index: number]&gt;): Option&lt;T&gt;;
 &nbsp;
-  public find(predicate: Predicate&lt;T, [index: number]&gt;): Option&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >find(</span>predicate: Predicate&lt;T, [index: number]&gt;): Option&lt;T&gt; {
     let next: Cons&lt;T&gt; = this;
     let index = 0;
 &nbsp;
@@ -2110,7 +2110,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     }
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >includes(</span>value: T): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >includes(</span>v</span>alue: T): boolean {
 <span class="cstat-no" title="statement not covered" >    return this.some(equals(value));</span>
   }
 &nbsp;
@@ -2124,7 +2124,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     index: number,
   ): Sequence&lt;U&gt;;
 &nbsp;
-  public collect&lt;U&gt;(
+  public <span class="fstat-no" title="function not covered" >collect&lt;</span>U&gt;(
     mapper: Mapper&lt;T, Option&lt;U&gt;, [index: number]&gt;,
     index: number = 0,
   ): Sequence&lt;U&gt; {
@@ -2152,20 +2152,20 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     }
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >collectFirst&lt;</span>U&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >collectFirst&lt;</span>U&gt;(</span>
     mapper: Mapper&lt;T, Option&lt;U&gt;, [index: number]&gt;,
   ): Option&lt;U&gt; {
-    let next: Cons&lt;T&gt; = <span class="cstat-no" title="statement not covered" >this;</span>
-    let index = <span class="cstat-no" title="statement not covered" >0;</span>
+    let next: Cons&lt;T&gt; = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this;</span></span>
+    let index = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    while (true) {</span>
-      const value = <span class="cstat-no" title="statement not covered" >mapper(next._head, index++);</span>
+      const value = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >mapper(next._head, index++);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (value.isSome()) {</span>
 <span class="cstat-no" title="statement not covered" >        return value;</span>
       }
 &nbsp;
-      const tail = <span class="cstat-no" title="statement not covered" >next._tail.force();</span>
+      const tail = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >next._tail.force();</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (Cons.isCons(tail)) {</span>
 <span class="cstat-no" title="statement not covered" >        next = tail;</span>
@@ -2175,7 +2175,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     }
   }
 &nbsp;
-  public some(predicate: Predicate&lt;T, [index: number]&gt;): boolean {
+  public <span class="fstat-no" title="function not covered" >some(</span>predicate: Predicate&lt;T, [index: number]&gt;): boolean {
     let next: Cons&lt;T&gt; = this;
     let index = 0;
 &nbsp;
@@ -2194,11 +2194,11 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     }
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >none(</span>predicate: Predicate&lt;T, [index: number]&gt;): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >none(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): boolean {
 <span class="cstat-no" title="statement not covered" >    return this.every(not(predicate));</span>
   }
 &nbsp;
-  public every(predicate: Predicate&lt;T, [index: number]&gt;): boolean {
+  public <span class="fstat-no" title="function not covered" >every(</span>predicate: Predicate&lt;T, [index: number]&gt;): boolean {
     let next: Cons&lt;T&gt; = this;
     let index = 0;
 &nbsp;
@@ -2217,7 +2217,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     }
   }
 &nbsp;
-  public count(predicate: Predicate&lt;T, [index: number]&gt;): number {
+  public <span class="fstat-no" title="function not covered" >count(</span>predicate: Predicate&lt;T, [index: number]&gt;): number {
     return this.reduce(
       (count, value, index) =&gt; (predicate(value, index) ? count + 1 : count),
       0,
@@ -2231,13 +2231,13 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
    * @param predicate - The stopping condition. Iteration stops when this returns true.
    * @param filter - Optional predicate to filter which elements are counted. If not provided, all elements before the stopping condition are counted.
    */
-  public <span class="fstat-no" title="function not covered" >countUntil(</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >countUntil(</span></span>
     predicate: Predicate&lt;T, [index: number]&gt;,
-    filter: Predicate&lt;T, [index: number]&gt; = <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >true,</span></span>
+    filter: Predicate&lt;T, [index: number]&gt; = <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >t</span>rue,</span></span></span></span>
   ): number {
-    let next: Cons&lt;T&gt; = <span class="cstat-no" title="statement not covered" >this;</span>
-    let index = <span class="cstat-no" title="statement not covered" >0;</span>
-    let count = <span class="cstat-no" title="statement not covered" >0;</span>
+    let next: Cons&lt;T&gt; = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this;</span></span>
+    let index = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0;</span></span>
+    let count = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    while (true) {</span>
 <span class="cstat-no" title="statement not covered" >      if (predicate(next._head, index)) {</span>
@@ -2249,7 +2249,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
       }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      index++;</span>
-      const tail = <span class="cstat-no" title="statement not covered" >next._tail.force();</span>
+      const tail = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >next._tail.force();</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (Cons.isCons(tail)) {</span>
 <span class="cstat-no" title="statement not covered" >        next = tail;</span>
@@ -2266,7 +2266,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
    */
   public distinct(seen: Set&lt;T&gt;): Sequence&lt;T&gt;;
 &nbsp;
-  public distinct(seen: Set&lt;T&gt; = Set.empty()): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >distinct(</span>seen: Set&lt;T&gt; = Set.empty()): Sequence&lt;T&gt; {
     let next: Cons&lt;T&gt; = this;
 &nbsp;
     while (true) {
@@ -2282,22 +2282,22 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
         return Cons.of(
           next._head,
           next._tail.map((tail) =&gt;
-            Cons.isCons(tail) ? tail.distinct(seen.add(next._head)) : <span class="branch-1 cbranch-no" title="branch not covered" >Nil,</span>
+            Cons.isCons(tail) ? tail.distinct(seen.add(next._head)) : <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Nil,</span></span>
           ),
         );
       }
     }
   }
 &nbsp;
-  public get(index: number): Option&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >get(</span>index: number): Option&lt;T&gt; {
     return index &lt; 0 ? None : this.skip(index).first();
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >has(</span>index: number): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >has(</span>i</span>ndex: number): boolean {
 <span class="cstat-no" title="statement not covered" >    return this.get(index).isSome();</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >set(</span>index: number, value: T): Cons&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >set(</span>i</span>ndex: number, value: T): Cons&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    if (index &lt; 0) {</span>
 <span class="cstat-no" title="statement not covered" >      return this;</span>
     }
@@ -2316,7 +2316,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >insert(</span>index: number, value: T): Cons&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >insert(</span>i</span>ndex: number, value: T): Cons&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    if (index &lt; 0) {</span>
 <span class="cstat-no" title="statement not covered" >      return this;</span>
     }
@@ -2331,18 +2331,18 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >append(</span>value: T): Cons&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >append(</span>v</span>alue: T): Cons&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return new Cons(</span>
       this._head,
       this._tail.map(<span class="fstat-no" title="function not covered" >(t</span>ail) =&gt; <span class="cstat-no" title="statement not covered" >tail.append(value))</span>,
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >prepend(</span>value: T): Cons&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >prepend(</span>v</span>alue: T): Cons&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return new Cons(value, Lazy.force(this));</span>
   }
 &nbsp;
-  public concat(iterable: Iterable&lt;T&gt;): Cons&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >concat(</span>iterable: Iterable&lt;T&gt;): Cons&lt;T&gt; {
     const sequence = Sequence.from(iterable);
 &nbsp;
     <span class="missing-if-branch" title="else path not taken" >E</span>if (Cons.isCons(sequence)) {
@@ -2355,15 +2355,15 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >subtract(</span>iterable: Iterable&lt;T&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >subtract(</span>i</span>terable: Iterable&lt;T&gt;): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.filter(<span class="fstat-no" title="function not covered" >(v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" >!Iterable.includes(iterable, value))</span>;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >intersect(</span>iterable: Iterable&lt;T&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >intersect(</span>i</span>terable: Iterable&lt;T&gt;): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.filter(<span class="fstat-no" title="function not covered" >(v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" >Iterable.includes(iterable, value))</span>;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >tee&lt;</span>A extends Array&lt;unknown&gt; = []&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >tee&lt;</span>A extends Array&lt;unknown&gt; = []&gt;(</span>
     callback: Callback&lt;this, void, [...args: A]&gt;,
     ...args: A
   ): this {
@@ -2371,8 +2371,8 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >zip&lt;</span>U&gt;(iterable: Iterable&lt;U&gt;): Sequence&lt;[T, U]&gt; {
-    const sequence = <span class="cstat-no" title="statement not covered" >Sequence.from(iterable);</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >zip&lt;</span>U&gt;(i</span>terable: Iterable&lt;U&gt;): Sequence&lt;[T, U]&gt; {
+    const sequence = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Sequence.from(iterable);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (Cons.isCons(sequence)) {</span>
 <span class="cstat-no" title="statement not covered" >      return new Cons(</span>
@@ -2384,11 +2384,11 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return Nil;</span>
   }
 &nbsp;
-  public first(): Option&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >first(</span>): Option&lt;T&gt; {
     return Option.of(this._head);
   }
 &nbsp;
-  public last(): Option&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >last(</span>): Option&lt;T&gt; {
     let next: Cons&lt;T&gt; = this;
 &nbsp;
     while (true) {
@@ -2402,7 +2402,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     }
   }
 &nbsp;
-  public take(count: number): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >take(</span>count: number): Sequence&lt;T&gt; {
     <span class="missing-if-branch" title="if path not taken" >I</span>if (count &lt;= 0) {
 <span class="cstat-no" title="statement not covered" >      return Nil;</span>
     }
@@ -2412,7 +2412,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
       count === 1
         ? Lazy.force(Nil)
         : this._tail.map((tail) =&gt;
-            Cons.isCons(tail) ? tail.take(count - 1) : <span class="branch-1 cbranch-no" title="branch not covered" >Nil,</span>
+            Cons.isCons(tail) ? tail.take(count - 1) : <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Nil,</span></span>
           ),
     );
   }
@@ -2423,7 +2423,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
 &nbsp;
   public takeWhile(predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt;;
 &nbsp;
-  public takeWhile(predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >takeWhile(</span>predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
     return this.takeUntil(not(predicate));
   }
 &nbsp;
@@ -2437,7 +2437,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     index: number,
   ): Sequence&lt;T&gt;;
 &nbsp;
-  public takeUntil(
+  public <span class="fstat-no" title="function not covered" >takeUntil(</span>
     predicate: Predicate&lt;T, [index: number]&gt;,
     index = 0,
   ): Sequence&lt;T&gt; {
@@ -2462,10 +2462,10 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
    * @remarks
    * The returned sequence is in reverse order relative to the input (nearest-first).
    */
-  public <span class="fstat-no" title="function not covered" >preceding(</span>predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
-    const preceding: Array&lt;T&gt; = <span class="cstat-no" title="statement not covered" >[];</span>
-    let next: Cons&lt;T&gt; = <span class="cstat-no" title="statement not covered" >this;</span>
-    let index = <span class="cstat-no" title="statement not covered" >0;</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >preceding(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
+    const preceding: Array&lt;T&gt; = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[];</span></span>
+    let next: Cons&lt;T&gt; = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this;</span></span>
+    let index = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    while (true) {</span>
 <span class="cstat-no" title="statement not covered" >      if (predicate(next._head, index++)) {</span>
@@ -2474,7 +2474,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      preceding.push(next._head);</span>
 &nbsp;
-      const tail = <span class="cstat-no" title="statement not covered" >next._tail.force();</span>
+      const tail = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >next._tail.force();</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (Cons.isCons(tail)) {</span>
 <span class="cstat-no" title="statement not covered" >        next = tail;</span>
@@ -2487,7 +2487,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return Sequence.from(preceding);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >takeLast(</span>count: number): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >takeLast(</span>c</span>ount: number): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.skip(this.size - count);</span>
   }
 &nbsp;
@@ -2497,15 +2497,15 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
 &nbsp;
   public takeLastWhile(predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >takeLastWhile(</span>predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >takeLastWhile(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.reverse().takeWhile(predicate).reverse();</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >takeLastUntil(</span>predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >takeLastUntil(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.takeLastWhile(not(predicate));</span>
   }
 &nbsp;
-  public skip(count: number): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >skip(</span>count: number): Sequence&lt;T&gt; {
     let next: Cons&lt;T&gt; = this;
 &nbsp;
     while (count-- &gt; 0) {
@@ -2521,7 +2521,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     return next;
   }
 &nbsp;
-  public skipWhile(predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >skipWhile(</span>predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
     let next: Cons&lt;T&gt; = this;
     let index = 0;
 &nbsp;
@@ -2538,39 +2538,39 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     return next;
   }
 &nbsp;
-  public skipUntil(predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >skipUntil(</span>predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
     return this.skipWhile(not(predicate));
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skipLast(</span>count: number): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skipLast(</span>c</span>ount: number): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.take(this.size - count);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skipLastWhile(</span>predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skipLastWhile(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.reverse().skipWhile(predicate).reverse();</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skipLastUntil(</span>predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skipLastUntil(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.skipLastWhile(not(predicate));</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >trim(</span>predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >trim(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.trimLeading(predicate).trimTrailing(predicate);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >trimLeading(</span>predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >trimLeading(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.skipWhile(predicate);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >trimTrailing(</span>predicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >trimTrailing(</span>p</span>redicate: Predicate&lt;T, [index: number]&gt;): Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.skipLastWhile(predicate);</span>
   }
 &nbsp;
-  public rest(): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >rest(</span>): Sequence&lt;T&gt; {
     return this._tail.force();
   }
 &nbsp;
-  public slice(start: number, end?: number): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >slice(</span>start: number, end?: number): Sequence&lt;T&gt; {
     let slice = this.skip(start);
 &nbsp;
     <span class="missing-if-branch" title="else path not taken" >E</span>if (end !== undefined) {
@@ -2580,11 +2580,11 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     return slice;
   }
 &nbsp;
-  public reverse(): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >reverse(</span>): Sequence&lt;T&gt; {
     return Sequence.from(this.toArray().reverse());
   }
 &nbsp;
-  public join(separator: string): string {
+  public <span class="fstat-no" title="function not covered" >join(</span>separator: string): string {
     let result = `${this._head}`;
 &nbsp;
     let next: Cons&lt;T&gt; = this;
@@ -2601,7 +2601,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     }
   }
 &nbsp;
-  public sort&lt;T extends Comparable&lt;T&gt;&gt;(this: Sequence&lt;T&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >sort&lt;</span>T extends Comparable&lt;T&gt;&gt;(this: Sequence&lt;T&gt;): Sequence&lt;T&gt; {
     return this.sortWith(compareComparable);
   }
 &nbsp;
@@ -2612,38 +2612,38 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     comparer: Comparer&lt;T&gt;,
   ): Sequence&lt;U&gt;;
 &nbsp;
-  public sortWith(comparer: Comparer&lt;T&gt;): Sequence&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >sortWith(</span>comparer: Comparer&lt;T&gt;): Sequence&lt;T&gt; {
     return Sequence.fromArray(Array.sortWith(this.toArray(), comparer));
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >compare&lt;</span>T&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >compare&lt;</span>T&gt;(</span>
     this: Sequence&lt;Comparable&lt;T&gt;&gt;,
     iterable: Iterable&lt;T&gt;,
   ): Comparison {
 <span class="cstat-no" title="statement not covered" >    return this.compareWith(iterable, Comparable.compare);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >compareWith&lt;</span>U = T&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >compareWith&lt;</span>U = T&gt;(</span>
     iterable: Iterable&lt;U&gt;,
     comparer: Comparer&lt;T, U, [index: number]&gt;,
   ): Comparison {
 <span class="cstat-no" title="statement not covered" >    return Iterable.compareWith(this, iterable, comparer);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >groupBy&lt;</span>K&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >groupBy&lt;</span>K&gt;(</span>
     grouper: Mapper&lt;T, K, [index: number]&gt;,
   ): Map&lt;K, Sequence&lt;T&gt;&gt; {
-<span class="cstat-no" title="statement not covered" >    return this.reduce(<span class="fstat-no" title="function not covered" >(g</span>roups, value, index) =&gt; {</span>
-      const group = <span class="cstat-no" title="statement not covered" >grouper(value, index);</span>
+<span class="cstat-no" title="statement not covered" >    return this.reduce(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(g</span></span>roups, value, index) =&gt; {</span>
+      const group = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >grouper(value, index);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      return groups.set(</span>
         group,
-        new Cons(value, Lazy.force(groups.get(group).getOrElse(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >Nil)</span>)),
+        new Cons(value, Lazy.force(groups.get(group).getOrElse(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >N</span>il)</span>)),
       );
     }, Map.empty&lt;K, Sequence&lt;T&gt;&gt;()).map(<span class="fstat-no" title="function not covered" >(g</span>roup) =&gt; <span class="cstat-no" title="statement not covered" >group.reverse())</span>;
   }
 &nbsp;
-  public equals(value: unknown): value is this {
+  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
     if (!Cons.isCons&lt;T&gt;(value)) {
       return false;
     }
@@ -2668,8 +2668,8 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     }
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
-    let size = <span class="cstat-no" title="statement not covered" >0;</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash): void {
+    let size = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    for (const value of this) {</span>
 <span class="cstat-no" title="statement not covered" >      hash.writeUnknown(value);</span>
@@ -2679,7 +2679,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    hash.writeUint32(size);</span>
   }
 &nbsp;
-  public *iterator(): Iterator&lt;T&gt; {
+  public *<span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;T&gt; {
     let next: Cons&lt;T&gt; = this;
 &nbsp;
     while (true) {
@@ -2695,11 +2695,11 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     }
   }
 &nbsp;
-  public [Symbol.iterator](): Iterator&lt;T&gt; {
+  public [<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;T&gt; {
     return this.iterator();
   }
 &nbsp;
-  public toArray(): Array&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >toArray(</span>): Array&lt;T&gt; {
     const array: Array&lt;T&gt; = [];
 &nbsp;
     let next: Cons&lt;T&gt; = this;
@@ -2717,7 +2717,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     }
   }
 &nbsp;
-  public toJSON(options?: Serializable.Options): Cons.JSON&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Serializable.Options): Cons.JSON&lt;T&gt; {
     const json: Cons.JSON&lt;T&gt; = [];
 &nbsp;
     let next: Cons&lt;T&gt; = this;
@@ -2735,7 +2735,7 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
     }
   }
 &nbsp;
-  public toString(): string {
+  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
     return `Sequence [ ${this.join(", ")} ]`;
   }
 }
@@ -2743,14 +2743,14 @@ export class Cons&lt;T&gt; implements Sequence&lt;T&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Cons {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >C</span>ons {</span></span>
   export type JSON&lt;T&gt; = Collection.Indexed.JSON&lt;T&gt;;
 &nbsp;
   export function isCons&lt;T&gt;(value: Iterable&lt;T&gt;): value is Cons&lt;T&gt;;
 &nbsp;
   export function isCons&lt;T&gt;(value: unknown): value is Cons&lt;T&gt;;
 &nbsp;
-  export function isCons&lt;T&gt;(value: unknown): value is Cons&lt;T&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isCons&lt;</span>T&gt;(value: unknown): value is Cons&lt;T&gt; {</span>
     return value instanceof Cons;
   }
 }
@@ -2761,7 +2761,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:07:01.024Z
+                at 2026-04-10T09:30:23.711Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

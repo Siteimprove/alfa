@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Network } from "../dist/network.js";
+import { Network } from "../src/network.ts";
 
 // foo
 // |- 1 => bar

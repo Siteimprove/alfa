@@ -5,10 +5,10 @@ import {
   Function,
   type Parser as CSSParser,
   Token,
-} from "../../syntax/index.js";
-import type { Resolvable } from "../resolvable.js";
+} from "../../syntax/index.ts";
+import type { Resolvable } from "../resolvable.ts";
 
-import { Value } from "../value.js";
+import { Value } from "../value.ts";
 
 const { map, either } = Parser;
 

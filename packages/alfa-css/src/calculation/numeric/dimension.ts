@@ -1,6 +1,6 @@
-import type { Unit } from "../../unit/index.js";
+import type { Unit } from "../../unit/index.ts";
 
-import { Numeric } from "./numeric.js";
+import { Numeric } from "./numeric.ts";
 
 /**
  * {@link https://drafts.csswg.org/css-values/#dimensions}

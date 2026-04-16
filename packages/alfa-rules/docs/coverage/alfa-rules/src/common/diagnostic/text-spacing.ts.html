@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">44.44% </span>
+                <span class="strong">43.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/27</span>
+                <span class='fraction'>13/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
+                <span class="strong">13.63% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/12</span>
+                <span class='fraction'>3/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">14.28% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/14</span>
+                <span class='fraction'>4/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">44.44% </span>
+                <span class="strong">46.42% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/27</span>
+                <span class='fraction'>13/28</span>
             </div>
         
             
@@ -381,7 +381,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -435,7 +435,7 @@ export class TextSpacing&lt;N extends Longhands.Name&gt; extends Diagnostic {
     owner: Element,
   ): TextSpacing&lt;N&gt;;
 &nbsp;
-  public static of&lt;N extends Longhands.Name&gt;(
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>N extends Longhands.Name&gt;(
     message: string,
     property?: N,
     value?: Length.Canonical,
@@ -469,7 +469,7 @@ export class TextSpacing&lt;N extends Longhands.Name&gt; extends Diagnostic {
   // The element with the bad style attribute
   private readonly _owner: Element;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     message: string,
     property: N,
     value: Length.Canonical,
@@ -489,31 +489,31 @@ export class TextSpacing&lt;N extends Longhands.Name&gt; extends Diagnostic {
     this._owner = owner;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >property(</span>): N {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >property(</span>): N {</span>
 <span class="cstat-no" title="statement not covered" >    return this._property;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >value(</span>): Length.Canonical {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >value(</span>): Length.Canonical {</span>
 <span class="cstat-no" title="statement not covered" >    return this._value;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >fontSize(</span>): Style.Computed&lt;"font-size"&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >fontSize(</span>): Style.Computed&lt;"font-size"&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._fontSize;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >ratio(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >ratio(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return this._ratio;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >threshold(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >threshold(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return this._threshold;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >declaration(</span>): Declaration {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >declaration(</span>): Declaration {</span>
 <span class="cstat-no" title="statement not covered" >    return this._declaration;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >owner(</span>): Element {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >owner(</span>): Element {</span>
 <span class="cstat-no" title="statement not covered" >    return this._owner;</span>
   }
 &nbsp;
@@ -521,8 +521,8 @@ export class TextSpacing&lt;N extends Longhands.Name&gt; extends Diagnostic {
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof TextSpacing &amp;&amp;
       value._message === this._message &amp;&amp;
       value._property === this._property &amp;&amp;
@@ -534,7 +534,7 @@ export class TextSpacing&lt;N extends Longhands.Name&gt; extends Diagnostic {
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    super.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    this._owner.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    hash.writeString(this._property);</span>
@@ -543,7 +543,7 @@ export class TextSpacing&lt;N extends Longhands.Name&gt; extends Diagnostic {
 <span class="cstat-no" title="statement not covered" >    hash.writeNumber(this._value.value);</span>
   }
 &nbsp;
-  public toJSON(options?: Node.SerializationOptions): TextSpacing.JSON&lt;N&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Node.SerializationOptions): TextSpacing.JSON&lt;N&gt; {
     return {
       ...super.toJSON(options),
       property: this._property,
@@ -560,7 +560,7 @@ export class TextSpacing&lt;N extends Longhands.Name&gt; extends Diagnostic {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >TextSpacing {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >T</span>extSpacing {</span></span>
   export interface JSON&lt;N extends Longhands.Name&gt; extends Diagnostic.JSON {
     property: N;
     value: Length.Fixed.JSON&lt;"px"&gt;;
@@ -579,7 +579,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >T
     value: unknown,
   ): value is TextSpacing&lt;Longhands.Name&gt;;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isTextSpacing(</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isTextSpacing(</span></span></span>
     value: unknown,
   ): value is TextSpacing&lt;Longhands.Name&gt; {
 <span class="cstat-no" title="statement not covered" >    return value instanceof TextSpacing;</span>
@@ -592,7 +592,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >T
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:08:25.373Z
+                at 2026-04-10T09:31:39.916Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

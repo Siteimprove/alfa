@@ -13,7 +13,7 @@ import type { Reducer } from "@siteimprove/alfa-reducer";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Set } from "@siteimprove/alfa-set";
 
-import { Branch, Empty, Leaf, Node } from "./node.js";
+import { Branch, Empty, Leaf, Node } from "./node.ts";
 
 const { not } = Predicate;
 const { compareComparable } = Comparable;

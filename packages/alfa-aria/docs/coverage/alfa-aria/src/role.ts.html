@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.65% </span>
+                <span class="strong">78.15% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>70/89</span>
+                <span class='fraction'>93/119</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.06% </span>
+                <span class="strong">61.53% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>18/29</span>
+                <span class='fraction'>32/52</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.58% </span>
+                <span class="strong">54.63% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>39/53</span>
+                <span class='fraction'>53/97</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.4% </span>
+                <span class="strong">78.65% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>69/88</span>
+                <span class='fraction'>70/89</span>
             </div>
         
             
@@ -854,7 +854,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1043,12 +1043,12 @@ import { Set } from "@siteimprove/alfa-set";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import type { Attribute } from "./attribute.js";
-import { Feature } from "./feature.js";
+import type { Attribute } from "./attribute.ts";
+import { Feature } from "./feature.ts";
 &nbsp;
-import { Roles } from "./role/data.js";
+import { Roles } from "./role/data.ts";
 &nbsp;
-import * as predicate from "./role/predicate.js";
+import * as predicate from "./role/predicate.ts";
 &nbsp;
 const { and, not, nor } = Predicate;
 &nbsp;
@@ -1060,7 +1060,7 @@ let roles = Map.empty&lt;Role.Name, Role&gt;();
 export class Role&lt;N extends Role.Name = Role.Name&gt;
   implements Equatable, Hashable, Serializable
 {
-  public static of&lt;N extends Role.Name&gt;(name: N): Role&lt;N&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>N extends Role.Name&gt;(name: N): Role&lt;N&gt; {
     return roles.get(name).getOrElse(() =&gt; {
       // The "as const" building of Roles makes TS give it a very
       // rigid type, and we need to manually help it to correctly merge the
@@ -1112,7 +1112,7 @@ export class Role&lt;N extends Role.Name = Role.Name&gt;
   private readonly _requiredAttributes: ReadonlyArray&lt;Attribute.Name&gt;;
   private readonly _prohibitedAttributes: ReadonlyArray&lt;Attribute.Name&gt;;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     name: N,
     supportedAttributes: Array&lt;Attribute.Name&gt;,
     requiredAttributes: Array&lt;Attribute.Name&gt;,
@@ -1124,59 +1124,59 @@ export class Role&lt;N extends Role.Name = Role.Name&gt;
     this._prohibitedAttributes = prohibitedAttributes;
   }
 &nbsp;
-  public get name(): N {
+  public get <span class="fstat-no" title="function not covered" >name(</span>): N {
     return this._name;
   }
 &nbsp;
   /**
    * Get all attributes supported by this role and its inherited (ancestors) roles.
    */
-  public get supportedAttributes(): ReadonlyArray&lt;Attribute.Name&gt; {
+  public get <span class="fstat-no" title="function not covered" >supportedAttributes(</span>): ReadonlyArray&lt;Attribute.Name&gt; {
     return this._supportedAttributes;
   }
 &nbsp;
   /**
    * Get all attributes required by this role and its inherited (ancestors) roles.
    */
-  public get requiredAttributes(): ReadonlyArray&lt;Attribute.Name&gt; {
+  public get <span class="fstat-no" title="function not covered" >requiredAttributes(</span>): ReadonlyArray&lt;Attribute.Name&gt; {
     return this._requiredAttributes;
   }
 &nbsp;
   /**
    * Get all attributes prohibited on this role and its inherited (ancestors) roles.
    */
-  public get prohibitedAttributes(): ReadonlyArray&lt;Attribute.Name&gt; {
+  public get <span class="fstat-no" title="function not covered" >prohibitedAttributes(</span>): ReadonlyArray&lt;Attribute.Name&gt; {
     return this._prohibitedAttributes;
   }
 &nbsp;
   /**
    * Get the required parent of this role.
    */
-  public get <span class="fstat-no" title="function not covered" >requiredParent(</span>): ReadonlyArray&lt;ReadonlyArray&lt;Role.Name&gt;&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >requiredParent(</span>): ReadonlyArray&lt;ReadonlyArray&lt;Role.Name&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return Roles[this._name].parent.required;</span>
   }
 &nbsp;
   /**
    * Get the required children of this role.
    */
-  public get <span class="fstat-no" title="function not covered" >requiredChildren(</span>): ReadonlyArray&lt;ReadonlyArray&lt;Role.Name&gt;&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >requiredChildren(</span>): ReadonlyArray&lt;ReadonlyArray&lt;Role.Name&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return Roles[this._name].children.required;</span>
   }
 &nbsp;
   /**
    * Check if this role has the specified name.
    */
-  public hasName&lt;N extends Role.Name&gt;(name: N): this is Role&lt;N&gt; {
+  public <span class="fstat-no" title="function not covered" >hasName&lt;</span>N extends Role.Name&gt;(name: N): this is Role&lt;N&gt; {
     return this._name === (name as Role.Name);
   }
 &nbsp;
   /**
    * Check if this role is a superclass of the role with the specified name.
    */
-  public <span class="fstat-no" title="function not covered" >isSuperclassOf&lt;</span>N extends Role.Name&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isSuperclassOf&lt;</span>N extends Role.Name&gt;(</span>
     name: N,
   ): this is Role&lt;Role.SuperclassOf&lt;N&gt;&gt; {
-    const { inherited } = <span class="cstat-no" title="statement not covered" >Roles[name];</span>
+    const { inherited } = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Roles[name];</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    for (const parent of inherited) {</span>
 <span class="cstat-no" title="statement not covered" >      if (parent === this._name || this.isSuperclassOf(parent)) {</span>
@@ -1190,7 +1190,7 @@ export class Role&lt;N extends Role.Name = Role.Name&gt;
   /**
    * Check if this role is a subclass of the role with the specified name.
    */
-  public <span class="fstat-no" title="function not covered" >isSubclassOf&lt;</span>N extends Role.Name&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isSubclassOf&lt;</span>N extends Role.Name&gt;(</span>
     name: N,
   ): this is Role&lt;Role.SubclassOf&lt;N&gt;&gt; {
 <span class="cstat-no" title="statement not covered" >    return Role.of(name).isSuperclassOf(this._name);</span>
@@ -1200,51 +1200,51 @@ export class Role&lt;N extends Role.Name = Role.Name&gt;
    * Check if this role either is, or is a subclass of, the role with the
    * specified name.
    */
-  public is&lt;N extends Role.Name&gt;(
+  public <span class="fstat-no" title="function not covered" >is&lt;</span>N extends Role.Name&gt;(
     name: N,
   ): this is Role&lt;N | Role.SubclassOf&lt;N&gt;&gt; {
-    return this.hasName(name) || <span class="branch-1 cbranch-no" title="branch not covered" >this.isSubclassOf(name);</span>
+    return this.hasName(name) || <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >this.isSubclassOf(name);</span></span>
   }
 &nbsp;
   /**
    * Check if this role is abstract.
    */
-  public isAbstract(): this is Role&lt;Role.Abstract&gt; {
+  public <span class="fstat-no" title="function not covered" >isAbstract(</span>): this is Role&lt;Role.Abstract&gt; {
     return Roles[this._name].abstract;
   }
 &nbsp;
   /**
    * Check if this role is non-abstract.
    */
-  public <span class="fstat-no" title="function not covered" >isConcrete(</span>): this is Role&lt;Role.Concrete&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isConcrete(</span>): this is Role&lt;Role.Concrete&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return !this.isAbstract();</span>
   }
 &nbsp;
   /**
    * Check if this role is presentational.
    */
-  public isPresentational(): this is Role&lt;Role.Presentational&gt; {
+  public <span class="fstat-no" title="function not covered" >isPresentational(</span>): this is Role&lt;Role.Presentational&gt; {
     return this.hasName("presentation") || this.hasName("none");
   }
 &nbsp;
   /**
    * Check if this role is a widget.
    */
-  public <span class="fstat-no" title="function not covered" >isWidget(</span>): this is Role&lt;Role.Widget&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isWidget(</span>): this is Role&lt;Role.Widget&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this.is("widget");</span>
   }
 &nbsp;
   /**
    * Check if this role is a landmark.
    */
-  public <span class="fstat-no" title="function not covered" >isLandmark(</span>): this is Role&lt;Role.Landmark&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isLandmark(</span>): this is Role&lt;Role.Landmark&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this.is("landmark");</span>
   }
 &nbsp;
   /**
    * Check if this role supports naming by the specified method.
    */
-  public isNamedBy(method: Role.NamedBy): boolean {
+  public <span class="fstat-no" title="function not covered" >isNamedBy(</span>method: Role.NamedBy): boolean {
     for (const found of Roles[this._name].name.from) {
       if (found === method) {
         return true;
@@ -1257,56 +1257,56 @@ export class Role&lt;N extends Role.Name = Role.Name&gt;
   /**
    * Check if this role prohibits naming.
    */
-  public isNameProhibited(): boolean {
+  public <span class="fstat-no" title="function not covered" >isNameProhibited(</span>): boolean {
     return Roles[this._name].name.prohibited;
   }
 &nbsp;
   /**
    * Check if this role has a required parent.
    */
-  public <span class="fstat-no" title="function not covered" >hasRequiredParent(</span>): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hasRequiredParent(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return Roles[this._name].parent.required.length &gt; 0;</span>
   }
 &nbsp;
   /**
    * Check if this role has presentational children.
    */
-  public hasPresentationalChildren(): boolean {
+  public <span class="fstat-no" title="function not covered" >hasPresentationalChildren(</span>): boolean {
     return Roles[this._name].children.presentational;
   }
 &nbsp;
   /**
    * Check if this role has required children.
    */
-  public hasRequiredChildren(): boolean {
+  public <span class="fstat-no" title="function not covered" >hasRequiredChildren(</span>): boolean {
     return Roles[this._name].children.required.length &gt; 0;
   }
 &nbsp;
   /**
    * Check if this role supports the specified attribute.
    */
-  public isAttributeSupported(name: Attribute.Name): boolean {
+  public <span class="fstat-no" title="function not covered" >isAttributeSupported(</span>name: Attribute.Name): boolean {
     return this._supportedAttributes.includes(name);
   }
 &nbsp;
   /**
    * Check if this role requires the specified attribute.
    */
-  public <span class="fstat-no" title="function not covered" >isAttributeRequired(</span>name: Attribute.Name): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isAttributeRequired(</span>n</span>ame: Attribute.Name): boolean {
 <span class="cstat-no" title="statement not covered" >    return this._requiredAttributes.includes(name);</span>
   }
 &nbsp;
   /**
    * Check if this role prohibits the specified attribute.
    */
-  public <span class="fstat-no" title="function not covered" >isAttributeProhibited(</span>name: Attribute.Name): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isAttributeProhibited(</span>n</span>ame: Attribute.Name): boolean {
 <span class="cstat-no" title="statement not covered" >    return this._prohibitedAttributes.includes(name);</span>
   }
 &nbsp;
   /**
    * Get the implicit value of the specified attribute, if any.
    */
-  public implicitAttributeValue(name: Attribute.Name): Option&lt;string&gt; {
+  public <span class="fstat-no" title="function not covered" >implicitAttributeValue(</span>name: Attribute.Name): Option&lt;string&gt; {
     const { inherited, attributes } = Roles[this._name];
 &nbsp;
     for (const [found, { value }] of attributes) {
@@ -1324,15 +1324,15 @@ export class Role&lt;N extends Role.Name = Role.Name&gt;
     return None;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Role &amp;&amp; value._name === this._name;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash): void {
 <span class="cstat-no" title="statement not covered" >    hash.writeString(this._name);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Role.JSON {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): Role.JSON {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       name: this._name,
     };
@@ -1342,7 +1342,7 @@ export class Role&lt;N extends Role.Name = Role.Name&gt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Role {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >R</span>ole {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     name: Name;
@@ -1350,7 +1350,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
 &nbsp;
   export type Name = keyof Roles;
 &nbsp;
-  export function isName(value: string): value is Name {
+  export function <span class="cstat-no" title="statement not covered" >isName(value: string): value is Name {</span>
     return value in Roles;
   }
 &nbsp;
@@ -1420,7 +1420,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
     Roles[N]["name"]["from"]
   &gt;;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isRole&lt;</span>N extends Name&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isRole&lt;N extends Name&gt;(</span></span>
     value: unknown,
     name?: N,
   ): value is Role&lt;Name&gt; {
@@ -1431,20 +1431,20 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
    * Get the role assigned either explicitly or implicitly to an element, if
    * any.
    */
-  export function from(element: Element): Option&lt;Role&gt; {
+  export function <span class="cstat-no" title="statement not covered" >from(element: Element): Option&lt;Role&gt; {</span>
     return fromExplicit(element).orElse(() =&gt; fromImplicit(element));
   }
 &nbsp;
   /**
    * Get the role explicitly assigned to an element, if any.
    */
-  export function fromExplicit(element: Element): Option&lt;Role&gt; {
+  export function <span class="cstat-no" title="statement not covered" >fromExplicit(element: Element): Option&lt;Role&gt; {</span>
     const roles: Sequence&lt;string&gt; = element
       .attribute("role")
       .map((attribute) =&gt; attribute.tokens())
       .getOrElse(() =&gt; Sequence.empty());
 &nbsp;
-    return (
+<span class="cstat-no" title="statement not covered" >    return (</span>
       roles
         .map((role) =&gt; role.toLowerCase())
         .filter(isName)
@@ -1467,7 +1467,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
   /**
    * Get the role implicitly assigned to an element, if any.
    */
-  export function fromImplicit(element: Element): Option&lt;Role&gt; {
+  export function <span class="cstat-no" title="statement not covered" >fromImplicit(element: Element): Option&lt;Role&gt; {</span>
     return element.namespace.flatMap((namespace) =&gt;
       Feature.from(namespace, element.name).flatMap((feature) =&gt;
         Sequence.from(feature.role(element))
@@ -1519,7 +1519,7 @@ const isAllowedPresentational: Predicate&lt;Element&gt; = nor(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:00.559Z
+                at 2026-04-10T09:29:24.679Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

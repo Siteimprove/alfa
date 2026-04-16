@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Attribute } from "../dist/index.js";
-import { serialize } from "./parser.js";
+import { Attribute } from "../src/index.ts";
+import { serialize } from "./parser.ts";
 
 test(".parse() parses a type selector", (t) => {
   t.deepEqual(serialize("div"), {

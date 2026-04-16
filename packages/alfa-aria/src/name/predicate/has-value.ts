@@ -1,6 +1,6 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import type { Name } from "../name.js";
+import type { Name } from "../name.ts";
 
 const { equals } = Predicate;
 

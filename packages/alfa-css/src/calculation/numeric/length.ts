@@ -1,10 +1,10 @@
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax/index.js";
+import { type Parser as CSSParser, Token } from "../../syntax/index.ts";
 
-import { Converter, Unit } from "../../unit/index.js";
-import { Dimension } from "./dimension.js";
+import { Converter, Unit } from "../../unit/index.ts";
+import { Dimension } from "./dimension.ts";
 
 const { map, either } = Parser;
 

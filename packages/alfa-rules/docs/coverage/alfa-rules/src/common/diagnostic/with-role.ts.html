@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64.28% </span>
+                <span class="strong">55.55% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/14</span>
+                <span class='fraction'>10/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/7</span>
+                <span class='fraction'>3/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">36.84% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/10</span>
+                <span class='fraction'>7/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64.28% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/14</span>
+                <span class='fraction'>10/15</span>
             </div>
         
             
@@ -199,7 +199,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -239,7 +239,7 @@ export class WithRole extends Diagnostic {
 &nbsp;
   public static of(message: string, role: Role.Name): WithRole;
 &nbsp;
-  public static of(message: string, role?: Role.Name): Diagnostic {
+  public static <span class="fstat-no" title="function not covered" >of(</span>message: string, role?: Role.Name): Diagnostic {
     return role === undefined
       ? <span class="branch-0 cbranch-no" title="branch not covered" >new Diagnostic(message)</span>
       : new WithRole(message, role);
@@ -247,12 +247,12 @@ export class WithRole extends Diagnostic {
 &nbsp;
   protected readonly _role: Role.Name;
 &nbsp;
-  protected constructor(message: string, role: Role.Name) {
+<span class="fstat-no" title="function not covered" >  protected constructor(m</span>essage: string, role: Role.Name) {
     super(message);
     this._role = role;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >role(</span>): Role.Name {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >role(</span>): Role.Name {</span>
 <span class="cstat-no" title="statement not covered" >    return this._role;</span>
   }
 &nbsp;
@@ -260,20 +260,20 @@ export class WithRole extends Diagnostic {
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof WithRole &amp;&amp;
       value._message === this._message &amp;&amp;
       value._role === this._role
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    super.hash(hash);</span>
 <span class="cstat-no" title="statement not covered" >    hash.writeString(this._role);</span>
   }
 &nbsp;
-  public toJSON(options?: dom.Node.SerializationOptions): WithRole.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: dom.Node.SerializationOptions): WithRole.JSON {
     return {
       ...super.toJSON(options),
       role: this._role,
@@ -284,7 +284,7 @@ export class WithRole extends Diagnostic {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >WithRole {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >W</span>ithRole {</span></span>
   export interface JSON extends Diagnostic.JSON {
     role: string;
   }
@@ -293,11 +293,11 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >W
 &nbsp;
   export function isWithRole(value: unknown): value is WithRole;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isWithRole(</span>value: unknown): value is WithRole {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isWithRole(v</span>alue: unknown): value is WithRole {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof WithRole;</span>
   }
 &nbsp;
-  export function getRoleName(element: Element, device: Device): Role.Name {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >getRoleName(</span>element: Element, device: Device): Role.Name {</span>
     return Node.from(element, device)
       .role.map((role) =&gt; role.name)
       .getOr("generic");
@@ -310,7 +310,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >W
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:08:25.373Z
+                at 2026-04-10T09:31:39.916Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

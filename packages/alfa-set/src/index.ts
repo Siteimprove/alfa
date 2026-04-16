@@ -1,1 +1,1 @@
-export * from "./set.js";
+export * from "./set.ts";

@@ -6,9 +6,9 @@ import {
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import type { Selector } from "../../index.js";
+import type { Selector } from "../../index.ts";
 
-import { PseudoElementSelector } from "./pseudo-element.js";
+import { PseudoElementSelector } from "./pseudo-element.ts";
 
 const { either, map, right, take } = Parser;
 

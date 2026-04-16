@@ -4,12 +4,12 @@ import type { Hash } from "@siteimprove/alfa-hash";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { Real } from "@siteimprove/alfa-math";
 
-import type { Math } from "../../calculation/index.js";
-import { Numeric as BaseNumeric } from "../../calculation/numeric/index.js";
+import type { Math } from "../../calculation/index.ts";
+import { Numeric as BaseNumeric } from "../../calculation/numeric/index.ts";
 
-import type { Resolvable } from "../resolvable.js";
-import { Value } from "../value.js";
-import type { Length } from "./length.js";
+import type { Resolvable } from "../resolvable.ts";
+import { Value } from "../value.ts";
+import type { Length } from "./length.ts";
 
 /**
  * @public

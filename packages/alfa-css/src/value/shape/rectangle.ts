@@ -6,14 +6,14 @@ import {
   Function,
   type Parser as CSSParser,
   Token,
-} from "../../syntax/index.js";
+} from "../../syntax/index.ts";
 
-import { Keyword } from "../textual/keyword.js";
-import { Length } from "../numeric/index.js";
-import type { Resolvable } from "../resolvable.js";
-import { Value } from "../value.js";
+import { Keyword } from "../textual/keyword.ts";
+import { Length } from "../numeric/index.ts";
+import type { Resolvable } from "../resolvable.ts";
+import { Value } from "../value.ts";
 
-import { BasicShape } from "./basic-shape.js";
+import { BasicShape } from "./basic-shape.ts";
 
 const { either, map, option, separatedList } = Parser;
 

@@ -1,9 +1,9 @@
 import { type Predicate } from "@siteimprove/alfa-predicate";
 
-import { type Node } from "../../node.js";
-import { type Role } from "../../role.js";
+import { type Node } from "../../node.ts";
+import { type Role } from "../../role.ts";
 
-import { hasName } from "../../role/predicate/has-name.js";
+import { hasName } from "../../role/predicate/has-name.ts";
 
 /**
  * @public

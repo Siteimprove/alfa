@@ -1,5 +1,5 @@
 import { Real } from "@siteimprove/alfa-math";
-import type { CSS4Color } from "../../dist/value/color/css4-color.js";
+import type { CSS4Color } from "../../src/value/color/css4-color.ts";
 
 /** @internal */
 export function color(

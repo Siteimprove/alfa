@@ -1,7 +1,7 @@
 import { Refinement } from "@siteimprove/alfa-refinement";
-import type { Comparer, TupleComparer } from "./comparer.js";
+import type { Comparer, TupleComparer } from "./comparer.ts";
 
-import { Comparison } from "./comparison.js";
+import { Comparison } from "./comparison.ts";
 
 const { isString, isNumber, isBigInt, isBoolean, isFunction, isObject } =
   Refinement;

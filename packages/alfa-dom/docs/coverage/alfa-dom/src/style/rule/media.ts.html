@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">44.44% </span>
+                <span class="strong">48% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/18</span>
+                <span class='fraction'>12/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">25% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>2/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30.76% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/13</span>
+                <span class='fraction'>12/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">47.05% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/17</span>
+                <span class='fraction'>9/18</span>
             </div>
         
             
@@ -179,7 +179,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -187,18 +187,18 @@
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -215,8 +215,8 @@ import type { Predicate } from "@siteimprove/alfa-predicate";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 &nbsp;
-import type { Rule } from "./index.js";
-import { ConditionRule } from "./condition.js";
+import type { Rule } from "./index.ts";
+import { ConditionRule } from "./condition.ts";
 &nbsp;
 /**
  * @public
@@ -236,16 +236,16 @@ export class MediaRule extends ConditionRule&lt;"media"&gt; {
       .getOr(Feature.Media.List.of([]));
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >queries(</span>): Feature.Media.List {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >queries(</span>): Feature.Media.List {</span>
 <span class="cstat-no" title="statement not covered" >    return this._queries;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): MediaRule.JSON {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): MediaRule.JSON {</span>
 <span class="cstat-no" title="statement not covered" >    return super.toJSON();</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
-    const rules = <span class="cstat-no" title="statement not covered" >this._rules</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
+    const rules = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._rules</span></span>
       .map(<span class="fstat-no" title="function not covered" >(r</span>ule) =&gt; <span class="cstat-no" title="statement not covered" >String.indent(rule.toString()))</span>
       .join("\n\n");
 &nbsp;
@@ -256,15 +256,15 @@ export class MediaRule extends ConditionRule&lt;"media"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >MediaRule {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >MediaRule {</span></span>
   export interface JSON extends ConditionRule.JSON&lt;"media"&gt; {}
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isMediaRule(</span>value: unknown): value is MediaRule {
+  export function isMediaRule(value: unknown): value is MediaRule {
 <span class="cstat-no" title="statement not covered" >    return value instanceof MediaRule;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >matches(</span>device: Device): Predicate&lt;MediaRule&gt; {
-<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >(r</span>ule) =&gt; <span class="cstat-no" title="statement not covered" >rule.queries.matches(device);</span></span>
+  export function matches(device: Device): Predicate&lt;MediaRule&gt; {
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(r</span></span>ule) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >rule.queries.matches(device);</span></span></span>
   }
 &nbsp;
   /**
@@ -274,8 +274,8 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >M
     json: JSON,
     fromRule: (json: Rule.JSON) =&gt; Trampoline&lt;Rule&gt;,
   ): Trampoline&lt;MediaRule&gt; {
-<span class="cstat-no" title="statement not covered" >    return Trampoline.traverse(json.rules, fromRule).map(<span class="fstat-no" title="function not covered" >(r</span>ules) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      MediaRule.of(json.condition, rules),</span>
+<span class="cstat-no" title="statement not covered" >    return Trampoline.traverse(json.rules, fromRule).map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(r</span></span>ules) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      MediaRule.of(json.condition, rules),</span></span>
     );
   }
 }
@@ -286,7 +286,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >M
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:21.155Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

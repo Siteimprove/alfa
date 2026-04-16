@@ -1,5 +1,5 @@
 import { Parser } from "@siteimprove/alfa-parser";
-import { Token } from "./token.js";
+import { Token } from "./token.ts";
 
 const { option, delimited } = Parser;
 

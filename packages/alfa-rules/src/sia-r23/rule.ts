@@ -3,11 +3,11 @@ import { DOM } from "@siteimprove/alfa-aria";
 import type { Element } from "@siteimprove/alfa-dom";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { audio } from "../common/applicability/audio.js";
-import { audioTranscript } from "../common/expectation/media-transcript.js";
-import type { Question } from "../common/act/question.js";
+import { audio } from "../common/applicability/audio.ts";
+import { audioTranscript } from "../common/expectation/media-transcript.ts";
+import type { Question } from "../common/act/question.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { isPerceivableForAll } = DOM;
 

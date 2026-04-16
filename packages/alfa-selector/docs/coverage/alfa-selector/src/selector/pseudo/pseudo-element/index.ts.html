@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.16% </span>
+                <span class="strong">70.83% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>38/48</span>
+                <span class='fraction'>34/48</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.57% </span>
+                <span class="strong">64.28% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>11/14</span>
+                <span class='fraction'>9/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -250,8 +250,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -277,7 +277,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
@@ -289,21 +289,14 @@
 <span class="cline-any cline-yes">160x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -312,7 +305,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">89x</span>
@@ -343,8 +343,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">127x</span>
-<span class="cline-any cline-yes">127x</span>
-<span class="cline-any cline-yes">127x</span>
+<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -359,7 +359,7 @@
 <span class="cline-any cline-yes">38x</span>
 <span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">38x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -391,26 +391,26 @@
 import { Err } from "@siteimprove/alfa-result";
 import { Parser } from "@siteimprove/alfa-parser";
 &nbsp;
-import type { Selector } from "../../index.js";
+import type { Selector } from "../../index.ts";
 &nbsp;
-import { After } from "./after.js";
-import { Backdrop } from "./backdrop.js";
-import { Before } from "./before.js";
-import { Cue } from "./cue.js";
-import { CueRegion } from "./cue-region.js";
-import { FileSelectorButton } from "./file-selector-button.js";
-import { FirstLetter } from "./first-letter.js";
-import { FirstLine } from "./first-line.js";
-import { GrammarError } from "./grammar-error.js";
-import { Marker } from "./marker.js";
-import { Part } from "./part.js";
-import { Placeholder } from "./placeholder.js";
-import { Selection } from "./selection.js";
-import { Slotted } from "./slotted.js";
-import { SpellingError } from "./spelling-error.js";
-import { TargetText } from "./target-text.js";
+import { After } from "./after.ts";
+import { Backdrop } from "./backdrop.ts";
+import { Before } from "./before.ts";
+import { Cue } from "./cue.ts";
+import { CueRegion } from "./cue-region.ts";
+import { FileSelectorButton } from "./file-selector-button.ts";
+import { FirstLetter } from "./first-letter.ts";
+import { FirstLine } from "./first-line.ts";
+import { GrammarError } from "./grammar-error.ts";
+import { Marker } from "./marker.ts";
+import { Part } from "./part.ts";
+import { Placeholder } from "./placeholder.ts";
+import { Selection } from "./selection.ts";
+import { Slotted } from "./slotted.ts";
+import { SpellingError } from "./spelling-error.ts";
+import { TargetText } from "./target-text.ts";
 &nbsp;
-import { PseudoElementSelector } from "./pseudo-element.js";
+import { PseudoElementSelector } from "./pseudo-element.ts";
 &nbsp;
 const { right } = Parser;
 const { parseLegacy, parseNonLegacy } = PseudoElementSelector;
@@ -439,10 +439,10 @@ export type PseudoElement =
 /**
  * @public
  */
-export namespace PseudoElement {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace PseudoElement {</span>
   export type JSON = PseudoElementSelector.JSON;
 &nbsp;
-  export function isPseudoElement(
+  export function <span class="cstat-no" title="statement not covered" >isPseudoElement(</span>
     value: unknown,
   ): value is PseudoElementSelector {
     // Note: this is not totally true as we could extend PseudoElementSelector
@@ -490,7 +490,7 @@ export namespace PseudoElement {
    * of the `either` parser combinator to avoid backtracking. Any changes to
    * this function should be benchmarked.
    */
-  export function parseWithoutColon(
+  export function <span class="cstat-no" title="statement not covered" >parseWithoutColon(</span>
     parseSelector: Selector.Parser.Component,
     isDoubleColon: boolean,
   ): CSSParser&lt;PseudoElement&gt; {
@@ -532,7 +532,7 @@ export namespace PseudoElement {
     };
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >parse(</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >parse(</span></span></span>
     parseSelector: Selector.Parser.Component,
   ): CSSParser&lt;PseudoElement&gt; {
 <span class="cstat-no" title="statement not covered" >    return right(Token.parseColon, <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(i</span></span>nput) =&gt; {</span>
@@ -556,7 +556,7 @@ export namespace PseudoElement {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:57.167Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

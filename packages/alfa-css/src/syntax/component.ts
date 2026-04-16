@@ -4,10 +4,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Block } from "./block.js";
-import { Function } from "./function.js";
-import type { Parser as CSSParser } from "./parser.js";
-import { Token } from "./token.js";
+import { Block } from "./block.ts";
+import { Function } from "./function.ts";
+import type { Parser as CSSParser } from "./parser.ts";
+import { Token } from "./token.ts";
 
 const { delimited, either, option, map } = Parser;
 

@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R90, { Outcomes } from "../../dist/sia-r90/rule.js";
+import R90, { Outcomes } from "../../src/sia-r90/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test("evaluate() passes a button with only text node children", async (t) => {
   const target = <button>Foo</button>;

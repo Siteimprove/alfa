@@ -4,8 +4,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Selective } from "@siteimprove/alfa-selective";
 import { String } from "@siteimprove/alfa-string";
 
-import { Style } from "../../style.js";
-import { isRendered } from "../predicate/is-rendered.js";
+import { Style } from "../../style.ts";
+import { isRendered } from "../predicate/is-rendered.ts";
 
 const { hasName, isElement } = Element;
 const { isText } = Text;

@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.14% </span>
+                <span class="strong">78.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>23/28</span>
+                <span class='fraction'>22/28</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.91% </span>
+                <span class="strong">47.82% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>17/23</span>
+                <span class='fraction'>11/23</span>
             </div>
         
             
@@ -174,7 +174,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -242,12 +242,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">47x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -261,7 +261,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">123x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -269,11 +269,11 @@
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 &nbsp;
-import { Specificity } from "../../specificity.js";
+import { Specificity } from "../../specificity.ts";
 &nbsp;
-import { WithName } from "../selector.js";
+import { WithName } from "../selector.ts";
 &nbsp;
-import { parseName } from "./parser.js";
+import { parseName } from "./parser.ts";
 &nbsp;
 const { map } = Parser;
 &nbsp;
@@ -283,14 +283,14 @@ const { map } = Parser;
  * @public
  */
 export class Type extends WithName&lt;"type"&gt; {
-  public static of(namespace: Option&lt;string&gt;, name: string): Type {
+  public static <span class="fstat-no" title="function not covered" >of(</span>namespace: Option&lt;string&gt;, name: string): Type {
     return new Type(namespace, name);
   }
 &nbsp;
   private readonly _namespace: Option&lt;string&gt;;
   protected readonly _key: Option&lt;Type&gt;;
 &nbsp;
-  protected constructor(namespace: Option&lt;string&gt;, name: string) {
+<span class="fstat-no" title="function not covered" >  protected constructor(n</span>amespace: Option&lt;string&gt;, name: string) {
     super("type", name, Specificity.of(0, 0, 1), false);
     this._namespace = namespace;
 &nbsp;
@@ -301,7 +301,7 @@ export class Type extends WithName&lt;"type"&gt; {
 <span class="cstat-no" title="statement not covered" >    return this._namespace;</span>
   }
 &nbsp;
-  public matches(element: Element): boolean {
+  public <span class="fstat-no" title="function not covered" >matches(</span>element: Element): boolean {
     if (this._name !== element.name) {
       return false;
     }
@@ -329,14 +329,14 @@ export class Type extends WithName&lt;"type"&gt; {
 <span class="cstat-no" title="statement not covered" >    yield this;</span>
   }
 &nbsp;
-  public toJSON(): Type.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Type.JSON {
     return {
       ...super.toJSON(),
       namespace: this._namespace.getOr(null),
     };
   }
 &nbsp;
-  public toString(): string {
+  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
     const namespace = this._namespace
       .map((namespace) =&gt; `${namespace}|`)
       .getOr("");
@@ -348,12 +348,12 @@ export class Type extends WithName&lt;"type"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Type {</span></span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >T</span>ype {</span></span>
   export interface JSON extends WithName.JSON&lt;"type"&gt; {
     namespace: string | null;
   }
 &nbsp;
-  export function isType(value: unknown): value is Type {
+  export function <span class="cstat-no" title="statement not covered" >isType(value: unknown): value is Type {</span>
     return value instanceof Type;
   }
 &nbsp;
@@ -373,7 +373,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:57.167Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

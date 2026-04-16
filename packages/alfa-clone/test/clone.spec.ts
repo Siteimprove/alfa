@@ -1,6 +1,6 @@
 import { describe, it } from "vitest";
 
-import { Clone } from "../dist/clone.js";
+import { Clone } from "../src/clone.ts";
 
 class Point implements Clone<Point> {
   constructor(

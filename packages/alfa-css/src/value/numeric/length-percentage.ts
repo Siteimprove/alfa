@@ -2,18 +2,18 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Math } from "../../calculation/index.js";
-import * as Base from "../../calculation/numeric/index.js";
-import type { Token } from "../../syntax/index.js";
-import { type Parser as CSSParser } from "../../syntax/index.js";
-import type { Unit } from "../../unit/index.js";
+import { Math } from "../../calculation/index.ts";
+import * as Base from "../../calculation/numeric/index.ts";
+import type { Token } from "../../syntax/index.ts";
+import { type Parser as CSSParser } from "../../syntax/index.ts";
+import type { Unit } from "../../unit/index.ts";
 
-import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.ts";
 
-import { Dimension } from "./dimension.js";
-import { Length } from "./length.js";
-import type { Numeric } from "./numeric.js";
-import { Percentage } from "./percentage.js";
+import { Dimension } from "./dimension.ts";
+import { Length } from "./length.ts";
+import type { Numeric } from "./numeric.ts";
+import { Percentage } from "./percentage.ts";
 
 const { either, map } = Parser;
 

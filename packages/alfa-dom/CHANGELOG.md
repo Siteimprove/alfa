@@ -1,5 +1,29 @@
 # @siteimprove/alfa-dom
 
+## 0.114.3
+
+### Patch Changes
+
+- **Changed:** Internal overhaul of the code structure with no outside impact. ([`6371d0a`](https://github.com/Siteimprove/alfa/commit/6371d0a1ad09fc5260c05e4b43c90efdfb86b87d))
+
+## 0.114.2
+
+### Patch Changes
+
+- **Fixed:** `getNodesInclusivelyBetween` now again correctly passes `treeOptions` to `lowestCommonAncestor`. ([#2056](https://github.com/Siteimprove/alfa/pull/2056))
+
+## 0.114.1
+
+### Patch Changes
+
+- **Fixed:** `fullTree` as default traversal in getNodesBetween has been restored after being changed to `Traversal.empty` in #2040. ([#2050](https://github.com/Siteimprove/alfa/pull/2050))
+
+## 0.114.0
+
+### Minor Changes
+
+- **Breaking:** Functions no longer accept injected default traversal. Defaults are set in the function signatures. ([#2049](https://github.com/Siteimprove/alfa/pull/2049))
+
 ## 0.113.0
 
 ### Minor Changes

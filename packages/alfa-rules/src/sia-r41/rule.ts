@@ -10,14 +10,14 @@ import type { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { expectation } from "../common/act/expectation.js";
-import { Group } from "../common/act/group.js";
-import { Question } from "../common/act/question.js";
+import { expectation } from "../common/act/expectation.ts";
+import { Group } from "../common/act/group.ts";
+import { Question } from "../common/act/question.ts";
 
-import { referenceSameResource } from "../common/predicate.js";
+import { referenceSameResource } from "../common/predicate.ts";
 
-import { WithName } from "../common/diagnostic.js";
-import { Scope, Stability } from "../tags/index.js";
+import { WithName } from "../common/diagnostic.ts";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;

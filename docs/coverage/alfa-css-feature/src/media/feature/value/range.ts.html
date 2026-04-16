@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.37% </span>
+                <span class="strong">73.8% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>29/37</span>
+                <span class='fraction'>31/42</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">59.09% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>13/22</span>
+                <span class='fraction'>14/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">63.88% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>14/21</span>
+                <span class='fraction'>23/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.37% </span>
+                <span class="strong">78.94% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>29/37</span>
+                <span class='fraction'>30/38</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -320,20 +320,20 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">238x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">238x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">235x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -346,9 +346,9 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import type { Bound } from "./bound.js";
-import type { Discrete } from "./discrete.js";
-import type { Value } from "./value.js";
+import type { Bound } from "./bound.ts";
+import type { Discrete } from "./discrete.ts";
+import type { Value } from "./value.ts";
 &nbsp;
 /**
  * A range, with an optional minimum and maximum bound, both of which may be
@@ -383,7 +383,7 @@ export class Range&lt;T = unknown&gt;
     return this._minimum;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >maximum(</span>): Option&lt;Bound&lt;T&gt;&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >maximum(</span>): Option&lt;Bound&lt;T&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._maximum;</span>
   }
 &nbsp;
@@ -394,11 +394,11 @@ export class Range&lt;T = unknown&gt;
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toLength(</span>): Range&lt;T | Length&lt;"px"&gt;&gt; {
-<span class="cstat-no" title="statement not covered" >    return this.map(<span class="fstat-no" title="function not covered" >(b</span>ound) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      Refinement.and(</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toLength(</span>): Range&lt;T | Length&lt;"px"&gt;&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return this.map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(b</span></span>ound) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      Refinement.and(</span></span>
         Number.isNumber,
-<span class="fstat-no" title="function not covered" >        (v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" >!value.hasCalculation() &amp;&amp; value.value === 0,</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >        (v</span></span>alue) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >!value.hasCalculation() &amp;&amp; value.value === 0,</span></span>
       )(bound)
         ? Length.of(0, "px")
         : bound,
@@ -441,16 +441,16 @@ export class Range&lt;T = unknown&gt;
     return true;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hasValue&lt;</span>U extends T&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hasValue&lt;</span>U extends T&gt;(</span>
     refinement: Refinement&lt;T, U&gt;,
   ): this is Discrete&lt;U&gt; {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       this._minimum.every(<span class="fstat-no" title="function not covered" >(b</span>ound) =&gt; <span class="cstat-no" title="statement not covered" >refinement(bound.value))</span> &amp;&amp;
       this._maximum.every(<span class="fstat-no" title="function not covered" >(b</span>ound) =&gt; <span class="cstat-no" title="statement not covered" >refinement(bound.value))</span>
     );
   }
 &nbsp;
-  public toJSON(): Range.JSON&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Range.JSON&lt;T&gt; {
     return {
       type: "range",
       minimum: this._minimum.map((bound) =&gt; bound.toJSON()).getOr(null),
@@ -462,7 +462,7 @@ export class Range&lt;T = unknown&gt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Range {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Range {</span></span>
   export interface JSON&lt;T&gt; {
     [key: string]: json.JSON;
     type: "range";
@@ -481,7 +481,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

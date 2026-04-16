@@ -8,7 +8,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import * as builtin from "./builtin.js";
+import * as builtin from "./builtin.ts";
 
 const { isEmpty } = Iterable;
 

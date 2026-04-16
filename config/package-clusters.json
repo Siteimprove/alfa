@@ -162,7 +162,6 @@
           ]
         },
         "@siteimprove/alfa-aria",
-        "@siteimprove/alfa-compatibility",
         "@siteimprove/alfa-device",
         "@siteimprove/alfa-iana",
         "@siteimprove/alfa-xpath"

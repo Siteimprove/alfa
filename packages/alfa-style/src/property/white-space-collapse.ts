@@ -1,4 +1,4 @@
-import { Longhand } from "../longhand.js";
+import { Longhand } from "../longhand.ts";
 
 export default Longhand.fromKeywords(
   { inherits: true },

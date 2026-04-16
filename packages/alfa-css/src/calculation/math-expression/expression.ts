@@ -5,7 +5,7 @@ import { Err } from "@siteimprove/alfa-result";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import type { Unit } from "../../unit/index.js";
+import type { Unit } from "../../unit/index.ts";
 
 import type {
   Angle,
@@ -13,9 +13,9 @@ import type {
   Number,
   Numeric,
   Percentage,
-} from "../numeric/index.js";
+} from "../numeric/index.ts";
 
-import type { Kind } from "./kind.js";
+import type { Kind } from "./kind.ts";
 
 /**
  * {@link https://drafts.csswg.org/css-values/#calculation-tree}

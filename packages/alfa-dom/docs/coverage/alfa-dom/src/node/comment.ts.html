@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">24% </span>
+                <span class="strong">29.03% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/25</span>
+                <span class='fraction'>9/31</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.5% </span>
+                <span class="strong">14.28% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/8</span>
+                <span class='fraction'>2/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.36% </span>
+                <span class="strong">52.38% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/11</span>
+                <span class='fraction'>11/21</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">24% </span>
+                <span class="strong">26.92% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/25</span>
+                <span class='fraction'>7/26</span>
             </div>
         
             
@@ -262,26 +262,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -291,7 +291,7 @@
 &nbsp;
 import * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { BaseNode } from "./node.js";
+import { BaseNode } from "./node.ts";
 &nbsp;
 /**
  * @public
@@ -323,22 +323,22 @@ export class Comment extends BaseNode&lt;"comment"&gt; {
     this._data = data;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >data(</span>): string {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >data(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return this._data;</span>
   }
 &nbsp;
   /**
    * @internal
    **/
-  protected <span class="fstat-no" title="function not covered" >_internalPath(</span>options?: BaseNode.Traversal): string {
-    let path = <span class="cstat-no" title="statement not covered" >this.parent(options)</span>
+  protected <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >_internalPath(</span>o</span>ptions?: BaseNode.Traversal): string {
+    let path = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.parent(options)</span></span>
       .map(<span class="fstat-no" title="function not covered" >(p</span>arent) =&gt; <span class="cstat-no" title="statement not covered" >parent.path(options))</span>
       .getOr("/");
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    path += path === "/" ? "" : "/";</span>
 <span class="cstat-no" title="statement not covered" >    path += "comment()";</span>
 &nbsp;
-    const index = <span class="cstat-no" title="statement not covered" >this.index(options, Comment.isComment);</span>
+    const index = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this.index(options, Comment.isComment);</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    path += `[${index + 1}]`;</span>
 &nbsp;
@@ -353,7 +353,7 @@ export class Comment extends BaseNode&lt;"comment"&gt; {
     },
   ): Comment.MinimalJSON;
   public toJSON(options?: BaseNode.SerializationOptions): Comment.JSON;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span></span>
     options?: BaseNode.SerializationOptions,
   ): Comment.MinimalJSON | Comment.JSON {
     const result = <span class="cstat-no" title="statement not covered" >{</span>
@@ -361,7 +361,7 @@ export class Comment extends BaseNode&lt;"comment"&gt; {
     };
 <span class="cstat-no" title="statement not covered" >    delete result.children;</span>
 &nbsp;
-    const verbosity = <span class="cstat-no" title="statement not covered" >options?.verbosity ?? json.Serializable.Verbosity.Medium;</span>
+    const verbosity = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >options?.verbosity ?? json.Serializable.Verbosity.Medium;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (verbosity &lt; json.Serializable.Verbosity.Medium) {</span>
 <span class="cstat-no" title="statement not covered" >      return result;</span>
@@ -371,7 +371,7 @@ export class Comment extends BaseNode&lt;"comment"&gt; {
 <span class="cstat-no" title="statement not covered" >    return result;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `&lt;!--${this._data}--&gt;`;</span>
   }
 }
@@ -379,14 +379,14 @@ export class Comment extends BaseNode&lt;"comment"&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Comment {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Comment {</span></span>
   export interface MinimalJSON extends BaseNode.JSON&lt;"comment"&gt; {}
 &nbsp;
   export interface JSON extends BaseNode.JSON&lt;"comment"&gt; {
     data: string;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isComment(</span>value: unknown): value is Comment {
+  export function isComment(value: unknown): value is Comment {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Comment;</span>
   }
 &nbsp;
@@ -406,7 +406,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:21.155Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

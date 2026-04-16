@@ -3,10 +3,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { Condition } from "../condition/index.js";
-import type { Feature } from "../feature.js";
+import { Condition } from "../condition/index.ts";
+import type { Feature } from "../feature.ts";
 
-import { Property } from "./feature/index.js";
+import { Property } from "./feature/index.ts";
 
 const { end, left, map } = Parser;
 

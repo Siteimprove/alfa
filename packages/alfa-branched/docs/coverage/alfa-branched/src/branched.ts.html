@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50.83% </span>
+                <span class="strong">50.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>61/120</span>
+                <span class='fraction'>76/151</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.52% </span>
+                <span class="strong">76.92% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>25/34</span>
+                <span class='fraction'>40/52</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.66% </span>
+                <span class="strong">37.97% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>42/90</span>
+                <span class='fraction'>60/158</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">50.44% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>56/112</span>
+                <span class='fraction'>57/113</span>
             </div>
         
             
@@ -827,7 +827,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1011,7 +1011,7 @@ const { not } = Predicate;
 export class Branched&lt;T, B = never&gt;
   implements Collection&lt;T&gt;, Iterable&lt;[T, Iterable&lt;B&gt;]&gt;
 {
-  public static of&lt;T, B = never&gt;(
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T, B = never&gt;(
     value: T,
     ...branches: Array&lt;B&gt;
   ): Branched&lt;T, B&gt; {
@@ -1027,28 +1027,28 @@ export class Branched&lt;T, B = never&gt;
 &nbsp;
   private readonly _values: List&lt;Value&lt;T, B&gt;&gt;;
 &nbsp;
-  protected constructor(values: List&lt;Value&lt;T, B&gt;&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(v</span>alues: List&lt;Value&lt;T, B&gt;&gt;) {
     this._values = values;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >size(</span>): number {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >size(</span>): number {</span>
 <span class="cstat-no" title="statement not covered" >    return this._values.size;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isEmpty(</span>): this is Branched&lt;never, B&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isEmpty(</span>): this is Branched&lt;never, B&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >forEach(</span>callback: Callback&lt;T, void, [Iterable&lt;B&gt;]&gt;): void {
-<span class="cstat-no" title="statement not covered" >    this._values.forEach(<span class="fstat-no" title="function not covered" >({</span> value, branches }) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      callback(</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >forEach(</span>c</span>allback: Callback&lt;T, void, [Iterable&lt;B&gt;]&gt;): void {
+<span class="cstat-no" title="statement not covered" >    this._values.forEach(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >({</span></span> value, branches }) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      callback(</span></span>
         value,
-        branches.getOrElse(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >List.empty())</span>,
+        branches.getOrElse(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >L</span>ist.empty())</span>,
       ),
     );
   }
 &nbsp;
-  public map&lt;U&gt;(mapper: Mapper&lt;T, U, [Iterable&lt;B&gt;]&gt;): Branched&lt;U, B&gt; {
+  public <span class="fstat-no" title="function not covered" >map&lt;</span>U&gt;(mapper: Mapper&lt;T, U, [Iterable&lt;B&gt;]&gt;): Branched&lt;U, B&gt; {
     return new Branched(
       this._values.reduce(
         (values, { value, branches }) =&gt;
@@ -1065,11 +1065,11 @@ export class Branched&lt;T, B = never&gt;
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >apply&lt;</span>U&gt;(mapper: Branched&lt;Mapper&lt;T, U&gt;, B&gt;): Branched&lt;U, B&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >apply&lt;</span>U&gt;(m</span>apper: Branched&lt;Mapper&lt;T, U&gt;, B&gt;): Branched&lt;U, B&gt; {
 <span class="cstat-no" title="statement not covered" >    return mapper.flatMap(<span class="fstat-no" title="function not covered" >(m</span>apper) =&gt; <span class="cstat-no" title="statement not covered" >this.map(mapper))</span>;</span>
   }
 &nbsp;
-  public flatMap&lt;U&gt;(
+  public <span class="fstat-no" title="function not covered" >flatMap&lt;</span>U&gt;(
     mapper: Mapper&lt;T, Branched&lt;U, B&gt;, [Iterable&lt;B&gt;]&gt;,
   ): Branched&lt;U, B&gt; {
     return new Branched(
@@ -1092,17 +1092,17 @@ export class Branched&lt;T, B = never&gt;
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >flatten&lt;</span>T, B&gt;(this: Branched&lt;Branched&lt;T, B&gt;, B&gt;): Branched&lt;T, B&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >flatten&lt;</span>T, B&gt;(this: Branched&lt;Branched&lt;T, B&gt;, B&gt;): Branched&lt;T, B&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this.flatMap(<span class="fstat-no" title="function not covered" >(b</span>ranched) =&gt; <span class="cstat-no" title="statement not covered" >branched)</span>;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reduce&lt;</span>U&gt;(reducer: Reducer&lt;T, U, [Iterable&lt;B&gt;]&gt;, accumulator: U): U {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reduce&lt;</span>U&gt;(r</span>educer: Reducer&lt;T, U, [Iterable&lt;B&gt;]&gt;, accumulator: U): U {
 <span class="cstat-no" title="statement not covered" >    return this._values.reduce(</span>
-<span class="fstat-no" title="function not covered" >      (a</span>ccumulator, value) =&gt;
-<span class="cstat-no" title="statement not covered" >        reducer(</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >      (a</span></span>ccumulator, value) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        reducer(</span></span>
           accumulator,
           value.value,
-          value.branches.getOrElse(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >List.empty())</span>,
+          value.branches.getOrElse(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >L</span>ist.empty())</span>,
         ),
       accumulator,
     );
@@ -1114,12 +1114,12 @@ export class Branched&lt;T, B = never&gt;
 &nbsp;
   public filter(predicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): Branched&lt;T, B&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >filter(</span>predicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): Branched&lt;T, B&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >filter(</span>p</span>redicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): Branched&lt;T, B&gt; {
 <span class="cstat-no" title="statement not covered" >    return new Branched(</span>
-      this._values.filter(<span class="fstat-no" title="function not covered" >({</span> value, branches }) =&gt;
-<span class="cstat-no" title="statement not covered" >        predicate(</span>
+      this._values.filter(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >({</span></span> value, branches }) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        predicate(</span></span>
           value,
-          branches.getOrElse(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >List.empty())</span>,
+          branches.getOrElse(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >L</span>ist.empty())</span>,
         ),
       ),
     );
@@ -1131,7 +1131,7 @@ export class Branched&lt;T, B = never&gt;
 &nbsp;
   public reject(predicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): Branched&lt;T, B&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reject(</span>predicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): Branched&lt;T, B&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reject(</span>p</span>redicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): Branched&lt;T, B&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.filter(not(predicate));</span>
   }
 &nbsp;
@@ -1141,32 +1141,32 @@ export class Branched&lt;T, B = never&gt;
 &nbsp;
   public find(predicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): Option&lt;T&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >find(</span>predicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): Option&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >find(</span>p</span>redicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): Option&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    return this._values</span>
-      .find(<span class="fstat-no" title="function not covered" >({</span> value, branches }) =&gt;
-<span class="cstat-no" title="statement not covered" >        predicate(</span>
+      .find(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >({</span></span> value, branches }) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        predicate(</span></span>
           value,
-          branches.getOrElse(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >List.empty())</span>,
+          branches.getOrElse(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >L</span>ist.empty())</span>,
         ),
       )
       .map(<span class="fstat-no" title="function not covered" >({</span> value }) =&gt; <span class="cstat-no" title="statement not covered" >value)</span>;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >includes(</span>value: T): boolean {
-<span class="cstat-no" title="statement not covered" >    return this._values.some(<span class="fstat-no" title="function not covered" >({</span> value: found }) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      Equatable.equals(value, found),</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >includes(</span>v</span>alue: T): boolean {
+<span class="cstat-no" title="statement not covered" >    return this._values.some(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >({</span></span> value: found }) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      Equatable.equals(value, found),</span></span>
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >collect&lt;</span>U&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >collect&lt;</span>U&gt;(</span>
     mapper: Mapper&lt;T, Option&lt;U&gt;, [Iterable&lt;B&gt;]&gt;,
   ): Branched&lt;U, B&gt; {
 <span class="cstat-no" title="statement not covered" >    return new Branched(</span>
       this._values.reduce(
-<span class="fstat-no" title="function not covered" >        (v</span>alues, { value, branches }) =&gt;
-<span class="cstat-no" title="statement not covered" >          mapper(</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >        (v</span></span>alues, { value, branches }) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >          mapper(</span></span>
             value,
-            branches.getOrElse(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >List.empty())</span>,
+            branches.getOrElse(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >L</span>ist.empty())</span>,
           )
             .map(<span class="fstat-no" title="function not covered" >(v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" >merge(values, value, branches))</span>
             .getOr(values),
@@ -1175,23 +1175,23 @@ export class Branched&lt;T, B = never&gt;
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >collectFirst&lt;</span>U&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >collectFirst&lt;</span>U&gt;(</span>
     mapper: Mapper&lt;T, Option&lt;U&gt;, [Iterable&lt;B&gt;]&gt;,
   ): Option&lt;U&gt; {
-<span class="cstat-no" title="statement not covered" >    return this._values.collectFirst(<span class="fstat-no" title="function not covered" >({</span> value, branches }) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      mapper(</span>
+<span class="cstat-no" title="statement not covered" >    return this._values.collectFirst(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >({</span></span> value, branches }) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      mapper(</span></span>
         value,
-        branches.getOrElse(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >List.empty())</span>,
+        branches.getOrElse(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >L</span>ist.empty())</span>,
       ),
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >some(</span>predicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >some(</span>p</span>redicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): boolean {
 <span class="cstat-no" title="statement not covered" >    for (const value of this._values) {</span>
 <span class="cstat-no" title="statement not covered" >      if (</span>
         predicate(
           value.value,
-          value.branches.getOrElse(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >List.empty())</span>,
+          value.branches.getOrElse(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >L</span>ist.empty())</span>,
         )
       ) {
 <span class="cstat-no" title="statement not covered" >        return true;</span>
@@ -1201,16 +1201,16 @@ export class Branched&lt;T, B = never&gt;
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >none(</span>predicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >none(</span>p</span>redicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): boolean {
 <span class="cstat-no" title="statement not covered" >    return this.every(not(predicate));</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >every(</span>predicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >every(</span>p</span>redicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): boolean {
 <span class="cstat-no" title="statement not covered" >    for (const value of this._values) {</span>
 <span class="cstat-no" title="statement not covered" >      if (</span>
         !predicate(
           value.value,
-          value.branches.getOrElse(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >List.empty())</span>,
+          value.branches.getOrElse(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >L</span>ist.empty())</span>,
         )
       ) {
 <span class="cstat-no" title="statement not covered" >        return false;</span>
@@ -1220,10 +1220,10 @@ export class Branched&lt;T, B = never&gt;
 <span class="cstat-no" title="statement not covered" >    return true;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >count(</span>predicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): number {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >count(</span>p</span>redicate: Predicate&lt;T, [Iterable&lt;B&gt;]&gt;): number {
 <span class="cstat-no" title="statement not covered" >    return this.reduce(</span>
-<span class="fstat-no" title="function not covered" >      (c</span>ount, value, branches) =&gt;
-<span class="cstat-no" title="statement not covered" >        predicate(value, branches) ? count + 1 : count,</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >      (c</span></span>ount, value, branches) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        predicate(value, branches) ? count + 1 : count,</span></span>
       0,
     );
   }
@@ -1233,11 +1233,11 @@ export class Branched&lt;T, B = never&gt;
    * As branched values merges branches with duplicate values, they will only
    * ever contain distinct values.
    */
-  public <span class="fstat-no" title="function not covered" >distinct(</span>): Branched&lt;T, B&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >distinct(</span>): Branched&lt;T, B&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >tee&lt;</span>A extends Array&lt;unknown&gt; = []&gt;(
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >tee&lt;</span>A extends Array&lt;unknown&gt; = []&gt;(</span>
     callback: Callback&lt;this, void, [...args: A]&gt;,
     ...args: A
   ): this {
@@ -1245,7 +1245,7 @@ export class Branched&lt;T, B = never&gt;
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public branch(value: T, ...branches: Array&lt;B&gt;): Branched&lt;T, B&gt; {
+  public <span class="fstat-no" title="function not covered" >branch(</span>value: T, ...branches: Array&lt;B&gt;): Branched&lt;T, B&gt; {
     return new Branched(
       merge(
         this._values,
@@ -1259,21 +1259,21 @@ export class Branched&lt;T, B = never&gt;
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public equals(value: unknown): boolean {
+  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
     return value instanceof Branched &amp;&amp; value._values.equals(this._values);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash): void {
 <span class="cstat-no" title="statement not covered" >    hash.writeHashable(this._values);</span>
   }
 &nbsp;
-  public *[<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;[T, Iterable&lt;B&gt;]&gt; {
+  public *[<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.iterator]</span></span>(): Iterator&lt;[T, Iterable&lt;B&gt;]&gt; {
 <span class="cstat-no" title="statement not covered" >    for (const value of this._values) {</span>
-<span class="cstat-no" title="statement not covered" >      yield [value.value, value.branches.getOrElse(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >List.empty())</span>];</span>
+<span class="cstat-no" title="statement not covered" >      yield [value.value, value.branches.getOrElse(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >L</span>ist.empty())</span>];</span>
     }
   }
 &nbsp;
-  public toArray(): Array&lt;[T, Array&lt;B&gt;]&gt; {
+  public <span class="fstat-no" title="function not covered" >toArray(</span>): Array&lt;[T, Array&lt;B&gt;]&gt; {
     return this._values
       .toArray()
       .map(({ value, branches }) =&gt; [
@@ -1282,12 +1282,12 @@ export class Branched&lt;T, B = never&gt;
       ]);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Branched.JSON&lt;T, B&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): Branched.JSON&lt;T, B&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._values</span>
       .toArray()
-      .map(<span class="fstat-no" title="function not covered" >({</span> value, branches }) =&gt; <span class="cstat-no" title="statement not covered" >[</span>
+      .map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >({</span></span> value, branches }) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[</span></span>
         Serializable.toJSON(value),
-        branches.getOrElse(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >List.empty())</span>.toJSON(),
+        branches.getOrElse(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >L</span>ist.empty())</span>.toJSON(),
       ]);
   }
 }
@@ -1295,33 +1295,33 @@ export class Branched&lt;T, B = never&gt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Branched {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >B</span>ranched {</span></span>
   export type JSON&lt;T, B = never&gt; = Array&lt;
     [Serializable.ToJSON&lt;T&gt;, Array&lt;Serializable.ToJSON&lt;B&gt;&gt;]
   &gt;;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isBranched&lt;</span>T, B = never&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isBranched&lt;T, B = never&gt;(</span></span>
     value: unknown,
   ): value is Branched&lt;T, B&gt; {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Branched;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >from&lt;</span>T, B = never&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >from&lt;T, B = never&gt;(</span></span>
     values: Iterable&lt;readonly [T, Iterable&lt;B&gt;]&gt;,
   ): Branched&lt;T, B&gt; {
 <span class="cstat-no" title="statement not covered" >    if (isBranched&lt;T, B&gt;(values)) {</span>
 <span class="cstat-no" title="statement not covered" >      return values;</span>
     }
 &nbsp;
-    const [[value, branches], ...rest] = <span class="cstat-no" title="statement not covered" >values;</span>
+    const [[value, branches], ...rest] = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >values;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return rest.reduce(</span>
-<span class="fstat-no" title="function not covered" >      (r</span>esult, [value, branches]) =&gt; <span class="cstat-no" title="statement not covered" >result.branch(value, ...branches),</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >      (r</span></span>esult, [value, branches]) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >result.branch(value, ...branches),</span></span>
       Branched.of(value, ...branches),
     );
   }
 &nbsp;
-  export function traverse&lt;T, U, B&gt;(
+  export function <span class="cstat-no" title="statement not covered" >traverse&lt;T, U, B&gt;(</span>
     values: Iterable&lt;T&gt;,
     mapper: Mapper&lt;T, Branched&lt;U, B&gt;, [index: number]&gt;,
   ): Branched&lt;Iterable&lt;U&gt;, B&gt; {
@@ -1335,7 +1335,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >B
     );
   }
 &nbsp;
-  export function sequence&lt;T, B&gt;(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >sequence&lt;</span>T, B&gt;(</span>
     values: Iterable&lt;Branched&lt;T, B&gt;&gt;,
   ): Branched&lt;Iterable&lt;T&gt;, B&gt; {
     return traverse(values, (value) =&gt; value);
@@ -1343,7 +1343,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >B
 }
 &nbsp;
 class Value&lt;T, B&gt; implements Equatable, Hashable {
-  public static of&lt;T, B&gt;(
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T, B&gt;(
     value: T,
     branches: Option&lt;List&lt;B&gt;&gt; = None,
   ): Value&lt;T, B&gt; {
@@ -1353,33 +1353,33 @@ class Value&lt;T, B&gt; implements Equatable, Hashable {
   private readonly _value: T;
   private readonly _branches: Option&lt;List&lt;B&gt;&gt;;
 &nbsp;
-  protected constructor(value: T, branches: Option&lt;List&lt;B&gt;&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(v</span>alue: T, branches: Option&lt;List&lt;B&gt;&gt;) {
     this._value = value;
     this._branches = branches;
   }
 &nbsp;
-  public get value(): T {
+  public get <span class="fstat-no" title="function not covered" >value(</span>): T {
     return this._value;
   }
 &nbsp;
-  public get branches(): Option&lt;List&lt;B&gt;&gt; {
+  public get <span class="fstat-no" title="function not covered" >branches(</span>): Option&lt;List&lt;B&gt;&gt; {
     return this._branches;
   }
 &nbsp;
-  public equals(value: unknown): value is this {
-    return (
+  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+<span class="cstat-no" title="statement not covered" >    return (</span>
       value instanceof Value &amp;&amp;
       Equatable.equals(value._value, this._value) &amp;&amp;
       Equatable.equals(value._branches, this._branches)
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash): void {
 <span class="cstat-no" title="statement not covered" >    hash.writeUnknown(this._value).writeHashable(this._branches);</span>
   }
 }
 &nbsp;
-function merge&lt;T, B&gt;(
+function <span class="fstat-no" title="function not covered" >merge&lt;</span>T, B&gt;(
   values: List&lt;Value&lt;T, B&gt;&gt;,
   value: T,
   branches: Option&lt;List&lt;B&gt;&gt;,
@@ -1400,7 +1400,7 @@ function merge&lt;T, B&gt;(
   return deduplicate(values, value, branches).append(Value.of(value, branches));
 }
 &nbsp;
-function deduplicate&lt;T, B&gt;(
+function <span class="fstat-no" title="function not covered" >deduplicate&lt;</span>T, B&gt;(
   values: List&lt;Value&lt;T, B&gt;&gt;,
   value: T,
   branches: Option&lt;List&lt;B&gt;&gt;,
@@ -1429,7 +1429,7 @@ function deduplicate&lt;T, B&gt;(
   }, List.empty());
 }
 &nbsp;
-function narrow&lt;T, B&gt;(
+function <span class="fstat-no" title="function not covered" >narrow&lt;</span>T, B&gt;(
   branches: Option&lt;List&lt;B&gt;&gt;,
   scope: Option&lt;List&lt;B&gt;&gt;,
 ): Option&lt;List&lt;B&gt;&gt; {
@@ -1438,7 +1438,7 @@ function narrow&lt;T, B&gt;(
   );
 }
 &nbsp;
-function unused&lt;T, B&gt;(
+function <span class="fstat-no" title="function not covered" >unused&lt;</span>T, B&gt;(
   branches: Option&lt;List&lt;B&gt;&gt;,
   values: List&lt;Value&lt;T, B&gt;&gt;,
 ): Option&lt;List&lt;B&gt;&gt; {
@@ -1459,7 +1459,7 @@ function unused&lt;T, B&gt;(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:54.555Z
+                at 2026-04-10T09:29:19.291Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

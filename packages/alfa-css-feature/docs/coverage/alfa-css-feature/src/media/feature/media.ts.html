@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.91% </span>
+                <span class="strong">70.31% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>35/48</span>
+                <span class='fraction'>45/64</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70.37% </span>
+                <span class="strong">70% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>19/27</span>
+                <span class='fraction'>28/40</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">69.69% </span>
+                <span class="strong">64.51% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>23/33</span>
+                <span class='fraction'>40/62</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.72% </span>
+                <span class="strong">73.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>32/44</span>
+                <span class='fraction'>33/45</span>
             </div>
         
             
@@ -427,7 +427,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -650,11 +650,11 @@ import type * as json from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 &nbsp;
-import type { Feature } from "../../feature.js";
+import type { Feature } from "../../feature.ts";
 &nbsp;
-import { Value } from "./value/index.js";
+import { Value } from "./value/index.ts";
 &nbsp;
-import { Comparison } from "./comparison.js";
+import { Comparison } from "./comparison.ts";
 &nbsp;
 const { delimited, either, filter, left, map, option, pair, right, separated } =
   Parser;
@@ -673,38 +673,38 @@ export abstract class Media&lt;N extends string = string, T = unknown&gt;
   private readonly _name: N;
   protected readonly _value: Option&lt;Value&lt;T&gt;&gt;;
 &nbsp;
-  protected constructor(name: N, value: Option&lt;Value&lt;T&gt;&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(n</span>ame: N, value: Option&lt;Value&lt;T&gt;&gt;) {
     this._name = name;
     this._value = value;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >name(</span>): string {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >name(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return this._name;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >value(</span>): Option&lt;Value&lt;T&gt;&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >value(</span>): Option&lt;Value&lt;T&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._value;</span>
   }
 &nbsp;
   public abstract matches(device: Device): boolean;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Media &amp;&amp;
       value.name === this.name &amp;&amp;
       value._value.equals(this._value)
     );
   }
 &nbsp;
-  private *<span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;Media&lt;N, T&gt;&gt; {
+  private *<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >iterator(</span>): Iterator&lt;Media&lt;N, T&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    yield this;</span>
   }
 &nbsp;
-  public [<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;Media&lt;N, T&gt;&gt; {
+  public [<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.iterator]</span></span>(): Iterator&lt;Media&lt;N, T&gt;&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.iterator();</span>
   }
 &nbsp;
-  public toJSON(): Media.JSON&lt;N&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Media.JSON&lt;N&gt; {
     return {
       type: "feature",
       name: this._name,
@@ -712,12 +712,12 @@ export abstract class Media&lt;N extends string = string, T = unknown&gt;
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `${this.name}${this._value.map(<span class="fstat-no" title="function not covered" >(v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" >`: ${value}`)</span>.getOr("")}`;</span>
   }
 }
 &nbsp;
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Media {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >M</span>edia {</span></span>
   export interface JSON&lt;N extends string = string&gt; {
     [key: string]: json.JSON;
 &nbsp;
@@ -726,7 +726,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >M
     value: Value.JSON | null;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isMedia(</span>value: unknown): value is Media {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isMedia(v</span>alue: unknown): value is Media {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Media;</span>
   }
 &nbsp;
@@ -801,7 +801,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >M
   const parseLength = filter(
     Length.parse,
     (length): length is Length.Fixed =&gt; !length.hasCalculation(),
-<span class="fstat-no" title="function not covered" >    () =</span>&gt; <span class="cstat-no" title="statement not covered" >"Calculations no supported in media queries",</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >    () =</span>&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >"</span>Calculations no supported in media queries",</span></span>
   );
 &nbsp;
   function parseComparisonLengthBound&lt;C extends Comparison = Comparison&gt;(
@@ -852,8 +852,8 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >M
             parseComparisonLengthBound(Comparison.parseGreaterThan),
           ),
         ),
-<span class="fstat-no" title="function not covered" >        ([</span>[maximum], [minimum]]) =&gt;
-<span class="cstat-no" title="statement not covered" >          from(Option.of(Value.range(minimum, maximum))),</span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >        ([</span></span>[maximum], [minimum]]) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >          from(Option.of(Value.range(minimum, maximum))),</span></span>
       ),
 &nbsp;
       // &lt;mf-name&gt; &lt;mf-comparison&gt; &lt;mf-value&gt;
@@ -899,7 +899,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >M
   /**
    * @internal
    */
-  export function parseContinuous&lt;N extends string = string&gt;(
+  export function <span class="cstat-no" title="statement not covered" >parseContinuous&lt;N extends string = string&gt;(</span>
     name: N,
     from: (value: Option&lt;Value&lt;Length.Fixed&gt;&gt;) =&gt; Media&lt;N, Length.Fixed&gt;,
   ): CSSParser&lt;Media&lt;N, Length.Fixed&gt;&gt; {
@@ -913,7 +913,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >M
   /**
    * @internal
    */
-  export function parseDiscrete&lt;
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >parseDiscrete&lt;</span></span>
     N extends string = string,
     K extends string = string,
   &gt;(
@@ -934,7 +934,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >M
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:08.864Z
+                at 2026-04-10T09:29:32.705Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

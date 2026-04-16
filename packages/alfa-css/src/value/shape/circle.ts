@@ -5,15 +5,15 @@ import {
   Function,
   type Parser as CSSParser,
   Token,
-} from "../../syntax/index.js";
+} from "../../syntax/index.ts";
 
-import { Keyword } from "../textual/keyword.js";
-import { Position } from "../position/index.js";
-import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
-import { Value } from "../value.js";
+import { Keyword } from "../textual/keyword.ts";
+import { Position } from "../position/index.ts";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.ts";
+import { Value } from "../value.ts";
 
-import { BasicShape } from "./basic-shape.js";
-import { Radius } from "./radius.js";
+import { BasicShape } from "./basic-shape.ts";
+import { Radius } from "./radius.ts";
 
 const { map, option, pair, right } = Parser;
 

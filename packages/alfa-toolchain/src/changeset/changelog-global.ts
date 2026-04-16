@@ -12,7 +12,7 @@ import {
   Error,
   getConfigOption,
   getPackagesShim,
-} from "./helpers.js";
+} from "./helpers.ts";
 
 import resolveFrom = require("resolve-from");
 

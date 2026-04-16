@@ -1,9 +1,9 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Element } from "./element.js";
-import { Shadow } from "../shadow.js";
+import { Element } from "./element.ts";
+import { Shadow } from "../shadow.ts";
 
-import { Slotable as BaseSlotable } from "./slotable.js";
-import type { Slotable } from "./index.js";
+import { Slotable as BaseSlotable } from "./slotable.ts";
+import type { Slotable } from "./index.ts";
 
 /** @public */
 export type Slot = Element<"slot">;

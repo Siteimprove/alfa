@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.71% </span>
+                <span class="strong">57.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/28</span>
+                <span class='fraction'>19/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.94% </span>
+                <span class="strong">43.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>9/17</span>
+                <span class='fraction'>13/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">53.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/15</span>
+                <span class='fraction'>16/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.71% </span>
+                <span class="strong">62.06% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/28</span>
+                <span class='fraction'>18/29</span>
             </div>
         
             
@@ -328,20 +328,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -351,9 +351,9 @@ import { None, Option } from "@siteimprove/alfa-option";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import type { Element } from "../node/slotable/element.js";
+import type { Element } from "../node/slotable/element.ts";
 &nbsp;
-import type { Rule } from "./rule/index.js";
+import type { Rule } from "./rule/index.ts";
 &nbsp;
 /**
  * @public
@@ -362,7 +362,7 @@ export class Declaration implements Equatable, Serializable {
   public static of(
     name: string,
     value: string,
-    important = false,
+    important = <span class="branch-0 cbranch-no" title="branch not covered" >false,</span>
   ): Declaration {
     return new Declaration(name, value, important);
   }
@@ -374,7 +374,7 @@ export class Declaration implements Equatable, Serializable {
    * @remarks
    * If the declaration is in a style rule, point to it
    */
-  private _parent: Option&lt;Rule&gt; = None;
+  private _parent: Option&lt;Rule&gt; = <span class="cstat-no" title="statement not covered" >None;</span>
   /**
    * @remarks
    * If the declaration is in a style attribute on an element, point to it
@@ -383,7 +383,7 @@ export class Declaration implements Equatable, Serializable {
    *
    * Only one of _parent and _owner should be Some.
    */
-  private _owner: Option&lt;Element&gt; = None;
+  private _owner: Option&lt;Element&gt; = <span class="cstat-no" title="statement not covered" >None;</span>
 &nbsp;
   protected constructor(name: string, value: string, important: boolean) {
     this._name = name;
@@ -391,27 +391,27 @@ export class Declaration implements Equatable, Serializable {
     this._important = important;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >name(</span>): string {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >name(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return this._name;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >value(</span>): string {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >value(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return this._value;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >important(</span>): boolean {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >important(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return this._important;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >parent(</span>): Option&lt;Rule&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >parent(</span>): Option&lt;Rule&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._parent;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >owner(</span>): Option&lt;Element&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >owner(</span>): Option&lt;Element&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._owner;</span>
   }
 &nbsp;
-  public *<span class="fstat-no" title="function not covered" >ancestors(</span>): Iterable&lt;Rule&gt; {
+  public *<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >ancestors(</span>): Iterable&lt;Rule&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    for (const parent of this._parent) {</span>
 <span class="cstat-no" title="statement not covered" >      yield parent;</span>
 <span class="cstat-no" title="statement not covered" >      yield* parent.ancestors();</span>
@@ -421,8 +421,8 @@ export class Declaration implements Equatable, Serializable {
   /**
    * Parent rule or owner element are ignored for declaration equality.
    */
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Declaration &amp;&amp;
       value._name === this._name &amp;&amp;
       value._value === this._value &amp;&amp;
@@ -440,7 +440,7 @@ export class Declaration implements Equatable, Serializable {
 &nbsp;
   public toString(): string {
     return `${this._name}: ${this._value}${
-      this._important ? <span class="branch-0 cbranch-no" title="branch not covered" >" !important" </span>: ""
+      this._important ? <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >" !important" </span>: "</span>"
     }`;
   }
 &nbsp;
@@ -448,7 +448,7 @@ export class Declaration implements Equatable, Serializable {
    * @internal
    */
   public _attachParent(parent: Rule): boolean {
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (this._parent.isSome() || this._owner.isSome()) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (<span class="branch-0 cbranch-no" title="branch not covered" >this._parent.isSome() || t</span>his._owner.isSome()) {
 <span class="cstat-no" title="statement not covered" >      return false;</span>
     }
 &nbsp;
@@ -461,7 +461,7 @@ export class Declaration implements Equatable, Serializable {
    * @internal
    */
   public _attachOwner(owner: Element): boolean {
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (this._parent.isSome() || this._owner.isSome()) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (<span class="branch-0 cbranch-no" title="branch not covered" >this._parent.isSome() || t</span>his._owner.isSome()) {
 <span class="cstat-no" title="statement not covered" >      return false;</span>
     }
 &nbsp;
@@ -474,7 +474,7 @@ export class Declaration implements Equatable, Serializable {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Declaration {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Declaration {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     name: string;
@@ -493,7 +493,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >D
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:21.155Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.33% </span>
+                <span class="strong">88.97% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>98/105</span>
+                <span class='fraction'>121/136</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.73% </span>
+                <span class="strong">95.61% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>72/76</span>
+                <span class='fraction'>109/114</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.18% </span>
+                <span class="strong">52.05% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>33/37</span>
+                <span class='fraction'>38/73</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.26% </span>
+                <span class="strong">93.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>97/104</span>
+                <span class='fraction'>98/105</span>
             </div>
         
             
@@ -916,7 +916,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -976,7 +976,7 @@ const { max, min } = Math;
 export class Rectangle
   implements Equatable, Hashable, Serializable&lt;Rectangle.JSON&gt;
 {
-  public static of(
+  public static <span class="fstat-no" title="function not covered" >of(</span>
     x: number,
     y: number,
     width: number,
@@ -986,7 +986,7 @@ export class Rectangle
   }
 &nbsp;
   private static _empty = new Rectangle(Infinity, Infinity, 0, 0);
-  public static empty(): Rectangle {
+  public static <span class="fstat-no" title="function not covered" >empty(</span>): Rectangle {
     return this._empty;
   }
 &nbsp;
@@ -996,7 +996,7 @@ export class Rectangle
     Infinity,
     Infinity,
   );
-  public static full(): Rectangle {
+  public static <span class="fstat-no" title="function not covered" >full(</span>): Rectangle {
     return this._full;
   }
 &nbsp;
@@ -1005,30 +1005,30 @@ export class Rectangle
   private readonly _width: number;
   private readonly _height: number;
 &nbsp;
-  protected constructor(x: number, y: number, width: number, height: number) {
+<span class="fstat-no" title="function not covered" >  protected constructor(x</span>: number, y: number, width: number, height: number) {
     this._x = x;
     this._y = y;
     this._width = width;
     this._height = height;
   }
 &nbsp;
-  public get x(): number {
+  public get <span class="fstat-no" title="function not covered" >x(</span>): number {
     return this._x;
   }
 &nbsp;
-  public get y(): number {
+  public get <span class="fstat-no" title="function not covered" >y(</span>): number {
     return this._y;
   }
 &nbsp;
-  public get width(): number {
+  public get <span class="fstat-no" title="function not covered" >width(</span>): number {
     return this._width;
   }
 &nbsp;
-  public get height(): number {
+  public get <span class="fstat-no" title="function not covered" >height(</span>): number {
     return this._height;
   }
 &nbsp;
-  public get top(): number {
+  public get <span class="fstat-no" title="function not covered" >top(</span>): number {
     // Infinity - Infinity is NaN, but here we want it to be -Infinity
     <span class="missing-if-branch" title="if path not taken" >I</span>if (this._y === Infinity &amp;&amp; this._height === -Infinity) {
 <span class="cstat-no" title="statement not covered" >      return -Infinity;</span>
@@ -1037,7 +1037,7 @@ export class Rectangle
     return this._height &gt; 0 ? this._y : this._y + this._height;
   }
 &nbsp;
-  public get right(): number {
+  public get <span class="fstat-no" title="function not covered" >right(</span>): number {
     // -Infinity + Infinity is NaN, but here we want it to be Infinity
     if (this._x === -Infinity &amp;&amp; this._width === Infinity) {
       return Infinity;
@@ -1046,7 +1046,7 @@ export class Rectangle
     return this._width &gt; 0 ? this._x + this._width : this._x;
   }
 &nbsp;
-  public get bottom(): number {
+  public get <span class="fstat-no" title="function not covered" >bottom(</span>): number {
     // -Infinity + Infinity is NaN, but here we want it to be Infinity
     if (this._y === -Infinity &amp;&amp; this._height === Infinity) {
       return Infinity;
@@ -1055,7 +1055,7 @@ export class Rectangle
     return this._height &gt; 0 ? this._y + this._height : this._y;
   }
 &nbsp;
-  public get left(): number {
+  public get <span class="fstat-no" title="function not covered" >left(</span>): number {
     // Infinity - Infinity is NaN, but here we want it to be -Infinity
     <span class="missing-if-branch" title="if path not taken" >I</span>if (this._x === Infinity &amp;&amp; this._width === -Infinity) {
 <span class="cstat-no" title="statement not covered" >      return -Infinity;</span>
@@ -1064,7 +1064,7 @@ export class Rectangle
     return this._width &gt; 0 ? this._x : this._x + this._width;
   }
 &nbsp;
-  public get center(): { x: number; y: number } {
+  public get <span class="fstat-no" title="function not covered" >center(</span>): { x: number; y: number } {
     // TODO: How to handle infinite rectangles?
     return {
       x: this._x + this._width / 2,
@@ -1072,24 +1072,24 @@ export class Rectangle
     };
   }
 &nbsp;
-  public get area(): number {
+  public get <span class="fstat-no" title="function not covered" >area(</span>): number {
     return this._width * this._height;
   }
 &nbsp;
-  public isEmpty(): boolean {
+  public <span class="fstat-no" title="function not covered" >isEmpty(</span>): boolean {
     return this.equals(Rectangle.empty());
   }
 &nbsp;
-  public isFull(): boolean {
+  public <span class="fstat-no" title="function not covered" >isFull(</span>): boolean {
     return this.equals(Rectangle.full());
   }
 &nbsp;
-  public contains(other: Rectangle): boolean {
+  public <span class="fstat-no" title="function not covered" >contains(</span>other: Rectangle): boolean {
     if (other.isEmpty() || this.isFull()) {
       return true;
     }
 &nbsp;
-    return (
+<span class="cstat-no" title="statement not covered" >    return (</span>
       this.left &lt;= other.left &amp;&amp;
       this.top &lt;= other.top &amp;&amp;
       other.right &lt;= this.right &amp;&amp;
@@ -1097,8 +1097,8 @@ export class Rectangle
     );
   }
 &nbsp;
-  public intersects(other: Rectangle): boolean {
-    return (
+  public <span class="fstat-no" title="function not covered" >intersects(</span>other: Rectangle): boolean {
+<span class="cstat-no" title="statement not covered" >    return (</span>
       other.left &lt;= this.right &amp;&amp;
       other.top &lt;= this.bottom &amp;&amp;
       other.right &gt;= this.left &amp;&amp;
@@ -1106,7 +1106,7 @@ export class Rectangle
     );
   }
 &nbsp;
-  public union(other: Rectangle): Rectangle {
+  public <span class="fstat-no" title="function not covered" >union(</span>other: Rectangle): Rectangle {
     if (this.contains(other)) {
       return this;
     }
@@ -1128,7 +1128,7 @@ export class Rectangle
     );
   }
 &nbsp;
-  public intersection(other: Rectangle): Rectangle {
+  public <span class="fstat-no" title="function not covered" >intersection(</span>other: Rectangle): Rectangle {
     if (!this.intersects(other)) {
       return Rectangle.empty();
     }
@@ -1186,10 +1186,10 @@ export class Rectangle
    *             |/////////////////////////////////|XXXXXXX|
    *             +---------------------------------+-------+
    */
-  public subtract(...others: Array&lt;Rectangle&gt;): Sequence&lt;Rectangle&gt; {
+  public <span class="fstat-no" title="function not covered" >subtract(</span>...others: Array&lt;Rectangle&gt;): Sequence&lt;Rectangle&gt; {
     // Sort by intersection area descending so that the biggest chunks are removed first.
-    others.sort(<span class="fstat-no" title="function not covered" >(a</span>, b) =&gt;
-<span class="cstat-no" title="statement not covered" >      Comparable.compare(b.intersection(this).area, a.intersection(this).area),</span>
+    others.sort(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(a</span></span>, b) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      Comparable.compare(b.intersection(this).area, a.intersection(this).area),</span></span>
     );
     let result: Array&lt;Rectangle&gt; = [this];
     for (const other of others) {
@@ -1216,7 +1216,7 @@ export class Rectangle
     return Sequence.from(result);
   }
 &nbsp;
-  private _subtract(other: Rectangle): Array&lt;Rectangle&gt; {
+  private <span class="fstat-no" title="function not covered" >_subtract(</span>other: Rectangle): Array&lt;Rectangle&gt; {
     if (!this.intersects(other)) {
       return [this];
     }
@@ -1289,7 +1289,7 @@ export class Rectangle
    *              | 3     |                         |       |
    *              +-------+-------------------------+-------+
    */
-  public intersectsCircle(cx: number, cy: number, r: number): boolean {
+  public <span class="fstat-no" title="function not covered" >intersectsCircle(</span>cx: number, cy: number, r: number): boolean {
     const center = this.center;
     const halfWidth = this.width / 2;
     const halfHeight = this.height / 2;
@@ -1321,7 +1321,7 @@ export class Rectangle
    * The squared distance is used to avoid the expensive square root operation.
    * If the actual distance is needed, the square root of the squared distance can be taken.
    */
-  public distanceSquared(other: Rectangle): number {
+  public <span class="fstat-no" title="function not covered" >distanceSquared(</span>other: Rectangle): number {
     const c1 = this.center;
     const c2 = other.center;
     return (c1.x - c2.x) ** 2 + (c1.y - c2.y) ** 2;
@@ -1329,8 +1329,8 @@ export class Rectangle
 &nbsp;
   public equals(value: this): boolean;
   public equals(value: unknown): value is this;
-  public equals(value: unknown): boolean {
-    return (
+  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
+<span class="cstat-no" title="statement not covered" >    return (</span>
       value === this ||
       (value instanceof Rectangle &amp;&amp;
         value.top === this.top &amp;&amp;
@@ -1340,7 +1340,7 @@ export class Rectangle
     );
   }
 &nbsp;
-  public hash(hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
     hash
       .writeNumber(this._x)
       .writeNumber(this._y)
@@ -1348,11 +1348,11 @@ export class Rectangle
       .writeNumber(this._height);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `Rectangle { x: ${this._x}, y: ${this._y}, width: ${this._width}, height: ${this._height} }`;</span>
   }
 &nbsp;
-  public toJSON(): Rectangle.JSON {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Rectangle.JSON {
     return {
       type: "rectangle",
       x: this._x,
@@ -1366,7 +1366,7 @@ export class Rectangle
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Rectangle {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >R</span>ectangle {</span></span>
   export type JSON = {
     [key: string]: json.JSON;
     type: "rectangle";
@@ -1376,22 +1376,22 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
     height: number;
   };
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >from(</span>json: Rectangle.JSON) {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >from(j</span>son: Rectangle.JSON) {</span>
 <span class="cstat-no" title="statement not covered" >    return Rectangle.of(json.x, json.y, json.width, json.height);</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isRectangle(</span>value: unknown): value is Rectangle {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isRectangle(v</span>alue: unknown): value is Rectangle {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Rectangle;</span>
   }
 &nbsp;
-  export function union(...rectangles: Array&lt;Rectangle&gt;): Rectangle {
+  export function <span class="cstat-no" title="statement not covered" >union(...rectangles: Array&lt;Rectangle&gt;): Rectangle {</span>
     return rectangles.reduce(
       (previous, current) =&gt; previous.union(current),
       Rectangle.empty(),
     );
   }
 &nbsp;
-  export function intersection(...rectangles: Array&lt;Rectangle&gt;): Rectangle {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >intersection(</span>...rectangles: Array&lt;Rectangle&gt;): Rectangle {</span>
     return rectangles.reduce(
       (previous, current) =&gt; previous.intersection(current),
       Rectangle.full(),
@@ -1405,7 +1405,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:43.524Z
+                at 2026-04-10T09:30:06.808Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -1,5 +1,5 @@
-import { Real } from "./real.js";
-import { Vector } from "./vector.js";
+import { Real } from "./real.ts";
+import { Vector } from "./vector.ts";
 
 /**
  * {@link https://en.wikipedia.org/wiki/Matrix_(mathematics)}

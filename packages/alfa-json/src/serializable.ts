@@ -1,6 +1,6 @@
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import type { JSON } from "./json.js";
+import type { JSON } from "./json.ts";
 
 const { keys } = Object;
 const { isArray } = Array;

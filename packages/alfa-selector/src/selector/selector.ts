@@ -8,13 +8,13 @@ import type * as json from "@siteimprove/alfa-json";
 import type { Option } from "@siteimprove/alfa-option";
 import { None } from "@siteimprove/alfa-option";
 
-import type { Context } from "../context.js";
-import type { Specificity } from "../specificity.js";
+import type { Context } from "../context.ts";
+import type { Specificity } from "../specificity.ts";
 
-import type { Complex } from "./complex.js";
-import type { Compound } from "./compound.js";
-import type { Relative } from "./relative.js";
-import type { Class, Id, Simple, Type } from "./simple/index.js";
+import type { Complex } from "./complex.ts";
+import type { Compound } from "./compound.ts";
+import type { Relative } from "./relative.ts";
+import type { Class, Id, Simple, Type } from "./simple/index.ts";
 
 /**
  * @internal

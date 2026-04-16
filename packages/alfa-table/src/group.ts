@@ -1,7 +1,7 @@
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Column } from "./column.js";
-import { Row } from "./row.js";
+import { Column } from "./column.ts";
+import { Row } from "./row.ts";
 
 const { or } = Refinement;
 

@@ -2,11 +2,11 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Specificity } from "../../specificity.js";
+import { Specificity } from "../../specificity.ts";
 
-import { WithName } from "../selector.js";
+import { WithName } from "../selector.ts";
 
-import { parseName } from "./parser.js";
+import { parseName } from "./parser.ts";
 
 const { map } = Parser;
 

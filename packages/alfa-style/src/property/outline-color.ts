@@ -1,7 +1,7 @@
 import { Color, Keyword } from "@siteimprove/alfa-css";
 
-import { Longhand } from "../longhand.js";
-import { Resolver } from "../resolver.js";
+import { Longhand } from "../longhand.ts";
+import { Resolver } from "../resolver.ts";
 
 type Specified = Color | Keyword<"invert">;
 

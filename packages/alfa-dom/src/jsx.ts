@@ -1,8 +1,8 @@
-import { h } from "./h.js";
+import { h } from "./h.ts";
 
 import type { Device } from "@siteimprove/alfa-device";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
-import type * as dom from "./index.js";
+import type * as dom from "./index.ts";
 
 const { entries } = Object;
 

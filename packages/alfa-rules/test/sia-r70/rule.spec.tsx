@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R70, { Outcomes } from "../../dist/sia-r70/rule.js";
+import R70, { Outcomes } from "../../src/sia-r70/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { passed, failed, inapplicable } from "../common/outcome.ts";
 
 test("evaluate() passes a page with no deprecated / obsolete elements ", async (t) => {
   const target = (

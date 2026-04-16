@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { isInert } from "../../../src/element/predicate/is-inert.js";
+import { isInert } from "../../../src/element/predicate/is-inert.ts";
 
 const device = Device.standard();
 const inert = isInert(device);

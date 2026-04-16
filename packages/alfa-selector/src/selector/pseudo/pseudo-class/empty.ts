@@ -1,5 +1,5 @@
 import type { Element } from "@siteimprove/alfa-dom";
-import { PseudoClassSelector } from "./pseudo-class.js";
+import { PseudoClassSelector } from "./pseudo-class.ts";
 
 /**
  * {@link https://drafts.csswg.org/selectors/#empty-pseudo}

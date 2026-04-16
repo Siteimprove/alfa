@@ -1,10 +1,10 @@
 import { type Element, h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R116, { Outcomes } from "../../dist/sia-r116/rule.js";
+import R116, { Outcomes } from "../../src/sia-r116/rule.ts";
 
-import { evaluate } from "../common/evaluate.js";
-import { failed, inapplicable, passed } from "../common/outcome.js";
+import { evaluate } from "../common/evaluate.ts";
+import { failed, inapplicable, passed } from "../common/outcome.ts";
 
 test("evaluate() passes summary elements with an accessible name from aria-label", async (t) => {
   const target = (

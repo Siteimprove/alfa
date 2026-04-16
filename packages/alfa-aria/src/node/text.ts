@@ -2,8 +2,8 @@ import type { Option } from "@siteimprove/alfa-option";
 
 import type * as dom from "@siteimprove/alfa-dom";
 
-import type { Name } from "../name/index.js";
-import { Node } from "../node.js";
+import type { Name } from "../name/index.ts";
+import { Node } from "../node.ts";
 
 /**
  * @public

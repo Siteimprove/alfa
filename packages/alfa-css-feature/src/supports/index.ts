@@ -1,5 +1,5 @@
-import * as supportsFeature from "./feature/index.js";
-import * as supportsQuery from "./query.js";
+import * as supportsFeature from "./feature/index.ts";
+import * as supportsQuery from "./query.ts";
 
 /**
  * @public

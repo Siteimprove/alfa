@@ -1,1 +1,1 @@
-export * from "./future.js";
+export * from "./future.ts";

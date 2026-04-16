@@ -10,7 +10,7 @@ import type { Refinement } from "@siteimprove/alfa-refinement";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import type { Result } from "./result.js";
+import type { Result } from "./result.ts";
 
 const { not, test } = Predicate;
 

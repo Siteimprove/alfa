@@ -3,8 +3,8 @@ import type { Token } from "@siteimprove/alfa-css";
 
 import * as parser from "@siteimprove/alfa-parser";
 
-import type { Longhands } from "./longhands.js";
-import { Longhand } from "./longhand.js";
+import type { Longhands } from "./longhands.ts";
+import { Longhand } from "./longhand.ts";
 
 const { either, end, left } = parser.Parser;
 

@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">69.23% </span>
+                <span class="strong">34.61% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>18/26</span>
+                <span class='fraction'>9/26</span>
             </div>
         
             
@@ -342,16 +342,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">855x</span>
+<span class="cline-any cline-yes">853x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">855x</span>
-<span class="cline-any cline-yes">855x</span>
-<span class="cline-any cline-yes">855x</span>
+<span class="cline-any cline-yes">853x</span>
+<span class="cline-any cline-yes">853x</span>
+<span class="cline-any cline-yes">853x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -503,13 +503,13 @@ import type * as json from "@siteimprove/alfa-json";
 import type { Option } from "@siteimprove/alfa-option";
 import { None } from "@siteimprove/alfa-option";
 &nbsp;
-import type { Context } from "../context.js";
-import type { Specificity } from "../specificity.js";
+import type { Context } from "../context.ts";
+import type { Specificity } from "../specificity.ts";
 &nbsp;
-import type { Complex } from "./complex.js";
-import type { Compound } from "./compound.js";
-import type { Relative } from "./relative.js";
-import type { Class, Id, Simple, Type } from "./simple/index.js";
+import type { Complex } from "./complex.ts";
+import type { Compound } from "./compound.ts";
+import type { Relative } from "./relative.ts";
+import type { Class, Id, Simple, Type } from "./simple/index.ts";
 &nbsp;
 /**
  * @internal
@@ -559,7 +559,7 @@ export abstract class BaseSelector&lt;T extends string = string&gt;
    */
   protected readonly _key: Option&lt;Id | Class | Type&gt; = None;
 &nbsp;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     type: T,
     specificity: Specificity,
     useContext: boolean,
@@ -569,19 +569,19 @@ export abstract class BaseSelector&lt;T extends string = string&gt;
     this._useContext = useContext;
   }
 &nbsp;
-  public get type(): T {
+  public get <span class="fstat-no" title="function not covered" >type(</span>): T {
     return this._type;
   }
 &nbsp;
-  public get specificity(): Specificity {
+  public get <span class="fstat-no" title="function not covered" >specificity(</span>): Specificity {
     return this._specificity;
   }
 &nbsp;
-  public get useContext(): boolean {
+  public get <span class="fstat-no" title="function not covered" >useContext(</span>): boolean {
     return this._useContext;
   }
 &nbsp;
-  public get key(): Option&lt;Id | Class | Type&gt; {
+  public get <span class="fstat-no" title="function not covered" >key(</span>): Option&lt;Id | Class | Type&gt; {
     return this._key;
   }
 &nbsp;
@@ -594,7 +594,7 @@ export abstract class BaseSelector&lt;T extends string = string&gt;
    *
    * @internal
    */
-  public static hasCompoundType(
+  public static <span class="fstat-no" title="function not covered" >hasCompoundType(</span>
     selector: BaseSelector,
   ): selector is Compound | Simple {
     return [
@@ -629,7 +629,7 @@ export abstract class BaseSelector&lt;T extends string = string&gt;
     Simple | Compound | Complex | Relative
   &gt;;
 &nbsp;
-  public toJSON(): BaseSelector.JSON&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): BaseSelector.JSON&lt;T&gt; {
     return {
       type: this._type,
       specificity: this._specificity.toJSON(),
@@ -664,7 +664,7 @@ export abstract class WithName&lt;
   N extends string = string,
 &gt; extends BaseSelector&lt;T&gt; {
   protected readonly _name: N;
-  protected constructor(
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
     type: T,
     name: N,
     specificity: Specificity,
@@ -694,7 +694,7 @@ export abstract class WithName&lt;
     );
   }
 &nbsp;
-  public toJSON(): WithName.JSON&lt;T, N&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): WithName.JSON&lt;T, N&gt; {
     return {
       ...super.toJSON(),
       name: this._name,
@@ -715,7 +715,7 @@ export namespace WithName {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:57.167Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

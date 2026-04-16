@@ -8,10 +8,10 @@ import { String } from "@siteimprove/alfa-string";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/expectation.ts";
 
-import { withDocumentElement } from "../common/applicability/with-document-element.js";
-import { Scope, Stability } from "../tags/index.js";
+import { withDocumentElement } from "../common/applicability/with-document-element.ts";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { hasName, hasNamespace } = Element;
 const { hasTextContent } = Node;

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">54.54% </span>
+                <span class="strong">56% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/22</span>
+                <span class='fraction'>14/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">22.22% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/9</span>
+                <span class='fraction'>4/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.82% </span>
+                <span class="strong">56.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>10/17</span>
+                <span class='fraction'>17/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.38% </span>
+                <span class="strong">54.54% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/21</span>
+                <span class='fraction'>12/22</span>
             </div>
         
             
@@ -248,20 +248,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -275,7 +275,7 @@ import { Option, None } from "@siteimprove/alfa-option";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import { Rule } from "./rule/index.js";
+import { Rule } from "./rule/index.ts";
 &nbsp;
 /**
  * @public
@@ -283,8 +283,8 @@ import { Rule } from "./rule/index.js";
 export class Sheet implements Equatable, Serializable {
   public static of(
     rules: Iterable&lt;Rule&gt;,
-    disabled = false,
-    condition: Option&lt;string&gt; = None,
+    disabled = <span class="branch-0 cbranch-no" title="branch not covered" >false,</span>
+    condition: Option&lt;string&gt; = <span class="branch-0 cbranch-no" title="branch not covered" >None,</span>
   ): Sheet {
     return new Sheet(Array.from(rules), disabled, condition);
   }
@@ -311,27 +311,27 @@ export class Sheet implements Equatable, Serializable {
     return this._rules;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >disabled(</span>): boolean {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >disabled(</span>): boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return this._disabled;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >condition(</span>): Option&lt;string&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >condition(</span>): Option&lt;string&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._condition;</span>
   }
 &nbsp;
-  public *<span class="fstat-no" title="function not covered" >children(</span>): Iterable&lt;Rule&gt; {
+  public *<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >children(</span>): Iterable&lt;Rule&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    yield* this._rules;</span>
   }
 &nbsp;
-  public *<span class="fstat-no" title="function not covered" >descendants(</span>): Iterable&lt;Rule&gt; {
+  public *<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >descendants(</span>): Iterable&lt;Rule&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    for (const child of this.children()) {</span>
 <span class="cstat-no" title="statement not covered" >      yield child;</span>
 <span class="cstat-no" title="statement not covered" >      yield* child.descendants();</span>
     }
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Sheet &amp;&amp;
       value._disabled === this._disabled &amp;&amp;
       value._condition.equals(this._condition) &amp;&amp;
@@ -348,7 +348,7 @@ export class Sheet implements Equatable, Serializable {
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return this._rules.join("\n");</span>
   }
 }
@@ -356,7 +356,7 @@ export class Sheet implements Equatable, Serializable {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Sheet {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Sheet {</span></span>
   export interface JSON {
     [key: string]: json.JSON;
     rules: Array&lt;Rule.JSON&gt;;
@@ -379,7 +379,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >S
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:21.155Z
+                at 2026-04-10T09:29:44.681Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

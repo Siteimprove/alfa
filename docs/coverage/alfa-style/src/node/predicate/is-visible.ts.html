@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.88% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>32/36</span>
+                <span class='fraction'>36/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
@@ -257,26 +257,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1796x</span>
-<span class="cline-any cline-yes">1796x</span>
+<span class="cline-any cline-yes">1875x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1250x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1041x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1041x</span>
+<span class="cline-any cline-yes">1227x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -287,11 +272,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1041x</span>
+<span class="cline-any cline-yes">985x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">980x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1022x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -303,7 +299,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1041x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">981x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -381,15 +381,15 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 &nbsp;
-import { hasComputedStyle } from "../../element/predicate/has-computed-style.js";
-import { isPositioned } from "../../element/predicate/is-positioned.js";
-import { hasSameForegroundAsBackground } from "./has-same-foreground-as-background.js";
+import { hasComputedStyle } from "../../element/predicate/has-computed-style.ts";
+import { isPositioned } from "../../element/predicate/is-positioned.ts";
+import { hasSameForegroundAsBackground } from "./has-same-foreground-as-background.ts";
 &nbsp;
-import { isClipped } from "./is-clipped.js";
-import { isOffscreen } from "./is-offscreen.js";
-import { isOptionHidden } from "./is-option-hidden.js";
-import { isRendered } from "./is-rendered.js";
-import { isTransparent } from "./is-transparent.js";
+import { isClipped } from "./is-clipped.ts";
+import { isOffscreen } from "./is-offscreen.ts";
+import { isOptionHidden } from "./is-option-hidden.ts";
+import { isRendered } from "./is-rendered.ts";
+import { isTransparent } from "./is-transparent.ts";
 &nbsp;
 const { hasName, isElement, isReplaced } = Element;
 const { nor, not, test } = Predicate;
@@ -409,7 +409,7 @@ const cache = Cache.empty&lt;Device, Cache&lt;Context, Cache&lt;Node, boolean&gt
 &nbsp;
 function isInvisible(
   device: Device,
-  context: Context = <span class="branch-0 cbranch-no" title="branch not covered" >Context.empty(),</span>
+  context: Context = Context.empty(),
 ): Predicate&lt;Node&gt; {
   return (node) =&gt;
     cache
@@ -509,15 +509,15 @@ const isVisibleWhenEmpty = hasName("textarea", "select");
  * first place).
  */
 function hasDimensions(device: Device): Predicate&lt;Element&gt; {
-  const hasDimension = <span class="cstat-no" title="statement not covered" >(<span class="cstat-no" title="statement not covered" >dimension: "height" | "width") =&gt;</span></span>
+  const hasDimension = (dimension: "height" | "width") =&gt;
     hasComputedStyle(
       dimension,
       and(Numeric.isFixed, (number) =&gt; number.value &gt; 0),
       device,
     );
 &nbsp;
-  const isStretched = <span class="cstat-no" title="statement not covered" >(...sides: ["top", "bottom"] | ["left", "right"]) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >    and(</span>
+  const isStretched = (...sides: ["top", "bottom"] | ["left", "right"]) =&gt;
+    and(
       isPositioned(device, "absolute"),
       hasComputedStyle(sides[0], Numeric.isNumeric, device),
       hasComputedStyle(sides[1], Numeric.isNumeric, device),
@@ -535,7 +535,7 @@ function hasDimensions(device: Device): Predicate&lt;Element&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

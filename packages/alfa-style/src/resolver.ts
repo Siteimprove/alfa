@@ -8,7 +8,7 @@ import {
 import { Length, List } from "@siteimprove/alfa-css";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 
-import type { Style } from "./style.js";
+import type { Style } from "./style.ts";
 
 /**
  * Resolvers are functions that resolve values to their canonical, computed

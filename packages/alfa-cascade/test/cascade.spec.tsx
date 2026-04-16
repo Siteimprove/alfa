@@ -2,12 +2,12 @@ import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { test } from "@siteimprove/alfa-test";
-import { Cascade } from "../dist/index.js";
+import { Cascade } from "../src/index.ts";
 
-import { Block } from "../dist/block.js";
-import { Layer, Origin } from "../dist/index.js";
+import { Block } from "../src/block.ts";
+import { Layer, Origin } from "../src/index.ts";
 
-import { authorOrder, getBlock, layer } from "./common/common.js";
+import { authorOrder, getBlock, layer } from "./common/common.ts";
 
 const device = Device.standard();
 

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.04% </span>
+                <span class="strong">75.96% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>64/82</span>
+                <span class='fraction'>79/104</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">81.7% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>40/50</span>
+                <span class='fraction'>67/82</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.18% </span>
+                <span class="strong">45.23% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>15/22</span>
+                <span class='fraction'>19/42</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.2% </span>
+                <span class="strong">78.48% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>61/78</span>
+                <span class='fraction'>62/79</span>
             </div>
         
             
@@ -548,7 +548,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -670,7 +670,7 @@ const { determinant, multiply, inverse, transpose } = Matrix;
  * @public
  */
 export class Transformation implements Equatable, Serializable {
-  public static of(matrix: Matrix): Transformation {
+  public static <span class="fstat-no" title="function not covered" >of(</span>matrix: Matrix): Transformation {
     const [
       [a = 1, b = 0, c = 0, d = 0] = [],
       [e = 0, f = 1, g = 0, h = 0] = [],
@@ -688,44 +688,44 @@ export class Transformation implements Equatable, Serializable {
 &nbsp;
   private static _empty = new Transformation(Matrix.identity(4));
 &nbsp;
-  public static empty(): Transformation {
+  public static <span class="fstat-no" title="function not covered" >empty(</span>): Transformation {
 <span class="cstat-no" title="statement not covered" >    return this._empty;</span>
   }
 &nbsp;
   private readonly _matrix: Matrix;
 &nbsp;
-  protected constructor(matrix: Matrix) {
+<span class="fstat-no" title="function not covered" >  protected constructor(m</span>atrix: Matrix) {
     this._matrix = matrix;
   }
 &nbsp;
-  public apply(transformation: Transformation): Transformation {
+  public <span class="fstat-no" title="function not covered" >apply(</span>transformation: Transformation): Transformation {
     return new Transformation(multiply(this._matrix, transformation._matrix));
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >translate(</span>tx: number, ty: number = <span class="branch-0 cbranch-no" title="branch not covered" >0,</span> tz: number = <span class="branch-0 cbranch-no" title="branch not covered" >0)</span>: Transformation {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >translate(</span>t</span>x: number, ty: number = <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >0,</span> t</span>z: number = <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >0)</span>: Transformation {</span>
 <span class="cstat-no" title="statement not covered" >    return this.apply(Transformation.translate(tx, ty, tz));</span>
   }
 &nbsp;
-  public scale(sx: number, sy: number = sx, sz: number = 1): Transformation {
+  public <span class="fstat-no" title="function not covered" >scale(</span>sx: number, sy: number = sx, sz: number = 1): Transformation {
     return this.apply(Transformation.scale(sx, sy, sz));
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >skew(</span>a: number, b: number): Transformation {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >skew(</span>a</span>: number, b: number): Transformation {
 <span class="cstat-no" title="statement not covered" >    return this.apply(Transformation.skew(a, b));</span>
   }
 &nbsp;
-  public rotate(a: number, u?: [number, number, number]): Transformation {
+  public <span class="fstat-no" title="function not covered" >rotate(</span>a: number, u?: [number, number, number]): Transformation {
     return this.apply(Transformation.rotate(a, u));
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >perspective(</span>d: number): Transformation {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >perspective(</span>d</span>: number): Transformation {
 <span class="cstat-no" title="statement not covered" >    return this.apply(Transformation.perspective(d));</span>
   }
 &nbsp;
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#decomposing-a-3d-matrix}
    */
-  public decompose(): Option&lt;Transformation.Components&gt; {
+  public <span class="fstat-no" title="function not covered" >decompose(</span>): Option&lt;Transformation.Components&gt; {
     const m = this._matrix;
 &nbsp;
     <span class="missing-if-branch" title="if path not taken" >I</span>if (m[3][3] === 0) {
@@ -794,7 +794,7 @@ export class Transformation implements Equatable, Serializable {
     z[2] /= s[2];
 &nbsp;
     <span class="missing-if-branch" title="if path not taken" >I</span>if (dot(u[0], cross(u[1], u[2])) &lt; 0) {
-<span class="cstat-no" title="statement not covered" >      for (let i = <span class="cstat-no" title="statement not covered" >0;</span> i &lt; 3; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      for (let i = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >0;</span> i</span> &lt; 3; i++) {</span>
 <span class="cstat-no" title="statement not covered" >        s[i] *= -1;</span>
 <span class="cstat-no" title="statement not covered" >        u[i][0] *= -1;</span>
 <span class="cstat-no" title="statement not covered" >        u[i][1] *= -1;</span>
@@ -831,18 +831,18 @@ export class Transformation implements Equatable, Serializable {
     });
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Transformation &amp;&amp;
       Matrix.equals(value._matrix, this._matrix)
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toArray(</span>): Array&lt;Array&lt;number&gt;&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toArray(</span>): Array&lt;Array&lt;number&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return Matrix.clone(this._matrix);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Transformation.JSON {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): Transformation.JSON {</span>
 <span class="cstat-no" title="statement not covered" >    return Matrix.clone(this._matrix);</span>
   }
 }
@@ -850,7 +850,7 @@ export class Transformation implements Equatable, Serializable {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Transformation {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >T</span>ransformation {</span></span>
   export type JSON = Array&lt;Array&lt;number&gt;&gt;;
 &nbsp;
   export interface Components {
@@ -880,7 +880,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >T
     perspective: Vector;
   }
 &nbsp;
-  export function translate(
+  export function <span class="cstat-no" title="statement not covered" >translate(</span>
     tx: number,
     ty: number = 0,
     tz: number = 0,
@@ -893,7 +893,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >T
     ]);
   }
 &nbsp;
-  export function scale(
+  export function <span class="cstat-no" title="statement not covered" >scale(</span>
     sx: number,
     sy: number = sx,
     sz: number = 1,
@@ -905,14 +905,14 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >T
     ]);
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >skew(</span>a: number, b: number): Transformation {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >skew(a</span>: number, b: number): Transformation {</span>
 <span class="cstat-no" title="statement not covered" >    return Transformation.of([</span>
       [1, tan(a)],
       [tan(b), 1],
     ]);
   }
 &nbsp;
-  export function rotate(
+  export function <span class="cstat-no" title="statement not covered" >rotate(</span>
     a: number,
     u: [number, number, number] = [0, 0, 1],
   ): Transformation {
@@ -937,7 +937,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >T
     ]);
   }
 &nbsp;
-  export function perspective(d: number): Transformation {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >perspective(</span>d: number): Transformation {</span>
     return Transformation.of([
       [1, 0, 0, 0],
       [0, 1, 0, 0],
@@ -947,7 +947,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >T
   }
 }
 &nbsp;
-function combine(a: Vector, b: Vector, ascl: number, bscl: number): Vector {
+function <span class="fstat-no" title="function not covered" >combine(</span>a: Vector, b: Vector, ascl: number, bscl: number): Vector {
   return [
     ascl * a[0] + bscl * b[0],
     ascl * a[1] + bscl * b[1],
@@ -961,7 +961,7 @@ function combine(a: Vector, b: Vector, ascl: number, bscl: number): Vector {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:50.088Z
+                at 2026-04-10T09:29:14.918Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

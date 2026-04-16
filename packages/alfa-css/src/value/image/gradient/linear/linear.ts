@@ -6,15 +6,15 @@ import {
   Comma,
   Function,
   type Parser as CSSParser,
-} from "../../../../syntax/index.js";
-import type { PartiallyResolvable, Resolvable } from "../../../resolvable.js";
+} from "../../../../syntax/index.ts";
+import type { PartiallyResolvable, Resolvable } from "../../../resolvable.ts";
 
-import { Value } from "../../../value.js";
+import { Value } from "../../../value.ts";
 
-import { Item } from "../item/index.js";
+import { Item } from "../item/index.ts";
 
-import { Direction } from "./direction.js";
-import { Side } from "./side.js";
+import { Direction } from "./direction.ts";
+import { Side } from "./side.ts";
 
 const { map, pair, option, left } = Parser;
 

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.23% </span>
+                <span class="strong">96.32% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>100/105</span>
+                <span class='fraction'>131/136</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.73% </span>
+                <span class="strong">95.61% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>72/76</span>
+                <span class='fraction'>109/114</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.59% </span>
+                <span class="strong">91.78% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>35/37</span>
+                <span class='fraction'>67/73</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.19% </span>
+                <span class="strong">95.23% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>99/104</span>
+                <span class='fraction'>100/105</span>
             </div>
         
             
@@ -744,7 +744,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">46x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">46x</span>
 <span class="cline-any cline-yes">46x</span>
@@ -916,37 +916,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">236x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">236x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">235x</span>
 <span class="cline-any cline-yes">1020x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">236x</span>
+<span class="cline-any cline-yes">235x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">236x</span>
+<span class="cline-any cline-yes">235x</span>
 <span class="cline-any cline-yes">136x</span>
 <span class="cline-any cline-yes">187x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">236x</span>
+<span class="cline-any cline-yes">235x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1012,11 +1012,11 @@ export class Rectangle
     this._height = height;
   }
 &nbsp;
-  public get x(): number {
+  public get <span class="fstat-no" title="function not covered" >x(</span>): number {
     return this._x;
   }
 &nbsp;
-  public get y(): number {
+  public get <span class="fstat-no" title="function not covered" >y(</span>): number {
     return this._y;
   }
 &nbsp;
@@ -1340,7 +1340,7 @@ export class Rectangle
     );
   }
 &nbsp;
-  public hash(hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
     hash
       .writeNumber(this._x)
       .writeNumber(this._y)
@@ -1348,7 +1348,7 @@ export class Rectangle
       .writeNumber(this._height);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `Rectangle { x: ${this._x}, y: ${this._y}, width: ${this._width}, height: ${this._height} }`;</span>
   }
 &nbsp;
@@ -1366,7 +1366,7 @@ export class Rectangle
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Rectangle {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Rectangle {</span></span>
   export type JSON = {
     [key: string]: json.JSON;
     type: "rectangle";
@@ -1380,7 +1380,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
     return Rectangle.of(json.x, json.y, json.width, json.height);
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isRectangle(</span>value: unknown): value is Rectangle {
+  export function isRectangle(value: unknown): value is Rectangle {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Rectangle;</span>
   }
 &nbsp;
@@ -1391,7 +1391,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
     );
   }
 &nbsp;
-  export function intersection(...rectangles: Array&lt;Rectangle&gt;): Rectangle {
+  export function <span class="fstat-no" title="function not covered" >intersection(</span>...rectangles: Array&lt;Rectangle&gt;): Rectangle {
     return rectangles.reduce(
       (previous, current) =&gt; previous.intersection(current),
       Rectangle.full(),
@@ -1405,7 +1405,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >R
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:05:47.734Z
+                at 2026-04-10T09:29:12.662Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

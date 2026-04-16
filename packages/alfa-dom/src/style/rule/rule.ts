@@ -5,9 +5,9 @@ import { None, Option } from "@siteimprove/alfa-option";
 
 import * as json from "@siteimprove/alfa-json";
 
-import type { Sheet } from "../sheet.js";
+import type { Sheet } from "../sheet.ts";
 
-import type { Rule } from "./index.js";
+import type { Rule } from "./index.ts";
 
 /**
  * @public

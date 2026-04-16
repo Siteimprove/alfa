@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.59% </span>
+                <span class="strong">70.21% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>36/47</span>
+                <span class='fraction'>33/47</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.07% </span>
+                <span class="strong">61.53% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>19/26</span>
+                <span class='fraction'>16/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">51.11% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>30/45</span>
+                <span class='fraction'>23/45</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -292,7 +292,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -370,12 +370,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -416,7 +416,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">97x</span>
+<span class="cline-any cline-yes">111x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -429,7 +429,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">113x</span>
+<span class="cline-any cline-yes">111x</span>
 <span class="cline-any cline-yes">292x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -440,17 +440,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">98x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">96x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
@@ -478,7 +478,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">99x</span>
+<span class="cline-any cline-yes">97x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -491,16 +491,16 @@ import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 &nbsp;
-import type { Context } from "../context.js";
-import { Specificity } from "../specificity.js";
+import type { Context } from "../context.ts";
+import { Specificity } from "../specificity.ts";
 &nbsp;
-import { Complex } from "./complex.js";
-import type { Compound } from "./compound.js";
+import { Complex } from "./complex.ts";
+import type { Compound } from "./compound.ts";
 &nbsp;
-import type { Absolute, Relative, Selector } from "./index.js";
-import { Relative as BaseRelative } from "./relative.js";
-import { BaseSelector } from "./selector.js";
-import type { Simple } from "./simple/index.js";
+import type { Absolute, Relative, Selector } from "./index.ts";
+import { Relative as BaseRelative } from "./relative.ts";
+import { BaseSelector } from "./selector.ts";
+import type { Simple } from "./simple/index.ts";
 &nbsp;
 const { either, end, map, separatedList } = Parser;
 &nbsp;
@@ -512,14 +512,14 @@ const { either, end, map, separatedList } = Parser;
 export class List&lt;
   T extends List.Item = List.Item,
 &gt; extends BaseSelector&lt;"list"&gt; {
-  public static of&lt;T extends List.Item&gt;(...selectors: Array&lt;T&gt;): List&lt;T&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>T extends List.Item&gt;(...selectors: Array&lt;T&gt;): List&lt;T&gt; {
     return new List(selectors);
   }
 &nbsp;
   private readonly _selectors: Array&lt;T&gt;;
   private readonly _length: number;
 &nbsp;
-  protected constructor(selectors: Array&lt;T&gt;) {
+<span class="fstat-no" title="function not covered" >  protected constructor(s</span>electors: Array&lt;T&gt;) {
     super(
       "list",
       Specificity.max(...selectors.map((selector) =&gt; selector.specificity)),
@@ -548,7 +548,7 @@ export class List&lt;
    *
    * @internal
    */
-  public simplify(): T | this {
+  public <span class="fstat-no" title="function not covered" >simplify(</span>): T | this {
     if (this._selectors.length === 1) {
       return this._selectors[0];
     }
@@ -570,7 +570,7 @@ export class List&lt;
 <span class="cstat-no" title="statement not covered" >    yield* this._selectors;</span>
   }
 &nbsp;
-  public toJSON(): List.JSON&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): List.JSON&lt;T&gt; {
     return {
       ...super.toJSON(),
       selectors: Array.toJSON(this._selectors),
@@ -585,7 +585,7 @@ export class List&lt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >List {</span></span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >L</span>ist {</span></span>
   export interface JSON&lt;T extends Item = Item&gt;
     extends BaseSelector.JSON&lt;"list"&gt; {
     selectors: Array&lt;Serializable.ToJSON&lt;T&gt;&gt;;
@@ -594,7 +594,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
   /** @internal */
   export type Item = Simple | Compound | Complex | BaseRelative;
 &nbsp;
-  export function isList(value: unknown): value is List {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isList(v</span>alue: unknown): value is List {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof List;</span>
   }
 &nbsp;
@@ -626,7 +626,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
     options?: Selector.Parser.Options,
   ): CSSParser&lt;T | List&lt;T&gt;&gt; {
     const parser =
-      (options?.forgiving ?? false)
+<span class="cstat-no" title="statement not covered" >      (options?.forgiving ?? false)</span>
         ? // In a forgiving context, if the parser errors, we discard all tokens
           // until the next comma.
           either(
@@ -684,11 +684,11 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
   ): CSSParser&lt;Absolute&gt;;
 &nbsp;
   /** @internal */
-  export function parse(
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >parse(</span></span>
     parseSelector: Selector.Parser.Component,
     options?: Selector.Parser.Options,
   ): CSSParser&lt;Item | List&lt;Item&gt;&gt; {
-    return (options?.relative ?? <span class="branch-0 cbranch-no" title="branch not covered" >false)</span>
+    return (options?.relative ?? false)
       ? parseRelative(parseSelector, options)
       : parseComplex(parseSelector, options);
   }
@@ -700,7 +700,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:57.167Z
+                at 2026-04-10T09:30:20.031Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

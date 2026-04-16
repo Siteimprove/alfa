@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">22.72% </span>
+                <span class="strong">25.53% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/44</span>
+                <span class='fraction'>12/47</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">20% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/5</span>
+                <span class='fraction'>2/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20.93% </span>
+                <span class="strong">10.46% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>9/43</span>
+                <span class='fraction'>9/86</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">22.72% </span>
+                <span class="strong">24.44% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/44</span>
+                <span class='fraction'>11/45</span>
             </div>
         
             
@@ -497,7 +497,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -529,7 +529,7 @@ import type { Thunk } from "@siteimprove/alfa-thunk";
 &nbsp;
 import type * as json from "@siteimprove/alfa-json";
 &nbsp;
-import type { Result } from "./result.js";
+import type { Result } from "./result.ts";
 &nbsp;
 const { not, test } = Predicate;
 &nbsp;
@@ -537,67 +537,67 @@ const { not, test } = Predicate;
  * @public
  */
 export class Err&lt;E&gt; implements Result&lt;never, E&gt; {
-  public static of&lt;E&gt;(error: E): Err&lt;E&gt; {
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>E&gt;(error: E): Err&lt;E&gt; {
     return new Err(error);
   }
 &nbsp;
   private readonly _error: E;
 &nbsp;
-  protected constructor(error: E) {
+<span class="fstat-no" title="function not covered" >  protected constructor(e</span>rror: E) {
     this._error = error;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isOk(</span>): this is never {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isOk(</span>): this is never {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >isErr(</span>): this is Err&lt;E&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isErr(</span>): this is Err&lt;E&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return true;</span>
   }
 &nbsp;
-  public map(): Err&lt;E&gt; {
+  public <span class="fstat-no" title="function not covered" >map(</span>): Err&lt;E&gt; {
     return this;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >mapErr&lt;</span>F&gt;(mapper: Mapper&lt;E, F&gt;): Err&lt;F&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >mapErr&lt;</span>F&gt;(m</span>apper: Mapper&lt;E, F&gt;): Err&lt;F&gt; {
 <span class="cstat-no" title="statement not covered" >    return new Err(mapper(this._error));</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >mapOrElse&lt;</span>U&gt;(ok: unknown, err: Mapper&lt;E, U&gt;): U {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >mapOrElse&lt;</span>U&gt;(o</span>k: unknown, err: Mapper&lt;E, U&gt;): U {
 <span class="cstat-no" title="statement not covered" >    return err(this._error);</span>
   }
 &nbsp;
-  public forEach(callback: Callback&lt;never&gt;): void {}
+  public <span class="fstat-no" title="function not covered" >forEach(</span>callback: Callback&lt;never&gt;): void {}
 &nbsp;
-  public forEachErr(callback: Callback&lt;E&gt;): void {
+  public <span class="fstat-no" title="function not covered" >forEachErr(</span>callback: Callback&lt;E&gt;): void {
     callback(this._error);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >apply(</span>): Err&lt;E&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >apply(</span>): Err&lt;E&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >flatMap(</span>): Err&lt;E&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >flatMap(</span>): Err&lt;E&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >flatten&lt;</span>T, E&gt;(this: Result&lt;never, E&gt;): Result&lt;T, E&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >flatten&lt;</span>T, E&gt;(this: Result&lt;never, E&gt;): Result&lt;T, E&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >reduce&lt;</span>U&gt;(reducer: unknown, accumulator: U): U {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >reduce&lt;</span>U&gt;(r</span>educer: unknown, accumulator: U): U {
 <span class="cstat-no" title="statement not covered" >    return accumulator;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >includes(</span>): this is never {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >includes(</span>): this is never {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >includesErr(</span>error: E): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >includesErr(</span>e</span>rror: E): boolean {
 <span class="cstat-no" title="statement not covered" >    return Equatable.equals(this._error, error);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >some(</span>): this is never {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >some(</span>): this is never {</span>
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
@@ -605,11 +605,11 @@ export class Err&lt;E&gt; implements Result&lt;never, E&gt; {
 &nbsp;
   public someErr(predicate: Predicate&lt;E&gt;): boolean;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >someErr(</span>predicate: Predicate&lt;E&gt;): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >someErr(</span>p</span>redicate: Predicate&lt;E&gt;): boolean {
 <span class="cstat-no" title="statement not covered" >    return test(predicate, this._error);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >none(</span>): this is Err&lt;E&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >none(</span>): this is Err&lt;E&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return true;</span>
   }
 &nbsp;
@@ -619,11 +619,11 @@ export class Err&lt;E&gt; implements Result&lt;never, E&gt; {
 &nbsp;
   public noneErr(predicate: Predicate&lt;E&gt;): boolean;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >noneErr(</span>predicate: Predicate&lt;E&gt;): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >noneErr(</span>p</span>redicate: Predicate&lt;E&gt;): boolean {
 <span class="cstat-no" title="statement not covered" >    return test(not(predicate), this._error);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >every(</span>): this is Err&lt;E&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >every(</span>): this is Err&lt;E&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return true;</span>
   }
 &nbsp;
@@ -633,95 +633,95 @@ export class Err&lt;E&gt; implements Result&lt;never, E&gt; {
 &nbsp;
   public everyErr(predicate: Predicate&lt;E&gt;): boolean;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >everyErr(</span>predicate: Predicate&lt;E&gt;): boolean {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >everyErr(</span>p</span>redicate: Predicate&lt;E&gt;): boolean {
 <span class="cstat-no" title="statement not covered" >    return test(predicate, this._error);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >and(</span>): Err&lt;E&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >and(</span>): Err&lt;E&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >andThen(</span>): Err&lt;E&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >andThen(</span>): Err&lt;E&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >or&lt;</span>U, F&gt;(result: Result&lt;U, F&gt;): Result&lt;U, F&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >or&lt;</span>U, F&gt;(r</span>esult: Result&lt;U, F&gt;): Result&lt;U, F&gt; {
 <span class="cstat-no" title="statement not covered" >    return result;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >orElse&lt;</span>U, F&gt;(result: Thunk&lt;Result&lt;U, F&gt;&gt;): Result&lt;U, F&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >orElse&lt;</span>U, F&gt;(r</span>esult: Thunk&lt;Result&lt;U, F&gt;&gt;): Result&lt;U, F&gt; {
 <span class="cstat-no" title="statement not covered" >    return result();</span>
   }
 &nbsp;
   /**
    * @internal
    */
-  public <span class="fstat-no" title="function not covered" >getUnsafe(</span>message = <span class="branch-0 cbranch-no" title="branch not covered" >"Attempted to .getUnsafe() from Err")</span>: never {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getUnsafe(</span>m</span>essage = <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >"Attempted to .getUnsafe() from Err")</span>: never {</span>
 <span class="cstat-no" title="statement not covered" >    throw new Error(message);</span>
   }
 &nbsp;
   /**
    * @internal
    */
-  public <span class="fstat-no" title="function not covered" >getErrUnsafe(</span>): E {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getErrUnsafe(</span>): E {</span>
 <span class="cstat-no" title="statement not covered" >    return this._error;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >getErr(</span>): E {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getErr(</span>): E {</span>
 <span class="cstat-no" title="statement not covered" >    return this._error;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >getOr&lt;</span>U&gt;(value: U): U {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getOr&lt;</span>U&gt;(v</span>alue: U): U {
 <span class="cstat-no" title="statement not covered" >    return value;</span>
   }
 &nbsp;
-  public getOrElse&lt;U&gt;(value: Callback&lt;E, U&gt;): U {
+  public <span class="fstat-no" title="function not covered" >getOrElse&lt;</span>U&gt;(value: Callback&lt;E, U&gt;): U {
     return value(this._error);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >getErrOr(</span>): E {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >getErrOr(</span>): E {</span>
 <span class="cstat-no" title="statement not covered" >    return this._error;</span>
   }
 &nbsp;
-  public getErrOrElse(): E {
+  public <span class="fstat-no" title="function not covered" >getErrOrElse(</span>): E {
     return this._error;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >ok(</span>): None {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >ok(</span>): None {</span>
 <span class="cstat-no" title="statement not covered" >    return None;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >err(</span>): Option&lt;E&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >err(</span>): Option&lt;E&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return Option.of(this._error);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >tee(</span>): Err&lt;E&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >tee(</span>): Err&lt;E&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >teeErr(</span>callback: Callback&lt;E&gt;): Err&lt;E&gt; {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >teeErr(</span>c</span>allback: Callback&lt;E&gt;): Err&lt;E&gt; {
 <span class="cstat-no" title="statement not covered" >    callback(this._error);</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Err &amp;&amp; Equatable.equals(value._error, this._error);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash): void {
 <span class="cstat-no" title="statement not covered" >    hash.writeBoolean(false).writeUnknown(this._error);</span>
   }
 &nbsp;
-  public *[<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>() {}
+  public *[<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >Symbol.iterator]</span></span>() {}
 &nbsp;
-  public toJSON(options?: Serializable.Options): Err.JSON&lt;E&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>options?: Serializable.Options): Err.JSON&lt;E&gt; {
     return {
       type: "err",
       error: Serializable.toJSON(this._error, options),
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `Err { ${this._error} }`;</span>
   }
 }
@@ -729,7 +729,7 @@ export class Err&lt;E&gt; implements Result&lt;never, E&gt; {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Err {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >E</span>rr {</span></span>
   export interface JSON&lt;E&gt; {
     [key: string]: json.JSON;
     type: "err";
@@ -740,7 +740,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >E
 &nbsp;
   export function isErr&lt;E&gt;(value: unknown): value is Err&lt;E&gt;;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isErr&lt;</span>E&gt;(value: unknown): value is Err&lt;E&gt; {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isErr&lt;</span>E&gt;(v</span>alue: unknown): value is Err&lt;E&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return value instanceof Err;</span>
   }
 }
@@ -751,7 +751,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >E
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:44.835Z
+                at 2026-04-10T09:30:07.890Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

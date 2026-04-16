@@ -1,7 +1,7 @@
 import type { Keyword } from "@siteimprove/alfa-css";
 import { Option } from "@siteimprove/alfa-option";
-import { Longhand } from "../longhand.js";
-import { isFlexContainer } from "../predicate/index.js";
+import { Longhand } from "../longhand.ts";
+import { isFlexContainer } from "../predicate/index.ts";
 
 type Specified = Keyword<"nowrap"> | Keyword<"wrap"> | Keyword<"wrap-reverse">;
 

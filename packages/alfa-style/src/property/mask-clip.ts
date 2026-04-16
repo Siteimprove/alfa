@@ -1,8 +1,8 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Box, Keyword, List } from "@siteimprove/alfa-css";
 
-import { Longhand } from "../longhand.js";
-import { Resolver } from "../resolver.js";
+import { Longhand } from "../longhand.ts";
+import { Resolver } from "../resolver.ts";
 
 const { either } = Parser;
 

@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70% </span>
+                <span class="strong">52.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>21/30</span>
+                <span class='fraction'>21/40</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>4/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/10</span>
+                <span class='fraction'>10/20</span>
             </div>
         
             
@@ -578,7 +578,7 @@ export type Refinement&lt;T, U extends T, A extends Array&lt;unknown&gt; = []&gt
 /**
  * @public
  */
-export namespace Refinement {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export </span>namespace Refinement {</span>
   interface Test {
     &lt;T, U extends T, A extends Array&lt;unknown&gt; = []&gt;(
       refinement: Refinement&lt;T, U, A&gt;,
@@ -767,39 +767,39 @@ export namespace Refinement {
 &nbsp;
   export const tee = Predicate.tee as Tee;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isString(</span>value: unknown): value is string {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isString(v</span>alue: unknown): value is string {</span>
 <span class="cstat-no" title="statement not covered" >    return typeof value === "string";</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isNumber(</span>value: unknown): value is number {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isNumber(v</span>alue: unknown): value is number {</span>
 <span class="cstat-no" title="statement not covered" >    return typeof value === "number";</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isBigInt(</span>value: unknown): value is bigint {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isBigInt(v</span>alue: unknown): value is bigint {</span>
 <span class="cstat-no" title="statement not covered" >    return typeof value === "bigint";</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isBoolean(</span>value: unknown): value is boolean {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isBoolean(v</span>alue: unknown): value is boolean {</span>
 <span class="cstat-no" title="statement not covered" >    return typeof value === "boolean";</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isNull(</span>value: unknown): value is null {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isNull(v</span>alue: unknown): value is null {</span>
 <span class="cstat-no" title="statement not covered" >    return value === null;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isUndefined(</span>value: unknown): value is undefined {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isUndefined(v</span>alue: unknown): value is undefined {</span>
 <span class="cstat-no" title="statement not covered" >    return value === undefined;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isSymbol(</span>value: unknown): value is symbol {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isSymbol(v</span>alue: unknown): value is symbol {</span>
 <span class="cstat-no" title="statement not covered" >    return typeof value === "symbol";</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isFunction(</span>value: unknown): value is Function {
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isFunction(v</span>alue: unknown): value is Function {</span>
 <span class="cstat-no" title="statement not covered" >    return typeof value === "function";</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isObject(</span>
+  export function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >isObject(</span></span>
     value: unknown,
   ): value is { [key: string]: unknown } {
 <span class="cstat-no" title="statement not covered" >    return typeof value === "object" &amp;&amp; value !== null;</span>
@@ -820,7 +820,7 @@ export namespace Refinement {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:44.530Z
+                at 2026-04-10T09:30:07.782Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

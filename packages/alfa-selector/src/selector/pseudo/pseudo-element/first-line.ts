@@ -1,4 +1,4 @@
-import { PseudoElementSelector } from "./pseudo-element.js";
+import { PseudoElementSelector } from "./pseudo-element.ts";
 
 /**
  * {@link https://drafts.csswg.org/css-pseudo-4/#first-line-pseudo}

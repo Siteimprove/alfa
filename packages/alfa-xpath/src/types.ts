@@ -1,4 +1,4 @@
-import type { Descriptor, Descriptors } from "./descriptors.js";
+import type { Descriptor, Descriptors } from "./descriptors.ts";
 
 /**
  * @public

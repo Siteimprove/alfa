@@ -1,8 +1,8 @@
 import { Image, Keyword, List } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../longhand.js";
-import { Resolver } from "../resolver.js";
+import { Longhand } from "../longhand.ts";
+import { Resolver } from "../resolver.ts";
 import { Selective } from "@siteimprove/alfa-selective";
 
 const { either } = Parser;

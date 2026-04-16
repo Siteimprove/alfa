@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Flags } from "../dist/flags.js";
+import { Flags } from "../src/flags.ts";
 
 const Example = Flags.named("example", "flagA", "flagB", "flagC", "flagD");
 

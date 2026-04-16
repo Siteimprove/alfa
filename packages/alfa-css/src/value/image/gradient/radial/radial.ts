@@ -8,17 +8,17 @@ import {
   Function,
   type Parser as CSSParser,
   Token,
-} from "../../../../syntax/index.js";
+} from "../../../../syntax/index.ts";
 
-import { Keyword } from "../../../textual/keyword.js";
-import { Position } from "../../../position/index.js";
-import type { PartiallyResolvable, Resolvable } from "../../../resolvable.js";
-import { Value } from "../../../value.js";
+import { Keyword } from "../../../textual/keyword.ts";
+import { Position } from "../../../position/index.ts";
+import type { PartiallyResolvable, Resolvable } from "../../../resolvable.ts";
+import { Value } from "../../../value.ts";
 
-import { Item } from "../item/index.js";
+import { Item } from "../item/index.ts";
 
-import { Extent } from "./extent.js";
-import { Shape } from "./shape.js";
+import { Extent } from "./extent.ts";
+import { Shape } from "./shape.ts";
 
 const { map, either, pair, option, left, right, delimited } = Parser;
 

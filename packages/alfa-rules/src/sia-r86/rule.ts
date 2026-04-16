@@ -5,10 +5,10 @@ import { Node, Query } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/index.js";
-import { BestPractice } from "../requirements/index.js";
+import { expectation } from "../common/act/index.ts";
+import { BestPractice } from "../requirements/index.ts";
 
-import { Scope, Stability } from "../tags/index.js";
+import { Scope, Stability } from "../tags/index.ts";
 
 const { isIncludedInTheAccessibilityTree, isMarkedDecorative } = DOM;
 const { getElementDescendants } = Query;

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.76% </span>
+                <span class="strong">87.84% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>122/139</span>
+                <span class='fraction'>159/181</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.05% </span>
+                <span class="strong">78.43% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>64/78</span>
+                <span class='fraction'>80/102</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.72% </span>
+                <span class="strong">74.69% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>37/47</span>
+                <span class='fraction'>62/83</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.23% </span>
+                <span class="strong">88.32% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>120/136</span>
+                <span class='fraction'>121/137</span>
             </div>
         
             
@@ -787,7 +787,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1293,14 +1293,14 @@ import { Style } from "@siteimprove/alfa-style";
 import * as dom from "@siteimprove/alfa-dom";
 import * as tree from "@siteimprove/alfa-tree";
 &nbsp;
-import { Attribute } from "./attribute.js";
-import { Feature } from "./feature.js";
-import { Name } from "./name/index.js";
-import { Role } from "./role.js";
+import { Attribute } from "./attribute.ts";
+import { Feature } from "./feature.ts";
+import { Name } from "./name/index.ts";
+import { Role } from "./role.ts";
 &nbsp;
-import { Container, Element, Inert, Text } from "./index.js";
+import { Container, Element, Inert, Text } from "./index.ts";
 &nbsp;
-import * as predicate from "./node/predicate.js";
+import * as predicate from "./node/predicate.ts";
 &nbsp;
 const { and, equals, not, test } = Predicate;
 const { isRendered } = Style;
@@ -1321,20 +1321,20 @@ export abstract class Node&lt;T extends string = string&gt;
 {
   protected readonly _node: dom.Node;
 &nbsp;
-  protected constructor(owner: dom.Node, children: Array&lt;Node&gt;, type: T) {
+<span class="fstat-no" title="function not covered" >  protected constructor(o</span>wner: dom.Node, children: Array&lt;Node&gt;, type: T) {
     super(children, type);
     this._node = owner;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >node(</span>): dom.Node {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >node(</span>): dom.Node {</span>
 <span class="cstat-no" title="statement not covered" >    return this._node;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >name(</span>): Option&lt;Name&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >name(</span>): Option&lt;Name&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return None;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >role(</span>): Option&lt;Role&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >role(</span>): Option&lt;Role&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return None;</span>
   }
 &nbsp;
@@ -1346,7 +1346,7 @@ export abstract class Node&lt;T extends string = string&gt;
 &nbsp;
   public attribute&lt;N extends Attribute.Name&gt;(name: N): Option&lt;Attribute&lt;N&gt;&gt;;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >attribute(</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >attribute(</span></span>
     predicate: Attribute.Name | Predicate&lt;Attribute&gt;,
   ): Option&lt;Attribute&gt; {
 <span class="cstat-no" title="statement not covered" >    return None;</span>
@@ -1355,22 +1355,22 @@ export abstract class Node&lt;T extends string = string&gt;
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-parent}
    */
-  public <span class="fstat-no" title="function not covered" >parent(</span>options: Node.Traversal = <span class="branch-0 cbranch-no" title="branch not covered" >Node.Traversal.empty)</span>: Option&lt;Node&gt; {
-    const parent = <span class="cstat-no" title="statement not covered" >this._parent as Option&lt;Node&gt;;</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >parent(</span>o</span>ptions: Node.Traversal = <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >Node.Traversal.empty)</span>: Option&lt;Node&gt; {</span>
+    const parent = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >this._parent as Option&lt;Node&gt;;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (options.has(Node.Traversal.ignored)) {</span>
 <span class="cstat-no" title="statement not covered" >      return parent;</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return parent.flatMap(<span class="fstat-no" title="function not covered" >(p</span>arent) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      parent.isIgnored() ? parent.parent(options) : Option.of(parent),</span>
+<span class="cstat-no" title="statement not covered" >    return parent.flatMap(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(p</span></span>arent) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      parent.isIgnored() ? parent.parent(options) : Option.of(parent),</span></span>
     );
   }
 &nbsp;
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-child}
    */
-  public children(
+  public <span class="fstat-no" title="function not covered" >children(</span>
     options: Node.Traversal = Node.Traversal.empty,
   ): Sequence&lt;Node&gt; {
     const children = Sequence.from(this._children) as Sequence&lt;Node&gt;;
@@ -1380,7 +1380,7 @@ export abstract class Node&lt;T extends string = string&gt;
     }
 &nbsp;
     return children.flatMap((child) =&gt;
-      child.isIgnored() ? <span class="branch-0 cbranch-no" title="branch not covered" >child.children(options) </span>: Sequence.of(child),
+      child.isIgnored() ? <span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >child.children(options) </span>: S</span>equence.of(child),
     );
   }
 &nbsp;
@@ -1388,7 +1388,7 @@ export abstract class Node&lt;T extends string = string&gt;
 &nbsp;
   public abstract isIgnored(): boolean;
 &nbsp;
-  public toJSON(): Node.JSON&lt;T&gt; {
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Node.JSON&lt;T&gt; {
     return {
       ...super.toJSON(),
       node: this._node.path(dom.Node.fullTree),
@@ -1435,7 +1435,7 @@ export interface Node {
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Node {</span>
+<span class="fstat-no" title="function not covered" >export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >N</span>ode {</span></span>
   export interface JSON&lt;T extends string = string&gt; extends tree.Node.JSON&lt;T&gt; {
     node: string;
   }
@@ -1451,7 +1451,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >N
 &nbsp;
   const cache = Cache.empty&lt;Device, Cache&lt;dom.Node, Node&gt;&gt;();
 &nbsp;
-  export function from(node: dom.Node, device: Device): Node {
+  export function <span class="cstat-no" title="statement not covered" >from(node: dom.Node, device: Device): Node {</span>
     const _cache = cache.get(device, Cache.empty);
 &nbsp;
     // If the cache already holds an entry for the specified node, then the tree
@@ -1467,7 +1467,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >N
     // then the tree that the node participates in has already been built, but
     // the node itself is not included within the resulting accessibility tree.
     <span class="missing-if-branch" title="if path not taken" >I</span>if (_cache.has(root)) {
-<span class="cstat-no" title="statement not covered" >      return _cache.get(node, <span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >Inert.of(node))</span>;</span>
+<span class="cstat-no" title="statement not covered" >      return _cache.get(node, <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >I</span>nert.of(node))</span>;</span>
     }
 &nbsp;
     // Before we start constructing the accessibility tree, we need to resolve
@@ -1551,11 +1551,11 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >N
 &nbsp;
     fromNode(root, device, claimed, owned, openDialogAncestors, State.empty());
 &nbsp;
-    return _cache.get(node, <span class="fstat-no" title="function not covered" >() =</span>&gt;
+    return _cache.get(node, <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >() =</span>&gt;</span>
       // If the cache still doesn't hold an entry for the specified node, then
       // the node doesn't even participate in the tree. Store it as an inert
       // node.
-<span class="cstat-no" title="statement not covered" >      Inert.of(node),</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      Inert.of(node),</span></span>
     );
   }
 &nbsp;
@@ -1734,7 +1734,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >N
             )
           ) {
             state = state.inert(false);
-          } else <span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="else path not taken" >E</span>if (!openDialogAncestors.has(node)) {</span>
+<span class="cstat-no" title="statement not covered" >          <span class="missing-if-branch" title="else path not taken" >E</span>} else <span class="cstat-no" title="statement not covered" >if (!openDialogAncestors.has(node)) {</span></span>
 <span class="cstat-no" title="statement not covered" >            return Inert.of(node);</span>
           }
         }
@@ -1807,7 +1807,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >N
 &nbsp;
             <span class="missing-if-branch" title="else path not taken" >E</span>if (
               attribute.isGlobal() ||
-<span class="branch-1 cbranch-no" title="branch not covered" >              role.some(<span class="fstat-no" title="function not covered" >(r</span>ole) =&gt; <span class="cstat-no" title="statement not covered" >role.isAttributeSupported(attribute.name))</span></span>
+<span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >              role.some(<span class="fstat-no" title="function not covered" >(r</span>ole) =&gt; <span class="cstat-no" title="statement not covered" >role.isAttributeSupported(attribute.name))</span></span></span>
             ) {
               attributes = attributes.set(name, attribute);
             }
@@ -1891,7 +1891,7 @@ const alwaysExpose = and(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-31T11:06:00.559Z
+                at 2026-04-10T09:29:24.679Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

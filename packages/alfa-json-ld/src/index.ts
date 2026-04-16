@@ -1,1 +1,1 @@
-export * from "./json-ld.js";
+export * from "./json-ld.ts";
