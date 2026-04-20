@@ -248,6 +248,11 @@ export namespace Question {
       type: "boolean",
       message: `Is this element visible when it's focused?`,
     },
+    // R101 (experimental)
+    "has-repeated-content-before-main": {
+      type: "boolean",
+      message: "Does the page have repeated content before its main content?",
+    },
     // R109 (experimental)
     "document-language": {
       type: "string",
