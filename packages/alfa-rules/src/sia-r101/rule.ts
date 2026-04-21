@@ -3,9 +3,11 @@ import { DOM } from "@siteimprove/alfa-aria";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Document } from "@siteimprove/alfa-dom";
 import { Element, Node, Query, Text } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { String } from "@siteimprove/alfa-string";
 import type { Page } from "@siteimprove/alfa-web";
 
 import { expectation, Question } from "../common/act/index.ts";
@@ -22,8 +24,11 @@ const { and } = Refinement;
  * This rule asks whether the page has repeated content before its main
  * content, unless it can automatically answer false when there is no
  * accessible content before the main element.
+ *
+ * It tries to locate the main landmarks (elements with role of main),
+ * and asks a question if it doesn't find any.
  */
-export default Rule.Atomic.of<Page, Document, Question.Metadata>({
+export default Rule.Atomic.of<Page, Document, Question.Metadata, Node>({
   uri: "https://alfa.siteimprove.com/rules/sia-r101",
   tags: [Scope.Page, Stability.Experimental],
   evaluate({ device, document }) {
@@ -33,15 +38,31 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
       },
 
       expectations(target) {
+        const mains = Query.getElementDescendants(
+          document,
+          Node.flatTree,
+        ).filter(hasRole(device, "main"));
+
         return {
-          1: Question.of("has-repeated-content-before-main", target)
-            .answerIf(hasNoContentBeforeMain(device), false)
-            .map((hasRepeatedContent) =>
-              expectation(
-                !hasRepeatedContent,
-                () => Outcomes.HasNoRepeatedContentBeforeMain,
-                () => Outcomes.HasRepeatedContentBeforeMain,
-              ),
+          1: Question.of("main-landmark-elements", target)
+            .answerIf(!mains.isEmpty(), mains)
+            .map((mains) =>
+              Iterable.first(mains)
+                .map((main) =>
+                  Question.of("has-repeated-content-before-main", main, target)
+                    .answerIf(
+                      hasNoAccessibleContentBefore(device, document),
+                      false,
+                    )
+                    .map((hasRepeatedContent) =>
+                      expectation(
+                        !hasRepeatedContent,
+                        () => Outcomes.HasNoRepeatedContentBeforeMain,
+                        () => Outcomes.HasRepeatedContentBeforeMain,
+                      ),
+                    ),
+                )
+                .getOr(Outcomes.HasNoMainContent),
             ),
         };
       },
@@ -53,6 +74,10 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
  * @public
  */
 export namespace Outcomes {
+  export const HasNoMainContent = Ok.of(
+    Diagnostic.of("The page has no main content"),
+  );
+
   export const HasNoRepeatedContentBeforeMain = Ok.of(
     Diagnostic.of("The page has no repeated content before its main content"),
   );
@@ -62,28 +87,19 @@ export namespace Outcomes {
   );
 }
 
-function hasNoContentBeforeMain(device: Device): Predicate<Document> {
-  return (document) => {
-    const main = Query.getElementDescendants(document, Node.flatTree).find(
-      hasRole(device, "main"),
-    );
-
-    if (!main.isSome()) {
-      // There might be main content on the page, even if there is no main
-      // element. In that case, we can't automatically answer if there is no
-      // content before the main content.
-      return false;
-    }
-
-    return !document
+function hasNoAccessibleContentBefore(
+  device: Device,
+  document: Document,
+): Predicate<Node> {
+  return (main) =>
+    !document
       .descendants(Node.flatTree)
-      .takeUntil((node) => node.equals(main.get()))
+      .takeUntil((node) => node.equals(main))
       .some(
         and(
           isIncludedInTheAccessibilityTree(device),
           isContent(Node.flatTree),
-          not(and(Text.isText, (text) => text.data.trim() === "")),
+          not(and(Text.isText, Text.is(String.isWhitespace))),
         ),
       );
-  };
 }

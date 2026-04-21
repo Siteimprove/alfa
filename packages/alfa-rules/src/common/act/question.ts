@@ -249,6 +249,10 @@ export namespace Question {
       message: `Is this element visible when it's focused?`,
     },
     // R101 (experimental)
+    "main-landmark-elements": {
+      type: "node[]",
+      message: "Where are the main landmark elements of the page?",
+    },
     "has-repeated-content-before-main": {
       type: "boolean",
       message: "Does the page have repeated content before its main content?",
