@@ -62,6 +62,36 @@ test("evaluate() automatically passes when the only content before main is white
   );
 });
 
+test("evaluate() automatically passes when the only content before main is whitespace-only text wrapped in an element", async (t) => {
+  const documentWithWhitespaceTextBeforeMain = h.document([
+    <html lang="en">
+      <head>
+        <title>The Three Kingdoms, Chapter 1</title>
+      </head>
+      <body>
+        <span>{h.text(" ")}</span>
+        <div role="main">
+          <p>Unity succeeds division and division follows unity.</p>
+        </div>
+      </body>
+    </html>,
+  ]);
+
+  t.deepEqual(
+    await evaluate(R101, {
+      document: documentWithWhitespaceTextBeforeMain,
+    }),
+    [
+      passed(
+        R101,
+        documentWithWhitespaceTextBeforeMain,
+        { 1: Outcomes.HasNoRepeatedContentBeforeMain },
+        Outcome.Mode.Automatic,
+      ),
+    ],
+  );
+});
+
 test("evaluate() automatically passes when only a decorative replaced element precedes main", async (t) => {
   const documentWithReplacedElementBeforeMain = h.document([
     <html lang="en">
@@ -107,10 +137,9 @@ const documentWithBannerThenMain = h.document([
 ]);
 
 test("evaluate() can't tell when a non-decorative replaced element precedes main but the question is unanswered", async (t) => {
-  t.deepEqual(
-    await evaluate(R101, { document: documentWithBannerThenMain }),
-    [cantTell(R101, documentWithBannerThenMain)],
-  );
+  t.deepEqual(await evaluate(R101, { document: documentWithBannerThenMain }), [
+    cantTell(R101, documentWithBannerThenMain),
+  ]);
 });
 
 test("evaluate() passes when oracle says the non-decorative replaced element before main is not repeated content", async (t) => {
@@ -291,7 +320,14 @@ test("evaluate() can't tell when oracle identifies main but repeated-content que
       { document: documentWithNavThenArticle },
       oracle({ "main-landmark-elements": [articleAsMainWithNavBefore] }),
     ),
-    [cantTell(R101, documentWithNavThenArticle, Diagnostic.empty(), Outcome.Mode.SemiAuto)],
+    [
+      cantTell(
+        R101,
+        documentWithNavThenArticle,
+        Diagnostic.empty(),
+        Outcome.Mode.SemiAuto,
+      ),
+    ],
   );
 });
 
@@ -354,17 +390,14 @@ test("evaluate() automatically passes when a page has multiple main landmarks an
     </html>,
   ]);
 
-  t.deepEqual(
-    await evaluate(R101, { document: documentWithMultipleMains }),
-    [
-      passed(
-        R101,
-        documentWithMultipleMains,
-        { 1: Outcomes.HasNoRepeatedContentBeforeMain },
-        Outcome.Mode.Automatic,
-      ),
-    ],
-  );
+  t.deepEqual(await evaluate(R101, { document: documentWithMultipleMains }), [
+    passed(
+      R101,
+      documentWithMultipleMains,
+      { 1: Outcomes.HasNoRepeatedContentBeforeMain },
+      Outcome.Mode.Automatic,
+    ),
+  ]);
 });
 
 test("evaluate() is inapplicable to non-HTML documents", async (t) => {

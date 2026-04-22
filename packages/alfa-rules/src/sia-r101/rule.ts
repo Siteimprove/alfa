@@ -56,9 +56,9 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Node>({
                     )
                     .map((hasRepeatedContent) =>
                       expectation(
-                        !hasRepeatedContent,
-                        () => Outcomes.HasNoRepeatedContentBeforeMain,
+                        hasRepeatedContent,
                         () => Outcomes.HasRepeatedContentBeforeMain,
+                        () => Outcomes.HasNoRepeatedContentBeforeMain,
                       ),
                     ),
                 )
