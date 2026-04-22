@@ -1,7 +1,10 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "compilerOptions": { "outDir": "../dist", "rewriteRelativeImportExtensions": true },
+  "compilerOptions": {
+    "outDir": "../dist",
+    "rewriteRelativeImportExtensions": true
+  },
   "files": [
     "./common/act/diagnostic.ts",
     "./common/act/expectation.ts",
@@ -150,6 +153,7 @@
     "./sia-r94/rule.ts",
     "./sia-r95/rule.ts",
     "./sia-r96/rule.ts",
+    "./sia-r101/rule.ts",
     "./sia-r109/rule.ts",
     "./sia-r110/rule.ts",
     "./sia-r111/rule.ts",
