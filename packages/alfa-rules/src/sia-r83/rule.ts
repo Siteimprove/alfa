@@ -51,7 +51,6 @@ const {
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r83",
-  requirements: [Criterion.of("1.4.4")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
