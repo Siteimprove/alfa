@@ -38,12 +38,12 @@
     "@microsoft/api-extractor": "^7.52.10",
     "@siteimprove/alfa-toolchain": "workspace:^0.114.3",
     "@types/node": "^25.6.0",
-    "@vitest/coverage-v8": "^4.1.4",
+    "@vitest/coverage-v8": "^4.1.5",
     "knip": "^6.5.0",
     "minimist": "^1.2.6",
     "prettier": "^3.8.3",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.4"
+    "vitest": "^4.1.5"
   },
   "comment-resolution": "Circumventing https://github.com/vitest-dev/vitest/issues/9876 until it is fixed upstream.",
   "resolutions": {
