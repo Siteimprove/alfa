@@ -21,6 +21,7 @@
     "./common/diagnostic/with-name.ts",
     "./common/diagnostic/with-bad-elements.ts",
     "./common/diagnostic/with-bounding-box.ts",
+    "./common/diagnostic/with-clickable-region.ts",
     "./common/diagnostic/with-other-heading.ts",
     "./common/diagnostic/with-role.ts",
     "./common/diagnostic.ts",

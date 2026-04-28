@@ -8,3 +8,4 @@ export * from "./diagnostic/with-role.ts";
 export * from "./diagnostic/with-name.ts";
 export * from "./diagnostic/with-other-heading.ts";
 export * from "./diagnostic/with-bounding-box.ts";
+export * from "./diagnostic/with-clickable-region.ts";

@@ -2,8 +2,8 @@ import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Rectangle } from "@siteimprove/alfa-rectangle";
 
+import { getClickableRegion } from "../../src/common/dom/get-clickable-region.ts";
 import { TargetSize } from "../../src/common/outcome/target-size.ts";
 import R111 from "../../src/sia-r111/rule.ts";
 import { evaluate } from "../common/evaluate.ts";
@@ -27,7 +27,7 @@ test("evaluate() passes button with clickable area of exactly 44x44 pixels", asy
     passed(R111, target, {
       1: TargetSize.HasSufficientSize(
         "Hello",
-        target.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target),
       ),
     }),
   ]);
@@ -49,7 +49,7 @@ test("evaluate() passes input element regardless of size", async (t) => {
     passed(R111, target, {
       1: TargetSize.IsUserAgentControlled(
         "",
-        target.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target),
       ),
     }),
   ]);
@@ -68,7 +68,7 @@ test("evaluate() passes undersized link with rightsized image descendant", async
 
   t.deepEqual(await evaluate(R111, { document, device }), [
     passed(R111, target, {
-      1: TargetSize.HasSufficientSize("", Rectangle.of(8, 8, 536, 357)),
+      1: TargetSize.HasSufficientSize("", getClickableRegion(device, target)),
     }),
   ]);
 });
@@ -91,7 +91,7 @@ test("evaluate() fails button with clickable area of less than 44x44 pixels", as
     failed(R111, target, {
       1: TargetSize.HasInsufficientSize(
         "Hello",
-        target.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target),
       ),
     }),
   ]);
@@ -128,7 +128,7 @@ test("evaluate() fails clipped button with bounding box of 44x44 pixels", async 
     failed(R111, target, {
       1: TargetSize.HasInsufficientSize(
         "Hello",
-        target.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target),
       ),
     }),
   ]);
@@ -226,7 +226,7 @@ test("evaluate() is applicable when link is not part of text", async (t) => {
     failed(R111, target, {
       1: TargetSize.HasInsufficientSize(
         "hello",
-        target.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target),
       ),
     }),
   ]);

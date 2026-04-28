@@ -19,7 +19,6 @@ import { WithName } from "../common/diagnostic.ts";
 
 import { TargetSize } from "../common/outcome/target-size.ts";
 
-import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size.ts";
 import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled.ts";
 
@@ -33,19 +32,17 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const boundingBox = Rectangle.union(
-          ...getClickableRegion(device, target),
-        );
+        const clickableRegion = getClickableRegion(device, target);
         const name = WithName.getName(target, device).getOr("");
 
         return {
           1: expectation(
             isUserAgentControlled()(target),
-            () => TargetSize.IsUserAgentControlled(name, boundingBox),
+            () => TargetSize.IsUserAgentControlled(name, clickableRegion),
             () =>
               expectation(
                 hasSufficientSize(24, device)(target),
-                () => TargetSize.HasSufficientSize(name, boundingBox),
+                () => TargetSize.HasSufficientSize(name, clickableRegion),
                 () => {
                   const tooCloseNeighbors = Sequence.from(
                     findElementsWithInsufficientSpacingToTarget(
@@ -57,11 +54,11 @@ export default Rule.Atomic.of<Page, Element>({
 
                   return expectation(
                     tooCloseNeighbors.isEmpty(),
-                    () => TargetSize.HasSufficientSpacing(name, boundingBox),
+                    () => TargetSize.HasSufficientSpacing(name, clickableRegion),
                     () =>
                       TargetSize.HasInsufficientSizeAndSpacing(
                         name,
-                        boundingBox,
+                        clickableRegion,
                         tooCloseNeighbors,
                       ),
                   );
@@ -95,7 +92,7 @@ function* findElementsWithInsufficientSpacingToTarget(
   target: Element,
 ): Iterable<Element> {
   const targetRegion = getClickableRegion(device, target);
-  const targetBoundingBox = Rectangle.union(...targetRegion);
+  const targetBoundingBox = targetRegion.boundingBox;
 
   const undersizedTargets = undersizedCache
     .get(document, Cache.empty)
@@ -107,19 +104,17 @@ function* findElementsWithInsufficientSpacingToTarget(
   for (const candidate of getAllTargets(document, device)) {
     if (target !== candidate) {
       const candidateRegion = getClickableRegion(device, candidate);
-      const candidateBoundingBox = Rectangle.union(...candidateRegion);
+      const candidateBoundingBox = candidateRegion.boundingBox;
 
       // To determine if an undersized target has sufficient spacing,
       // we check that the 24 CSS pixel diameter circle of the target
       // does not intersect another target or the circle of any other
       // adjacent undersized targets.
       if (
-        candidateRegion.some((rect) =>
-          rect.intersectsCircle(
-            targetBoundingBox.center.x,
-            targetBoundingBox.center.y,
-            12,
-          ),
+        candidateRegion.intersectsCircle(
+          targetBoundingBox.center.x,
+          targetBoundingBox.center.y,
+          12,
         ) ||
         (undersizedTargets.includes(candidate) &&
           candidateBoundingBox.distanceSquared(targetBoundingBox) < 24 ** 2)

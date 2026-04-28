@@ -2,8 +2,8 @@ import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Rectangle } from "@siteimprove/alfa-rectangle";
 
+import { getClickableRegion } from "../../src/common/dom/get-clickable-region.ts";
 import { TargetSize } from "../../src/common/outcome/target-size.ts";
 import R113 from "../../src/sia-r113/rule.ts";
 import { evaluate } from "../common/evaluate.ts";
@@ -27,7 +27,7 @@ test("evaluate() passes button with clickable area of exactly 24x24 pixels", asy
     passed(R113, target, {
       1: TargetSize.HasSufficientSize(
         "Hello",
-        target.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target),
       ),
     }),
   ]);
@@ -49,7 +49,7 @@ test("evaluate() passes input element regardless of size", async (t) => {
     passed(R113, target, {
       1: TargetSize.IsUserAgentControlled(
         "",
-        target.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target),
       ),
     }),
   ]);
@@ -73,7 +73,7 @@ test("evaluate() passes button with clickable area of less than 24x24 pixels and
     passed(R113, target, {
       1: TargetSize.HasSufficientSpacing(
         "Hello",
-        target.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target),
       ),
     }),
   ]);
@@ -120,13 +120,13 @@ test("evaluate() passes button with clickable area of less than 24x24 pixels and
     passed(R113, target1, {
       1: TargetSize.HasSufficientSpacing(
         "Hello",
-        target1.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target1),
       ),
     }),
     passed(R113, target2, {
       1: TargetSize.HasSufficientSpacing(
         "World",
-        target2.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target2),
       ),
     }),
   ]);
@@ -175,7 +175,7 @@ test("evaluate() passes undersized button with vertically adjacent undersized bu
     passed(R113, target1, {
       1: TargetSize.HasSufficientSpacing(
         "Hello",
-        target1.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target1),
       ),
     }),
   ]);
@@ -224,7 +224,7 @@ test("evaluate() passes undersized button with vertically adjacent undersized bu
     passed(R113, target1, {
       1: TargetSize.HasSufficientSpacing(
         "Hello",
-        target1.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target1),
       ),
     }),
   ]);
@@ -278,13 +278,13 @@ test("evaluate() passes undersized button on top of other target when there is a
     passed(R113, behind, {
       1: TargetSize.HasSufficientSize(
         "",
-        behind.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, behind),
       ),
     }),
     passed(R113, target, {
       1: TargetSize.HasSufficientSpacing(
         "x",
-        target.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target),
       ),
     }),
   ]);
@@ -336,13 +336,13 @@ test("evaluate() fails button on top of other target with a non-target in-betwee
     passed(R113, behind, {
       1: TargetSize.HasSufficientSize(
         "",
-        behind.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, behind),
       ),
     }),
     failed(R113, target, {
       1: TargetSize.HasInsufficientSizeAndSpacing(
         "",
-        target.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target),
         [behind],
       ),
     }),
@@ -391,14 +391,14 @@ test("evaluate() fails undersized button with vertically adjacent undersized but
     failed(R113, target1, {
       1: TargetSize.HasInsufficientSizeAndSpacing(
         "Hello",
-        target1.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target1),
         [target2],
       ),
     }),
     failed(R113, target2, {
       1: TargetSize.HasInsufficientSizeAndSpacing(
         "World",
-        target2.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target2),
         [target1],
       ),
     }),
@@ -446,14 +446,14 @@ test("evaluate() fails an undersized button whose 24px diameter circle intersect
     failed(R113, target1, {
       1: TargetSize.HasInsufficientSizeAndSpacing(
         "Hello",
-        target1.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target1),
         [target2],
       ),
     }),
     passed(R113, target2, {
       1: TargetSize.HasSufficientSpacing(
         "World",
-        target2.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target2),
       ),
     }),
   ]);
@@ -489,12 +489,12 @@ test("evaluate() fails an undersized button next to an image inside a link", asy
 
   t.deepEqual(await evaluate(R113, { document, device }), [
     passed(R113, neighbor, {
-      1: TargetSize.HasSufficientSize("", Rectangle.of(8, 8, 536, 357)),
+      1: TargetSize.HasSufficientSize("", getClickableRegion(device, neighbor)),
     }),
     failed(R113, target, {
       1: TargetSize.HasInsufficientSizeAndSpacing(
         "x",
-        Rectangle.of(544, 8, 20, 20),
+        getClickableRegion(device, target),
         [neighbor],
       ),
     }),
@@ -647,7 +647,7 @@ test("evaluate() is applicable when link is not part of text", async (t) => {
     passed(R113, target, {
       1: TargetSize.HasSufficientSpacing(
         "hello",
-        target.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target),
       ),
     }),
   ]);
@@ -700,7 +700,7 @@ test("evaluate() is applicable when button is not clipped by parent due to overf
     passed(R113, target, {
       1: TargetSize.HasSufficientSpacing(
         "foo",
-        target.getBoundingBox(device).getUnsafe(),
+        getClickableRegion(device, target),
       ),
     }),
   ]);

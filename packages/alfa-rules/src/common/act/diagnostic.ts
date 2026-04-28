@@ -39,4 +39,5 @@ export namespace Diagnostic {
   export import WithName = diagnostic.WithName;
   export import WithOtherHeading = diagnostic.WithOtherHeading;
   export import WithBoundingBox = diagnostic.WithBoundingBox;
+  export import WithClickableRegion = diagnostic.WithClickableRegion;
 }

@@ -5,7 +5,6 @@ import type { Document } from "@siteimprove/alfa-dom";
 import { Element, Node, Query, Text } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
@@ -109,8 +108,7 @@ export function isTarget(device: Device): Predicate<Element> {
 
 function hasNonEmptyBoundingBox(device: Device): Predicate<Element> {
   return function (element) {
-    const region = getClickableRegion(device, element);
-    return Rectangle.union(...region).area > 0;
+    return getClickableRegion(device, element).boundingBox.area > 0;
   };
 }
 

@@ -1,67 +1,80 @@
 import type { Element } from "@siteimprove/alfa-dom";
 import { Either } from "@siteimprove/alfa-either";
-import type { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Err, Ok } from "@siteimprove/alfa-result";
 
-import { WithBoundingBox } from "../diagnostic.ts";
+import { WithClickableRegion } from "../diagnostic.ts";
+import type { ClickableRegion } from "../dom/get-clickable-region.ts";
 
 export namespace TargetSize {
-  export const IsUserAgentControlled = (name: string, box: Rectangle) =>
+  export const IsUserAgentControlled = (
+    name: string,
+    region: ClickableRegion,
+  ) =>
     Ok.of(
-      WithBoundingBox.of(
+      WithClickableRegion.of(
         "Target is user agent controlled",
         name,
-        box,
+        region.boundingBox,
         Either.left({ ua: true }),
         [],
+        region.contributors,
+        region.subtractors,
       ),
     );
 
-  export const HasSufficientSize = (name: string, box: Rectangle) =>
+  export const HasSufficientSize = (name: string, region: ClickableRegion) =>
     Ok.of(
-      WithBoundingBox.of(
+      WithClickableRegion.of(
         "Target has sufficient size",
         name,
-        box,
+        region.boundingBox,
         Either.right({ size: true, spacing: true }),
         [],
+        region.contributors,
+        region.subtractors,
       ),
     );
 
-  export const HasInsufficientSize = (name: string, box: Rectangle) =>
+  export const HasInsufficientSize = (name: string, region: ClickableRegion) =>
     Err.of(
-      WithBoundingBox.of(
+      WithClickableRegion.of(
         "Target has insufficient size",
         name,
-        box,
+        region.boundingBox,
         Either.right({ size: false, spacing: true }),
         [],
+        region.contributors,
+        region.subtractors,
       ),
     );
 
-  export const HasSufficientSpacing = (name: string, box: Rectangle) =>
+  export const HasSufficientSpacing = (name: string, region: ClickableRegion) =>
     Ok.of(
-      WithBoundingBox.of(
+      WithClickableRegion.of(
         "Target has sufficient spacing",
         name,
-        box,
+        region.boundingBox,
         Either.right({ size: false, spacing: true }),
         [],
+        region.contributors,
+        region.subtractors,
       ),
     );
 
   export const HasInsufficientSizeAndSpacing = (
     name: string,
-    box: Rectangle,
+    region: ClickableRegion,
     tooCloseNeighbors: Iterable<Element>,
   ) =>
     Err.of(
-      WithBoundingBox.of(
+      WithClickableRegion.of(
         "Target has insufficient size and spacing",
         name,
-        box,
+        region.boundingBox,
         Either.right({ size: false, spacing: false }),
         tooCloseNeighbors,
+        region.contributors,
+        region.subtractors,
       ),
     );
 }

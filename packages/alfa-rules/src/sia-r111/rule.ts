@@ -11,7 +11,6 @@ import { WithName } from "../common/diagnostic.ts";
 
 import { TargetSize } from "../common/outcome/target-size.ts";
 
-import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size.ts";
 import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled.ts";
 
@@ -25,18 +24,16 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const boundingBox = Rectangle.union(
-          ...getClickableRegion(device, target),
-        );
+        const clickableRegion = getClickableRegion(device, target);
 
         const name = WithName.getName(target, device).getOr("");
         return {
           1: expectation(
             isUserAgentControlled()(target),
-            () => TargetSize.IsUserAgentControlled(name, boundingBox),
+            () => TargetSize.IsUserAgentControlled(name, clickableRegion),
             hasSufficientSize(44, device)(target)
-              ? () => TargetSize.HasSufficientSize(name, boundingBox)
-              : () => TargetSize.HasInsufficientSize(name, boundingBox),
+              ? () => TargetSize.HasSufficientSize(name, clickableRegion)
+              : () => TargetSize.HasInsufficientSize(name, clickableRegion),
           ),
         };
       },
