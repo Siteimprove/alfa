@@ -71,11 +71,14 @@ const _default: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 // @public @deprecated (undocumented)
 const _default_10: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 
-// @public (undocumented)
-const _default_11: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
+// @public @deprecated (undocumented)
+const _default_11: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 
 // @public (undocumented)
 const _default_12: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
+
+// @public (undocumented)
+const _default_13: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
 // @public
 const _default_2: Rule.Atomic<Page, Document_2, Question.Metadata, Element_2<string>>;
@@ -87,10 +90,10 @@ const _default_3: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Node_2
 const _default_4: Rule.Atomic<Page, Document_2, Question.Metadata, Node_2>;
 
 // @public
-const _default_5: Rule.Atomic<Page, Document_2, Question.Metadata, Document_2>;
+const _default_5: Rule.Atomic<Page, Document_2, Question.Metadata, Node_2>;
 
 // @public
-const _default_6: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
+const _default_6: Rule.Atomic<Page, Document_2, Question.Metadata, Document_2>;
 
 // @public
 const _default_7: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
@@ -98,15 +101,15 @@ const _default_7: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Elemen
 // @public
 const _default_8: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
-// @public @deprecated (undocumented)
-const _default_9: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
+// @public
+const _default_9: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
 declare namespace deprecatedRules {
     export {
-        _default_9 as DR3,
-        _default_10 as DR6,
-        _default_11 as DR34,
-        _default_12 as DR36
+        _default_10 as DR3,
+        _default_11 as DR6,
+        _default_12 as DR34,
+        _default_13 as DR36
     }
 }
 export { deprecatedRules }
@@ -140,11 +143,12 @@ declare namespace experimentalRules {
         _default as ER8,
         _default_2 as ER87,
         _default_3 as R82,
-        _default_4 as R101,
-        _default_5 as R109,
-        _default_6 as R114,
-        _default_7 as R115,
-        _default_8 as R117
+        _default_4 as R98,
+        _default_5 as R101,
+        _default_6 as R109,
+        _default_7 as R114,
+        _default_8 as R115,
+        _default_9 as R117
     }
 }
 export { experimentalRules }
