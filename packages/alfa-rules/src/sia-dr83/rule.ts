@@ -50,9 +50,8 @@ const {
 } = Style;
 
 /**
- * This rule has been deprecated and should not be used anymore.
- *
  * @deprecated
+ * This rule has been deprecated due to a too-strict interpretation of WCAG.
  */
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r83",

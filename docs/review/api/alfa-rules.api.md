@@ -71,13 +71,13 @@ const _default: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 // @public @deprecated (undocumented)
 const _default_10: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 
-// @public @deprecated
+// @public @deprecated (undocumented)
 const _default_11: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
-// @public @deprecated
+// @public @deprecated (undocumented)
 const _default_12: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
-// @public @deprecated
+// @public @deprecated (undocumented)
 const _default_13: Rule.Atomic<Page, Text_2, {}, Text_2>;
 
 // @public
