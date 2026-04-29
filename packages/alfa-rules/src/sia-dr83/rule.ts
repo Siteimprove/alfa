@@ -49,6 +49,11 @@ const {
   isVisible,
 } = Style;
 
+/**
+ * This rule has been deprecated and should not be used anymore.
+ *
+ * @deprecated
+ */
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r83",
   requirements: [Criterion.of("1.4.4")],
