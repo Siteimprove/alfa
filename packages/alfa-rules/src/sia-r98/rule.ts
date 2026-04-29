@@ -3,13 +3,14 @@ import { DOM } from "@siteimprove/alfa-aria";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Document } from "@siteimprove/alfa-dom";
 import { Node, Query } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { expectation, Question } from "../common/act/index.ts";
 import { withDocumentElement } from "../common/applicability/with-document-element.ts";
+import { getMainElements } from "../common/dom/get-main-elements.ts";
 import { isAtTheStart } from "../common/predicate.ts";
 import { Scope, Stability } from "../tags/index.ts";
 
@@ -30,10 +31,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Node>({
       },
 
       expectations(target) {
-        const mains = Query.getElementDescendants(
-          document,
-          Node.flatTree,
-        ).filter(hasRole(device, "main"));
+        const mains = getMainElements(device, document);
 
         return {
           1: Question.of("main-landmark-elements", target)
@@ -55,16 +53,6 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Node>({
   },
 });
 
-function hasHeadingAtStart(main: Node, device: Device): boolean {
-  return Query.getElementDescendants(main, Node.flatTree).some(
-    (element) =>
-      isVisible(device)(element) &&
-      isIncludedInTheAccessibilityTree(device)(element) &&
-      hasRole(device, "heading")(element) &&
-      isAtTheStart(main, device)(element),
-  );
-}
-
 /**
  * @public
  */
@@ -77,9 +65,6 @@ export namespace Outcomes {
    * Unlike R101, which passes vacuously when no main content is identified,
    * this rule fails: without any identified main content the expectation
    * "main content starts with a heading" cannot be satisfied.
-   *
-   * This follows a strict reading of the rule which states its expectation
-   * in terms of existence of headings at the start of main content.
    */
   export const HasNoMainContent = Err.of(
     Diagnostic.of("The page has no main content"),
@@ -87,5 +72,15 @@ export namespace Outcomes {
 
   export const HasNoHeadingAtStartOfMainContent = Err.of(
     Diagnostic.of("The page has no heading at the start of its main content"),
+  );
+}
+
+function hasHeadingAtStart(main: Node, device: Device): boolean {
+  return Query.getElementDescendants(main, Node.flatTree).some(
+    (element) =>
+      isVisible(device)(element) &&
+      isIncludedInTheAccessibilityTree(device)(element) &&
+      hasRole(device, "heading")(element) &&
+      isAtTheStart(main, device)(element),
   );
 }
