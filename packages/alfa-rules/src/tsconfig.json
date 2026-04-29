@@ -153,6 +153,7 @@
     "./sia-r94/rule.ts",
     "./sia-r95/rule.ts",
     "./sia-r96/rule.ts",
+    "./sia-r98/rule.ts",
     "./sia-r101/rule.ts",
     "./sia-r109/rule.ts",
     "./sia-r110/rule.ts",
