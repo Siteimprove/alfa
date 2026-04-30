@@ -72,7 +72,6 @@ import R78 from "./sia-r78/rule.ts";
 import R79 from "./sia-r79/rule.ts";
 import R80 from "./sia-r80/rule.ts";
 import R81 from "./sia-r81/rule.ts";
-import R83 from "./sia-r83/rule.ts";
 import R84 from "./sia-r84/rule.ts";
 import R85 from "./sia-r85/rule.ts";
 import R86 from "./sia-r86/rule.ts";
@@ -164,7 +163,6 @@ export {
   R79,
   R80,
   R81,
-  R83,
   R84,
   R85,
   R86,

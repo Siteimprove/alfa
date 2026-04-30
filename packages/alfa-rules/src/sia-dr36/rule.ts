@@ -11,6 +11,11 @@ import type { Question } from "../common/act/question.ts";
 
 import { Scope, Stability } from "../tags/index.ts";
 
+/**
+ * @deprecated
+ * This rule has been deprecated and should not be used anymore. The composite
+ * rules have been updated to not use it.
+ */
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r36",
   requirements: [Technique.of("G78"), Technique.of("H96")],

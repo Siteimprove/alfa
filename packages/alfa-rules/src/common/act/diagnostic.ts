@@ -7,7 +7,7 @@ import * as withFirstHeading from "../../sia-r61/rule.ts";
 import * as distinguishingStyles from "../../sia-r62/diagnostics.ts";
 import * as matchingClasses from "../../sia-r65/diagnostics.ts";
 import * as withDeclaration from "../../sia-r75/rule.ts";
-import * as clippingAncestors from "../../sia-r83/rule.ts";
+import * as clippingAncestors from "../../sia-dr83/rule.ts";
 
 // R66, R69
 import * as colorError from "../dom/get-colors.ts";
