@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^",
-    "axios": "^1.16.0",
+    "axios": "^1.16.1",
     "prettier": "^3.8.3"
   },
   "publishConfig": {
