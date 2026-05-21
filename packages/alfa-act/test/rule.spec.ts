@@ -99,8 +99,6 @@ test("evaluate() keeps mode automatic when questions are answered internally", a
     (value) => value === 2,
   );
 
-  console.dir(await evaluate(rule, [target1, target2]), { depth: null });
-
   t.deepEqual(await evaluate(rule, [target1, target2]), [
     passed(rule, target1, { "1": Outcomes.Passed }),
     failed(rule, target2, { "1": Outcomes.Failed }),
