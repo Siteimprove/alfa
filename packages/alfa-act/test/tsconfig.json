@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "lib": ["DOM", "ESNext"]
+  },
+  "files": [
+    "./fixtures/evaluate.ts",
+    "./fixtures/index.ts",
+    "./fixtures/rule.ts",
+    "./fixtures/target.ts",
+    "./outcome.spec.ts",
+    "./rule.spec.ts",
+    "./interview.spec.ts",
+    "./interview.spec-d.ts",
+    "./question.spec.ts"
+  ],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
+}
