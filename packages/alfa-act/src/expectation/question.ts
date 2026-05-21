@@ -168,6 +168,11 @@ export class Question<
       | Result<ANSWER, unknown>,
     answerOrMerger?: ANSWER | Mapper<Diagnostic, Diagnostic, [Diagnostic]>,
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI> {
+    // If the question is already rhetorical, no need to do anything.
+    if (this.isRhetorical()) {
+      return this;
+    }
+
     let condition = false;
     let answer: ANSWER;
     let diagnostic = this._diagnostic;
