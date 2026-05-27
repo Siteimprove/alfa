@@ -36,7 +36,7 @@ runs:
         echo "This workflow can only be called from the main branch."
         exit 1
 
-    - uses: actions/setup-node@v5
+    - uses: actions/setup-node@v6
       with:
         # 24 is Active from October 2025 to October 2026.
         node-version: 24
