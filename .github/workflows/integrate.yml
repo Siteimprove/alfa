@@ -23,16 +23,16 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        # 20 is in Maintenance until April 2026.
-        # 22 is Active until October 2025, Maintenance until April 2027.
-        # 24 is Current from April 2025 to October 2025, then Active until October 2026, Maintenance until April 2028.
-        # 26 will be Current in April 2026.
+        # 22 is in Maintenance until April 2027.
+        # 24 is Active until October 2026, Maintenance until April 2028.
+        # 26 is Current from May 2026 to October 2026, then Active until October 2027, Maintenance until April 2029.
+        # 28 will be Current in April/May 2027.
         # https://nodejs.org/en/about/previous-releases
-        node: [20, 22, 24]
+        node: [22, 24, 26]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node }}
           cache: yarn
