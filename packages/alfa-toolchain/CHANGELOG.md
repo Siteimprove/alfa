@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.115.1
+
+### Patch Changes
+
+- **Changed:** Empty release to retrigger publication. ([`1e92bbe`](https://github.com/Siteimprove/alfa/commit/1e92bbe73028301bab9b3b3ebaa98d5b49d04102))
+
 ## 0.115.0
 
 ## 0.114.3
