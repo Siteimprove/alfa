@@ -17,7 +17,7 @@
     "#coverage:comment": "We use --coverage.enabled instead of --coverage to allow overriding options in the CLI. See warning at https://vitest.dev/config/#coverage",
     "coverage": "vitest run --coverage.enabled --config ./config/vitest.config.ts",
     "#coverage:package:comment": "Run coverage for a single package. Usage: yarn workspace @siteimprove/alfa-foo coverage:package. ALFA_PATH is used in vitest config.",
-    "coverage:package": "ALFA_PATH=$(echo ${INIT_CWD} | sed \"s+$(pwd)/++\") vitest run --coverage.enabled --config ./config/vitest.config.ts",
+    "coverage:package": "ALFA_PATH=$(echo ${INIT_CWD} | sed \"s+$(pwd)/++\") yarn coverage",
     "watch": "node scripts/watch.mjs --pretty",
     "extract": "node scripts/api-extractor.mjs --pretty",
     "extract:self": "CI=false yarn extract ${INIT_CWD}",
