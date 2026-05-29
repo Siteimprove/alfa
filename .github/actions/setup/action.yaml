@@ -84,5 +84,10 @@ runs:
       # We need a user able to bypass branch protection (i.e. admin on the repo).
       run: |
         git config --local core.filemode false
-        git config --local user.name "${{ inputs.user-name }}"
-        git config --local user.email "${{ inputs.user-email }}"
+        git config --local user.name "${GIT_USER_NAME}"
+        git config --local user.email "${GIT_USER_EMAIL}"
+      env:
+      # Passing them as a variables rather than inline hardens against script injection.
+      # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+        GIT_USER_NAME: ${{ inputs.user-name }}
+        GIT_USER_EMAIL: ${{ inputs.user-email }}
