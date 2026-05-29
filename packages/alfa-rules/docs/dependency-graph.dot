@@ -90,8 +90,6 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   "name_src/sia-r28";
   "src/sia-r29/rule.ts";
   "name_src/sia-r29";
-  "src/sia-r3/rule.ts";
-  "name_src/sia-r3";
   "src/sia-r30/rule.ts";
   "name_src/sia-r30";
   "src/sia-r32/rule.ts";
@@ -192,8 +190,6 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   "name_src/sia-r80";
   "src/sia-r81/rule.ts";
   "name_src/sia-r81";
-  "src/sia-r83/rule.ts";
-  "name_src/sia-r83";
   "src/sia-r84/rule.ts";
   "name_src/sia-r84";
   "src/sia-r85/rule.ts";
@@ -239,12 +235,12 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   "src/common/diagnostic/with-bad-elements.ts";
   "exit_src/sia-r5";
   "exit_src/sia-r48";
+  "exit_src/sia-r101";
   "exit_src/sia-r84";
   "exit_src/sia-r62";
   "src/sia-r62/serialise.ts";
   "exit_src/sia-r22";
   "exit_src/sia-r69";
-  "exit_src/sia-r83";
   "exit_src/sia-r25";
   "exit_src/sia-r33";
   "src/common/expectation/media-transcript.ts";
@@ -276,7 +272,6 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   "exit_src/sia-r35";
   "exit_src/sia-r79";
   "exit_src/sia-r116";
-  "exit_src/sia-r3";
   "exit_src/sia-r76";
   "exit_src/sia-r37";
   "exit_src/sia-r95";
@@ -325,12 +320,16 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   "exit_src/sia-r60";
   "exit_src/sia-r46";
   "exit_src/sia-r15";
+  "src/sia-dr3/rule.ts";
+  "name_src/sia-dr3";
   "src/sia-dr34/rule.ts";
   "name_src/sia-dr34";
   "src/sia-dr36/rule.ts";
   "name_src/sia-dr36";
   "src/sia-dr6/rule.ts";
   "name_src/sia-dr6";
+  "src/sia-dr83/rule.ts";
+  "name_src/sia-dr83";
   "exit_src/sia-r45";
   "exit_src/sia-r63";
   "src/common/predicate/is-aria-controls-optional.ts";
@@ -341,6 +340,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   "exit_src/sia-r93";
   "exit_src/sia-r8";
   "exit_src/sia-r94";
+  "exit_src/sia-dr3";
   "exit_src/sia-r115";
   "exit_src/sia-r50";
   "exit_src/sia-r19";
@@ -350,6 +350,8 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   "name_src/sia-er8";
   "src/sia-er87/rule.ts";
   "name_src/sia-er87";
+  "src/sia-r101/rule.ts";
+  "name_src/sia-r101";
   "src/sia-r109/rule.ts";
   "name_src/sia-r109";
   "src/sia-r114/rule.ts";
@@ -367,6 +369,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   "src/common/applicability/audio.ts";
   "exit_src/sia-r80";
   "exit_src/sia-r26";
+  "exit_src/sia-dr83";
   "exit_src/common/act";
   "exit_src/common";
   "src/sia-r65/diagnostics.ts";
@@ -391,7 +394,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
       "name_src" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#68ff00";
+        color = "#6bff00";
         label = "src";
       ];
       "exit_src" [
@@ -405,7 +408,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
       ];
       "src/index.ts" [
         label = "index.ts";
-        color = "#68ff00";
+        color = "#6bff00";
         penwidth = 5;
       ];
       "src/deprecated.ts" [
@@ -420,7 +423,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r13" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00d0ff";
+          color = "#00e4ff";
           label = "sia-r13";
         ];
         "exit_src/sia-r13" [
@@ -439,7 +442,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r109" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00b5ff";
+          color = "#00c9ff";
           label = "sia-r109";
         ];
         "exit_src/sia-r109" [
@@ -458,7 +461,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r40" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00a7ff";
+          color = "#00bcff";
           label = "sia-r40";
         ];
         "exit_src/sia-r40" [
@@ -477,7 +480,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/common" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#24ff00";
+          color = "#1bff00";
           label = "common";
         ];
         "exit_src/common" [
@@ -495,7 +498,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
           "name_src/common/dom" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#83ff00";
+            color = "#86ff00";
             label = "dom";
           ];
           "exit_src/common/dom" [
@@ -518,7 +521,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
             "name_src/common/dom/get-colors" [
               penwidth = 5;
               shape = "rectangle";
-              color = "#fdff00";
+              color = "#ffff00";
               label = "get-colors";
             ];
             "exit_src/common/dom/get-colors" [
@@ -577,7 +580,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
           "name_src/common/outcome" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#7500ff";
+            color = "#5e00ff";
             label = "outcome";
           ];
           "exit_src/common/outcome" [
@@ -608,7 +611,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
           "name_src/common/predicate" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#0005ff";
+            color = "#001bff";
             label = "predicate";
           ];
           "exit_src/common/predicate" [
@@ -657,7 +660,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
           "name_src/common/diagnostic" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#0071ff";
+            color = "#0086ff";
             label = "diagnostic";
           ];
           "exit_src/common/diagnostic" [
@@ -712,7 +715,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
           "name_src/common/expectation" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#efff00";
+            color = "#f2ff00";
             label = "expectation";
           ];
           "exit_src/common/expectation" [
@@ -761,7 +764,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
           "name_src/common/applicability" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#ff0095";
+            color = "#ff00a1";
             label = "applicability";
           ];
           "exit_src/common/applicability" [
@@ -818,7 +821,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
           "name_src/common/act" [
             penwidth = 5;
             shape = "rectangle";
-            color = "#ac00ff";
+            color = "#9400ff";
             label = "act";
           ];
           "exit_src/common/act" [
@@ -838,7 +841,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
           ];
           "src/common/act/index.ts" [
             label = "index.ts";
-            color = "#ac00ff";
+            color = "#9400ff";
             penwidth = 5;
           ];
           "src/common/act/diagnostic.ts" [
@@ -1002,7 +1005,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r66" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#0099ff";
+          color = "#00aeff";
           label = "sia-r66";
         ];
         "exit_src/sia-r66" [
@@ -1021,7 +1024,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r14" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#008cff";
+          color = "#00a1ff";
           label = "sia-r14";
         ];
         "exit_src/sia-r14" [
@@ -1040,7 +1043,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r47" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#007eff";
+          color = "#0094ff";
           label = "sia-r47";
         ];
         "exit_src/sia-r47" [
@@ -1059,7 +1062,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r61" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#0063ff";
+          color = "#0079ff";
           label = "sia-r61";
         ];
         "exit_src/sia-r61" [
@@ -1078,7 +1081,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r77" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff00a2";
+          color = "#ff00ae";
           label = "sia-r77";
         ];
         "exit_src/sia-r77" [
@@ -1097,7 +1100,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r2" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff00b0";
+          color = "#ff00bc";
           label = "sia-r2";
         ];
         "exit_src/sia-r2" [
@@ -1116,7 +1119,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r38" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#1700ff";
+          color = "#0000ff";
           label = "sia-r38";
         ];
         "exit_src/sia-r38" [
@@ -1135,7 +1138,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/tags" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff00d9";
+          color = "#ff00e4";
           label = "tags";
         ];
         "exit_src/tags" [
@@ -1143,7 +1146,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         ];
         "src/tags/index.ts" [
           label = "index.ts";
-          color = "#ff00d9";
+          color = "#ff00e4";
           penwidth = 5;
         ];
         "src/tags/scope.ts" [
@@ -1174,7 +1177,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r74" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#0012ff";
+          color = "#0028ff";
           label = "sia-r74";
         ];
         "exit_src/sia-r74" [
@@ -1193,7 +1196,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r1" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#0900ff";
+          color = "#000dff";
           label = "sia-r1";
         ];
         "exit_src/sia-r1" [
@@ -1212,7 +1215,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r4" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#3200ff";
+          color = "#1b00ff";
           label = "sia-r4";
         ];
         "exit_src/sia-r4" [
@@ -1231,7 +1234,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/requirements" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00c2ff";
+          color = "#00d7ff";
           label = "requirements";
         ];
         "exit_src/requirements" [
@@ -1242,7 +1245,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         ];
         "src/requirements/index.ts" [
           label = "index.ts";
-          color = "#00c2ff";
+          color = "#00d7ff";
           penwidth = 5;
         ];
         "src/requirements/aria.ts" [
@@ -1264,7 +1267,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r71" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#2400ff";
+          color = "#0d00ff";
           label = "sia-r71";
         ];
         "exit_src/sia-r71" [
@@ -1283,7 +1286,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-dr36" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#5a00ff";
+          color = "#4300ff";
           label = "sia-dr36";
         ];
         "exit_src/sia-dr36" [
@@ -1302,7 +1305,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r21" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#4d00ff";
+          color = "#3600ff";
           label = "sia-r21";
         ];
         "exit_src/sia-r21" [
@@ -1321,7 +1324,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r18" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#6800ff";
+          color = "#5100ff";
           label = "sia-r18";
         ];
         "exit_src/sia-r18" [
@@ -1340,7 +1343,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r87" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#3f00ff";
+          color = "#2800ff";
           label = "sia-r87";
         ];
         "exit_src/sia-r87" [
@@ -1359,7 +1362,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r59" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00f8ff";
+          color = "#00fff2";
           label = "sia-r59";
         ];
         "exit_src/sia-r59" [
@@ -1378,7 +1381,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r73" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00fff8";
+          color = "#00ffe4";
           label = "sia-r73";
         ];
         "exit_src/sia-r73" [
@@ -1397,7 +1400,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r70" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#5aff00";
+          color = "#5eff00";
           label = "sia-r70";
         ];
         "exit_src/sia-r70" [
@@ -1416,7 +1419,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r5" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#75ff00";
+          color = "#79ff00";
           label = "sia-r5";
         ];
         "exit_src/sia-r5" [
@@ -1435,7 +1438,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r48" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#3fff00";
+          color = "#36ff00";
           label = "sia-r48";
         ];
         "exit_src/sia-r48" [
@@ -1448,13 +1451,32 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
           style = "invis";
         ];
       }
+      subgraph "cluster_src/sia-r101" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r101" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#43ff00";
+          label = "sia-r101";
+        ];
+        "exit_src/sia-r101" [
+          style = "invis";
+        ];
+        "src/sia-r101/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r101/rule.ts" -> "exit_src/sia-r101" [
+          style = "invis";
+        ];
+      }
       subgraph "cluster_src/sia-r84" {
         color = "#000000";
         label = "";
         "name_src/sia-r84" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#4dff00";
+          color = "#51ff00";
           label = "sia-r84";
         ];
         "exit_src/sia-r84" [
@@ -1473,7 +1495,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r62" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ffe600";
+          color = "#ffe400";
           label = "sia-r62";
         ];
         "exit_src/sia-r62" [
@@ -1504,7 +1526,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r22" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#32ff00";
+          color = "#28ff00";
           label = "sia-r22";
         ];
         "exit_src/sia-r22" [
@@ -1523,7 +1545,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r69" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#17ff00";
+          color = "#0dff00";
           label = "sia-r69";
         ];
         "exit_src/sia-r69" [
@@ -1536,32 +1558,13 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
           style = "invis";
         ];
       }
-      subgraph "cluster_src/sia-r83" {
-        color = "#000000";
-        label = "";
-        "name_src/sia-r83" [
-          penwidth = 5;
-          shape = "rectangle";
-          color = "#09ff00";
-          label = "sia-r83";
-        ];
-        "exit_src/sia-r83" [
-          style = "invis";
-        ];
-        "src/sia-r83/rule.ts" [
-          label = "rule.ts";
-        ];
-        "src/sia-r83/rule.ts" -> "exit_src/sia-r83" [
-          style = "invis";
-        ];
-      }
       subgraph "cluster_src/sia-r25" {
         color = "#000000";
         label = "";
         "name_src/sia-r25" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ff05";
+          color = "#00ff00";
           label = "sia-r25";
         ];
         "exit_src/sia-r25" [
@@ -1580,7 +1583,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r33" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#0020ff";
+          color = "#0036ff";
           label = "sia-r33";
         ];
         "exit_src/sia-r33" [
@@ -1599,7 +1602,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r91" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#002dff";
+          color = "#0043ff";
           label = "sia-r91";
         ];
         "exit_src/sia-r91" [
@@ -1618,7 +1621,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r55" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#0048ff";
+          color = "#005eff";
           label = "sia-r55";
         ];
         "exit_src/sia-r55" [
@@ -1637,7 +1640,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r110" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#0056ff";
+          color = "#006bff";
           label = "sia-r110";
         ];
         "exit_src/sia-r110" [
@@ -1656,7 +1659,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-dr6" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#003bff";
+          color = "#0051ff";
           label = "sia-dr6";
         ];
         "exit_src/sia-dr6" [
@@ -1675,7 +1678,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r9" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ff8c";
+          color = "#00ff86";
           label = "sia-r9";
         ];
         "exit_src/sia-r9" [
@@ -1694,7 +1697,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r92" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ff7e";
+          color = "#00ff79";
           label = "sia-r92";
         ];
         "exit_src/sia-r92" [
@@ -1713,7 +1716,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-er8" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ff56";
+          color = "#00ff51";
           label = "sia-er8";
         ];
         "exit_src/sia-er8" [
@@ -1732,7 +1735,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r56" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ff71";
+          color = "#00ff6b";
           label = "sia-r56";
         ];
         "exit_src/sia-r56" [
@@ -1751,7 +1754,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r30" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ff48";
+          color = "#00ff43";
           label = "sia-r30";
         ];
         "exit_src/sia-r30" [
@@ -1770,7 +1773,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r113" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ff63";
+          color = "#00ff5e";
           label = "sia-r113";
         ];
         "exit_src/sia-r113" [
@@ -1789,7 +1792,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r53" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ffd0";
+          color = "#00ffc9";
           label = "sia-r53";
         ];
         "exit_src/sia-r53" [
@@ -1808,7 +1811,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-er87" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ff99";
+          color = "#00ff94";
           label = "sia-er87";
         ];
         "exit_src/sia-er87" [
@@ -1827,7 +1830,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r35" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ffa7";
+          color = "#00ffa1";
           label = "sia-r35";
         ];
         "exit_src/sia-r35" [
@@ -1846,7 +1849,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r79" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ffb5";
+          color = "#00ffae";
           label = "sia-r79";
         ];
         "exit_src/sia-r79" [
@@ -1865,7 +1868,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r116" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ffc2";
+          color = "#00ffbc";
           label = "sia-r116";
         ];
         "exit_src/sia-r116" [
@@ -1878,32 +1881,13 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
           style = "invis";
         ];
       }
-      subgraph "cluster_src/sia-r3" {
-        color = "#000000";
-        label = "";
-        "name_src/sia-r3" [
-          penwidth = 5;
-          shape = "rectangle";
-          color = "#00ffeb";
-          label = "sia-r3";
-        ];
-        "exit_src/sia-r3" [
-          style = "invis";
-        ];
-        "src/sia-r3/rule.ts" [
-          label = "rule.ts";
-        ];
-        "src/sia-r3/rule.ts" -> "exit_src/sia-r3" [
-          style = "invis";
-        ];
-      }
       subgraph "cluster_src/sia-r76" {
         color = "#000000";
         label = "";
         "name_src/sia-r76" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ffdd";
+          color = "#00ffd7";
           label = "sia-r76";
         ];
         "exit_src/sia-r76" [
@@ -1922,7 +1906,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r37" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#9eff00";
+          color = "#a1ff00";
           label = "sia-r37";
         ];
         "exit_src/sia-r37" [
@@ -1941,7 +1925,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r95" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#acff00";
+          color = "#aeff00";
           label = "sia-r95";
         ];
         "exit_src/sia-r95" [
@@ -1960,7 +1944,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r114" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#90ff00";
+          color = "#94ff00";
           label = "sia-r114";
         ];
         "exit_src/sia-r114" [
@@ -1979,7 +1963,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r96" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff2900";
+          color = "#ff2800";
           label = "sia-r96";
         ];
         "exit_src/sia-r96" [
@@ -2017,7 +2001,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r117" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff4400";
+          color = "#ff4300";
           label = "sia-r117";
         ];
         "exit_src/sia-r117" [
@@ -2036,7 +2020,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r75" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff5f00";
+          color = "#ff5e00";
           label = "sia-r75";
         ];
         "exit_src/sia-r75" [
@@ -2074,7 +2058,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r72" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff7a00";
+          color = "#ff7900";
           label = "sia-r72";
         ];
         "exit_src/sia-r72" [
@@ -2093,7 +2077,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r7" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff6c00";
+          color = "#ff6b00";
           label = "sia-r7";
         ];
         "exit_src/sia-r7" [
@@ -2112,7 +2096,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r28" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ff3b";
+          color = "#00ff36";
           label = "sia-r28";
         ];
         "exit_src/sia-r28" [
@@ -2131,7 +2115,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r42" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ff2d";
+          color = "#00ff28";
           label = "sia-r42";
         ];
         "exit_src/sia-r42" [
@@ -2150,7 +2134,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r64" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ff12";
+          color = "#00ff0d";
           label = "sia-r64";
         ];
         "exit_src/sia-r64" [
@@ -2169,7 +2153,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r11" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ff20";
+          color = "#00ff1b";
           label = "sia-r11";
         ];
         "exit_src/sia-r11" [
@@ -2188,7 +2172,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r12" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ffcb00";
+          color = "#ffc900";
           label = "sia-r12";
         ];
         "exit_src/sia-r12" [
@@ -2207,7 +2191,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r67" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ffbe00";
+          color = "#ffbc00";
           label = "sia-r67";
         ];
         "exit_src/sia-r67" [
@@ -2226,7 +2210,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r41" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ffb000";
+          color = "#ffae00";
           label = "sia-r41";
         ];
         "exit_src/sia-r41" [
@@ -2245,7 +2229,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r44" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ffd900";
+          color = "#ffd700";
           label = "sia-r44";
         ];
         "exit_src/sia-r44" [
@@ -2264,7 +2248,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r17" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#fff400";
+          color = "#fff200";
           label = "sia-r17";
         ];
         "exit_src/sia-r17" [
@@ -2283,7 +2267,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r32" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#d4ff00";
+          color = "#d7ff00";
           label = "sia-r32";
         ];
         "exit_src/sia-r32" [
@@ -2302,7 +2286,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r54" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#b9ff00";
+          color = "#bcff00";
           label = "sia-r54";
         ];
         "exit_src/sia-r54" [
@@ -2321,7 +2305,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r111" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#c7ff00";
+          color = "#c9ff00";
           label = "sia-r111";
         ];
         "exit_src/sia-r111" [
@@ -2340,7 +2324,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r90" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#e2ff00";
+          color = "#e4ff00";
           label = "sia-r90";
         ];
         "exit_src/sia-r90" [
@@ -2359,7 +2343,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r60" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff0e00";
+          color = "#ff0d00";
           label = "sia-r60";
         ];
         "exit_src/sia-r60" [
@@ -2416,7 +2400,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r45" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#c700ff";
+          color = "#ae00ff";
           label = "sia-r45";
         ];
         "exit_src/sia-r45" [
@@ -2435,7 +2419,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r63" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#d400ff";
+          color = "#bc00ff";
           label = "sia-r63";
         ];
         "exit_src/sia-r63" [
@@ -2454,7 +2438,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r16" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#b900ff";
+          color = "#a100ff";
           label = "sia-r16";
         ];
         "exit_src/sia-r16" [
@@ -2498,7 +2482,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r57" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff00f4";
+          color = "#f200ff";
           label = "sia-r57";
         ];
         "exit_src/sia-r57" [
@@ -2517,7 +2501,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r31" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#fd00ff";
+          color = "#e400ff";
           label = "sia-r31";
         ];
         "exit_src/sia-r31" [
@@ -2536,7 +2520,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r93" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#e200ff";
+          color = "#c900ff";
           label = "sia-r93";
         ];
         "exit_src/sia-r93" [
@@ -2555,7 +2539,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r8" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ef00ff";
+          color = "#d700ff";
           label = "sia-r8";
         ];
         "exit_src/sia-r8" [
@@ -2574,7 +2558,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r94" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff00e6";
+          color = "#ff00f2";
           label = "sia-r94";
         ];
         "exit_src/sia-r94" [
@@ -2587,13 +2571,32 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
           style = "invis";
         ];
       }
+      subgraph "cluster_src/sia-dr3" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-dr3" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff00ff";
+          label = "sia-dr3";
+        ];
+        "exit_src/sia-dr3" [
+          style = "invis";
+        ];
+        "src/sia-dr3/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-dr3/rule.ts" -> "exit_src/sia-dr3" [
+          style = "invis";
+        ];
+      }
       subgraph "cluster_src/sia-r115" {
         color = "#000000";
         label = "";
         "name_src/sia-r115" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff00cb";
+          color = "#ff00d7";
           label = "sia-r115";
         ];
         "exit_src/sia-r115" [
@@ -2612,7 +2615,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r50" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff00be";
+          color = "#ff00c9";
           label = "sia-r50";
         ];
         "exit_src/sia-r50" [
@@ -2631,7 +2634,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r19" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff9500";
+          color = "#ff9400";
           label = "sia-r19";
         ];
         "exit_src/sia-r19" [
@@ -2650,7 +2653,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r86" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ffa200";
+          color = "#ffa100";
           label = "sia-r86";
         ];
         "exit_src/sia-r86" [
@@ -2669,7 +2672,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r20" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff8700";
+          color = "#ff8600";
           label = "sia-r20";
         ];
         "exit_src/sia-r20" [
@@ -2688,7 +2691,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r85" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff005f";
+          color = "#ff006b";
           label = "sia-r85";
         ];
         "exit_src/sia-r85" [
@@ -2707,7 +2710,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r49" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff0087";
+          color = "#ff0094";
           label = "sia-r49";
         ];
         "exit_src/sia-r49" [
@@ -2726,7 +2729,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-dr34" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff006c";
+          color = "#ff0079";
           label = "sia-dr34";
         ];
         "exit_src/sia-dr34" [
@@ -2745,7 +2748,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r23" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff007a";
+          color = "#ff0086";
           label = "sia-r23";
         ];
         "exit_src/sia-r23" [
@@ -2764,7 +2767,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r80" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff0051";
+          color = "#ff005e";
           label = "sia-r80";
         ];
         "exit_src/sia-r80" [
@@ -2783,7 +2786,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r26" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff0044";
+          color = "#ff0051";
           label = "sia-r26";
         ];
         "exit_src/sia-r26" [
@@ -2796,13 +2799,32 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
           style = "invis";
         ];
       }
+      subgraph "cluster_src/sia-dr83" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-dr83" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0028";
+          label = "sia-dr83";
+        ];
+        "exit_src/sia-dr83" [
+          style = "invis";
+        ];
+        "src/sia-dr83/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-dr83/rule.ts" -> "exit_src/sia-dr83" [
+          style = "invis";
+        ];
+      }
       subgraph "cluster_src/sia-r10" {
         color = "#000000";
         label = "";
         "name_src/sia-r10" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff000e";
+          color = "#ff000d";
           label = "sia-r10";
         ];
         "exit_src/sia-r10" [
@@ -2821,7 +2843,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r29" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff0029";
+          color = "#ff0036";
           label = "sia-r29";
         ];
         "exit_src/sia-r29" [
@@ -2840,7 +2862,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r43" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff0036";
+          color = "#ff0043";
           label = "sia-r43";
         ];
         "exit_src/sia-r43" [
@@ -2859,7 +2881,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r68" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#9e00ff";
+          color = "#8600ff";
           label = "sia-r68";
         ];
         "exit_src/sia-r68" [
@@ -2878,7 +2900,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r82" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#8300ff";
+          color = "#6b00ff";
           label = "sia-r82";
         ];
         "exit_src/sia-r82" [
@@ -2897,7 +2919,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r24" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#9000ff";
+          color = "#7900ff";
           label = "sia-r24";
         ];
         "exit_src/sia-r24" [
@@ -2916,7 +2938,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r27" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ddff";
+          color = "#00f2ff";
           label = "sia-r27";
         ];
         "exit_src/sia-r27" [
@@ -2935,7 +2957,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         "name_src/sia-r81" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ebff";
+          color = "#00ffff";
           label = "sia-r81";
         ];
         "exit_src/sia-r81" [
@@ -3071,6 +3093,9 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
       "exit_src/sia-r48" -> "exit_src" [
         style = "invis";
       ];
+      "exit_src/sia-r101" -> "exit_src" [
+        style = "invis";
+      ];
       "exit_src/sia-r84" -> "exit_src" [
         style = "invis";
       ];
@@ -3081,9 +3106,6 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         style = "invis";
       ];
       "exit_src/sia-r69" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/sia-r83" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/sia-r25" -> "exit_src" [
@@ -3165,9 +3187,6 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         style = "invis";
       ];
       "exit_src/requirements" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/sia-r3" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/sia-r76" -> "exit_src" [
@@ -3338,6 +3357,9 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
       "exit_src/sia-r94" -> "exit_src" [
         style = "invis";
       ];
+      "exit_src/sia-dr3" -> "exit_src" [
+        style = "invis";
+      ];
       "exit_src/sia-r62" -> "exit_src" [
         style = "invis";
       ];
@@ -3390,6 +3412,9 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
         style = "invis";
       ];
       "exit_src/sia-r26" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-dr83" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/common" -> "exit_src" [
@@ -3909,58 +3934,61 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
     "exit_src" -> "exit_src" [
       style = "invis";
     ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
   }
   "exit_src/sia-r13" -> "name_src/common" [
     style = "solid";
-    color = "#00d0ff";
+    color = "#00e4ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r13";
   ];
   "exit_src/sia-r13" -> "name_src/tags" [
     style = "solid";
-    color = "#00d0ff";
+    color = "#00e4ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r13";
   ];
   "exit_src/sia-r109" -> "name_src/common" [
     style = "solid";
-    color = "#00b5ff";
+    color = "#00c9ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r109";
   ];
   "exit_src/sia-r109" -> "name_src/common" [
     style = "invis";
-    color = "#00b5ff";
+    color = "#00c9ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r109";
   ];
   "exit_src/sia-r109" -> "name_src/common" [
     style = "invis";
-    color = "#00b5ff";
+    color = "#00c9ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r109";
   ];
   "exit_src/sia-r109" -> "name_src/tags" [
     style = "solid";
-    color = "#00b5ff";
+    color = "#00c9ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r109";
   ];
   "exit_src/sia-r40" -> "name_src/common" [
     style = "solid";
-    color = "#00a7ff";
+    color = "#00bcff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r40";
   ];
   "exit_src/sia-r40" -> "name_src/requirements" [
     style = "solid";
-    color = "#00a7ff";
+    color = "#00bcff";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r40";
   ];
   "exit_src/sia-r40" -> "name_src/tags" [
     style = "solid";
-    color = "#00a7ff";
+    color = "#00bcff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r40";
   ];
@@ -3980,145 +4008,145 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "exit_src/sia-r66" -> "name_src/common" [
     style = "dotted";
-    color = "#0099ff";
+    color = "#00aeff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r66";
   ];
   "exit_src/sia-r66" -> "name_src/common" [
     style = "invis";
-    color = "#0099ff";
+    color = "#00aeff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r66";
   ];
   "exit_src/sia-r66" -> "name_src/common" [
     style = "invis";
-    color = "#0099ff";
+    color = "#00aeff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r66";
   ];
   "exit_src/sia-r66" -> "name_src/common" [
     style = "invis";
-    color = "#0099ff";
+    color = "#00aeff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r66";
   ];
   "exit_src/sia-r66" -> "name_src/tags" [
     style = "solid";
-    color = "#0099ff";
+    color = "#00aeff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r66";
   ];
   "exit_src/sia-r14" -> "name_src/common" [
     style = "solid";
-    color = "#008cff";
+    color = "#00a1ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r14";
   ];
   "exit_src/sia-r14" -> "name_src/tags" [
     style = "solid";
-    color = "#008cff";
+    color = "#00a1ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r14";
   ];
   "exit_src/sia-r47" -> "name_src/common" [
     style = "solid";
-    color = "#007eff";
+    color = "#0094ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r47";
   ];
   "exit_src/sia-r47" -> "name_src/tags" [
     style = "solid";
-    color = "#007eff";
+    color = "#0094ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r47";
   ];
   "exit_src/sia-r61" -> "name_src/common" [
     style = "solid";
-    color = "#0063ff";
+    color = "#0079ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r61";
   ];
   "exit_src/sia-r61" -> "name_src/common" [
     style = "invis";
-    color = "#0063ff";
+    color = "#0079ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r61";
   ];
   "exit_src/sia-r61" -> "name_src/requirements" [
     style = "solid";
-    color = "#0063ff";
+    color = "#0079ff";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r61";
   ];
   "exit_src/sia-r61" -> "name_src/tags" [
     style = "solid";
-    color = "#0063ff";
+    color = "#0079ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r61";
   ];
   "exit_src/sia-r77" -> "name_src/common" [
     style = "solid";
-    color = "#ff00a2";
+    color = "#ff00ae";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r77";
   ];
   "exit_src/sia-r77" -> "name_src/tags" [
     style = "solid";
-    color = "#ff00a2";
+    color = "#ff00ae";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r77";
   ];
   "exit_src/sia-r2" -> "name_src/common" [
     style = "solid";
-    color = "#ff00b0";
+    color = "#ff00bc";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r2";
   ];
   "exit_src/sia-r2" -> "name_src/tags" [
     style = "solid";
-    color = "#ff00b0";
+    color = "#ff00bc";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r2";
   ];
   "exit_src/sia-r38" -> "name_src/common" [
     style = "solid";
-    color = "#1700ff";
+    color = "#0000ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r38";
   ];
   "exit_src/sia-r38" -> "name_src/common" [
     style = "invis";
-    color = "#1700ff";
+    color = "#0000ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r38";
   ];
   "exit_src/sia-r38" -> "name_src/common" [
     style = "invis";
-    color = "#1700ff";
+    color = "#0000ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r38";
   ];
   "exit_src/sia-r38" -> "name_src/sia-r24" [
     style = "solid";
-    color = "#1700ff";
+    color = "#0000ff";
     lhead = "cluster_src/sia-r24";
     ltail = "cluster_src/sia-r38";
   ];
   "exit_src/sia-r38" -> "name_src/sia-r25" [
     style = "solid";
-    color = "#1700ff";
+    color = "#0000ff";
     lhead = "cluster_src/sia-r25";
     ltail = "cluster_src/sia-r38";
   ];
   "exit_src/sia-r38" -> "name_src/sia-r31" [
     style = "solid";
-    color = "#1700ff";
+    color = "#0000ff";
     lhead = "cluster_src/sia-r31";
     ltail = "cluster_src/sia-r38";
   ];
   "exit_src/sia-r38" -> "name_src/tags" [
     style = "solid";
-    color = "#1700ff";
+    color = "#0000ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r38";
   ];
@@ -4145,552 +4173,542 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "exit_src/sia-r74" -> "name_src/common" [
     style = "solid";
-    color = "#0012ff";
+    color = "#0028ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r74";
   ];
   "exit_src/sia-r74" -> "name_src/tags" [
     style = "solid";
-    color = "#0012ff";
+    color = "#0028ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r74";
   ];
   "exit_src/sia-r1" -> "name_src/common" [
     style = "solid";
-    color = "#0900ff";
+    color = "#000dff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r1";
   ];
   "exit_src/sia-r1" -> "name_src/common" [
     style = "invis";
-    color = "#0900ff";
+    color = "#000dff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r1";
   ];
   "exit_src/sia-r1" -> "name_src/tags" [
     style = "solid";
-    color = "#0900ff";
+    color = "#000dff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r1";
   ];
   "exit_src/common/expectation" -> "name_src/common/act" [
     style = "solid";
-    color = "#efff00";
+    color = "#f2ff00";
     lhead = "cluster_src/common/act";
     ltail = "cluster_src/common/expectation";
   ];
   "exit_src/common/expectation" -> "name_src/common/diagnostic" [
     style = "solid";
-    color = "#efff00";
+    color = "#f2ff00";
     lhead = "cluster_src/common/diagnostic";
     ltail = "cluster_src/common/expectation";
   ];
   "exit_src/sia-r4" -> "name_src/common" [
     style = "solid";
-    color = "#3200ff";
+    color = "#1b00ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r4";
   ];
   "exit_src/sia-r4" -> "name_src/tags" [
     style = "solid";
-    color = "#3200ff";
+    color = "#1b00ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r4";
   ];
   "exit_src/common/applicability" -> "name_src/common/act" [
     style = "solid";
-    color = "#ff0095";
+    color = "#ff00a1";
     lhead = "cluster_src/common/act";
     ltail = "cluster_src/common/applicability";
   ];
   "src/rules.ts" -> "name_src/sia-r1" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r1";
   ];
   "src/rules.ts" -> "name_src/sia-r10" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r10";
   ];
   "src/rules.ts" -> "name_src/sia-r11" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r11";
   ];
   "src/rules.ts" -> "name_src/sia-r110" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r110";
   ];
   "src/rules.ts" -> "name_src/sia-r111" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r111";
   ];
   "src/rules.ts" -> "name_src/sia-r113" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r113";
   ];
   "src/rules.ts" -> "name_src/sia-r116" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r116";
   ];
   "src/rules.ts" -> "name_src/sia-r12" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r12";
   ];
   "src/rules.ts" -> "name_src/sia-r13" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r13";
   ];
   "src/rules.ts" -> "name_src/sia-r14" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r14";
   ];
   "src/rules.ts" -> "name_src/sia-r15" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r15";
   ];
   "src/rules.ts" -> "name_src/sia-r16" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r16";
   ];
   "src/rules.ts" -> "name_src/sia-r17" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r17";
   ];
   "src/rules.ts" -> "name_src/sia-r18" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r18";
   ];
   "src/rules.ts" -> "name_src/sia-r19" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r19";
   ];
   "src/rules.ts" -> "name_src/sia-r2" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r2";
   ];
   "src/rules.ts" -> "name_src/sia-r20" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r20";
   ];
   "src/rules.ts" -> "name_src/sia-r21" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r21";
   ];
   "src/rules.ts" -> "name_src/sia-r22" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r22";
   ];
   "src/rules.ts" -> "name_src/sia-r23" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r23";
   ];
   "src/rules.ts" -> "name_src/sia-r24" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r24";
   ];
   "src/rules.ts" -> "name_src/sia-r25" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r25";
   ];
   "src/rules.ts" -> "name_src/sia-r26" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r26";
   ];
   "src/rules.ts" -> "name_src/sia-r27" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r27";
   ];
   "src/rules.ts" -> "name_src/sia-r28" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r28";
   ];
   "src/rules.ts" -> "name_src/sia-r29" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r29";
-  ];
-  "src/rules.ts" -> "name_src/sia-r3" [
-    style = "solid";
-    color = "#68ff00";
-    lhead = "cluster_src/sia-r3";
   ];
   "src/rules.ts" -> "name_src/sia-r30" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r30";
   ];
   "src/rules.ts" -> "name_src/sia-r31" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r31";
   ];
   "src/rules.ts" -> "name_src/sia-r32" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r32";
   ];
   "src/rules.ts" -> "name_src/sia-r33" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r33";
   ];
   "src/rules.ts" -> "name_src/sia-r35" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r35";
   ];
   "src/rules.ts" -> "name_src/sia-r37" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r37";
   ];
   "src/rules.ts" -> "name_src/sia-r38" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r38";
   ];
   "src/rules.ts" -> "name_src/sia-r39" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r39";
   ];
   "src/rules.ts" -> "name_src/sia-r4" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r4";
   ];
   "src/rules.ts" -> "name_src/sia-r40" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r40";
   ];
   "src/rules.ts" -> "name_src/sia-r41" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r41";
   ];
   "src/rules.ts" -> "name_src/sia-r42" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r42";
   ];
   "src/rules.ts" -> "name_src/sia-r43" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r43";
   ];
   "src/rules.ts" -> "name_src/sia-r44" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r44";
   ];
   "src/rules.ts" -> "name_src/sia-r45" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r45";
   ];
   "src/rules.ts" -> "name_src/sia-r46" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r46";
   ];
   "src/rules.ts" -> "name_src/sia-r47" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r47";
   ];
   "src/rules.ts" -> "name_src/sia-r48" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r48";
   ];
   "src/rules.ts" -> "name_src/sia-r49" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r49";
   ];
   "src/rules.ts" -> "name_src/sia-r5" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r5";
   ];
   "src/rules.ts" -> "name_src/sia-r50" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r50";
   ];
   "src/rules.ts" -> "name_src/sia-r53" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r53";
   ];
   "src/rules.ts" -> "name_src/sia-r54" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r54";
   ];
   "src/rules.ts" -> "name_src/sia-r55" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r55";
   ];
   "src/rules.ts" -> "name_src/sia-r56" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r56";
   ];
   "src/rules.ts" -> "name_src/sia-r57" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r57";
   ];
   "src/rules.ts" -> "name_src/sia-r59" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r59";
   ];
   "src/rules.ts" -> "name_src/sia-r60" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r60";
   ];
   "src/rules.ts" -> "name_src/sia-r61" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r61";
   ];
   "src/rules.ts" -> "name_src/sia-r62" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r62";
   ];
   "src/rules.ts" -> "name_src/sia-r63" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r63";
   ];
   "src/rules.ts" -> "name_src/sia-r64" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r64";
   ];
   "src/rules.ts" -> "name_src/sia-r65" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r65";
   ];
   "src/rules.ts" -> "name_src/sia-r66" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r66";
   ];
   "src/rules.ts" -> "name_src/sia-r67" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r67";
   ];
   "src/rules.ts" -> "name_src/sia-r68" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r68";
   ];
   "src/rules.ts" -> "name_src/sia-r69" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r69";
   ];
   "src/rules.ts" -> "name_src/sia-r7" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r7";
   ];
   "src/rules.ts" -> "name_src/sia-r70" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r70";
   ];
   "src/rules.ts" -> "name_src/sia-r71" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r71";
   ];
   "src/rules.ts" -> "name_src/sia-r72" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r72";
   ];
   "src/rules.ts" -> "name_src/sia-r73" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r73";
   ];
   "src/rules.ts" -> "name_src/sia-r74" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r74";
   ];
   "src/rules.ts" -> "name_src/sia-r75" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r75";
   ];
   "src/rules.ts" -> "name_src/sia-r76" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r76";
   ];
   "src/rules.ts" -> "name_src/sia-r77" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r77";
   ];
   "src/rules.ts" -> "name_src/sia-r78" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r78";
   ];
   "src/rules.ts" -> "name_src/sia-r79" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r79";
   ];
   "src/rules.ts" -> "name_src/sia-r8" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r8";
   ];
   "src/rules.ts" -> "name_src/sia-r80" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r80";
   ];
   "src/rules.ts" -> "name_src/sia-r81" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r81";
-  ];
-  "src/rules.ts" -> "name_src/sia-r83" [
-    style = "solid";
-    color = "#68ff00";
-    lhead = "cluster_src/sia-r83";
   ];
   "src/rules.ts" -> "name_src/sia-r84" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r84";
   ];
   "src/rules.ts" -> "name_src/sia-r85" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r85";
   ];
   "src/rules.ts" -> "name_src/sia-r86" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r86";
   ];
   "src/rules.ts" -> "name_src/sia-r87" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r87";
   ];
   "src/rules.ts" -> "name_src/sia-r9" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r9";
   ];
   "src/rules.ts" -> "name_src/sia-r90" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r90";
   ];
   "src/rules.ts" -> "name_src/sia-r91" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r91";
   ];
   "src/rules.ts" -> "name_src/sia-r92" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r92";
   ];
   "src/rules.ts" -> "name_src/sia-r93" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r93";
   ];
   "src/rules.ts" -> "name_src/sia-r94" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r94";
   ];
   "src/rules.ts" -> "name_src/sia-r95" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r95";
   ];
   "src/rules.ts" -> "name_src/sia-r96" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r96";
   ];
   "exit_src/common/expectation" -> "name_src/common/act" [
     style = "invis";
-    color = "#efff00";
+    color = "#f2ff00";
     lhead = "cluster_src/common/act";
     ltail = "cluster_src/common/expectation";
   ];
   "exit_src/common/expectation" -> "name_src/common/act" [
     style = "invis";
-    color = "#efff00";
+    color = "#f2ff00";
     lhead = "cluster_src/common/act";
     ltail = "cluster_src/common/expectation";
   ];
   "exit_src/common/expectation" -> "name_src/common/act" [
     style = "invis";
-    color = "#efff00";
+    color = "#f2ff00";
     lhead = "cluster_src/common/act";
     ltail = "cluster_src/common/expectation";
   ];
   "exit_src/common/expectation" -> "name_src/common/diagnostic" [
     style = "invis";
-    color = "#efff00";
+    color = "#f2ff00";
     lhead = "cluster_src/common/diagnostic";
     ltail = "cluster_src/common/expectation";
   ];
   "exit_src/common/expectation" -> "name_src/common/dom" [
     style = "solid";
-    color = "#efff00";
+    color = "#f2ff00";
     lhead = "cluster_src/common/dom";
     ltail = "cluster_src/common/expectation";
   ];
   "exit_src/common/expectation" -> "name_src/common/outcome" [
     style = "solid";
-    color = "#efff00";
+    color = "#f2ff00";
     lhead = "cluster_src/common/outcome";
     ltail = "cluster_src/common/expectation";
   ];
@@ -4699,120 +4717,120 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "exit_src/common/expectation" -> "src/common/predicate.ts" [
     style = "solid";
-    color = "#efff00";
+    color = "#f2ff00";
     ltail = "cluster_src/common/expectation";
   ];
   "exit_src/sia-r71" -> "name_src/common" [
     style = "solid";
-    color = "#2400ff";
+    color = "#0d00ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r71";
   ];
   "exit_src/sia-r71" -> "name_src/tags" [
     style = "solid";
-    color = "#2400ff";
+    color = "#0d00ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r71";
   ];
   "exit_src/sia-dr36" -> "name_src/common" [
     style = "dotted";
-    color = "#5a00ff";
+    color = "#4300ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-dr36";
   ];
   "exit_src/sia-dr36" -> "name_src/common" [
     style = "invis";
-    color = "#5a00ff";
+    color = "#4300ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-dr36";
   ];
   "exit_src/sia-dr36" -> "name_src/common" [
     style = "invis";
-    color = "#5a00ff";
+    color = "#4300ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-dr36";
   ];
   "exit_src/sia-dr36" -> "name_src/tags" [
     style = "solid";
-    color = "#5a00ff";
+    color = "#4300ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-dr36";
   ];
   "exit_src/sia-r21" -> "name_src/common" [
     style = "solid";
-    color = "#4d00ff";
+    color = "#3600ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r21";
   ];
   "exit_src/sia-r21" -> "name_src/common" [
     style = "invis";
-    color = "#4d00ff";
+    color = "#3600ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r21";
   ];
   "exit_src/sia-r21" -> "name_src/requirements" [
     style = "solid";
-    color = "#4d00ff";
+    color = "#3600ff";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r21";
   ];
   "exit_src/sia-r21" -> "name_src/tags" [
     style = "solid";
-    color = "#4d00ff";
+    color = "#3600ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r21";
   ];
   "exit_src/sia-r18" -> "name_src/common" [
     style = "solid";
-    color = "#6800ff";
+    color = "#5100ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r18";
   ];
   "exit_src/sia-r18" -> "name_src/requirements" [
     style = "solid";
-    color = "#6800ff";
+    color = "#5100ff";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r18";
   ];
   "exit_src/sia-r18" -> "name_src/tags" [
     style = "solid";
-    color = "#6800ff";
+    color = "#5100ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r18";
   ];
   "exit_src/sia-r87" -> "name_src/common" [
     style = "solid";
-    color = "#3f00ff";
+    color = "#2800ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r87";
   ];
   "exit_src/sia-r87" -> "name_src/common" [
     style = "invis";
-    color = "#3f00ff";
+    color = "#2800ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r87";
   ];
   "exit_src/sia-r87" -> "name_src/common" [
     style = "invis";
-    color = "#3f00ff";
+    color = "#2800ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r87";
   ];
   "exit_src/sia-r87" -> "name_src/common" [
     style = "invis";
-    color = "#3f00ff";
+    color = "#2800ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r87";
   ];
   "exit_src/sia-r87" -> "name_src/requirements" [
     style = "solid";
-    color = "#3f00ff";
+    color = "#2800ff";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r87";
   ];
   "exit_src/sia-r87" -> "name_src/tags" [
     style = "solid";
-    color = "#3f00ff";
+    color = "#2800ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r87";
   ];
@@ -4825,121 +4843,139 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "exit_src/sia-r59" -> "name_src/common" [
     style = "solid";
-    color = "#00f8ff";
+    color = "#00fff2";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r59";
   ];
   "exit_src/sia-r59" -> "name_src/common" [
     style = "invis";
-    color = "#00f8ff";
+    color = "#00fff2";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r59";
   ];
   "exit_src/sia-r59" -> "name_src/requirements" [
     style = "solid";
-    color = "#00f8ff";
+    color = "#00fff2";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r59";
   ];
   "exit_src/sia-r59" -> "name_src/tags" [
     style = "solid";
-    color = "#00f8ff";
+    color = "#00fff2";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r59";
   ];
   "exit_src/sia-r73" -> "name_src/tags" [
     style = "solid";
-    color = "#00fff8";
+    color = "#00ffe4";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r73";
   ];
   "exit_src/sia-r70" -> "name_src/common" [
     style = "solid";
-    color = "#5aff00";
+    color = "#5eff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r70";
   ];
   "exit_src/sia-r70" -> "name_src/common" [
     style = "invis";
-    color = "#5aff00";
+    color = "#5eff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r70";
   ];
   "exit_src/sia-r70" -> "name_src/common" [
     style = "invis";
-    color = "#5aff00";
+    color = "#5eff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r70";
   ];
   "exit_src/sia-r70" -> "name_src/requirements" [
     style = "solid";
-    color = "#5aff00";
+    color = "#5eff00";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r70";
   ];
   "exit_src/sia-r70" -> "name_src/tags" [
     style = "solid";
-    color = "#5aff00";
+    color = "#5eff00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r70";
   ];
   "exit_src/sia-r5" -> "name_src/common" [
     style = "solid";
-    color = "#75ff00";
+    color = "#79ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r5";
   ];
   "exit_src/sia-r5" -> "name_src/tags" [
     style = "solid";
-    color = "#75ff00";
+    color = "#79ff00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r5";
   ];
   "exit_src/common/expectation" -> "name_src/common/act" [
     style = "invis";
-    color = "#efff00";
+    color = "#f2ff00";
     lhead = "cluster_src/common/act";
     ltail = "cluster_src/common/expectation";
   ];
   "exit_src/common/expectation" -> "name_src/common/act" [
     style = "invis";
-    color = "#efff00";
+    color = "#f2ff00";
     lhead = "cluster_src/common/act";
     ltail = "cluster_src/common/expectation";
   ];
   "exit_src/sia-r48" -> "name_src/common" [
     style = "solid";
-    color = "#3fff00";
+    color = "#36ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r48";
   ];
   "exit_src/sia-r48" -> "name_src/common" [
     style = "invis";
-    color = "#3fff00";
+    color = "#36ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r48";
   ];
   "exit_src/sia-r48" -> "name_src/tags" [
     style = "solid";
-    color = "#3fff00";
+    color = "#36ff00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r48";
   ];
+  "exit_src/sia-r101" -> "name_src/common" [
+    style = "solid";
+    color = "#43ff00";
+    lhead = "cluster_src/common";
+    ltail = "cluster_src/sia-r101";
+  ];
+  "exit_src/sia-r101" -> "name_src/common" [
+    style = "invis";
+    color = "#43ff00";
+    lhead = "cluster_src/common";
+    ltail = "cluster_src/sia-r101";
+  ];
+  "exit_src/sia-r101" -> "name_src/tags" [
+    style = "solid";
+    color = "#43ff00";
+    lhead = "cluster_src/tags";
+    ltail = "cluster_src/sia-r101";
+  ];
   "exit_src/sia-r84" -> "name_src/common" [
     style = "solid";
-    color = "#4dff00";
+    color = "#51ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r84";
   ];
   "exit_src/sia-r84" -> "name_src/tags" [
     style = "solid";
-    color = "#4dff00";
+    color = "#51ff00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r84";
   ];
   "exit_src/sia-r62" -> "name_src/common" [
     style = "dotted";
-    color = "#ffe600";
+    color = "#ffe400";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r62";
   ];
@@ -4952,397 +4988,385 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "exit_src/sia-r22" -> "name_src/common" [
     style = "solid";
-    color = "#32ff00";
+    color = "#28ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r22";
   ];
   "exit_src/sia-r22" -> "name_src/common" [
     style = "invis";
-    color = "#32ff00";
+    color = "#28ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r22";
   ];
   "exit_src/sia-r22" -> "name_src/common" [
     style = "invis";
-    color = "#32ff00";
+    color = "#28ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r22";
   ];
   "exit_src/sia-r22" -> "name_src/tags" [
     style = "solid";
-    color = "#32ff00";
+    color = "#28ff00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r22";
   ];
   "exit_src/sia-r69" -> "name_src/common" [
     style = "dotted";
-    color = "#17ff00";
+    color = "#0dff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r69";
   ];
   "exit_src/sia-r69" -> "name_src/common" [
     style = "invis";
-    color = "#17ff00";
+    color = "#0dff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r69";
   ];
   "exit_src/sia-r69" -> "name_src/common" [
     style = "invis";
-    color = "#17ff00";
+    color = "#0dff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r69";
   ];
   "exit_src/sia-r69" -> "name_src/common" [
     style = "invis";
-    color = "#17ff00";
+    color = "#0dff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r69";
   ];
   "exit_src/sia-r69" -> "name_src/tags" [
     style = "solid";
-    color = "#17ff00";
+    color = "#0dff00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r69";
   ];
-  "exit_src/sia-r83" -> "name_src/common" [
-    style = "solid";
-    color = "#09ff00";
-    lhead = "cluster_src/common";
-    ltail = "cluster_src/sia-r83";
-  ];
-  "exit_src/sia-r83" -> "name_src/tags" [
-    style = "solid";
-    color = "#09ff00";
-    lhead = "cluster_src/tags";
-    ltail = "cluster_src/sia-r83";
-  ];
   "exit_src/sia-r25" -> "name_src/common" [
     style = "solid";
-    color = "#00ff05";
+    color = "#00ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r25";
   ];
   "exit_src/sia-r25" -> "name_src/common" [
     style = "invis";
-    color = "#00ff05";
+    color = "#00ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r25";
   ];
   "exit_src/sia-r25" -> "name_src/common" [
     style = "invis";
-    color = "#00ff05";
+    color = "#00ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r25";
   ];
   "exit_src/sia-r25" -> "name_src/tags" [
     style = "solid";
-    color = "#00ff05";
+    color = "#00ff00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r25";
   ];
   "exit_src/sia-r33" -> "name_src/common" [
     style = "dotted";
-    color = "#0020ff";
+    color = "#0036ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r33";
   ];
   "exit_src/sia-r33" -> "name_src/common" [
     style = "invis";
-    color = "#0020ff";
+    color = "#0036ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r33";
   ];
   "exit_src/sia-r33" -> "name_src/common" [
     style = "invis";
-    color = "#0020ff";
+    color = "#0036ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r33";
   ];
   "exit_src/sia-r33" -> "name_src/tags" [
     style = "solid";
-    color = "#0020ff";
+    color = "#0036ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r33";
   ];
   "exit_src/sia-r91" -> "name_src/common" [
     style = "solid";
-    color = "#002dff";
+    color = "#0043ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r91";
   ];
   "exit_src/sia-r91" -> "name_src/common" [
     style = "invis";
-    color = "#002dff";
+    color = "#0043ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r91";
   ];
   "exit_src/sia-r91" -> "name_src/tags" [
     style = "solid";
-    color = "#002dff";
+    color = "#0043ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r91";
   ];
   "exit_src/sia-r55" -> "name_src/common" [
     style = "solid";
-    color = "#0048ff";
+    color = "#005eff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r55";
   ];
   "exit_src/sia-r55" -> "name_src/common" [
     style = "invis";
-    color = "#0048ff";
+    color = "#005eff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r55";
   ];
   "exit_src/sia-r55" -> "name_src/common" [
     style = "invis";
-    color = "#0048ff";
+    color = "#005eff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r55";
   ];
   "exit_src/sia-r55" -> "name_src/common" [
     style = "invis";
-    color = "#0048ff";
+    color = "#005eff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r55";
   ];
   "exit_src/sia-r55" -> "name_src/requirements" [
     style = "solid";
-    color = "#0048ff";
+    color = "#005eff";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r55";
   ];
   "exit_src/sia-r55" -> "name_src/tags" [
     style = "solid";
-    color = "#0048ff";
+    color = "#005eff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r55";
   ];
   "exit_src/sia-r110" -> "name_src/common" [
     style = "solid";
-    color = "#0056ff";
+    color = "#006bff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r110";
   ];
   "exit_src/sia-r110" -> "name_src/common" [
     style = "invis";
-    color = "#0056ff";
+    color = "#006bff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r110";
   ];
   "exit_src/sia-r110" -> "name_src/tags" [
     style = "solid";
-    color = "#0056ff";
+    color = "#006bff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r110";
   ];
   "exit_src/sia-dr6" -> "name_src/common" [
     style = "solid";
-    color = "#003bff";
+    color = "#0051ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-dr6";
   ];
   "exit_src/sia-dr6" -> "name_src/tags" [
     style = "solid";
-    color = "#003bff";
+    color = "#0051ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-dr6";
   ];
   "exit_src/sia-r9" -> "name_src/common" [
     style = "solid";
-    color = "#00ff8c";
+    color = "#00ff86";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r9";
   ];
   "exit_src/sia-r9" -> "name_src/common" [
     style = "invis";
-    color = "#00ff8c";
+    color = "#00ff86";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r9";
   ];
   "exit_src/sia-r9" -> "name_src/common" [
     style = "invis";
-    color = "#00ff8c";
+    color = "#00ff86";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r9";
   ];
   "exit_src/sia-r9" -> "name_src/tags" [
     style = "solid";
-    color = "#00ff8c";
+    color = "#00ff86";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r9";
   ];
   "exit_src/sia-r92" -> "name_src/common" [
     style = "solid";
-    color = "#00ff7e";
+    color = "#00ff79";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r92";
   ];
   "exit_src/sia-r92" -> "name_src/common" [
     style = "invis";
-    color = "#00ff7e";
+    color = "#00ff79";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r92";
   ];
   "exit_src/sia-r92" -> "name_src/tags" [
     style = "solid";
-    color = "#00ff7e";
+    color = "#00ff79";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r92";
   ];
   "exit_src/sia-er8" -> "name_src/common" [
     style = "solid";
-    color = "#00ff56";
+    color = "#00ff51";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-er8";
   ];
   "exit_src/sia-er8" -> "name_src/common" [
     style = "invis";
-    color = "#00ff56";
+    color = "#00ff51";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-er8";
   ];
   "exit_src/sia-er8" -> "name_src/tags" [
     style = "solid";
-    color = "#00ff56";
+    color = "#00ff51";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-er8";
   ];
   "exit_src/sia-r56" -> "name_src/common" [
     style = "solid";
-    color = "#00ff71";
+    color = "#00ff6b";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r56";
   ];
   "exit_src/sia-r56" -> "name_src/common" [
     style = "invis";
-    color = "#00ff71";
+    color = "#00ff6b";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r56";
   ];
   "exit_src/sia-r56" -> "name_src/requirements" [
     style = "solid";
-    color = "#00ff71";
+    color = "#00ff6b";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r56";
   ];
   "exit_src/sia-r56" -> "name_src/tags" [
     style = "solid";
-    color = "#00ff71";
+    color = "#00ff6b";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r56";
   ];
   "exit_src/sia-r30" -> "name_src/common" [
     style = "solid";
-    color = "#00ff48";
+    color = "#00ff43";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r30";
   ];
   "exit_src/sia-r30" -> "name_src/common" [
     style = "invis";
-    color = "#00ff48";
+    color = "#00ff43";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r30";
   ];
   "exit_src/sia-r30" -> "name_src/common" [
     style = "invis";
-    color = "#00ff48";
+    color = "#00ff43";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r30";
   ];
   "exit_src/sia-r30" -> "name_src/sia-r23" [
     style = "solid";
-    color = "#00ff48";
+    color = "#00ff43";
     lhead = "cluster_src/sia-r23";
     ltail = "cluster_src/sia-r30";
   ];
   "exit_src/sia-r30" -> "name_src/sia-r29" [
     style = "solid";
-    color = "#00ff48";
+    color = "#00ff43";
     lhead = "cluster_src/sia-r29";
     ltail = "cluster_src/sia-r30";
   ];
   "exit_src/sia-r30" -> "name_src/tags" [
     style = "solid";
-    color = "#00ff48";
+    color = "#00ff43";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r30";
   ];
   "exit_src/sia-r113" -> "name_src/common" [
     style = "solid";
-    color = "#00ff63";
+    color = "#00ff5e";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r113";
   ];
   "exit_src/sia-r113" -> "name_src/common" [
     style = "invis";
-    color = "#00ff63";
+    color = "#00ff5e";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r113";
   ];
   "exit_src/sia-r113" -> "name_src/common" [
     style = "invis";
-    color = "#00ff63";
+    color = "#00ff5e";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r113";
   ];
   "exit_src/sia-r113" -> "name_src/common" [
     style = "invis";
-    color = "#00ff63";
+    color = "#00ff5e";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r113";
   ];
   "exit_src/sia-r113" -> "name_src/common" [
     style = "invis";
-    color = "#00ff63";
+    color = "#00ff5e";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r113";
   ];
   "exit_src/sia-r113" -> "name_src/common" [
     style = "invis";
-    color = "#00ff63";
+    color = "#00ff5e";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r113";
   ];
   "exit_src/sia-r113" -> "name_src/common" [
     style = "invis";
-    color = "#00ff63";
+    color = "#00ff5e";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r113";
   ];
   "exit_src/common/expectation" -> "name_src/common/act" [
     style = "invis";
-    color = "#efff00";
+    color = "#f2ff00";
     lhead = "cluster_src/common/act";
     ltail = "cluster_src/common/expectation";
   ];
   "exit_src/common/expectation" -> "name_src/common/act" [
     style = "invis";
-    color = "#efff00";
+    color = "#f2ff00";
     lhead = "cluster_src/common/act";
     ltail = "cluster_src/common/expectation";
   ];
   "exit_src/sia-r53" -> "name_src/common" [
     style = "solid";
-    color = "#00ffd0";
+    color = "#00ffc9";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r53";
   ];
   "exit_src/sia-r53" -> "name_src/common" [
     style = "invis";
-    color = "#00ffd0";
+    color = "#00ffc9";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r53";
   ];
   "exit_src/sia-r53" -> "name_src/requirements" [
     style = "solid";
-    color = "#00ffd0";
+    color = "#00ffc9";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r53";
   ];
   "exit_src/sia-r53" -> "name_src/tags" [
     style = "solid";
-    color = "#00ffd0";
+    color = "#00ffc9";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r53";
   ];
@@ -5362,258 +5386,246 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "exit_src/sia-er87" -> "name_src/common" [
     style = "solid";
-    color = "#00ff99";
+    color = "#00ff94";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-er87";
   ];
   "exit_src/sia-er87" -> "name_src/common" [
     style = "invis";
-    color = "#00ff99";
+    color = "#00ff94";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-er87";
   ];
   "exit_src/sia-er87" -> "name_src/common" [
     style = "invis";
-    color = "#00ff99";
+    color = "#00ff94";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-er87";
   ];
   "exit_src/sia-er87" -> "name_src/common" [
     style = "invis";
-    color = "#00ff99";
+    color = "#00ff94";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-er87";
   ];
   "exit_src/sia-er87" -> "name_src/tags" [
     style = "solid";
-    color = "#00ff99";
+    color = "#00ff94";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-er87";
   ];
   "exit_src/sia-r35" -> "name_src/common" [
     style = "solid";
-    color = "#00ffa7";
+    color = "#00ffa1";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r35";
   ];
   "exit_src/sia-r35" -> "name_src/common" [
     style = "invis";
-    color = "#00ffa7";
+    color = "#00ffa1";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r35";
   ];
   "exit_src/sia-r35" -> "name_src/common" [
     style = "invis";
-    color = "#00ffa7";
+    color = "#00ffa1";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r35";
   ];
   "exit_src/sia-r35" -> "name_src/sia-r26" [
     style = "solid";
-    color = "#00ffa7";
+    color = "#00ffa1";
     lhead = "cluster_src/sia-r26";
     ltail = "cluster_src/sia-r35";
   ];
   "exit_src/sia-r35" -> "name_src/sia-r32" [
     style = "solid";
-    color = "#00ffa7";
+    color = "#00ffa1";
     lhead = "cluster_src/sia-r32";
     ltail = "cluster_src/sia-r35";
   ];
   "exit_src/sia-r35" -> "name_src/sia-r33" [
     style = "solid";
-    color = "#00ffa7";
+    color = "#00ffa1";
     lhead = "cluster_src/sia-r33";
     ltail = "cluster_src/sia-r35";
   ];
   "exit_src/sia-r35" -> "name_src/tags" [
     style = "solid";
-    color = "#00ffa7";
+    color = "#00ffa1";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r35";
   ];
   "exit_src/sia-r79" -> "name_src/common" [
     style = "solid";
-    color = "#00ffb5";
+    color = "#00ffae";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r79";
   ];
   "exit_src/sia-r79" -> "name_src/requirements" [
     style = "solid";
-    color = "#00ffb5";
+    color = "#00ffae";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r79";
   ];
   "exit_src/sia-r79" -> "name_src/tags" [
     style = "solid";
-    color = "#00ffb5";
+    color = "#00ffae";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r79";
   ];
   "exit_src/sia-r116" -> "name_src/common" [
     style = "solid";
-    color = "#00ffc2";
+    color = "#00ffbc";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r116";
   ];
   "exit_src/sia-r116" -> "name_src/tags" [
     style = "solid";
-    color = "#00ffc2";
+    color = "#00ffbc";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r116";
   ];
-  "exit_src/sia-r3" -> "name_src/common" [
-    style = "solid";
-    color = "#00ffeb";
-    lhead = "cluster_src/common";
-    ltail = "cluster_src/sia-r3";
-  ];
-  "exit_src/sia-r3" -> "name_src/tags" [
-    style = "solid";
-    color = "#00ffeb";
-    lhead = "cluster_src/tags";
-    ltail = "cluster_src/sia-r3";
-  ];
   "exit_src/sia-r76" -> "name_src/common" [
     style = "solid";
-    color = "#00ffdd";
+    color = "#00ffd7";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r76";
   ];
   "exit_src/sia-r76" -> "name_src/common" [
     style = "invis";
-    color = "#00ffdd";
+    color = "#00ffd7";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r76";
   ];
   "exit_src/sia-r76" -> "name_src/tags" [
     style = "solid";
-    color = "#00ffdd";
+    color = "#00ffd7";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r76";
   ];
   "exit_src/sia-r37" -> "name_src/common" [
     style = "solid";
-    color = "#9eff00";
+    color = "#a1ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r37";
   ];
   "exit_src/sia-r37" -> "name_src/common" [
     style = "invis";
-    color = "#9eff00";
+    color = "#a1ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r37";
   ];
   "exit_src/sia-r37" -> "name_src/common" [
     style = "invis";
-    color = "#9eff00";
+    color = "#a1ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r37";
   ];
   "exit_src/sia-r37" -> "name_src/sia-r25" [
     style = "solid";
-    color = "#9eff00";
+    color = "#a1ff00";
     lhead = "cluster_src/sia-r25";
     ltail = "cluster_src/sia-r37";
   ];
   "exit_src/sia-r37" -> "name_src/sia-r31" [
     style = "solid";
-    color = "#9eff00";
+    color = "#a1ff00";
     lhead = "cluster_src/sia-r31";
     ltail = "cluster_src/sia-r37";
   ];
   "exit_src/sia-r37" -> "name_src/tags" [
     style = "solid";
-    color = "#9eff00";
+    color = "#a1ff00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r37";
   ];
   "exit_src/sia-r95" -> "name_src/common" [
     style = "solid";
-    color = "#acff00";
+    color = "#aeff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r95";
   ];
   "exit_src/sia-r95" -> "name_src/common" [
     style = "invis";
-    color = "#acff00";
+    color = "#aeff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r95";
   ];
   "exit_src/sia-r95" -> "name_src/tags" [
     style = "solid";
-    color = "#acff00";
+    color = "#aeff00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r95";
   ];
   "src/common/diagnostic.ts" -> "name_src/common/diagnostic" [
     style = "solid";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/common/diagnostic";
   ];
   "src/common/diagnostic.ts" -> "name_src/common/diagnostic" [
     style = "invis";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/common/diagnostic";
   ];
   "src/common/diagnostic.ts" -> "name_src/common/diagnostic" [
     style = "invis";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/common/diagnostic";
   ];
   "src/common/diagnostic.ts" -> "name_src/common/diagnostic" [
     style = "invis";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/common/diagnostic";
   ];
   "src/common/diagnostic.ts" -> "name_src/common/diagnostic" [
     style = "invis";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/common/diagnostic";
   ];
   "src/common/diagnostic.ts" -> "name_src/common/diagnostic" [
     style = "invis";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/common/diagnostic";
   ];
   "src/common/diagnostic.ts" -> "name_src/common/diagnostic" [
     style = "invis";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/common/diagnostic";
   ];
   "exit_src/sia-r114" -> "name_src/common" [
     style = "solid";
-    color = "#90ff00";
+    color = "#94ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r114";
   ];
   "exit_src/sia-r114" -> "name_src/tags" [
     style = "solid";
-    color = "#90ff00";
+    color = "#94ff00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r114";
   ];
   "exit_src/sia-r96" -> "name_src/common" [
     style = "solid";
-    color = "#ff2900";
+    color = "#ff2800";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r96";
   ];
   "exit_src/sia-r96" -> "name_src/common" [
     style = "invis";
-    color = "#ff2900";
+    color = "#ff2800";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r96";
   ];
   "exit_src/sia-r96" -> "name_src/common" [
     style = "invis";
-    color = "#ff2900";
+    color = "#ff2800";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r96";
   ];
   "exit_src/sia-r96" -> "name_src/tags" [
     style = "solid";
-    color = "#ff2900";
+    color = "#ff2800";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r96";
   ];
@@ -5643,43 +5655,43 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "exit_src/sia-r117" -> "name_src/common" [
     style = "solid";
-    color = "#ff4400";
+    color = "#ff4300";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r117";
   ];
   "exit_src/sia-r117" -> "name_src/common" [
     style = "invis";
-    color = "#ff4400";
+    color = "#ff4300";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r117";
   ];
   "exit_src/sia-r117" -> "name_src/tags" [
     style = "solid";
-    color = "#ff4400";
+    color = "#ff4300";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r117";
   ];
   "exit_src/sia-r75" -> "name_src/common" [
     style = "solid";
-    color = "#ff5f00";
+    color = "#ff5e00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r75";
   ];
   "exit_src/sia-r75" -> "name_src/requirements" [
     style = "solid";
-    color = "#ff5f00";
+    color = "#ff5e00";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r75";
   ];
   "exit_src/sia-r75" -> "name_src/tags" [
     style = "solid";
-    color = "#ff5f00";
+    color = "#ff5e00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r75";
   ];
   "exit_src/common/predicate" -> "name_src/common/dom" [
     style = "solid";
-    color = "#0005ff";
+    color = "#001bff";
     lhead = "cluster_src/common/dom";
     ltail = "cluster_src/common/predicate";
   ];
@@ -5719,186 +5731,186 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "exit_src/common/dom/get-colors" -> "src/common/dom/get-interposed-descendant.ts" [
     style = "solid";
-    color = "#fdff00";
+    color = "#ffff00";
     ltail = "cluster_src/common/dom/get-colors";
   ];
   "exit_src/sia-r72" -> "name_src/common" [
     style = "solid";
-    color = "#ff7a00";
+    color = "#ff7900";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r72";
   ];
   "exit_src/sia-r72" -> "name_src/requirements" [
     style = "solid";
-    color = "#ff7a00";
+    color = "#ff7900";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r72";
   ];
   "exit_src/sia-r72" -> "name_src/tags" [
     style = "solid";
-    color = "#ff7a00";
+    color = "#ff7900";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r72";
   ];
   "exit_src/sia-r7" -> "name_src/common" [
     style = "solid";
-    color = "#ff6c00";
+    color = "#ff6b00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r7";
   ];
   "exit_src/sia-r7" -> "name_src/tags" [
     style = "solid";
-    color = "#ff6c00";
+    color = "#ff6b00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r7";
   ];
   "exit_src/sia-r28" -> "name_src/common" [
     style = "solid";
-    color = "#00ff3b";
+    color = "#00ff36";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r28";
   ];
   "exit_src/sia-r28" -> "name_src/tags" [
     style = "solid";
-    color = "#00ff3b";
+    color = "#00ff36";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r28";
   ];
   "exit_src/sia-r42" -> "name_src/common" [
     style = "solid";
-    color = "#00ff2d";
+    color = "#00ff28";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r42";
   ];
   "exit_src/sia-r42" -> "name_src/common" [
     style = "invis";
-    color = "#00ff2d";
+    color = "#00ff28";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r42";
   ];
   "exit_src/sia-r42" -> "name_src/tags" [
     style = "solid";
-    color = "#00ff2d";
+    color = "#00ff28";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r42";
   ];
   "exit_src/sia-r64" -> "name_src/common" [
     style = "solid";
-    color = "#00ff12";
+    color = "#00ff0d";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r64";
   ];
   "exit_src/sia-r64" -> "name_src/tags" [
     style = "solid";
-    color = "#00ff12";
+    color = "#00ff0d";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r64";
   ];
   "exit_src/sia-r11" -> "name_src/common" [
     style = "solid";
-    color = "#00ff20";
+    color = "#00ff1b";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r11";
   ];
   "exit_src/sia-r11" -> "name_src/tags" [
     style = "solid";
-    color = "#00ff20";
+    color = "#00ff1b";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r11";
   ];
   "exit_src/sia-r12" -> "name_src/common" [
     style = "solid";
-    color = "#ffcb00";
+    color = "#ffc900";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r12";
   ];
   "exit_src/sia-r12" -> "name_src/tags" [
     style = "solid";
-    color = "#ffcb00";
+    color = "#ffc900";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r12";
   ];
   "exit_src/sia-r67" -> "name_src/common" [
     style = "solid";
-    color = "#ffbe00";
+    color = "#ffbc00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r67";
   ];
   "exit_src/sia-r67" -> "name_src/tags" [
     style = "solid";
-    color = "#ffbe00";
+    color = "#ffbc00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r67";
   ];
   "exit_src/sia-r41" -> "name_src/common" [
     style = "solid";
-    color = "#ffb000";
+    color = "#ffae00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r41";
   ];
   "exit_src/sia-r41" -> "name_src/common" [
     style = "invis";
-    color = "#ffb000";
+    color = "#ffae00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r41";
   ];
   "exit_src/sia-r41" -> "name_src/common" [
     style = "invis";
-    color = "#ffb000";
+    color = "#ffae00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r41";
   ];
   "exit_src/sia-r41" -> "name_src/common" [
     style = "invis";
-    color = "#ffb000";
+    color = "#ffae00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r41";
   ];
   "exit_src/sia-r41" -> "name_src/common" [
     style = "invis";
-    color = "#ffb000";
+    color = "#ffae00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r41";
   ];
   "exit_src/sia-r41" -> "name_src/tags" [
     style = "solid";
-    color = "#ffb000";
+    color = "#ffae00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r41";
   ];
   "exit_src/sia-r44" -> "name_src/common" [
     style = "solid";
-    color = "#ffd900";
+    color = "#ffd700";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r44";
   ];
   "exit_src/sia-r44" -> "name_src/tags" [
     style = "solid";
-    color = "#ffd900";
+    color = "#ffd700";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r44";
   ];
   "exit_src/sia-r62" -> "name_src/common" [
     style = "invis";
-    color = "#ffe600";
+    color = "#ffe400";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r62";
   ];
   "exit_src/sia-r62" -> "name_src/common" [
     style = "invis";
-    color = "#ffe600";
+    color = "#ffe400";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r62";
   ];
   "exit_src/sia-r62" -> "name_src/common" [
     style = "invis";
-    color = "#ffe600";
+    color = "#ffe400";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r62";
   ];
   "exit_src/sia-r62" -> "name_src/common" [
     style = "invis";
-    color = "#ffe600";
+    color = "#ffe400";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r62";
   ];
@@ -5911,70 +5923,70 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "exit_src/sia-r62" -> "name_src/tags" [
     style = "solid";
-    color = "#ffe600";
+    color = "#ffe400";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r62";
   ];
   "exit_src/sia-r17" -> "name_src/common" [
     style = "solid";
-    color = "#fff400";
+    color = "#fff200";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r17";
   ];
   "exit_src/sia-r17" -> "name_src/common" [
     style = "invis";
-    color = "#fff400";
+    color = "#fff200";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r17";
   ];
   "exit_src/sia-r17" -> "name_src/tags" [
     style = "solid";
-    color = "#fff400";
+    color = "#fff200";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r17";
   ];
   "exit_src/common/dom" -> "name_src/common/applicability" [
     style = "solid";
-    color = "#83ff00";
+    color = "#86ff00";
     lhead = "cluster_src/common/applicability";
     ltail = "cluster_src/common/dom";
   ];
   "src/common/predicate.ts" -> "name_src/common/predicate" [
     style = "solid";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/common/predicate";
   ];
   "src/common/predicate.ts" -> "name_src/common/predicate" [
     style = "invis";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/common/predicate";
   ];
   "src/common/predicate.ts" -> "name_src/common/predicate" [
     style = "invis";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/common/predicate";
   ];
   "exit_src/sia-r32" -> "name_src/common" [
     style = "solid";
-    color = "#d4ff00";
+    color = "#d7ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r32";
   ];
   "exit_src/sia-r32" -> "name_src/common" [
     style = "invis";
-    color = "#d4ff00";
+    color = "#d7ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r32";
   ];
   "exit_src/sia-r32" -> "name_src/common" [
     style = "invis";
-    color = "#d4ff00";
+    color = "#d7ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r32";
   ];
   "exit_src/sia-r32" -> "name_src/tags" [
     style = "solid";
-    color = "#d4ff00";
+    color = "#d7ff00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r32";
   ];
@@ -5983,22 +5995,22 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "exit_src/common/outcome" -> "src/common/diagnostic.ts" [
     style = "solid";
-    color = "#7500ff";
+    color = "#5e00ff";
     ltail = "cluster_src/common/outcome";
   ];
   "src/index.ts" -> "name_src/common" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/common";
   ];
   "src/index.ts" -> "name_src/common" [
     style = "invis";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/common";
   ];
   "src/index.ts" -> "name_src/common" [
     style = "invis";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/common";
   ];
   "src/index.ts" -> "src/deprecated.ts" [
@@ -6017,7 +6029,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "src/index.ts" -> "name_src/requirements" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/requirements";
   ];
   "src/index.ts" -> "src/rules.ts" [
@@ -6029,7 +6041,7 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "src/index.ts" -> "name_src/tags" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/tags";
   ];
   "src/index.ts" -> "src/version.ts" [
@@ -6041,117 +6053,117 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "exit_src/sia-r54" -> "name_src/common" [
     style = "solid";
-    color = "#b9ff00";
+    color = "#bcff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r54";
   ];
   "exit_src/sia-r54" -> "name_src/tags" [
     style = "solid";
-    color = "#b9ff00";
+    color = "#bcff00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r54";
   ];
   "exit_src/sia-r111" -> "name_src/common" [
     style = "solid";
-    color = "#c7ff00";
+    color = "#c9ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r111";
   ];
   "exit_src/sia-r111" -> "name_src/common" [
     style = "invis";
-    color = "#c7ff00";
+    color = "#c9ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r111";
   ];
   "exit_src/sia-r111" -> "name_src/common" [
     style = "invis";
-    color = "#c7ff00";
+    color = "#c9ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r111";
   ];
   "exit_src/sia-r111" -> "name_src/common" [
     style = "invis";
-    color = "#c7ff00";
+    color = "#c9ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r111";
   ];
   "exit_src/sia-r111" -> "name_src/common" [
     style = "invis";
-    color = "#c7ff00";
+    color = "#c9ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r111";
   ];
   "exit_src/sia-r111" -> "name_src/common" [
     style = "invis";
-    color = "#c7ff00";
+    color = "#c9ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r111";
   ];
   "exit_src/sia-r111" -> "name_src/common" [
     style = "invis";
-    color = "#c7ff00";
+    color = "#c9ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r111";
   ];
   "src/common/dom/get-colors.ts" -> "name_src/common/dom/get-colors" [
     style = "solid";
-    color = "#83ff00";
+    color = "#86ff00";
     lhead = "cluster_src/common/dom/get-colors";
   ];
   "src/common/dom/get-colors.ts" -> "name_src/common/dom/get-colors" [
     style = "invis";
-    color = "#83ff00";
+    color = "#86ff00";
     lhead = "cluster_src/common/dom/get-colors";
   ];
   "src/common/dom/get-colors.ts" -> "name_src/common/dom/get-colors" [
     style = "invis";
-    color = "#83ff00";
+    color = "#86ff00";
     lhead = "cluster_src/common/dom/get-colors";
   ];
   "src/common/dom/get-colors.ts" -> "name_src/common/dom/get-colors" [
     style = "invis";
-    color = "#83ff00";
+    color = "#86ff00";
     lhead = "cluster_src/common/dom/get-colors";
   ];
   "exit_src/sia-r90" -> "name_src/common" [
     style = "solid";
-    color = "#e2ff00";
+    color = "#e4ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r90";
   ];
   "exit_src/sia-r90" -> "name_src/common" [
     style = "invis";
-    color = "#e2ff00";
+    color = "#e4ff00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r90";
   ];
   "exit_src/sia-r90" -> "name_src/tags" [
     style = "solid";
-    color = "#e2ff00";
+    color = "#e4ff00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r90";
   ];
   "exit_src/sia-r60" -> "name_src/common" [
     style = "solid";
-    color = "#ff0e00";
+    color = "#ff0d00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r60";
   ];
   "exit_src/sia-r60" -> "name_src/common" [
     style = "invis";
-    color = "#ff0e00";
+    color = "#ff0d00";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r60";
   ];
   "exit_src/sia-r60" -> "name_src/requirements" [
     style = "solid";
-    color = "#ff0e00";
+    color = "#ff0d00";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r60";
   ];
   "exit_src/sia-r60" -> "name_src/tags" [
     style = "solid";
-    color = "#ff0e00";
+    color = "#ff0d00";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r60";
   ];
@@ -6238,506 +6250,545 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
     style = "solid";
     color = "black";
   ];
+  "src/deprecated.ts" -> "name_src/sia-dr3" [
+    style = "solid";
+    color = "#6bff00";
+    lhead = "cluster_src/sia-dr3";
+  ];
   "src/deprecated.ts" -> "name_src/sia-dr34" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-dr34";
   ];
   "src/deprecated.ts" -> "name_src/sia-dr36" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-dr36";
   ];
   "src/deprecated.ts" -> "name_src/sia-dr6" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-dr6";
+  ];
+  "src/deprecated.ts" -> "name_src/sia-dr83" [
+    style = "solid";
+    color = "#6bff00";
+    lhead = "cluster_src/sia-dr83";
   ];
   "exit_src/sia-r45" -> "name_src/common" [
     style = "solid";
-    color = "#c700ff";
+    color = "#ae00ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r45";
   ];
   "exit_src/sia-r45" -> "name_src/tags" [
     style = "solid";
-    color = "#c700ff";
+    color = "#ae00ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r45";
   ];
   "exit_src/sia-r63" -> "name_src/common" [
     style = "solid";
-    color = "#d400ff";
+    color = "#bc00ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r63";
   ];
   "exit_src/sia-r63" -> "name_src/tags" [
     style = "solid";
-    color = "#d400ff";
+    color = "#bc00ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r63";
   ];
   "exit_src/sia-r16" -> "name_src/common" [
     style = "solid";
-    color = "#b900ff";
+    color = "#a100ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r16";
   ];
   "exit_src/sia-r16" -> "name_src/tags" [
     style = "solid";
-    color = "#b900ff";
+    color = "#a100ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r16";
   ];
   "exit_src/sia-r57" -> "name_src/common" [
     style = "solid";
-    color = "#ff00f4";
+    color = "#f200ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r57";
   ];
   "exit_src/sia-r57" -> "name_src/requirements" [
     style = "solid";
-    color = "#ff00f4";
+    color = "#f200ff";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r57";
   ];
   "exit_src/sia-r57" -> "name_src/tags" [
     style = "solid";
-    color = "#ff00f4";
+    color = "#f200ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r57";
   ];
   "exit_src/sia-r31" -> "name_src/common" [
     style = "dotted";
-    color = "#fd00ff";
+    color = "#e400ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r31";
   ];
   "exit_src/sia-r31" -> "name_src/common" [
     style = "invis";
-    color = "#fd00ff";
+    color = "#e400ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r31";
   ];
   "exit_src/sia-r31" -> "name_src/common" [
     style = "invis";
-    color = "#fd00ff";
+    color = "#e400ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r31";
   ];
   "exit_src/sia-r31" -> "name_src/tags" [
     style = "solid";
-    color = "#fd00ff";
+    color = "#e400ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r31";
   ];
   "exit_src/sia-r93" -> "name_src/common" [
     style = "solid";
-    color = "#e200ff";
+    color = "#c900ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r93";
   ];
   "exit_src/sia-r93" -> "name_src/common" [
     style = "invis";
-    color = "#e200ff";
+    color = "#c900ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r93";
   ];
   "exit_src/sia-r93" -> "name_src/tags" [
     style = "solid";
-    color = "#e200ff";
+    color = "#c900ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r93";
   ];
   "exit_src/sia-r8" -> "name_src/common" [
     style = "solid";
-    color = "#ef00ff";
+    color = "#d700ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r8";
   ];
   "exit_src/sia-r8" -> "name_src/common" [
     style = "invis";
-    color = "#ef00ff";
+    color = "#d700ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r8";
   ];
   "exit_src/sia-r8" -> "name_src/tags" [
     style = "solid";
-    color = "#ef00ff";
+    color = "#d700ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r8";
   ];
   "exit_src/sia-r94" -> "name_src/common" [
     style = "solid";
-    color = "#ff00e6";
+    color = "#ff00f2";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r94";
   ];
   "exit_src/sia-r94" -> "name_src/tags" [
     style = "solid";
-    color = "#ff00e6";
+    color = "#ff00f2";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r94";
   ];
+  "exit_src/sia-dr3" -> "name_src/common" [
+    style = "solid";
+    color = "#ff00ff";
+    lhead = "cluster_src/common";
+    ltail = "cluster_src/sia-dr3";
+  ];
+  "exit_src/sia-dr3" -> "name_src/tags" [
+    style = "solid";
+    color = "#ff00ff";
+    lhead = "cluster_src/tags";
+    ltail = "cluster_src/sia-dr3";
+  ];
   "exit_src/sia-r115" -> "name_src/common" [
     style = "solid";
-    color = "#ff00cb";
+    color = "#ff00d7";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r115";
   ];
   "exit_src/sia-r115" -> "name_src/tags" [
     style = "solid";
-    color = "#ff00cb";
+    color = "#ff00d7";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r115";
   ];
   "exit_src/sia-r50" -> "name_src/common" [
     style = "solid";
-    color = "#ff00be";
+    color = "#ff00c9";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r50";
   ];
   "exit_src/sia-r50" -> "name_src/common" [
     style = "invis";
-    color = "#ff00be";
+    color = "#ff00c9";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r50";
   ];
   "exit_src/sia-r50" -> "name_src/common" [
     style = "invis";
-    color = "#ff00be";
+    color = "#ff00c9";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r50";
   ];
   "exit_src/sia-r50" -> "name_src/sia-r48" [
     style = "solid";
-    color = "#ff00be";
+    color = "#ff00c9";
     lhead = "cluster_src/sia-r48";
     ltail = "cluster_src/sia-r50";
   ];
   "exit_src/sia-r50" -> "name_src/sia-r49" [
     style = "solid";
-    color = "#ff00be";
+    color = "#ff00c9";
     lhead = "cluster_src/sia-r49";
     ltail = "cluster_src/sia-r50";
   ];
   "exit_src/sia-r50" -> "name_src/tags" [
     style = "solid";
-    color = "#ff00be";
+    color = "#ff00c9";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r50";
   ];
   "exit_src/common/expectation" -> "name_src/common/act" [
     style = "invis";
-    color = "#efff00";
+    color = "#f2ff00";
     lhead = "cluster_src/common/act";
     ltail = "cluster_src/common/expectation";
   ];
   "exit_src/common/expectation" -> "name_src/common/act" [
     style = "invis";
-    color = "#efff00";
+    color = "#f2ff00";
     lhead = "cluster_src/common/act";
     ltail = "cluster_src/common/expectation";
   ];
   "exit_src/sia-r19" -> "name_src/common" [
     style = "solid";
-    color = "#ff9500";
+    color = "#ff9400";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r19";
   ];
   "exit_src/sia-r19" -> "name_src/common" [
     style = "invis";
-    color = "#ff9500";
+    color = "#ff9400";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r19";
   ];
   "exit_src/sia-r19" -> "name_src/requirements" [
     style = "solid";
-    color = "#ff9500";
+    color = "#ff9400";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r19";
   ];
   "exit_src/sia-r19" -> "name_src/tags" [
     style = "solid";
-    color = "#ff9500";
+    color = "#ff9400";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r19";
   ];
   "exit_src/sia-r86" -> "name_src/common" [
     style = "solid";
-    color = "#ffa200";
+    color = "#ffa100";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r86";
   ];
   "exit_src/sia-r86" -> "name_src/requirements" [
     style = "solid";
-    color = "#ffa200";
+    color = "#ffa100";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r86";
   ];
   "exit_src/sia-r86" -> "name_src/tags" [
     style = "solid";
-    color = "#ffa200";
+    color = "#ffa100";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r86";
   ];
   "exit_src/sia-r20" -> "name_src/common" [
     style = "solid";
-    color = "#ff8700";
+    color = "#ff8600";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r20";
   ];
   "exit_src/sia-r20" -> "name_src/requirements" [
     style = "solid";
-    color = "#ff8700";
+    color = "#ff8600";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r20";
   ];
   "exit_src/sia-r20" -> "name_src/tags" [
     style = "solid";
-    color = "#ff8700";
+    color = "#ff8600";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r20";
   ];
   "src/experimental.ts" -> "name_src/sia-er8" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-er8";
   ];
   "src/experimental.ts" -> "name_src/sia-er87" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-er87";
+  ];
+  "src/experimental.ts" -> "name_src/sia-r101" [
+    style = "solid";
+    color = "#6bff00";
+    lhead = "cluster_src/sia-r101";
   ];
   "src/experimental.ts" -> "name_src/sia-r109" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r109";
   ];
   "src/experimental.ts" -> "name_src/sia-r114" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r114";
   ];
   "src/experimental.ts" -> "name_src/sia-r115" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r115";
   ];
   "src/experimental.ts" -> "name_src/sia-r117" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r117";
   ];
   "src/experimental.ts" -> "name_src/sia-r82" [
     style = "solid";
-    color = "#68ff00";
+    color = "#6bff00";
     lhead = "cluster_src/sia-r82";
   ];
   "exit_src/sia-r85" -> "name_src/common" [
     style = "solid";
-    color = "#ff005f";
+    color = "#ff006b";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r85";
   ];
   "exit_src/sia-r85" -> "name_src/requirements" [
     style = "solid";
-    color = "#ff005f";
+    color = "#ff006b";
     lhead = "cluster_src/requirements";
     ltail = "cluster_src/sia-r85";
   ];
   "exit_src/sia-r85" -> "name_src/tags" [
     style = "solid";
-    color = "#ff005f";
+    color = "#ff006b";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r85";
   ];
   "exit_src/sia-r49" -> "name_src/common" [
     style = "solid";
-    color = "#ff0087";
+    color = "#ff0094";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r49";
   ];
   "exit_src/sia-r49" -> "name_src/common" [
     style = "invis";
-    color = "#ff0087";
+    color = "#ff0094";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r49";
   ];
   "exit_src/sia-r49" -> "name_src/tags" [
     style = "solid";
-    color = "#ff0087";
+    color = "#ff0094";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r49";
   ];
   "exit_src/common/applicability" -> "name_src/common/dom" [
     style = "solid";
-    color = "#ff0095";
+    color = "#ff00a1";
     lhead = "cluster_src/common/dom";
     ltail = "cluster_src/common/applicability";
   ];
   "exit_src/common/applicability" -> "name_src/common/act" [
     style = "invis";
-    color = "#ff0095";
+    color = "#ff00a1";
     lhead = "cluster_src/common/act";
     ltail = "cluster_src/common/applicability";
   ];
   "exit_src/sia-dr34" -> "name_src/common" [
     style = "dotted";
-    color = "#ff006c";
+    color = "#ff0079";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-dr34";
   ];
   "exit_src/sia-dr34" -> "name_src/common" [
     style = "invis";
-    color = "#ff006c";
+    color = "#ff0079";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-dr34";
   ];
   "exit_src/sia-dr34" -> "name_src/common" [
     style = "invis";
-    color = "#ff006c";
+    color = "#ff0079";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-dr34";
   ];
   "exit_src/sia-dr34" -> "name_src/tags" [
     style = "solid";
-    color = "#ff006c";
+    color = "#ff0079";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-dr34";
   ];
   "exit_src/sia-r23" -> "name_src/common" [
     style = "dotted";
-    color = "#ff007a";
+    color = "#ff0086";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r23";
   ];
   "exit_src/sia-r23" -> "name_src/common" [
     style = "invis";
-    color = "#ff007a";
+    color = "#ff0086";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r23";
   ];
   "exit_src/sia-r23" -> "name_src/common" [
     style = "invis";
-    color = "#ff007a";
+    color = "#ff0086";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r23";
   ];
   "exit_src/sia-r23" -> "name_src/tags" [
     style = "solid";
-    color = "#ff007a";
+    color = "#ff0086";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r23";
   ];
   "exit_src/sia-r80" -> "name_src/common" [
     style = "solid";
-    color = "#ff0051";
+    color = "#ff005e";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r80";
   ];
   "exit_src/sia-r80" -> "name_src/tags" [
     style = "solid";
-    color = "#ff0051";
+    color = "#ff005e";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r80";
   ];
   "exit_src/sia-r26" -> "name_src/common" [
     style = "dotted";
-    color = "#ff0044";
+    color = "#ff0051";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r26";
   ];
   "exit_src/sia-r26" -> "name_src/common" [
     style = "invis";
-    color = "#ff0044";
+    color = "#ff0051";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r26";
   ];
   "exit_src/sia-r26" -> "name_src/common" [
     style = "invis";
-    color = "#ff0044";
+    color = "#ff0051";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r26";
   ];
   "exit_src/sia-r26" -> "name_src/tags" [
     style = "solid";
-    color = "#ff0044";
+    color = "#ff0051";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r26";
+  ];
+  "exit_src/sia-dr83" -> "name_src/common" [
+    style = "solid";
+    color = "#ff0028";
+    lhead = "cluster_src/common";
+    ltail = "cluster_src/sia-dr83";
+  ];
+  "exit_src/sia-dr83" -> "name_src/tags" [
+    style = "solid";
+    color = "#ff0028";
+    lhead = "cluster_src/tags";
+    ltail = "cluster_src/sia-dr83";
   ];
   "src/common/act/diagnostic.ts" -> "src/common/diagnostic.ts" [
     style = "invis";
   ];
   "exit_src/common/act" -> "src/common/diagnostic.ts" [
     style = "solid";
-    color = "#ac00ff";
+    color = "#9400ff";
     ltail = "cluster_src/common/act";
   ];
   "exit_src/common/act" -> "name_src/common/dom" [
     style = "solid";
-    color = "#ac00ff";
+    color = "#9400ff";
     lhead = "cluster_src/common/dom";
     ltail = "cluster_src/common/act";
   ];
+  "exit_src/common" -> "name_src/sia-dr83" [
+    style = "solid";
+    color = "#1bff00";
+    lhead = "cluster_src/sia-dr83";
+    ltail = "cluster_src/common";
+  ];
   "exit_src/common" -> "name_src/sia-r109" [
     style = "solid";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/sia-r109";
     ltail = "cluster_src/common";
   ];
   "exit_src/common" -> "name_src/sia-r14" [
     style = "solid";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/sia-r14";
     ltail = "cluster_src/common";
   ];
   "exit_src/common" -> "name_src/sia-r16" [
     style = "solid";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/sia-r16";
     ltail = "cluster_src/common";
   ];
   "exit_src/common" -> "name_src/sia-r55" [
     style = "solid";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/sia-r55";
     ltail = "cluster_src/common";
   ];
   "exit_src/common" -> "name_src/sia-r56" [
     style = "solid";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/sia-r56";
     ltail = "cluster_src/common";
   ];
   "exit_src/common" -> "name_src/sia-r61" [
     style = "solid";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/sia-r61";
     ltail = "cluster_src/common";
   ];
   "exit_src/common" -> "name_src/sia-r62" [
     style = "solid";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/sia-r62";
     ltail = "cluster_src/common";
   ];
   "exit_src/common" -> "name_src/sia-r65" [
     style = "solid";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/sia-r65";
     ltail = "cluster_src/common";
   ];
   "exit_src/common" -> "name_src/sia-r75" [
     style = "solid";
-    color = "#24ff00";
+    color = "#1bff00";
     lhead = "cluster_src/sia-r75";
-    ltail = "cluster_src/common";
-  ];
-  "exit_src/common" -> "name_src/sia-r83" [
-    style = "solid";
-    color = "#24ff00";
-    lhead = "cluster_src/sia-r83";
     ltail = "cluster_src/common";
   ];
   "exit_src/sia-r65" -> "name_src/common" [
@@ -6767,151 +6818,151 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "exit_src/sia-r10" -> "name_src/common" [
     style = "solid";
-    color = "#ff000e";
+    color = "#ff000d";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r10";
   ];
   "exit_src/sia-r10" -> "name_src/tags" [
     style = "solid";
-    color = "#ff000e";
+    color = "#ff000d";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r10";
   ];
   "exit_src/sia-r29" -> "name_src/common" [
     style = "dotted";
-    color = "#ff0029";
+    color = "#ff0036";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r29";
   ];
   "exit_src/sia-r29" -> "name_src/common" [
     style = "invis";
-    color = "#ff0029";
+    color = "#ff0036";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r29";
   ];
   "exit_src/sia-r29" -> "name_src/common" [
     style = "invis";
-    color = "#ff0029";
+    color = "#ff0036";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r29";
   ];
   "exit_src/sia-r29" -> "name_src/tags" [
     style = "solid";
-    color = "#ff0029";
+    color = "#ff0036";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r29";
   ];
   "exit_src/sia-r43" -> "name_src/common" [
     style = "solid";
-    color = "#ff0036";
+    color = "#ff0043";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r43";
   ];
   "exit_src/sia-r43" -> "name_src/tags" [
     style = "solid";
-    color = "#ff0036";
+    color = "#ff0043";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r43";
   ];
   "exit_src/sia-r68" -> "name_src/common" [
     style = "solid";
-    color = "#9e00ff";
+    color = "#8600ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r68";
   ];
   "exit_src/sia-r68" -> "name_src/common" [
     style = "invis";
-    color = "#9e00ff";
+    color = "#8600ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r68";
   ];
   "exit_src/sia-r68" -> "name_src/tags" [
     style = "solid";
-    color = "#9e00ff";
+    color = "#8600ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r68";
   ];
   "exit_src/common/outcome" -> "name_src/common/diagnostic" [
     style = "solid";
-    color = "#7500ff";
+    color = "#5e00ff";
     lhead = "cluster_src/common/diagnostic";
     ltail = "cluster_src/common/outcome";
   ];
   "exit_src/sia-r82" -> "name_src/common" [
     style = "solid";
-    color = "#8300ff";
+    color = "#6b00ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r82";
   ];
   "exit_src/sia-r82" -> "name_src/common" [
     style = "invis";
-    color = "#8300ff";
+    color = "#6b00ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r82";
   ];
   "exit_src/sia-r82" -> "name_src/tags" [
     style = "solid";
-    color = "#8300ff";
+    color = "#6b00ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r82";
   ];
   "exit_src/sia-r24" -> "name_src/common" [
     style = "dotted";
-    color = "#9000ff";
+    color = "#7900ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r24";
   ];
   "exit_src/sia-r24" -> "name_src/common" [
     style = "invis";
-    color = "#9000ff";
+    color = "#7900ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r24";
   ];
   "exit_src/sia-r24" -> "name_src/common" [
     style = "invis";
-    color = "#9000ff";
+    color = "#7900ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r24";
   ];
   "exit_src/sia-r24" -> "name_src/tags" [
     style = "solid";
-    color = "#9000ff";
+    color = "#7900ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r24";
   ];
   "exit_src/sia-r27" -> "name_src/common" [
     style = "solid";
-    color = "#00ddff";
+    color = "#00f2ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r27";
   ];
   "exit_src/sia-r27" -> "name_src/common" [
     style = "invis";
-    color = "#00ddff";
+    color = "#00f2ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r27";
   ];
   "exit_src/sia-r27" -> "name_src/common" [
     style = "invis";
-    color = "#00ddff";
+    color = "#00f2ff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r27";
   ];
   "exit_src/sia-r27" -> "name_src/sia-r22" [
     style = "solid";
-    color = "#00ddff";
+    color = "#00f2ff";
     lhead = "cluster_src/sia-r22";
     ltail = "cluster_src/sia-r27";
   ];
   "exit_src/sia-r27" -> "name_src/sia-r31" [
     style = "solid";
-    color = "#00ddff";
+    color = "#00f2ff";
     lhead = "cluster_src/sia-r31";
     ltail = "cluster_src/sia-r27";
   ];
   "exit_src/sia-r27" -> "name_src/tags" [
     style = "solid";
-    color = "#00ddff";
+    color = "#00f2ff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r27";
   ];
@@ -6931,37 +6982,37 @@ digraph "dependency-graph-@siteimprove/alfa-rules" {
   ];
   "exit_src/sia-r81" -> "name_src/common" [
     style = "solid";
-    color = "#00ebff";
+    color = "#00ffff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r81";
   ];
   "exit_src/sia-r81" -> "name_src/common" [
     style = "invis";
-    color = "#00ebff";
+    color = "#00ffff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r81";
   ];
   "exit_src/sia-r81" -> "name_src/common" [
     style = "invis";
-    color = "#00ebff";
+    color = "#00ffff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r81";
   ];
   "exit_src/sia-r81" -> "name_src/common" [
     style = "invis";
-    color = "#00ebff";
+    color = "#00ffff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r81";
   ];
   "exit_src/sia-r81" -> "name_src/common" [
     style = "invis";
-    color = "#00ebff";
+    color = "#00ffff";
     lhead = "cluster_src/common";
     ltail = "cluster_src/sia-r81";
   ];
   "exit_src/sia-r81" -> "name_src/tags" [
     style = "solid";
-    color = "#00ebff";
+    color = "#00ffff";
     lhead = "cluster_src/tags";
     ltail = "cluster_src/sia-r81";
   ];
