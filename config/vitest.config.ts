@@ -1,6 +1,6 @@
 import { coverageConfigDefaults, defineConfig } from "vitest/config";
 
-// ALFA_PATH is set by the coverage:package path in the global package.json
+// ALFA_PATH is set by the coverage:package script in the global package.json
 // manifest file.
 // The default for alfaPath is to include all packages, unless overwritten by
 // ALFA_PATH.
