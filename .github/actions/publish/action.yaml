@@ -71,7 +71,11 @@ runs:
     - name: Set token for npm publication (npm registry)
       if: inputs.npm-publish == 'true'
       shell: bash
-      run: npm config set //registry.npmjs.org/:_authToken=${{ inputs.npm-token }}
+      run: npm config set //registry.npmjs.org/:_authToken="${NPM_TOKEN}"
+      env:
+        # Passing it as a variable rather than inline hardens against script injection.
+        # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+        NPM_TOKEN: ${{ inputs.npm-token }}
     - name: Make npm release (npm Packages Registry)
       # Overwrite the registry with a CLI option, thus leaving the package.json files untouched.
       if: inputs.npm-publish == 'true'
@@ -84,10 +88,10 @@ runs:
     - name: Make Github release
       shell: bash
       run: >
-        gh release create ${VERSION}
+        gh release create "${VERSION}"
         --prerelease
         --verify-tag
-        --title ${VERSION}
+        --title "${VERSION}"
         --notes "[Changelog for this release](CHANGELOG.md)"
       env:
         GH_TOKEN: ${{ github.token }}

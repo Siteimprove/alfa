@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.115.1](../../compare/v0.115.0...v0.115.1) (2026-05-29)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#01151): Empty release to retrigger publication.
+
 ## [0.115.0](../../compare/v0.114.3...v0.115.0) (2026-05-29)
 
 ### Breaking
