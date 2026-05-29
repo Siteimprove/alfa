@@ -1,5 +1,21 @@
 # @siteimprove/alfa-rules
 
+## 0.115.0
+
+### Minor Changes
+
+- **Breaking:** SIA-R3 is now deprecated as Success Criterion 4.1.1 has been removed from WCAG 2.2 (and WCAG 2.1 for HTML). ([#2066](https://github.com/Siteimprove/alfa/pull/2066))
+
+  It is still available as `DR3`.
+
+- **Breaking:** SIA-R83 is now deprecated and will be removed in a later version. ([#2079](https://github.com/Siteimprove/alfa/pull/2079))
+
+- **Added:** New rule SIA-R101 added. The rule asks for repeated content before main content, unless there is no content. ([#2070](https://github.com/Siteimprove/alfa/pull/2070))
+
+### Patch Changes
+
+- **Fixed:** SIA-R95 now correctly handles `<iframe>` made inert by an `inert` attribute. ([#2059](https://github.com/Siteimprove/alfa/pull/2059))
+
 ## 0.114.3
 
 ### Patch Changes

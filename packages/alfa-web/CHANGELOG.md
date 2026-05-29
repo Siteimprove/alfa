@@ -1,5 +1,7 @@
 # @siteimprove/alfa-web
 
+## 0.115.0
+
 ## 0.114.3
 
 ### Patch Changes
