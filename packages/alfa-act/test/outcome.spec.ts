@@ -18,6 +18,15 @@ import {
 const rule = RuleFixture.alwaysInapplicable;
 const target1 = Target.one;
 
+type ANSWER = Array<[string, Option<Result<Diagnostic>>]>;
+
+function conclusive(
+  answer: Result<Diagnostic>,
+  oracleUsed: boolean = false,
+): Finding<ANSWER> {
+  return Finding.conclusive<ANSWER>([["1", Option.of(answer)]], oracleUsed);
+}
+
 // ── Outcome.getMode ────────────────────────────────────────────────────────
 
 test(".getMode() returns Automatic when oracleUsed is false", (t) => {
@@ -31,47 +40,26 @@ test(".getMode() returns SemiAuto when oracleUsed is true", (t) => {
 // ── Outcome.fromFinding ────────────────────────────────────────────────────
 
 test(".fromFinding() returns Passed when finding is conclusive Ok", (t) => {
-  const finding = Finding.conclusive(
-    [
-      ["1", Option.of(Ok.of(Diagnostic.of("ok")))] as [
-        string,
-        Option<Result<Diagnostic>>,
-      ],
-    ],
-    false,
-  );
+  const finding = conclusive(Outcomes.Passed);
+
   t.deepEqual(
     Outcome.fromFinding(rule, target1)(finding).toJSON(),
-    passed(rule, target1, { "1": Ok.of(Diagnostic.of("ok")) }),
+    passed(rule, target1, { "1": Outcomes.Passed }),
   );
 });
 
 test(".fromFinding() returns Failed when finding is conclusive Err", (t) => {
-  const finding = Finding.conclusive(
-    [
-      ["1", Option.of(Err.of(Diagnostic.of("fail")))] as [
-        string,
-        Option<Result<Diagnostic>>,
-      ],
-    ],
-    false,
-  );
+  const finding = conclusive(Outcomes.Failed);
+
   t.deepEqual(
     Outcome.fromFinding(rule, target1)(finding).toJSON(),
-    failed(rule, target1, { "1": Err.of(Diagnostic.of("fail")) }),
+    failed(rule, target1, { "1": Outcomes.Failed }),
   );
 });
 
 test(".fromFinding() returns SemiAuto mode when oracleUsed is true", (t) => {
-  const finding = Finding.conclusive(
-    [
-      ["1", Option.of(Ok.of(Diagnostic.of("ok")))] as [
-        string,
-        Option<Result<Diagnostic>>,
-      ],
-    ],
-    true,
-  );
+  const finding = conclusive(Outcomes.Passed, true);
+
   t.equal(
     Outcome.fromFinding(rule, target1)(finding).toJSON().mode,
     Outcome.Mode.SemiAuto,
@@ -81,6 +69,7 @@ test(".fromFinding() returns SemiAuto mode when oracleUsed is true", (t) => {
 test(".fromFinding() returns CantTell with preserved diagnostic when finding is inconclusive", (t) => {
   const diag = Diagnostic.of("need answer");
   const finding = Finding.inconclusive(diag, false);
+
   t.deepEqual(
     Outcome.fromFinding(rule, target1)(finding).toJSON(),
     cantTell(rule, target1, diag),
@@ -89,6 +78,7 @@ test(".fromFinding() returns CantTell with preserved diagnostic when finding is 
 
 test(".fromFinding() returns SemiAuto mode when finding is inconclusive and oracleUsed is true", (t) => {
   const finding = Finding.inconclusive(Diagnostic.of("need answer"), true);
+
   t.equal(
     Outcome.fromFinding(rule, target1)(finding).toJSON().mode,
     Outcome.Mode.SemiAuto,
@@ -109,7 +99,7 @@ test("Passed.of() returns an outcome with target and expectations", (t) => {
     Outcome.Passed.of(
       rule,
       target1,
-      Record.from(Object.entries({ "1": Outcomes.Passed })),
+      Record.from([["1", Outcomes.Passed]]),
       Outcome.Mode.Automatic,
     ).toJSON(),
     passed(rule, target1, { "1": Outcomes.Passed }),
@@ -121,7 +111,7 @@ test("Failed.of() returns an outcome with target and expectations", (t) => {
     Outcome.Failed.of(
       rule,
       target1,
-      Record.from(Object.entries({ "1": Outcomes.Failed })),
+      Record.from([["1", Outcomes.Failed]]),
       Outcome.Mode.Automatic,
     ).toJSON(),
     failed(rule, target1, { "1": Outcomes.Failed }),
