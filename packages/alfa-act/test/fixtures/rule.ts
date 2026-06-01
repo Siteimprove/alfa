@@ -23,6 +23,9 @@ type Input = Iterable<Target>;
 export namespace Outcomes {
   export const Passed = Ok.of(Diagnostic.of("passed"));
   export const Failed = Err.of(Diagnostic.of("failed"));
+  // Placeholder used in Failed outcomes when an expectation was None (CantTell)
+  // but the overall outcome is Failed due to another expectation.
+  export const Placeholder = Err.of(Diagnostic.empty());
 
   export function isPassed(
     outcome: Outcome.Applicable<Input, Target, Q>,
@@ -142,6 +145,41 @@ export namespace Rule {
             .map((answer) => (answer ? Outcomes.Passed : Outcomes.Failed)),
         }),
       }),
+    });
+  }
+
+  // Factory for Composite rules with two expectations:
+  // "1": Trilean.some — passes if any sub-rule outcome passes (lenient).
+  // "2": Trilean.every — passes only if all sub-rule outcomes pass (strict).
+  export function makeDualComposite(
+    uri: string,
+    composes: Array<ActRule<Input, Target, Q>>,
+  ): ActRule.Composite<Input, Target, Q> {
+    return ActRule.Composite.of({
+      uri,
+      composes,
+      evaluate() {
+        return {
+          expectations(outcomes) {
+            return {
+              "1": Trilean.fold(
+                (outcomes) => Trilean.some(outcomes, Outcomes.isPassed),
+                () => Outcomes.Passed,
+                () => Outcomes.Failed,
+                () => None,
+                outcomes,
+              ),
+              "2": Trilean.fold(
+                (outcomes) => Trilean.every(outcomes, Outcomes.isPassed),
+                () => Outcomes.Passed,
+                () => Outcomes.Failed,
+                () => None,
+                outcomes,
+              ),
+            };
+          },
+        };
+      },
     });
   }
 
