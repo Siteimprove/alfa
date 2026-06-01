@@ -35,14 +35,14 @@ describe("Interview", () => {
     expectTypeOf<Answer>().toExtend<Interview>();
   });
 
-  it("accepts a Question with a URI that is a key of Metadata", () => {
+  it("can be a Question with a URI that is a key of the Metadata", () => {
     // Keeping this one explicit as we test the basic case.
     type Q1 = act.Question<"boolean", Subject, Context, boolean, Answer, "q1">;
 
     expectTypeOf<Q1>().toExtend<Interview>();
   });
 
-  it("rejects a Question with a URI not in Q", () => {
+  it("cannot be a Question with a URI not in the Metadata", () => {
     type QWrong = act.Question<
       string,
       Subject,
@@ -55,14 +55,14 @@ describe("Interview", () => {
     expectTypeOf<QWrong>().not.toExtend<Interview>();
   });
 
-  it("rejects a Question with valid URI but incorrect answer type", () => {
+  it("cannot be a Question with valid URI but incorrect answer type", () => {
     // { "q1": ["boolean", number] } has incorrect "answer type" (number).
     type Q1 = act.Question<"boolean", Subject, Context, number, Answer, "q1">;
 
     expectTypeOf<Q1>().not.toExtend<Interview>();
   });
 
-  it("rejects a Question with valid URI but incorrect answer type representation", () => {
+  it("cannot be a Question with valid URI but incorrect answer type representation", () => {
     // { "q1": ["incorrect", boolean] } has incorrect "type representation".
     type Q1 = act.Question<
       "incorrect",
@@ -76,7 +76,7 @@ describe("Interview", () => {
     expectTypeOf<Q1>().not.toExtend<Interview>();
   });
 
-  it("only accepts a nested Interview, with smaller depth", () => {
+  it("can be a nested Interview, with a smaller depth", () => {
     // A Question returning an Interview of depth 1.
     type Q1 = Question<Interview<1>>;
 
@@ -91,7 +91,7 @@ describe("Interview", () => {
     expectTypeOf<Q1>().not.toExtend<Interview<1>>();
   });
 
-  it("rejects a nested Interview at depth -1", () => {
+  it("cannot be a nested Interview at depth -1", () => {
     // Not specifying the depths in the questions, to give more possibilities
     type Q1 = Question<Interview>;
 
@@ -99,7 +99,7 @@ describe("Interview", () => {
     expectTypeOf<Q1>().not.toExtend<Interview<-1>>();
   });
 
-  it("accepts non-nested question at depth -1", () => {
+  it("can be a non-nested question at depth -1", () => {
     expectTypeOf<Question<Answer>>().toExtend<Interview<-1>>();
   });
 });
