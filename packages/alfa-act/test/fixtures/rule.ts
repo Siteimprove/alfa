@@ -97,6 +97,13 @@ export namespace Rule {
     (value: number) => value % 4 === 0,
   );
 
+  // Applicable to multiples of 3, pass multiples of 6
+  export const threesix = makeSimple(
+    "fixture:threesix",
+    (value: number) => value % 3 === 0,
+    (value: number) => value % 6 === 0,
+  );
+
   const shouldPass = (target: Target) =>
     Question.of<string, Target, Target, boolean, "q1">(
       "boolean",
@@ -113,6 +120,10 @@ export namespace Rule {
       Future.now(Option.from(shouldPass(question.subject.value)));
   }
 
+  // Factory for Atomic rules with a single pass/fail expectation asking a single
+  // question.
+  // The question is answered automatically if the target matches one of the
+  // "auto" predicates.
   export function withQuestion(
     uri: string,
     applicability: Predicate<number> = () => true,

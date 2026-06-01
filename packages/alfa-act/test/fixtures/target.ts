@@ -28,7 +28,7 @@ export namespace Target {
   export const one = Target.of(1);
   export const two = Target.of(2);
 
-  export function from(values: Iterable<number>): Iterable<Target> {
-    return Iterable.map(values, Target.of);
+  export function from(values: Array<number>): Array<Target> {
+    return values.map(Target.of);
   }
 }

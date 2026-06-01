@@ -20,6 +20,7 @@ const {
   alwaysFail: fail,
   alwaysInapplicable: skip,
   alwaysPass: pass,
+  threesix,
   twofour,
 } = RuleFixture;
 const ask = RuleFixture.withQuestion("test:ask");
@@ -69,11 +70,14 @@ test("evaluate() returns Automatic mode when the oracle does not answer a Questi
   // It is the default oracle, but keeping it explicit to make the test explicit.
   const oracle = () => Future.now(None);
 
-  t.deepEqual(await evaluate(ask, [target1], oracle), [cantTell(ask, target1)]);
+  t.deepEqual(await evaluate(ask, [target1], oracle), [
+    // Automatic is the default mode, but keeping it explicit to make the test explicit.
+    cantTell(ask, target1, undefined, Outcome.Mode.Automatic),
+  ]);
 });
 
 test("evaluate() returns SemiAuto mode when the oracle answers a Question", async (t) => {
-  const oracle = () => Future.now(Option.from(true));
+  const oracle = RuleFixture.oracle(() => true);
 
   t.deepEqual(await evaluate(ask, [target1], oracle), [
     passed(ask, target1, { "1": Outcomes.Passed }, Outcome.Mode.SemiAuto),
@@ -100,8 +104,9 @@ test("evaluate() keeps mode automatic when questions are answered internally", a
   );
 
   t.deepEqual(await evaluate(rule, [target1, target2]), [
-    passed(rule, target1, { "1": Outcomes.Passed }),
-    failed(rule, target2, { "1": Outcomes.Failed }),
+    // Automatic is the default mode, but keeping it explicit to make the test explicit.
+    passed(rule, target1, { "1": Outcomes.Passed }, Outcome.Mode.Automatic),
+    failed(rule, target2, { "1": Outcomes.Failed }, Outcome.Mode.Automatic),
   ]);
 });
 
@@ -172,4 +177,104 @@ test("isComposite() returns true and isAtomic() returns false for a Composite ru
 
   t(Rule.isComposite(composite));
   t(!Rule.isAtomic(composite));
+});
+
+// ── Composite (multiple input rules) ───────────────────────────────────────
+
+// Sort outcomes by serialized target value so tests are independent of Map's
+// hash-based iteration order.
+function sortByTarget(outcomes: Array<Outcome.JSON>): Array<Outcome.JSON> {
+  return [...outcomes].sort((a, b) => {
+    const ta = "target" in a ? (a.target as number) : -1;
+    const tb = "target" in b ? (b.target as number) : -1;
+    return ta - tb;
+  });
+}
+
+test("evaluate() returns Passed when at least one of two sub-rules passes for the same target", async (t) => {
+  const composite = RuleFixture.makeComposite("test:comp-pass-beats-fail", [
+    pass,
+    fail,
+  ]);
+
+  t.deepEqual(await evaluate(composite, [target1]), [
+    passed(composite, target1, { "1": Outcomes.Passed }),
+  ]);
+});
+
+test("evaluate() returns Failed when both sub-rules fail for the same target", async (t) => {
+  const composite = RuleFixture.makeComposite("test:comp-all-fail", [
+    fail,
+    fail,
+  ]);
+
+  t.deepEqual(await evaluate(composite, [target1]), [
+    failed(composite, target1, { "1": Outcomes.Failed }),
+  ]);
+});
+
+test("evaluate() returns CantTell when sub-rules yield only Failed and CantTell for a target", async (t) => {
+  // [Failed, CantTell] → Trilean.some → undefined → CantTell
+  const composite = RuleFixture.makeComposite("test:comp-fail-cantTell", [
+    fail,
+    ask,
+  ]);
+
+  t.deepEqual(await evaluate(composite, [target1]), [
+    cantTell(composite, target1),
+  ]);
+});
+
+test("evaluate() returns Passed when one sub-rule passes and another CantTells for the same target", async (t) => {
+  // [Passed, CantTell] → Trilean.some → true → Passed
+  const composite = RuleFixture.makeComposite("test:comp-pass-cantTell", [
+    pass,
+    ask,
+  ]);
+
+  t.deepEqual(await evaluate(composite, [target1]), [
+    passed(composite, target1, { "1": Outcomes.Passed }),
+  ]);
+});
+
+test("evaluate() handles disjoint applicability across two rules", async (t) => {
+  // fail: applicable to all; twofour: even only, passes multiples of 4.
+  // T1 (odd): only fail → Failed.
+  // T2 (even, not ×4): both fail → Failed.
+  // T4 (×4): fail fails but twofour passes → Passed (some wins).
+  // Use an explicit array so all sub-rules share the same Target instances.
+  const composite = RuleFixture.makeComposite("test:comp-disjoint", [
+    fail,
+    twofour,
+  ]);
+
+  t.deepEqual(sortByTarget(await evaluate(composite, Target.from([1, 2, 4]))), [
+    failed(composite, Target.of(1), { "1": Outcomes.Failed }),
+    failed(composite, Target.of(2), { "1": Outcomes.Failed }),
+    passed(composite, Target.of(4), { "1": Outcomes.Passed }),
+  ]);
+});
+
+test("evaluate() handles three rules with mixed outcomes per target", async (t) => {
+  // twofour: even, passes ×4. threesix: ×3, passes ×6. ask: CantTell (no oracle).
+  // T2 (even, not ×4): twofour fails, threesix N/A, ask CantTell → [Failed, CantTell] → CantTell.
+  // T3 (×3, not ×6): twofour N/A, threesix fails, ask CantTell → [Failed, CantTell] → CantTell.
+  // T4 (×4): twofour passes, threesix N/A, ask CantTell → [Passed, CantTell] → Passed.
+  // T6 (×2 and ×3): twofour fails, threesix passes, ask CantTell → [Failed, Passed, CantTell] → Passed.
+  // Use an explicit array so all sub-rules share the same Target instances.
+  const composite = RuleFixture.makeComposite("test:comp-three-rules", [
+    twofour,
+    threesix,
+    ask,
+  ]);
+
+  t.deepEqual(
+    sortByTarget(await evaluate(composite, Target.from([2, 3, 4, 6]))),
+    [
+      cantTell(composite, Target.of(2)),
+      cantTell(composite, Target.of(3)),
+      passed(composite, Target.of(4), { "1": Outcomes.Passed }),
+      passed(composite, Target.of(6), { "1": Outcomes.Passed }),
+    ],
+  );
 });
