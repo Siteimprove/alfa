@@ -12,14 +12,13 @@ import {
 
 import { Target } from "./fixtures/target.ts";
 
-type Q = { q1: [string, boolean] };
+type Metadata = { q1: ["boolean", boolean]; q2: ["number", number] };
 
-const noOracle: Oracle<{}, Target, Q, Target> = () => Future.now(None);
+const noOracle: Oracle<{}, Target, Metadata, Target> = () => Future.now(None);
 
 const target1 = Target.one;
 
-// Rule typed with Q so Interview.conduct receives a matching oracle type.
-const rule = Rule.Atomic.of<{}, Target, Q, Target>({
+const rule = Rule.Atomic.of<{}, Target, Metadata, Target>({
   uri: "test:interview",
   evaluate: () => ({
     applicability: () => [],
@@ -54,7 +53,7 @@ test("conduct() returns a conclusive finding without consulting the oracle when 
 });
 
 test("conduct() returns a conclusive finding with oracleUsed true when the oracle answers", async (t) => {
-  const q = Question.of("bool", "q1" as const, "?", target1, target1);
+  const q = Question.of("boolean", "q1" as const, "?", target1, target1);
   const oracle = () => Future.now(Option.of(true as boolean));
   const finding = await Interview.conduct(q, rule, oracle);
   t(finding.isLeft());
@@ -64,9 +63,16 @@ test("conduct() returns a conclusive finding with oracleUsed true when the oracl
 });
 
 test("conduct() returns a conclusive finding via fallback when oracle returns None", async (t) => {
-  const q = Question.of("bool", "q1" as const, "?", target1, target1, {
-    fallback: Option.of(false as boolean),
-  });
+  const q = Question.of(
+    "boolean" as const,
+    "q1" as const,
+    "?",
+    target1,
+    target1,
+    {
+      fallback: Option.of(false as boolean),
+    },
+  );
   const finding = await Interview.conduct(q, rule, noOracle);
   t(finding.isLeft());
   if (finding.isLeft()) {
@@ -76,7 +82,7 @@ test("conduct() returns a conclusive finding via fallback when oracle returns No
 
 test("conduct() returns an inconclusive finding with the question diagnostic when oracle returns None and no fallback is present", async (t) => {
   const diag = Diagnostic.of("need answer");
-  const q = Question.of("bool", "q1" as const, "?", target1, target1, {
+  const q = Question.of("boolean", "q1" as const, "?", target1, target1, {
     diagnostic: diag,
   });
   const finding = await Interview.conduct(q, rule, noOracle);

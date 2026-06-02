@@ -2,27 +2,13 @@ import { describe, expectTypeOf, it } from "vitest";
 
 import type * as act from "../src/index.ts";
 
-type Subject = never;
-type Context = Subject;
-type Answer = number;
-type Metadata = { q1: ["boolean", boolean]; q2: ["number", number] };
-
-type Question<ANSWER> = act.Question<
-  "boolean",
-  Subject,
-  Context,
-  boolean,
-  ANSWER,
-  "q1"
->;
-
-type Interview<D extends number = act.Interview.MaxDepth> = act.Interview<
-  Metadata,
-  Subject,
-  Context,
+import type {
   Answer,
-  D
->;
+  Context,
+  Interview,
+  Question,
+  Subject,
+} from "./fixtures/index.ts";
 
 describe("Interview", () => {
   it("collapses to ANSWER when Metadata is empty", () => {

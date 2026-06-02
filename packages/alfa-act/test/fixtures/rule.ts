@@ -1,24 +1,28 @@
 import { Future } from "@siteimprove/alfa-future";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { type Maybe, None, Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import type { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err, type Result } from "@siteimprove/alfa-result";
+import { Ok, Err } from "@siteimprove/alfa-result";
 import { Trilean } from "@siteimprove/alfa-trilean";
 
 import {
   Diagnostic,
-  type Oracle,
   Outcome,
-  Question,
+  Question as ActQuestion,
   Rule as ActRule,
 } from "../../src/index.ts";
 
 import { Target } from "./target.ts";
-
-// Type of questions asked in fixture rules.
-type Q = { q1: [string, boolean] };
-
-type Input = Iterable<Target>;
+import type {
+  Applicable,
+  Atomic,
+  Composite,
+  Expectation,
+  Input,
+  Metadata,
+  Oracle,
+  Question,
+  TRule,
+} from "./types.ts";
 
 export namespace Outcomes {
   export const Passed = Ok.of(Diagnostic.of("passed"));
@@ -27,9 +31,7 @@ export namespace Outcomes {
   // but the overall outcome is Failed due to another expectation.
   export const Placeholder = Err.of(Diagnostic.empty());
 
-  export function isPassed(
-    outcome: Outcome.Applicable<Input, Target, Q>,
-  ): Trilean {
+  export function isPassed(outcome: Applicable): Trilean {
     if (Outcome.isPassed(outcome)) {
       return true;
     }
@@ -49,10 +51,8 @@ export namespace Rule {
   export function makeAtomic(
     uri: string,
     applicability: Predicate<number>,
-    expectations: (target: Target) => {
-      [key: string]: Maybe<Result<Diagnostic>>;
-    },
-  ): ActRule.Atomic<Input, Target> {
+    expectations: (target: Target) => Expectation,
+  ): Atomic {
     return ActRule.Atomic.of({
       uri,
       evaluate: (input) => ({
@@ -69,7 +69,7 @@ export namespace Rule {
     uri: string,
     applicability: Predicate<number>,
     expectations: Predicate<number>,
-  ): ActRule.Atomic<Input, Target> {
+  ): Atomic {
     return makeAtomic(uri, applicability, (t) => ({
       "1": expectations(t.value) ? Outcomes.Passed : Outcomes.Failed,
     }));
@@ -107,8 +107,8 @@ export namespace Rule {
     (value: number) => value % 6 === 0,
   );
 
-  const shouldPass = (target: Target) =>
-    Question.of<string, Target, Target, boolean, "q1">(
+  const shouldPass = (target: Target): Question<boolean> =>
+    ActQuestion.of<"boolean", Target, Target, boolean, "q1">(
       "boolean",
       "q1",
       `Should ${target.value} pass?`,
@@ -116,9 +116,7 @@ export namespace Rule {
       target,
     );
 
-  export function oracle(
-    shouldPass: Trilean.Predicate<number>,
-  ): Oracle<Input, Target, Q, Target> {
+  export function oracle(shouldPass: Trilean.Predicate<number>): Oracle {
     return (_, question) =>
       Future.now(Option.from(shouldPass(question.subject.value)));
   }
@@ -132,8 +130,8 @@ export namespace Rule {
     applicability: Predicate<number> = () => true,
     autoTrue: Predicate<number> = () => false,
     autoFalse: Predicate<number> = () => false,
-  ): ActRule.Atomic<Input, Target, Q> {
-    return ActRule.Atomic.of<Input, Target, Q>({
+  ): Atomic<Metadata> {
+    return ActRule.Atomic.of<Input, Target, Metadata>({
       uri,
       evaluate: (input) => ({
         applicability: () =>
@@ -148,13 +146,39 @@ export namespace Rule {
     });
   }
 
+  // Factory for Composite rules taking the trilean "some" of its input rules.
+  export function makeComposite(
+    uri: string,
+    composes: Array<TRule>,
+  ): Composite {
+    return ActRule.Composite.of({
+      uri,
+      composes,
+      evaluate() {
+        return {
+          expectations(outcomes) {
+            return {
+              1: Trilean.fold(
+                (outcomes) => Trilean.some(outcomes, Outcomes.isPassed),
+                () => Outcomes.Passed,
+                () => Outcomes.Failed,
+                () => None,
+                outcomes,
+              ),
+            };
+          },
+        };
+      },
+    });
+  }
+
   // Factory for Composite rules with two expectations:
   // "1": Trilean.some — passes if any sub-rule outcome passes (lenient).
   // "2": Trilean.every — passes only if all sub-rule outcomes pass (strict).
   export function makeDualComposite(
     uri: string,
-    composes: Array<ActRule<Input, Target, Q>>,
-  ): ActRule.Composite<Input, Target, Q> {
+    composes: Array<TRule>,
+  ): Composite {
     return ActRule.Composite.of({
       uri,
       composes,
@@ -171,32 +195,6 @@ export namespace Rule {
               ),
               "2": Trilean.fold(
                 (outcomes) => Trilean.every(outcomes, Outcomes.isPassed),
-                () => Outcomes.Passed,
-                () => Outcomes.Failed,
-                () => None,
-                outcomes,
-              ),
-            };
-          },
-        };
-      },
-    });
-  }
-
-  // Factory for Composite rules taking the trilean "some" of its input rules.
-  export function makeComposite(
-    uri: string,
-    composes: Array<ActRule<Input, Target, Q>>,
-  ): ActRule.Composite<Input, Target, Q> {
-    return ActRule.Composite.of({
-      uri,
-      composes,
-      evaluate() {
-        return {
-          expectations(outcomes) {
-            return {
-              1: Trilean.fold(
-                (outcomes) => Trilean.some(outcomes, Outcomes.isPassed),
                 () => Outcomes.Passed,
                 () => Outcomes.Failed,
                 () => None,

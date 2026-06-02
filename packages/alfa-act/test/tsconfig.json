@@ -10,6 +10,7 @@
     "./fixtures/index.ts",
     "./fixtures/rule.ts",
     "./fixtures/target.ts",
+    "./fixtures/types.ts",
     "./outcome.spec.ts",
     "./rule.spec.ts",
     "./interview.spec.ts",

@@ -23,6 +23,7 @@ const {
   threesix,
   twofour,
 } = RuleFixture;
+
 const ask = RuleFixture.withQuestion("test:ask");
 
 const { one: target1, two: target2 } = Target;
@@ -282,11 +283,15 @@ test("evaluate() handles three rules with mixed outcomes per target", async (t) 
 // ── Atomic (multiple expectations) ─────────────────────────────────────────
 
 test("evaluate() is Passed when all expectations pass", async (t) => {
-  const rule = RuleFixture.makeAtomic("test:multi-exp-all-pass", () => true, () => ({
-    "1": Outcomes.Passed,
-    "2": Outcomes.Passed,
-    "3": Outcomes.Passed,
-  }));
+  const rule = RuleFixture.makeAtomic(
+    "test:multi-exp-all-pass",
+    () => true,
+    () => ({
+      "1": Outcomes.Passed,
+      "2": Outcomes.Passed,
+      "3": Outcomes.Passed,
+    }),
+  );
 
   t.deepEqual(await evaluate(rule, [target1]), [
     passed(rule, target1, {
@@ -298,11 +303,15 @@ test("evaluate() is Passed when all expectations pass", async (t) => {
 });
 
 test("evaluate() is Failed when any expectation fails even if others pass", async (t) => {
-  const rule = RuleFixture.makeAtomic("test:multi-exp-one-fail", () => true, () => ({
-    "1": Outcomes.Passed,
-    "2": Outcomes.Failed,
-    "3": Outcomes.Passed,
-  }));
+  const rule = RuleFixture.makeAtomic(
+    "test:multi-exp-one-fail",
+    () => true,
+    () => ({
+      "1": Outcomes.Passed,
+      "2": Outcomes.Failed,
+      "3": Outcomes.Passed,
+    }),
+  );
 
   t.deepEqual(await evaluate(rule, [target1]), [
     failed(rule, target1, {
@@ -314,10 +323,14 @@ test("evaluate() is Failed when any expectation fails even if others pass", asyn
 });
 
 test("evaluate() is Failed when all expectations fail", async (t) => {
-  const rule = RuleFixture.makeAtomic("test:multi-exp-all-fail", () => true, () => ({
-    "1": Outcomes.Failed,
-    "2": Outcomes.Failed,
-  }));
+  const rule = RuleFixture.makeAtomic(
+    "test:multi-exp-all-fail",
+    () => true,
+    () => ({
+      "1": Outcomes.Failed,
+      "2": Outcomes.Failed,
+    }),
+  );
 
   t.deepEqual(await evaluate(rule, [target1]), [
     failed(rule, target1, {
@@ -329,20 +342,28 @@ test("evaluate() is Failed when all expectations fail", async (t) => {
 
 test("evaluate() is CantTell when some expectations are inconclusive and none fail", async (t) => {
   // None acts as an unanswered expectation (CantTell), no fail → CantTell overall.
-  const rule = RuleFixture.makeAtomic("test:multi-exp-cantTell", () => true, () => ({
-    "1": Outcomes.Passed,
-    "2": None,
-  }));
+  const rule = RuleFixture.makeAtomic(
+    "test:multi-exp-cantTell",
+    () => true,
+    () => ({
+      "1": Outcomes.Passed,
+      "2": None,
+    }),
+  );
 
   t.deepEqual(await evaluate(rule, [target1]), [cantTell(rule, target1)]);
 });
 
 test("evaluate() is Failed when some expectations fail and others are inconclusive", async (t) => {
   // A failing expectation beats an inconclusive one; the None becomes a placeholder Err.
-  const rule = RuleFixture.makeAtomic("test:multi-exp-fail-cantTell", () => true, () => ({
-    "1": Outcomes.Failed,
-    "2": None,
-  }));
+  const rule = RuleFixture.makeAtomic(
+    "test:multi-exp-fail-cantTell",
+    () => true,
+    () => ({
+      "1": Outcomes.Failed,
+      "2": None,
+    }),
+  );
 
   t.deepEqual(await evaluate(rule, [target1]), [
     failed(rule, target1, {
@@ -359,7 +380,9 @@ test("evaluate() is Failed when some expectations fail and others are inconclusi
 //   "2" (strict):  passes only if ALL sub-rule outcomes pass (Trilean.every)
 
 test("evaluate() is Passed when all sub-rules pass on a dual-expectation composite", async (t) => {
-  const composite = RuleFixture.makeDualComposite("test:dual-comp-pass", [pass]);
+  const composite = RuleFixture.makeDualComposite("test:dual-comp-pass", [
+    pass,
+  ]);
 
   t.deepEqual(await evaluate(composite, [target1]), [
     passed(composite, target1, {
@@ -373,7 +396,10 @@ test("evaluate() is Failed when sub-rules pass and fail on a dual-expectation co
   // exp "1" (some): Passed beats Failed → Passed.
   // exp "2" (every): all must pass; one fails → Failed.
   // Combined: one expectation fails → outcome is Failed.
-  const composite = RuleFixture.makeDualComposite("test:dual-comp-mixed", [pass, fail]);
+  const composite = RuleFixture.makeDualComposite("test:dual-comp-mixed", [
+    pass,
+    fail,
+  ]);
 
   t.deepEqual(await evaluate(composite, [target1]), [
     failed(composite, target1, {
@@ -384,7 +410,9 @@ test("evaluate() is Failed when sub-rules pass and fail on a dual-expectation co
 });
 
 test("evaluate() is Failed when all sub-rules fail on a dual-expectation composite", async (t) => {
-  const composite = RuleFixture.makeDualComposite("test:dual-comp-fail", [fail]);
+  const composite = RuleFixture.makeDualComposite("test:dual-comp-fail", [
+    fail,
+  ]);
 
   t.deepEqual(await evaluate(composite, [target1]), [
     failed(composite, target1, {
@@ -398,16 +426,24 @@ test("evaluate() is CantTell when sub-rules pass and CantTell on a dual-expectat
   // exp "1" (some): Passed wins over CantTell → Passed.
   // exp "2" (every): one CantTell means not all conclusively pass → None → inconclusive.
   // Combined: exp "2" is None → overall CantTell.
-  const composite = RuleFixture.makeDualComposite("test:dual-comp-pass-cantTell", [pass, ask]);
+  const composite = RuleFixture.makeDualComposite(
+    "test:dual-comp-pass-cantTell",
+    [pass, ask],
+  );
 
-  t.deepEqual(await evaluate(composite, [target1]), [cantTell(composite, target1)]);
+  t.deepEqual(await evaluate(composite, [target1]), [
+    cantTell(composite, target1),
+  ]);
 });
 
 test("evaluate() is Failed when sub-rules fail and CantTell on a dual-expectation composite", async (t) => {
   // exp "1" (some): Failed + CantTell → undefined → None → placeholder Err.
   // exp "2" (every): Failed beats CantTell → Failed.
   // Combined: exp "2" fails → outcome is Failed.
-  const composite = RuleFixture.makeDualComposite("test:dual-comp-fail-cantTell", [fail, ask]);
+  const composite = RuleFixture.makeDualComposite(
+    "test:dual-comp-fail-cantTell",
+    [fail, ask],
+  );
 
   t.deepEqual(await evaluate(composite, [target1]), [
     failed(composite, target1, {
