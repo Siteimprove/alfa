@@ -3,22 +3,19 @@ import { None } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
 import type { Result } from "@siteimprove/alfa-result";
 
-import {
-  Diagnostic,
-  Outcome,
-  Rule as ActRule,
-  type Oracle,
-} from "../../src/index.ts";
+import { Diagnostic, Outcome } from "../../src/index.ts";
 
 import { Target } from "./target.ts";
+
+import type { Input, Oracle, TRule } from "./types.ts";
 
 /**
  * Evaluate a rule and return serialized outcomes.
  */
-export async function evaluate<Q extends {} = {}>(
-  rule: ActRule<Iterable<Target>, Target, Q, Target>,
-  input: Iterable<Target> = [],
-  oracle: Oracle<Iterable<Target>, Target, Q, Target> = () => Future.now(None),
+export async function evaluate(
+  rule: TRule,
+  input: Input = [],
+  oracle: Oracle = () => Future.now(None),
 ): Promise<Array<Outcome.JSON>> {
   return Array.from(await rule.evaluate(input, oracle)).map((o) => o.toJSON());
 }
@@ -27,7 +24,7 @@ export async function evaluate<Q extends {} = {}>(
  * Builds a Passed outcome.
  */
 export function passed(
-  rule: ActRule<Iterable<Target>, Target, {}, Target>,
+  rule: TRule,
   target: Target,
   expectations: { [id: string]: Result<Diagnostic> },
   mode: Outcome.Mode = Outcome.Mode.Automatic,
@@ -44,7 +41,7 @@ export function passed(
  * Builds a Failed outcome.
  */
 export function failed(
-  rule: ActRule<Iterable<Target>, Target, {}, Target>,
+  rule: TRule,
   target: Target,
   expectations: { [id: string]: Result<Diagnostic> },
   mode: Outcome.Mode = Outcome.Mode.Automatic,
@@ -61,7 +58,7 @@ export function failed(
  * Builds a CantTell outcome.
  */
 export function cantTell(
-  rule: ActRule<Iterable<Target>, Target, {}, Target>,
+  rule: TRule,
   target: Target,
   diagnostic: Diagnostic = Diagnostic.empty(),
   mode: Outcome.Mode = Outcome.Mode.Automatic,
@@ -73,7 +70,7 @@ export function cantTell(
  * Builds an Inapplicable outcome.
  */
 export function inapplicable(
-  rule: ActRule<Iterable<Target>, Target, {}, Target>,
+  rule: TRule,
   mode: Outcome.Mode = Outcome.Mode.Automatic,
 ): Outcome.Inapplicable.JSON {
   return Outcome.Inapplicable.of(rule, mode).toJSON();
