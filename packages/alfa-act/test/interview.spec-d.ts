@@ -7,14 +7,6 @@ type Context = Subject;
 type Answer = number;
 type Metadata = { q1: ["boolean", boolean]; q2: ["number", number] };
 
-type Interview<D extends number = act.Interview.MaxDepth> = act.Interview<
-  Metadata,
-  Subject,
-  Context,
-  Answer,
-  D
->;
-
 type Question<ANSWER> = act.Question<
   "boolean",
   Subject,
@@ -22,6 +14,14 @@ type Question<ANSWER> = act.Question<
   boolean,
   ANSWER,
   "q1"
+>;
+
+type Interview<D extends number = act.Interview.MaxDepth> = act.Interview<
+  Metadata,
+  Subject,
+  Context,
+  Answer,
+  D
 >;
 
 describe("Interview", () => {
@@ -43,8 +43,8 @@ describe("Interview", () => {
   });
 
   it("cannot be a Question with a URI not in the Metadata", () => {
-    type QWrong = act.Question<
-      string,
+    type QWrongURI = act.Question<
+      "boolean",
       Subject,
       Context,
       boolean,
@@ -52,19 +52,26 @@ describe("Interview", () => {
       "unknown-uri"
     >;
 
-    expectTypeOf<QWrong>().not.toExtend<Interview>();
+    expectTypeOf<QWrongURI>().not.toExtend<Interview>();
   });
 
-  it("cannot be a Question with valid URI but incorrect answer type", () => {
+  it("cannot be a Question with incorrect answer type", () => {
     // { "q1": ["boolean", number] } has incorrect "answer type" (number).
-    type Q1 = act.Question<"boolean", Subject, Context, number, Answer, "q1">;
+    type QWrongType = act.Question<
+      "boolean",
+      Subject,
+      Context,
+      number,
+      Answer,
+      "q1"
+    >;
 
-    expectTypeOf<Q1>().not.toExtend<Interview>();
+    expectTypeOf<QWrongType>().not.toExtend<Interview>();
   });
 
-  it("cannot be a Question with valid URI but incorrect answer type representation", () => {
+  it("cannot be a Question with incorrect answer type representation", () => {
     // { "q1": ["incorrect", boolean] } has incorrect "type representation".
-    type Q1 = act.Question<
+    type QWrongRepresentation = act.Question<
       "incorrect",
       Subject,
       Context,
@@ -73,7 +80,7 @@ describe("Interview", () => {
       "q1"
     >;
 
-    expectTypeOf<Q1>().not.toExtend<Interview>();
+    expectTypeOf<QWrongRepresentation>().not.toExtend<Interview>();
   });
 
   it("can be a nested Interview, with a smaller depth", () => {
