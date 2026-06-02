@@ -1,6 +1,5 @@
 // Type of questions asked in fixture rules.
-import { type Maybe, Option } from "@siteimprove/alfa-option";
-import { Record } from "@siteimprove/alfa-record";
+import { type Maybe } from "@siteimprove/alfa-option";
 import type { Result } from "@siteimprove/alfa-result";
 import type * as act from "../../src/index.ts";
 import type { Target } from "./target.ts";
@@ -39,4 +38,6 @@ export type Atomic<Q extends act.Question.Metadata = {}> = act.Rule.Atomic<
 export type Composite = act.Rule.Composite<Input, Target, Metadata>;
 export type TRule = act.Rule<Input, Target, Metadata>;
 
-export type Oracle = act.Oracle<Input, Target, Metadata, Target>;
+export type Oracle = act.Oracle<Input, Target, Metadata, Subject>;
+
+export type Event = act.Rule.Event<Input, Target, Metadata, Subject>;

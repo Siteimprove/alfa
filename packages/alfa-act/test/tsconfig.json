@@ -8,14 +8,20 @@
   "files": [
     "./fixtures/evaluate.ts",
     "./fixtures/index.ts",
+    "./fixtures/performance.ts",
     "./fixtures/rule.ts",
     "./fixtures/target.ts",
     "./fixtures/types.ts",
     "./outcome.spec.ts",
+    "./performance.spec.ts",
     "./rule.spec.ts",
     "./interview.spec.ts",
     "./interview.spec-d.ts",
     "./question.spec.ts"
   ],
-  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
+  "references": [
+    { "path": "../src" },
+    { "path": "../../alfa-performance" },
+    { "path": "../../alfa-test" }
+  ]
 }
