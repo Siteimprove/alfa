@@ -1,18 +1,18 @@
 import { test } from "@siteimprove/alfa-test";
-import { Option } from "@siteimprove/alfa-option";
-import { Ok, Err, type Result } from "@siteimprove/alfa-result";
+import { None, Option } from "@siteimprove/alfa-option";
+import type { Result } from "@siteimprove/alfa-result";
 import { Record } from "@siteimprove/alfa-record";
 
 import { Diagnostic, Finding, Outcome } from "@siteimprove/alfa-act";
 
 import {
-  Rule as RuleFixture,
-  Target,
   cantTell,
-  passed,
   failed,
   inapplicable,
+  passed,
   Outcomes,
+  Rule as RuleFixture,
+  Target,
 } from "./fixtures/index.ts";
 
 const rule = RuleFixture.alwaysInapplicable;
@@ -192,4 +192,134 @@ test("equals() returns false when rule differs", (t) => {
   const a = Outcome.Inapplicable.of(rule, Outcome.Mode.Automatic);
   const b = Outcome.Inapplicable.of(other, Outcome.Mode.Automatic);
   t(!a.equals(b));
+});
+
+// ── Outcome.fromFinding (multiple expectations) ────────────────────────────
+
+test("Outcome.fromFinding() returns Passed when all expectations are Some(Ok)", (t) => {
+  const finding = Finding.conclusive<ANSWER>(
+    [
+      ["1", Option.of(Outcomes.Passed)],
+      ["2", Option.of(Outcomes.Passed)],
+      ["3", Option.of(Outcomes.Passed)],
+    ],
+    false,
+  );
+
+  t.deepEqual(
+    Outcome.fromFinding(rule, target1)(finding).toJSON(),
+    passed(rule, target1, {
+      "1": Outcomes.Passed,
+      "2": Outcomes.Passed,
+      "3": Outcomes.Passed,
+    }),
+  );
+});
+
+test("Outcome.fromFinding() returns Failed when all expectations are Some(Err)", (t) => {
+  const finding = Finding.conclusive<ANSWER>(
+    [
+      ["1", Option.of(Outcomes.Failed)],
+      ["2", Option.of(Outcomes.Failed)],
+    ],
+    false,
+  );
+
+  t.deepEqual(
+    Outcome.fromFinding(rule, target1)(finding).toJSON(),
+    failed(rule, target1, {
+      "1": Outcomes.Failed,
+      "2": Outcomes.Failed,
+    }),
+  );
+});
+
+test("Outcome.fromFinding() returns Failed when some expectations are Ok and one is Err", (t) => {
+  const finding = Finding.conclusive<ANSWER>(
+    [
+      ["1", Option.of(Outcomes.Passed)],
+      ["2", Option.of(Outcomes.Failed)],
+      ["3", Option.of(Outcomes.Passed)],
+    ],
+    false,
+  );
+
+  t.deepEqual(
+    Outcome.fromFinding(rule, target1)(finding).toJSON(),
+    failed(rule, target1, {
+      "1": Outcomes.Passed,
+      "2": Outcomes.Failed,
+      "3": Outcomes.Passed,
+    }),
+  );
+});
+
+test("Outcome.fromFinding() returns CantTell when some expectations are None and none are Err", (t) => {
+  const finding = Finding.conclusive<ANSWER>(
+    [
+      ["1", Option.of(Outcomes.Passed)],
+      ["2", None],
+    ],
+    false,
+  );
+
+  t.deepEqual(
+    Outcome.fromFinding(rule, target1)(finding).toJSON(),
+    cantTell(rule, target1),
+  );
+});
+
+test("Outcome.fromFinding() returns Failed when some expectations are Err and others are None", (t) => {
+  // None expectations become Placeholder (Err of empty Diagnostic) in Failed outcomes.
+  const finding = Finding.conclusive<ANSWER>(
+    [
+      ["1", Option.of(Outcomes.Failed)],
+      ["2", None],
+    ],
+    false,
+  );
+
+  t.deepEqual(
+    Outcome.fromFinding(rule, target1)(finding).toJSON(),
+    failed(rule, target1, {
+      "1": Outcomes.Failed,
+      "2": Outcomes.Placeholder,
+    }),
+  );
+});
+
+test("Outcome.fromFinding() returns Failed when expectations mix Ok, Err, and None", (t) => {
+  // Err beats everything; None becomes Placeholder; Ok is preserved as-is.
+  const finding = Finding.conclusive<ANSWER>(
+    [
+      ["1", Option.of(Outcomes.Passed)],
+      ["2", Option.of(Outcomes.Failed)],
+      ["3", None],
+    ],
+    false,
+  );
+
+  t.deepEqual(
+    Outcome.fromFinding(rule, target1)(finding).toJSON(),
+    failed(rule, target1, {
+      "1": Outcomes.Passed,
+      "2": Outcomes.Failed,
+      "3": Outcomes.Placeholder,
+    }),
+  );
+});
+
+test("Outcome.fromFinding() returns CantTell when all expectations are None", (t) => {
+  const finding = Finding.conclusive<ANSWER>(
+    [
+      ["1", None],
+      ["2", None],
+    ],
+    false,
+  );
+
+  t.deepEqual(
+    Outcome.fromFinding(rule, target1)(finding).toJSON(),
+    cantTell(rule, target1),
+  );
 });

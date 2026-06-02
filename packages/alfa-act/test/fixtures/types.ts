@@ -1,5 +1,6 @@
 // Type of questions asked in fixture rules.
-import type { Maybe } from "@siteimprove/alfa-option";
+import { type Maybe, Option } from "@siteimprove/alfa-option";
+import { Record } from "@siteimprove/alfa-record";
 import type { Result } from "@siteimprove/alfa-result";
 import type * as act from "../../src/index.ts";
 import type { Target } from "./target.ts";
@@ -26,7 +27,9 @@ export type Interview<D extends number = act.Interview.MaxDepth> =
 export type Input = Iterable<Target>;
 
 export type Applicable = act.Outcome.Applicable<Input, Target, Metadata>;
-export type Expectation = { [key: string]: Maybe<Result<act.Diagnostic>> };
+export type Expectation = {
+  [key: string]: Maybe<Result<act.Diagnostic, act.Diagnostic>>;
+};
 
 export type Atomic<Q extends act.Question.Metadata = {}> = act.Rule.Atomic<
   Input,
