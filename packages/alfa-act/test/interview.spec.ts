@@ -42,7 +42,7 @@ const question = Question.of<"number", Target, Target, number, "q2">(
 );
 
 // Inside an interview, the rule only matters as an argument to the oracle. We
-// don't care for these test and can pick any rule.
+// don't care for these tests and can pick any rule.
 const rule: Atomic<Metadata> = RuleFixture.alwaysInapplicable;
 
 test(".conduct() returns a conclusive finding without using oracle when the interview is a direct answer", async (t) => {

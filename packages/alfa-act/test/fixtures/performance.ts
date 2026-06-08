@@ -45,9 +45,7 @@ function checkEntry(
 
   if (Performance.isMark(entry)) {
     checkMark(entry, expected as Performance.Mark<Event>, t);
-  }
-
-  if (Performance.isMeasure(entry)) {
+  } else {
     checkMeasure(entry, expected as Performance.Measure<Event>, t);
   }
 }

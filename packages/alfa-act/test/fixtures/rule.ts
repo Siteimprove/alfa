@@ -135,9 +135,9 @@ export namespace Rule {
     ).map((answer) => (answer ? Option.of(target) : None));
 
   /** Oracle factory, taking a trilean predicate to decide the answer */
-  export function oracle(shouldPass: Trilean.Predicate<number>): Oracle {
+  export function oracle(predicate: Trilean.Predicate<number>): Oracle {
     return (_, question) =>
-      Future.now(Option.from(shouldPass(question.subject.value)));
+      Future.now(Option.from(predicate(question.subject.value)));
   }
 
   /**

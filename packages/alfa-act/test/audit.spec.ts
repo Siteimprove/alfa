@@ -16,18 +16,14 @@ import {
 
 // ── Scenario ─────────────────────────────────────────────────────────────────
 //
-// Two atomic rules are tracked:
-//   pass — always applicable, always passes
-//   fail — always applicable, always fails
+// Three atomic rules are used:
+//   pass — always applicable, always passes;
+//   fail — always applicable, always fails;
+//   ask - always applicable, ask whether it should pass.
 //
-// A third atomic rule asks a question (oracle always answers true → passes):
-//   ask
-//
-// Two composite rules share pass as a sub-rule:
-//   comp1 = makeComposite([pass, fail])
-//            "some" semantics: pass beats fail → Passed (Automatic)
-//   comp2 = makeComposite([pass, ask])
-//            "some" semantics: pass + oracle-pass → Passed (SemiAuto)
+// Two composite rules, sharing pass as a sub-rule, using a "some" logic:
+//   comp1 = makeComposite([pass, fail]) (pass beats fail → Passed (Automatic))
+//   comp2 = makeComposite([pass, ask]) (pass + oracle-pass → Passed (SemiAuto))
 //
 // Audit rule list (intentionally out of dependency order):
 //   [comp1, comp2, pass, fail]
@@ -35,7 +31,7 @@ import {
 // Caching is witnessed by the performance comparison; this shows the order in
 // which events trigger and shows that rules only trigger once.
 //
-// Expected behaviour:
+// Expected behavior:
 // • comp1 triggers the first (and only) evaluation of pass and
 //   fail; their bodies run once each.
 // • comp2 retrieves pass from the cache (body not re-run) and
@@ -45,12 +41,12 @@ import {
 //
 // This proves:
 // (a) caching: shared sub-rules are evaluated at most once,
-// (b) topological ordering: listing rules after their composite users is safe,
+// (b) topological ordering: listing rules after their composite caller is safe,
 // (c) SemiAuto propagation: oracle usage flows up through composites.
 
-// Actual behaviour:
+// Actual behavior:
 // The current implementation of Future is not as lazy as it should, so the
-// outcomes of rules that are present multiple time (pass, fail) are duplicated.
+// outcomes of rules that are present multiple times (pass, fail) are duplicated.
 // The cache also caches the Future, not the actual result, so part of the
 // execution is indeed cached ("start total" and "start applicability"), but
 // the end is delayed in a Future that gets re-evaluated and is therefore
@@ -81,7 +77,7 @@ test("evaluate() integrates caching, topological ordering, and oracle across ato
     // comp2: oracle used for ask → SemiAuto propagates to the composite
     passed(comp2, Target.one, { "1": Outcomes.Passed }, Outcome.Mode.SemiAuto),
     passed(comp2, Target.two, { "1": Outcomes.Passed }, Outcome.Mode.SemiAuto),
-    // pass (pos 3): cache hit — same outcomes computed during comp1
+    // pass: same outcomes computed during comp1
     // Outcomes are incorrectly duplicated by the lack of laziness in Future
     passed(pass, Target.one, { "1": Outcomes.Passed }),
     passed(pass, Target.two, { "1": Outcomes.Passed }),
@@ -89,7 +85,7 @@ test("evaluate() integrates caching, topological ordering, and oracle across ato
     passed(pass, Target.two, { "1": Outcomes.Passed }),
     passed(pass, Target.one, { "1": Outcomes.Passed }),
     passed(pass, Target.two, { "1": Outcomes.Passed }),
-    // fail (pos 4): cache hit
+    // fail: same outcomes computed during comp1
     // Outcomes are incorrectly duplicated by the lack of laziness in Future
     failed(fail, Target.one, { "1": Outcomes.Failed }),
     failed(fail, Target.two, { "1": Outcomes.Failed }),
@@ -99,8 +95,7 @@ test("evaluate() integrates caching, topological ordering, and oracle across ato
 
   // ── performance ───────────────────────────────────────────────────────────
   // Each rule body is measured exactly once; cache hits produce no entries.
-  // Absence of a second pass/fail/ask block confirms that
-  // the standalone traversal positions 3-5 all hit the cache.
+  // Absence of a second pass/fail/ask block confirms that.
   const expectedEntries = [
     // comp1 and its two sub-rules (both cache misses)
     mark(comp1, "start", "total"),
@@ -126,6 +121,7 @@ test("evaluate() integrates caching, topological ordering, and oracle across ato
     measure(pass, "end", "expectation"),
     measure(pass, "end", "total"),
 
+    // ask is a cache miss and needs to be fully evaluated.
     mark(ask, "start", "total"),
     mark(ask, "start", "applicability"),
     measure(ask, "end", "applicability"),
@@ -133,14 +129,13 @@ test("evaluate() integrates caching, topological ordering, and oracle across ato
     measure(ask, "end", "expectation"),
     measure(ask, "end", "total"),
     measure(comp2, "end", "total"),
-    // pass (pos 3), fail (pos 4), ask (pos 5): cache hits → no entries
 
+    // pass, fail: cache hits → no entries
     // Evaluation is incorrectly duplicated by the lack of laziness in Future
     measure(pass, "end", "applicability"),
     mark(pass, "start", "expectation"),
     measure(pass, "end", "expectation"),
     measure(pass, "end", "total"),
-
     // Evaluation is incorrectly duplicated by the lack of laziness in Future
     measure(fail, "end", "applicability"),
     mark(fail, "start", "expectation"),
