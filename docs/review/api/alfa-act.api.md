@@ -15,6 +15,7 @@ import type { Hash } from '@siteimprove/alfa-hash';
 import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
+import { Left } from '@siteimprove/alfa-either';
 import { List } from '@siteimprove/alfa-list';
 import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Maybe } from '@siteimprove/alfa-option';
@@ -24,6 +25,7 @@ import type { Performance } from '@siteimprove/alfa-performance';
 import type { Predicate } from '@siteimprove/alfa-predicate';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import type { Result } from '@siteimprove/alfa-result';
+import { Right } from '@siteimprove/alfa-either';
 import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
@@ -90,6 +92,10 @@ export namespace Finding {
     export function conclusive<ANSWER>(answer: ANSWER, oracleUsed?: boolean): Finding<ANSWER>;
     // (undocumented)
     export function inconclusive<DIAGNOSTIC extends Diagnostic>(diagnostic: DIAGNOSTIC, oracleUsed?: boolean): Finding<never, DIAGNOSTIC>;
+    // (undocumented)
+    export function isConclusive<A>(finding: Finding<A>): finding is Left<[A, boolean]>;
+    // (undocumented)
+    export function isInconclusive<D extends Diagnostic>(finding: Finding<unknown, D>): finding is Right<[D, boolean]>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Depths" needs to be exported by the entry point index.d.ts
