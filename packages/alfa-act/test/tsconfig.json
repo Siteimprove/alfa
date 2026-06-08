@@ -20,9 +20,5 @@
     "./question.spec.ts",
     "./audit.spec.ts"
   ],
-  "references": [
-    { "path": "../src" },
-    { "path": "../../alfa-performance" },
-    { "path": "../../alfa-test" }
-  ]
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }
