@@ -6,7 +6,7 @@ import { Rule } from "../../src/index.ts";
 
 import type { Event, TRule } from "./types.ts";
 
-export function makePerformance(): [
+export function usePerformance(): [
   performance: Performance<Event>,
   entries: Array<Performance.Entry<Event>>,
 ] {

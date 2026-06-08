@@ -3,7 +3,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 
 import type * as json from "@siteimprove/alfa-json";
 
-// Minimal Hashable + Serializable target wrapping a number.
+/** Minimal Hashable + Serializable target wrapping a number. */
 export class Target implements json.Serializable<number>, Hashable {
   public static of(value: number): Target {
     return new Target(value);

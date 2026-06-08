@@ -1,4 +1,3 @@
-// Type of questions asked in fixture rules.
 import { type Maybe } from "@siteimprove/alfa-option";
 import type { Result } from "@siteimprove/alfa-result";
 import type * as act from "../../src/index.ts";

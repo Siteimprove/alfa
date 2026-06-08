@@ -4,7 +4,7 @@ import { Cache } from "../src/index.ts";
 
 import {
   checkEntries,
-  makePerformance,
+  usePerformance,
   mark,
   measure,
   Rule as RuleFixture,
@@ -16,14 +16,14 @@ const {
   alwaysPass: pass,
   alwaysInapplicable: skip,
 } = RuleFixture;
-const { one: target1 } = Target;
+const target = Target.one;
 
 // ── Atomic ─────────────────────────────────────────────────────────────────
 
 test("evaluate() collects all 6 performance entries for an applicable Atomic rule", async (t) => {
-  const [perf, entries] = makePerformance();
+  const [perf, entries] = usePerformance();
 
-  await pass.evaluate([target1], undefined, Cache.empty(), perf);
+  await pass.evaluate([target], undefined, Cache.empty(), perf);
 
   checkEntries(
     entries,
@@ -40,9 +40,9 @@ test("evaluate() collects all 6 performance entries for an applicable Atomic rul
 });
 
 test("evaluate() collects 5 performance entries for an inapplicable Atomic rule", async (t) => {
-  const [perf, entries] = makePerformance();
+  const [perf, entries] = usePerformance();
 
-  await skip.evaluate([target1], undefined, Cache.empty(), perf);
+  await skip.evaluate([target], undefined, Cache.empty(), perf);
 
   checkEntries(
     entries,
@@ -62,13 +62,13 @@ test("evaluate() collects 5 performance entries for an inapplicable Atomic rule"
 // ── Composite ──────────────────────────────────────────────────────────────
 
 test("evaluate() collects total performance entries for a Composite rule, plus entries for its sub-rules", async (t) => {
-  const [perf, entries] = makePerformance();
+  const [perf, entries] = usePerformance();
 
   const composite = RuleFixture.makeComposite("test:perf-composite", [
     pass,
     fail,
   ]);
-  await composite.evaluate([target1], undefined, Cache.empty(), perf);
+  await composite.evaluate([target], undefined, Cache.empty(), perf);
 
   checkEntries(
     entries,

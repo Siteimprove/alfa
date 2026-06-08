@@ -1,5 +1,3 @@
-import { Future } from "@siteimprove/alfa-future";
-import { None } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
 import { Audit, Outcome } from "../src/index.ts";
@@ -7,14 +5,13 @@ import { Audit, Outcome } from "../src/index.ts";
 import {
   checkEntries,
   failed,
-  makePerformance,
+  usePerformance,
   mark,
   measure,
   Outcomes,
   passed,
   Rule as RuleFixture,
   Target,
-  type Oracle,
 } from "./fixtures/index.ts";
 
 // ── Scenario ─────────────────────────────────────────────────────────────────
@@ -59,33 +56,15 @@ import {
 // the end is delayed in a Future that gets re-evaluated and is therefore
 // duplicated ("end applicability", …)
 
-const pass = RuleFixture.alwaysPass;
-const fail = RuleFixture.alwaysFail;
+const { alwaysFail: fail, alwaysPass: pass } = RuleFixture;
 const ask = RuleFixture.withQuestion("fixture:audit-ask");
-const noOracle: Oracle = () => Future.now(None);
 
 test("evaluate() integrates caching, topological ordering, and oracle across atomic and composite rules", async (t) => {
-  const callLog: Array<string> = [];
-
-  // const pass = RuleFixture.makeSimpleWitnessed(
-  //   "fixture:witnessed-pass",
-  //   () => true,
-  //   () => true,
-  //   () => callLog.push("pass"),
-  // );
-  // const fail = RuleFixture.makeSimpleWitnessed(
-  //   "fixture:witnessed-fail",
-  //   () => true,
-  //   () => false,
-  //   () => callLog.push("fail"),
-  // );
-  const ask = RuleFixture.withQuestion("fixture:audit-ask");
-
   const comp1 = RuleFixture.makeComposite("fixture:audit-comp1", [pass, fail]);
   const comp2 = RuleFixture.makeComposite("fixture:audit-comp2", [pass, ask]);
 
   const oracle = RuleFixture.oracle(() => true);
-  const [perf, entries] = makePerformance();
+  const [perf, entries] = usePerformance();
 
   const input = [Target.one, Target.two];
 

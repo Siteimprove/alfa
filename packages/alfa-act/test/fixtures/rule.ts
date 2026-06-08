@@ -45,9 +45,13 @@ export namespace Outcomes {
 }
 
 export namespace Rule {
-  // Factory for Atomic rules with no questions.
-  // The rule accepts an Iterable<Target> as input; applicable targets are those
-  // whose value passes the predicate.
+  /**
+   * Factory for Atomic rules with no questions.
+   *
+   * @remarks
+   * The rule accepts an `Iterable<Target>` as input; applicable targets are those
+   * whose value passes the applicability predicate.
+   */
   export function makeAtomic(
     uri: string,
     applicability: Predicate<number>,
@@ -62,9 +66,14 @@ export namespace Rule {
     });
   }
 
-  // Factory for Atomic rules with a single pass/fail expectation and no questions.
-  // Applicable targets are those whose value passes `applicability`; they pass
-  // expectation "1" iff their value also passes `expectations`.
+  /**
+   * Factory for Atomic rules with a single expectation and no questions.
+   *
+   * @remarks
+   * Applicable targets are those whose value passes the `applicability` predicate;
+   * they pass expectation "1" iff their value also passes the `expectations`
+   * predicate.
+   */
   export function makeSimple(
     uri: string,
     applicability: Predicate<number>,
@@ -73,28 +82,6 @@ export namespace Rule {
     return makeAtomic(uri, applicability, (t) => ({
       "1": expectations(t.value) ? Outcomes.Passed : Outcomes.Failed,
     }));
-  }
-
-  // Like makeSimple, but calls onEvaluate() the first time the rule body runs
-  // (i.e. on every cache miss). Useful for asserting caching behaviour.
-  export function makeSimpleWitnessed(
-    uri: string,
-    applicability: Predicate<number>,
-    expectations: Predicate<number>,
-    onEvaluate: () => void,
-  ): Atomic {
-    return ActRule.Atomic.of({
-      uri,
-      evaluate: (input) => {
-        onEvaluate();
-        return {
-          applicability: () => [...input].filter((t) => applicability(t.value)),
-          expectations: (t) => ({
-            "1": expectations(t.value) ? Outcomes.Passed : Outcomes.Failed,
-          }),
-        };
-      },
-    });
   }
 
   export const alwaysPass = makeSimple(
@@ -115,14 +102,14 @@ export namespace Rule {
     () => false,
   );
 
-  // Applicable to even numbers, pass multiples of 4
+  /** Applicable to even numbers, pass multiples of 4 */
   export const twofour = makeSimple(
     "fixture:twofour",
     (value: number) => value % 2 === 0,
     (value: number) => value % 4 === 0,
   );
 
-  // Applicable to multiples of 3, pass multiples of 6
+  /** Applicable to multiples of 3, pass multiples of 6 */
   export const threesix = makeSimple(
     "fixture:threesix",
     (value: number) => value % 3 === 0,
@@ -138,15 +125,20 @@ export namespace Rule {
       target,
     );
 
+  /** Oracle factory, taking a trilean predicate to decide the answer */
   export function oracle(shouldPass: Trilean.Predicate<number>): Oracle {
     return (_, question) =>
       Future.now(Option.from(shouldPass(question.subject.value)));
   }
 
-  // Factory for Atomic rules with a single pass/fail expectation asking a single
-  // question.
-  // The question is answered automatically if the target matches one of the
-  // "auto" predicates.
+  /**
+   * Factory for Atomic rules with a single pass/fail expectation asking a single
+   * question.
+   *
+   * @remarks
+   * The question is answered automatically if the target matches one of the
+   * "auto" predicates.
+   */
   export function withQuestion(
     uri: string,
     applicability: Predicate<number> = () => true,
@@ -168,7 +160,7 @@ export namespace Rule {
     });
   }
 
-  // Factory for Composite rules taking the trilean "some" of its input rules.
+  /** Factory for Composite rules taking the trilean "some" of its input rules. */
   export function makeComposite(
     uri: string,
     composes: Array<TRule>,
@@ -194,9 +186,11 @@ export namespace Rule {
     });
   }
 
-  // Factory for Composite rules with two expectations:
-  // "1": Trilean.some — passes if any sub-rule outcome passes (lenient).
-  // "2": Trilean.every — passes only if all sub-rule outcomes pass (strict).
+  /**
+   * Factory for Composite rules with two expectations:
+   * "1": Trilean.some — passes if any sub-rule outcome passes (lenient).
+   * "2": Trilean.every — passes only if all sub-rule outcomes pass (strict).
+   */
   export function makeDualComposite(
     uri: string,
     composes: Array<TRule>,

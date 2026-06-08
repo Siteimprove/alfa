@@ -32,13 +32,13 @@ function useOracle(
   return [calls, countingOracle];
 }
 
-const target1 = Target.one;
+const target = Target.one;
 const question = Question.of<"number", Target, Target, number, "q2">(
   "number",
   "q2",
   "?",
-  target1,
-  target1,
+  target,
+  target,
 );
 
 // Inside an interview, the rule only matters as an argument to the oracle. We
@@ -78,8 +78,8 @@ test(".conduct() returns a conclusive finding via fallback calling but not using
     "boolean" as const,
     "q1" as const,
     "?",
-    target1,
-    target1,
+    target,
+    target,
     {
       fallback: Option.of(false),
     },
@@ -95,7 +95,7 @@ test(".conduct() returns a conclusive finding via fallback calling but not using
 
 test(".conduct() returns an inconclusive finding with the question diagnostic when the oracle returns None and no fallback is present", async (t) => {
   const diag = Diagnostic.of("need answer");
-  const q = Question.of("boolean", "q1" as const, "?", target1, target1, {
+  const q = Question.of("boolean", "q1" as const, "?", target, target, {
     diagnostic: diag,
   });
   const [calls, oracle] = useOracle(noOracle);
@@ -122,8 +122,8 @@ test(".conduct() returns a conclusive finding when oracle answers all questions 
     "boolean",
     "q1",
     "?",
-    target1,
-    target1,
+    target,
+    target,
   ).map((_) => question);
 
   const [calls, oracle] = useOracle((_, q) =>
@@ -147,16 +147,16 @@ test(".conduct() returns an inconclusive finding with the first unanswered quest
     "number",
     "q2",
     "?",
-    target1,
-    target1,
+    target,
+    target,
     { diagnostic: diag2 },
   );
   const chain = Question.of<"boolean", Target, Target, boolean, "q1">(
     "boolean",
     "q1",
     "?",
-    target1,
-    target1,
+    target,
+    target,
     { diagnostic: diag1 },
   ).map((_) => q2);
 
