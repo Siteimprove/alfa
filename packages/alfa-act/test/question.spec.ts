@@ -4,10 +4,6 @@ import { Ok, Err } from "@siteimprove/alfa-result";
 
 import { Diagnostic, Question } from "../src/index.ts";
 
-import { Target } from "./fixtures/target.ts";
-
-const target1 = Target.one;
-
 // ── Question.of ────────────────────────────────────────────────────────────
 
 function makeQuestion(
@@ -115,9 +111,8 @@ test("#answerIf() applies a custom merger when given Err of Diagnostic", (t) => 
 });
 
 test("#answerIf() passes both old and current diagnostics to the merger", (t) => {
-  const q = questionWithOriginal.answerIf(
-    Err.of(current),
-    (old, cur) => Diagnostic.of(`${old.message} + ${cur.message}`),
+  const q = questionWithOriginal.answerIf(Err.of(current), (old, cur) =>
+    Diagnostic.of(`${old.message} + ${cur.message}`),
   );
 
   t(!q.isRhetorical());
