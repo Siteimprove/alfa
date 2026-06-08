@@ -1,5 +1,4 @@
 import type { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Iterable } from "@siteimprove/alfa-iterable";
 
 import type * as json from "@siteimprove/alfa-json";
 

@@ -150,12 +150,3 @@ test("evaluate() integrates caching, topological ordering, and oracle across ato
   t.equal(entries.length, expectedEntries.length);
   checkEntries(entries, expectedEntries, t);
 });
-
-function showOutcome(outcome: Outcome<any, any, any, any>): void {
-  const foo = outcome.toJSON();
-  console.dir({
-    outcome: foo.outcome,
-    rule: foo.rule.uri,
-    target: (foo as any).target,
-  });
-}
