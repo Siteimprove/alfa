@@ -47,11 +47,11 @@ const rule: Atomic<Metadata> = RuleFixture.alwaysInapplicable;
 
 test(".conduct() returns a conclusive finding without using oracle when the interview is a direct answer", async (t) => {
   const [calls, oracle] = useOracle(noOracle);
-  const finding = await Interview.conduct("answer", rule, oracle);
+  const finding = await Interview.conduct("direct answer", rule, oracle);
 
   t(Finding.isConclusive(finding));
   t.equal(calls.count, 0);
-  t.deepEqual(finding.left().getUnsafe(), ["answer", false]);
+  t.deepEqual(finding.left().getUnsafe(), ["direct answer", false]);
 });
 
 test(".conduct() returns a conclusive finding without consulting the oracle when given a rhetorical question", async (t) => {
@@ -109,11 +109,11 @@ test(".conduct() returns an inconclusive finding with the question diagnostic wh
 
 test(".conduct() preserves oracleUsed true in the conclusive finding when passed in", async (t) => {
   const [calls, oracle] = useOracle(noOracle);
-  const finding = await Interview.conduct("answer", rule, oracle, true);
+  const finding = await Interview.conduct("direct answer", rule, oracle, true);
 
   t(Finding.isConclusive(finding));
   t.equal(calls.count, 0);
-  t.deepEqual(finding.left().getUnsafe(), ["answer", true]);
+  t.deepEqual(finding.left().getUnsafe(), ["direct answer", true]);
 });
 
 test(".conduct() returns a conclusive finding when oracle answers all questions in a chain", async (t) => {
