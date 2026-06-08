@@ -85,21 +85,21 @@ test("#answerIf() returns a rhetorical question when given Ok", (t) => {
 });
 
 test("#answerIf() returns a non-rhetorical question with updated diagnostic when given Err of Diagnostic", (t) => {
-  // The latest answerIf attempt is failing with Diagnostic `current`, so we
+  // The answerIf attempt is failing with Diagnostic `current`, so we
   // record it as the new question's diagnostic.
   const q = questionWithOriginal.answerIf(Err.of(current));
 
   t(!q.isRhetorical());
-  t(q.diagnostic.equals(current));
+  t.deepEqual(q.diagnostic.toJSON(), current.toJSON());
 });
 
 test("#answerIf() returns unchanged diagnostic when given Err of non-Diagnostic", (t) => {
-  // The latest answerIf attempt is failing without usable further information,
+  // The answerIf attempt is failing without usable further information,
   // so we keep the original diagnostic as the new question's diagnostic.
   const q = questionWithOriginal.answerIf(Err.of("plain error"));
 
   t(!q.isRhetorical());
-  t(q.diagnostic.equals(original));
+  t.deepEqual(q.diagnostic.toJSON(), original.toJSON());
 });
 
 test("#answerIf() applies a custom merger when given Err of Diagnostic", (t) => {
@@ -107,7 +107,7 @@ test("#answerIf() applies a custom merger when given Err of Diagnostic", (t) => 
   const q = questionWithOriginal.answerIf(Err.of(current), (old, _cur) => old);
 
   t(!q.isRhetorical());
-  t(q.diagnostic.equals(original));
+  t.deepEqual(q.diagnostic.toJSON(), original.toJSON());
 });
 
 test("#answerIf() passes both old and current diagnostics to the merger", (t) => {
@@ -116,7 +116,10 @@ test("#answerIf() passes both old and current diagnostics to the merger", (t) =>
   );
 
   t(!q.isRhetorical());
-  t(q.diagnostic.equals(Diagnostic.of("original + current")));
+  t.deepEqual(
+    q.diagnostic.toJSON(),
+    Diagnostic.of("original + current").toJSON(),
+  );
 });
 
 test("#answerIf() merger accumulates across chained failing calls", (t) => {
@@ -129,7 +132,7 @@ test("#answerIf() merger accumulates across chained failing calls", (t) => {
     .answerIf(Err.of(Diagnostic.of("c")), merge); // diagnostic: "a+b+c"
 
   t(!q.isRhetorical());
-  t(q.diagnostic.equals(Diagnostic.of("a+b+c")));
+  t.deepEqual(q.diagnostic.toJSON(), Diagnostic.of("a+b+c").toJSON());
 });
 
 // ── map / Rhetorical.map / flatMap ─────────────────────────────────────────

@@ -38,12 +38,13 @@ test(".getMode() returns SemiAuto when oracleUsed is true", (t) => {
 });
 
 // ── Outcome.fromFinding ────────────────────────────────────────────────────
+const fromFinding = Outcome.fromFinding(rule, target);
 
 test(".fromFinding() returns Passed when finding is conclusive Ok", (t) => {
   const finding = conclusive(Outcomes.Passed);
 
   t.deepEqual(
-    Outcome.fromFinding(rule, target)(finding).toJSON(),
+    fromFinding(finding).toJSON(),
     passed(rule, target, { "1": Outcomes.Passed }),
   );
 });
@@ -52,7 +53,7 @@ test(".fromFinding() returns Failed when finding is conclusive Err", (t) => {
   const finding = conclusive(Outcomes.Failed);
 
   t.deepEqual(
-    Outcome.fromFinding(rule, target)(finding).toJSON(),
+    fromFinding(finding).toJSON(),
     failed(rule, target, { "1": Outcomes.Failed }),
   );
 });
@@ -60,29 +61,20 @@ test(".fromFinding() returns Failed when finding is conclusive Err", (t) => {
 test(".fromFinding() returns SemiAuto mode when oracleUsed is true", (t) => {
   const finding = conclusive(Outcomes.Passed, true);
 
-  t.equal(
-    Outcome.fromFinding(rule, target)(finding).toJSON().mode,
-    Outcome.Mode.SemiAuto,
-  );
+  t.equal(fromFinding(finding).toJSON().mode, Outcome.Mode.SemiAuto);
 });
 
 test(".fromFinding() returns CantTell with preserved diagnostic when finding is inconclusive", (t) => {
   const diag = Diagnostic.of("need answer");
   const finding = Finding.inconclusive(diag, false);
 
-  t.deepEqual(
-    Outcome.fromFinding(rule, target)(finding).toJSON(),
-    cantTell(rule, target, diag),
-  );
+  t.deepEqual(fromFinding(finding).toJSON(), cantTell(rule, target, diag));
 });
 
 test(".fromFinding() returns SemiAuto mode when finding is inconclusive and oracleUsed is true", (t) => {
   const finding = Finding.inconclusive(Diagnostic.of("need answer"), true);
 
-  t.equal(
-    Outcome.fromFinding(rule, target)(finding).toJSON().mode,
-    Outcome.Mode.SemiAuto,
-  );
+  t.equal(fromFinding(finding).toJSON().mode, Outcome.Mode.SemiAuto);
 });
 
 // ── Subclass factories: JSON shape ─────────────────────────────────────────
@@ -207,7 +199,7 @@ test("Outcome.fromFinding() returns Passed when all expectations are Some(Ok)", 
   );
 
   t.deepEqual(
-    Outcome.fromFinding(rule, target)(finding).toJSON(),
+    fromFinding(finding).toJSON(),
     passed(rule, target, {
       "1": Outcomes.Passed,
       "2": Outcomes.Passed,
@@ -226,7 +218,7 @@ test("Outcome.fromFinding() returns Failed when all expectations are Some(Err)",
   );
 
   t.deepEqual(
-    Outcome.fromFinding(rule, target)(finding).toJSON(),
+    fromFinding(finding).toJSON(),
     failed(rule, target, {
       "1": Outcomes.Failed,
       "2": Outcomes.Failed,
@@ -245,7 +237,7 @@ test("Outcome.fromFinding() returns Failed when some expectations are Ok and one
   );
 
   t.deepEqual(
-    Outcome.fromFinding(rule, target)(finding).toJSON(),
+    fromFinding(finding).toJSON(),
     failed(rule, target, {
       "1": Outcomes.Passed,
       "2": Outcomes.Failed,
@@ -263,10 +255,7 @@ test("Outcome.fromFinding() returns CantTell when some expectations are None and
     false,
   );
 
-  t.deepEqual(
-    Outcome.fromFinding(rule, target)(finding).toJSON(),
-    cantTell(rule, target),
-  );
+  t.deepEqual(fromFinding(finding).toJSON(), cantTell(rule, target));
 });
 
 test("Outcome.fromFinding() returns Failed when some expectations are Err and others are None", (t) => {
@@ -280,7 +269,7 @@ test("Outcome.fromFinding() returns Failed when some expectations are Err and ot
   );
 
   t.deepEqual(
-    Outcome.fromFinding(rule, target)(finding).toJSON(),
+    fromFinding(finding).toJSON(),
     failed(rule, target, {
       "1": Outcomes.Failed,
       "2": Outcomes.Placeholder,
@@ -300,7 +289,7 @@ test("Outcome.fromFinding() returns Failed when expectations mix Ok, Err, and No
   );
 
   t.deepEqual(
-    Outcome.fromFinding(rule, target)(finding).toJSON(),
+    fromFinding(finding).toJSON(),
     failed(rule, target, {
       "1": Outcomes.Passed,
       "2": Outcomes.Failed,
@@ -318,8 +307,5 @@ test("Outcome.fromFinding() returns CantTell when all expectations are None", (t
     false,
   );
 
-  t.deepEqual(
-    Outcome.fromFinding(rule, target)(finding).toJSON(),
-    cantTell(rule, target),
-  );
+  t.deepEqual(fromFinding(finding).toJSON(), cantTell(rule, target));
 });
