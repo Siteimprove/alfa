@@ -2636,7 +2636,7 @@ __metadata:
   resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
   dependencies:
     "@siteimprove/alfa-rng": "workspace:^"
-    "@types/node": "npm:^25.9.1"
+    "@types/node": "npm:^25.9.2"
     vitest: "npm:^4.1.8"
   languageName: unknown
   linkType: soft
@@ -2844,9 +2844,9 @@ __metadata:
     "@microsoft/api-documenter": "npm:^7.30.5"
     "@microsoft/api-extractor": "npm:^7.52.10"
     "@siteimprove/alfa-toolchain": "workspace:^0.115.1"
-    "@types/node": "npm:^25.9.1"
+    "@types/node": "npm:^25.9.2"
     "@vitest/coverage-v8": "npm:^4.1.8"
-    knip: "npm:^6.15.0"
+    knip: "npm:^6.16.1"
     minimist: "npm:^1.2.6"
     prettier: "npm:^3.8.3"
     typescript: "npm:^6.0.3"
@@ -3002,12 +3002,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^25.9.1":
-  version: 25.9.1
-  resolution: "@types/node@npm:25.9.1"
+"@types/node@npm:*, @types/node@npm:^25.9.2":
+  version: 25.9.2
+  resolution: "@types/node@npm:25.9.2"
   dependencies:
     undici-types: "npm:>=7.24.0 <7.24.7"
-  checksum: 10c0/9a04682842bebbcf21a1779dfeab9aa733d7bd7bbc0a0edb641ab3a9a3d43eac543225acf669c334f458f1956443ebc072bc3c72840c543b8b356cab5c82d456
+  checksum: 10c0/f14c0d56361febb985eccc45cf0834ee6e2f07c4389a636f3e1a55ebde320077a80bface18c9afd3092f5fa295925502c1a9d55f805efa813f634aa9c941cbac
   languageName: node
   linkType: hard
 
@@ -4957,15 +4957,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:^6.15.0":
-  version: 6.15.0
-  resolution: "knip@npm:6.15.0"
+"knip@npm:^6.16.1":
+  version: 6.16.1
+  resolution: "knip@npm:6.16.1"
   dependencies:
     fdir: "npm:^6.5.0"
     formatly: "npm:^0.3.0"
     get-tsconfig: "npm:4.14.0"
     jiti: "npm:^2.7.0"
-    minimist: "npm:^1.2.8"
     oxc-parser: "npm:^0.133.0"
     oxc-resolver: "npm:^11.20.0"
     picomatch: "npm:^4.0.4"
@@ -4978,7 +4977,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10c0/f31d96c3cdb7ec6a49642cbaa272b64deab33d734de405b6177fff96448dd1f31d17d31941d07290b50f90573789af32dc2386b35f2b69316e87768a2f1e94a1
+  checksum: 10c0/b723ee43f2a5170d5330d3d6cbd54452620ca76e2bffc11d8c8615d5f42c3aa60e9f7763f768210c0b97babff046df668479cb7f4ca78e3e7a8312ef12530370
   languageName: node
   linkType: hard
 
@@ -5185,7 +5184,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimist@npm:^1.2.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6, minimist@npm:^1.2.8":
+"minimist@npm:^1.2.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6":
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
   checksum: 10c0/19d3fcdca050087b84c2029841a093691a91259a47def2f18222f41e7645a0b7c44ef4b40e88a1e58a40c84d2ef0ee6047c55594d298146d0eb3f6b737c20ce6
