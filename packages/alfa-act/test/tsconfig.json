@@ -17,7 +17,8 @@
     "./rule.spec.ts",
     "./interview.spec.ts",
     "./interview.spec-d.ts",
-    "./question.spec.ts"
+    "./question.spec.ts",
+    "./audit.spec.ts"
   ],
   "references": [
     { "path": "../src" },

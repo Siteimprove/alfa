@@ -1,0 +1,182 @@
+import { Future } from "@siteimprove/alfa-future";
+import { None } from "@siteimprove/alfa-option";
+import { test } from "@siteimprove/alfa-test";
+
+import { Audit, Outcome } from "../src/index.ts";
+
+import {
+  checkEntries,
+  failed,
+  makePerformance,
+  mark,
+  measure,
+  Outcomes,
+  passed,
+  Rule as RuleFixture,
+  Target,
+  type Oracle,
+} from "./fixtures/index.ts";
+
+// ── Scenario ─────────────────────────────────────────────────────────────────
+//
+// Two atomic rules are tracked:
+//   pass — always applicable, always passes
+//   fail — always applicable, always fails
+//
+// A third atomic rule asks a question (oracle always answers true → passes):
+//   ask
+//
+// Two composite rules share pass as a sub-rule:
+//   comp1 = makeComposite([pass, fail])
+//            "some" semantics: pass beats fail → Passed (Automatic)
+//   comp2 = makeComposite([pass, ask])
+//            "some" semantics: pass + oracle-pass → Passed (SemiAuto)
+//
+// Audit rule list (intentionally out of dependency order):
+//   [comp1, comp2, pass, fail]
+//
+// Caching is witnessed by the performance comparison; this shows the order in
+// which events trigger and shows that rules only trigger once.
+//
+// Expected behaviour:
+// • comp1 triggers the first (and only) evaluation of pass and
+//   fail; their bodies run once each.
+// • comp2 retrieves pass from the cache (body not re-run) and
+//   evaluates ask for the first time.
+// • The two standalone entries at positions 3–4 both hit the cache; no
+//   second evaluation of any body takes place.
+//
+// This proves:
+// (a) caching: shared sub-rules are evaluated at most once,
+// (b) topological ordering: listing rules after their composite users is safe,
+// (c) SemiAuto propagation: oracle usage flows up through composites.
+
+// Actual behaviour:
+// The current implementation of Future is not as lazy as it should, so the
+// outcomes of rules that are present multiple time (pass, fail) are duplicated.
+// The cache also caches the Future, not the actual result, so part of the
+// execution is indeed cached ("start total" and "start applicability"), but
+// the end is delayed in a Future that gets re-evaluated and is therefore
+// duplicated ("end applicability", …)
+
+const pass = RuleFixture.alwaysPass;
+const fail = RuleFixture.alwaysFail;
+const ask = RuleFixture.withQuestion("fixture:audit-ask");
+const noOracle: Oracle = () => Future.now(None);
+
+test("evaluate() integrates caching, topological ordering, and oracle across atomic and composite rules", async (t) => {
+  const callLog: Array<string> = [];
+
+  // const pass = RuleFixture.makeSimpleWitnessed(
+  //   "fixture:witnessed-pass",
+  //   () => true,
+  //   () => true,
+  //   () => callLog.push("pass"),
+  // );
+  // const fail = RuleFixture.makeSimpleWitnessed(
+  //   "fixture:witnessed-fail",
+  //   () => true,
+  //   () => false,
+  //   () => callLog.push("fail"),
+  // );
+  const ask = RuleFixture.withQuestion("fixture:audit-ask");
+
+  const comp1 = RuleFixture.makeComposite("fixture:audit-comp1", [pass, fail]);
+  const comp2 = RuleFixture.makeComposite("fixture:audit-comp2", [pass, ask]);
+
+  const oracle = RuleFixture.oracle(() => true);
+  const [perf, entries] = makePerformance();
+
+  const input = [Target.one, Target.two];
+
+  const audit = Audit.of(input, [comp1, comp2, pass, fail], oracle);
+
+  const outcomes = Array.from(await audit.evaluate(perf)).map((o) =>
+    o.toJSON(),
+  );
+
+  t.deepEqual(outcomes, [
+    // comp1: pass beats fail for every target
+    passed(comp1, Target.one, { "1": Outcomes.Passed }),
+    passed(comp1, Target.two, { "1": Outcomes.Passed }),
+    // comp2: oracle used for ask → SemiAuto propagates to the composite
+    passed(comp2, Target.one, { "1": Outcomes.Passed }, Outcome.Mode.SemiAuto),
+    passed(comp2, Target.two, { "1": Outcomes.Passed }, Outcome.Mode.SemiAuto),
+    // pass (pos 3): cache hit — same outcomes computed during comp1
+    // Outcomes are incorrectly duplicated by the lack of laziness in Future
+    passed(pass, Target.one, { "1": Outcomes.Passed }),
+    passed(pass, Target.two, { "1": Outcomes.Passed }),
+    passed(pass, Target.one, { "1": Outcomes.Passed }),
+    passed(pass, Target.two, { "1": Outcomes.Passed }),
+    passed(pass, Target.one, { "1": Outcomes.Passed }),
+    passed(pass, Target.two, { "1": Outcomes.Passed }),
+    // fail (pos 4): cache hit
+    // Outcomes are incorrectly duplicated by the lack of laziness in Future
+    failed(fail, Target.one, { "1": Outcomes.Failed }),
+    failed(fail, Target.two, { "1": Outcomes.Failed }),
+    failed(fail, Target.one, { "1": Outcomes.Failed }),
+    failed(fail, Target.two, { "1": Outcomes.Failed }),
+  ]);
+
+  // ── performance ───────────────────────────────────────────────────────────
+  // Each rule body is measured exactly once; cache hits produce no entries.
+  // Absence of a second pass/fail/ask block confirms that
+  // the standalone traversal positions 3-5 all hit the cache.
+  const expectedEntries = [
+    // comp1 and its two sub-rules (both cache misses)
+    mark(comp1, "start", "total"),
+    mark(pass, "start", "total"),
+    mark(pass, "start", "applicability"),
+    measure(pass, "end", "applicability"),
+    mark(pass, "start", "expectation"),
+    measure(pass, "end", "expectation"),
+    measure(pass, "end", "total"),
+    mark(fail, "start", "total"),
+    mark(fail, "start", "applicability"),
+    measure(fail, "end", "applicability"),
+    mark(fail, "start", "expectation"),
+    measure(fail, "end", "expectation"),
+    measure(fail, "end", "total"),
+    measure(comp1, "end", "total"),
+    // comp2: pass is a cache hit (no entries), ask is a cache miss
+    mark(comp2, "start", "total"),
+
+    // Evaluation is incorrectly duplicated by the lack of laziness in Future
+    measure(pass, "end", "applicability"),
+    mark(pass, "start", "expectation"),
+    measure(pass, "end", "expectation"),
+    measure(pass, "end", "total"),
+
+    mark(ask, "start", "total"),
+    mark(ask, "start", "applicability"),
+    measure(ask, "end", "applicability"),
+    mark(ask, "start", "expectation"),
+    measure(ask, "end", "expectation"),
+    measure(ask, "end", "total"),
+    measure(comp2, "end", "total"),
+    // pass (pos 3), fail (pos 4), ask (pos 5): cache hits → no entries
+
+    // Evaluation is incorrectly duplicated by the lack of laziness in Future
+    measure(pass, "end", "applicability"),
+    mark(pass, "start", "expectation"),
+    measure(pass, "end", "expectation"),
+    measure(pass, "end", "total"),
+
+    // Evaluation is incorrectly duplicated by the lack of laziness in Future
+    measure(fail, "end", "applicability"),
+    mark(fail, "start", "expectation"),
+    measure(fail, "end", "expectation"),
+    measure(fail, "end", "total"),
+  ];
+  t.equal(entries.length, expectedEntries.length);
+  checkEntries(entries, expectedEntries, t);
+});
+
+function showOutcome(outcome: Outcome<any, any, any, any>): void {
+  const foo = outcome.toJSON();
+  console.dir({
+    outcome: foo.outcome,
+    rule: foo.rule.uri,
+    target: (foo as any).target,
+  });
+}

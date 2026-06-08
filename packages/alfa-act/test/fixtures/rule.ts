@@ -75,6 +75,28 @@ export namespace Rule {
     }));
   }
 
+  // Like makeSimple, but calls onEvaluate() the first time the rule body runs
+  // (i.e. on every cache miss). Useful for asserting caching behaviour.
+  export function makeSimpleWitnessed(
+    uri: string,
+    applicability: Predicate<number>,
+    expectations: Predicate<number>,
+    onEvaluate: () => void,
+  ): Atomic {
+    return ActRule.Atomic.of({
+      uri,
+      evaluate: (input) => {
+        onEvaluate();
+        return {
+          applicability: () => [...input].filter((t) => applicability(t.value)),
+          expectations: (t) => ({
+            "1": expectations(t.value) ? Outcomes.Passed : Outcomes.Failed,
+          }),
+        };
+      },
+    });
+  }
+
   export const alwaysPass = makeSimple(
     "fixture:always-pass",
     () => true,
