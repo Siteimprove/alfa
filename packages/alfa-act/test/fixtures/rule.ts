@@ -125,6 +125,15 @@ export namespace Rule {
       target,
     );
 
+  const shouldBeApplicable = (target: Target): Question<Option<Target>> =>
+    ActQuestion.of<"boolean", Target, Target, boolean, "q1">(
+      "boolean",
+      "q1",
+      `Is ${target.value} applicable?`,
+      target,
+      target,
+    ).map((answer) => (answer ? Option.of(target) : None));
+
   /** Oracle factory, taking a trilean predicate to decide the answer */
   export function oracle(shouldPass: Trilean.Predicate<number>): Oracle {
     return (_, question) =>
@@ -155,6 +164,37 @@ export namespace Rule {
             .answerIf(autoTrue(target.value), true)
             .answerIf(autoFalse(target.value), false)
             .map((answer) => (answer ? Outcomes.Passed : Outcomes.Failed)),
+        }),
+      }),
+    });
+  }
+
+  /**
+   * Factory for Atomic rules with a question in the applicability phase.
+   *
+   * @remarks
+   * All input targets are potential targets; a boolean question (`q1`) decides
+   * whether each is applicable. `true` → `Some(target)` (included), `false` →
+   * `None` (excluded). When the question is unanswered the target is silently
+   * dropped — yielding Inapplicable if every target is dropped.
+   * Targets that pass applicability always satisfy expectation "1".
+   */
+  export function withApplicabilityQuestion(
+    uri: string,
+    autoInclude: Predicate<number> = () => false,
+    autoExclude: Predicate<number> = () => false,
+  ): Atomic<Metadata> {
+    return ActRule.Atomic.of<Input, Target, Metadata>({
+      uri,
+      evaluate: (input) => ({
+        applicability: () =>
+          [...input].map((target) =>
+            shouldBeApplicable(target)
+              .answerIf(autoInclude(target.value), true)
+              .answerIf(autoExclude(target.value), false),
+          ),
+        expectations: () => ({
+          "1": Outcomes.Passed,
         }),
       }),
     });

@@ -111,6 +111,65 @@ test("evaluate() keeps mode automatic when questions are answered internally", a
   ]);
 });
 
+// ── Atomic (question in applicability) ─────────────────────────────────────
+// Unlike questions in expectations (unanswered → CantTell), an unanswered
+// applicability question silently drops the potential target. When every
+// target is dropped the outcome is Inapplicable, not CantTell.
+
+const askApplicability = RuleFixture.withApplicabilityQuestion(
+  "test:ask-applicability",
+);
+
+test("evaluate() returns Inapplicable when applicability question is unanswered for all targets", async (t) => {
+  t.deepEqual(await evaluate(askApplicability, [target1, target2]), [
+    inapplicable(askApplicability),
+  ]);
+});
+
+test("evaluate() returns SemiAuto Inapplicable when oracle excludes all targets via applicability question", async (t) => {
+  const oracle = RuleFixture.oracle(() => false);
+
+  t.deepEqual(await evaluate(askApplicability, [target1, target2], oracle), [
+    inapplicable(askApplicability, Outcome.Mode.SemiAuto),
+  ]);
+});
+
+test("evaluate() returns SemiAuto outcomes when oracle includes targets via applicability question", async (t) => {
+  const oracle = RuleFixture.oracle(() => true);
+
+  t.deepEqual(await evaluate(askApplicability, [target1, target2], oracle), [
+    passed(
+      askApplicability,
+      target1,
+      { "1": Outcomes.Passed },
+      Outcome.Mode.SemiAuto,
+    ),
+    passed(
+      askApplicability,
+      target2,
+      { "1": Outcomes.Passed },
+      Outcome.Mode.SemiAuto,
+    ),
+  ]);
+});
+
+test("evaluate() drops targets with unanswered applicability questions and keeps oracle-answered ones", async (t) => {
+  // Oracle includes target1, does not answer for target2.
+  // target1 → applicable, passes (SemiAuto). target2 → dropped (not CantTell).
+  const oracle = RuleFixture.oracle((value) =>
+    value === 1 ? true : undefined,
+  );
+
+  t.deepEqual(await evaluate(askApplicability, [target1, target2], oracle), [
+    passed(
+      askApplicability,
+      target1,
+      { "1": Outcomes.Passed },
+      Outcome.Mode.SemiAuto,
+    ),
+  ]);
+});
+
 test("evaluate() returns the same Future reference when called with the same Cache", async (t) => {
   const cache = Cache.empty();
   const a = pass.evaluate([target1], undefined, cache);
