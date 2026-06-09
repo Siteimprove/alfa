@@ -25,6 +25,16 @@ type Depths = [-1, 0, 1, 2];
  * a JavaScript manipulable representation (T), and an actual type (A).
  * The SUBJECT and CONTEXT types are the subject and context of the question.
  *
+ * @remarks
+ * That is, an Interview is either:
+ * * an ANSWER.
+ * * A Question, expecting an Interview, provided its URI, answer type
+ *   (QUESTION[URI][1]), and answer type representation (QUESTION[URI][0]) are correct.
+ *   The returned interview has depth one smaller.
+ *
+ * The complex object keys mapping ensure that the question's URI exist in the
+ * metadata.
+ *
  * @public
  */
 export type Interview<
