@@ -225,7 +225,7 @@ test("evaluate() returns Failed when a sub-rule outcome is Failed", async (t) =>
 
 test("evaluate() propagates SemiAuto mode from a sub-rule that used the oracle", async (t) => {
   const composite = RuleFixture.makeComposite("test:comp-semi", [ask]);
-  const oracle = () => Future.now(Option.from(true));
+  const oracle = RuleFixture.oracle(() => true);
 
   t.deepEqual(await evaluate(composite, [target1], oracle), [
     passed(composite, target1, { "1": Outcomes.Passed }, Outcome.Mode.SemiAuto),
@@ -240,16 +240,6 @@ test("isComposite() returns true and isAtomic() returns false for a Composite ru
 });
 
 // ── Composite (multiple input rules) ───────────────────────────────────────
-
-// Sort outcomes by serialized target value so tests are independent of Map's
-// hash-based iteration order.
-function sortByTarget(outcomes: Array<Outcome.JSON>): Array<Outcome.JSON> {
-  return [...outcomes].sort((a, b) => {
-    const ta = "target" in a ? (a.target as number) : -1;
-    const tb = "target" in b ? (b.target as number) : -1;
-    return ta - tb;
-  });
-}
 
 test("evaluate() returns Passed when at least one of two sub-rules passes for the same target", async (t) => {
   const composite = RuleFixture.makeComposite("test:comp-pass-beats-fail", [
@@ -297,12 +287,21 @@ test("evaluate() returns Passed when one sub-rule passes and another CantTells f
   ]);
 });
 
+// Sort outcomes by serialized target value so tests are independent of Map's
+// hash-based iteration order.
+function sortByTarget(outcomes: Array<Outcome.JSON>): Array<Outcome.JSON> {
+  return [...outcomes].sort((a, b) => {
+    const ta = "target" in a ? (a.target as number) : -1;
+    const tb = "target" in b ? (b.target as number) : -1;
+    return ta - tb;
+  });
+}
+
 test("evaluate() handles disjoint applicability across two rules", async (t) => {
   // fail: applicable to all; twofour: even only, passes multiples of 4.
   // T1 (odd): only fail → Failed.
   // T2 (even, not ×4): both fail → Failed.
   // T4 (×4): fail fails but twofour passes → Passed (some wins).
-  // Use an explicit array so all sub-rules share the same Target instances.
   const composite = RuleFixture.makeComposite("test:comp-disjoint", [
     fail,
     twofour,
@@ -321,7 +320,6 @@ test("evaluate() handles three rules with mixed outcomes per target", async (t) 
   // T3 (×3, not ×6): twofour N/A, threesix fails, ask CantTell → [Failed, CantTell] → CantTell.
   // T4 (×4): twofour passes, threesix N/A, ask CantTell → [Passed, CantTell] → Passed.
   // T6 (×2 and ×3): twofour fails, threesix passes, ask CantTell → [Failed, Passed, CantTell] → Passed.
-  // Use an explicit array so all sub-rules share the same Target instances.
   const composite = RuleFixture.makeComposite("test:comp-three-rules", [
     twofour,
     threesix,
