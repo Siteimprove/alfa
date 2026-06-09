@@ -287,8 +287,8 @@ test("evaluate() returns Passed when one sub-rule passes and another CantTells f
   ]);
 });
 
-// Sort outcomes by serialized target value so tests are independent of Map's
-// hash-based iteration order.
+// Sort outcomes by serialized target value; outcomes are .groupBy targets as
+// part of Composite rule evaluation, which messes up ordering.
 function sortByTarget(outcomes: Array<Outcome.JSON>): Array<Outcome.JSON> {
   return [...outcomes].sort((a, b) => {
     const ta = "target" in a ? (a.target as number) : -1;
