@@ -155,7 +155,7 @@ test("#flatMap() chains questions and passes the answer through", (t) => {
     .map((n) => n * 2)
     .flatMap((n) => makeQuestion(n).map(() => n + 10));
 
-  // We keep the initial message "What goes with 1?", double the answer before
+  // We keep the initial message "Which number goes with 1?", double the answer before
   // sending it as answer to the nested question, which adds 10 to it with its
   // own quester.
   t.equal(q.message, "Which number goes with 1?");
