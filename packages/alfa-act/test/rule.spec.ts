@@ -1,6 +1,6 @@
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { None, Option } from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
 import { Cache, Outcome, Rule } from "../src/index.ts";
