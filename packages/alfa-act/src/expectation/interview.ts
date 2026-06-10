@@ -1,4 +1,3 @@
-import { Future } from "@siteimprove/alfa-future";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
 
@@ -77,8 +76,8 @@ export namespace Interview {
    *
    *  Oracles must return Options, to have the possibility to not answer a given
    *  question (by returning None).
-   *  Oracles must return Futures, because the full interview process is
-   *  essentially  async (e.g., asking through a CLI).
+   *  Oracles must return Promises, because the full interview process is
+   *  essentially async (e.g., asking through a CLI).
    *
    *  The final result of the interview is either a conclusive finding with an
    *  answer, or  an inconclusive finding with a diagnostic explaining why an
@@ -103,14 +102,14 @@ export namespace Interview {
     rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
     oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>,
     oracleUsed: boolean = false,
-  ): Future<Finding<ANSWER>> {
+  ): Promise<Finding<ANSWER>> {
     if (interview instanceof Question) {
-      let answer: Future<Option<Interview<QUESTION, SUBJECT, TARGET, ANSWER>>>;
+      let answer: Promise<Option<Interview<QUESTION, SUBJECT, TARGET, ANSWER>>>;
 
       if (interview.isRhetorical()) {
-        answer = Future.now(Option.of(interview.answer()));
+        answer = Promise.resolve(Option.of(interview.answer()));
       } else {
-        answer = oracle(rule, interview).map((option) =>
+        answer = oracle(rule, interview).then((option) =>
           option
             // Record that the oracle was successfully used
             .tee((_) => (oracleUsed = true))
@@ -121,19 +120,21 @@ export namespace Interview {
         );
       }
 
-      return answer.flatMap((answer) =>
+      return answer.then((answer) =>
         answer
           // Recursively conduct an interview
           .map((answer) => conduct(answer, rule, oracle, oracleUsed))
           // If we still don't have a final answer, the finding is inconclusive,
           // return the last diagnostic.
           .getOrElse(() =>
-            Future.now(Finding.inconclusive(interview.diagnostic, oracleUsed)),
+            Promise.resolve(
+              Finding.inconclusive(interview.diagnostic, oracleUsed),
+            ),
           ),
       );
     }
 
     // The interview is not a question, so it is a conclusive finding.
-    return Future.now(Finding.conclusive(interview, oracleUsed));
+    return Promise.resolve(Finding.conclusive(interview, oracleUsed));
   }
 }

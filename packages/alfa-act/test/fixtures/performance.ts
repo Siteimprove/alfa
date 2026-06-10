@@ -60,6 +60,26 @@ export function checkEntries(
   });
 }
 
+/**
+ * Sort entries by rules' URI.
+ *
+ * @remarks
+ * With evaluation being concurrent (both in Audits and composite rules), order
+ * of entries is not guaranteed. So, we group them by the rules' URI to have
+ * stable tests.
+ *
+ * Since Array#sort is stable, the relative order of entries for a given rule
+ * is preserved.
+ */
+export function sortEntries(
+  entries: ReadonlyArray<Performance.Entry<Event>>,
+): Array<Performance.Entry<Event>> {
+  // Copy the array to avoid mutating it.
+  return Array.copy(entries).sort((a, b) =>
+    a.data.rule.uri.localeCompare(b.data.rule.uri),
+  );
+}
+
 export function mark(
   rule: TRule,
   type: "start" | "end",

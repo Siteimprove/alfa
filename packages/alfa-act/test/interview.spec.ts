@@ -1,5 +1,4 @@
 import { test } from "@siteimprove/alfa-test";
-import { Future } from "@siteimprove/alfa-future";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import {
@@ -14,7 +13,7 @@ import { Target, Rule as RuleFixture } from "./fixtures/index.ts";
 import type { Atomic, Input, Metadata } from "./fixtures/index.ts";
 
 const noOracle: Oracle<Input, Target, Metadata, Target> = () =>
-  Future.now(None);
+  Promise.resolve(None);
 
 function useOracle(
   oracle: Oracle<Input, Target, Metadata, Target>,
@@ -65,7 +64,7 @@ test(".conduct() returns a conclusive finding without consulting the oracle when
 });
 
 test(".conduct() returns a conclusive finding with oracleUsed true when the oracle answers", async (t) => {
-  const [calls, oracle] = useOracle(() => Future.now(Option.of(42)));
+  const [calls, oracle] = useOracle(() => Promise.resolve(Option.of(42)));
   const finding = await Interview.conduct(question, rule, oracle);
 
   t(Finding.isConclusive(finding));
@@ -128,8 +127,8 @@ test(".conduct() returns a conclusive finding when oracle answers all questions 
 
   const [calls, oracle] = useOracle((_, q) =>
     q.uri === "q1"
-      ? Future.now(Option.of<boolean>(true))
-      : Future.now(Option.of<number>(42)),
+      ? Promise.resolve(Option.of<boolean>(true))
+      : Promise.resolve(Option.of<number>(42)),
   );
 
   const finding = await Interview.conduct(chain, rule, oracle);
@@ -163,7 +162,9 @@ test(".conduct() returns an inconclusive finding with the first unanswered quest
   // Oracle answers q1 but not q2 → inconclusive at q2; oracleUsed is true.
   // Both questions were consulted (count 2): q1 answered, q2 returned None.
   const [callsQ1, oracleAnswersQ1] = useOracle((_, q) =>
-    q.uri === "q1" ? Future.now(Option.of<boolean>(true)) : Future.now(None),
+    q.uri === "q1"
+      ? Promise.resolve(Option.of<boolean>(true))
+      : Promise.resolve(None),
   );
 
   const findingAtQ2 = await Interview.conduct(chain, rule, oracleAnswersQ1);

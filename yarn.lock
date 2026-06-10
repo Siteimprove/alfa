@@ -1579,7 +1579,6 @@ __metadata:
     "@siteimprove/alfa-either": "workspace:^"
     "@siteimprove/alfa-equatable": "workspace:^"
     "@siteimprove/alfa-functor": "workspace:^"
-    "@siteimprove/alfa-future": "workspace:^"
     "@siteimprove/alfa-hash": "workspace:^"
     "@siteimprove/alfa-iterable": "workspace:^"
     "@siteimprove/alfa-json": "workspace:^"
@@ -1997,7 +1996,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-future@workspace:^, @siteimprove/alfa-future@workspace:packages/alfa-future":
+"@siteimprove/alfa-future@workspace:packages/alfa-future":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-future@workspace:packages/alfa-future"
   dependencies:
@@ -2413,7 +2412,6 @@ __metadata:
     "@siteimprove/alfa-earl": "workspace:^"
     "@siteimprove/alfa-either": "workspace:^"
     "@siteimprove/alfa-equatable": "workspace:^"
-    "@siteimprove/alfa-future": "workspace:^"
     "@siteimprove/alfa-hash": "workspace:^"
     "@siteimprove/alfa-http": "workspace:^"
     "@siteimprove/alfa-iana": "workspace:^"
