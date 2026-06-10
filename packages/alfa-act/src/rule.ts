@@ -1,6 +1,5 @@
 import { Array } from "@siteimprove/alfa-array";
 import type { Equatable } from "@siteimprove/alfa-equatable";
-import { Future } from "@siteimprove/alfa-future";
 import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
@@ -101,13 +100,19 @@ export abstract class Rule<
     return Array.some(this._tags, predicate);
   }
 
+  // Despite returning a promise, this method is **not** async as it would wrap
+  // it in a new promise every time. So, the return value is the cached promise.
+  // If it were async, the return value would be a new promise created upon call,
+  // even if they would still ultimately return the same cache object and would
+  // not duplicate the computation.
   public evaluate(
     input: I,
     // A rule asking no questions, never calls its oracle, so it can be anything
-    oracle: {} extends Q ? any : Oracle<I, T, Q, S> = () => Future.now(None),
+    oracle: {} extends Q ? any : Oracle<I, T, Q, S> = () =>
+      Promise.resolve(None),
     outcomes: Cache = Cache.empty(),
     performance?: Performance<Rule.Event<I, T, Q, S>>,
-  ): Future<Iterable<Outcome<I, T, Q, S>>> {
+  ): Promise<Iterable<Outcome<I, T, Q, S>>> {
     return this._evaluate(input, oracle, outcomes, performance);
   }
 
@@ -236,7 +241,7 @@ export namespace Rule {
       oracle: {} extends Q ? any : Oracle<I, T, Q, S>,
       outcomes: Cache,
       performance?: Performance<Event<I, T, Q, S>>,
-    ): Future<Iterable<Outcome<I, T, Q, S>>>;
+    ): Promise<Iterable<Outcome<I, T, Q, S>>>;
   }
 
   export class Atomic<
@@ -271,7 +276,7 @@ export namespace Rule {
       evaluate: Atomic.Evaluate<I, T, Q, S>,
     ) {
       super(uri, requirements, tags, (input, oracle, outcomes, performance) =>
-        outcomes.get(this, () => {
+        outcomes.get(this, async () => {
           const startRule = performance?.mark(Event.start(this)).start;
 
           // In the evaluate function in Atomic.of, "this" is not yet build.
@@ -294,61 +299,60 @@ export namespace Rule {
           const startApplicability = performance?.mark(
             Event.startApplicability(this),
           ).start;
-          let startExpectation: number | undefined;
 
-          return Future.traverse(applicability(), (interview) =>
-            Interview.conduct(interview, this, oracle).map((target) =>
-              target.either(
-                // We have a target, wrap it properly and return it.
-                ([target, oracleUsed]) =>
-                  Tuple.of(Maybe.toOption(target), oracleUsed),
-                // We have an unanswered question and return None
-                ([_, oracleUsed]) => Tuple.of(None, oracleUsed),
+          const conducted = await Promise.all(
+            Array.from(applicability()).map((interview) =>
+              Interview.conduct(interview, this, oracle).then((target) =>
+                target.either(
+                  // We have a target, wrap it properly and return it.
+                  ([target, oracleUsed]) =>
+                    Tuple.of(Maybe.toOption(target), oracleUsed),
+                  // We have an unanswered question and return None
+                  ([_, oracleUsed]) => Tuple.of(None, oracleUsed),
+                ),
               ),
             ),
-          )
-            .map((targets) =>
-              // We both need to keep with each target whether the oracle was used,
-              // and with the global sequence whether it was used at all.
-              // The second case is needed to decide whether the oracle was used
-              // when producing an Inapplicable result (empty sequence).
-              // None are cleared from the sequence, and Some are opened to only
-              // keep the targets.
-              //
-              // For efficiency, we prepend the targets and reverse the full
-              // sequence later to conserve the order.
-              // This result in a O(n) rather than O(n²) process.
-              Sequence.from(targets).reduce(
-                ([acc, wasUsed], [cur, isUsed]) =>
-                  Tuple.of(
-                    cur.isSome()
-                      ? acc.prepend(Tuple.of(cur.get(), isUsed))
-                      : acc,
-                    wasUsed || isUsed,
-                  ),
-                Tuple.of(Sequence.empty<Tuple<[T, boolean]>>(), false),
-              ),
-            )
-            .tee(() => {
-              performance?.measure(
-                Event.endApplicability(this),
-                startApplicability,
-              );
-              startExpectation = performance?.mark(
-                Event.startExpectation(this),
-              ).start;
-            })
-            .flatMap<Iterable<Outcome<I, T, Q, S>>>(([targets, oracleUsed]) => {
-              if (targets.isEmpty()) {
-                return Future.now([
-                  Outcome.Inapplicable.of(this, Outcome.getMode(oracleUsed)),
-                ]);
-              }
+          );
 
-              return Future.traverse(
-                // Since targets were prepended when Applicability was processed,
-                // we now need to reverse the sequence to restore initial order.
-                targets.reverse(),
+          // We both need to keep with each target whether the oracle was used,
+          // and with the global sequence whether it was used at all.
+          // The second case is needed to decide whether the oracle was used
+          // when producing an Inapplicable result (empty sequence).
+          // None are cleared from the sequence, and Some are opened to only
+          // keep the targets.
+          //
+          // For efficiency, we prepend the targets and reverse the full
+          // sequence later to conserve the order.
+          // This result in a O(n) rather than O(n²) process.
+          const [targets, oracleUsed] = Sequence.from(conducted).reduce(
+            ([acc, wasUsed], [cur, isUsed]) =>
+              Tuple.of(
+                cur.isSome() ? acc.prepend(Tuple.of(cur.get(), isUsed)) : acc,
+                wasUsed || isUsed,
+              ),
+            Tuple.of(Sequence.empty<Tuple<[T, boolean]>>(), false),
+          );
+
+          performance?.measure(
+            Event.endApplicability(this),
+            startApplicability,
+          );
+
+          let result: Iterable<Outcome<I, T, Q, S>>;
+
+          if (targets.isEmpty()) {
+            result = [
+              Outcome.Inapplicable.of(this, Outcome.getMode(oracleUsed)),
+            ];
+          } else {
+            const startExpectation = performance?.mark(
+              Event.startExpectation(this),
+            ).start;
+
+            result = await Promise.all(
+              // Since targets were prepended when Applicability was processed,
+              // we now need to reverse the sequence to restore initial order.
+              Array.from(targets.reverse()).map(
                 ([target, oracleUsedInApplicability]) =>
                   resolve(
                     target,
@@ -357,16 +361,14 @@ export namespace Rule {
                     oracle,
                     oracleUsedInApplicability,
                   ),
-              ).tee(() => {
-                performance?.measure(
-                  Event.endExpectation(this),
-                  startExpectation,
-                );
-              });
-            })
-            .tee(() => {
-              performance?.measure(Event.end(this), startRule);
-            });
+              ),
+            );
+            performance?.measure(Event.endExpectation(this), startExpectation);
+          }
+
+          performance?.measure(Event.end(this), startRule);
+
+          return result;
         }),
       );
     }
@@ -484,7 +486,7 @@ export namespace Rule {
       evaluate: Composite.Evaluate<I, T, Q, S>,
     ) {
       super(uri, requirements, tags, (input, oracle, outcomes, performance) =>
-        outcomes.get(this, () => {
+        outcomes.get(this, async () => {
           const startRule = performance?.mark(Event.start(this)).start;
 
           // In the evaluate function in Atomic.of, "this" is not yet build.
@@ -499,59 +501,63 @@ export namespace Rule {
                 }
               : undefined;
 
-          return Future.traverse(this._composes, (rule) =>
-            rule.evaluate(input, oracle, outcomes, performance),
-          )
-            .map((outcomes) =>
-              // We both need to keep with each outcome whether the oracle was used,
-              // and with the global sequence whether it was used at all.
-              // The second case is needed to decide whether the oracle was used
-              // when producing an Inapplicable result (empty sequence).
-              // Inapplicable outcomes one are cleared from the sequence.
-              //
-              // For efficiency, we prepend the targets and reverse the full
-              // sequence later to conserve the order.
-              // This result in a O(n) rather than O(n²) process.
-              Sequence.from(flatten(outcomes)).reduce(
-                ([acc, wasUsed], outcome) =>
-                  Tuple.of(
-                    Applicable.isApplicable<I, T, Q, S>(outcome)
-                      ? acc.prepend(outcome)
-                      : acc,
-                    wasUsed || outcome.isSemiAuto,
-                  ),
-                Tuple.of(
-                  Sequence.empty<Outcome.Applicable<I, T, Q, S>>(),
-                  false,
+          const evaluated = await Promise.all(
+            this._composes.map((rule) =>
+              rule.evaluate(input, oracle, outcomes, performance),
+            ),
+          );
+
+          // We both need to keep with each outcome whether the oracle was used,
+          // and with the global sequence whether it was used at all.
+          // The second case is needed to decide whether the oracle was used
+          // when producing an Inapplicable result (empty sequence).
+          // Inapplicable outcomes one are cleared from the sequence.
+          //
+          // For efficiency, we prepend the targets and reverse the full
+          // sequence later to conserve the order.
+          // This result in a O(n) rather than O(n²) process.
+          const [targets, oracleUsed] = Sequence.from(
+            flatten(evaluated),
+          ).reduce(
+            ([acc, wasUsed], outcome) =>
+              Tuple.of(
+                Applicable.isApplicable<I, T, Q, S>(outcome)
+                  ? acc.prepend(outcome)
+                  : acc,
+                wasUsed || outcome.isSemiAuto,
+              ),
+            Tuple.of(Sequence.empty<Outcome.Applicable<I, T, Q, S>>(), false),
+          );
+
+          let result: Iterable<Outcome<I, T, Q, S>>;
+
+          if (targets.isEmpty()) {
+            result = [
+              Outcome.Inapplicable.of(this, Outcome.getMode(oracleUsed)),
+            ];
+          } else {
+            const { expectations } = evaluate(input, rulePerformance);
+
+            result = await Promise.all(
+              // Since targets were prepended when Applicability was processed,
+              // we now need to reverse the sequence to restore initial order.
+              Array.from(
+                targets.reverse().groupBy((outcome) => outcome.target),
+              ).map(([target, outcomes]) =>
+                resolve(
+                  target,
+                  Record.of(expectations(outcomes)),
+                  this,
+                  oracle,
+                  oracleUsed,
                 ),
               ),
-            )
-            .flatMap<Iterable<Outcome<I, T, Q, S>>>(([targets, oracleUsed]) => {
-              if (targets.isEmpty()) {
-                return Future.now([
-                  Outcome.Inapplicable.of(this, Outcome.getMode(oracleUsed)),
-                ]);
-              }
+            );
+          }
 
-              const { expectations } = evaluate(input, rulePerformance);
+          performance?.measure(Event.end(this), startRule);
 
-              return Future.traverse(
-                // Since targets were prepended when Applicability was processed,
-                // we now need to reverse the sequence to restore initial order.
-                targets.reverse().groupBy((outcome) => outcome.target),
-                ([target, outcomes]) =>
-                  resolve(
-                    target,
-                    Record.of(expectations(outcomes)),
-                    this,
-                    oracle,
-                    oracleUsed,
-                  ),
-              );
-            })
-            .tee(() => {
-              performance?.measure(Event.end(this), startRule);
-            });
+          return result;
         }),
       );
 
@@ -867,17 +873,17 @@ function resolve<I, T extends Hashable, Q extends Question.Metadata, S>(
   // A rule asking no questions, never calls its oracle, so it can be anything
   oracle: {} extends Q ? any : Oracle<I, T, Q, S>,
   oracleUsedInApplicability: boolean,
-): Future<Outcome.Applicable<I, T, Q, S>> {
+): Promise<Outcome.Applicable<I, T, Q, S>> {
   return (
     // First, conduct all interviews and get the findings.
-    Future.traverse(expectations, conductInterview(rule, oracle))
+    Promise.all(Array.from(expectations).map(conductInterview(rule, oracle)))
       // Next, we process the findings, turning a list of findings into a finding
       // of a list.
-      .map(processFindings(Maybe.toOption, oracleUsedInApplicability))
+      .then(processFindings(Maybe.toOption, oracleUsedInApplicability))
       // Lastly, we turn the finding into an Outcome. If the finding is
       // Conclusive, this will be a Passed/Failed outcome, otherwise we can
       // create the CantTell one now.
-      .map(Outcome.fromFinding(rule, target))
+      .then(Outcome.fromFinding(rule, target))
   );
 }
 
@@ -896,9 +902,9 @@ function conductInterview<
 ): ([id, interview]: [
   string,
   Interview<Q, S, T, Maybe<Result<Diagnostic>>>,
-]) => Future<[string, Finding<Maybe<Result<Diagnostic>>>]> {
+]) => Promise<[string, Finding<Maybe<Result<Diagnostic>>>]> {
   return ([id, interview]) =>
-    Interview.conduct(interview, rule, oracle).map(
+    Interview.conduct(interview, rule, oracle).then(
       (finding): [string, Finding<Maybe<Result<Diagnostic>>>] => [id, finding],
     );
 }

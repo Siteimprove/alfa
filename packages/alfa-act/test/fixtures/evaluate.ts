@@ -1,4 +1,3 @@
-import { Future } from "@siteimprove/alfa-future";
 import { None } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
 import type { Result } from "@siteimprove/alfa-result";
@@ -15,7 +14,7 @@ import type { Input, Oracle, TRule } from "./types.ts";
 export async function evaluate(
   rule: TRule,
   input: Input = [],
-  oracle: Oracle = () => Future.now(None),
+  oracle: Oracle = () => Promise.resolve(None),
 ): Promise<Array<Outcome.JSON>> {
   return Array.from(await rule.evaluate(input, oracle)).map((o) => o.toJSON());
 }

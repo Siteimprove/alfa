@@ -28,7 +28,6 @@
     "@siteimprove/alfa-either": "workspace:^",
     "@siteimprove/alfa-equatable": "workspace:^",
     "@siteimprove/alfa-functor": "workspace:^",
-    "@siteimprove/alfa-future": "workspace:^",
     "@siteimprove/alfa-hash": "workspace:^",
     "@siteimprove/alfa-iterable": "workspace:^",
     "@siteimprove/alfa-json": "workspace:^",

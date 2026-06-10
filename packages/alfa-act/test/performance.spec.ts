@@ -8,6 +8,7 @@ import {
   mark,
   measure,
   Rule as RuleFixture,
+  sortEntries,
   Target,
 } from "./fixtures/index.ts";
 
@@ -39,7 +40,7 @@ test("evaluate() collects all 6 performance entries for an applicable Atomic rul
   );
 });
 
-test("evaluate() collects 5 performance entries for an inapplicable Atomic rule", async (t) => {
+test("evaluate() collects 4 performance entries for an inapplicable Atomic rule", async (t) => {
   const [perf, entries] = usePerformance();
 
   await skip.evaluate([target], undefined, Cache.empty(), perf);
@@ -50,9 +51,6 @@ test("evaluate() collects 5 performance entries for an inapplicable Atomic rule"
       mark(skip, "start", "total"),
       mark(skip, "start", "applicability"),
       measure(skip, "end", "applicability"),
-      // We should not have a "start expectation" without an "end expectation"…
-      mark(skip, "start", "expectation"),
-      // measure(skip, "end", "expectation"),
       measure(skip, "end", "total"),
     ],
     t,
@@ -70,24 +68,38 @@ test("evaluate() collects total performance entries for a Composite rule, plus e
   ]);
   await composite.evaluate([target], undefined, Cache.empty(), perf);
 
+  // Sub-rules evaluate concurrently, so their entries interleave; group them
+  // back together by rule before comparing against the expected sequence.
+  // The sorting is alphabetical order of URIs, so
+  // fixture:always-fail -> fixture:always-pass -> test:perf-composite
   checkEntries(
-    entries,
+    sortEntries(entries),
     [
-      mark(composite, "start", "total"),
-      mark(pass, "start", "total"),
-      mark(pass, "start", "applicability"),
-      measure(pass, "end", "applicability"),
-      mark(pass, "start", "expectation"),
-      measure(pass, "end", "expectation"),
-      measure(pass, "end", "total"),
       mark(fail, "start", "total"),
       mark(fail, "start", "applicability"),
       measure(fail, "end", "applicability"),
       mark(fail, "start", "expectation"),
       measure(fail, "end", "expectation"),
       measure(fail, "end", "total"),
+      mark(pass, "start", "total"),
+      mark(pass, "start", "applicability"),
+      measure(pass, "end", "applicability"),
+      mark(pass, "start", "expectation"),
+      measure(pass, "end", "expectation"),
+      measure(pass, "end", "total"),
+      mark(composite, "start", "total"),
       measure(composite, "end", "total"),
     ],
+    t,
+  );
+
+  // Ensure that the composite rule actually started before its atomic and ended
+  // after them.
+  // There is no guarantee that Promise.all starts in any specific order, so
+  // "start fail" could be before "start pass".
+  checkEntries(
+    [entries[0], entries[entries.length - 1]],
+    [mark(composite, "start", "total"), measure(composite, "end", "total")],
     t,
   );
 });

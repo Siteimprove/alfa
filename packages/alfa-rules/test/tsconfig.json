@@ -125,7 +125,6 @@
   ],
   "references": [
     { "path": "../src" },
-    { "path": "../../alfa-future" },
     { "path": "../../alfa-http" },
     { "path": "../../alfa-test" }
   ]

@@ -1,4 +1,3 @@
-import { Future } from "@siteimprove/alfa-future";
 import { None, Option } from "@siteimprove/alfa-option";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -137,7 +136,7 @@ export namespace Rule {
   /** Oracle factory, taking a trilean predicate to decide the answer */
   export function oracle(predicate: Trilean.Predicate<number>): Oracle {
     return (_, question) =>
-      Future.now(Option.from(predicate(question.subject.value)));
+      Promise.resolve(Option.from(predicate(question.subject.value)));
   }
 
   /**

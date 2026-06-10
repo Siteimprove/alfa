@@ -12,6 +12,7 @@ import {
   passed,
   Rule as RuleFixture,
   Target,
+  sortEntries,
 } from "./fixtures/index.ts";
 
 // ── Scenario ─────────────────────────────────────────────────────────────────
@@ -78,17 +79,9 @@ test("evaluate() integrates caching, topological ordering, and oracle across ato
     passed(comp2, Target.one, { "1": Outcomes.Passed }, Outcome.Mode.SemiAuto),
     passed(comp2, Target.two, { "1": Outcomes.Passed }, Outcome.Mode.SemiAuto),
     // pass: same outcomes computed during comp1
-    // Outcomes are incorrectly duplicated by the lack of laziness in Future
-    passed(pass, Target.one, { "1": Outcomes.Passed }),
-    passed(pass, Target.two, { "1": Outcomes.Passed }),
-    passed(pass, Target.one, { "1": Outcomes.Passed }),
-    passed(pass, Target.two, { "1": Outcomes.Passed }),
     passed(pass, Target.one, { "1": Outcomes.Passed }),
     passed(pass, Target.two, { "1": Outcomes.Passed }),
     // fail: same outcomes computed during comp1
-    // Outcomes are incorrectly duplicated by the lack of laziness in Future
-    failed(fail, Target.one, { "1": Outcomes.Failed }),
-    failed(fail, Target.two, { "1": Outcomes.Failed }),
     failed(fail, Target.one, { "1": Outcomes.Failed }),
     failed(fail, Target.two, { "1": Outcomes.Failed }),
   ]);
@@ -96,52 +89,37 @@ test("evaluate() integrates caching, topological ordering, and oracle across ato
   // ── performance ───────────────────────────────────────────────────────────
   // Each rule body is measured exactly once; cache hits produce no entries.
   // Absence of a second pass/fail/ask block confirms that.
+  // Entries are sorted by rules' URI:
+  // fixture:always-fail -> fixture:always-pass -> fixture:audit-ask -> fixture:audit-comp1 -> fixture:audit-comp2
+  // There is no guarantee that Promise.all starts in any specific order, so
+  // "start comp2" could be before "start comp1".
+  // There is also no guarantee that the "pass" that gets evaluated is the one
+  // in comp1 rather than comp2.
   const expectedEntries = [
     // comp1 and its two sub-rules (both cache misses)
-    mark(comp1, "start", "total"),
-    mark(pass, "start", "total"),
-    mark(pass, "start", "applicability"),
-    measure(pass, "end", "applicability"),
-    mark(pass, "start", "expectation"),
-    measure(pass, "end", "expectation"),
-    measure(pass, "end", "total"),
     mark(fail, "start", "total"),
     mark(fail, "start", "applicability"),
     measure(fail, "end", "applicability"),
     mark(fail, "start", "expectation"),
     measure(fail, "end", "expectation"),
     measure(fail, "end", "total"),
-    measure(comp1, "end", "total"),
-    // comp2: pass is a cache hit (no entries), ask is a cache miss
-    mark(comp2, "start", "total"),
-
-    // Evaluation is incorrectly duplicated by the lack of laziness in Future
+    mark(pass, "start", "total"),
+    mark(pass, "start", "applicability"),
     measure(pass, "end", "applicability"),
     mark(pass, "start", "expectation"),
     measure(pass, "end", "expectation"),
     measure(pass, "end", "total"),
-
-    // ask is a cache miss and needs to be fully evaluated.
     mark(ask, "start", "total"),
     mark(ask, "start", "applicability"),
     measure(ask, "end", "applicability"),
     mark(ask, "start", "expectation"),
     measure(ask, "end", "expectation"),
     measure(ask, "end", "total"),
+    mark(comp1, "start", "total"),
+    measure(comp1, "end", "total"),
+    mark(comp2, "start", "total"),
     measure(comp2, "end", "total"),
-
-    // pass, fail: cache hits → no entries
-    // Evaluation is incorrectly duplicated by the lack of laziness in Future
-    measure(pass, "end", "applicability"),
-    mark(pass, "start", "expectation"),
-    measure(pass, "end", "expectation"),
-    measure(pass, "end", "total"),
-    // Evaluation is incorrectly duplicated by the lack of laziness in Future
-    measure(fail, "end", "applicability"),
-    mark(fail, "start", "expectation"),
-    measure(fail, "end", "expectation"),
-    measure(fail, "end", "total"),
   ];
   t.equal(entries.length, expectedEntries.length);
-  checkEntries(entries, expectedEntries, t);
+  checkEntries(sortEntries(entries), expectedEntries, t);
 });

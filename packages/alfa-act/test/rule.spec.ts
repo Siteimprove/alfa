@@ -1,4 +1,3 @@
-import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
@@ -69,7 +68,7 @@ test("evaluate() returns CantTell when no oracle answer the question", async (t)
 
 test("evaluate() returns Automatic mode when the oracle does not answer a Question", async (t) => {
   // It is the default oracle, but keeping it explicit to make the test explicit.
-  const oracle = () => Future.now(None);
+  const oracle = () => Promise.resolve(None);
 
   t.deepEqual(await evaluate(ask, [target1], oracle), [
     // Automatic is the default mode, but keeping it explicit to make the test explicit.
@@ -170,7 +169,7 @@ test("evaluate() drops targets with unanswered applicability questions and keeps
   ]);
 });
 
-test("evaluate() returns the same Future reference when called with the same Cache", async (t) => {
+test("evaluate() reuses the cached outcomes when called with the same Cache", async (t) => {
   const cache = Cache.empty();
   const a = pass.evaluate([target1], undefined, cache);
 
@@ -181,7 +180,7 @@ test("evaluate() returns the same Future reference when called with the same Cac
 
   const b = pass.evaluate([target1], undefined, cache);
 
-  // This tests physical equality, i.e. the same object is shared.
+  // The cache hit return the exact same promise (physical identity).
   t(a === b);
 
   const otherCache = Cache.empty();
