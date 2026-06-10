@@ -14,7 +14,7 @@ import type { Monad } from '@siteimprove/alfa-monad';
 import type { Thenable } from '@siteimprove/alfa-thenable';
 import type { Thunk } from '@siteimprove/alfa-thunk';
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export abstract class Future<T> implements Functor<T>, Applicative<T>, Monad<T>, Thenable<T>, AsyncIterable<T> {
     // (undocumented)
     [Symbol.asyncIterator](): AsyncIterator<T>;
@@ -46,7 +46,7 @@ export abstract class Future<T> implements Functor<T>, Applicative<T>, Monad<T>,
     toPromise(): Promise<T>;
 }
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export namespace Future {
     // (undocumented)
     export function defer<T>(continuation: Continuation<T>): Future<T>;

@@ -4,7 +4,7 @@
   "homepage": "https://alfa.siteimprove.com",
   "version": "0.115.1",
   "license": "MIT",
-  "description": "An implementation of futures, which are a lazy version of promises for dealing with possibly asynchronous control flow",
+  "description": "DEPRECATED — An implementation of futures, which are a lazy version of promises for dealing with possibly asynchronous control flow",
   "repository": {
     "type": "git",
     "url": "github:Siteimprove/alfa",

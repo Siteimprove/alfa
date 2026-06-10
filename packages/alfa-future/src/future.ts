@@ -13,14 +13,12 @@ import type { Thunk } from "@siteimprove/alfa-thunk";
  * {@link http://blog.higher-order.com/assets/trampolines.pdf}
  *
  * @public
+ *
+ * @deprecated
+ * This package is not maintained anymore.
  */
 export abstract class Future<T>
-  implements
-    Functor<T>,
-    Applicative<T>,
-    Monad<T>,
-    Thenable<T>,
-    AsyncIterable<T>
+  implements Functor<T>, Applicative<T>, Monad<T>, Thenable<T>, AsyncIterable<T>
 {
   protected abstract step(): Future<T>;
 
@@ -94,6 +92,9 @@ export abstract class Future<T>
 
 /**
  * @public
+ *
+ * @deprecated
+ * This package is not maintained anymore.
  */
 export namespace Future {
   export type Maybe<T> = T | Future<T>;
@@ -153,6 +154,10 @@ export namespace Future {
   }
 }
 
+/**
+ * @deprecated
+ * This package is not maintained anymore.
+ */
 class Now<T> extends Future<T> {
   public static of<T>(value: T): Now<T> {
     return new Now(value);
@@ -198,6 +203,10 @@ class Now<T> extends Future<T> {
   }
 }
 
+/**
+ * @deprecated
+ * This package is not maintained anymore.
+ */
 class Defer<T> extends Future<T> {
   public static of<T>(continuation: Continuation<T>): Defer<T> {
     return new Defer(continuation);
@@ -239,6 +248,10 @@ class Defer<T> extends Future<T> {
   }
 }
 
+/**
+ * @deprecated
+ * This package is not maintained anymore.
+ */
 namespace Defer {
   export class Bind<S, T> extends Future<T> {
     public static of<S, T>(
@@ -296,6 +309,10 @@ namespace Defer {
   }
 }
 
+/**
+ * @deprecated
+ * This package is not maintained anymore.
+ */
 class Suspend<T> extends Future<T> {
   public static of<T>(thunk: Thunk<Future<T>>): Suspend<T> {
     return new Suspend(thunk);
@@ -329,6 +346,10 @@ class Suspend<T> extends Future<T> {
   }
 }
 
+/**
+ * @deprecated
+ * This package is not maintained anymore.
+ */
 namespace Suspend {
   export class Bind<S, T> extends Future<T> {
     public static of<S, T>(
@@ -341,7 +362,10 @@ namespace Suspend {
     private readonly _thunk: Thunk<Future<S>>;
     private readonly _mapper: Mapper<S, Future<T>>;
 
-    protected constructor(thunk: Thunk<Future<S>>, mapper: Mapper<S, Future<T>>) {
+    protected constructor(
+      thunk: Thunk<Future<S>>,
+      mapper: Mapper<S, Future<T>>,
+    ) {
       super();
       this._thunk = thunk;
       this._mapper = mapper;
@@ -371,6 +395,10 @@ namespace Suspend {
   }
 }
 
+/**
+ * @deprecated
+ * This package is not maintained anymore.
+ */
 async function defer<T>(thunk: Thunk<T>): Promise<T> {
   return Promise.resolve().then(thunk);
 }
