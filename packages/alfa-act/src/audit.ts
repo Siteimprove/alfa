@@ -1,4 +1,3 @@
-import { Array } from "@siteimprove/alfa-array";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
