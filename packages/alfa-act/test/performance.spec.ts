@@ -1,4 +1,3 @@
-import { Array } from "@siteimprove/alfa-array";
 import { test } from "@siteimprove/alfa-test";
 
 import { Cache } from "../src/index.ts";
