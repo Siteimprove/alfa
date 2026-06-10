@@ -39,8 +39,6 @@ digraph "dependency-graph-Alfa" {
   "@siteimprove/alfa-functor";
   "@siteimprove/alfa-earl";
   "@siteimprove/alfa-either";
-  "@siteimprove/alfa-future";
-  "name_Computations";
   "@siteimprove/alfa-list";
   "@siteimprove/alfa-performance";
   "name_Performance measurements";
@@ -82,6 +80,7 @@ digraph "dependency-graph-Alfa" {
   "@siteimprove/alfa-selective";
   "@siteimprove/alfa-bits";
   "@siteimprove/alfa-lazy";
+  "name_Computations";
   "@siteimprove/alfa-css";
   "exit_HTML";
   "name_CSS syntax";
@@ -1482,12 +1481,6 @@ digraph "dependency-graph-Alfa" {
     lhead = "cluster_Type definitions";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
-  "exit_Accessibility Conformance Testing" -> "name_Computations" [
-    style = "solid";
-    color = "#e800ff";
-    lhead = "cluster_Computations";
-    ltail = "cluster_Accessibility Conformance Testing";
-  ];
   "exit_Accessibility Conformance Testing" -> "name_Hash tables" [
     style = "solid";
     color = "#e800ff";
@@ -1594,6 +1587,12 @@ digraph "dependency-graph-Alfa" {
     style = "invis";
     color = "#e800ff";
     lhead = "cluster_Collections";
+    ltail = "cluster_Accessibility Conformance Testing";
+  ];
+  "exit_Accessibility Conformance Testing" -> "name_other" [
+    style = "invis";
+    color = "#e800ff";
+    lhead = "cluster_other";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "@siteimprove/alfa-thunk" -> "@siteimprove/alfa-mapper" [
@@ -5248,12 +5247,6 @@ digraph "dependency-graph-Alfa" {
     style = "invis";
     color = "#e800ff";
     lhead = "cluster_Understanding the web";
-    ltail = "cluster_Accessibility Conformance Testing";
-  ];
-  "exit_Accessibility Conformance Testing" -> "name_Computations" [
-    style = "invis";
-    color = "#e800ff";
-    lhead = "cluster_Computations";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
