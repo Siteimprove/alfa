@@ -13,6 +13,9 @@ const { isFunction, isObject } = Refinement;
  * rejection callbacks as available for promises.
  *
  * @public
+ *
+ * @deprecated
+ * This package is no longer maintained.
  */
 export interface Thenable<T, E = unknown> {
   then(resolved: Callback<T>, rejected: Callback<E>): void;
@@ -20,6 +23,9 @@ export interface Thenable<T, E = unknown> {
 
 /**
  * @public
+ *
+ * @deprecated
+ * This package is no longer maintained.
  */
 export namespace Thenable {
   /**

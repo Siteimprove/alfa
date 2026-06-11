@@ -4,7 +4,7 @@
   "homepage": "https://alfa.siteimprove.com",
   "version": "0.116.0",
   "license": "MIT",
-  "description": "Functionality for working with thenables, which are promise-like structures that can be awaited",
+  "description": "DEPRECATED — Functionality for working with thenables, which are promise-like structures that can be awaited",
   "repository": {
     "type": "git",
     "url": "github:Siteimprove/alfa",
