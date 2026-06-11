@@ -8,10 +8,10 @@ import { Array as Array_2 } from '@siteimprove/alfa-array';
 import type { Callback } from '@siteimprove/alfa-callback';
 import type { Continuation } from '@siteimprove/alfa-continuation';
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 type Promise_2<T> = globalThis.Promise<T>;
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 namespace Promise_2 {
     // (undocumented)
     function all<T>(...promises: Array_2<Promise_2<T>>): Promise_2<Array_2<T>>;

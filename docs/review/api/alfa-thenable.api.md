@@ -9,13 +9,13 @@ import type { Callback } from '@siteimprove/alfa-callback';
 import type { Continuation } from '@siteimprove/alfa-continuation';
 import type { Mapper } from '@siteimprove/alfa-mapper';
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export interface Thenable<T, E = unknown> {
     // (undocumented)
     then(resolved: Callback<T>, rejected: Callback<E>): void;
 }
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export namespace Thenable {
     // (undocumented)
     export function all<T, E = unknown>(...thenables: Array_2<Thenable<T, E>>): Thenable<Array_2<T>, E>;

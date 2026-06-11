@@ -10,11 +10,17 @@ import * as builtin from "./builtin.ts";
  * merges with the `Promise` namespace.
  *
  * @public
+ *
+ * @deprecated
+ * This package is no longer maintained.
  */
 export type Promise<T> = globalThis.Promise<T>;
 
 /**
  * @public
+ *
+ * @deprecated
+ * This package is no longer maintained.
  */
 export namespace Promise {
   export function isPromise<T>(value: unknown): value is Promise<T> {
