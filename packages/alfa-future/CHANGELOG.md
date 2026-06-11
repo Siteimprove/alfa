@@ -1,5 +1,18 @@
 # @siteimprove/alfa-future
 
+## 0.116.0
+
+### Minor Changes
+
+- **Breaking:** The `@siteimprove/alfa-future` package is now deprecated. ([#2104](https://github.com/Siteimprove/alfa/pull/2104))
+
+  The `Future` layer on top of native `Promise` was making less and less sense with the availability of top-level `await`.
+
+  Migration for main functions:
+  - Replace `Future.now` with `Promise.resolve`
+  - Replace `Future#map` and `Future#flatMap` with `Promise#then` (e.g. `foo.map(value => f(value))` becomes `foo.then(value => f(value))`.
+  - Replace `Future.traverse` with `Promise.all` and a custome mapper, e.g. `Future.traverse(iterable, mapper)` becomes `Promise.all(iterable.map(mapper))`.
+
 ## 0.115.1
 
 ## 0.115.0

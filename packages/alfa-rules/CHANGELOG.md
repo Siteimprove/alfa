@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.116.0
+
+### Minor Changes
+
+- **Breaking:** "start expectation" performance mark for inapplicable rules is no longer emitted (the "end expectation" measure was never emitted). ([#2104](https://github.com/Siteimprove/alfa/pull/2104))
+
 ## 0.115.1
 
 ## 0.115.0

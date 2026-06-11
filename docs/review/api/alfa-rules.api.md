@@ -27,7 +27,7 @@ import { Tag } from '@siteimprove/alfa-act';
 import { Text as Text_2 } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
-export const alfaVersion = "0.115.1";
+export const alfaVersion = "0.116.0";
 
 // @public (undocumented)
 export class ARIA extends Requirement<"ARIA"> {
