@@ -19,8 +19,9 @@ concurrency:
 
 jobs:
   build:
-    name: Build
+    name: Build (${{ matrix.os }}, node ${{ matrix.node }})
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
         # 22 is in Maintenance until April 2027.
@@ -39,7 +40,66 @@ jobs:
       - run: yarn install --immutable
       - run: yarn dedupe --check
       - run: yarn build --quiet
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist-${{ matrix.os }}-${{ matrix.node }}
+          path: packages/*/dist
+          if-no-files-found: error
+          retention-days: 1
+
+  coverage:
+    name: Coverage (${{ matrix.os }}, node ${{ matrix.node }})
+    needs: build
+    if: ${{ !cancelled() }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [22, 24, 26]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node }}
+          cache: yarn
+      - run: yarn install --immutable
+      - uses: actions/download-artifact@v7
+        with:
+          name: dist-${{ matrix.os }}-${{ matrix.node }}
       - run: yarn coverage --coverage.reporter=text-summary --coverage.thresholds.lines=75
-      - run: yarn validate-structure ${{ github.workspace }}
+
+  extract:
+    name: Extract API documentation
+    needs: build
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: yarn
+      - run: yarn install --immutable
+      - uses: actions/download-artifact@v7
+        with:
+          name: dist-ubuntu-latest-26
       - run: yarn extract --quiet
+
+  lint:
+    name: Knip and Validate
+    needs: build
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: yarn
+      - run: yarn install --immutable
+      - uses: actions/download-artifact@v6
+        with:
+          name: dist-ubuntu-latest-26
+      - run: yarn validate-structure ${{ github.workspace }}
       - run: yarn knip
