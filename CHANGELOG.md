@@ -1,5 +1,13 @@
 # Alfa changelog
 
+## [0.117.0](../../compare/v0.116.0...v0.117.0) (2026-06-11)
+
+### Breaking
+
+- [@siteimprove/alfa-promise](packages/alfa-promise/CHANGELOG.md#01170): The `@siteimprove/alfa-promise` package is now deprecated. ([#2107](https://github.com/Siteimprove/alfa/pull/2107))
+
+- [@siteimprove/alfa-thenable](packages/alfa-thenable/CHANGELOG.md#01170): The `@siteimprove/alfa-thenable` package is now deprecated. ([#2107](https://github.com/Siteimprove/alfa/pull/2107))
+
 ## [0.116.0](../../compare/v0.115.1...v0.116.0) (2026-06-11)
 
 ### Breaking

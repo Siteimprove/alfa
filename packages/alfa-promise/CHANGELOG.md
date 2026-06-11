@@ -1,5 +1,13 @@
 # @siteimprove/alfa-promise
 
+## 0.117.0
+
+### Minor Changes
+
+- **Breaking:** The `@siteimprove/alfa-promise` package is now deprecated. ([#2107](https://github.com/Siteimprove/alfa/pull/2107))
+
+  This package was not used, and its functionalities are now part of the native Promise implementation.
+
 ## 0.116.0
 
 ## 0.115.1

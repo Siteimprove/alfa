@@ -1,5 +1,13 @@
 # @siteimprove/alfa-thenable
 
+## 0.117.0
+
+### Minor Changes
+
+- **Breaking:** The `@siteimprove/alfa-thenable` package is now deprecated. ([#2107](https://github.com/Siteimprove/alfa/pull/2107))
+
+  This package was only used in the now deprecated `@siteimprove/alfa-future` package.
+
 ## 0.116.0
 
 ## 0.115.1
