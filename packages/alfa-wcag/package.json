@@ -32,7 +32,7 @@
     "@siteimprove/alfa-refinement": "workspace:^"
   },
   "devDependencies": {
-    "prettier": "^3.8.3",
+    "prettier": "^3.8.4",
     "puppeteer": "^25.1.0"
   },
   "publishConfig": {

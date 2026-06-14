@@ -793,20 +793,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-documenter@npm:^7.30.5":
-  version: 7.30.5
-  resolution: "@microsoft/api-documenter@npm:7.30.5"
+"@microsoft/api-documenter@npm:^7.30.7":
+  version: 7.30.7
+  resolution: "@microsoft/api-documenter@npm:7.30.7"
   dependencies:
     "@microsoft/api-extractor-model": "npm:7.33.8"
     "@microsoft/tsdoc": "npm:~0.16.0"
     "@rushstack/node-core-library": "npm:5.23.1"
     "@rushstack/terminal": "npm:0.24.0"
-    "@rushstack/ts-command-line": "npm:5.3.9"
+    "@rushstack/ts-command-line": "npm:5.3.10"
     js-yaml: "npm:~4.1.0"
     resolve: "npm:~1.22.1"
   bin:
     api-documenter: bin/api-documenter
-  checksum: 10c0/d596765d55176ba03320ae00baea4209a9b59170af931a44f14a9ae0aaf25bb59468508a93a1d88df4fd7c77090280afe9fa4c7f2687230a5accff6cf2753ccc
+  checksum: 10c0/ee409c9b00e32e9321ea772cb5999826ec1e2d58d510b5cf55825844167d12358c32a23ef058dc570945af0f84a79e5cfdd48068a84f277b2a3356e6bf81b550
   languageName: node
   linkType: hard
 
@@ -1541,15 +1541,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/ts-command-line@npm:5.3.9":
-  version: 5.3.9
-  resolution: "@rushstack/ts-command-line@npm:5.3.9"
+"@rushstack/ts-command-line@npm:5.3.10":
+  version: 5.3.10
+  resolution: "@rushstack/ts-command-line@npm:5.3.10"
   dependencies:
     "@rushstack/terminal": "npm:0.24.0"
     "@types/argparse": "npm:1.0.38"
     argparse: "npm:~1.0.9"
     string-argv: "npm:~0.3.1"
-  checksum: 10c0/353589c9dbd53dd81cafa059c488a573ff12472b25387863fca9eebd47ae2312cf614689c27ce50eaefba1a7d112539950e7a5c1ea8b15e255a60977659b50fb
+  checksum: 10c0/309d1a11778be57ff9ef1e1664012ed3ec09fe1ac6e290f5d0d56a6164fe19f8aff98478e39f4a24364b110b9d61e4b1e9199ace19bda2b3809ccde0958b57f3
   languageName: node
   linkType: hard
 
@@ -1651,7 +1651,7 @@ __metadata:
     "@siteimprove/alfa-test": "workspace:^"
     "@siteimprove/alfa-thunk": "workspace:^"
     "@siteimprove/alfa-tree": "workspace:^"
-    prettier: "npm:^3.8.3"
+    prettier: "npm:^3.8.4"
     puppeteer: "npm:^25.1.0"
   languageName: unknown
   linkType: soft
@@ -2080,7 +2080,7 @@ __metadata:
     "@siteimprove/alfa-slice": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
     axios: "npm:^1.17.0"
-    prettier: "npm:^3.8.3"
+    prettier: "npm:^3.8.4"
   languageName: unknown
   linkType: soft
 
@@ -2635,7 +2635,7 @@ __metadata:
   resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
   dependencies:
     "@siteimprove/alfa-rng": "workspace:^"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     vitest: "npm:^4.1.8"
   languageName: unknown
   linkType: soft
@@ -2794,7 +2794,7 @@ __metadata:
     "@siteimprove/alfa-option": "workspace:^"
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
-    prettier: "npm:^3.8.3"
+    prettier: "npm:^3.8.4"
     puppeteer: "npm:^25.1.0"
   languageName: unknown
   linkType: soft
@@ -2840,14 +2840,14 @@ __metadata:
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.31.0"
-    "@microsoft/api-documenter": "npm:^7.30.5"
+    "@microsoft/api-documenter": "npm:^7.30.7"
     "@microsoft/api-extractor": "npm:^7.52.10"
     "@siteimprove/alfa-toolchain": "workspace:^0.117.0"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     "@vitest/coverage-v8": "npm:^4.1.8"
     knip: "npm:^6.16.1"
     minimist: "npm:^1.2.6"
-    prettier: "npm:^3.8.3"
+    prettier: "npm:^3.8.4"
     typescript: "npm:^6.0.3"
     vitest: "npm:^4.1.8"
   languageName: unknown
@@ -3001,12 +3001,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^25.9.2":
-  version: 25.9.2
-  resolution: "@types/node@npm:25.9.2"
+"@types/node@npm:*, @types/node@npm:^25.9.3":
+  version: 25.9.3
+  resolution: "@types/node@npm:25.9.3"
   dependencies:
     undici-types: "npm:>=7.24.0 <7.24.7"
-  checksum: 10c0/f14c0d56361febb985eccc45cf0834ee6e2f07c4389a636f3e1a55ebde320077a80bface18c9afd3092f5fa295925502c1a9d55f805efa813f634aa9c941cbac
+  checksum: 10c0/72d3aece9d42c2c641bcd3f3cb2dc2828b4bd384dfcbd910c404b8859a68bd69d50c4769ce7defd4ff5e049768e23e615f09407ea2cbbb5f44b90d75a7c6b8ca
   languageName: node
   linkType: hard
 
@@ -5776,12 +5776,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.8.3":
-  version: 3.8.3
-  resolution: "prettier@npm:3.8.3"
+"prettier@npm:^3.8.4":
+  version: 3.8.4
+  resolution: "prettier@npm:3.8.4"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10c0/754816fd7593eb80f6376d7476d463e832c38a12f32775a82683adb6e35b772b1f484d65f19401507b983a8c8a7cd5a4a9f12006bd56491e8f35503473f77473
+  checksum: 10c0/b90a0cbe75b88ac0af9c13fe0f359bd19926fabccd88483227b21f71f0c1cc42da056fc1ac3a361e665577c568371d5ccfb2c62c31c8a1186f8d1bd531a063e9
   languageName: node
   linkType: hard
 
