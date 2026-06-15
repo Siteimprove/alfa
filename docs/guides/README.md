@@ -25,13 +25,11 @@ List of Alfa repositories, both public and private, and some of their particular
 * [Alfa integrations](https://github.com/Siteimprove/alfa-integrations) (public): Contains integrations of Alfa with various frameworks, including a Command Line Interface and the Accessibility Code Checker API.
   * The CLI, `alfa-test-utils`, and integrations with browsers automations are actively maintained. The other integrations are more dormant.
   * The packages are published still associated with the Alfa repository for historical reasons.
-  * Alfa core packages are auto-updated by Dependabot. Other dependencies of actively maintained packages also are.
-  * Other packages are not auto-updated (except for security updates), notably due to the low amount of tests decreasing confidence in CI results.
-  * Has very few tests overall, especially in the non actively maintained packages.
+  * All dependencies are auto-updated by Dependabot.
 
 * [Alfa examples](https://github.com/Siteimprove/alfa-examples) (public): Curated list of examples of Alfa usage.
   * Contains both "unit" examples of integrations, more end-to-end examples of integrations with Siteimprove Accessibility Code Checker, and some advanced usages of Alfa.
-  * Alfa packages, and the ones needed for actively maintained integration, are automatically updated by Dependabot.
+  * All dependencies are automatically updated by Dependabot.
   
 * [Alfa ACT-R](https://github.com/Siteimprove/alfa-act-r) (public): Acceptance testing of Alfa rules against the ACT Rules test cases.
   * This mostly contains only tests and fixtures to run them…
