@@ -100,7 +100,6 @@ yarn knip                           # Find unused dependencies and exports
 yarn extract                        # Extract API documentation
 yarn workspace @siteimprove/alfa-<name> extract:self  # Single-package API extraction
 yarn validate-structure .           # Validate project structure
-yarn dedupe --check                 # Check for duplicate dependencies
 ```
 
 ### Scratch Files
@@ -205,7 +204,7 @@ yarn changeset
 - Builds and tests on Ubuntu + Windows, Node.js 22 / 24 / 26
 - Steps: build, test, coverage, knip, structure validation, API extraction
 
-`release.yml` is human-triggered only. Never run it from automation; never use the `publish` action.
+`release.yml` is human-triggered only. Never run it from automation; never use the `publish` action directly.
 
 Reusable actions in `.github/actions/`: `setup`, `coverage`, `documentation`, `dependency-graphs`.
 
@@ -233,12 +232,3 @@ Reusable actions in `.github/actions/`: `setup`, `coverage`, `documentation`, `d
 **Tests fail after dependency changes** — rebuild first: `yarn build && yarn test`.
 
 **"Cannot find module" errors** — check that imports use the `.ts` extension; verify `tsconfig.json` project references match `package.json` dependencies.
-
-**Yarn install authentication error**:
-
-```bash
-yarn config set npmScopes.siteimprove.npmAuthToken <token>
-# or add to .npmrc: @siteimprove:registry=https://npm.pkg.github.com/siteimprove
-```
-
-**Duplicate dependencies** — `yarn dedupe`.
