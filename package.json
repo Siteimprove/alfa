@@ -39,7 +39,7 @@
     "@siteimprove/alfa-toolchain": "workspace:^0.117.0",
     "@types/node": "^25.9.3",
     "@vitest/coverage-v8": "^4.1.8",
-    "knip": "^6.16.1",
+    "knip": "^6.17.1",
     "minimist": "^1.2.6",
     "prettier": "^3.8.4",
     "typescript": "^6.0.3",
