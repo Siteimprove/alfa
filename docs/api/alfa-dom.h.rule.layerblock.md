@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function layerBlock(rules: Array<Rule>, layer?: string): Layer.BlockRule;
+function layerBlock(rules: Array<Rule>, layer?: string): Rule.Layer.Block;
 ```
 
 ## Parameters
@@ -62,5 +62,5 @@ _(Optional)_
 
 **Returns:**
 
-[Layer.BlockRule](./alfa-dom.layer.blockrule.md)
+Rule.Layer.Block
 

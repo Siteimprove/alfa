@@ -175,5 +175,17 @@ Create a RNG that returns a number between 0 and 1.
 
 
 </td></tr>
+<tr><td>
+
+[zip(this, other)](./alfa-rng.rngfactory.zip.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
 </tbody></table>
 

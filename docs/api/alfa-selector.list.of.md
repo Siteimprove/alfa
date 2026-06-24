@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of<T extends Item>(...selectors: Array<T>): List<T>;
+static of<T extends List.Item>(...selectors: Array<T>): List<T>;
 ```
 
 ## Parameters

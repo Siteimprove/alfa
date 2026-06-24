@@ -4,6 +4,8 @@
 
 ## Bits.bit() function
 
+Returns a number whose binary representation has a 1 in the ith position.
+
 **Signature:**
 
 ```typescript

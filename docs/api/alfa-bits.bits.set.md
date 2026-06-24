@@ -4,6 +4,8 @@
 
 ## Bits.set() function
 
+Returns the input with the ith bit is set to 1.
+
 **Signature:**
 
 ```typescript

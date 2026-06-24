@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-isMedia: typeof import("./media/feature/media.js").Media.isMedia
+isMedia: typeof import("./media/feature/media.ts").Media.isMedia
 ```

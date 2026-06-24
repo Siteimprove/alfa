@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseLengthPercentage: Parser<Slice<Token>, Math<"length-percentage">, string, []>
+parseLengthPercentage: Parser<import("@siteimprove/alfa-slice").Slice<import("../../index.ts").Token>, Math<"length-percentage">, string, []>
 ```

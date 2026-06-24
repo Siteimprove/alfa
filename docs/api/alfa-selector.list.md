@@ -11,6 +11,30 @@
 export declare namespace List 
 ```
 
+## Functions
+
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isList(value)](./alfa-selector.list.islist.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
 ## Interfaces
 
 <table><thead><tr><th>

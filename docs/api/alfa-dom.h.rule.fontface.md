@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function fontFace(declarations: Array<Declaration> | Record<string, string>): FontFaceRule;
+function fontFace(declarations: Array<Declaration> | Record<string, string>): Rule.FontFace;
 ```
 
 ## Parameters
@@ -46,5 +46,5 @@ Array&lt;Declaration&gt; \| Record&lt;string, string&gt;
 
 **Returns:**
 
-FontFaceRule
+Rule.FontFace
 

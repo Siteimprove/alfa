@@ -13,5 +13,3 @@ type JSON = {
         elements: Array<Element.JSON>;
     };
 ```
-**References:** [Element.JSON](./alfa-dom.element.json.md)
-

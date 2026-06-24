@@ -35,7 +35,7 @@ options
 
 </td><td>
 
-[Node.SerializationOptions](./alfa-dom.node.serializationoptions.md)
+Node.SerializationOptions
 
 
 </td><td>

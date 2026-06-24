@@ -8,5 +8,5 @@
 **Signature:**
 
 ```typescript
-export type Color = Hex | Named | HSL | RGB | Current | System;
+export type Color<S extends ColorMix.InterpolationSpace = ColorMix.InterpolationSpace, H extends ColorMix.HueInterpolationMethod = ColorMix.HueInterpolationMethod> = ColorMix<S, H> | CSS4Color | Current | System;
 ```

@@ -9,7 +9,7 @@ Constructs a new instance of the `Function` class
 **Signature:**
 
 ```typescript
-protected constructor(name: string, value: Array<Token>);
+protected constructor(name: N, value: Array<Token>);
 ```
 
 ## Parameters
@@ -37,7 +37,7 @@ name
 
 </td><td>
 
-string
+N
 
 
 </td><td>

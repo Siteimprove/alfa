@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-getElementDescendants: (node: import("../../node.js").Node, options?: import("../../node.js").Node.Traversal) => import("@siteimprove/alfa-sequence").Sequence<import("../element.js").Element<string>>
+getElementDescendants: (node: Node, options?: Node.Traversal) => import("@siteimprove/alfa-sequence").Sequence<import("../index.ts").Element<string>>
 ```
 
 ## Parameters
@@ -35,7 +35,7 @@ node
 
 </td><td>
 
-import("../../node.js").[Node](./alfa-dom.node.md)
+Node
 
 
 </td><td>
@@ -49,7 +49,7 @@ options
 
 </td><td>
 
-import("../../node.js").[Node.Traversal](./alfa-dom.node.traversal.md)
+Node.Traversal
 
 
 </td><td>
@@ -62,5 +62,5 @@ _(Optional)_
 
 **Returns:**
 
-import("@siteimprove/alfa-sequence").[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;import("../element.js").Element&lt;string&gt;&gt;
+import("@siteimprove/alfa-sequence").[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;import("../index.ts").Element&lt;string&gt;&gt;
 

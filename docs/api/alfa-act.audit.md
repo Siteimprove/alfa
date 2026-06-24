@@ -4,13 +4,17 @@
 
 ## Audit class
 
-\* I: type of Input for rules \* T: possible types of test targets \* Q: questions' metadata type \* S: possible types of questions' subject.
+An Audit is built from an input (usually a page), a set of rules that apply to this kind of input, and optionally an oracle to answer questions arising during the audit. Audits need to be explicitly evaluated to produce outcomes.
 
 **Signature:**
 
 ```typescript
 export declare class Audit<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> 
 ```
+
+## Remarks
+
+\* I: type of Input for rules \* T: possible types of test targets \* Q: questions' metadata type \* S: possible types of questions' subject.
 
 ## Constructors
 

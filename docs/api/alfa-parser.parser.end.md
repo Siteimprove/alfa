@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function end<I extends Iterable<unknown>, E>(ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>): Parser<I, void, E>;
+export function end<I extends Iterable<unknown>, E>(ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>): Parser<I, void, E, Array<any>>;
 ```
 
 ## Parameters
@@ -46,5 +46,5 @@ ifError
 
 **Returns:**
 
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, void, E&gt;
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, void, E, Array&lt;any&gt;&gt;
 

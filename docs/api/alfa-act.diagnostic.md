@@ -59,27 +59,3 @@ Description
 </td></tr>
 </tbody></table>
 
-## Variables
-
-<table><thead><tr><th>
-
-Variable
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[empty](./alfa-act.diagnostic.empty.md)
-
-
-</td><td>
-
-
-</td></tr>
-</tbody></table>
-

@@ -52,5 +52,5 @@ target
 
 ## Remarks
 
-When memoizing a recursive function, care must be taken to also memoize the recursive calls. This is best done by wrapping an anonymous function that recurses on the memoized function: `const foo = Cache.memoize(function (x: A): B { … foo(x2) … }`
+When memoizing a recursive function, care must be taken to also memoize the recursive calls. This is best done by wrapping an anonymous function that recurses on the memoized function: `const foo = Cache.memoize(function (x: A): B { … foo(x2) … })`
 

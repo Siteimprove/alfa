@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseCloseComment: Parser<Slice<Token>, CloseComment, string, []>
+parseCloseComment: CSSParser<CloseComment>
 ```

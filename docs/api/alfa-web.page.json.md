@@ -60,7 +60,7 @@ Description
 
 </td><td>
 
-[Document.JSON](./alfa-dom.document.json.md)
+Document.JSON
 
 
 </td><td>

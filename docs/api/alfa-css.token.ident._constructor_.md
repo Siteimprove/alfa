@@ -9,7 +9,7 @@ Constructs a new instance of the `Ident` class
 **Signature:**
 
 ```typescript
-protected constructor(value: string);
+protected constructor(value: N);
 ```
 
 ## Parameters
@@ -37,7 +37,7 @@ value
 
 </td><td>
 
-string
+N
 
 
 </td><td>

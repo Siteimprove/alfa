@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-interface MinimalJSON extends Node.JSON<"type"> 
+interface MinimalJSON extends BaseNode.JSON<"type"> 
 ```
-**Extends:** [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"type"&gt;
+**Extends:** BaseNode.JSON&lt;"type"&gt;
 

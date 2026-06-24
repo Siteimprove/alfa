@@ -9,7 +9,7 @@
 **Signature:**
 
 ```typescript
-function encode(input: string): Uint8Array;
+function encode(input: string): Uint8Array<ArrayBuffer>;
 ```
 
 ## Parameters
@@ -48,5 +48,5 @@ string
 
 **Returns:**
 
-Uint8Array
+Uint8Array&lt;ArrayBuffer&gt;
 

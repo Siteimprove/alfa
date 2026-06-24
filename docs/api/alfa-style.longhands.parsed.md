@@ -15,5 +15,7 @@ export type Parsed<N extends Name> = Longhand.Parsed<Property[TrueName<N>]>;
 
 ## Remarks
 
+The parsed type differs from the declared type in that the parsed type must not include the defaulting keywords as these are handled globally rather than individually.
+
 The parsed type doesn't really exist in CSS. It is an artefact on how we handle the default keywords.
 

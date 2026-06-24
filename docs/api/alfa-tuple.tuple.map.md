@@ -7,7 +7,9 @@
 **Signature:**
 
 ```typescript
-export type Map<T extends Tuple, U> = T extends readonly [infer _, ...infer R] ? [U, ...Map<R, U>] : Empty;
+export type Map<T extends Tuple, U> = {
+        [K in keyof T]: U;
+    };
 ```
-**References:** [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Map](./alfa-tuple.tuple.map.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)
+**References:** [Tuple](./alfa-tuple.tuple.md)
 

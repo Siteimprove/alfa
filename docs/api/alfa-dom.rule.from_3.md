@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function from(json: KeyframesRule.JSON): KeyframesRule;
+function from(json: Keyframes.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Keyframes;
 ```
 
 ## Parameters
@@ -35,7 +35,21 @@ json
 
 </td><td>
 
-[KeyframesRule.JSON](./alfa-dom.keyframesrule.json.md)
+Keyframes.JSON
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+sheetFactory
+
+
+</td><td>
+
+(rules: Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt;) =&gt; Sheet
 
 
 </td><td>
@@ -46,5 +60,5 @@ json
 
 **Returns:**
 
-KeyframesRule
+Keyframes
 

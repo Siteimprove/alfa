@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseComma: Parser<Slice<Token>, Comma, string, []>
+parseComma: CSSParser<Comma>
 ```

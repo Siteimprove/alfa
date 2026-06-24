@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseAnglePercentage: Parser<Slice<Token>, Math<"angle-percentage">, string, []>
+parseAnglePercentage: Parser<import("@siteimprove/alfa-slice").Slice<import("../../index.ts").Token>, Math<"angle-percentage">, string, []>
 ```

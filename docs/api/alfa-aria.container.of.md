@@ -35,7 +35,7 @@ owner
 
 </td><td>
 
-[dom.Node](./alfa-dom.node.md)
+dom.Node
 
 
 </td><td>

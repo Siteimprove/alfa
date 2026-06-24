@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function layerStatement(layers: Array<string>): Layer.StatementRule;
+function layerStatement(layers: Array<string>): Rule.Layer.Statement;
 ```
 
 ## Parameters
@@ -46,5 +46,5 @@ Array&lt;string&gt;
 
 **Returns:**
 
-[Layer.StatementRule](./alfa-dom.layer.statementrule.md)
+Rule.Layer.Statement
 

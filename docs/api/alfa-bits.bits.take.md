@@ -4,6 +4,8 @@
 
 ## Bits.take() function
 
+Returns the input with only the n least signifant bits.
+
 **Signature:**
 
 ```typescript

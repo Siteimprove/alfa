@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of(value: string): Function;
+static of<N extends string = string>(value: N): Function<N>;
 ```
 
 ## Parameters
@@ -35,7 +35,7 @@ value
 
 </td><td>
 
-string
+N
 
 
 </td><td>
@@ -46,5 +46,5 @@ string
 
 **Returns:**
 
-[Function](./alfa-css.token.function.md)
+[Function](./alfa-css.token.function.md)<!-- -->&lt;N&gt;
 

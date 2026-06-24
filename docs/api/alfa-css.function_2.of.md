@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of(name: string, value: Iterable<Token>): Function;
+static of<N extends string = string>(name: N, value: Iterable<Token>): Function<N>;
 ```
 
 ## Parameters
@@ -35,7 +35,7 @@ name
 
 </td><td>
 
-string
+N
 
 
 </td><td>
@@ -60,5 +60,5 @@ Iterable&lt;Token&gt;
 
 **Returns:**
 
-[Function](./alfa-css.function_2.md)
+[Function](./alfa-css.function_2.md)<!-- -->&lt;N&gt;
 

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function left<I, T, U, E, A extends Array<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, U, E, A>): Parser<I, T, E, A>;
+export function left<I, T, E, A extends Array<unknown> = []>(left: Parser<I, T, E, A>, ...right: Array<Parser<I, unknown, E, A>>): Parser<I, T, E, A>;
 ```
 
 ## Parameters
@@ -49,7 +49,7 @@ right
 
 </td><td>
 
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, U, E, A&gt;
+Array&lt;[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, unknown, E, A&gt;&gt;
 
 
 </td><td>

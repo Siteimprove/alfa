@@ -39,6 +39,19 @@ This version of R87 ask questions whose subject is not the target of the rule. T
 </td></tr>
 <tr><td>
 
+[R101](./alfa-rules.experimentalrules.r101.md)
+
+
+</td><td>
+
+This rule asks whether the page has repeated content before its main content, unless it can automatically answer false when there is no accessible content before the main element.
+
+It tries to locate the main landmarks (elements with role of main), and asks a question if it doesn't find any.
+
+
+</td></tr>
+<tr><td>
+
 [R109](./alfa-rules.experimentalrules.r109.md)
 
 

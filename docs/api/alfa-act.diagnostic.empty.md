@@ -2,10 +2,14 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-act](./alfa-act.md) &gt; [Diagnostic](./alfa-act.diagnostic.md) &gt; [empty](./alfa-act.diagnostic.empty.md)
 
-## Diagnostic.empty variable
+## Diagnostic.empty() method
 
 **Signature:**
 
 ```typescript
-empty: Diagnostic
+static empty(): Diagnostic;
 ```
+**Returns:**
+
+[Diagnostic](./alfa-act.diagnostic.md)
+

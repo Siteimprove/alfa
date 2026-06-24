@@ -9,5 +9,5 @@
 **Signature:**
 
 ```typescript
-parseProp: Parser<import("@siteimprove/alfa-slice").Slice<import("../../syntax/token.js").Token>, Scale<Number.Fixed | Percentage.Canonical, Number.Fixed | Percentage.Canonical, Number.Fixed | Percentage.Canonical>, string, []>
+parseProp: Parser<import("@siteimprove/alfa-slice").Slice<import("../../syntax/token.ts").Token>, Scale<Number.Fixed | Percentage.Canonical, Number.Fixed | Percentage.Canonical, Number.Fixed | Percentage.Canonical>, string, []>
 ```

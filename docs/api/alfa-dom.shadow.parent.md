@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-parent(options?: Node.Traversal): Option<Node>;
+parent(options?: BaseNode.Traversal): Option<Node>;
 ```
 
 ## Parameters
@@ -35,7 +35,7 @@ options
 
 </td><td>
 
-[Node.Traversal](./alfa-dom.node.traversal.md)
+BaseNode.Traversal
 
 
 </td><td>

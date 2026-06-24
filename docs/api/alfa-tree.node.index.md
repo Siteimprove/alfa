@@ -9,7 +9,7 @@
 **Signature:**
 
 ```typescript
-index(options?: Flags<K, F>): number;
+index(options?: Flags<K, F>, predicate?: Predicate<Node<K, F>>): number;
 ```
 
 ## Parameters
@@ -42,7 +42,23 @@ Flags&lt;K, F&gt;
 
 </td><td>
 
-_(Optional)_
+_(Optional)_ Traversal flags to control tree traversal behavior
+
+
+</td></tr>
+<tr><td>
+
+predicate
+
+
+</td><td>
+
+Predicate&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;K, F&gt;&gt;
+
+
+</td><td>
+
+_(Optional)_ Optional predicate to filter siblings when calculating the index
 
 
 </td></tr>

@@ -31,6 +31,8 @@ Description
 
 </td><td>
 
+Returns a number whose binary representation has a 1 in the ith position.
+
 
 </td></tr>
 <tr><td>
@@ -39,6 +41,8 @@ Description
 
 
 </td><td>
+
+Returns the input with the ith bit is set to 0.
 
 
 </td></tr>
@@ -58,6 +62,8 @@ Description
 
 </td><td>
 
+Returns the input with the ith bit is set to 1.
+
 
 </td></tr>
 <tr><td>
@@ -66,6 +72,8 @@ Description
 
 
 </td><td>
+
+Returns the input with the n least signifant bits removed.
 
 
 </td></tr>
@@ -76,6 +84,8 @@ Description
 
 </td><td>
 
+Returns the input with only the n least signifant bits.
+
 
 </td></tr>
 <tr><td>
@@ -84,6 +94,8 @@ Description
 
 
 </td><td>
+
+Returns true if the ith bit is 1.
 
 
 </td></tr>

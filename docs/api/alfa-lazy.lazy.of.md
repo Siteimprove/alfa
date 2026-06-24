@@ -4,6 +4,8 @@
 
 ## Lazy.of() method
 
+Create a new lazy value from a thunk. The Lazy will contain a frozen copy of the Thunk, ensuring it always produces the same value and thus can indeed be lazily evaluated.
+
 **Signature:**
 
 ```typescript

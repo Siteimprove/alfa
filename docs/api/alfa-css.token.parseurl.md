@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function parseURL(predicate?: Predicate<URL>): Parser<Slice<Token>, URL, string, []>;
+function parseURL(predicate?: Predicate<URL>): CSSParser<URL>;
 ```
 
 ## Parameters
@@ -48,5 +48,5 @@ _(Optional)_
 
 **Returns:**
 
-Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [URL](./alfa-css.token.url.md)<!-- -->, string, \[\]&gt;
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;[URL](./alfa-css.token.url.md)<!-- -->&gt;
 

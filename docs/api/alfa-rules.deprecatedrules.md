@@ -19,7 +19,7 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[DR18](./alfa-rules.deprecatedrules.dr18.md)
+[DR3](./alfa-rules.deprecatedrules.dr3.md)
 
 
 </td><td>
@@ -55,16 +55,7 @@ Description
 </td></tr>
 <tr><td>
 
-[DR66](./alfa-rules.deprecatedrules.dr66.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[DR69](./alfa-rules.deprecatedrules.dr69.md)
+[DR83](./alfa-rules.deprecatedrules.dr83.md)
 
 
 </td><td>

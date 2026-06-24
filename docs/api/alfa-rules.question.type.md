@@ -45,7 +45,7 @@ Description
 
 </td><td>
 
-Iterable&lt;RGB&gt;
+Iterable&lt;CSS4Color&gt;
 
 
 </td><td>

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function style(selector: string, declarations: Array<Declaration> | Record<string, string>, hint?: boolean): StyleRule;
+function style(selector: string, declarations: Array<Declaration> | Record<string, string>, hint?: boolean): Rule.Style;
 ```
 
 ## Parameters
@@ -76,5 +76,5 @@ _(Optional)_
 
 **Returns:**
 
-StyleRule
+Rule.Style
 

@@ -4,6 +4,8 @@
 
 ## Bits.clear() function
 
+Returns the input with the ith bit is set to 0.
+
 **Signature:**
 
 ```typescript

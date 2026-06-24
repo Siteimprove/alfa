@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-type Canonical = Current | System | RGB.Canonical;
+type Canonical = CSS4Color.Canonical;
 ```
-**References:** [RGB.Canonical](./alfa-css.rgb.canonical.md)
+**References:** [CSS4Color.Canonical](./alfa-css.css4color.canonical.md)
 

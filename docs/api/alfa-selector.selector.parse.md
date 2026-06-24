@@ -4,6 +4,10 @@
 
 ## Selector.parse variable
 
+Parses a (list of) complex selector.
+
+[https://drafts.csswg.org/selectors/\#typedef-complex-selector-list](https://drafts.csswg.org/selectors/#typedef-complex-selector-list) If the list contains a single selector, it is simplified out.
+
 **Signature:**
 
 ```typescript

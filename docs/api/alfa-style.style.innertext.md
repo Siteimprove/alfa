@@ -49,7 +49,7 @@ isAcceptable
 
 </td><td>
 
-(device: Device) =&gt; import("@siteimprove/alfa-predicate").[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;import("@siteimprove/alfa-dom").[Text](./alfa-dom.text.md)<!-- -->&gt;
+(device: Device) =&gt; import("@siteimprove/alfa-predicate").[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;import("@siteimprove/alfa-dom").Text&gt;
 
 
 </td><td>

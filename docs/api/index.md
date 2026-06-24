@@ -200,6 +200,15 @@ This package provides functionality for working with arrays.
 </td></tr>
 <tr><td>
 
+[@siteimprove/alfa-eaa](./alfa-eaa.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [@siteimprove/alfa-earl](./alfa-earl.md)
 
 
@@ -273,15 +282,6 @@ This package provides functionality for working with arrays.
 <tr><td>
 
 [@siteimprove/alfa-functor](./alfa-functor.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[@siteimprove/alfa-future](./alfa-future.md)
 
 
 </td><td>
@@ -470,17 +470,6 @@ This package provides functionality for working with arrays.
 </td></tr>
 <tr><td>
 
-[@siteimprove/alfa-promise](./alfa-promise.md)
-
-
-</td><td>
-
-This package provides functionality for working with promises.
-
-
-</td></tr>
-<tr><td>
-
 [@siteimprove/alfa-record](./alfa-record.md)
 
 
@@ -617,24 +606,6 @@ This package provides functionality for working with promises.
 <tr><td>
 
 [@siteimprove/alfa-table](./alfa-table.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[@siteimprove/alfa-test-deprecated](./alfa-test-deprecated.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[@siteimprove/alfa-thenable](./alfa-thenable.md)
 
 
 </td><td>

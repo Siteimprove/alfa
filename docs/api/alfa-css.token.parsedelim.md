@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function parseDelim(query?: string | number | Predicate<Delim>): Parser<Slice<Token>, Delim, string, []>;
+function parseDelim(query?: string | number | Predicate<Delim>): CSSParser<Delim>;
 ```
 
 ## Parameters
@@ -48,5 +48,5 @@ _(Optional)_
 
 **Returns:**
 
-Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Delim](./alfa-css.token.delim.md)<!-- -->, string, \[\]&gt;
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;[Delim](./alfa-css.token.delim.md)<!-- -->&gt;
 

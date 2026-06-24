@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function from(json: NamespaceRule.JSON): NamespaceRule;
+function from(json: Namespace.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Namespace;
 ```
 
 ## Parameters
@@ -35,7 +35,21 @@ json
 
 </td><td>
 
-[NamespaceRule.JSON](./alfa-dom.namespacerule.json.md)
+Namespace.JSON
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+sheetFactory
+
+
+</td><td>
+
+(rules: Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt;) =&gt; Sheet
 
 
 </td><td>
@@ -46,5 +60,5 @@ json
 
 **Returns:**
 
-NamespaceRule
+Namespace
 

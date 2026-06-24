@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function parseHash(predicate?: Predicate<Hash>): Parser<Slice<Token>, Hash, string, []>;
+function parseHash(predicate?: Predicate<Hash>): CSSParser<Hash>;
 ```
 
 ## Parameters
@@ -48,5 +48,5 @@ _(Optional)_
 
 **Returns:**
 
-Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Hash](./alfa-css.token.hash.md)<!-- -->, string, \[\]&gt;
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;[Hash](./alfa-css.token.hash.md)<!-- -->&gt;
 

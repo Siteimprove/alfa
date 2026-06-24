@@ -95,17 +95,6 @@ Description
 </td></tr>
 <tr><td>
 
-[Relative](./alfa-selector.relative.md)
-
-
-</td><td>
-
-[https://drafts.csswg.org/selectors/\#relative-selector](https://drafts.csswg.org/selectors/#relative-selector)
-
-
-</td></tr>
-<tr><td>
-
 [Specificity](./alfa-selector.specificity.md)
 
 
@@ -271,16 +260,6 @@ Description
 <tr><td>
 
 [PseudoElement](./alfa-selector.pseudoelement.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[Relative](./alfa-selector.relative.md)
 
 
 </td><td>

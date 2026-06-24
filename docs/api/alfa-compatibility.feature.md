@@ -4,6 +4,10 @@
 
 ## Feature type
 
+> Warning: This API is now obsolete.
+> 
+> This package is not maintained anymore.
+> 
 
 **Signature:**
 

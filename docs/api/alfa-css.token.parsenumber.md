@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function parseNumber(predicate?: Predicate<Number>): Parser<Slice<Token>, Number, string, []>;
+function parseNumber(predicate?: Predicate<Number>): CSSParser<Number>;
 ```
 
 ## Parameters
@@ -48,5 +48,5 @@ _(Optional)_
 
 **Returns:**
 
-Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Number](./alfa-css.token.number.md)<!-- -->, string, \[\]&gt;
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;[Number](./alfa-css.token.number.md)<!-- -->&gt;
 

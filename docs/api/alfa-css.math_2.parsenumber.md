@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseNumber: Parser<Slice<Token>, Math<"number">, string, []>
+parseNumber: Parser<import("@siteimprove/alfa-slice").Slice<import("../../index.ts").Token>, Math<"number">, string, []>
 ```

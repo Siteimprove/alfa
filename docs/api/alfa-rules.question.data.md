@@ -140,6 +140,14 @@ Data: {
             readonly type: "boolean";
             readonly message: "Is this element visible when it's focused?";
         };
+        readonly "main-landmark-elements": {
+            readonly type: "node[]";
+            readonly message: "Where are the main landmark elements of the page?";
+        };
+        readonly "has-repeated-content-before-main": {
+            readonly type: "boolean";
+            readonly message: "Does the page have repeated content before its main content?";
+        };
         readonly "document-language": {
             readonly type: "string";
             readonly message: "What is the main language of the document?";

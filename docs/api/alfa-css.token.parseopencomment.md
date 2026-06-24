@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseOpenComment: Parser<Slice<Token>, OpenComment, string, []>
+parseOpenComment: CSSParser<OpenComment>
 ```

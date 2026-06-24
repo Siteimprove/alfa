@@ -30,7 +30,7 @@ Checks that a directory includes an API extractor config file.
 </td></tr>
 <tr><td>
 
-[validate(cwd)](./alfa-toolchain.validation.validate.md)
+[validate(rootDir)](./alfa-toolchain.validation.validate.md)
 
 
 </td><td>

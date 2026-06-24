@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function keyframes(name: string, rules: Array<Rule>): KeyframesRule;
+function keyframes(name: string, rules: Array<Rule>): Rule.Keyframes;
 ```
 
 ## Parameters
@@ -60,5 +60,5 @@ Array&lt;Rule&gt;
 
 **Returns:**
 
-KeyframesRule
+Rule.Keyframes
 

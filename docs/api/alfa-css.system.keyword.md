@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-type Keyword = "canvas" | "canvastext" | "linktext" | "visitedtext" | "activetext" | "buttonface" | "buttontext" | "field" | "fieldtext" | "highlight" | "highlighttext" | "graytext";
+export type Keyword = (typeof keywords)[number];
 ```

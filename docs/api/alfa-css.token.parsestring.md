@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function parseString(predicate?: Predicate<String>): Parser<Slice<Token>, String, string, []>;
+function parseString(predicate?: Predicate<String>): CSSParser<String>;
 ```
 
 ## Parameters
@@ -48,5 +48,5 @@ _(Optional)_
 
 **Returns:**
 
-Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [String](./alfa-css.token.string.md)<!-- -->, string, \[\]&gt;
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;[String](./alfa-css.token.string.md)<!-- -->&gt;
 

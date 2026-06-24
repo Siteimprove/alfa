@@ -4,6 +4,11 @@
 
 ## deprecatedRules.DR36 variable
 
+> Warning: This API is now obsolete.
+> 
+> This rule has been deprecated and should not be used anymore. The composite rules have been updated to not use it.
+> 
+
 **Signature:**
 
 ```typescript

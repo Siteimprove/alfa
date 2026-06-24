@@ -26,7 +26,7 @@ Description
 
 </td><td>
 
-\* I: type of Input for rules \* T: possible types of test targets \* Q: questions' metadata type \* S: possible types of questions' subject.
+An Audit is built from an input (usually a page), a set of rules that apply to this kind of input, and optionally an oracle to answer questions arising during the audit. Audits need to be explicitly evaluated to produce outcomes.
 
 
 </td></tr>
@@ -37,6 +37,7 @@ Description
 
 </td><td>
 
+Cache from rules to outcomes.
 
 
 </td></tr>
@@ -47,6 +48,7 @@ Description
 
 </td><td>
 
+Diagnostics are associated with each Question or final Outcome. They at least contain an explanatory message. Diagnostics can be extended to include more information for the rules that need it.
 
 
 </td></tr>
@@ -145,6 +147,16 @@ Description
 </td></tr>
 <tr><td>
 
+[Finding](./alfa-act.finding.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
 [Interview](./alfa-act.interview.md)
 
 
@@ -219,6 +231,17 @@ Description
 
 </th></tr></thead>
 <tbody><tr><td>
+
+[Finding](./alfa-act.finding.md)
+
+
+</td><td>
+
+The result of an Interview: either a Conclusive finding (a final answer was reached) or an Inconclusive one (more information is needed).
+
+
+</td></tr>
+<tr><td>
 
 [Interview](./alfa-act.interview.md)
 

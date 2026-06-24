@@ -8,7 +8,7 @@
 **Signature:**
 
 ```typescript
-export declare function validate(cwd: string): Promise<void>;
+export declare function validate(rootDir: string): Promise<void>;
 ```
 
 ## Parameters
@@ -31,7 +31,7 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-cwd
+rootDir
 
 
 </td><td>

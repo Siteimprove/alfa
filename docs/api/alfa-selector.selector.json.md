@@ -9,5 +9,5 @@
 ```typescript
 type JSON = Simple.JSON | Compound.JSON | Complex.JSON | Relative.JSON | List.JSON;
 ```
-**References:** [Simple.JSON](./alfa-selector.simple.json.md)<!-- -->, [Compound.JSON](./alfa-selector.compound.json.md)<!-- -->, [Complex.JSON](./alfa-selector.complex.json.md)<!-- -->, [Relative.JSON](./alfa-selector.relative.json.md)<!-- -->, [List.JSON](./alfa-selector.list.json.md)
+**References:** [Simple.JSON](./alfa-selector.simple.json.md)<!-- -->, [Compound.JSON](./alfa-selector.compound.json.md)<!-- -->, [Complex.JSON](./alfa-selector.complex.json.md)<!-- -->, [List.JSON](./alfa-selector.list.json.md)
 

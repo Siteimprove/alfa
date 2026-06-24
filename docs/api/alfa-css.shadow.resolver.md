@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-type Resolver = Length.Resolver;
+type Resolver = Length.Resolver & Color.Resolver;
 ```
-**References:** [Length.Resolver](./alfa-css.length.resolver.md)
+**References:** [Length.Resolver](./alfa-css.length.resolver.md)<!-- -->, [Color.Resolver](./alfa-css.color.resolver.md)
 

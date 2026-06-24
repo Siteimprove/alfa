@@ -7,7 +7,9 @@
 **Signature:**
 
 ```typescript
-export function every<T extends Tuple>(tuple: T, predicate: Predicate<Item<T>, [index: number]>): boolean;
+export function every<T extends Tuple, U extends Item<T>>(tuple: T, refinement: Refinement<Item<T>, U, [index: number]>): tuple is {
+        [K in keyof T]: U extends T[K] ? U : never;
+    };
 ```
 
 ## Parameters
@@ -44,12 +46,12 @@ T
 </td></tr>
 <tr><td>
 
-predicate
+refinement
 
 
 </td><td>
 
-Predicate&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, \[index: number\]&gt;
+Refinement&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, U, \[index: number\]&gt;
 
 
 </td><td>
@@ -60,5 +62,5 @@ Predicate&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, \[index: numbe
 
 **Returns:**
 
-boolean
+tuple is { \[K in keyof T\]: U extends T\[K\] ? U : never; }
 

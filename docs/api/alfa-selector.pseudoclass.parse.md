@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function parse(parseSelector: Thunk<CSSParser<Absolute>>): CSSParser<PseudoClass>;
+function parse(parseSelector: Selector.Parser.Component): CSSParser<PseudoClass>;
 ```
 
 ## Parameters
@@ -35,7 +35,7 @@ parseSelector
 
 </td><td>
 
-Thunk&lt;[CSSParser](./alfa-css.parser.md)<!-- -->&lt;Absolute&gt;&gt;
+[Selector.Parser.Component](./alfa-selector.selector.parser.component.md)
 
 
 </td><td>

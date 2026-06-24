@@ -4,6 +4,8 @@
 
 ## Bits.skip() function
 
+Returns the input with the n least signifant bits removed.
+
 **Signature:**
 
 ```typescript

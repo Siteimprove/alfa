@@ -110,6 +110,24 @@ Description
 
 
 </td></tr>
+<tr><td>
+
+[fromFinding(rule, target)](./alfa-act.outcome.fromfinding.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[getMode(oracleUsed)](./alfa-act.outcome.getmode.md)
+
+
+</td><td>
+
+
+</td></tr>
 </tbody></table>
 
 ## Interfaces

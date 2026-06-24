@@ -11,7 +11,7 @@ Computes the painting order of the element descendants of a root element and ret
 **Signature:**
 
 ```typescript
-from: (this: unknown, root: Node<string>, device: Device) => PaintingOrder
+from: (this: unknown, root: Node, device: Device) => PaintingOrder
 ```
 
 ## Parameters
@@ -53,7 +53,7 @@ root
 
 </td><td>
 
-Node&lt;string&gt;
+Node
 
 
 </td><td>

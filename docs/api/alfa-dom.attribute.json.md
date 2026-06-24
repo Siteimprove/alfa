@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-interface JSON<N extends string = string> extends Node.JSON<"attribute"> 
+interface JSON<N extends string = string> extends BaseNode.JSON<"attribute"> 
 ```
-**Extends:** [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"attribute"&gt;
+**Extends:** BaseNode.JSON&lt;"attribute"&gt;
 
 ## Properties
 

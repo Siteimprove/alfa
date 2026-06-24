@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function system(keyword: System.Keyword): System;
+system: (value: System.Keyword) => System
 ```
 
 ## Parameters
@@ -30,7 +30,7 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-keyword
+value
 
 
 </td><td>

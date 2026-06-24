@@ -7,5 +7,7 @@
 **Signature:**
 
 ```typescript
-type Child = Node | string;
+type Child = dom.Node | string;
 ```
+**References:** [dom.Node](./alfa-dom.node_2.md)
+

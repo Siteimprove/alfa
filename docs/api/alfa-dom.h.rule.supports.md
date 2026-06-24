@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function supports(condition: string, rules: Array<Rule>): SupportsRule;
+function supports(condition: string, rules: Array<Rule>): Rule.Supports;
 ```
 
 ## Parameters
@@ -60,5 +60,5 @@ Array&lt;Rule&gt;
 
 **Returns:**
 
-SupportsRule
+Rule.Supports
 

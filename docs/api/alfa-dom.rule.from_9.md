@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function from(json: StyleRule.JSON): StyleRule;
+function from(json: Style.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Style;
 ```
 
 ## Parameters
@@ -35,7 +35,21 @@ json
 
 </td><td>
 
-[StyleRule.JSON](./alfa-dom.stylerule.json.md)
+Style.JSON
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+sheetFactory
+
+
+</td><td>
+
+(rules: Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt;) =&gt; Sheet
 
 
 </td><td>
@@ -46,5 +60,5 @@ json
 
 **Returns:**
 
-StyleRule
+Style
 

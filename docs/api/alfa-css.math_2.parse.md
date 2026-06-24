@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parse: Parser<Slice<Token>, Math<Dimension>, string, []>
+parse: Parser<import("@siteimprove/alfa-slice").Slice<import("../../index.ts").Token>, Math<Dimension>, string, []>
 ```

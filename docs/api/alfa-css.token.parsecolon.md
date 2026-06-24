@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseColon: Parser<Slice<Token>, Colon, string, []>
+parseColon: CSSParser<Colon>
 ```

@@ -17,3 +17,9 @@ export type Interview<QUESTION extends Question.Metadata, SUBJECT, CONTEXT, ANSW
 ```
 **References:** [Question.Metadata](./alfa-act.question.metadata.md)<!-- -->, [Interview](./alfa-act.interview.md)
 
+## Remarks
+
+That is, an Interview is either: \* an ANSWER. \* A Question, expecting an Interview, provided its URI, answer type (QUESTION\[URI\]\[1\]), and answer type representation (QUESTION\[URI\]\[0\]) are correct. The returned interview has depth one smaller.
+
+The complex object keys mapping ensure that the question's URI exist in the metadata.
+

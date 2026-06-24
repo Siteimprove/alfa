@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-"color[]": Iterable<RGB>;
+"color[]": Iterable<CSS4Color>;
 ```

@@ -40,7 +40,7 @@ Description
 </td></tr>
 <tr><td>
 
-[Element](./alfa-aria.element.md)
+[Element\_2](./alfa-aria.element_2.md)
 
 
 </td><td>
@@ -80,7 +80,7 @@ Description
 </td></tr>
 <tr><td>
 
-[Text](./alfa-aria.text.md)
+[Text\_2](./alfa-aria.text_2.md)
 
 
 </td><td>
@@ -105,7 +105,7 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[Node](./alfa-aria.node.md)
+[Node\_2](./alfa-aria.node_2.md)
 
 
 </td><td>
@@ -166,7 +166,7 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[Node](./alfa-aria.node.md)
+[Node\_2](./alfa-aria.node_2.md)
 
 
 </td><td>
@@ -222,7 +222,7 @@ Helpers and Predicates for accessibility aspects of DOM objects
 </td></tr>
 <tr><td>
 
-[Element](./alfa-aria.element.md)
+[Element\_2](./alfa-aria.element_2.md)
 
 
 </td><td>
@@ -242,7 +242,7 @@ Helpers and Predicates for accessibility aspects of DOM objects
 </td></tr>
 <tr><td>
 
-[Node](./alfa-aria.node.md)
+[Node\_2](./alfa-aria.node_2.md)
 
 
 </td><td>
@@ -272,7 +272,7 @@ Helpers and Predicates for accessibility aspects of DOM objects
 </td></tr>
 <tr><td>
 
-[Text](./alfa-aria.text.md)
+[Text\_2](./alfa-aria.text_2.md)
 
 
 </td><td>

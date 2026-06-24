@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function from(json: ImportRule.JSON): ImportRule;
+function from(json: Import.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Import;
 ```
 
 ## Parameters
@@ -35,7 +35,21 @@ json
 
 </td><td>
 
-[ImportRule.JSON](./alfa-dom.importrule.json.md)
+Import.JSON
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+sheetFactory
+
+
+</td><td>
+
+(rules: Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt;) =&gt; Sheet
 
 
 </td><td>
@@ -46,5 +60,5 @@ json
 
 **Returns:**
 
-ImportRule
+Import
 

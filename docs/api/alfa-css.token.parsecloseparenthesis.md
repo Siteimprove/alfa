@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseCloseParenthesis: Parser<Slice<Token>, CloseParenthesis, string, []>
+parseCloseParenthesis: CSSParser<CloseParenthesis>
 ```

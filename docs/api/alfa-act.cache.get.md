@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-get<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q, S>>>>): Future<Iterable<Outcome<I, T, Q, S>>>;
+get<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, ifMissing: Thunk<Promise<Iterable<Outcome<I, T, Q, S>>>>): Promise<Iterable<Outcome<I, T, Q, S>>>;
 ```
 
 ## Parameters
@@ -49,7 +49,7 @@ ifMissing
 
 </td><td>
 
-Thunk&lt;Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;&gt;
+Thunk&lt;Promise&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;&gt;
 
 
 </td><td>
@@ -60,5 +60,5 @@ Thunk&lt;Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;&gt;
 
 **Returns:**
 
-Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;
+Promise&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;
 

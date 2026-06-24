@@ -2,10 +2,49 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-style](./alfa-style.md) &gt; [Style](./alfa-style.style.md) &gt; [isInert](./alfa-style.style.isinert.md)
 
-## Style.isInert variable
+## Style.isInert() function
 
 **Signature:**
 
 ```typescript
-isInert: typeof element.isInert
+isInert: (device: Device) => import("@siteimprove/alfa-predicate").Predicate<Element<string>, []>
 ```
+
+## Parameters
+
+<table><thead><tr><th>
+
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+device
+
+
+</td><td>
+
+Device
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
+**Returns:**
+
+import("@siteimprove/alfa-predicate").[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;Element&lt;string&gt;, \[\]&gt;
+

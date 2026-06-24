@@ -44,6 +44,15 @@ Build the style of an element.
 
 
 </td></tr>
+<tr><td>
+
+[isInert(device)](./alfa-style.style.isinert.md)
+
+
+</td><td>
+
+
+</td></tr>
 </tbody></table>
 
 ## Interfaces
@@ -274,15 +283,6 @@ Description
 </td></tr>
 <tr><td>
 
-[isInert](./alfa-style.style.isinert.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
 [isPositioned](./alfa-style.style.ispositioned.md)
 
 
@@ -398,6 +398,15 @@ Description
 <tr><td>
 
 [Specified](./alfa-style.style.specified.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Used](./alfa-style.style.used.md)
 
 
 </td><td>

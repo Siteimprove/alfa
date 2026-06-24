@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseAngle: Parser<Slice<Token>, Math<"angle">, string, []>
+parseAngle: Parser<import("@siteimprove/alfa-slice").Slice<import("../../index.ts").Token>, Math<"angle">, string, []>
 ```

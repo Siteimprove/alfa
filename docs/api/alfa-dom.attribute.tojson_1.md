@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-toJSON(options?: Node.SerializationOptions): Attribute.JSON<N>;
+toJSON(options?: BaseNode.SerializationOptions): Attribute.JSON<N>;
 ```
 
 ## Parameters
@@ -35,7 +35,7 @@ options
 
 </td><td>
 
-[Node.SerializationOptions](./alfa-dom.node.serializationoptions.md)
+BaseNode.SerializationOptions
 
 
 </td><td>

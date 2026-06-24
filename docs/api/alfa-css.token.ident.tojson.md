@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-toJSON(): Ident.JSON;
+toJSON(): Ident.JSON<N>;
 ```
 **Returns:**
 
-[Ident.JSON](./alfa-css.token.ident.json.md)
+[Ident.JSON](./alfa-css.token.ident.json.md)<!-- -->&lt;N&gt;
 

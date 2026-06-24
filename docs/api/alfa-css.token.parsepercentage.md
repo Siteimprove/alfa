@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function parsePercentage(predicate?: Predicate<Percentage>): Parser<Slice<Token>, Percentage, string, []>;
+function parsePercentage(predicate?: Predicate<Percentage>): CSSParser<Percentage>;
 ```
 
 ## Parameters
@@ -48,5 +48,5 @@ _(Optional)_
 
 **Returns:**
 
-Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Percentage](./alfa-css.token.percentage.md)<!-- -->, string, \[\]&gt;
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;[Percentage](./alfa-css.token.percentage.md)<!-- -->&gt;
 

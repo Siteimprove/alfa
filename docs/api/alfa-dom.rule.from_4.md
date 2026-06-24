@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function from(json: Layer.BlockRule.JSON): Layer.BlockRule;
+function from(json: Layer.Block.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Layer.Block;
 ```
 
 ## Parameters
@@ -35,7 +35,21 @@ json
 
 </td><td>
 
-[Layer.BlockRule.JSON](./alfa-dom.layer.blockrule.json.md)
+Layer.Block.JSON
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+sheetFactory
+
+
+</td><td>
+
+(rules: Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt;) =&gt; Sheet
 
 
 </td><td>
@@ -46,5 +60,5 @@ json
 
 **Returns:**
 
-[Layer.BlockRule](./alfa-dom.layer.blockrule.md)
+Layer.Block
 

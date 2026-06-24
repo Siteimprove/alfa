@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function namespace(namespace: string, prefix?: string): NamespaceRule;
+function namespace(namespace: string, prefix?: string): Rule.Namespace;
 ```
 
 ## Parameters
@@ -62,5 +62,5 @@ _(Optional)_
 
 **Returns:**
 
-NamespaceRule
+Rule.Namespace
 

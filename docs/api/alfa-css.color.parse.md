@@ -2,12 +2,51 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Color](./alfa-css.color.md) &gt; [parse](./alfa-css.color.parse.md)
 
-## Color.parse variable
+## Color.parse() function
 
 [https://drafts.csswg.org/css-color/\#typedef-color](https://drafts.csswg.org/css-color/#typedef-color)
 
 **Signature:**
 
 ```typescript
-parse: Parser<Slice<Token>, Color, string, []>
+function parse(input: Slice<Token>): Result<[Slice<Token>, Color], string>;
 ```
+
+## Parameters
+
+<table><thead><tr><th>
+
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+input
+
+
+</td><td>
+
+Slice&lt;Token&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
+**Returns:**
+
+Result&lt;\[Slice&lt;Token&gt;, [Color](./alfa-css.color.md)<!-- -->\], string&gt;
+

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function from(json: SupportsRule.JSON): SupportsRule;
+function from(json: Supports.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Supports;
 ```
 
 ## Parameters
@@ -35,7 +35,21 @@ json
 
 </td><td>
 
-[SupportsRule.JSON](./alfa-dom.supportsrule.json.md)
+Supports.JSON
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+sheetFactory
+
+
+</td><td>
+
+(rules: Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt;) =&gt; Sheet
 
 
 </td><td>
@@ -46,5 +60,5 @@ json
 
 **Returns:**
 
-SupportsRule
+Supports
 

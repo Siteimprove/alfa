@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-interface JSON 
+interface JSON<N extends string = string> 
 ```
 
 ## Properties
@@ -43,7 +43,7 @@ Description
 
 </td><td>
 
-string
+N
 
 
 </td><td>

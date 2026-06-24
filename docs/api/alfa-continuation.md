@@ -4,31 +4,6 @@
 
 ## alfa-continuation package
 
-## Namespaces
-
-<table><thead><tr><th>
-
-Namespace
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[Continuation](./alfa-continuation.continuation.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-</tbody></table>
-
 ## Type Aliases
 
 <table><thead><tr><th>

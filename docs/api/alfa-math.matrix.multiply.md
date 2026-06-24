@@ -9,7 +9,7 @@
 **Signature:**
 
 ```typescript
-function multiply(m: Matrix, n: number | Matrix): Matrix;
+function multiply(m: Matrix | Vector, n: number | Matrix | Vector): Matrix;
 ```
 
 ## Parameters
@@ -37,7 +37,7 @@ m
 
 </td><td>
 
-[Matrix](./alfa-math.matrix.md)
+[Matrix](./alfa-math.matrix.md) \| Vector
 
 
 </td><td>
@@ -51,7 +51,7 @@ n
 
 </td><td>
 
-number \| [Matrix](./alfa-math.matrix.md)
+number \| [Matrix](./alfa-math.matrix.md) \| Vector
 
 
 </td><td>

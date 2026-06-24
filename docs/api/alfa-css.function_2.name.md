@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-get name(): string;
+get name(): N;
 ```

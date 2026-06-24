@@ -75,5 +75,47 @@ Description
 
 
 </td></tr>
+<tr><td>
+
+[getTextDescendants](./alfa-dom.query.gettextdescendants.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
+## Type Aliases
+
+<table><thead><tr><th>
+
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[TextGroup](./alfa-dom.query.textgroup.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[TextGroupOptions](./alfa-dom.query.textgroupoptions.md)
+
+
+</td><td>
+
+
+</td></tr>
 </tbody></table>
 

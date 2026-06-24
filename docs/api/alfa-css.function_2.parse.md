@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-parse: <T>(query?: string | Predicate<Token.Function>, body?: CSSParser<T> | Thunk<CSSParser<T>>) => Parser<Slice<Token>, readonly [Function, T], string, []>
+function parse<T, N extends string = string>(query: N | ReadonlyArray<N> | Refinement<Token.Function, Token.Function<N>>, body?: CSSParser<T> | Thunk<CSSParser<T>>): CSSParser<[Function, T]>;
 ```
 
 ## Parameters
@@ -35,12 +35,10 @@ query
 
 </td><td>
 
-string \| Predicate&lt;[Token.Function](./alfa-css.token.function.md)<!-- -->&gt;
+N \| ReadonlyArray&lt;N&gt; \| Refinement&lt;[Token.Function](./alfa-css.token.function.md)<!-- -->, [Token.Function](./alfa-css.token.function.md)<!-- -->&lt;N&gt;&gt;
 
 
 </td><td>
-
-_(Optional)_
 
 
 </td></tr>
@@ -64,5 +62,5 @@ _(Optional)_
 
 **Returns:**
 
-Parser&lt;Slice&lt;Token&gt;, readonly \[[Function](./alfa-css.function_2.md)<!-- -->, T\], string, \[\]&gt;
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;\[[Function](./alfa-css.function_2.md)<!-- -->, T\]&gt;
 

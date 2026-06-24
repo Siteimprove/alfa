@@ -9,5 +9,5 @@ R82 ask questions whose subject is not the target of the rule. The context of th
 **Signature:**
 
 ```typescript
-_default: Rule.Atomic<Page, Element<string>, Question.Metadata, Node<string> | Array<Node<string>>>
+_default: Rule.Atomic<Page, Element<string>, Question.Metadata, Node | Array<Node>>
 ```

@@ -33,6 +33,15 @@ Description
 
 
 </td></tr>
+<tr><td>
+
+[parse(query, body)](./alfa-css.function_2.parse_1.md)
+
+
+</td><td>
+
+
+</td></tr>
 </tbody></table>
 
 ## Interfaces

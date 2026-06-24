@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function from(json: PageRule.JSON): PageRule;
+function from(json: Page.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Page;
 ```
 
 ## Parameters
@@ -35,7 +35,21 @@ json
 
 </td><td>
 
-[PageRule.JSON](./alfa-dom.pagerule.json.md)
+Page.JSON
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+sheetFactory
+
+
+</td><td>
+
+(rules: Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt;) =&gt; Sheet
 
 
 </td><td>
@@ -46,5 +60,5 @@ json
 
 **Returns:**
 
-PageRule
+Page
 

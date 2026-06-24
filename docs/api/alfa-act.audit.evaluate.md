@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-evaluate(performance?: Performance<Rule.Event<I, T, Q, S>>): Future<Iterable<Outcome<I, T, Q, S>>>;
+evaluate(performance?: Performance<Rule.Event<I, T, Q, S>>): Promise<Iterable<Outcome<I, T, Q, S>>>;
 ```
 
 ## Parameters
@@ -48,5 +48,5 @@ _(Optional)_
 
 **Returns:**
 
-Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;
+Promise&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;
 

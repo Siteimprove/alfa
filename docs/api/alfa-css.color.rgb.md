@@ -4,10 +4,12 @@
 
 ## Color.rgb() function
 
+Creates a color in the sRGB color space.
+
 **Signature:**
 
 ```typescript
-function rgb<C extends Number.Canonical | Percentage.Canonical, A extends Number.Canonical | Percentage.Canonical>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
+function rgb(red: Number | Percentage, green: Number | Percentage, blue: Number | Percentage, alpha?: Number | Percentage): CSS4Color;
 ```
 
 ## Parameters
@@ -35,7 +37,7 @@ red
 
 </td><td>
 
-C
+Number \| Percentage
 
 
 </td><td>
@@ -49,7 +51,7 @@ green
 
 </td><td>
 
-C
+Number \| Percentage
 
 
 </td><td>
@@ -63,7 +65,7 @@ blue
 
 </td><td>
 
-C
+Number \| Percentage
 
 
 </td><td>
@@ -77,10 +79,12 @@ alpha
 
 </td><td>
 
-A
+Number \| Percentage
 
 
 </td><td>
+
+_(Optional)_
 
 
 </td></tr>
@@ -88,5 +92,5 @@ A
 
 **Returns:**
 
-RGB&lt;C, A&gt;
+CSS4Color
 

@@ -39,7 +39,7 @@ Description
 </td></tr>
 <tr><td>
 
-[Comment](./alfa-dom.comment.md)
+[Comment\_2](./alfa-dom.comment_2.md)
 
 
 </td><td>
@@ -59,7 +59,7 @@ Description
 </td></tr>
 <tr><td>
 
-[Document](./alfa-dom.document.md)
+[Document\_2](./alfa-dom.document_2.md)
 
 
 </td><td>
@@ -69,17 +69,7 @@ Description
 </td></tr>
 <tr><td>
 
-[Element](./alfa-dom.element.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[FontFaceRule](./alfa-dom.fontfacerule.md)
+[Element\_2](./alfa-dom.element_2.md)
 
 
 </td><td>
@@ -90,66 +80,6 @@ Description
 <tr><td>
 
 [Fragment](./alfa-dom.fragment.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[ImportRule](./alfa-dom.importrule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[KeyframeRule](./alfa-dom.keyframerule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[KeyframesRule](./alfa-dom.keyframesrule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[MediaRule](./alfa-dom.mediarule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[NamespaceRule](./alfa-dom.namespacerule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[PageRule](./alfa-dom.pagerule.md)
 
 
 </td><td>
@@ -179,27 +109,7 @@ Description
 </td></tr>
 <tr><td>
 
-[StyleRule](./alfa-dom.stylerule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[SupportsRule](./alfa-dom.supportsrule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[Text](./alfa-dom.text.md)
+[Text\_2](./alfa-dom.text_2.md)
 
 
 </td><td>
@@ -210,61 +120,6 @@ Description
 <tr><td>
 
 [Type](./alfa-dom.type.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-</tbody></table>
-
-## Abstract Classes
-
-<table><thead><tr><th>
-
-Abstract Class
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[ConditionRule](./alfa-dom.conditionrule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[GroupingRule](./alfa-dom.groupingrule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[Node](./alfa-dom.node.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[Rule](./alfa-dom.rule.md)
 
 
 </td><td>
@@ -335,51 +190,6 @@ Description
 </td></tr>
 </tbody></table>
 
-## Interfaces
-
-<table><thead><tr><th>
-
-Interface
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[Node](./alfa-dom.node.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[Slot](./alfa-dom.slot.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[Slotable](./alfa-dom.slotable.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-</tbody></table>
-
 ## Namespaces
 
 <table><thead><tr><th>
@@ -415,17 +225,7 @@ Description
 </td></tr>
 <tr><td>
 
-[Comment](./alfa-dom.comment.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[ConditionRule](./alfa-dom.conditionrule.md)
+[Comment\_2](./alfa-dom.comment_2.md)
 
 
 </td><td>
@@ -445,7 +245,7 @@ Description
 </td></tr>
 <tr><td>
 
-[Document](./alfa-dom.document.md)
+[Document\_2](./alfa-dom.document_2.md)
 
 
 </td><td>
@@ -455,17 +255,7 @@ Description
 </td></tr>
 <tr><td>
 
-[Element](./alfa-dom.element.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[FontFaceRule](./alfa-dom.fontfacerule.md)
+[Element\_2](./alfa-dom.element_2.md)
 
 
 </td><td>
@@ -485,27 +275,7 @@ Description
 </td></tr>
 <tr><td>
 
-[GroupingRule](./alfa-dom.groupingrule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
 [h](./alfa-dom.h.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[ImportRule](./alfa-dom.importrule.md)
 
 
 </td><td>
@@ -525,47 +295,6 @@ Description
 </td></tr>
 <tr><td>
 
-[KeyframeRule](./alfa-dom.keyframerule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[KeyframesRule](./alfa-dom.keyframesrule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[Layer](./alfa-dom.layer.md)
-
-
-</td><td>
-
-Model for CSS layers
-
-
-</td></tr>
-<tr><td>
-
-[MediaRule](./alfa-dom.mediarule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
 [Namespace](./alfa-dom.namespace.md)
 
 
@@ -576,27 +305,7 @@ Model for CSS layers
 </td></tr>
 <tr><td>
 
-[NamespaceRule](./alfa-dom.namespacerule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[Node](./alfa-dom.node.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[PageRule](./alfa-dom.pagerule.md)
+[Node\_2](./alfa-dom.node_2.md)
 
 
 </td><td>
@@ -646,16 +355,6 @@ Model for CSS layers
 </td></tr>
 <tr><td>
 
-[Slot](./alfa-dom.slot.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
 [Slotable](./alfa-dom.slotable.md)
 
 
@@ -666,27 +365,7 @@ Model for CSS layers
 </td></tr>
 <tr><td>
 
-[StyleRule](./alfa-dom.stylerule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[SupportsRule](./alfa-dom.supportsrule.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[Text](./alfa-dom.text.md)
+[Text\_2](./alfa-dom.text_2.md)
 
 
 </td><td>
@@ -697,6 +376,51 @@ Model for CSS layers
 <tr><td>
 
 [Type](./alfa-dom.type.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
+
+## Type Aliases
+
+<table><thead><tr><th>
+
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Node\_2](./alfa-dom.node_2.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Rule](./alfa-dom.rule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Slotable](./alfa-dom.slotable.md)
 
 
 </td><td>

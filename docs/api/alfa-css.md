@@ -62,6 +62,16 @@ Description
 </td></tr>
 <tr><td>
 
+[CSS4Color](./alfa-css.css4color.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
 [CustomIdent](./alfa-css.customident.md)
 
 
@@ -106,27 +116,7 @@ Description
 </td></tr>
 <tr><td>
 
-[Hex](./alfa-css.hex.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[HSL](./alfa-css.hsl.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[Image](./alfa-css.image.md)
+[Image\_2](./alfa-css.image_2.md)
 
 
 </td><td>
@@ -181,16 +171,6 @@ Description
 <tr><td>
 
 [Matrix](./alfa-css.matrix.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[Named](./alfa-css.named.md)
 
 
 </td><td>
@@ -260,16 +240,6 @@ Description
 </td><td>
 
 [https://drafts.fxtf.org/css-masking/\#funcdef-clip-rect](https://drafts.fxtf.org/css-masking/#funcdef-clip-rect)
-
-
-</td></tr>
-<tr><td>
-
-[RGB](./alfa-css.rgb.md)
-
-
-</td><td>
-
 
 
 </td></tr>
@@ -367,7 +337,7 @@ Class representing a transformation that resizes an element in either 2D or 3D s
 </td></tr>
 <tr><td>
 
-[URL](./alfa-css.url.md)
+[URL\_2](./alfa-css.url_2.md)
 
 
 </td><td>
@@ -568,6 +538,16 @@ Description
 </td></tr>
 <tr><td>
 
+[CSS4Color](./alfa-css.css4color.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
 [Current](./alfa-css.current.md)
 
 
@@ -648,26 +628,6 @@ Description
 </td></tr>
 <tr><td>
 
-[Hex](./alfa-css.hex.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[HSL](./alfa-css.hsl.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
 [Ident](./alfa-css.ident.md)
 
 
@@ -678,7 +638,7 @@ Description
 </td></tr>
 <tr><td>
 
-[Image](./alfa-css.image.md)
+[Image\_2](./alfa-css.image_2.md)
 
 
 </td><td>
@@ -779,16 +739,6 @@ Description
 </td></tr>
 <tr><td>
 
-[Named](./alfa-css.named.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
 [Nth](./alfa-css.nth.md)
 
 
@@ -875,16 +825,6 @@ Description
 
 
 </td><td>
-
-
-</td></tr>
-<tr><td>
-
-[RGB](./alfa-css.rgb.md)
-
-
-</td><td>
-
 
 
 </td></tr>
@@ -1020,7 +960,7 @@ Description
 </td></tr>
 <tr><td>
 
-[URL](./alfa-css.url.md)
+[URL\_2](./alfa-css.url_2.md)
 
 
 </td><td>
@@ -1208,7 +1148,7 @@ Converters are functions that convert an input value from one unit within a set 
 
 </td><td>
 
-[https://drafts.csswg.org/css-color/\#css-system-colors](https://drafts.csswg.org/css-color/#css-system-colors)
+[https://drafts.csswg.org/css-color-4/\#css-system-colors](https://drafts.csswg.org/css-color-4/#css-system-colors)
 
 
 </td></tr>

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of(value: string): Ident;
+static of<N extends string>(value: N): Ident<N>;
 ```
 
 ## Parameters
@@ -35,7 +35,7 @@ value
 
 </td><td>
 
-string
+N
 
 
 </td><td>
@@ -46,5 +46,5 @@ string
 
 **Returns:**
 
-[Ident](./alfa-css.token.ident.md)
+[Ident](./alfa-css.token.ident.md)<!-- -->&lt;N&gt;
 

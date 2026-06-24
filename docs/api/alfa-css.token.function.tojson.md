@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-toJSON(): Function.JSON;
+toJSON(): Function.JSON<N>;
 ```
 **Returns:**
 
-[Function.JSON](./alfa-css.token.function.json.md)
+[Function.JSON](./alfa-css.token.function.json.md)<!-- -->&lt;N&gt;
 

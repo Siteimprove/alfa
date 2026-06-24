@@ -213,5 +213,18 @@ Extract the specified type of a named property.
 
 
 </td></tr>
+<tr><td>
+
+[Used](./alfa-style.longhands.used.md)
+
+
+</td><td>
+
+Extract the used type of a named property.
+
+[https://drafts.csswg.org/css-cascade/\#used](https://drafts.csswg.org/css-cascade/#used)
+
+
+</td></tr>
 </tbody></table>
 

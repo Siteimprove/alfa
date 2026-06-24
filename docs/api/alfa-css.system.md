@@ -4,7 +4,7 @@
 
 ## System type
 
-[https://drafts.csswg.org/css-color/\#css-system-colors](https://drafts.csswg.org/css-color/#css-system-colors)
+[https://drafts.csswg.org/css-color-4/\#css-system-colors](https://drafts.csswg.org/css-color-4/#css-system-colors)
 
 **Signature:**
 

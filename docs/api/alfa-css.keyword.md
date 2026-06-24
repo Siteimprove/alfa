@@ -35,6 +35,15 @@ Description
 </td></tr>
 <tr><td>
 
+[isKeyword(value, names)](./alfa-css.keyword.iskeyword_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [parse(keywords)](./alfa-css.keyword.parse.md)
 
 

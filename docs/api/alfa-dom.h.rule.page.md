@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function page(selector: string, declarations: Array<Declaration> | Record<string, string>): PageRule;
+function page(selector: string, declarations: Array<Declaration> | Record<string, string>): Rule.Page;
 ```
 
 ## Parameters
@@ -60,5 +60,5 @@ Array&lt;Declaration&gt; \| Record&lt;string, string&gt;
 
 **Returns:**
 
-PageRule
+Rule.Page
 

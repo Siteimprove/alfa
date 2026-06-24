@@ -9,5 +9,5 @@
 **Signature:**
 
 ```typescript
-parseProp: Parser<import("@siteimprove/alfa-slice").Slice<import("../../syntax/token.js").Token>, Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length.Fixed<"px">> | Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length>, string, []>
+parseProp: Parser<import("@siteimprove/alfa-slice").Slice<import("../../syntax/token.ts").Token>, Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length.Fixed<"px">> | Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length>, string, []>
 ```

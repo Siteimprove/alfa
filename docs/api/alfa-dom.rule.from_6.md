@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function from(json: MediaRule.JSON): MediaRule;
+function from(json: Media.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Media;
 ```
 
 ## Parameters
@@ -35,7 +35,21 @@ json
 
 </td><td>
 
-[MediaRule.JSON](./alfa-dom.mediarule.json.md)
+Media.JSON
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+sheetFactory
+
+
+</td><td>
+
+(rules: Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt;) =&gt; Sheet
 
 
 </td><td>
@@ -46,5 +60,5 @@ json
 
 **Returns:**
 
-MediaRule
+Media
 

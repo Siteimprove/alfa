@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function from(json: Layer.StatementRule.JSON): Layer.StatementRule;
+function from(json: Layer.Statement.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Layer.Statement;
 ```
 
 ## Parameters
@@ -35,7 +35,21 @@ json
 
 </td><td>
 
-[Layer.StatementRule.JSON](./alfa-dom.layer.statementrule.json.md)
+Layer.Statement.JSON
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+sheetFactory
+
+
+</td><td>
+
+(rules: Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt;) =&gt; Sheet
 
 
 </td><td>
@@ -46,5 +60,5 @@ json
 
 **Returns:**
 
-[Layer.StatementRule](./alfa-dom.layer.statementrule.md)
+Layer.Statement
 

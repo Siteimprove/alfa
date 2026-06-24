@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function media(condition: string, rules: Array<Rule>): MediaRule;
+function media(condition: string, rules: Array<Rule>): Rule.Media;
 ```
 
 ## Parameters
@@ -60,5 +60,5 @@ Array&lt;Rule&gt;
 
 **Returns:**
 
-MediaRule
+Rule.Media
 

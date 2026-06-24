@@ -10,3 +10,32 @@
 ```typescript
 export declare namespace Combinator 
 ```
+
+## Functions
+
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[matcher(left, combinator, right, element, context)](./alfa-selector.combinator.matcher.md)
+
+
+</td><td>
+
+Does the element match the combinator, with left and right selectors?
+
+This is used both for Complex selectors matching and for Relative selectors matching, hence it is defined here to re-use code.
+
+
+</td></tr>
+</tbody></table>
+

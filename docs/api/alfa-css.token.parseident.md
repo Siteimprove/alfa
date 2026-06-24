@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function parseIdent(query?: string | Predicate<Ident>): Parser<Slice<Token>, Ident, string, []>;
+function parseIdent<N extends string>(query: N | Array<N> | Refinement<Ident, Ident<N>>): CSSParser<Ident<N>>;
 ```
 
 ## Parameters
@@ -35,12 +35,10 @@ query
 
 </td><td>
 
-string \| Predicate&lt;[Ident](./alfa-css.token.ident.md)<!-- -->&gt;
+N \| Array&lt;N&gt; \| Refinement&lt;[Ident](./alfa-css.token.ident.md)<!-- -->, [Ident](./alfa-css.token.ident.md)<!-- -->&lt;N&gt;&gt;
 
 
 </td><td>
-
-_(Optional)_
 
 
 </td></tr>
@@ -48,5 +46,5 @@ _(Optional)_
 
 **Returns:**
 
-Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Ident](./alfa-css.token.ident.md)<!-- -->, string, \[\]&gt;
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;[Ident](./alfa-css.token.ident.md)<!-- -->&lt;N&gt;&gt;
 

@@ -4,11 +4,12 @@
 
 ## generateGraphs() function
 
+Generates and saves both the global dependency graph (between packages of the repository), and the individual ones (between files inside each package).
 
 **Signature:**
 
 ```typescript
-export declare function generateGraphs(cwd: string): Promise<void>;
+export declare function generateGraphs(rootDir: string, target: string): Promise<void>;
 ```
 
 ## Parameters
@@ -31,7 +32,21 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-cwd
+rootDir
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+target
 
 
 </td><td>

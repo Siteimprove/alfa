@@ -68,5 +68,5 @@ number
 
 ## Remarks
 
-The modulo operation is different from the remainder operation supported natively in JavaScript through the % operator.
+The modulo operation is different from the remainder operation supported natively in JavaScript through the `%` operator. The modulo operation always returns a result with the same sign as the divisor.
 

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-interface JSON extends Node.JSON<"fragment"> 
+interface JSON extends BaseNode.JSON<"fragment"> 
 ```
-**Extends:** [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"fragment"&gt;
+**Extends:** BaseNode.JSON&lt;"fragment"&gt;
 

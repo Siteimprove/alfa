@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function from(json: FontFaceRule.JSON): FontFaceRule;
+function from(json: FontFace.JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): FontFace;
 ```
 
 ## Parameters
@@ -35,7 +35,21 @@ json
 
 </td><td>
 
-[FontFaceRule.JSON](./alfa-dom.fontfacerule.json.md)
+FontFace.JSON
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+sheetFactory
+
+
+</td><td>
+
+(rules: Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt;) =&gt; Sheet
 
 
 </td><td>
@@ -46,5 +60,5 @@ json
 
 **Returns:**
 
-FontFaceRule
+FontFace
 

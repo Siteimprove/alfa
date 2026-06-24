@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function parseDimension(predicate?: Predicate<Dimension>): Parser<Slice<Token>, Dimension, string, []>;
+function parseDimension(predicate?: Predicate<Dimension>): CSSParser<Dimension>;
 ```
 
 ## Parameters
@@ -48,5 +48,5 @@ _(Optional)_
 
 **Returns:**
 
-Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Dimension](./alfa-css.token.dimension.md)<!-- -->, string, \[\]&gt;
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;[Dimension](./alfa-css.token.dimension.md)<!-- -->&gt;
 

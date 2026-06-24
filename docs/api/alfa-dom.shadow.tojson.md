@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-toJSON(options: Node.SerializationOptions & {
+toJSON(options: BaseNode.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Shadow.MinimalJSON;
 ```
@@ -37,7 +37,7 @@ options
 
 </td><td>
 
-[Node.SerializationOptions](./alfa-dom.node.serializationoptions.md) &amp; { verbosity: [json.Serializable.Verbosity.Minimal](./alfa-json.serializable.verbosity.md) \| [json.Serializable.Verbosity.Low](./alfa-json.serializable.verbosity.md)<!-- -->; }
+BaseNode.SerializationOptions &amp; { verbosity: [json.Serializable.Verbosity.Minimal](./alfa-json.serializable.verbosity.md) \| [json.Serializable.Verbosity.Low](./alfa-json.serializable.verbosity.md)<!-- -->; }
 
 
 </td><td>

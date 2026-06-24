@@ -4,6 +4,8 @@
 
 ## Bits.test() function
 
+Returns true if the ith bit is 1.
+
 **Signature:**
 
 ```typescript

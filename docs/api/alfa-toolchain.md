@@ -19,11 +19,23 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[generateGraphs(cwd)](./alfa-toolchain.generategraphs.md)
+[generateGraphs(rootDir, target)](./alfa-toolchain.generategraphs.md)
 
 
 </td><td>
 
+Generates and saves both the global dependency graph (between packages of the repository), and the individual ones (between files inside each package).
+
+
+</td></tr>
+<tr><td>
+
+[generateUnitTestCoverageReport(cwd)](./alfa-toolchain.generateunittestcoveragereport.md)
+
+
+</td><td>
+
+Find the coverage reports of all packages under `cwd` and generate an HTML summary of line coverage by unit tests in each package.
 
 
 </td></tr>

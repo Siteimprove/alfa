@@ -60,7 +60,7 @@ Description
 
 </td><td>
 
-[Document.JSON](./alfa-dom.document.json.md) \| [Shadow.JSON](./alfa-dom.shadow.json.md)
+Document.JSON \| [Shadow.JSON](./alfa-dom.shadow.json.md)
 
 
 </td><td>

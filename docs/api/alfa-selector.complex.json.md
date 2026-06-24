@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-interface JSON extends Selector.JSON<"complex"> 
+interface JSON extends BaseSelector.JSON<"complex"> 
 ```
-**Extends:** Selector.JSON&lt;"complex"&gt;
+**Extends:** BaseSelector.JSON&lt;"complex"&gt;
 
 ## Properties
 

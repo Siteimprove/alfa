@@ -2,53 +2,10 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-dom](./alfa-dom.md) &gt; [Rule](./alfa-dom.rule.md) &gt; [JSON](./alfa-dom.rule.json.md)
 
-## Rule.JSON interface
+## Rule.JSON type
 
 **Signature:**
 
 ```typescript
-interface JSON<T extends string = string> 
+type JSON = FontFace.JSON | Grouping.JSON | Import.JSON | Keyframe.JSON | Keyframes.JSON | Layer.Block.JSON | Layer.Statement.JSON | Media.JSON | Namespace.JSON | Page.JSON | Style.JSON | Supports.JSON;
 ```
-
-## Properties
-
-<table><thead><tr><th>
-
-Property
-
-
-</th><th>
-
-Modifiers
-
-
-</th><th>
-
-Type
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[type](./alfa-dom.rule.json.type.md)
-
-
-</td><td>
-
-
-</td><td>
-
-T
-
-
-</td><td>
-
-
-</td></tr>
-</tbody></table>
-
