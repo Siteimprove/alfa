@@ -37,17 +37,17 @@
     "@microsoft/api-documenter": "^7.30.7",
     "@microsoft/api-extractor": "^7.52.10",
     "@siteimprove/alfa-toolchain": "workspace:^0.117.0",
-    "@types/node": "^25.9.3",
-    "@vitest/coverage-v8": "^4.1.8",
-    "knip": "^6.16.1",
+    "@types/node": "^26.0.0",
+    "@vitest/coverage-v8": "^4.1.9",
+    "knip": "^6.17.1",
     "minimist": "^1.2.6",
     "prettier": "^3.8.4",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.9"
   },
   "comment-resolution": "Circumventing https://github.com/vitest-dev/vitest/issues/9876 until it is fixed upstream.",
   "resolutions": {
     "vite": "7.3.2"
   },
-  "packageManager": "yarn@4.16.0"
+  "packageManager": "yarn@4.17.0"
 }
