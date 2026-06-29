@@ -1,6 +1,3 @@
-// CC0
-import * as td from "typedoc";
-
 /** @type {import('typedoc').TypeDocOptions} */
 export default {
   name: "Alfa API documentation",
