@@ -73,7 +73,8 @@
     "madge": "^8.0.0",
     "resolve-from": "^5.0.0",
     "simple-git": "^3.36.0",
-    "ts-graphviz": "^3.0.7"
+    "ts-graphviz": "^3.0.7",
+    "typedoc": "^0.28.19"
   },
   "devDependencies": {
     "@changesets/types": "^6.1.0",
