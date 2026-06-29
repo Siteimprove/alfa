@@ -22,7 +22,9 @@
     "./changelog.cjs": "./dist/changeset/changelog-individual.cjs",
     "./changelog.js": "./dist/changeset/changelog-individual.cjs",
     "./global-changelog": "./dist/changeset/build-changelog.js",
-    "./global-changelog.js": "./dist/changeset/build-changelog.js"
+    "./global-changelog.js": "./dist/changeset/build-changelog.js",
+    "./typedoc-plugin-categorize": "./dist/typedoc/categorize.js",
+    "./typedoc-plugin-categorize.js": "./dist/typedoc/categorize.js"
   },
   "types": "dist/index.d.ts",
   "bin": {
