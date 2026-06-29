@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>4/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -113,8 +113,7 @@
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L51'></a><a href='#L51'>51</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -141,32 +140,30 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">40x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">40x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">76x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">76x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">76x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Future } from "@siteimprove/alfa-future";
-import type { Hashable } from "@siteimprove/alfa-hash";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Hashable } from "@siteimprove/alfa-hash";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 &nbsp;
 import type { Outcome } from "./outcome.ts";
@@ -192,28 +189,28 @@ import type { Rule } from "./rule.ts";
 export class Cache {
   // We do not want a singleton pattern here, as we need to create a fresh cache
   // on each new Audit.
-  public static <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >empty(</span>): Cache {</span>
-<span class="cstat-no" title="statement not covered" >    return new Cache();</span>
+  public static empty(): Cache {
+    return new Cache();
   }
 &nbsp;
-  private readonly _storage = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >new WeakMap&lt;object, unknown&gt;();</span></span>
+  private readonly _storage = new WeakMap&lt;object, unknown&gt;();
 &nbsp;
-<span class="fstat-no" title="function not covered" >  protected <span class="fstat-no" title="function not covered" >constructor() {</span>}</span>
+<span class="fstat-no" title="function not covered" >  protected constructor() {}</span>
 &nbsp;
-  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >get&lt;</span>I, T extends Hashable, Q extends Question.Metadata, S&gt;(</span>
+  public <span class="fstat-no" title="function not covered" >get&lt;</span>I, T extends Hashable, Q extends Question.Metadata, S&gt;(
     rule: Rule&lt;I, T, Q, S&gt;,
-    ifMissing: Thunk&lt;Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;&gt;,
-  ): Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt; {
-    let outcomes = <span class="cstat-no" title="statement not covered" >this._storage.get(rule) as</span>
-      | Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;
+    ifMissing: Thunk&lt;Promise&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;&gt;,
+  ): Promise&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt; {
+    let outcomes = this._storage.get(rule) as
+      | Promise&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;
       | undefined;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (outcomes === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >      outcomes = ifMissing();</span>
-<span class="cstat-no" title="statement not covered" >      this._storage.set(rule, outcomes);</span>
+    if (outcomes === undefined) {
+      outcomes = ifMissing();
+      this._storage.set(rule, outcomes);
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return outcomes;</span>
+    return outcomes;
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -223,7 +220,7 @@ export class Cache {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-05-29T11:57:25.941Z
+                at 2026-06-26T12:48:55.421Z
             </div>
         <script src="../prettify.js"></script>
         <script>

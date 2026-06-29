@@ -1,4 +1,3 @@
-import { Future } from "@siteimprove/alfa-future";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -37,7 +36,7 @@ export class Audit<
   >(
     input: I,
     rules: Iterable<Rule<I, T, Q, S>>,
-    oracle: Oracle<I, T, Q, S> = () => Future.now(None),
+    oracle: Oracle<I, T, Q, S> = () => Promise.resolve(None),
   ): Audit<I, T, Q, S> {
     return new Audit(input, List.from(rules), oracle);
   }
@@ -58,11 +57,13 @@ export class Audit<
 
   public evaluate(
     performance?: Performance<Rule.Event<I, T, Q, S>>,
-  ): Future<Iterable<Outcome<I, T, Q, S>>> {
+  ): Promise<Iterable<Outcome<I, T, Q, S>>> {
     const outcomes = Cache.empty();
 
-    return Future.traverse(this._rules, (rule) =>
-      rule.evaluate(this._input, this._oracle, outcomes, performance),
-    ).map(Iterable.flatten);
+    return Promise.all(
+      this._rules.map((rule) =>
+        rule.evaluate(this._input, this._oracle, outcomes, performance),
+      ),
+    ).then(Iterable.flatten);
   }
 }

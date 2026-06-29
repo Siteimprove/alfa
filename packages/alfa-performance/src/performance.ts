@@ -10,9 +10,7 @@ import { now } from "./now.ts";
  * @public
  */
 export class Performance<T>
-  implements
-    AsyncIterable<Performance.Entry<T>>,
-    Serializable<Performance.JSON>
+  implements AsyncIterable<Performance.Entry<T>>, Serializable<Performance.JSON>
 {
   public static of<T = string>(): Performance<T> {
     return new Performance();

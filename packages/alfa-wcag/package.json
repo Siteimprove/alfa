@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-wcag",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.115.1",
+  "version": "0.117.0",
   "license": "MIT",
   "description": "Types for working with WCAG-related information in a structured manner",
   "repository": {
@@ -32,8 +32,8 @@
     "@siteimprove/alfa-refinement": "workspace:^"
   },
   "devDependencies": {
-    "prettier": "^3.8.3",
-    "puppeteer": "^25.1.0"
+    "prettier": "^3.9.1",
+    "puppeteer": "^25.2.1"
   },
   "publishConfig": {
     "access": "public",

@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-act",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.115.1",
+  "version": "0.117.0",
   "license": "MIT",
   "description": "Functionality for implementing rules specified in the ACT Rules Format",
   "repository": {
@@ -28,7 +28,6 @@
     "@siteimprove/alfa-either": "workspace:^",
     "@siteimprove/alfa-equatable": "workspace:^",
     "@siteimprove/alfa-functor": "workspace:^",
-    "@siteimprove/alfa-future": "workspace:^",
     "@siteimprove/alfa-hash": "workspace:^",
     "@siteimprove/alfa-iterable": "workspace:^",
     "@siteimprove/alfa-json": "workspace:^",
@@ -47,6 +46,9 @@
     "@siteimprove/alfa-thunk": "workspace:^",
     "@siteimprove/alfa-trilean": "workspace:^",
     "@siteimprove/alfa-tuple": "workspace:^"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "workspace:^"
   },
   "publishConfig": {
     "access": "public",

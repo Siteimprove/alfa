@@ -39,8 +39,6 @@ digraph "dependency-graph-Alfa" {
   "@siteimprove/alfa-functor";
   "@siteimprove/alfa-earl";
   "@siteimprove/alfa-either";
-  "@siteimprove/alfa-future";
-  "name_Computations";
   "@siteimprove/alfa-list";
   "@siteimprove/alfa-performance";
   "name_Performance measurements";
@@ -82,6 +80,7 @@ digraph "dependency-graph-Alfa" {
   "@siteimprove/alfa-selective";
   "@siteimprove/alfa-bits";
   "@siteimprove/alfa-lazy";
+  "name_Computations";
   "@siteimprove/alfa-css";
   "exit_HTML";
   "name_CSS syntax";
@@ -93,7 +92,6 @@ digraph "dependency-graph-Alfa" {
   "name_CSS";
   "@siteimprove/alfa-style";
   "@siteimprove/alfa-table";
-  "@siteimprove/alfa-thenable";
   "exit_CSS syntax";
   "@siteimprove/alfa-url";
   "exit_CSS";
@@ -118,7 +116,7 @@ digraph "dependency-graph-Alfa" {
       "name_Comparison" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#e8ff00";
+        color = "#ccff00";
         label = "Comparison";
       ];
       "exit_Comparison" [
@@ -143,7 +141,7 @@ digraph "dependency-graph-Alfa" {
       "name_Collections" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#a2ff00";
+        color = "#80ff00";
         label = "Collections";
       ];
       "exit_Collections" [
@@ -191,7 +189,7 @@ digraph "dependency-graph-Alfa" {
         "name_Built ins" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ff00d1";
+          color = "#ff00e6";
           label = "Built ins";
         ];
         "exit_Built ins" [
@@ -259,7 +257,7 @@ digraph "dependency-graph-Alfa" {
       "name_Alternatives" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#ff8b00";
+        color = "#ff9900";
         label = "Alternatives";
       ];
       "exit_Alternatives" [
@@ -296,7 +294,7 @@ digraph "dependency-graph-Alfa" {
       "name_Logic" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#0074ff";
+        color = "#0066ff";
         label = "Logic";
       ];
       "exit_Logic" [
@@ -327,7 +325,7 @@ digraph "dependency-graph-Alfa" {
       "name_other" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#1700ff";
+        color = "#3300ff";
         label = "other";
       ];
       "exit_other" [
@@ -394,7 +392,7 @@ digraph "dependency-graph-Alfa" {
       "name_Accessibility Conformance Testing" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#e800ff";
+        color = "#cc00ff";
         label = "Accessibility Conformance Testing";
       ];
       "exit_Accessibility Conformance Testing" [
@@ -431,7 +429,7 @@ digraph "dependency-graph-Alfa" {
       "name_Understanding the web" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#ff4600";
+        color = "#ff4c00";
         label = "Understanding the web";
       ];
       "exit_Understanding the web" [
@@ -455,7 +453,7 @@ digraph "dependency-graph-Alfa" {
         "name_HTML" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ffb9";
+          color = "#00ffff";
           label = "HTML";
         ];
         "exit_HTML" [
@@ -480,7 +478,7 @@ digraph "dependency-graph-Alfa" {
         "name_Infrastructure" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ff2e";
+          color = "#00ff66";
           label = "Infrastructure";
         ];
         "exit_Infrastructure" [
@@ -511,7 +509,7 @@ digraph "dependency-graph-Alfa" {
         "name_CSS syntax" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#17ff00";
+          color = "#00ff19";
           label = "CSS syntax";
         ];
         "exit_CSS syntax" [
@@ -619,7 +617,7 @@ digraph "dependency-graph-Alfa" {
       "name_Type definitions" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#ff008b";
+        color = "#ff0099";
         label = "Type definitions";
       ];
       "exit_Type definitions" [
@@ -698,7 +696,7 @@ digraph "dependency-graph-Alfa" {
       "name_Hash tables" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#ffd100";
+        color = "#ffe600";
         label = "Hash tables";
       ];
       "exit_Hash tables" [
@@ -729,7 +727,7 @@ digraph "dependency-graph-Alfa" {
       "name_Performance measurements" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#002eff";
+        color = "#0019ff";
         label = "Performance measurements";
       ];
       "exit_Performance measurements" [
@@ -754,81 +752,22 @@ digraph "dependency-graph-Alfa" {
       "name_Computations" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#a200ff";
+        color = "#8000ff";
         label = "Computations";
       ];
       "exit_Computations" [
         style = "invis";
       ];
-      subgraph "cluster_Synchronous" {
-        color = "#000000";
-        label = "";
-        "name_Synchronous" [
-          penwidth = 5;
-          shape = "rectangle";
-          color = "#5d00ff";
-          label = "Synchronous";
-        ];
-        "exit_Synchronous" [
-          style = "invis";
-        ];
-        "@siteimprove/alfa-lazy" [
-          label = "alfa-lazy";
-        ];
-        "@siteimprove/alfa-trampoline" [
-          label = "alfa-trampoline";
-        ];
-        "@siteimprove/alfa-lazy" -> "exit_Synchronous" [
-          style = "invis";
-        ];
-        "@siteimprove/alfa-trampoline" -> "exit_Synchronous" [
-          style = "invis";
-        ];
-      }
-      subgraph "cluster_Asynchronous" {
-        color = "#000000";
-        label = "";
-        "name_Asynchronous" [
-          penwidth = 5;
-          shape = "rectangle";
-          color = "#00ffff";
-          label = "Asynchronous";
-        ];
-        "exit_Asynchronous" [
-          style = "invis";
-        ];
-        "@siteimprove/alfa-promise" [
-          label = "alfa-promise";
-        ];
-        "@siteimprove/alfa-thenable" [
-          label = "alfa-thenable";
-        ];
-        "@siteimprove/alfa-future" [
-          label = "alfa-future";
-        ];
-        "@siteimprove/alfa-promise" -> "exit_Asynchronous" [
-          style = "invis";
-        ];
-        "@siteimprove/alfa-thenable" -> "exit_Asynchronous" [
-          style = "invis";
-        ];
-        "@siteimprove/alfa-future" -> "exit_Asynchronous" [
-          style = "invis";
-        ];
-      }
-      "exit_Synchronous" -> "exit_Computations" [
+      "@siteimprove/alfa-lazy" [
+        label = "alfa-lazy";
+      ];
+      "@siteimprove/alfa-trampoline" [
+        label = "alfa-trampoline";
+      ];
+      "@siteimprove/alfa-lazy" -> "exit_Computations" [
         style = "invis";
       ];
-      "exit_Asynchronous" -> "exit_Computations" [
-        style = "invis";
-      ];
-      "exit_Asynchronous" -> "exit_Computations" [
-        style = "invis";
-      ];
-      "exit_Asynchronous" -> "exit_Computations" [
-        style = "invis";
-      ];
-      "exit_Synchronous" -> "exit_Computations" [
+      "@siteimprove/alfa-trampoline" -> "exit_Computations" [
         style = "invis";
       ];
     }
@@ -838,7 +777,7 @@ digraph "dependency-graph-Alfa" {
       "name_Serialization" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#00ff74";
+        color = "#00ffb3";
         label = "Serialization";
       ];
       "exit_Serialization" [
@@ -875,7 +814,7 @@ digraph "dependency-graph-Alfa" {
       "name_Graphs" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#ff0046";
+        color = "#ff004d";
         label = "Graphs";
       ];
       "exit_Graphs" [
@@ -900,7 +839,7 @@ digraph "dependency-graph-Alfa" {
       "name_Tooling" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#00b9ff";
+        color = "#00b2ff";
         label = "Tooling";
       ];
       "exit_Tooling" [
@@ -1030,9 +969,6 @@ digraph "dependency-graph-Alfa" {
     "exit_Alternatives" -> "exit_Alfa" [
       style = "invis";
     ];
-    "exit_Computations" -> "exit_Alfa" [
-      style = "invis";
-    ];
     "exit_other" -> "exit_Alfa" [
       style = "invis";
     ];
@@ -1046,9 +982,6 @@ digraph "dependency-graph-Alfa" {
       style = "invis";
     ];
     "exit_Type definitions" -> "exit_Alfa" [
-      style = "invis";
-    ];
-    "exit_Computations" -> "exit_Alfa" [
       style = "invis";
     ];
     "exit_Type definitions" -> "exit_Alfa" [
@@ -1076,9 +1009,6 @@ digraph "dependency-graph-Alfa" {
       style = "invis";
     ];
     "exit_Understanding the web" -> "exit_Alfa" [
-      style = "invis";
-    ];
-    "exit_Computations" -> "exit_Alfa" [
       style = "invis";
     ];
     "exit_Understanding the web" -> "exit_Alfa" [
@@ -1153,103 +1083,103 @@ digraph "dependency-graph-Alfa" {
   }
   "exit_Comparison" -> "name_other" [
     style = "dotted";
-    color = "#e8ff00";
+    color = "#ccff00";
     lhead = "cluster_other";
     ltail = "cluster_Comparison";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "solid";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Comparison" [
     style = "solid";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Comparison";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Comparison" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Comparison";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Hash tables" [
     style = "solid";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Serialization" [
     style = "solid";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Serialization";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Logic" [
     style = "solid";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Logic";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Logic" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Logic";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_other" [
     style = "dotted";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_other";
     ltail = "cluster_Alternatives";
   ];
   "exit_Logic" -> "name_Collections" [
     style = "solid";
-    color = "#0074ff";
+    color = "#0066ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Logic";
   ];
   "exit_Logic" -> "name_Type definitions" [
     style = "solid";
-    color = "#0074ff";
+    color = "#0066ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Logic";
   ];
   "exit_Logic" -> "name_other" [
     style = "dotted";
-    color = "#0074ff";
+    color = "#0066ff";
     lhead = "cluster_other";
     ltail = "cluster_Logic";
   ];
@@ -1269,49 +1199,49 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Accessibility Conformance Testing" -> "name_Collections" [
     style = "solid";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Alternatives" [
     style = "solid";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Logic" [
     style = "solid";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Logic";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Logic" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Logic";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_other" -> "name_Collections" [
     style = "solid";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Collections";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Type definitions" [
     style = "solid";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Alternatives" [
     style = "solid";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Type definitions" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_other";
   ];
@@ -1324,276 +1254,276 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "solid";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Hash tables" [
     style = "solid";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "solid";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "solid";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "@siteimprove/alfa-collection" -> "name_Built ins" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Hash tables" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Collections";
   ];
   "@siteimprove/alfa-collection" -> "name_Built ins" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "exit_Collections" -> "name_Serialization" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Alternatives" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Type definitions" [
     style = "solid";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Collections" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Serialization" [
     style = "solid";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Serialization";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Alternatives" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Comparison" [
     style = "solid";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Comparison";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Type definitions" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Type definitions";
-    ltail = "cluster_Accessibility Conformance Testing";
-  ];
-  "exit_Accessibility Conformance Testing" -> "name_Computations" [
-    style = "solid";
-    color = "#e800ff";
-    lhead = "cluster_Computations";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Hash tables" [
     style = "solid";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Collections" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Serialization" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Serialization";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Collections" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Type definitions" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Type definitions" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Alternatives" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Performance measurements" [
     style = "solid";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Performance measurements";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Logic" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Logic";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Collections" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Logic" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Logic";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Alternatives" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Serialization" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Serialization";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Collections" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_other" [
     style = "solid";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_other";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Type definitions" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Logic" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Logic";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Collections" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Collections";
+    ltail = "cluster_Accessibility Conformance Testing";
+  ];
+  "exit_Accessibility Conformance Testing" -> "name_other" [
+    style = "invis";
+    color = "#cc00ff";
+    lhead = "cluster_other";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "@siteimprove/alfa-thunk" -> "@siteimprove/alfa-mapper" [
@@ -1612,43 +1542,43 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Type definitions" -> "name_other" [
     style = "dotted";
-    color = "#ff008b";
+    color = "#ff0099";
     lhead = "cluster_other";
     ltail = "cluster_Type definitions";
   ];
   "exit_Hash tables" -> "name_other" [
     style = "dotted";
-    color = "#ffd100";
+    color = "#ffe600";
     lhead = "cluster_other";
     ltail = "cluster_Hash tables";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Hash tables" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Collections";
   ];
@@ -1661,61 +1591,61 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Serialization" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Alternatives" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Hash tables" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_other" [
     style = "dotted";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_other";
     ltail = "cluster_Collections";
   ];
   "exit_other" -> "name_Type definitions" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Type definitions" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_other";
   ];
@@ -1728,13 +1658,13 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
@@ -1747,96 +1677,96 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Alternatives" -> "name_Comparison" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Comparison";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Hash tables" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Serialization" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Serialization";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Logic" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Logic";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Logic" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Logic";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_other" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_other";
     ltail = "cluster_Alternatives";
   ];
   "exit_Performance measurements" -> "name_Type definitions" [
     style = "solid";
-    color = "#002eff";
+    color = "#0019ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Performance measurements";
   ];
   "exit_Performance measurements" -> "name_Type definitions" [
     style = "invis";
-    color = "#002eff";
+    color = "#0019ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Performance measurements";
   ];
   "exit_Performance measurements" -> "name_Type definitions" [
     style = "invis";
-    color = "#002eff";
+    color = "#0019ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Performance measurements";
   ];
   "exit_Performance measurements" -> "name_Type definitions" [
     style = "invis";
-    color = "#002eff";
+    color = "#0019ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Performance measurements";
   ];
   "exit_Performance measurements" -> "name_other" [
     style = "dotted";
-    color = "#002eff";
+    color = "#0019ff";
     lhead = "cluster_other";
     ltail = "cluster_Performance measurements";
   ];
   "@siteimprove/alfa-set" -> "name_Built ins" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
@@ -1849,18 +1779,18 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Hash tables" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Collections";
   ];
   "@siteimprove/alfa-set" -> "name_Built ins" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "exit_Collections" -> "name_Serialization" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Collections";
   ];
@@ -1873,97 +1803,97 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Alternatives" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Logic" -> "name_Type definitions" [
     style = "invis";
-    color = "#0074ff";
+    color = "#0066ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Logic";
   ];
   "exit_Logic" -> "name_Comparison" [
     style = "solid";
-    color = "#0074ff";
+    color = "#0066ff";
     lhead = "cluster_Comparison";
     ltail = "cluster_Logic";
   ];
   "exit_Logic" -> "name_Type definitions" [
     style = "invis";
-    color = "#0074ff";
+    color = "#0066ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Logic";
   ];
   "exit_Logic" -> "name_other" [
     style = "invis";
-    color = "#0074ff";
+    color = "#0066ff";
     lhead = "cluster_other";
     ltail = "cluster_Logic";
   ];
   "exit_Computations" -> "name_Type definitions" [
     style = "solid";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Comparison" [
     style = "solid";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Comparison";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Type definitions" [
     style = "invis";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Serialization" [
     style = "solid";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Serialization";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Type definitions" [
     style = "invis";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Type definitions" [
     style = "invis";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Type definitions" [
     style = "invis";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Computations";
   ];
@@ -1976,67 +1906,67 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Computations" -> "name_other" [
     style = "dotted";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_other";
     ltail = "cluster_Computations";
   ];
   "exit_Serialization" -> "name_Logic" [
     style = "solid";
-    color = "#00ff74";
+    color = "#00ffb3";
     lhead = "cluster_Logic";
     ltail = "cluster_Serialization";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "solid";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "dotted";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
@@ -2049,97 +1979,97 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "solid";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Graphs" -> "name_Comparison" [
     style = "solid";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_Comparison";
     ltail = "cluster_Graphs";
   ];
   "exit_Graphs" -> "name_Hash tables" [
     style = "solid";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Graphs";
   ];
   "exit_Graphs" -> "name_Collections" [
     style = "solid";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_Collections";
     ltail = "cluster_Graphs";
   ];
   "exit_Graphs" -> "name_Serialization" [
     style = "solid";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_Serialization";
     ltail = "cluster_Graphs";
   ];
   "exit_Graphs" -> "name_Collections" [
     style = "invis";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_Collections";
     ltail = "cluster_Graphs";
   ];
   "exit_Graphs" -> "name_Collections" [
     style = "invis";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_Collections";
     ltail = "cluster_Graphs";
   ];
   "exit_Graphs" -> "name_Collections" [
     style = "invis";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_Collections";
     ltail = "cluster_Graphs";
   ];
   "exit_Graphs" -> "name_other" [
     style = "dotted";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_other";
     ltail = "cluster_Graphs";
   ];
@@ -2152,7 +2082,7 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
@@ -2161,30 +2091,30 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Infrastructure" -> "@siteimprove/alfa-device" [
     style = "solid";
-    color = "#00ff2e";
+    color = "#00ff66";
     ltail = "cluster_Infrastructure";
   ];
   "exit_Infrastructure" -> "name_HTML" [
     style = "solid";
-    color = "#00ff2e";
+    color = "#00ff66";
     lhead = "cluster_HTML";
     ltail = "cluster_Infrastructure";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Hash tables" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Graphs" [
     style = "solid";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Graphs";
     ltail = "cluster_Understanding the web";
   ];
@@ -2197,31 +2127,31 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
@@ -2234,13 +2164,13 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Hash tables" -> "name_other" [
     style = "invis";
-    color = "#ffd100";
+    color = "#ffe600";
     lhead = "cluster_other";
     ltail = "cluster_Hash tables";
   ];
   "exit_Graphs" -> "name_Comparison" [
     style = "invis";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_Comparison";
     ltail = "cluster_Graphs";
   ];
@@ -2253,49 +2183,49 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Graphs" -> "name_Hash tables" [
     style = "invis";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Graphs";
   ];
   "exit_Graphs" -> "name_Collections" [
     style = "invis";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_Collections";
     ltail = "cluster_Graphs";
   ];
   "exit_Graphs" -> "name_Serialization" [
     style = "invis";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_Serialization";
     ltail = "cluster_Graphs";
   ];
   "exit_Graphs" -> "name_Collections" [
     style = "invis";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_Collections";
     ltail = "cluster_Graphs";
   ];
   "exit_Graphs" -> "name_Collections" [
     style = "invis";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_Collections";
     ltail = "cluster_Graphs";
   ];
   "exit_Graphs" -> "name_Collections" [
     style = "invis";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_Collections";
     ltail = "cluster_Graphs";
   ];
   "exit_Graphs" -> "name_other" [
     style = "invis";
-    color = "#ff0046";
+    color = "#ff004d";
     lhead = "cluster_other";
     ltail = "cluster_Graphs";
   ];
   "exit_Performance measurements" -> "name_Type definitions" [
     style = "invis";
-    color = "#002eff";
+    color = "#0019ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Performance measurements";
   ];
@@ -2308,199 +2238,199 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Performance measurements" -> "name_Serialization" [
     style = "solid";
-    color = "#002eff";
+    color = "#0019ff";
     lhead = "cluster_Serialization";
     ltail = "cluster_Performance measurements";
   ];
   "exit_Performance measurements" -> "name_Type definitions" [
     style = "invis";
-    color = "#002eff";
+    color = "#0019ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Performance measurements";
   ];
   "exit_Tooling" -> "name_Collections" [
     style = "solid";
-    color = "#00b9ff";
+    color = "#00b2ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Tooling";
   ];
   "exit_Tooling" -> "name_Collections" [
     style = "invis";
-    color = "#00b9ff";
+    color = "#00b2ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Tooling";
   ];
   "exit_Tooling" -> "name_Alternatives" [
     style = "solid";
-    color = "#00b9ff";
+    color = "#00b2ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Tooling";
   ];
   "exit_Tooling" -> "name_Alternatives" [
     style = "invis";
-    color = "#00b9ff";
+    color = "#00b2ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Tooling";
   ];
   "exit_Tooling" -> "name_Collections" [
     style = "invis";
-    color = "#00b9ff";
+    color = "#00b2ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Tooling";
   ];
   "exit_Tooling" -> "name_other" [
     style = "solid";
-    color = "#00b9ff";
+    color = "#00b2ff";
     lhead = "cluster_other";
     ltail = "cluster_Tooling";
   ];
   "exit_Tooling" -> "name_other" [
     style = "invis";
-    color = "#00b9ff";
+    color = "#00b2ff";
     lhead = "cluster_other";
     ltail = "cluster_Tooling";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Hash tables" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Type definitions" [
     style = "solid";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_other" -> "name_Comparison" [
     style = "solid";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Comparison";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Serialization" [
     style = "solid";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Serialization";
     ltail = "cluster_other";
   ];
@@ -2513,7 +2443,7 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_other" -> "name_Alternatives" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_other";
   ];
@@ -2526,43 +2456,43 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_other" -> "name_Collections" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Collections";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Type definitions" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Type definitions" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Alternatives" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Logic" [
     style = "solid";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Logic";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Logic" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Logic";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Alternatives" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_other";
   ];
@@ -2575,25 +2505,25 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Comparison" -> "name_Logic" [
     style = "solid";
-    color = "#e8ff00";
+    color = "#ccff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Comparison";
   ];
   "exit_Comparison" -> "name_other" [
     style = "invis";
-    color = "#e8ff00";
+    color = "#ccff00";
     lhead = "cluster_other";
     ltail = "cluster_Comparison";
   ];
   "exit_Comparison" -> "name_other" [
     style = "invis";
-    color = "#e8ff00";
+    color = "#ccff00";
     lhead = "cluster_other";
     ltail = "cluster_Comparison";
   ];
   "@siteimprove/alfa-list" -> "name_Built ins" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "@siteimprove/alfa-list" -> "@siteimprove/alfa-bits" [
@@ -2605,7 +2535,7 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
@@ -2618,36 +2548,36 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Hash tables" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Collections";
   ];
   "@siteimprove/alfa-list" -> "name_Built ins" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "exit_Collections" -> "name_Serialization" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Collections";
   ];
@@ -2660,31 +2590,31 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Alternatives" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
@@ -2697,13 +2627,13 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_other" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_other";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
@@ -2716,43 +2646,43 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Hash tables" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Serialization" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Computations" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Computations";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Alternatives" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_other" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_other";
     ltail = "cluster_Collections";
   ];
@@ -2765,55 +2695,55 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Comparison" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Comparison";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Hash tables" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Serialization" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Serialization";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
@@ -2826,43 +2756,19 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
-  "exit_Computations" -> "name_Collections" [
-    style = "solid";
-    color = "#a200ff";
-    lhead = "cluster_Collections";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_Type definitions" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Type definitions";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_Type definitions" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Type definitions";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_other" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_other";
-    ltail = "cluster_Computations";
-  ];
   "exit_other" -> "name_Type definitions" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Logic" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Logic";
     ltail = "cluster_other";
   ];
@@ -2875,55 +2781,55 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Serialization" -> "name_Alternatives" [
     style = "solid";
-    color = "#00ff74";
+    color = "#00ffb3";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Serialization";
   ];
   "exit_Serialization" -> "name_Logic" [
     style = "invis";
-    color = "#00ff74";
+    color = "#00ffb3";
     lhead = "cluster_Logic";
     ltail = "cluster_Serialization";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Comparison" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Comparison";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Hash tables" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Serialization" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Serialization";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
@@ -2936,31 +2842,31 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Alternatives" -> "name_Logic" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Logic";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Logic" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Logic";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_other" [
     style = "invis";
-    color = "#ff8b00";
+    color = "#ff9900";
     lhead = "cluster_other";
     ltail = "cluster_Alternatives";
   ];
@@ -2977,42 +2883,6 @@ digraph "dependency-graph-Alfa" {
   "@siteimprove/alfa-callback" -> "@siteimprove/alfa-mapper" [
     style = "solid";
     color = "black";
-  ];
-  "exit_Computations" -> "name_Collections" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Collections";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_Type definitions" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Type definitions";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_Type definitions" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Type definitions";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_Type definitions" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Type definitions";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_Logic" [
-    style = "solid";
-    color = "#a200ff";
-    lhead = "cluster_Logic";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_other" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_other";
-    ltail = "cluster_Computations";
   ];
   "@siteimprove/alfa-foldable" -> "@siteimprove/alfa-reducer" [
     style = "invis";
@@ -3023,31 +2893,31 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_HTML" -> "name_CSS syntax" [
     style = "solid";
-    color = "#00ffb9";
+    color = "#00ffff";
     lhead = "cluster_CSS syntax";
     ltail = "cluster_HTML";
   ];
   "exit_HTML" -> "name_CSS syntax" [
     style = "invis";
-    color = "#00ffb9";
+    color = "#00ffff";
     lhead = "cluster_CSS syntax";
     ltail = "cluster_HTML";
   ];
@@ -3056,126 +2926,126 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_HTML" -> "@siteimprove/alfa-device" [
     style = "solid";
-    color = "#00ffb9";
+    color = "#00ffff";
     ltail = "cluster_HTML";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Computations" [
     style = "solid";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Computations";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Computations" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Computations";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
@@ -3188,24 +3058,24 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Serialization" -> "name_Alternatives" [
     style = "invis";
-    color = "#00ff74";
+    color = "#00ffb3";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Serialization";
   ];
   "exit_Serialization" -> "name_Logic" [
     style = "invis";
-    color = "#00ff74";
+    color = "#00ffb3";
     lhead = "cluster_Logic";
     ltail = "cluster_Serialization";
   ];
   "@siteimprove/alfa-sequence" -> "name_Built ins" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
@@ -3218,36 +3088,36 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Hash tables" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Collections";
   ];
   "@siteimprove/alfa-sequence" -> "name_Built ins" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "exit_Collections" -> "name_Serialization" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Computations" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Computations";
     ltail = "cluster_Collections";
   ];
@@ -3260,31 +3130,31 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Alternatives" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
@@ -3297,7 +3167,7 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_other" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_other";
     ltail = "cluster_Collections";
   ];
@@ -3317,19 +3187,19 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Type definitions" -> "name_other" [
     style = "invis";
-    color = "#ff008b";
+    color = "#ff0099";
     lhead = "cluster_other";
     ltail = "cluster_Type definitions";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
@@ -3342,129 +3212,129 @@ digraph "dependency-graph-Alfa" {
   ];
   "@siteimprove/alfa-aria" -> "name_HTML" [
     style = "solid";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_HTML";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Graphs" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Graphs";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Hash tables" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "@siteimprove/alfa-aria" -> "name_CSS" [
     style = "solid";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_CSS";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "@siteimprove/alfa-aria" -> "name_CSS" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_CSS";
   ];
   "@siteimprove/alfa-aria" -> "name_HTML" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_HTML";
   ];
   "exit_Understanding the web" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
@@ -3491,133 +3361,66 @@ digraph "dependency-graph-Alfa" {
   ];
   "@siteimprove/alfa-xpath" -> "name_HTML" [
     style = "solid";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_HTML";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
-  "exit_Computations" -> "name_Type definitions" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Type definitions";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_Collections" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Collections";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_Type definitions" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Type definitions";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_Type definitions" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Type definitions";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_Type definitions" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Type definitions";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_Collections" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Collections";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_Type definitions" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Type definitions";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_Type definitions" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Type definitions";
-    ltail = "cluster_Computations";
-  ];
-  "@siteimprove/alfa-future" -> "@siteimprove/alfa-thenable" [
-    style = "invis";
-  ];
-  "@siteimprove/alfa-future" -> "@siteimprove/alfa-thenable" [
-    style = "solid";
-    color = "black";
-  ];
-  "exit_Computations" -> "name_Type definitions" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_Type definitions";
-    ltail = "cluster_Computations";
-  ];
-  "exit_Computations" -> "name_other" [
-    style = "invis";
-    color = "#a200ff";
-    lhead = "cluster_other";
-    ltail = "cluster_Computations";
-  ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
@@ -3633,78 +3436,78 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_CSS syntax" -> "@siteimprove/alfa-device" [
     style = "solid";
-    color = "#17ff00";
+    color = "#00ff19";
     ltail = "cluster_CSS syntax";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
@@ -3717,79 +3520,79 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Hash tables" -> "name_Comparison" [
     style = "solid";
-    color = "#ffd100";
+    color = "#ffe600";
     lhead = "cluster_Comparison";
     ltail = "cluster_Hash tables";
   ];
   "exit_Hash tables" -> "name_Serialization" [
     style = "solid";
-    color = "#ffd100";
+    color = "#ffe600";
     lhead = "cluster_Serialization";
     ltail = "cluster_Hash tables";
   ];
   "exit_Hash tables" -> "name_Logic" [
     style = "solid";
-    color = "#ffd100";
+    color = "#ffe600";
     lhead = "cluster_Logic";
     ltail = "cluster_Hash tables";
   ];
   "exit_Hash tables" -> "name_other" [
     style = "invis";
-    color = "#ffd100";
+    color = "#ffe600";
     lhead = "cluster_other";
     ltail = "cluster_Hash tables";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Hash tables" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
@@ -3802,13 +3605,13 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
@@ -3821,24 +3624,24 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Hash tables" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Collections";
   ];
   "@siteimprove/alfa-branched" -> "name_Built ins" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "exit_Collections" -> "name_Serialization" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Collections";
   ];
@@ -3851,49 +3654,49 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Alternatives" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_other" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_other";
     ltail = "cluster_Collections";
   ];
   "exit_Logic" -> "name_Type definitions" [
     style = "invis";
-    color = "#0074ff";
+    color = "#0066ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Logic";
   ];
   "exit_Logic" -> "name_Type definitions" [
     style = "invis";
-    color = "#0074ff";
+    color = "#0066ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Logic";
   ];
@@ -3906,55 +3709,55 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Logic" -> "name_other" [
     style = "invis";
-    color = "#0074ff";
+    color = "#0066ff";
     lhead = "cluster_other";
     ltail = "cluster_Logic";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Hash tables" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
@@ -3967,31 +3770,31 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Accessibility Conformance Testing" -> "name_Alternatives" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_other" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_other";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
@@ -4023,43 +3826,43 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
@@ -4072,18 +3875,18 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "@siteimprove/alfa-slice" -> "name_Built ins" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
@@ -4096,209 +3899,209 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Hash tables" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Collections";
   ];
   "@siteimprove/alfa-slice" -> "name_Built ins" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "exit_Collections" -> "name_Serialization" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Alternatives" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_other" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_other";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Hash tables" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Serialization" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Alternatives" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Computations" -> "name_Type definitions" [
     style = "invis";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Collections" [
-    style = "invis";
-    color = "#a200ff";
+    style = "solid";
+    color = "#8000ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Type definitions" [
     style = "invis";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Type definitions" [
     style = "invis";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Type definitions" [
     style = "invis";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Collections" [
     style = "invis";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Type definitions" [
     style = "invis";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Type definitions" [
     style = "invis";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Type definitions" [
     style = "invis";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_Type definitions" [
     style = "invis";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Computations";
   ];
   "exit_Computations" -> "name_other" [
     style = "invis";
-    color = "#a200ff";
+    color = "#8000ff";
     lhead = "cluster_other";
     ltail = "cluster_Computations";
   ];
   "@siteimprove/alfa-flags" -> "name_Built ins" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Serialization" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Collections";
   ];
@@ -4311,25 +4114,25 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_other" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_other";
     ltail = "cluster_Collections";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
@@ -4355,67 +4158,67 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Hash tables" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
@@ -4428,43 +4231,43 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_other" -> "name_Comparison" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Comparison";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Comparison" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Comparison";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Hash tables" [
     style = "solid";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Hash tables";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Serialization" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Serialization";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Collections" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Collections";
     ltail = "cluster_other";
   ];
   "exit_other" -> "name_Hash tables" [
     style = "invis";
-    color = "#1700ff";
+    color = "#3300ff";
     lhead = "cluster_Hash tables";
     ltail = "cluster_other";
   ];
@@ -4484,25 +4287,25 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Understanding the web" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Understanding the web";
   ];
@@ -4535,97 +4338,97 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
@@ -4638,54 +4441,54 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "@siteimprove/alfa-record" -> "name_Built ins" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "exit_Collections" -> "name_Serialization" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Collections";
   ];
@@ -4698,43 +4501,43 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Alternatives" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_other" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_other";
     ltail = "cluster_Collections";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
@@ -4752,97 +4555,97 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Understanding the web" -> "name_Comparison" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Hash tables" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Serialization" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Logic" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Logic";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Alternatives" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Collections";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Type definitions" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
     style = "invis";
-    color = "#ff4600";
+    color = "#ff4c00";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "@siteimprove/alfa-map" -> "name_Built ins" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "@siteimprove/alfa-map" -> "@siteimprove/alfa-bits" [
@@ -4854,7 +4657,7 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
@@ -4867,137 +4670,137 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Hash tables" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Hash tables" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Collections";
   ];
   "@siteimprove/alfa-map" -> "name_Built ins" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "exit_Collections" -> "name_Serialization" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Serialization";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Alternatives" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_other" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_other";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_other" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_other";
     ltail = "cluster_Collections";
   ];
   "@siteimprove/alfa-tuple" -> "name_Built ins" [
     style = "solid";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Built ins";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Comparison" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Comparison";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Hash tables" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Alternatives" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Type definitions" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_Logic" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_Logic";
     ltail = "cluster_Collections";
   ];
   "exit_Collections" -> "name_other" [
     style = "invis";
-    color = "#a2ff00";
+    color = "#80ff00";
     lhead = "cluster_other";
     ltail = "cluster_Collections";
   ];
@@ -5010,61 +4813,61 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Accessibility Conformance Testing" -> "name_other" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_other";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
     style = "solid";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Understanding the web";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Collections" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_other" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_other";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Understanding the web";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Comparison" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Comparison";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Understanding the web";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Understanding the web";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Understanding the web";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Understanding the web";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
@@ -5077,163 +4880,163 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Accessibility Conformance Testing" -> "name_Serialization" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Serialization";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Alternatives" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Comparison" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Comparison";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Hash tables" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Hash tables";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Understanding the web";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Collections" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Serialization" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Serialization";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Collections" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Collections" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_other" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_other";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Alternatives" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Understanding the web";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Logic" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Logic";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Collections" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_other" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_other";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Logic" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Logic";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Alternatives" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Serialization" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Serialization";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Understanding the web";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Collections" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Collections" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Collections";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_other" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_other";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Understanding the web";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Understanding the web";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Type definitions" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Type definitions";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Logic" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Logic";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Understanding the web";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
@@ -5246,25 +5049,19 @@ digraph "dependency-graph-Alfa" {
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Understanding the web";
-    ltail = "cluster_Accessibility Conformance Testing";
-  ];
-  "exit_Accessibility Conformance Testing" -> "name_Computations" [
-    style = "invis";
-    color = "#e800ff";
-    lhead = "cluster_Computations";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_Understanding the web" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_Understanding the web";
     ltail = "cluster_Accessibility Conformance Testing";
   ];
   "exit_Accessibility Conformance Testing" -> "name_other" [
     style = "invis";
-    color = "#e800ff";
+    color = "#cc00ff";
     lhead = "cluster_other";
     ltail = "cluster_Accessibility Conformance Testing";
   ];

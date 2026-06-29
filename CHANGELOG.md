@@ -1,5 +1,31 @@
 # Alfa changelog
 
+## [0.117.0](../../compare/v0.116.0...v0.117.0) (2026-06-11)
+
+### Breaking
+
+- [@siteimprove/alfa-promise](packages/alfa-promise/CHANGELOG.md#01170): The `@siteimprove/alfa-promise` package is now deprecated. ([#2107](https://github.com/Siteimprove/alfa/pull/2107))
+
+- [@siteimprove/alfa-thenable](packages/alfa-thenable/CHANGELOG.md#01170): The `@siteimprove/alfa-thenable` package is now deprecated. ([#2107](https://github.com/Siteimprove/alfa/pull/2107))
+
+## [0.116.0](../../compare/v0.115.1...v0.116.0) (2026-06-11)
+
+### Breaking
+
+- [@siteimprove/alfa-future](packages/alfa-future/CHANGELOG.md#01160): The `@siteimprove/alfa-future` package is now deprecated. ([#2104](https://github.com/Siteimprove/alfa/pull/2104))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01160): "start expectation" performance mark for inapplicable rules is no longer emitted (the "end expectation" measure was never emitted). ([#2104](https://github.com/Siteimprove/alfa/pull/2104))
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#01160): All functionalities now use `Promise` instead of `Future`. ([#2104](https://github.com/Siteimprove/alfa/pull/2104))
+
+### Added
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#01160): `Finding.isConclusive` and `Finding.isInconclusive` type guards are now available. ([#2103](https://github.com/Siteimprove/alfa/pull/2103))
+
+### Fixed
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#01160): `Question.answerIf` now correctly handles being chained. ([#2103](https://github.com/Siteimprove/alfa/pull/2103))
+
 ## [0.115.1](../../compare/v0.115.0...v0.115.1) (2026-05-29)
 
 ### Changed
