@@ -4,16 +4,14 @@ import * as td from "typedoc";
 /** @type {import('typedoc').TypeDocOptions} */
 export default {
   name: "Alfa API documentation",
-  entryPoints: [
-    "../packages/alfa-act",
-    "../packages/alfa-dom",
-    "../packages/alfa-rules",
-    "../packages/alfa-selector",
-  ],
+  entryPoints: ["../packages/alfa-*"],
   entryPointStrategy: "packages",
   includeVersion: false,
   excludeExternals: true,
-  plugin: ["typedoc-plugin-markdown", "@siteimprove/alfa-toolchain/typedoc-plugin-categorize"],
+  plugin: [
+    "typedoc-plugin-markdown",
+    "@siteimprove/alfa-toolchain/typedoc-plugin-categorize",
+  ],
   outputs: [
     { name: "html", path: "../docs/typedoc/html" },
     { name: "markdown", path: "../docs/typedoc/markdown" },
