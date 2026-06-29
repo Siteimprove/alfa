@@ -17,7 +17,7 @@ export default {
   favicon: "../media/icon.svg",
   sourceLinkExternal: true,
   navigationLinks: {
-    "Alfa technical documentation": "https://alfa.siteimprove.com",
+    "Alfa rules documentation": "https://alfa.siteimprove.com",
     Siteimprove: "https://siteimprove.com",
   },
   useFirstParagraphOfCommentAsSummary: true,
