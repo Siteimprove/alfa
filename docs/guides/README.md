@@ -22,6 +22,7 @@ List of Alfa repositories, both public and private, and some of their particular
 
 * [Alfa](https://github.com/Siteimprove/alfa) (this repository): The main repository for Alfa code.
   * All dependencies are auto-updated by Dependabot. 
+  * Uses a merge queue for PRs, reducing friction when several PRs are merged around the same time.
 
 * [Alfa integrations](https://github.com/Siteimprove/alfa-integrations) (public): Contains integrations of Alfa with various frameworks, including a Command Line Interface and the Accessibility Code Checker API.
   * The CLI, `alfa-test-utils`, and integrations with browsers automations are actively maintained. The other integrations are more dormant.
