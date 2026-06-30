@@ -68,3 +68,6 @@ Note that Dependabot is currently used almost everywhere for dependencies update
   * Build a static website inside a Docker container.
   * The site is published at [alfa.siteimprove.com](https://alfa.siteimprove.com/), it is publicly available and serves as technical documentation for our rules.
   * Mostly ReactJS, plus processing of the markdown files.
+
+* [Alfa Web extension](https://github.com/Siteimprove/alfa-web-extension) (private): Web extension running Alfa.
+  * The extension is available in major browsers' extensions marketplace.
