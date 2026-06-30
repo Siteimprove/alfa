@@ -84,7 +84,7 @@ Since we run into the Github repo, it is very easy to test with an older version
 
 Travelling back in time to find when a change occurred can also be automated with [`git bisect`](https://git-scm.com/docs/git-bisect).
 
-In case of regression, or change of behavior, finding the precise version where it was introduced and then searching for cues in the [Changelog](../../CHANGELOG.md) is often a good way to narrow dowrn the possible cause.
+In case of regression, or change of behavior, finding the precise version where it was introduced and then searching for cues in the [Changelog](../../CHANGELOG.md) is often a good way to narrow down the possible cause.
 
 ## Finding an element
 
@@ -193,7 +193,7 @@ From here, it is possible to observe the behaviour of the rule a bit more in det
   tee(isFoo, (val, res) => show(`${val} is foo? ${res}`))
   ```
   This is particularly useful in long predicates combination, e.g. turning a `and(isFoo, isBar)` into `and(tee(isFoo, …), tee(isBar, …))` is often a nice and easy way to see the results of each predicate without much work.
-- Other structures (notably collections), also have a `.tee` method that can be used the same way. Replacing a `foo.filter(isBar)` with `foo.tee(val => showAll(val.toJSON()).filter(isBar)` can help a lot.
+- Other structures (notably collections), also have a `#tee` method that can be used the same way. Replacing a `foo.filter(isBar)` with `foo.tee(val => showAll(val.toJSON()).filter(isBar)` can help a lot.
 
 ## Focusing
 
