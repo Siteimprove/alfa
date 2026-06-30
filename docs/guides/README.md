@@ -22,22 +22,26 @@ List of Alfa repositories, both public and private, and some of their particular
 
 Note that Dependabot is currently used almost everywhere for dependencies updates. It does not, however, update yarn. When a new version is out, yarn will print a message upon invocation of nearly any command. It then needs to be manually updated with `yarn set version latest` (in every repo) (remember to add the new release file to version control). All repos still have a local copy of yarn (rather than relying on Corepack, as recommended by yarn), mostly for historical reasons.
 
+* Shared setup (by most repos if not all):
+  * All dependencies are auto-updated by Dependabot.
+  * Packages are automatically deduped upon installation (through a yarn plugin).
+  * API documentation is generated as part of the release workflow.
+  * Use a `!pr <command>` comment to issue commands on a PR, e.g. `!pr help`; mostly useful for `!pr extract` when it was not issued before pushing.
+
+
 * [Alfa](https://github.com/Siteimprove/alfa) (this repository): The main repository for Alfa code.
-  * All dependencies are auto-updated by Dependabot. 
   * Uses a merge queue for PRs, reducing friction when several PRs are merged around the same time.
+  * Test coverage is generated as part of the release workflow.
 
 * [Alfa integrations](https://github.com/Siteimprove/alfa-integrations) (public): Contains integrations of Alfa with various frameworks, including a Command Line Interface and the Accessibility Code Checker API.
   * The CLI, `alfa-test-utils`, and integrations with browsers automations are actively maintained. The other integrations are more dormant.
   * The packages are published still associated with the Alfa repository for historical reasons.
-  * All dependencies are auto-updated by Dependabot.
 
 * [Alfa examples](https://github.com/Siteimprove/alfa-examples) (public): Curated list of examples of Alfa usage.
   * Contains both "unit" examples of integrations, more end-to-end examples of integrations with Siteimprove Accessibility Code Checker, and some advanced usages of Alfa.
-  * All dependencies are automatically updated by Dependabot.
   
 * [Alfa ACT-R](https://github.com/Siteimprove/alfa-act-r) (public): Acceptance testing of Alfa rules against the ACT Rules test cases.
   * This mostly contains only tests and fixtures to run them…
-  * All dependencies are auto updated by Dependabot.
   * Test cases are auto-fetched every Monday morning from the W3C website, and implementation reports are automatically updated with the new test cases.
   * The published implementation reports are used to build [the WAI implementation reports](https://www.w3.org/WAI/standards-guidelines/act/implementations/), updated every Thursday (see also [nightly build snapshot](https://wai-wcag-act-rules.netlify.app/standards-guidelines/act/implementations/)).
   * We aim at maintaining the rules on par with the latest ACT Rules changes, so when these tests break and our implementation numbers decrease, we need to update the rules.
