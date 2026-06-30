@@ -20,6 +20,8 @@ Remember to [Add a change set](changeset.md) to your pull requests if needed.
 
 List of Alfa repositories, both public and private, and some of their particularities…
 
+Note that Dependabot is currently used almost everywhere for dependencies updates. It does not, however, update yarn. When a new version is out, yarn will print a message upon invocation of nearly any command. It then needs to be manually updated with `yarn set version latest` (in every repo) (remember to add the new release file to version control). All repos still have a local copy of yarn (rather than relying on Corepack, as recommended by yarn), mostly for historical reasons.
+
 * [Alfa](https://github.com/Siteimprove/alfa) (this repository): The main repository for Alfa code.
   * All dependencies are auto-updated by Dependabot. 
   * Uses a merge queue for PRs, reducing friction when several PRs are merged around the same time.
