@@ -1,7 +1,10 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "compilerOptions": { "outDir": "../dist", "rewriteRelativeImportExtensions": true },
+  "compilerOptions": {
+    "outDir": "../dist",
+    "rewriteRelativeImportExtensions": true
+  },
   "files": [
     "./changeset/build-changelog.ts",
     "./changeset/changelog-global.ts",
@@ -18,6 +21,7 @@
     "./dependency-graph/helpers.ts",
     "./dependency-graph/index.ts",
     "./dependency-graph/rainbow.ts",
+    "./typedoc/categorize.ts",
     "./validation/has-extractor-config.ts",
     "./validation/index.ts",
     "./validation/is-in-clusters.ts",

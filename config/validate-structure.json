@@ -25,7 +25,8 @@
         "madge",
         "resolve-from",
         "simple-git",
-        "ts-graphviz"
+        "ts-graphviz",
+        "typedoc"
       ]
     }
   },

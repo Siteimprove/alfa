@@ -13,7 +13,10 @@ const config: KnipConfig = {
     ".": {
       entry: ["scripts/*.mjs"],
       project: ["scripts/**/*.mjs"],
-      ignoreDependencies: ["prettier"],
+      // Prettier is used by IDEs directly.
+      // typedoc-plugin-markdown is included via config/typedoc.mjs but in an
+      // indirect way that knip cannot see.
+      ignoreDependencies: ["prettier", "typedoc-plugin-markdown"],
     },
     "packages/*": { entry, project },
     "packages/alfa-aria": { entry: [...entry, "scripts/**/*.ts"], project },
