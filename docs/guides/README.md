@@ -21,6 +21,7 @@ Remember to [Add a change set](changeset.md) to your pull requests if needed.
 List of Alfa repositories, both public and private, and some of their particularities…
 
 * [Alfa](https://github.com/Siteimprove/alfa) (this repository): The main repository for Alfa code.
+  * All dependencies are auto-updated by Dependabot. 
 
 * [Alfa integrations](https://github.com/Siteimprove/alfa-integrations) (public): Contains integrations of Alfa with various frameworks, including a Command Line Interface and the Accessibility Code Checker API.
   * The CLI, `alfa-test-utils`, and integrations with browsers automations are actively maintained. The other integrations are more dormant.
@@ -38,10 +39,15 @@ List of Alfa repositories, both public and private, and some of their particular
   * The published implementation reports are used to build [the WAI implementation reports](https://www.w3.org/WAI/standards-guidelines/act/implementations/), updated every Thursday (see also [nightly build snapshot](https://wai-wcag-act-rules.netlify.app/standards-guidelines/act/implementations/)).
   * We aim at maintaining the rules on par with the latest ACT Rules changes, so when these tests break and our implementation numbers decrease, we need to update the rules.
 
-* [Alfa companion](https://github.com/Siteimprove/alfa-companion) (private): Incubator for Alfa related projects before they make it to the main repository.
+* [Alfa companion](https://github.com/Siteimprove/alfa-companion) (private): Incubator for Alfa related projects before they make it to the main repository; and place to host private Alfa related packages.
   * Low overall test coverage, this is mostly an experiment/incubator repo.
   * Auto update of Alfa and other packages via Dependabot.
   * Can be used for experiments, both on code or on tooling, before deploying to the main Alfa repository and to production. 
+
+* [Alfa pre-staging](https://github.com/Siteimprove/alfa-pre-staging) (private): Wrapper for running the Accessibility Code Checker, at a chosen version, on a demo page.
+  * Mostly just a workflow that runs the Code Checker, asking for the version to run.
+  * Allow to compare audits between different versions of Alfa (and the Code Checker), meant to help testers.
+  * The version choosing somewhat relies on all packages having the same version and may break once that changes…
 
 * [Alfa performance benchmarking](https://github.com/Siteimprove/alfa-performance-benchmarking) (private): Set up for testing performance impact of changes.
   * Runs with local Alfa through yarn portals, which allow to measure unreleased code.
