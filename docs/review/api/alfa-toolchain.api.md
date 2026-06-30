@@ -29,7 +29,10 @@ declare namespace globalChangelog {
 export { globalChangelog }
 
 // @public
-function hasExtractorConfig(name: string, dir: string): Array<string>;
+function hasAPIExtractorConfig(name: string, dir: string): Array<string>;
+
+// @public
+function hasTypedocConfig(name: string, dir: string): Array<string>;
 
 declare namespace individualChangelog {
     export {
@@ -65,7 +68,8 @@ function validateWorkspaceTsconfig({ dir, packageJson, }: {
 
 declare namespace Validation {
     export {
-        hasExtractorConfig,
+        hasAPIExtractorConfig,
+        hasTypedocConfig,
         validate,
         validateChangesets,
         validatePackageJson,

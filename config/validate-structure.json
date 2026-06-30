@@ -1,5 +1,6 @@
 {
   "has-api-extractor-config": true,
+  "has-typedoc-config": true,
   "validate-changesets": true,
   "forbid-major": true,
   "validate-package-json": {
