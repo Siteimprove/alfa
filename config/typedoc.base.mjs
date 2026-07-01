@@ -4,7 +4,7 @@ export default {
   readme: "none",
   includeVersion: true,
   excludeExternals: true,
-  excludeInternal: true,
+  excludeInternal: false,
   jsDocCompatibility: false,
   excludeTags: ["@knipignore"],
   sort: ["alphabetical", "kind"],
