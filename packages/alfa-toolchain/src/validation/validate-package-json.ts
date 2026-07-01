@@ -92,7 +92,15 @@ export function validatePackageJson(
   }
 
   // external dependencies
-  if (config.noExternalDeps) {
+  if (
+    config.noExternalDeps &&
+    // The alfa-toolchain package, by nature, depends on many external packages
+    // for reading project structure, building graphs, manipulating .dot files,
+    // adding typedoc plugins, …
+    // It is, by definition, only used in the tooling and building of the
+    // project and therefore external dependencies don't matter.
+    !packageJson.name.includes("alfa-toolchain")
+  ) {
     for (const dependency in packageJson.dependencies) {
       if (
         // internal dependencies are always allowed.
