@@ -1,7 +1,7 @@
 /** @type {import('typedoc').TypeDocOptions & import('typedoc-plugin-markdown').PluginOptions} */
 export default {
   name: "Alfa API documentation",
-  entryPoints: ["../packages/alfa-*"],
+  entryPoints: ["../packages/alfa-act", "../packages/alfa-dom"],
   entryPointStrategy: "packages",
   readme: "none",
   includeVersion: true,
@@ -13,9 +13,6 @@ export default {
   outputs: [
     { name: "html", path: "../docs/typedoc/html" },
     { name: "json", path: "../docs/typedoc/json" },
-    // Because the categorizeMarkdown theme has side effect and does modify some
-    // reflections, it must be called last to avoid these changes creeping into
-    // the other outputs.
     {
       name: "markdown",
       path: "../docs/typedoc/markdown",

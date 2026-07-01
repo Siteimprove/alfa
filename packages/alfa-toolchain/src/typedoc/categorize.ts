@@ -63,9 +63,9 @@ class MyMarkdownThemeContext extends MarkdownThemeContext {
   ) {
     super(theme, page, options);
 
-    const saved = this.partials.groupIndex;
+    const groupIndex = this.partials.groupIndex;
 
-    // When we have a group (olr category) with several members, we want to
+    // When we have a group (or category) with several members, we want to
     // add the kind of the member to the name of the reflection, as they otherwise
     // have the same name (this is how they are categorized). The default HTML
     // theme adds a one letter badge for this differentiation, but the Markdown
@@ -73,18 +73,36 @@ class MyMarkdownThemeContext extends MarkdownThemeContext {
     // https://github.com/typedoc2md/typedoc-plugin-markdown/blob/main/packages/typedoc-plugin-markdown/src/theme/context/partials/member.groupIndex.ts#L77-L82
     // just gets the children's names, with no easy hook to edit them before they
     // land in the table, so we have to update the actual reflection.
-    //
-    // This is fairly bad as it means that the theme is having a side effect on
-    // the full project. Therefore, the Markdown output should be called last
-    // otherwise the kind will make its way to the other outputs.
     this.partials.groupIndex = (group) => {
-      if (group.children.length > 1) {
-        for (const child of group.children) {
-          child.name = `${child.name} (${TypeDoc.ReflectionKind.singularString(child.kind)})`;
-        }
+      // In there is only one reflection in the group/category, the kind doesn't
+      // matter, and is displayed as column header in the table view.
+      if (group.children.length <= 1) {
+        return groupIndex(group);
       }
 
-      return saved(group);
+      // Since we cannot easily update just the produced output, we actually
+      // update the input, then revert the changes. The map saves the old values.
+      const oldNames = new Map<
+        TypeDoc.DeclarationReflection | TypeDoc.DocumentReflection,
+        string
+      >();
+      for (const child of group.children) {
+        // Save the original name.
+        oldNames.set(child, child.name);
+        // Add the kind to the name.
+        child.name = `${child.name} (${TypeDoc.ReflectionKind.singularString(child.kind)})`;
+      }
+
+      // Build the final output, using the default call.
+      const result = groupIndex(group);
+
+      // Restore the original names.
+      for (const child of group.children) {
+        child.name = oldNames.get(child)!;
+      }
+
+      // Return the pre-built result.
+      return result;
     };
   }
 }
