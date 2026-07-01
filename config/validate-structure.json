@@ -11,24 +11,7 @@
     "noExternalDeps": true,
     "allowedExternalDeps": {
       "@siteimprove/alfa-css": ["colorjs.io"],
-      "@siteimprove/alfa-test": ["vitest"],
-      "@siteimprove/alfa-toolchain": [
-        "@changesets/assemble-release-plan",
-        "@changesets/config",
-        "@changesets/get-github-info",
-        "@changesets/git",
-        "@changesets/read",
-        "@manypkg/get-packages",
-        "@ts-graphviz/adapter",
-        "@svitejs/changesets-changelog-github-compact",
-        "axios",
-        "json-stringify-pretty-compact",
-        "madge",
-        "resolve-from",
-        "simple-git",
-        "ts-graphviz",
-        "typedoc"
-      ]
+      "@siteimprove/alfa-test": ["vitest"]
     }
   },
   "validate-workspace-tsconfig": true,
