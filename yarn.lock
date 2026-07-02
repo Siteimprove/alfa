@@ -2734,6 +2734,7 @@ __metadata:
     simple-git: "npm:^3.36.0"
     ts-graphviz: "npm:^3.0.7"
     typedoc: "npm:^0.28.19"
+    typedoc-plugin-markdown: "npm:^4.12.0"
   bin:
     alfa-changelog: dist/changeset/changelog-global.js
     create-alfa-package: dist/create-alfa-package.js
