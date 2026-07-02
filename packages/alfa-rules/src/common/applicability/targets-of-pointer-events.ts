@@ -1,4 +1,4 @@
-import { DOM } from "@siteimprove/alfa-aria";
+import { DOM, type Role } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Document } from "@siteimprove/alfa-dom";
@@ -103,8 +103,18 @@ export function isTarget(device: Device): Predicate<Element> {
     isFocusable(device),
     isVisible(device),
     not(isScrolledBehind(device)),
-    hasRole(device, (role) => role.isWidget()),
+    hasRole(device, hasTargetRole),
   );
+}
+
+function hasTargetRole(role: Role): boolean {
+  return role.isWidget() && !isCompositeContainer(role);
+}
+
+function isCompositeContainer(role: Role): boolean {
+  // These roles organize child widgets; the children provide the pointer
+  // targets, not the container itself.
+  return role.is("select") || role.is("grid") || role.is("tablist");
 }
 
 function hasNonEmptyBoundingBox(device: Device): Predicate<Element> {

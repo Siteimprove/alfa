@@ -575,6 +575,87 @@ test("evaluate() is inapplicable to <area> elements", async (t) => {
   t.deepEqual(await evaluate(R113, { document, device }), [inapplicable(R113)]);
 });
 
+test("evaluate() does not target exposed regions of composite menu containers", async (t) => {
+  const device = Device.standard();
+
+  const item1 = (
+    <li
+      role="menuitem"
+      tabindex="0"
+      box={{ device, x: 8, y: 8, width: 240, height: 32 }}
+    >
+      Action Button
+    </li>
+  );
+
+  const item2 = (
+    <li
+      role="menuitem"
+      tabindex="-1"
+      box={{ device, x: 8, y: 40, width: 240, height: 32 }}
+    >
+      Action Link
+    </li>
+  );
+
+  const divider = (
+    <li
+      role="none"
+      aria-hidden="true"
+      tabindex="-1"
+      box={{ device, x: 8, y: 72, width: 240, height: 9 }}
+    >
+      <div box={{ device, x: 8, y: 76, width: 240, height: 1 }}></div>
+    </li>
+  );
+
+  const item3 = (
+    <li
+      role="menuitem"
+      tabindex="-1"
+      box={{ device, x: 8, y: 81, width: 240, height: 32 }}
+    >
+      Disabled Action Button
+    </li>
+  );
+
+  const menu = (
+    <ul
+      role="menu"
+      tabindex="-1"
+      box={{ device, x: 8, y: 8, width: 240, height: 105 }}
+    >
+      {item1}
+      {item2}
+      {divider}
+      {item3}
+    </ul>
+  );
+
+  const document = h.document([menu]);
+
+  t.deepEqual(await evaluate(R113, { document, device }), [
+    passed(R113, item1, {
+      1: TargetSize.HasSufficientSize(
+        "Action Button",
+        item1.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+    passed(R113, item2, {
+      1: TargetSize.HasSufficientSize(
+        "Action Link",
+        item2.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+    passed(R113, item3, {
+      1: TargetSize.HasSufficientSize(
+        "Disabled Action Button",
+        item3.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+  ]);
+});
+
 test("evaluate() is inapplicable to button with display: none", async (t) => {
   const device = Device.standard();
 
