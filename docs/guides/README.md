@@ -23,7 +23,7 @@ List of Alfa repositories, both public and private, and some of their particular
 Note that Dependabot is currently used almost everywhere for dependencies updates. It does not, however, update yarn. When a new version is out, yarn will print a message upon invocation of nearly any command. It then needs to be manually updated with `yarn set version latest` (in every repo) (remember to add the new release file to version control). All repos still have a local copy of yarn (rather than relying on Corepack, as recommended by yarn), mostly for historical reasons.
 
 * Shared setup (by most repos if not all):
-  * All dependencies are auto-updated by Dependabot.
+  * All dependencies are auto-updated by Dependabot. Security updates asap, regular updates on Monday morning (CET). Problems are reported to the latest editor of the workflow (in each repository).
   * Packages are automatically deduped upon installation (through a yarn plugin).
   * API documentation is generated as part of the release workflow.
   * Use a `!pr <command>` comment to issue commands on a PR, e.g. `!pr help`; mostly useful for `!pr extract` when it was not issued before pushing.
@@ -39,6 +39,8 @@ Note that Dependabot is currently used almost everywhere for dependencies update
 
 * [Alfa examples](https://github.com/Siteimprove/alfa-examples) (public): Curated list of examples of Alfa usage.
   * Contains both "unit" examples of integrations, more end-to-end examples of integrations with Siteimprove Accessibility Code Checker, and some advanced usages of Alfa.
+  * The Accessibility Code Checker is run on the test page weekly (Monday morning, CET) to ensure it is always working and we always have a Code Checker Page Report available. Problems are reported to the latest editor of the workflow.
+  * There is a Codespace with the Accessibility Code Checker pre setup (and correct secrets for members of the Siteimprove organization). This enable anyone (internal or external) to run a demo Code Checker with no local setup, and experiment with it. The Codespace is rebuilt on any change to `main`.
   
 * [Alfa ACT-R](https://github.com/Siteimprove/alfa-act-r) (public): Acceptance testing of Alfa rules against the ACT Rules test cases.
   * This mostly contains only tests and fixtures to run them…
