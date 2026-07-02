@@ -27,6 +27,7 @@ Note that Dependabot is currently used almost everywhere for dependencies update
   * Packages are automatically deduped upon installation (through a yarn plugin).
   * API documentation is generated as part of the release workflow.
   * Use a `!pr <command>` comment to issue commands on a PR, e.g. `!pr help`; mostly useful for `!pr extract` when it was not issued before pushing.
+  * We mostly try to run the CI/CD with the last 3 node version (LTS, active, current), but some repos only use one version (typically, Alfa ACT-R needs to be run once, not to work with every version). Node versions usually get bumped in April/May. There is an automated reminder in Siteimprove's Slack to update the versions (needs to be done in all workflow in all repos); also remember to update the base image for the CodeSpace in Alfa Examples.
 
 
 * [Alfa](https://github.com/Siteimprove/alfa) (this repository): The main repository for Alfa code.
