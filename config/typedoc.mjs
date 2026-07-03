@@ -1,11 +1,22 @@
 /** @type {import('typedoc').TypeDocOptions & import('typedoc-plugin-markdown').PluginOptions} */
 export default {
   name: "Alfa API documentation",
-  entryPoints: ["../packages/alfa-*"],
+  entryPoints: ["../packages/alfa-act", "../packages/alfa-dom"],
   entryPointStrategy: "packages",
   readme: "none",
   includeVersion: true,
   excludeExternals: true,
+  packageOptions: {
+    entryPoints: ["src/index.ts"],
+    gitRevision: "main",
+    readme: "none",
+    includeVersion: true,
+    excludeExternals: true,
+    excludeInternal: false,
+    jsDocCompatibility: false,
+    excludeTags: ["@knipignore"],
+    sort: ["alphabetical", "kind"],
+  },
   plugin: [
     "@siteimprove/alfa-toolchain/typedoc-plugin-categorize",
     "typedoc-plugin-markdown",
