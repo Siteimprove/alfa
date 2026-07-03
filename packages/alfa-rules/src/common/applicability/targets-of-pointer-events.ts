@@ -103,12 +103,8 @@ export function isTarget(device: Device): Predicate<Element> {
     isFocusable(device),
     isVisible(device),
     not(isScrolledBehind(device)),
-    hasRole(device, hasTargetRole),
+    hasRole(device, isPointerTargetWidget),
   );
-}
-
-function hasTargetRole(role: Role): boolean {
-  return role.isWidget() && !isNonClickableCompositeContainer(role);
 }
 
 // These composite widgets normally delegate pointer actions to child widgets:
@@ -124,6 +120,11 @@ const isNonClickableCompositeContainer = Role.hasName(
   "tree",
   "grid",
   "treegrid",
+);
+
+const isPointerTargetWidget = and(
+  (role: Role) => role.isWidget(),
+  not(isNonClickableCompositeContainer),
 );
 
 function hasNonEmptyBoundingBox(device: Device): Predicate<Element> {
