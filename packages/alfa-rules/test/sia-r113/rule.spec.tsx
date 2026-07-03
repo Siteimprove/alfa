@@ -575,7 +575,7 @@ test("evaluate() is inapplicable to <area> elements", async (t) => {
   t.deepEqual(await evaluate(R113, { document, device }), [inapplicable(R113)]);
 });
 
-test("evaluate() does not target exposed regions of composite menu containers", async (t) => {
+test("evaluate() does not target exposed regions of menu containers", async (t) => {
   const device = Device.standard();
 
   const item1 = (

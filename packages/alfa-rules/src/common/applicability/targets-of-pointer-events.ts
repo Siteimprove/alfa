@@ -108,13 +108,13 @@ export function isTarget(device: Device): Predicate<Element> {
 }
 
 function hasTargetRole(role: Role): boolean {
-  return role.isWidget() && !isCompositeContainer(role);
+  return role.isWidget() && !isMenuContainer(role);
 }
 
-function isCompositeContainer(role: Role): boolean {
-  // These roles organize child widgets; the children provide the pointer
+function isMenuContainer(role: Role): boolean {
+  // Menus organize child menu items; the child items provide the pointer
   // targets, not the container itself.
-  return role.is("select") || role.is("grid") || role.is("tablist");
+  return role.hasName("menu") || role.hasName("menubar");
 }
 
 function hasNonEmptyBoundingBox(device: Device): Predicate<Element> {
