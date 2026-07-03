@@ -8,7 +8,7 @@ import type * as json from "@siteimprove/alfa-json";
 /**
  * Diagnostics are associated with each Question or final Outcome. They at least
  * contain an explanatory message. Diagnostics can be extended to include more
- * information for the rules that need it.
+ * information for the rules that need it. test typedoc
  *
  * @public
  */
