@@ -8,7 +8,7 @@
 
 > **fromShadow**(`json`, `fromNode`, `device?`): `Trampoline`\<[`Shadow`](../Shadow-1.md)\>
 
-Defined in: [alfa-dom/src/node/shadow.ts:186](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L186)
+Defined in: [alfa-dom/src/node/shadow.ts:186](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 **`Internal`**
 

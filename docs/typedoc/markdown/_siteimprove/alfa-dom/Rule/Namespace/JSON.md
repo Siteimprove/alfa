@@ -6,7 +6,7 @@
 
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/rule/namespace.ts:51](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts#L51)
+Defined in: [alfa-dom/src/style/rule/namespace.ts:51](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: [alfa-dom/src/style/rule/namespace.ts:51](https://github.com/Siteimp
 
 > **namespace**: `string`
 
-Defined in: [alfa-dom/src/style/rule/namespace.ts:52](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts#L52)
+Defined in: [alfa-dom/src/style/rule/namespace.ts:52](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
 
 ## prefix
 
@@ -30,7 +30,7 @@ Defined in: [alfa-dom/src/style/rule/namespace.ts:52](https://github.com/Siteimp
 
 > **prefix**: `string` \| `null`
 
-Defined in: [alfa-dom/src/style/rule/namespace.ts:53](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts#L53)
+Defined in: [alfa-dom/src/style/rule/namespace.ts:53](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
 
 ## type
 
@@ -38,7 +38,7 @@ Defined in: [alfa-dom/src/style/rule/namespace.ts:53](https://github.com/Siteimp
 
 > **type**: `"namespace"`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L96)
+Defined in: [alfa-dom/src/style/rule/rule.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 

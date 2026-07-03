@@ -6,7 +6,7 @@
 
 # Interface: MinimalJSON
 
-Defined in: [alfa-act/src/rule.ts:171](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L171)
+Defined in: [alfa-act/src/rule.ts:171](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Indexable
 
@@ -18,4 +18,4 @@ Defined in: [alfa-act/src/rule.ts:171](https://github.com/Siteimprove/alfa/blob/
 
 > **uri**: `string`
 
-Defined in: [alfa-act/src/rule.ts:173](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L173)
+Defined in: [alfa-act/src/rule.ts:173](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

@@ -8,7 +8,7 @@
 
 > **isQuestion**\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>(`value`): `value is Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>`
 
-Defined in: [alfa-act/src/expectation/question.ts:333](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L333)
+Defined in: [alfa-act/src/expectation/question.ts:333](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## Type Parameters
 

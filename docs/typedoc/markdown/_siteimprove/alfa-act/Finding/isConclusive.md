@@ -8,7 +8,7 @@
 
 > **isConclusive**\<`A`\>(`finding`): `finding is Left<[A, boolean]>`
 
-Defined in: [alfa-act/src/expectation/finding.ts:27](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/finding.ts#L27)
+Defined in: [alfa-act/src/expectation/finding.ts:27](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/finding.ts)
 
 ## Type Parameters
 

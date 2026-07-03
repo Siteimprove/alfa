@@ -8,7 +8,7 @@
 
 > **isRoot**: (`options?`) => `Predicate`\<[`Node`](../Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/index.ts:140](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L140)
+Defined in: [alfa-dom/src/node/index.ts:140](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
 
 ## Parameters
 

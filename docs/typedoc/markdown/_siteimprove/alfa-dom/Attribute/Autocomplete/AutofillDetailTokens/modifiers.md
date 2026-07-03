@@ -8,4 +8,4 @@
 
 > `const` **modifiers**: `string`[]
 
-Defined in: [alfa-dom/src/node/attribute/autocomplete.ts:77](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute/autocomplete.ts#L77)
+Defined in: [alfa-dom/src/node/attribute/autocomplete.ts:77](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute/autocomplete.ts)

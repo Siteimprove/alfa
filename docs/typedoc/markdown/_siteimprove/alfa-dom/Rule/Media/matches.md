@@ -8,7 +8,7 @@
 
 > **matches**(`device`): `Predicate`\<[`Media`](../Media-2.md)\>
 
-Defined in: [alfa-dom/src/style/rule/media.ts:57](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts#L57)
+Defined in: [alfa-dom/src/style/rule/media.ts:57](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts)
 
 ## Parameters
 

@@ -8,7 +8,7 @@
 
 > **isInconclusive**\<`D`\>(`finding`): `finding is Right<[D, boolean]>`
 
-Defined in: [alfa-act/src/expectation/finding.ts:40](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/finding.ts#L40)
+Defined in: [alfa-act/src/expectation/finding.ts:40](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/finding.ts)
 
 ## Type Parameters
 

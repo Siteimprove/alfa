@@ -8,7 +8,7 @@
 
 > **isAtomic**: \{\<`I`, `T`, `Q`, `S`\>(`value`): `value is Atomic<I, T, Q, S>`; \<`I`, `T`, `Q`, `S`\>(`value`): `value is Atomic<I, T, Q, S>`; \}
 
-Defined in: [alfa-act/src/rule.ts:450](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L450)
+Defined in: [alfa-act/src/rule.ts:450](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Call Signature
 

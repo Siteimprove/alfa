@@ -8,7 +8,7 @@
 
 > **fragment**(`children`, `externalId?`, `extraData?`): [`Fragment`](../Fragment-1.md)
 
-Defined in: [alfa-dom/src/h.ts:220](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L220)
+Defined in: [alfa-dom/src/h.ts:220](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Parameters
 

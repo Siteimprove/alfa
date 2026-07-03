@@ -8,7 +8,7 @@
 
 > **isFailed**: \{\<`I`, `T`, `Q`, `S`\>(`value`): `value is Failed<I, T, Q, S>`; \<`I`, `T`, `Q`, `S`\>(`value`): `value is Failed<I, T, Q, S>`; \}
 
-Defined in: [alfa-act/src/outcome.ts:551](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L551)
+Defined in: [alfa-act/src/outcome.ts:551](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## Call Signature
 

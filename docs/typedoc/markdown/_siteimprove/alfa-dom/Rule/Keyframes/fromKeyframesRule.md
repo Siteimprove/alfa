@@ -8,7 +8,7 @@
 
 > **fromKeyframesRule**(`json`, `fromRule`): `Trampoline`\<[`Keyframes`](../Keyframes-2.md)\>
 
-Defined in: [alfa-dom/src/style/rule/keyframes.ts:59](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframes.ts#L59)
+Defined in: [alfa-dom/src/style/rule/keyframes.ts:59](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframes.ts)
 
 **`Internal`**
 

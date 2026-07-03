@@ -6,7 +6,7 @@
 
 # Class: Atomic\<I, T, Q, S\>
 
-Defined in: [alfa-act/src/rule.ts:247](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L247)
+Defined in: [alfa-act/src/rule.ts:247](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Extends
 
@@ -27,7 +27,7 @@ Defined in: [alfa-act/src/rule.ts:247](https://github.com/Siteimprove/alfa/blob/
 
 > `protected` **new Atomic**\<`I`, `T`, `Q`, `S`\>(`uri`, `requirements`, `tags`, `evaluate`): `Atomic`\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/rule.ts:272](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L272)
+Defined in: [alfa-act/src/rule.ts:272](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Parameters
 
@@ -52,7 +52,7 @@ Defined in: [alfa-act/src/rule.ts:272](https://github.com/Siteimprove/alfa/blob/
 
 > `protected` `readonly` **\_evaluate**: [`Evaluate`](Evaluate.md)\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/rule.ts:52](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L52)
+Defined in: [alfa-act/src/rule.ts:52](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Inherited from
 
@@ -64,7 +64,7 @@ Defined in: [alfa-act/src/rule.ts:52](https://github.com/Siteimprove/alfa/blob/m
 
 > `protected` `readonly` **\_requirements**: `Array`\<[`Requirement`](../Requirement-1.md)\<`string`, `string`\>\>
 
-Defined in: [alfa-act/src/rule.ts:50](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L50)
+Defined in: [alfa-act/src/rule.ts:50](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Inherited from
 
@@ -76,7 +76,7 @@ Defined in: [alfa-act/src/rule.ts:50](https://github.com/Siteimprove/alfa/blob/m
 
 > `protected` `readonly` **\_tags**: `Array`\<[`Tag`](../Tag-1.md)\<`string`\>\>
 
-Defined in: [alfa-act/src/rule.ts:51](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L51)
+Defined in: [alfa-act/src/rule.ts:51](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Inherited from
 
@@ -88,7 +88,7 @@ Defined in: [alfa-act/src/rule.ts:51](https://github.com/Siteimprove/alfa/blob/m
 
 > `protected` `readonly` **\_uri**: `string`
 
-Defined in: [alfa-act/src/rule.ts:49](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L49)
+Defined in: [alfa-act/src/rule.ts:49](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Inherited from
 
@@ -102,7 +102,7 @@ Defined in: [alfa-act/src/rule.ts:49](https://github.com/Siteimprove/alfa/blob/m
 
 > **equals**\<`I`, `T`, `Q`, `S`\>(`value`): `boolean`
 
-Defined in: [alfa-act/src/rule.ts:119](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L119)
+Defined in: [alfa-act/src/rule.ts:119](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 Check if a value of the same type as this are equal.
 
@@ -137,7 +137,7 @@ This function does not further refine the type of the given value.
 
 > **equals**(`value`): `value is Atomic<I, T, Q, S>`
 
-Defined in: [alfa-act/src/rule.ts:123](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L123)
+Defined in: [alfa-act/src/rule.ts:123](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 Check if a value of an unknown type is equal to this.
 
@@ -165,7 +165,7 @@ This function refines the type of the given value.
 
 > **evaluate**(`input`, `oracle?`, `outcomes?`, `performance?`): `Promise`\<`Iterable`\<[`Outcome`](../Outcome-1.md)\<`I`, `T`, `Q`, `S`, [`Value`](../Outcome/Value.md)\>\>\>
 
-Defined in: [alfa-act/src/rule.ts:108](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L108)
+Defined in: [alfa-act/src/rule.ts:108](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Parameters
 
@@ -192,7 +192,7 @@ Defined in: [alfa-act/src/rule.ts:108](https://github.com/Siteimprove/alfa/blob/
 
 > **hasRequirement**(`requirement`): `boolean`
 
-Defined in: [alfa-act/src/rule.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L78)
+Defined in: [alfa-act/src/rule.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Parameters
 
@@ -212,7 +212,7 @@ Defined in: [alfa-act/src/rule.ts:78](https://github.com/Siteimprove/alfa/blob/m
 
 > **hasRequirement**(`predicate`): `boolean`
 
-Defined in: [alfa-act/src/rule.ts:80](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L80)
+Defined in: [alfa-act/src/rule.ts:80](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Parameters
 
@@ -236,7 +236,7 @@ Defined in: [alfa-act/src/rule.ts:80](https://github.com/Siteimprove/alfa/blob/m
 
 > **hasTag**(`tag`): `boolean`
 
-Defined in: [alfa-act/src/rule.ts:91](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L91)
+Defined in: [alfa-act/src/rule.ts:91](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Parameters
 
@@ -256,7 +256,7 @@ Defined in: [alfa-act/src/rule.ts:91](https://github.com/Siteimprove/alfa/blob/m
 
 > **hasTag**(`predicate`): `boolean`
 
-Defined in: [alfa-act/src/rule.ts:93](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L93)
+Defined in: [alfa-act/src/rule.ts:93](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Parameters
 
@@ -278,7 +278,7 @@ Defined in: [alfa-act/src/rule.ts:93](https://github.com/Siteimprove/alfa/blob/m
 
 > **hash**(`hash`): `void`
 
-Defined in: [alfa-act/src/rule.ts:129](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L129)
+Defined in: [alfa-act/src/rule.ts:129](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Parameters
 
@@ -300,7 +300,7 @@ Defined in: [alfa-act/src/rule.ts:129](https://github.com/Siteimprove/alfa/blob/
 
 > `static` **of**\<`I`, `T`, `Q`, `S`\>(`properties`): `Atomic`\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/rule.ts:253](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L253)
+Defined in: [alfa-act/src/rule.ts:253](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Type Parameters
 
@@ -333,7 +333,7 @@ Defined in: [alfa-act/src/rule.ts:253](https://github.com/Siteimprove/alfa/blob/
 
 > **get** **requirements**(): readonly [`Requirement`](../Requirement-1.md)\<`string`, `string`\>[]
 
-Defined in: [alfa-act/src/rule.ts:70](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L70)
+Defined in: [alfa-act/src/rule.ts:70](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 
@@ -351,7 +351,7 @@ readonly [`Requirement`](../Requirement-1.md)\<`string`, `string`\>[]
 
 > **get** **tags**(): readonly [`Tag`](../Tag-1.md)\<`string`\>[]
 
-Defined in: [alfa-act/src/rule.ts:74](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L74)
+Defined in: [alfa-act/src/rule.ts:74](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 
@@ -367,7 +367,7 @@ readonly [`Tag`](../Tag-1.md)\<`string`\>[]
 
 > **toEARL**(): [`EARL`](EARL.md)
 
-Defined in: [alfa-act/src/rule.ts:143](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L143)
+Defined in: [alfa-act/src/rule.ts:143](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Returns
 
@@ -385,7 +385,7 @@ Defined in: [alfa-act/src/rule.ts:143](https://github.com/Siteimprove/alfa/blob/
 
 > **toJSON**(`options`): [`MinimalJSON`](MinimalJSON.md)
 
-Defined in: [alfa-act/src/rule.ts:376](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L376)
+Defined in: [alfa-act/src/rule.ts:376](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Parameters
 
@@ -406,7 +406,7 @@ Defined in: [alfa-act/src/rule.ts:376](https://github.com/Siteimprove/alfa/blob/
 
 > **toJSON**(): [`JSON`](Atomic/JSON.md)
 
-Defined in: [alfa-act/src/rule.ts:380](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L380)
+Defined in: [alfa-act/src/rule.ts:380](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 
@@ -422,7 +422,7 @@ Defined in: [alfa-act/src/rule.ts:380](https://github.com/Siteimprove/alfa/blob/
 
 > **toSARIF**(): `ReportingDescriptor`
 
-Defined in: [alfa-act/src/rule.ts:157](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L157)
+Defined in: [alfa-act/src/rule.ts:157](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Returns
 
@@ -440,7 +440,7 @@ Defined in: [alfa-act/src/rule.ts:157](https://github.com/Siteimprove/alfa/blob/
 
 > **get** **uri**(): `string`
 
-Defined in: [alfa-act/src/rule.ts:66](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L66)
+Defined in: [alfa-act/src/rule.ts:66](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 

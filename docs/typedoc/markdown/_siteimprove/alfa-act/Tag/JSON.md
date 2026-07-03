@@ -6,7 +6,7 @@
 
 # Interface: JSON\<T\>
 
-Defined in: [alfa-act/src/metadata/tag.ts:35](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts#L35)
+Defined in: [alfa-act/src/metadata/tag.ts:35](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
 
 ## Type Parameters
 
@@ -24,4 +24,4 @@ Defined in: [alfa-act/src/metadata/tag.ts:35](https://github.com/Siteimprove/alf
 
 > **type**: `T`
 
-Defined in: [alfa-act/src/metadata/tag.ts:37](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts#L37)
+Defined in: [alfa-act/src/metadata/tag.ts:37](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)

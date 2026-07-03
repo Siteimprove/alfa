@@ -8,7 +8,7 @@
 
 > **page**(`selector`, `declarations`): [`Page`](../../Rule/Page-2.md)
 
-Defined in: [alfa-dom/src/h.ts:333](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L333)
+Defined in: [alfa-dom/src/h.ts:333](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Parameters
 

@@ -6,7 +6,7 @@
 
 # Interface: EARL
 
-Defined in: [alfa-act/src/outcome.ts:178](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L178)
+Defined in: [alfa-act/src/outcome.ts:178](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## Extends
 
@@ -83,7 +83,7 @@ Defined in: alfa-earl/dist/earl.d.ts:6
 
 > **@type**: `"earl:Assertion"`
 
-Defined in: [alfa-act/src/outcome.ts:179](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L179)
+Defined in: [alfa-act/src/outcome.ts:179](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## earl:mode
 
@@ -91,7 +91,7 @@ Defined in: [alfa-act/src/outcome.ts:179](https://github.com/Siteimprove/alfa/bl
 
 > **earl:mode**: `"earl:automatic"` \| `"earl:semiAuto"` \| `"earl:manual"`
 
-Defined in: [alfa-act/src/outcome.ts:180](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L180)
+Defined in: [alfa-act/src/outcome.ts:180](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## earl:test
 
@@ -99,10 +99,10 @@ Defined in: [alfa-act/src/outcome.ts:180](https://github.com/Siteimprove/alfa/bl
 
 > **earl:test**: `object`
 
-Defined in: [alfa-act/src/outcome.ts:181](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L181)
+Defined in: [alfa-act/src/outcome.ts:181](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### @id
 
 | Name | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| `@id` | `string` |  | [alfa-act/src/outcome.ts:182](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L182) |
+| `@id` | `string` |  | [alfa-act/src/outcome.ts:182](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts) |

@@ -8,7 +8,7 @@
 
 > **media**(`condition`, `rules`): [`Media`](../../Rule/Media-2.md)
 
-Defined in: [alfa-dom/src/h.ts:322](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L322)
+Defined in: [alfa-dom/src/h.ts:322](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Parameters
 

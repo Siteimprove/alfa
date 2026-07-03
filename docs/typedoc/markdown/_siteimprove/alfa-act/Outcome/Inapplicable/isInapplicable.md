@@ -10,7 +10,7 @@
 
 > **isInapplicable**\<`I`, `T`, `Q`, `S`\>(`value`): `value is Inapplicable<I, T, Q, S>`
 
-Defined in: [alfa-act/src/outcome.ts:808](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L808)
+Defined in: [alfa-act/src/outcome.ts:808](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ### Type Parameters
 
@@ -35,7 +35,7 @@ Defined in: [alfa-act/src/outcome.ts:808](https://github.com/Siteimprove/alfa/bl
 
 > **isInapplicable**\<`I`, `T`, `Q`, `S`\>(`value`): `value is Inapplicable<I, T, Q, S>`
 
-Defined in: [alfa-act/src/outcome.ts:815](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L815)
+Defined in: [alfa-act/src/outcome.ts:815](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ### Type Parameters
 

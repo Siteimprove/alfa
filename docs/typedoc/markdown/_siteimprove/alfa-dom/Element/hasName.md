@@ -8,7 +8,7 @@
 
 > **hasName**: \{\<`N`\>(`predicate`): `Refinement`\<[`Element`](../Element-1.md)\<`string`\>, [`Element`](../Element-1.md)\<`N`\>\>; \<`N`\>(`name`, ...`rest`): `Refinement`\<[`Element`](../Element-1.md)\<`string`\>, [`Element`](../Element-1.md)\<`N`\>\>; \}
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:566](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L566)
+Defined in: [alfa-dom/src/node/slotable/element.ts:566](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## Call Signature
 

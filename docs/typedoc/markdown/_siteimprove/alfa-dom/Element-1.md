@@ -6,7 +6,7 @@
 
 # Class: Element\<N\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:35](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L35)
+Defined in: [alfa-dom/src/node/slotable/element.ts:35](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## Extends
 
@@ -24,7 +24,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:35](https://github.com/Siteim
 
 > `protected` **new Element**\<`N`\>(`namespace`, `prefix`, `name`, `attributes`, `children`, `style`, `box`, `device`, `externalId?`, `internalId?`, `extraData?`): `Element`\<`N`\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:75](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L75)
+Defined in: [alfa-dom/src/node/slotable/element.ts:75](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 #### Parameters
 
@@ -72,7 +72,7 @@ Defined in: alfa-tree/dist/tree.d.ts:176
 
 > **\_attachContent**(`document`): `boolean`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:475](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L475)
+Defined in: [alfa-dom/src/node/slotable/element.ts:475](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 **`Internal`**
 
@@ -116,7 +116,7 @@ Defined in: alfa-tree/dist/tree.d.ts:184
 
 > **\_attachShadow**(`shadow`): `boolean`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:462](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L462)
+Defined in: [alfa-dom/src/node/slotable/element.ts:462](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 **`Internal`**
 
@@ -148,7 +148,7 @@ Defined in: alfa-tree/dist/tree.d.ts:27
 
 > `protected` **\_displaySize**: `number` \| `undefined`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:310](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L310)
+Defined in: [alfa-dom/src/node/slotable/element.ts:310](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## _frozen
 
@@ -179,7 +179,7 @@ method.
 
 > `protected` **\_inputType**: `InputType` \| `undefined`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:309](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L309)
+Defined in: [alfa-dom/src/node/slotable/element.ts:309](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## _internalPath
 
@@ -187,7 +187,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:309](https://github.com/Sitei
 
 > `protected` **\_internalPath**(`options?`): `string`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:345](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L345)
+Defined in: [alfa-dom/src/node/slotable/element.ts:345](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 **`Internal`**
 
@@ -211,7 +211,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:345](https://github.com/Sitei
 
 > `protected` **\_optionsList**: `Sequence`\<`Element`\<`"option"`\>\> \| `undefined`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:311](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L311)
+Defined in: [alfa-dom/src/node/slotable/element.ts:311](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## _parent
 
@@ -243,7 +243,7 @@ Defined in: alfa-tree/dist/tree.d.ts:29
 
 > **ancestors**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:333](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L333)
+Defined in: [alfa-dom/src/node/node.ts:333](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -265,7 +265,7 @@ Defined in: [alfa-dom/src/node/node.ts:333](https://github.com/Siteimprove/alfa/
 
 > **assignedNodes**(`this`): `Iterable`\<[`Slotable`](Slotable-1.md)\>
 
-Defined in: [alfa-dom/src/node/slotable/slot.ts:19](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/slot.ts#L19)
+Defined in: [alfa-dom/src/node/slotable/slot.ts:19](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/slot.ts)
 
 Get the slotables assigned to this slot.
 
@@ -288,7 +288,7 @@ Get the slotables assigned to this slot.
 
 > **assignedSlot**(): `Option`\<`Slot`\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:321](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L321)
+Defined in: [alfa-dom/src/node/slotable/element.ts:321](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 [https://dom.spec.whatwg.org/#dom-slotable-assignedslot](https://dom.spec.whatwg.org/#dom-slotable-assignedslot)
 
@@ -308,7 +308,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:321](https://github.com/Sitei
 
 > **attribute**\<`A`\>(`name`): `Option`\<[`Attribute`](Attribute-1.md)\<`A`\>\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:205](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L205)
+Defined in: [alfa-dom/src/node/slotable/element.ts:205](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ##### Type Parameters
 
@@ -330,7 +330,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:205](https://github.com/Sitei
 
 > **attribute**\<`A`\>(`predicate`): `Option`\<[`Attribute`](Attribute-1.md)\<`A`\>\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:207](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L207)
+Defined in: [alfa-dom/src/node/slotable/element.ts:207](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ##### Type Parameters
 
@@ -356,7 +356,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:207](https://github.com/Sitei
 
 > **get** **attributes**(): `Sequence`\<[`Attribute`](Attribute-1.md)\<`string`\>\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:134](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L134)
+Defined in: [alfa-dom/src/node/slotable/element.ts:134](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ##### Returns
 
@@ -368,7 +368,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:134](https://github.com/Sitei
 
 > **children**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:168](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L168)
+Defined in: [alfa-dom/src/node/slotable/element.ts:168](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 #### Parameters
 
@@ -392,7 +392,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:168](https://github.com/Sitei
 
 > **get** **classes**(): `Sequence`\<`string`\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:160](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L160)
+Defined in: [alfa-dom/src/node/slotable/element.ts:160](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 [https://dom.spec.whatwg.org/#concept-class](https://dom.spec.whatwg.org/#concept-class)
 
@@ -408,7 +408,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:160](https://github.com/Sitei
 
 > **closest**\<`T`\>(`refinement`, `options?`): `Option`\<`T`\>
 
-Defined in: [alfa-dom/src/node/node.ts:348](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L348)
+Defined in: [alfa-dom/src/node/node.ts:348](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 ##### Type Parameters
 
@@ -435,7 +435,7 @@ Defined in: [alfa-dom/src/node/node.ts:348](https://github.com/Siteimprove/alfa/
 
 > **closest**(`predicate`, `options?`): `Option`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:352](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L352)
+Defined in: [alfa-dom/src/node/node.ts:352](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 ##### Parameters
 
@@ -460,7 +460,7 @@ Defined in: [alfa-dom/src/node/node.ts:352](https://github.com/Siteimprove/alfa/
 
 > **get** **content**(): `Option`\<[`Document`](Document-1.md)\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:146](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L146)
+Defined in: [alfa-dom/src/node/slotable/element.ts:146](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ##### Returns
 
@@ -472,7 +472,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:146](https://github.com/Sitei
 
 > **descendants**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:329](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L329)
+Defined in: [alfa-dom/src/node/node.ts:329](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -494,7 +494,7 @@ Defined in: [alfa-dom/src/node/node.ts:329](https://github.com/Siteimprove/alfa/
 
 > **displaySize**(`this`): `number`
 
-Defined in: [alfa-dom/src/node/element/augment.ts:36](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/element/augment.ts#L36)
+Defined in: [alfa-dom/src/node/element/augment.ts:36](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/element/augment.ts)
 
 [https://html.spec.whatwg.org/multipage/form-elements.html#concept-select-size](https://html.spec.whatwg.org/multipage/form-elements.html#concept-select-size)
 
@@ -524,7 +524,7 @@ as the actual displayed size.
 
 > **equals**(`value`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:264](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L264)
+Defined in: [alfa-dom/src/node/node.ts:264](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 ##### Parameters
 
@@ -544,7 +544,7 @@ Defined in: [alfa-dom/src/node/node.ts:264](https://github.com/Siteimprove/alfa/
 
 > **equals**(`value`): `value is Element<N>`
 
-Defined in: [alfa-dom/src/node/node.ts:266](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L266)
+Defined in: [alfa-dom/src/node/node.ts:266](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 ##### Parameters
 
@@ -602,7 +602,7 @@ Defined in: alfa-tree/dist/tree.d.ts:48
 
 > **first**(`options?`): `Option`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:343](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L343)
+Defined in: [alfa-dom/src/node/node.ts:343](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -624,7 +624,7 @@ Defined in: [alfa-dom/src/node/node.ts:343](https://github.com/Siteimprove/alfa/
 
 > **following**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:342](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L342)
+Defined in: [alfa-dom/src/node/node.ts:342](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -683,7 +683,7 @@ Defined in: alfa-tree/dist/tree.d.ts:54
 
 > **getBoundingBox**(`device`): `Option`\<`Rectangle`\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:164](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L164)
+Defined in: [alfa-dom/src/node/slotable/element.ts:164](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 #### Parameters
 
@@ -725,7 +725,7 @@ Defined in: alfa-tree/dist/tree.d.ts:179
 
 > **get** **id**(): `Option`\<`string`\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:153](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L153)
+Defined in: [alfa-dom/src/node/slotable/element.ts:153](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 [https://dom.spec.whatwg.org/#concept-id](https://dom.spec.whatwg.org/#concept-id)
 
@@ -739,7 +739,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:153](https://github.com/Sitei
 
 > **inclusiveAncestors**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:335](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L335)
+Defined in: [alfa-dom/src/node/node.ts:335](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -761,7 +761,7 @@ Defined in: [alfa-dom/src/node/node.ts:335](https://github.com/Siteimprove/alfa/
 
 > **inclusiveDescendants**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:331](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L331)
+Defined in: [alfa-dom/src/node/node.ts:331](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -783,7 +783,7 @@ Defined in: [alfa-dom/src/node/node.ts:331](https://github.com/Siteimprove/alfa/
 
 > **inclusiveSiblings**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:339](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L339)
+Defined in: [alfa-dom/src/node/node.ts:339](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -805,7 +805,7 @@ Defined in: [alfa-dom/src/node/node.ts:339](https://github.com/Siteimprove/alfa/
 
 > **index**(`options?`, `predicate?`): `number`
 
-Defined in: [alfa-dom/src/node/node.ts:347](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L347)
+Defined in: [alfa-dom/src/node/node.ts:347](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -828,7 +828,7 @@ Defined in: [alfa-dom/src/node/node.ts:347](https://github.com/Siteimprove/alfa/
 
 > **inputType**(`this`): `InputType`
 
-Defined in: [alfa-dom/src/node/element/augment.ts:24](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/element/augment.ts#L24)
+Defined in: [alfa-dom/src/node/element/augment.ts:24](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/element/augment.ts)
 
 [https://html.spec.whatwg.org/#attr-input-type](https://html.spec.whatwg.org/#attr-input-type)
 
@@ -866,7 +866,7 @@ Defined in: alfa-tree/dist/tree.d.ts:49
 
 > **isAncestorOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:334](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L334)
+Defined in: [alfa-dom/src/node/node.ts:334](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -889,7 +889,7 @@ Defined in: [alfa-dom/src/node/node.ts:334](https://github.com/Siteimprove/alfa/
 
 > **isChildOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:328](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L328)
+Defined in: [alfa-dom/src/node/node.ts:328](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -912,7 +912,7 @@ Defined in: [alfa-dom/src/node/node.ts:328](https://github.com/Siteimprove/alfa/
 
 > **isDescendantOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:330](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L330)
+Defined in: [alfa-dom/src/node/node.ts:330](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -935,7 +935,7 @@ Defined in: [alfa-dom/src/node/node.ts:330](https://github.com/Siteimprove/alfa/
 
 > **isInclusiveAncestorOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:336](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L336)
+Defined in: [alfa-dom/src/node/node.ts:336](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -958,7 +958,7 @@ Defined in: [alfa-dom/src/node/node.ts:336](https://github.com/Siteimprove/alfa/
 
 > **isInclusiveDescendantsOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:332](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L332)
+Defined in: [alfa-dom/src/node/node.ts:332](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -981,7 +981,7 @@ Defined in: [alfa-dom/src/node/node.ts:332](https://github.com/Siteimprove/alfa/
 
 > **isInclusiveSiblingOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:340](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L340)
+Defined in: [alfa-dom/src/node/node.ts:340](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -1004,7 +1004,7 @@ Defined in: [alfa-dom/src/node/node.ts:340](https://github.com/Siteimprove/alfa/
 
 > **isInert**(): `boolean`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:278](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L278)
+Defined in: [alfa-dom/src/node/slotable/element.ts:278](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 Computes inertness of an element based on the `inert` attribute.
 
@@ -1025,7 +1025,7 @@ only open dialogs can escape inertness (except when they have the `inert` attrib
 
 > **isParentOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:324](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L324)
+Defined in: [alfa-dom/src/node/node.ts:324](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -1048,7 +1048,7 @@ Defined in: [alfa-dom/src/node/node.ts:324](https://github.com/Siteimprove/alfa/
 
 > **isRootOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:326](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L326)
+Defined in: [alfa-dom/src/node/node.ts:326](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -1071,7 +1071,7 @@ Defined in: [alfa-dom/src/node/node.ts:326](https://github.com/Siteimprove/alfa/
 
 > **isSiblingOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:338](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L338)
+Defined in: [alfa-dom/src/node/node.ts:338](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -1094,7 +1094,7 @@ Defined in: [alfa-dom/src/node/node.ts:338](https://github.com/Siteimprove/alfa/
 
 > **isSummaryForItsParentDetails**(`this`): `boolean`
 
-Defined in: [alfa-dom/src/node/element/augment.ts:46](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/element/augment.ts#L46)
+Defined in: [alfa-dom/src/node/element/augment.ts:46](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/element/augment.ts)
 
 [https://html.spec.whatwg.org/multipage/#summary-for-its-parent-details](https://html.spec.whatwg.org/multipage/#summary-for-its-parent-details)
 
@@ -1114,7 +1114,7 @@ Defined in: [alfa-dom/src/node/element/augment.ts:46](https://github.com/Siteimp
 
 > **isVoid**(): `boolean`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:224](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L224)
+Defined in: [alfa-dom/src/node/slotable/element.ts:224](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 [https://html.spec.whatwg.org/#void-elements](https://html.spec.whatwg.org/#void-elements)
 
@@ -1128,7 +1128,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:224](https://github.com/Sitei
 
 > **last**(`options?`): `Option`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:344](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L344)
+Defined in: [alfa-dom/src/node/node.ts:344](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -1152,7 +1152,7 @@ Defined in: [alfa-dom/src/node/node.ts:344](https://github.com/Siteimprove/alfa/
 
 > **get** **name**(): `N`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:123](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L123)
+Defined in: [alfa-dom/src/node/slotable/element.ts:123](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ##### Returns
 
@@ -1166,7 +1166,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:123](https://github.com/Sitei
 
 > **get** **namespace**(): `Option`\<[`Namespace`](Namespace-1.md)\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:115](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L115)
+Defined in: [alfa-dom/src/node/slotable/element.ts:115](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ##### Returns
 
@@ -1178,7 +1178,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:115](https://github.com/Sitei
 
 > **next**(`options?`): `Option`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:346](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L346)
+Defined in: [alfa-dom/src/node/node.ts:346](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -1200,7 +1200,7 @@ Defined in: [alfa-dom/src/node/node.ts:346](https://github.com/Siteimprove/alfa/
 
 > `static` **of**\<`N`\>(`namespace`, `prefix`, `name`, `attributes?`, `children?`, `style?`, `box?`, `device?`, `externalId?`, `internalId?`, `extraData?`): `Element`\<`N`\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:36](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L36)
+Defined in: [alfa-dom/src/node/slotable/element.ts:36](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 #### Type Parameters
 
@@ -1234,7 +1234,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:36](https://github.com/Siteim
 
 > **optionsList**(`this`): `Sequence`\<`Element`\<`"option"`\>\>
 
-Defined in: [alfa-dom/src/node/element/augment.ts:41](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/element/augment.ts#L41)
+Defined in: [alfa-dom/src/node/element/augment.ts:41](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/element/augment.ts)
 
 [https://html.spec.whatwg.org/multipage/form-elements.html#concept-select-option-list](https://html.spec.whatwg.org/multipage/form-elements.html#concept-select-option-list)
 
@@ -1256,7 +1256,7 @@ Defined in: [alfa-dom/src/node/element/augment.ts:41](https://github.com/Siteimp
 
 > **parent**(`options?`): `Option`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:197](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L197)
+Defined in: [alfa-dom/src/node/node.ts:197](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 ##### Parameters
 
@@ -1287,7 +1287,7 @@ to extends the one in `alfa-tree/Node`.
 
 > **parent**(`options?`): `Option`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:323](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L323)
+Defined in: [alfa-dom/src/node/node.ts:323](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 ##### Parameters
 
@@ -1309,7 +1309,7 @@ Defined in: [alfa-dom/src/node/node.ts:323](https://github.com/Siteimprove/alfa/
 
 > **path**(`options?`): `string`
 
-Defined in: [alfa-dom/src/node/node.ts:256](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L256)
+Defined in: [alfa-dom/src/node/node.ts:256](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 Get an XPath that uniquely identifies the node across descendants of its
 root.
@@ -1334,7 +1334,7 @@ root.
 
 > **preceding**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:341](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L341)
+Defined in: [alfa-dom/src/node/node.ts:341](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -1358,7 +1358,7 @@ Defined in: [alfa-dom/src/node/node.ts:341](https://github.com/Siteimprove/alfa/
 
 > **get** **prefix**(): `Option`\<`string`\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:119](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L119)
+Defined in: [alfa-dom/src/node/slotable/element.ts:119](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ##### Returns
 
@@ -1370,7 +1370,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:119](https://github.com/Sitei
 
 > **previous**(`options?`): `Option`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:345](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L345)
+Defined in: [alfa-dom/src/node/node.ts:345](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -1394,7 +1394,7 @@ Defined in: [alfa-dom/src/node/node.ts:345](https://github.com/Siteimprove/alfa/
 
 > **get** **qualifiedName**(): `string`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:127](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L127)
+Defined in: [alfa-dom/src/node/slotable/element.ts:127](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ##### Returns
 
@@ -1406,7 +1406,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:127](https://github.com/Sitei
 
 > **root**(`options?`): [`Node`](Node-1.md)
 
-Defined in: [alfa-dom/src/node/node.ts:325](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L325)
+Defined in: [alfa-dom/src/node/node.ts:325](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -1452,7 +1452,7 @@ Aliases to [Node#internalId](Attribute-1.md#internalid).
 
 > **get** **shadow**(): `Option`\<[`Shadow`](Shadow-1.md)\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:142](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L142)
+Defined in: [alfa-dom/src/node/slotable/element.ts:142](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ##### Returns
 
@@ -1464,7 +1464,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:142](https://github.com/Sitei
 
 > **siblings**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:337](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L337)
+Defined in: [alfa-dom/src/node/node.ts:337](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -1486,7 +1486,7 @@ Defined in: [alfa-dom/src/node/node.ts:337](https://github.com/Siteimprove/alfa/
 
 > **slotName**(`this`): `string`
 
-Defined in: [alfa-dom/src/node/slotable/slot.ts:24](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/slot.ts#L24)
+Defined in: [alfa-dom/src/node/slotable/slot.ts:24](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/slot.ts)
 
 [https://dom.spec.whatwg.org/#slot-name](https://dom.spec.whatwg.org/#slot-name)
 
@@ -1506,7 +1506,7 @@ Defined in: [alfa-dom/src/node/slotable/slot.ts:24](https://github.com/Siteimpro
 
 > **slotableName**(): `string`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:336](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L336)
+Defined in: [alfa-dom/src/node/slotable/element.ts:336](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 [https://dom.spec.whatwg.org/#slotable-name](https://dom.spec.whatwg.org/#slotable-name)
 
@@ -1526,7 +1526,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:336](https://github.com/Sitei
 
 > **get** **style**(): `Option`\<[`Block`](Block-1.md)\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:138](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L138)
+Defined in: [alfa-dom/src/node/slotable/element.ts:138](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ##### Returns
 
@@ -1538,7 +1538,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:138](https://github.com/Sitei
 
 > **tabIndex**(): `Option`\<`number`\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:252](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L252)
+Defined in: [alfa-dom/src/node/slotable/element.ts:252](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 [https://html.spec.whatwg.org/#dom-tabindex](https://html.spec.whatwg.org/#dom-tabindex)
 
@@ -1552,7 +1552,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:252](https://github.com/Sitei
 
 > **tabOrder**(`this`): `Sequence`\<`Element`\<`string`\>\>
 
-Defined in: [alfa-dom/src/node/node.ts:59](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L59)
+Defined in: [alfa-dom/src/node/node.ts:59](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 Construct a sequence of descendants of this node sorted by tab index. Only
 nodes with a non-negative tab index are included in the sequence.
@@ -1579,7 +1579,7 @@ nodes with a non-negative tab index are included in the sequence.
 
 > **textContent**(`options?`): `string`
 
-Defined in: [alfa-dom/src/node/node.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L47)
+Defined in: [alfa-dom/src/node/node.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 [https://dom.spec.whatwg.org/#concept-descendant-text-content](https://dom.spec.whatwg.org/#concept-descendant-text-content)
 
@@ -1603,7 +1603,7 @@ Defined in: [alfa-dom/src/node/node.ts:47](https://github.com/Siteimprove/alfa/b
 
 > **toEARL**(): `EARL`
 
-Defined in: [alfa-dom/src/node/node.ts:291](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L291)
+Defined in: [alfa-dom/src/node/node.ts:291](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Returns
 
@@ -1621,7 +1621,7 @@ Defined in: [alfa-dom/src/node/node.ts:291](https://github.com/Siteimprove/alfa/
 
 > **toJSON**(`options`): [`MinimalJSON`](Element/MinimalJSON.md)
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L363)
+Defined in: [alfa-dom/src/node/slotable/element.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ##### Parameters
 
@@ -1641,7 +1641,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:363](https://github.com/Sitei
 
 > **toJSON**(`options`): [`JSON`](Element/JSON.md)\<`string`\> & `object`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:371](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L371)
+Defined in: [alfa-dom/src/node/slotable/element.ts:371](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ##### Parameters
 
@@ -1659,7 +1659,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:371](https://github.com/Sitei
 
 > **toJSON**(`options?`): [`JSON`](Element/JSON.md)\<`N`\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:377](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L377)
+Defined in: [alfa-dom/src/node/slotable/element.ts:377](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ##### Parameters
 
@@ -1681,7 +1681,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:377](https://github.com/Sitei
 
 > **toSARIF**(): `Location`
 
-Defined in: [alfa-dom/src/node/node.ts:306](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L306)
+Defined in: [alfa-dom/src/node/node.ts:306](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Returns
 
@@ -1697,7 +1697,7 @@ Defined in: [alfa-dom/src/node/node.ts:306](https://github.com/Siteimprove/alfa/
 
 > **toString**(): `string`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:428](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L428)
+Defined in: [alfa-dom/src/node/slotable/element.ts:428](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 Returns a string representation of an object.
 

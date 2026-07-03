@@ -8,7 +8,7 @@
 
 > **isDiagnostic**(`value`): `value is Diagnostic`
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts:66](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L66)
+Defined in: [alfa-act/src/expectation/diagnostic.ts:66](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
 
 ## Parameters
 

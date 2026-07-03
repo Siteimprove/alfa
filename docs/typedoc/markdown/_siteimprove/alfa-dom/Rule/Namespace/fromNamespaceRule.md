@@ -8,7 +8,7 @@
 
 > **fromNamespaceRule**(`json`): `Trampoline`\<[`Namespace`](../Namespace-2.md)\>
 
-Defined in: [alfa-dom/src/style/rule/namespace.ts:63](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts#L63)
+Defined in: [alfa-dom/src/style/rule/namespace.ts:63](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
 
 **`Internal`**
 

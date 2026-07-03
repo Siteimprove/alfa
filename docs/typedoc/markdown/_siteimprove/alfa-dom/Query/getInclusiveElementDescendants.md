@@ -8,7 +8,7 @@
 
 > `const` **getInclusiveElementDescendants**: (`node`, `options`) => `Sequence`\<[`Element`](../Element-1.md)\<`string`\>\> = `descendants.getInclusiveElementDescendants`
 
-Defined in: [alfa-dom/src/node/query/index.ts:12](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/query/index.ts#L12)
+Defined in: [alfa-dom/src/node/query/index.ts:12](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/query/index.ts)
 
 ## Parameters
 

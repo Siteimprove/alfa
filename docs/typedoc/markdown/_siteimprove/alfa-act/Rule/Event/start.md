@@ -10,7 +10,7 @@
 
 > **start**\<`I`, `T`, `Q`, `S`, `N`\>(`rule`, `name`): [`Event`](../Event-1.md)\<`I`, `T`, `Q`, `S`, `"start"`, `N`\>
 
-Defined in: [alfa-act/src/rule.ts:732](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L732)
+Defined in: [alfa-act/src/rule.ts:732](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ### Type Parameters
 
@@ -37,7 +37,7 @@ Defined in: [alfa-act/src/rule.ts:732](https://github.com/Siteimprove/alfa/blob/
 
 > **start**\<`I`, `T`, `Q`, `S`\>(`rule`): [`Event`](../Event-1.md)\<`I`, `T`, `Q`, `S`, `"start"`, `"total"`\>
 
-Defined in: [alfa-act/src/rule.ts:740](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L740)
+Defined in: [alfa-act/src/rule.ts:740](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ### Type Parameters
 

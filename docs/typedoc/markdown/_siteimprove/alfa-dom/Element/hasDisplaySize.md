@@ -8,7 +8,7 @@
 
 > **hasDisplaySize**: (`valueOrPredicate`) => `Predicate`\<[`Element`](../Element-1.md)\<`"select"`\>\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:563](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L563)
+Defined in: [alfa-dom/src/node/slotable/element.ts:563](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## Parameters
 

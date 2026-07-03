@@ -8,7 +8,7 @@
 
 > **jsx**\<`N`\>(`name`, `properties?`, ...`children`): [`Element`](Element-1.md)\<`N`\>
 
-Defined in: [alfa-dom/src/jsx.ts:12](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts#L12)
+Defined in: [alfa-dom/src/jsx.ts:12](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts)
 
 ## Type Parameters
 

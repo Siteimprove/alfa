@@ -8,7 +8,7 @@
 
 > **foldCase**\<`N`\>(`name`, `owner`): `N` \| `Lowercase`\<`N`\>
 
-Defined in: [alfa-dom/src/node/attribute.ts:260](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts#L260)
+Defined in: [alfa-dom/src/node/attribute.ts:260](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts)
 
 **`Internal`**
 

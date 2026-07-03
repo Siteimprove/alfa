@@ -8,7 +8,7 @@
 
 > **endApplicability**\<`I`, `T`, `Q`, `S`\>(`rule`): [`Event`](../Event-1.md)\<`I`, `T`, `Q`, `S`, `"end"`, `"applicability"`\>
 
-Defined in: [alfa-act/src/rule.ts:787](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L787)
+Defined in: [alfa-act/src/rule.ts:787](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Type Parameters
 

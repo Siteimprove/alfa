@@ -8,7 +8,7 @@
 
 > **hasInputType**: \{(`predicate`): `Predicate`\<[`Element`](../Element-1.md)\<`string`\>\>; (`inputType`, ...`rest`): `Predicate`\<[`Element`](../Element-1.md)\<`string`\>\>; \}
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:565](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L565)
+Defined in: [alfa-dom/src/node/slotable/element.ts:565](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## Call Signature
 

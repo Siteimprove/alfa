@@ -8,7 +8,7 @@
 
 > `const` **getNodesBetween**: (`node1`, `node2`, `includeOptions`, `treeOptions`) => `Sequence`\<[`Node`](../Node-1.md)\> = `traversal.getNodesBetween`
 
-Defined in: [alfa-dom/src/node/index.ts:138](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L138)
+Defined in: [alfa-dom/src/node/index.ts:138](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
 
 Get content between two nodes. The relative order of the nodes is unknown.
 Options let it choose whether the first or second node (in tree order)

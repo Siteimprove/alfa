@@ -8,7 +8,7 @@
 
 > **fromText**(`json`, `device?`): `Trampoline`\<[`Text`](../Text-1.md)\>
 
-Defined in: [alfa-dom/src/node/slotable/text.ts:172](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts#L172)
+Defined in: [alfa-dom/src/node/slotable/text.ts:172](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
 
 **`Internal`**
 

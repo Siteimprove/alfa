@@ -8,4 +8,4 @@
 
 > `const` **isFallback**: `Predicate`\<`BaseNode`\<`string`\>\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:580](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L580)
+Defined in: [alfa-dom/src/node/slotable/element.ts:580](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)

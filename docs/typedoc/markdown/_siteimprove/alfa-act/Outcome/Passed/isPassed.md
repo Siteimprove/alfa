@@ -10,7 +10,7 @@
 
 > **isPassed**\<`I`, `T`, `Q`, `S`\>(`value`): `value is Passed<I, T, Q, S>`
 
-Defined in: [alfa-act/src/outcome.ts:339](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L339)
+Defined in: [alfa-act/src/outcome.ts:339](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ### Type Parameters
 
@@ -35,7 +35,7 @@ Defined in: [alfa-act/src/outcome.ts:339](https://github.com/Siteimprove/alfa/bl
 
 > **isPassed**\<`I`, `T`, `Q`, `S`\>(`value`): `value is Passed<I, T, Q, S>`
 
-Defined in: [alfa-act/src/outcome.ts:346](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L346)
+Defined in: [alfa-act/src/outcome.ts:346](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ### Type Parameters
 

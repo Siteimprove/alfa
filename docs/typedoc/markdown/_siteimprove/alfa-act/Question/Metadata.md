@@ -8,7 +8,7 @@
 
 > **Metadata** = `object`
 
-Defined in: [alfa-act/src/expectation/question.ts:331](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L331)
+Defined in: [alfa-act/src/expectation/question.ts:331](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## Index Signature
 

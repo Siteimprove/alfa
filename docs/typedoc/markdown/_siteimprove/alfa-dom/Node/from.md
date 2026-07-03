@@ -10,7 +10,7 @@
 
 > **from**(`json`, `device?`): [`Element`](../Element-1.md)
 
-Defined in: [alfa-dom/src/node/index.ts:83](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L83)
+Defined in: [alfa-dom/src/node/index.ts:83](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
 
 ### Parameters
 
@@ -27,7 +27,7 @@ Defined in: [alfa-dom/src/node/index.ts:83](https://github.com/Siteimprove/alfa/
 
 > **from**(`json`, `device?`): [`Attribute`](../Attribute-1.md)
 
-Defined in: [alfa-dom/src/node/index.ts:85](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L85)
+Defined in: [alfa-dom/src/node/index.ts:85](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
 
 ### Parameters
 
@@ -44,7 +44,7 @@ Defined in: [alfa-dom/src/node/index.ts:85](https://github.com/Siteimprove/alfa/
 
 > **from**(`json`, `device?`): [`Text`](../Text-1.md)
 
-Defined in: [alfa-dom/src/node/index.ts:87](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L87)
+Defined in: [alfa-dom/src/node/index.ts:87](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
 
 ### Parameters
 
@@ -61,7 +61,7 @@ Defined in: [alfa-dom/src/node/index.ts:87](https://github.com/Siteimprove/alfa/
 
 > **from**(`json`, `device?`): [`Comment`](../Comment-1.md)
 
-Defined in: [alfa-dom/src/node/index.ts:89](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L89)
+Defined in: [alfa-dom/src/node/index.ts:89](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
 
 ### Parameters
 
@@ -78,7 +78,7 @@ Defined in: [alfa-dom/src/node/index.ts:89](https://github.com/Siteimprove/alfa/
 
 > **from**(`json`, `device?`): [`Document`](../Document-1.md)
 
-Defined in: [alfa-dom/src/node/index.ts:91](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L91)
+Defined in: [alfa-dom/src/node/index.ts:91](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
 
 ### Parameters
 
@@ -95,7 +95,7 @@ Defined in: [alfa-dom/src/node/index.ts:91](https://github.com/Siteimprove/alfa/
 
 > **from**(`json`, `device?`): [`Document`](../Document-1.md)
 
-Defined in: [alfa-dom/src/node/index.ts:93](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L93)
+Defined in: [alfa-dom/src/node/index.ts:93](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
 
 ### Parameters
 
@@ -112,7 +112,7 @@ Defined in: [alfa-dom/src/node/index.ts:93](https://github.com/Siteimprove/alfa/
 
 > **from**(`json`, `device?`): [`Fragment`](../Fragment-1.md)
 
-Defined in: [alfa-dom/src/node/index.ts:95](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L95)
+Defined in: [alfa-dom/src/node/index.ts:95](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
 
 ### Parameters
 
@@ -129,7 +129,7 @@ Defined in: [alfa-dom/src/node/index.ts:95](https://github.com/Siteimprove/alfa/
 
 > **from**(`json`, `device?`): [`Node`](../Node-1.md)
 
-Defined in: [alfa-dom/src/node/index.ts:97](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L97)
+Defined in: [alfa-dom/src/node/index.ts:97](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
 
 ### Parameters
 

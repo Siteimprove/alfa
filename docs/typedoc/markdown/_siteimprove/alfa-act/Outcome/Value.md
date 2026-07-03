@@ -6,7 +6,7 @@
 
 # Enumeration: Value
 
-Defined in: [alfa-act/src/outcome.ts:155](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L155)
+Defined in: [alfa-act/src/outcome.ts:155](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 **`Internal`**
 
@@ -16,7 +16,7 @@ Defined in: [alfa-act/src/outcome.ts:155](https://github.com/Siteimprove/alfa/bl
 
 | Enumeration Member | Value | Defined in |
 | ------ | ------ | ------ |
-| <a id="canttell"></a> `CantTell` | `"cantTell"` | [alfa-act/src/outcome.ts:159](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L159) |
-| <a id="failed"></a> `Failed` | `"failed"` | [alfa-act/src/outcome.ts:158](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L158) |
-| <a id="inapplicable"></a> `Inapplicable` | `"inapplicable"` | [alfa-act/src/outcome.ts:156](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L156) |
-| <a id="passed"></a> `Passed` | `"passed"` | [alfa-act/src/outcome.ts:157](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L157) |
+| <a id="canttell"></a> `CantTell` | `"cantTell"` | [alfa-act/src/outcome.ts:159](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts) |
+| <a id="failed"></a> `Failed` | `"failed"` | [alfa-act/src/outcome.ts:158](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts) |
+| <a id="inapplicable"></a> `Inapplicable` | `"inapplicable"` | [alfa-act/src/outcome.ts:156](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts) |
+| <a id="passed"></a> `Passed` | `"passed"` | [alfa-act/src/outcome.ts:157](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts) |

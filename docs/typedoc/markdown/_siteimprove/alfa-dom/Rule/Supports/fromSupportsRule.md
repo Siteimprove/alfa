@@ -8,7 +8,7 @@
 
 > **fromSupportsRule**(`json`, `fromRule`): `Trampoline`\<[`Supports`](../Supports-2.md)\>
 
-Defined in: [alfa-dom/src/style/rule/supports.ts:69](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/supports.ts#L69)
+Defined in: [alfa-dom/src/style/rule/supports.ts:69](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/supports.ts)
 
 **`Internal`**
 

@@ -8,7 +8,7 @@
 
 > **isBrowsingContextContainer**: (`element`) => `boolean`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:569](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L569)
+Defined in: [alfa-dom/src/node/slotable/element.ts:569](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 [https://html.spec.whatwg.org/#browsing-context-container](https://html.spec.whatwg.org/#browsing-context-container)
 

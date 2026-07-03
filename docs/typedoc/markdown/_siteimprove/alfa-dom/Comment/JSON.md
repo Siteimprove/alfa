@@ -6,7 +6,7 @@
 
 # Interface: JSON
 
-Defined in: [alfa-dom/src/node/comment.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/comment.ts#L96)
+Defined in: [alfa-dom/src/node/comment.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/comment.ts)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: [alfa-dom/src/node/comment.ts:96](https://github.com/Siteimprove/alf
 
 > `optional` **children?**: [`JSON`](../Node/JSON.md)[]
 
-Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L364)
+Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -34,7 +34,7 @@ Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/
 
 > **data**: `string`
 
-Defined in: [alfa-dom/src/node/comment.ts:97](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/comment.ts#L97)
+Defined in: [alfa-dom/src/node/comment.ts:97](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/comment.ts)
 
 ## externalId
 
@@ -66,7 +66,7 @@ Defined in: alfa-tree/dist/tree.d.ts:195
 
 > `optional` **path?**: `string`
 
-Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L363)
+Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 

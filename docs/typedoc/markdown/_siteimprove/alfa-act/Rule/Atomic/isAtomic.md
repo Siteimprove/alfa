@@ -10,7 +10,7 @@
 
 > **isAtomic**\<`I`, `T`, `Q`, `S`\>(`value`): `value is Atomic<I, T, Q, S>`
 
-Defined in: [alfa-act/src/rule.ts:426](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L426)
+Defined in: [alfa-act/src/rule.ts:426](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ### Type Parameters
 
@@ -35,7 +35,7 @@ Defined in: [alfa-act/src/rule.ts:426](https://github.com/Siteimprove/alfa/blob/
 
 > **isAtomic**\<`I`, `T`, `Q`, `S`\>(`value`): `value is Atomic<I, T, Q, S>`
 
-Defined in: [alfa-act/src/rule.ts:433](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L433)
+Defined in: [alfa-act/src/rule.ts:433](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ### Type Parameters
 

@@ -8,7 +8,7 @@
 
 > **isGroupingRule**(`value`): `value is Grouping<string>`
 
-Defined in: [alfa-dom/src/style/rule/grouping.ts:44](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts#L44)
+Defined in: [alfa-dom/src/style/rule/grouping.ts:44](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
 
 ## Parameters
 

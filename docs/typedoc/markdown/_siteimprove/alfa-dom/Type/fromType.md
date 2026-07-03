@@ -8,7 +8,7 @@
 
 > **fromType**\<`N`\>(`json`): `Trampoline`\<[`Type`](../Type-1.md)\<`N`\>\>
 
-Defined in: [alfa-dom/src/node/type.ts:120](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts#L120)
+Defined in: [alfa-dom/src/node/type.ts:120](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts)
 
 **`Internal`**
 

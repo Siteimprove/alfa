@@ -8,7 +8,7 @@
 
 > **shadow**(`children`, `style?`, `mode?`, `externalId?`, `internalId?`, `extraData?`): [`Shadow`](../Shadow-1.md)
 
-Defined in: [alfa-dom/src/h.ts:182](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L182)
+Defined in: [alfa-dom/src/h.ts:182](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Parameters
 

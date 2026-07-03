@@ -8,7 +8,7 @@
 
 > **Target**\<`R`\> = `R` *extends* [`Rule`](../Rule-1.md)\<`any`, infer T, `any`, `any`\> ? `T` : `never`
 
-Defined in: [alfa-act/src/rule.ts:198](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L198)
+Defined in: [alfa-act/src/rule.ts:198](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Type Parameters
 

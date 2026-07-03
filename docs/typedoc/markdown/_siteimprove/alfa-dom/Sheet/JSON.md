@@ -6,7 +6,7 @@
 
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/sheet.ts:89](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L89)
+Defined in: [alfa-dom/src/style/sheet.ts:89](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 ## Indexable
 
@@ -18,7 +18,7 @@ Defined in: [alfa-dom/src/style/sheet.ts:89](https://github.com/Siteimprove/alfa
 
 > **condition**: `string` \| `null`
 
-Defined in: [alfa-dom/src/style/sheet.ts:93](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L93)
+Defined in: [alfa-dom/src/style/sheet.ts:93](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 ## disabled
 
@@ -26,7 +26,7 @@ Defined in: [alfa-dom/src/style/sheet.ts:93](https://github.com/Siteimprove/alfa
 
 > **disabled**: `boolean`
 
-Defined in: [alfa-dom/src/style/sheet.ts:92](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L92)
+Defined in: [alfa-dom/src/style/sheet.ts:92](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 ## rules
 
@@ -34,4 +34,4 @@ Defined in: [alfa-dom/src/style/sheet.ts:92](https://github.com/Siteimprove/alfa
 
 > **rules**: [`JSON`](../Rule/JSON.md)[]
 
-Defined in: [alfa-dom/src/style/sheet.ts:91](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L91)
+Defined in: [alfa-dom/src/style/sheet.ts:91](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)

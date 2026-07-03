@@ -8,7 +8,7 @@
 
 > **isMediaRule**(`value`): `value is Media`
 
-Defined in: [alfa-dom/src/style/rule/media.ts:53](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts#L53)
+Defined in: [alfa-dom/src/style/rule/media.ts:53](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts)
 
 ## Parameters
 

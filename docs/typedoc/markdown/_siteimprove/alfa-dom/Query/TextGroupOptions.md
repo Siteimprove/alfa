@@ -8,7 +8,7 @@
 
 > **TextGroupOptions**\<`N`\> = `descendants.TextGroupOptions`\<`N`\>
 
-Defined in: [alfa-dom/src/node/query/index.ts:18](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/query/index.ts#L18)
+Defined in: [alfa-dom/src/node/query/index.ts:18](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/query/index.ts)
 
 ## Type Parameters
 

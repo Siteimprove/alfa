@@ -6,7 +6,7 @@
 
 # Interface: JSON\<V\>
 
-Defined in: [alfa-act/src/outcome.ts:171](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L171)
+Defined in: [alfa-act/src/outcome.ts:171](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## Extended by
 
@@ -31,7 +31,7 @@ Defined in: [alfa-act/src/outcome.ts:171](https://github.com/Siteimprove/alfa/bl
 
 > **mode**: [`Mode`](Mode.md)
 
-Defined in: [alfa-act/src/outcome.ts:175](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L175)
+Defined in: [alfa-act/src/outcome.ts:175](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## outcome
 
@@ -39,7 +39,7 @@ Defined in: [alfa-act/src/outcome.ts:175](https://github.com/Siteimprove/alfa/bl
 
 > **outcome**: `V`
 
-Defined in: [alfa-act/src/outcome.ts:173](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L173)
+Defined in: [alfa-act/src/outcome.ts:173](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## rule
 
@@ -47,4 +47,4 @@ Defined in: [alfa-act/src/outcome.ts:173](https://github.com/Siteimprove/alfa/bl
 
 > **rule**: [`JSON`](../Rule/JSON.md) \| [`MinimalJSON`](../Rule/MinimalJSON.md)
 
-Defined in: [alfa-act/src/outcome.ts:174](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L174)
+Defined in: [alfa-act/src/outcome.ts:174](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

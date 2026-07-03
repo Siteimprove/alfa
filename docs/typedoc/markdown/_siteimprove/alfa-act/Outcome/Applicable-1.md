@@ -8,7 +8,7 @@
 
 > **Applicable**\<`I`, `T`, `Q`, `S`\> = [`Passed`](Passed-2.md)\<`I`, `T`, `Q`, `S`\> \| [`Failed`](Failed-2.md)\<`I`, `T`, `Q`, `S`\> \| [`CantTell`](CantTell-2.md)\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/outcome.ts:704](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L704)
+Defined in: [alfa-act/src/outcome.ts:704](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## Type Parameters
 

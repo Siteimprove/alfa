@@ -6,7 +6,7 @@
 
 # Class: Keyframe
 
-Defined in: [alfa-dom/src/style/rule/keyframe.ts:11](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts#L11)
+Defined in: [alfa-dom/src/style/rule/keyframe.ts:11](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [alfa-dom/src/style/rule/keyframe.ts:11](https://github.com/Siteimpr
 
 > `protected` **new Keyframe**(`key`, `declarations`): `KeyframeRule`
 
-Defined in: [alfa-dom/src/style/rule/keyframe.ts:22](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts#L22)
+Defined in: [alfa-dom/src/style/rule/keyframe.ts:22](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)
 
 #### Parameters
 
@@ -41,7 +41,7 @@ Defined in: [alfa-dom/src/style/rule/keyframe.ts:22](https://github.com/Siteimpr
 
 > **\_attachOwner**(`owner`): `boolean`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:65](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L65)
+Defined in: [alfa-dom/src/style/rule/rule.ts:65](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 **`Internal`**
 
@@ -65,7 +65,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:65](https://github.com/Siteimprove/
 
 > **\_attachParent**(`parent`): `boolean`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:79](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L79)
+Defined in: [alfa-dom/src/style/rule/rule.ts:79](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 **`Internal`**
 
@@ -89,7 +89,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:79](https://github.com/Siteimprove/
 
 > `protected` **\_owner**: `Option`\<[`Sheet`](../Sheet-1.md)\> = `None`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:18](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L18)
+Defined in: [alfa-dom/src/style/rule/rule.ts:18](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 
@@ -101,7 +101,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:18](https://github.com/Siteimprove/
 
 > `protected` **\_parent**: `Option`\<[`Rule`](../Rule-1.md)\> = `None`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:19](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L19)
+Defined in: [alfa-dom/src/style/rule/rule.ts:19](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 
@@ -113,7 +113,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:19](https://github.com/Siteimprove/
 
 > **ancestors**(): `Iterable`\<[`Rule`](../Rule-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L47)
+Defined in: [alfa-dom/src/style/rule/rule.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Returns
 
@@ -129,7 +129,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:47](https://github.com/Siteimprove/
 
 > **children**(): `Iterable`\<[`Rule`](../Rule-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:38](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L38)
+Defined in: [alfa-dom/src/style/rule/rule.ts:38](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Returns
 
@@ -145,7 +145,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:38](https://github.com/Siteimprove/
 
 > **descendants**(): `Iterable`\<[`Rule`](../Rule-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:40](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L40)
+Defined in: [alfa-dom/src/style/rule/rule.ts:40](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Returns
 
@@ -161,7 +161,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:40](https://github.com/Siteimprove/
 
 > **equals**(`value`): `value is Keyframe`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:54](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L54)
+Defined in: [alfa-dom/src/style/rule/rule.ts:54](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 Check if a value of the same type as this are equal.
 
@@ -191,7 +191,7 @@ This function does not further refine the type of the given value.
 
 > **get** **key**(): `string`
 
-Defined in: [alfa-dom/src/style/rule/keyframe.ts:31](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts#L31)
+Defined in: [alfa-dom/src/style/rule/keyframe.ts:31](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)
 
 ##### Returns
 
@@ -203,7 +203,7 @@ Defined in: [alfa-dom/src/style/rule/keyframe.ts:31](https://github.com/Siteimpr
 
 > `static` **of**(`key`, `declarations`): `KeyframeRule`
 
-Defined in: [alfa-dom/src/style/rule/keyframe.ts:12](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts#L12)
+Defined in: [alfa-dom/src/style/rule/keyframe.ts:12](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)
 
 #### Parameters
 
@@ -224,7 +224,7 @@ Defined in: [alfa-dom/src/style/rule/keyframe.ts:12](https://github.com/Siteimpr
 
 > **get** **owner**(): `Option`\<[`Sheet`](../Sheet-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:30](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L30)
+Defined in: [alfa-dom/src/style/rule/rule.ts:30](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 
@@ -242,7 +242,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:30](https://github.com/Siteimprove/
 
 > **get** **parent**(): `Option`\<[`Rule`](../Rule-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:34](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L34)
+Defined in: [alfa-dom/src/style/rule/rule.ts:34](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 
@@ -260,7 +260,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:34](https://github.com/Siteimprove/
 
 > **get** **style**(): [`Block`](../Block-1.md)
 
-Defined in: [alfa-dom/src/style/rule/keyframe.ts:35](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts#L35)
+Defined in: [alfa-dom/src/style/rule/keyframe.ts:35](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)
 
 ##### Returns
 
@@ -272,7 +272,7 @@ Defined in: [alfa-dom/src/style/rule/keyframe.ts:35](https://github.com/Siteimpr
 
 > **toJSON**(): [`JSON`](Keyframe/JSON.md)
 
-Defined in: [alfa-dom/src/style/rule/keyframe.ts:39](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts#L39)
+Defined in: [alfa-dom/src/style/rule/keyframe.ts:39](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)
 
 #### Returns
 
@@ -288,7 +288,7 @@ Defined in: [alfa-dom/src/style/rule/keyframe.ts:39](https://github.com/Siteimpr
 
 > **toString**(): `string`
 
-Defined in: [alfa-dom/src/style/rule/keyframe.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts#L47)
+Defined in: [alfa-dom/src/style/rule/keyframe.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)
 
 Returns a string representation of an object.
 
@@ -304,7 +304,7 @@ Returns a string representation of an object.
 
 > **get** **type**(): `T`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:26](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L26)
+Defined in: [alfa-dom/src/style/rule/rule.ts:26](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 

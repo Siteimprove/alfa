@@ -8,7 +8,7 @@
 
 > **importRule**: (`href`, `sheet`, `mediaCondition`, `supportCondition`, `layer`) => [`Import`](Import-1.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:69](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L69)
+Defined in: [alfa-dom/src/style/rule/index.ts:69](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ## Parameters
 

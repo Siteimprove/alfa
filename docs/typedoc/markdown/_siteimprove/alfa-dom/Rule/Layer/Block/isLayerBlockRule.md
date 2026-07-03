@@ -8,7 +8,7 @@
 
 > **isLayerBlockRule**(`value`): `value is Block`
 
-Defined in: [alfa-dom/src/style/rule/layer.ts:135](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts#L135)
+Defined in: [alfa-dom/src/style/rule/layer.ts:135](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
 
 ## Parameters
 

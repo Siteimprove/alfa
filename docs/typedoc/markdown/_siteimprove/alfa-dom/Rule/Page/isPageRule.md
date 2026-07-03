@@ -8,7 +8,7 @@
 
 > **isPageRule**(`value`): `value is Page`
 
-Defined in: [alfa-dom/src/style/rule/page.ts:65](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts#L65)
+Defined in: [alfa-dom/src/style/rule/page.ts:65](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)
 
 ## Parameters
 

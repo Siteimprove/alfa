@@ -8,7 +8,7 @@
 
 > **type**\<`N`\>(`name`, `publicId?`, `systemId?`, `externalId?`, `internalId?`, `extraData?`): [`Type`](../Type-1.md)\<`N`\>
 
-Defined in: [alfa-dom/src/h.ts:202](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L202)
+Defined in: [alfa-dom/src/h.ts:202](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Type Parameters
 

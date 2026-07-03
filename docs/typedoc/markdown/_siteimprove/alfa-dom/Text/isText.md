@@ -8,7 +8,7 @@
 
 > **isText**(`value`): `value is Text`
 
-Defined in: [alfa-dom/src/node/slotable/text.ts:161](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts#L161)
+Defined in: [alfa-dom/src/node/slotable/text.ts:161](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
 
 ## Parameters
 

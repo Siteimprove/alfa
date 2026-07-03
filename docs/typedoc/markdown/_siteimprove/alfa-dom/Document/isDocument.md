@@ -8,7 +8,7 @@
 
 > **isDocument**(`value`): `value is Document`
 
-Defined in: [alfa-dom/src/node/document.ts:152](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/document.ts#L152)
+Defined in: [alfa-dom/src/node/document.ts:152](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/document.ts)
 
 ## Parameters
 

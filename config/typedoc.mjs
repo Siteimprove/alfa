@@ -9,6 +9,8 @@ export default {
   packageOptions: {
     entryPoints: ["src/index.ts"],
     gitRevision: "main",
+    sourceLinkTemplate:
+      "https://github.com/Siteimprove/alfa/blob/{gitRevision}/{path}",
     readme: "none",
     includeVersion: true,
     excludeExternals: true,

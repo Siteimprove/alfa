@@ -6,7 +6,7 @@
 
 # Interface: JSON
 
-Defined in: [alfa-dom/src/node/document.ts:148](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/document.ts#L148)
+Defined in: [alfa-dom/src/node/document.ts:148](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/document.ts)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: [alfa-dom/src/node/document.ts:148](https://github.com/Siteimprove/a
 
 > `optional` **children?**: [`JSON`](../Node/JSON.md)[]
 
-Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L364)
+Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -58,7 +58,7 @@ Defined in: alfa-tree/dist/tree.d.ts:195
 
 > `optional` **path?**: `string`
 
-Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L363)
+Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -82,7 +82,7 @@ Defined in: alfa-tree/dist/tree.d.ts:196
 
 > **style**: `Array`\<[`JSON`](../Sheet/JSON.md)\>
 
-Defined in: [alfa-dom/src/node/document.ts:149](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/document.ts#L149)
+Defined in: [alfa-dom/src/node/document.ts:149](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/document.ts)
 
 ## type
 

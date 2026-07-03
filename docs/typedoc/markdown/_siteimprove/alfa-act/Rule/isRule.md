@@ -8,7 +8,7 @@
 
 > **isRule**\<`I`, `T`, `Q`, `S`\>(`value`): `value is Rule<I, T, Q, S>`
 
-Defined in: [alfa-act/src/rule.ts:204](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L204)
+Defined in: [alfa-act/src/rule.ts:204](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Type Parameters
 

@@ -6,7 +6,7 @@
 
 # Interface: JSON\<N\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:496](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L496)
+Defined in: [alfa-dom/src/node/slotable/element.ts:496](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## Extends
 
@@ -28,7 +28,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:496](https://github.com/Sitei
 
 > **attributes**: [`JSON`](../Attribute/JSON.md)\<`string`\>[]
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:502](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L502)
+Defined in: [alfa-dom/src/node/slotable/element.ts:502](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## box
 
@@ -36,7 +36,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:502](https://github.com/Sitei
 
 > **box**: `JSON` \| `null`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:506](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L506)
+Defined in: [alfa-dom/src/node/slotable/element.ts:506](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## children
 
@@ -44,7 +44,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:506](https://github.com/Sitei
 
 > `optional` **children?**: [`JSON`](../Node/JSON.md)[]
 
-Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L364)
+Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -56,7 +56,7 @@ Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/
 
 > **content**: [`JSON`](../Document/JSON.md) \| `null`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:505](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L505)
+Defined in: [alfa-dom/src/node/slotable/element.ts:505](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## externalId
 
@@ -88,7 +88,7 @@ Defined in: alfa-tree/dist/tree.d.ts:195
 
 > **name**: `N`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:501](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L501)
+Defined in: [alfa-dom/src/node/slotable/element.ts:501](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## namespace
 
@@ -96,7 +96,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:501](https://github.com/Sitei
 
 > **namespace**: `string` \| `null`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:499](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L499)
+Defined in: [alfa-dom/src/node/slotable/element.ts:499](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## path
 
@@ -104,7 +104,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:499](https://github.com/Sitei
 
 > `optional` **path?**: `string`
 
-Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L363)
+Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -116,7 +116,7 @@ Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/
 
 > **prefix**: `string` \| `null`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:500](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L500)
+Defined in: [alfa-dom/src/node/slotable/element.ts:500](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## serializationId
 
@@ -136,7 +136,7 @@ Defined in: alfa-tree/dist/tree.d.ts:196
 
 > **shadow**: [`JSON`](../Shadow/JSON.md) \| `null`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:504](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L504)
+Defined in: [alfa-dom/src/node/slotable/element.ts:504](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## style
 
@@ -144,7 +144,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts:504](https://github.com/Sitei
 
 > **style**: `string` \| [`JSON`](../Block/JSON.md) \| `null`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:503](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L503)
+Defined in: [alfa-dom/src/node/slotable/element.ts:503](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## type
 

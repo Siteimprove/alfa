@@ -8,7 +8,7 @@
 
 > **isSlotable**(`value`): `value is Slotable`
 
-Defined in: [alfa-dom/src/node/slotable/index.ts:14](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/index.ts#L14)
+Defined in: [alfa-dom/src/node/slotable/index.ts:14](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/index.ts)
 
 ## Parameters
 

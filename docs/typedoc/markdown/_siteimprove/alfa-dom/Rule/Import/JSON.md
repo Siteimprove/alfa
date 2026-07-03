@@ -6,7 +6,7 @@
 
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/rule/import.ts:130](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts#L130)
+Defined in: [alfa-dom/src/style/rule/import.ts:130](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: [alfa-dom/src/style/rule/import.ts:130](https://github.com/Siteimpro
 
 > **condition**: `string`
 
-Defined in: [alfa-dom/src/style/rule/condition.ts:37](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/condition.ts#L37)
+Defined in: [alfa-dom/src/style/rule/condition.ts:37](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/condition.ts)
 
 #### Inherited from
 
@@ -34,7 +34,7 @@ Defined in: [alfa-dom/src/style/rule/condition.ts:37](https://github.com/Siteimp
 
 > **href**: `string`
 
-Defined in: [alfa-dom/src/style/rule/import.ts:131](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts#L131)
+Defined in: [alfa-dom/src/style/rule/import.ts:131](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts)
 
 ## layer
 
@@ -42,7 +42,7 @@ Defined in: [alfa-dom/src/style/rule/import.ts:131](https://github.com/Siteimpro
 
 > **layer**: `string` \| `null`
 
-Defined in: [alfa-dom/src/style/rule/import.ts:133](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts#L133)
+Defined in: [alfa-dom/src/style/rule/import.ts:133](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts)
 
 ## rules
 
@@ -50,7 +50,7 @@ Defined in: [alfa-dom/src/style/rule/import.ts:133](https://github.com/Siteimpro
 
 > **rules**: `Array`\<[`JSON`](../JSON.md)\>
 
-Defined in: [alfa-dom/src/style/rule/grouping.ts:41](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts#L41)
+Defined in: [alfa-dom/src/style/rule/grouping.ts:41](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
 
 #### Inherited from
 
@@ -62,7 +62,7 @@ Defined in: [alfa-dom/src/style/rule/grouping.ts:41](https://github.com/Siteimpr
 
 > **supportText**: `string` \| `null`
 
-Defined in: [alfa-dom/src/style/rule/import.ts:132](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts#L132)
+Defined in: [alfa-dom/src/style/rule/import.ts:132](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts)
 
 ## type
 
@@ -70,7 +70,7 @@ Defined in: [alfa-dom/src/style/rule/import.ts:132](https://github.com/Siteimpro
 
 > **type**: `"import"`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L96)
+Defined in: [alfa-dom/src/style/rule/rule.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 

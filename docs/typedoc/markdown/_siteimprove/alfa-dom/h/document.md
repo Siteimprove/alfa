@@ -8,7 +8,7 @@
 
 > **document**(`children`, `style?`, `externalId?`, `internalId?`, `extraData?`): [`Document`](../Document-1.md)
 
-Defined in: [alfa-dom/src/h.ts:164](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L164)
+Defined in: [alfa-dom/src/h.ts:164](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Parameters
 

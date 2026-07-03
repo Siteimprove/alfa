@@ -8,7 +8,7 @@
 
 > **from**(`json`): [`Declaration`](../Declaration-1.md)
 
-Defined in: [alfa-dom/src/style/declaration.ts:138](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L138)
+Defined in: [alfa-dom/src/style/declaration.ts:138](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ## Parameters
 

@@ -8,7 +8,7 @@
 
 > `const` **getElementIdMap**: (`node`) => `Map`\<`string`, [`Element`](../Element-1.md)\<`string`\>\> = `elementIdMap.getElementIdMap`
 
-Defined in: [alfa-dom/src/node/query/index.ts:15](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/query/index.ts#L15)
+Defined in: [alfa-dom/src/node/query/index.ts:15](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/query/index.ts)
 
 Returns a map from id to elements, in the subtree rooted at a given node.
 

@@ -8,7 +8,7 @@
 
 > **startExpectation**\<`I`, `T`, `Q`, `S`\>(`rule`): [`Event`](../Event-1.md)\<`I`, `T`, `Q`, `S`, `"start"`, `"expectation"`\>
 
-Defined in: [alfa-act/src/rule.ts:796](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L796)
+Defined in: [alfa-act/src/rule.ts:796](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Type Parameters
 

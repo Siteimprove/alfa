@@ -8,4 +8,4 @@
 
 > **Traversal** = `ReturnType`\<*typeof* [`Traversal`](Traversal-1.md)\[`"of"`\]\>
 
-Defined in: [alfa-dom/src/node/node.ts:387](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L387)
+Defined in: [alfa-dom/src/node/node.ts:387](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)

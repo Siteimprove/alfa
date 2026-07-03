@@ -10,7 +10,7 @@
 
 > **from**(`json`, `sheetFactory`): [`FontFace`](FontFace-2.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:80](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L80)
+Defined in: [alfa-dom/src/style/rule/index.ts:80](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ### Parameters
 
@@ -27,7 +27,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts:80](https://github.com/Siteimprove
 
 > **from**(`json`, `sheetFactory`): [`Import`](Import-1.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:85](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L85)
+Defined in: [alfa-dom/src/style/rule/index.ts:85](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ### Parameters
 
@@ -44,7 +44,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts:85](https://github.com/Siteimprove
 
 > **from**(`json`, `sheetFactory`): [`Keyframe`](Keyframe-2.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:90](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L90)
+Defined in: [alfa-dom/src/style/rule/index.ts:90](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ### Parameters
 
@@ -61,7 +61,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts:90](https://github.com/Siteimprove
 
 > **from**(`json`, `sheetFactory`): [`Keyframes`](Keyframes-2.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:95](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L95)
+Defined in: [alfa-dom/src/style/rule/index.ts:95](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ### Parameters
 
@@ -78,7 +78,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts:95](https://github.com/Siteimprove
 
 > **from**(`json`, `sheetFactory`): [`Block`](Layer/Block-1.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:100](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L100)
+Defined in: [alfa-dom/src/style/rule/index.ts:100](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ### Parameters
 
@@ -95,7 +95,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts:100](https://github.com/Siteimprov
 
 > **from**(`json`, `sheetFactory`): [`Statement`](Layer/Statement-1.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:105](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L105)
+Defined in: [alfa-dom/src/style/rule/index.ts:105](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ### Parameters
 
@@ -112,7 +112,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts:105](https://github.com/Siteimprov
 
 > **from**(`json`, `sheetFactory`): [`Media`](Media-2.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:110](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L110)
+Defined in: [alfa-dom/src/style/rule/index.ts:110](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ### Parameters
 
@@ -129,7 +129,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts:110](https://github.com/Siteimprov
 
 > **from**(`json`, `sheetFactory`): [`Namespace`](Namespace-2.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:115](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L115)
+Defined in: [alfa-dom/src/style/rule/index.ts:115](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ### Parameters
 
@@ -146,7 +146,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts:115](https://github.com/Siteimprov
 
 > **from**(`json`, `sheetFactory`): [`Page`](Page-2.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:120](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L120)
+Defined in: [alfa-dom/src/style/rule/index.ts:120](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ### Parameters
 
@@ -163,7 +163,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts:120](https://github.com/Siteimprov
 
 > **from**(`json`, `sheetFactory`): [`Style`](Style-2.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:125](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L125)
+Defined in: [alfa-dom/src/style/rule/index.ts:125](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ### Parameters
 
@@ -180,7 +180,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts:125](https://github.com/Siteimprov
 
 > **from**(`json`, `sheetFactory`): [`Supports`](Supports-2.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:130](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L130)
+Defined in: [alfa-dom/src/style/rule/index.ts:130](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ### Parameters
 
@@ -197,7 +197,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts:130](https://github.com/Siteimprov
 
 > **from**(`json`, `sheetFactory`): [`Rule`](../Rule-1.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:135](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L135)
+Defined in: [alfa-dom/src/style/rule/index.ts:135](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ### Parameters
 

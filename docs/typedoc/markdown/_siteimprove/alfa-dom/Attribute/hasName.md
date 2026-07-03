@@ -8,7 +8,7 @@
 
 > **hasName**: \{\<`N`\>(`predicate`): `Refinement`\<[`Attribute`](../Attribute-1.md)\<`string`\>, [`Attribute`](../Attribute-1.md)\<`N`\>\>; \<`N`\>(`name`, ...`rest`): `Refinement`\<[`Attribute`](../Attribute-1.md)\<`string`\>, [`Attribute`](../Attribute-1.md)\<`N`\>\>; \}
 
-Defined in: [alfa-dom/src/node/attribute.ts:269](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts#L269)
+Defined in: [alfa-dom/src/node/attribute.ts:269](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts)
 
 ## Call Signature
 

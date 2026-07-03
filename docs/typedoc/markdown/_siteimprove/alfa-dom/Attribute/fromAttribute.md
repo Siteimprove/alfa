@@ -8,7 +8,7 @@
 
 > **fromAttribute**\<`N`\>(`attribute`): `Trampoline`\<[`Attribute`](../Attribute-1.md)\<`N`\>\>
 
-Defined in: [alfa-dom/src/node/attribute.ts:239](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts#L239)
+Defined in: [alfa-dom/src/node/attribute.ts:239](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts)
 
 **`Internal`**
 

@@ -6,7 +6,7 @@
 
 # Abstract Class: Outcome\<I, T, Q, S, V\>
 
-Defined in: [alfa-act/src/outcome.ts:29](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L29)
+Defined in: [alfa-act/src/outcome.ts:29](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 I: type of Input for the associated rule
 T: type of the rule's test target
@@ -45,7 +45,7 @@ V: type of outcome value
 
 > `protected` **new Outcome**\<`I`, `T`, `Q`, `S`, `V`\>(`outcome`, `rule`, `mode`): `Outcome`\<`I`, `T`, `Q`, `S`, `V`\>
 
-Defined in: [alfa-act/src/outcome.ts:57](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L57)
+Defined in: [alfa-act/src/outcome.ts:57](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Parameters
 
@@ -65,7 +65,7 @@ Defined in: [alfa-act/src/outcome.ts:57](https://github.com/Siteimprove/alfa/blo
 
 > `protected` `readonly` **\_mode**: [`Mode`](Outcome/Mode.md)
 
-Defined in: [alfa-act/src/outcome.ts:55](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L55)
+Defined in: [alfa-act/src/outcome.ts:55](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 [https://www.w3.org/TR/EARL10-Schema/#mode](https://www.w3.org/TR/EARL10-Schema/#mode)
 
@@ -75,7 +75,7 @@ Defined in: [alfa-act/src/outcome.ts:55](https://github.com/Siteimprove/alfa/blo
 
 > `protected` `readonly` **\_rule**: [`Rule`](Rule-1.md)\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/outcome.ts:51](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L51)
+Defined in: [alfa-act/src/outcome.ts:51](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 [https://www.w3.org/TR/EARL10-Schema/#test](https://www.w3.org/TR/EARL10-Schema/#test)
 While this is called a "test" in EARL, in Alfa this is always a "rule".
@@ -88,7 +88,7 @@ While this is called a "test" in EARL, in Alfa this is always a "rule".
 
 > **equals**\<`I`, `T`, `Q`, `S`, `V`\>(`value`): `boolean`
 
-Defined in: [alfa-act/src/outcome.ts:97](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L97)
+Defined in: [alfa-act/src/outcome.ts:97](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 Check if a value of the same type as this are equal.
 
@@ -124,7 +124,7 @@ This function does not further refine the type of the given value.
 
 > **equals**(`value`): `value is Outcome<I, T, Q, S, V>`
 
-Defined in: [alfa-act/src/outcome.ts:105](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L105)
+Defined in: [alfa-act/src/outcome.ts:105](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 Check if a value of an unknown type is equal to this.
 
@@ -152,7 +152,7 @@ This function refines the type of the given value.
 
 > **hash**(`hash`): `void`
 
-Defined in: [alfa-act/src/outcome.ts:116](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L116)
+Defined in: [alfa-act/src/outcome.ts:116](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Parameters
 
@@ -176,7 +176,7 @@ Defined in: [alfa-act/src/outcome.ts:116](https://github.com/Siteimprove/alfa/bl
 
 > **get** **isSemiAuto**(): `boolean`
 
-Defined in: [alfa-act/src/outcome.ts:89](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L89)
+Defined in: [alfa-act/src/outcome.ts:89](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -190,7 +190,7 @@ Defined in: [alfa-act/src/outcome.ts:89](https://github.com/Siteimprove/alfa/blo
 
 > **get** **mode**(): [`Mode`](Outcome/Mode.md)
 
-Defined in: [alfa-act/src/outcome.ts:85](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L85)
+Defined in: [alfa-act/src/outcome.ts:85](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 [https://www.w3.org/TR/EARL10-Schema/#mode](https://www.w3.org/TR/EARL10-Schema/#mode)
 
@@ -206,7 +206,7 @@ Defined in: [alfa-act/src/outcome.ts:85](https://github.com/Siteimprove/alfa/blo
 
 > **get** **outcome**(): `V`
 
-Defined in: [alfa-act/src/outcome.ts:70](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L70)
+Defined in: [alfa-act/src/outcome.ts:70](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 [https://www.w3.org/TR/EARL10-Schema/#outcome](https://www.w3.org/TR/EARL10-Schema/#outcome)
 
@@ -222,7 +222,7 @@ Defined in: [alfa-act/src/outcome.ts:70](https://github.com/Siteimprove/alfa/blo
 
 > **get** **rule**(): [`Rule`](Rule-1.md)\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/outcome.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L78)
+Defined in: [alfa-act/src/outcome.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 [https://www.w3.org/TR/EARL10-Schema/#test](https://www.w3.org/TR/EARL10-Schema/#test)
 While this is called a "test" in EARL, in Alfa this is always a "rule".
@@ -239,7 +239,7 @@ While this is called a "test" in EARL, in Alfa this is always a "rule".
 
 > **get** **target**(): `T` \| `undefined`
 
-Defined in: [alfa-act/src/outcome.ts:93](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L93)
+Defined in: [alfa-act/src/outcome.ts:93](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -251,7 +251,7 @@ Defined in: [alfa-act/src/outcome.ts:93](https://github.com/Siteimprove/alfa/blo
 
 > **toEARL**(): [`EARL`](Outcome/EARL.md)
 
-Defined in: [alfa-act/src/outcome.ts:130](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L130)
+Defined in: [alfa-act/src/outcome.ts:130](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Returns
 
@@ -267,7 +267,7 @@ Defined in: [alfa-act/src/outcome.ts:130](https://github.com/Siteimprove/alfa/bl
 
 > **toJSON**(`options?`): [`JSON`](Outcome/JSON.md)\<`V`\>
 
-Defined in: [alfa-act/src/outcome.ts:122](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L122)
+Defined in: [alfa-act/src/outcome.ts:122](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Parameters
 
@@ -289,7 +289,7 @@ Defined in: [alfa-act/src/outcome.ts:122](https://github.com/Siteimprove/alfa/bl
 
 > `abstract` **toSARIF**(): `Result`
 
-Defined in: [alfa-act/src/outcome.ts:143](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L143)
+Defined in: [alfa-act/src/outcome.ts:143](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Returns
 

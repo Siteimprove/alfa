@@ -8,7 +8,7 @@
 
 > `const` **getDescendants**: \{\<`T`\>(`refinement`): (`node`, `options?`) => `Sequence`\<`T`\>; (`predicate`): (`node`, `options?`) => `Sequence`\<[`Node`](../Node-1.md)\>; \} = `descendants.getDescendants`
 
-Defined in: [alfa-dom/src/node/query/index.ts:10](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/query/index.ts#L10)
+Defined in: [alfa-dom/src/node/query/index.ts:10](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/query/index.ts)
 
 ## Call Signature
 

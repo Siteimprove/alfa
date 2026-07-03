@@ -6,7 +6,7 @@
 
 # Interface: IntrinsicElements
 
-Defined in: [alfa-dom/src/jsx.ts:111](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts#L111)
+Defined in: [alfa-dom/src/jsx.ts:111](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts)
 
 ## Indexable
 

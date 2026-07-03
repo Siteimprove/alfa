@@ -8,7 +8,7 @@
 
 > **isImportRule**(`value`): `value is Import`
 
-Defined in: [alfa-dom/src/style/rule/import.ts:136](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts#L136)
+Defined in: [alfa-dom/src/style/rule/import.ts:136](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts)
 
 ## Parameters
 

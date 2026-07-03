@@ -8,7 +8,7 @@
 
 > **isAttribute**(`value`): `value is Attribute<string>`
 
-Defined in: [alfa-dom/src/node/attribute.ts:232](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts#L232)
+Defined in: [alfa-dom/src/node/attribute.ts:232](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts)
 
 ## Parameters
 

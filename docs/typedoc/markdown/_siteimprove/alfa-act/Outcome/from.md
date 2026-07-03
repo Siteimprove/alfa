@@ -8,7 +8,7 @@
 
 > **from**\<`I`, `T`, `Q`, `S`\>(`rule`, `target`, `expectations`, `mode`): [`Applicable`](Applicable-1.md)\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/outcome.ts:834](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L834)
+Defined in: [alfa-act/src/outcome.ts:834](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## Type Parameters
 

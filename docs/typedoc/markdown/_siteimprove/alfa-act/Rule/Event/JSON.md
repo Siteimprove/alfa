@@ -6,7 +6,7 @@
 
 # Interface: JSON\<T, N\>
 
-Defined in: [alfa-act/src/rule.ts:712](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L712)
+Defined in: [alfa-act/src/rule.ts:712](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Type Parameters
 
@@ -25,7 +25,7 @@ Defined in: [alfa-act/src/rule.ts:712](https://github.com/Siteimprove/alfa/blob/
 
 > **name**: `N`
 
-Defined in: [alfa-act/src/rule.ts:716](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L716)
+Defined in: [alfa-act/src/rule.ts:716](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## rule
 
@@ -33,7 +33,7 @@ Defined in: [alfa-act/src/rule.ts:716](https://github.com/Siteimprove/alfa/blob/
 
 > **rule**: [`JSON`](../JSON.md)
 
-Defined in: [alfa-act/src/rule.ts:715](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L715)
+Defined in: [alfa-act/src/rule.ts:715](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## type
 
@@ -41,4 +41,4 @@ Defined in: [alfa-act/src/rule.ts:715](https://github.com/Siteimprove/alfa/blob/
 
 > **type**: `T`
 
-Defined in: [alfa-act/src/rule.ts:714](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L714)
+Defined in: [alfa-act/src/rule.ts:714](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

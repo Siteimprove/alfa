@@ -6,7 +6,7 @@
 
 # Interface: Properties
 
-Defined in: [alfa-dom/src/jsx.ts:87](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts#L87)
+Defined in: [alfa-dom/src/jsx.ts:87](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts)
 
 ## Indexable
 
@@ -18,7 +18,7 @@ Defined in: [alfa-dom/src/jsx.ts:87](https://github.com/Siteimprove/alfa/blob/ma
 
 > `optional` **style?**: `Record`\<`string`, `string`\>
 
-Defined in: [alfa-dom/src/jsx.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts#L96)
+Defined in: [alfa-dom/src/jsx.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts)
 
 An optional record of CSS property names and their associated values.
 This works similarly to the `style` property in React.

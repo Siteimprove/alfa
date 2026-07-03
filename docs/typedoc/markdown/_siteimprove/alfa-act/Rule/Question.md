@@ -8,7 +8,7 @@
 
 > **Question**\<`R`\> = `R` *extends* [`Rule`](../Rule-1.md)\<`any`, `any`, infer Q, `any`\> ? `Q` : `never`
 
-Defined in: [alfa-act/src/rule.ts:200](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L200)
+Defined in: [alfa-act/src/rule.ts:200](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Type Parameters
 

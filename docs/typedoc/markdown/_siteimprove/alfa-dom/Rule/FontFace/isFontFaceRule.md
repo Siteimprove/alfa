@@ -8,7 +8,7 @@
 
 > **isFontFaceRule**(`value`): `value is FontFace`
 
-Defined in: [alfa-dom/src/style/rule/font-face.ts:52](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/font-face.ts#L52)
+Defined in: [alfa-dom/src/style/rule/font-face.ts:52](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/font-face.ts)
 
 ## Parameters
 

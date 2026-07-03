@@ -8,7 +8,7 @@
 
 > **Oracle**\<`INPUT`, `TARGET`, `QUESTION`, `SUBJECT`\> = (`rule`, `question`) => `Promise`\<`Option`\<`QUESTION`\[keyof `QUESTION`\]\[`1`\]\>\>
 
-Defined in: [alfa-act/src/expectation/oracle.ts:18](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/oracle.ts#L18)
+Defined in: [alfa-act/src/expectation/oracle.ts:18](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/oracle.ts)
 
 * QUESTION: questions' metadata type; has the shape { URI: [T, A] } where
             URI is the question URI, T a representation of the expected return

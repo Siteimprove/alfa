@@ -8,7 +8,7 @@
 
 > **isCantTell**: \{\<`I`, `T`, `Q`, `S`\>(`value`): `value is CantTell<I, T, Q, S>`; \<`I`, `T`, `Q`, `S`\>(`value`): `value is CantTell<I, T, Q, S>`; \}
 
-Defined in: [alfa-act/src/outcome.ts:702](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L702)
+Defined in: [alfa-act/src/outcome.ts:702](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## Call Signature
 

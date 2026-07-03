@@ -8,7 +8,7 @@
 
 > **fromImportRule**(`json`, `fromRule`, `sheetFactory`): `Trampoline`\<[`Import`](../Import-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/import.ts:160](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts#L160)
+Defined in: [alfa-dom/src/style/rule/import.ts:160](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts)
 
 **`Internal`**
 

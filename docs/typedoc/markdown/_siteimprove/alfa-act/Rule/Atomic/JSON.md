@@ -6,7 +6,7 @@
 
 # Interface: JSON
 
-Defined in: [alfa-act/src/rule.ts:399](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L399)
+Defined in: [alfa-act/src/rule.ts:399](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: [alfa-act/src/rule.ts:399](https://github.com/Siteimprove/alfa/blob/
 
 > **requirements**: `Array`\<[`JSON`](../../Requirement/JSON.md)\<`string`, `string`\>\>
 
-Defined in: [alfa-act/src/rule.ts:180](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L180)
+Defined in: [alfa-act/src/rule.ts:180](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Inherited from
 
@@ -34,7 +34,7 @@ Defined in: [alfa-act/src/rule.ts:180](https://github.com/Siteimprove/alfa/blob/
 
 > **tags**: `Array`\<[`JSON`](../../Tag/JSON.md)\<`string`\>\>
 
-Defined in: [alfa-act/src/rule.ts:181](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L181)
+Defined in: [alfa-act/src/rule.ts:181](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Inherited from
 
@@ -46,7 +46,7 @@ Defined in: [alfa-act/src/rule.ts:181](https://github.com/Siteimprove/alfa/blob/
 
 > **type**: `"atomic"`
 
-Defined in: [alfa-act/src/rule.ts:400](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L400)
+Defined in: [alfa-act/src/rule.ts:400](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Overrides
 
@@ -58,7 +58,7 @@ Defined in: [alfa-act/src/rule.ts:400](https://github.com/Siteimprove/alfa/blob/
 
 > **uri**: `string`
 
-Defined in: [alfa-act/src/rule.ts:179](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L179)
+Defined in: [alfa-act/src/rule.ts:179](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Inherited from
 

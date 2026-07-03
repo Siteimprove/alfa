@@ -8,7 +8,7 @@
 
 > `const` **hasTextContent**: (`predicate`, `options`) => `Predicate`\<[`Node`](../Node-1.md)\> = `predicate.hasTextContent`
 
-Defined in: [alfa-dom/src/node/index.ts:145](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L145)
+Defined in: [alfa-dom/src/node/index.ts:145](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
 
 ## Parameters
 

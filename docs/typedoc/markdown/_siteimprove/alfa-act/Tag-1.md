@@ -6,7 +6,7 @@
 
 # Abstract Class: Tag\<T\>
 
-Defined in: [alfa-act/src/metadata/tag.ts:9](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts#L9)
+Defined in: [alfa-act/src/metadata/tag.ts:9](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
 
 ## Type Parameters
 
@@ -25,7 +25,7 @@ Defined in: [alfa-act/src/metadata/tag.ts:9](https://github.com/Siteimprove/alfa
 
 > `protected` **new Tag**\<`T`\>(): `Tag`\<`T`\>
 
-Defined in: [alfa-act/src/metadata/tag.ts:12](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts#L12)
+Defined in: [alfa-act/src/metadata/tag.ts:12](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
 
 #### Returns
 
@@ -39,7 +39,7 @@ Defined in: [alfa-act/src/metadata/tag.ts:12](https://github.com/Siteimprove/alf
 
 > **equals**(`value`): `boolean`
 
-Defined in: [alfa-act/src/metadata/tag.ts:16](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts#L16)
+Defined in: [alfa-act/src/metadata/tag.ts:16](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
 
 Check if a value of the same type as this are equal.
 
@@ -65,7 +65,7 @@ This function does not further refine the type of the given value.
 
 > **equals**(`value`): `value is Tag<T>`
 
-Defined in: [alfa-act/src/metadata/tag.ts:18](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts#L18)
+Defined in: [alfa-act/src/metadata/tag.ts:18](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
 
 Check if a value of an unknown type is equal to this.
 
@@ -93,7 +93,7 @@ This function refines the type of the given value.
 
 > **toJSON**(): [`JSON`](Tag/JSON.md)\<`T`\>
 
-Defined in: [alfa-act/src/metadata/tag.ts:24](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts#L24)
+Defined in: [alfa-act/src/metadata/tag.ts:24](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
 
 #### Returns
 
@@ -111,7 +111,7 @@ Defined in: [alfa-act/src/metadata/tag.ts:24](https://github.com/Siteimprove/alf
 
 > **get** `abstract` **type**(): `T`
 
-Defined in: [alfa-act/src/metadata/tag.ts:14](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts#L14)
+Defined in: [alfa-act/src/metadata/tag.ts:14](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
 
 ##### Returns
 

@@ -8,7 +8,7 @@
 
 > **fromElement**\<`N`\>(`json`, `fromNode`, `device?`): `Trampoline`\<[`Element`](../Element-1.md)\<`N`\>\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:520](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L520)
+Defined in: [alfa-dom/src/node/slotable/element.ts:520](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 **`Internal`**
 

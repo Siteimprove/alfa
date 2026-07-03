@@ -6,7 +6,7 @@
 
 # Interface: JSON\<N\>
 
-Defined in: [alfa-dom/src/node/attribute.ts:223](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts#L223)
+Defined in: [alfa-dom/src/node/attribute.ts:223](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts)
 
 ## Extends
 
@@ -28,7 +28,7 @@ Defined in: [alfa-dom/src/node/attribute.ts:223](https://github.com/Siteimprove/
 
 > `optional` **children?**: [`JSON`](../Node/JSON.md)[]
 
-Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L364)
+Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -64,7 +64,7 @@ Defined in: alfa-tree/dist/tree.d.ts:195
 
 > **name**: `N`
 
-Defined in: [alfa-dom/src/node/attribute.ts:228](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts#L228)
+Defined in: [alfa-dom/src/node/attribute.ts:228](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts)
 
 ## namespace
 
@@ -72,7 +72,7 @@ Defined in: [alfa-dom/src/node/attribute.ts:228](https://github.com/Siteimprove/
 
 > **namespace**: `string` \| `null`
 
-Defined in: [alfa-dom/src/node/attribute.ts:226](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts#L226)
+Defined in: [alfa-dom/src/node/attribute.ts:226](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts)
 
 ## path
 
@@ -80,7 +80,7 @@ Defined in: [alfa-dom/src/node/attribute.ts:226](https://github.com/Siteimprove/
 
 > `optional` **path?**: `string`
 
-Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L363)
+Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -92,7 +92,7 @@ Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/
 
 > **prefix**: `string` \| `null`
 
-Defined in: [alfa-dom/src/node/attribute.ts:227](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts#L227)
+Defined in: [alfa-dom/src/node/attribute.ts:227](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts)
 
 ## serializationId
 
@@ -124,4 +124,4 @@ Defined in: alfa-tree/dist/tree.d.ts:192
 
 > **value**: `string`
 
-Defined in: [alfa-dom/src/node/attribute.ts:229](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts#L229)
+Defined in: [alfa-dom/src/node/attribute.ts:229](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts)

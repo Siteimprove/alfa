@@ -6,7 +6,7 @@
 
 # Interface: Evaluate()\<I, T, Q, S\>
 
-Defined in: [alfa-act/src/rule.ts:601](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L601)
+Defined in: [alfa-act/src/rule.ts:601](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Type Parameters
 
@@ -19,7 +19,7 @@ Defined in: [alfa-act/src/rule.ts:601](https://github.com/Siteimprove/alfa/blob/
 
 > **Evaluate**(`input`, `performance?`): `object`
 
-Defined in: [alfa-act/src/rule.ts:607](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L607)
+Defined in: [alfa-act/src/rule.ts:607](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Parameters
 
@@ -34,4 +34,4 @@ Defined in: [alfa-act/src/rule.ts:607](https://github.com/Siteimprove/alfa/blob/
 
 | Name | Type | Defined in |
 | ------ | ------ | ------ |
-| `expectations()` | (`outcomes`) => `object` | [alfa-act/src/rule.ts:617](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L617) |
+| `expectations()` | (`outcomes`) => `object` | [alfa-act/src/rule.ts:617](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts) |

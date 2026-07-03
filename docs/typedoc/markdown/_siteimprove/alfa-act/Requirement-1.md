@@ -6,7 +6,7 @@
 
 # Abstract Class: Requirement\<T, U\>
 
-Defined in: [alfa-act/src/metadata/requirement.ts:9](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts#L9)
+Defined in: [alfa-act/src/metadata/requirement.ts:9](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
 
 ## Type Parameters
 
@@ -27,7 +27,7 @@ Defined in: [alfa-act/src/metadata/requirement.ts:9](https://github.com/Siteimpr
 
 > `protected` **new Requirement**\<`T`, `U`\>(`type`, `uri`): `Requirement`\<`T`, `U`\>
 
-Defined in: [alfa-act/src/metadata/requirement.ts:21](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts#L21)
+Defined in: [alfa-act/src/metadata/requirement.ts:21](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
 
 #### Parameters
 
@@ -48,7 +48,7 @@ Defined in: [alfa-act/src/metadata/requirement.ts:21](https://github.com/Siteimp
 
 > **equals**(`value`): `boolean`
 
-Defined in: [alfa-act/src/metadata/requirement.ts:34](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts#L34)
+Defined in: [alfa-act/src/metadata/requirement.ts:34](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
 
 Check if a value of the same type as this are equal.
 
@@ -74,7 +74,7 @@ This function does not further refine the type of the given value.
 
 > **equals**(`value`): `value is Requirement<T, U>`
 
-Defined in: [alfa-act/src/metadata/requirement.ts:36](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts#L36)
+Defined in: [alfa-act/src/metadata/requirement.ts:36](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
 
 Check if a value of an unknown type is equal to this.
 
@@ -102,7 +102,7 @@ This function refines the type of the given value.
 
 > **toEARL**(): [`EARL`](Requirement/EARL.md)
 
-Defined in: [alfa-act/src/metadata/requirement.ts:49](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts#L49)
+Defined in: [alfa-act/src/metadata/requirement.ts:49](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
 
 #### Returns
 
@@ -118,7 +118,7 @@ Defined in: [alfa-act/src/metadata/requirement.ts:49](https://github.com/Siteimp
 
 > **toJSON**(): [`JSON`](Requirement/JSON.md)\<`T`, `U`\>
 
-Defined in: [alfa-act/src/metadata/requirement.ts:42](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts#L42)
+Defined in: [alfa-act/src/metadata/requirement.ts:42](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
 
 #### Returns
 
@@ -136,7 +136,7 @@ Defined in: [alfa-act/src/metadata/requirement.ts:42](https://github.com/Siteimp
 
 > **get** **type**(): `T`
 
-Defined in: [alfa-act/src/metadata/requirement.ts:26](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts#L26)
+Defined in: [alfa-act/src/metadata/requirement.ts:26](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
 
 ##### Returns
 
@@ -150,7 +150,7 @@ Defined in: [alfa-act/src/metadata/requirement.ts:26](https://github.com/Siteimp
 
 > **get** **uri**(): `U`
 
-Defined in: [alfa-act/src/metadata/requirement.ts:30](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts#L30)
+Defined in: [alfa-act/src/metadata/requirement.ts:30](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
 
 ##### Returns
 

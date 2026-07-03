@@ -8,7 +8,7 @@
 
 > **declaration**(`name`, `value`, `important?`): [`Declaration`](../Declaration-1.md)
 
-Defined in: [alfa-dom/src/h.ts:264](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L264)
+Defined in: [alfa-dom/src/h.ts:264](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Parameters
 

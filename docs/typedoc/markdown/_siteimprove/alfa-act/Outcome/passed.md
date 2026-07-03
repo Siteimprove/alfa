@@ -8,7 +8,7 @@
 
 > **passed**: \<`I`, `T`, `Q`, `S`\>(`rule`, `target`, `expectations`, `mode`) => [`Passed`](Passed-2.md)\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/outcome.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L363)
+Defined in: [alfa-act/src/outcome.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## Type Parameters
 

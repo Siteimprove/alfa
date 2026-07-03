@@ -8,7 +8,7 @@
 
 > **isType**(`value`): `value is Type<string>`
 
-Defined in: [alfa-dom/src/node/type.ts:113](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts#L113)
+Defined in: [alfa-dom/src/node/type.ts:113](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts)
 
 ## Parameters
 

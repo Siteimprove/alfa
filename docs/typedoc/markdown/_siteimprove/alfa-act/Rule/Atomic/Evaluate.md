@@ -6,7 +6,7 @@
 
 # Interface: Evaluate()\<I, T, Q, S\>
 
-Defined in: [alfa-act/src/rule.ts:403](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L403)
+Defined in: [alfa-act/src/rule.ts:403](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Type Parameters
 
@@ -19,7 +19,7 @@ Defined in: [alfa-act/src/rule.ts:403](https://github.com/Siteimprove/alfa/blob/
 
 > **Evaluate**(`input`, `performance?`): `object`
 
-Defined in: [alfa-act/src/rule.ts:409](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L409)
+Defined in: [alfa-act/src/rule.ts:409](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Parameters
 
@@ -34,5 +34,5 @@ Defined in: [alfa-act/src/rule.ts:409](https://github.com/Siteimprove/alfa/blob/
 
 | Name | Type | Defined in |
 | ------ | ------ | ------ |
-| `applicability()` | () => `Iterable`\<[`Interview`](../../Interview-1.md)\<`Q`, `S`, `T`, `Maybe`\<`T`\>\>\> | [alfa-act/src/rule.ts:419](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L419) |
-| `expectations()` | (`target`) => `object` | [alfa-act/src/rule.ts:420](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L420) |
+| `applicability()` | () => `Iterable`\<[`Interview`](../../Interview-1.md)\<`Q`, `S`, `T`, `Maybe`\<`T`\>\>\> | [alfa-act/src/rule.ts:419](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts) |
+| `expectations()` | (`target`) => `object` | [alfa-act/src/rule.ts:420](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts) |

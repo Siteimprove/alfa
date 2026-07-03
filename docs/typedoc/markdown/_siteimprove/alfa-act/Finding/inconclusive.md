@@ -8,7 +8,7 @@
 
 > **inconclusive**\<`DIAGNOSTIC`\>(`diagnostic`, `oracleUsed?`): [`Finding`](../Finding-1.md)\<`never`, `DIAGNOSTIC`\>
 
-Defined in: [alfa-act/src/expectation/finding.ts:33](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/finding.ts#L33)
+Defined in: [alfa-act/src/expectation/finding.ts:33](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/finding.ts)
 
 ## Type Parameters
 

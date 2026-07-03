@@ -8,7 +8,7 @@
 
 > **matches**(`device`): `Predicate`\<[`Import`](../Import-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/import.ts:153](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts#L153)
+Defined in: [alfa-dom/src/style/rule/import.ts:153](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts)
 
 ## Parameters
 

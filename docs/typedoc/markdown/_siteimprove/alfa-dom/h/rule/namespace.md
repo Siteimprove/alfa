@@ -8,7 +8,7 @@
 
 > **namespace**(`namespace`, `prefix?`): [`Namespace`](../../Rule/Namespace-2.md)
 
-Defined in: [alfa-dom/src/h.ts:326](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L326)
+Defined in: [alfa-dom/src/h.ts:326](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Parameters
 

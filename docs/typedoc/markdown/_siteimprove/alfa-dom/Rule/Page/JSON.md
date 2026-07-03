@@ -6,7 +6,7 @@
 
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/rule/page.ts:60](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts#L60)
+Defined in: [alfa-dom/src/style/rule/page.ts:60](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: [alfa-dom/src/style/rule/page.ts:60](https://github.com/Siteimprove/
 
 > **selector**: `string`
 
-Defined in: [alfa-dom/src/style/rule/page.ts:61](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts#L61)
+Defined in: [alfa-dom/src/style/rule/page.ts:61](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)
 
 ## style
 
@@ -30,7 +30,7 @@ Defined in: [alfa-dom/src/style/rule/page.ts:61](https://github.com/Siteimprove/
 
 > **style**: `string` \| [`JSON`](../../Block/JSON.md)
 
-Defined in: [alfa-dom/src/style/rule/page.ts:62](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts#L62)
+Defined in: [alfa-dom/src/style/rule/page.ts:62](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)
 
 ## type
 
@@ -38,7 +38,7 @@ Defined in: [alfa-dom/src/style/rule/page.ts:62](https://github.com/Siteimprove/
 
 > **type**: `"page"`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L96)
+Defined in: [alfa-dom/src/style/rule/rule.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 

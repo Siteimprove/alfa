@@ -6,7 +6,7 @@
 
 # Class: Cache
 
-Defined in: [alfa-act/src/cache.ts:24](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/cache.ts#L24)
+Defined in: [alfa-act/src/cache.ts:24](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/cache.ts)
 
 Cache from rules to outcomes.
 
@@ -28,7 +28,7 @@ to a given `Audit` where the input is fixed.
 
 > `protected` **new Cache**(): `Cache`
 
-Defined in: [alfa-act/src/cache.ts:33](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/cache.ts#L33)
+Defined in: [alfa-act/src/cache.ts:33](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/cache.ts)
 
 #### Returns
 
@@ -40,7 +40,7 @@ Defined in: [alfa-act/src/cache.ts:33](https://github.com/Siteimprove/alfa/blob/
 
 > `static` **empty**(): `Cache`
 
-Defined in: [alfa-act/src/cache.ts:27](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/cache.ts#L27)
+Defined in: [alfa-act/src/cache.ts:27](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/cache.ts)
 
 #### Returns
 
@@ -52,7 +52,7 @@ Defined in: [alfa-act/src/cache.ts:27](https://github.com/Siteimprove/alfa/blob/
 
 > **get**\<`I`, `T`, `Q`, `S`\>(`rule`, `ifMissing`): `Promise`\<`Iterable`\<[`Outcome`](Outcome-1.md)\<`I`, `T`, `Q`, `S`, [`Value`](Outcome/Value.md)\>, `any`, `any`\>\>
 
-Defined in: [alfa-act/src/cache.ts:35](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/cache.ts#L35)
+Defined in: [alfa-act/src/cache.ts:35](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/cache.ts)
 
 #### Type Parameters
 

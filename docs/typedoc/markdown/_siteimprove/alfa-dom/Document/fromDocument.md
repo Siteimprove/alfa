@@ -8,7 +8,7 @@
 
 > **fromDocument**(`json`, `fromNode`, `device?`): `Trampoline`\<[`Document`](../Document-1.md)\>
 
-Defined in: [alfa-dom/src/node/document.ts:159](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/document.ts#L159)
+Defined in: [alfa-dom/src/node/document.ts:159](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/document.ts)
 
 **`Internal`**
 

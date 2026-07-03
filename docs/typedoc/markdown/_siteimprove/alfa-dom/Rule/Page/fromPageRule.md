@@ -8,7 +8,7 @@
 
 > **fromPageRule**(`json`): `Trampoline`\<[`Page`](../Page-2.md)\>
 
-Defined in: [alfa-dom/src/style/rule/page.ts:72](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts#L72)
+Defined in: [alfa-dom/src/style/rule/page.ts:72](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)
 
 **`Internal`**
 

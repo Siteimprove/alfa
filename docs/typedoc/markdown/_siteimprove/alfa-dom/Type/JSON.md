@@ -6,7 +6,7 @@
 
 # Interface: JSON\<N\>
 
-Defined in: [alfa-dom/src/node/type.ts:105](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts#L105)
+Defined in: [alfa-dom/src/node/type.ts:105](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts)
 
 ## Extends
 
@@ -28,7 +28,7 @@ Defined in: [alfa-dom/src/node/type.ts:105](https://github.com/Siteimprove/alfa/
 
 > `optional` **children?**: [`JSON`](../Node/JSON.md)[]
 
-Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L364)
+Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -64,7 +64,7 @@ Defined in: alfa-tree/dist/tree.d.ts:195
 
 > **name**: `N`
 
-Defined in: [alfa-dom/src/node/type.ts:108](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts#L108)
+Defined in: [alfa-dom/src/node/type.ts:108](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts)
 
 ## path
 
@@ -72,7 +72,7 @@ Defined in: [alfa-dom/src/node/type.ts:108](https://github.com/Siteimprove/alfa/
 
 > `optional` **path?**: `string`
 
-Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L363)
+Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -84,7 +84,7 @@ Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/
 
 > **publicId**: `string` \| `null`
 
-Defined in: [alfa-dom/src/node/type.ts:109](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts#L109)
+Defined in: [alfa-dom/src/node/type.ts:109](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts)
 
 ## serializationId
 
@@ -104,7 +104,7 @@ Defined in: alfa-tree/dist/tree.d.ts:196
 
 > **systemId**: `string` \| `null`
 
-Defined in: [alfa-dom/src/node/type.ts:110](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts#L110)
+Defined in: [alfa-dom/src/node/type.ts:110](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts)
 
 ## type
 

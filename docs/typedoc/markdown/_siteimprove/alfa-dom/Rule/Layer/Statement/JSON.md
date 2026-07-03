@@ -6,7 +6,7 @@
 
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/rule/layer.ts:57](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts#L57)
+Defined in: [alfa-dom/src/style/rule/layer.ts:57](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: [alfa-dom/src/style/rule/layer.ts:57](https://github.com/Siteimprove
 
 > **layers**: `Array`\<`string`\>
 
-Defined in: [alfa-dom/src/style/rule/layer.ts:58](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts#L58)
+Defined in: [alfa-dom/src/style/rule/layer.ts:58](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
 
 ## type
 
@@ -30,7 +30,7 @@ Defined in: [alfa-dom/src/style/rule/layer.ts:58](https://github.com/Siteimprove
 
 > **type**: `"layer-statement"`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L96)
+Defined in: [alfa-dom/src/style/rule/rule.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 

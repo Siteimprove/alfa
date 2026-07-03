@@ -8,7 +8,7 @@
 
 > **namespace**: (`namespace`, `prefix`) => [`Namespace`](Namespace-2.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:75](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L75)
+Defined in: [alfa-dom/src/style/rule/index.ts:75](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ## Parameters
 

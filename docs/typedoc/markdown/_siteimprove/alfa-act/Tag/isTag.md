@@ -8,7 +8,7 @@
 
 > **isTag**\<`T`\>(`value`, `type?`): `value is Tag<T>`
 
-Defined in: [alfa-act/src/metadata/tag.ts:40](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts#L40)
+Defined in: [alfa-act/src/metadata/tag.ts:40](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
 
 ## Type Parameters
 

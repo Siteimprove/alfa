@@ -8,4 +8,4 @@
 
 > `const` **fullTree**: [`Traversal`](Traversal.md) = `BaseNode.fullTree`
 
-Defined in: [alfa-dom/src/node/index.ts:77](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L77)
+Defined in: [alfa-dom/src/node/index.ts:77](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)

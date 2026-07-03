@@ -8,7 +8,7 @@
 
 > **keyframes**(`name`, `rules`): [`Keyframes`](../../Rule/Keyframes-2.md)
 
-Defined in: [alfa-dom/src/h.ts:302](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L302)
+Defined in: [alfa-dom/src/h.ts:302](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Parameters
 

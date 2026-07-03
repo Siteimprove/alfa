@@ -8,7 +8,7 @@
 
 > **fromRule**(`sheetFactory`): (`json`) => `Trampoline`\<[`Rule`](../Rule-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/index.ts:150](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L150)
+Defined in: [alfa-dom/src/style/rule/index.ts:150](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 **`Internal`**
 

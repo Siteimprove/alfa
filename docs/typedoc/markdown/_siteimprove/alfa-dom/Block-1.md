@@ -6,7 +6,7 @@
 
 # Class: Block
 
-Defined in: [alfa-dom/src/style/block.ts:13](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts#L13)
+Defined in: [alfa-dom/src/style/block.ts:13](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
 
 ## Implements
 
@@ -20,7 +20,7 @@ Defined in: [alfa-dom/src/style/block.ts:13](https://github.com/Siteimprove/alfa
 
 > `protected` **new Block**(`declarations`): `Block`
 
-Defined in: [alfa-dom/src/style/block.ts:20](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts#L20)
+Defined in: [alfa-dom/src/style/block.ts:20](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
 
 #### Parameters
 
@@ -38,7 +38,7 @@ Defined in: [alfa-dom/src/style/block.ts:20](https://github.com/Siteimprove/alfa
 
 > **\[iterator\]**(): `Iterator`\<[`Declaration`](Declaration-1.md)\>
 
-Defined in: [alfa-dom/src/style/block.ts:58](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts#L58)
+Defined in: [alfa-dom/src/style/block.ts:58](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
 
 #### Returns
 
@@ -54,7 +54,7 @@ Defined in: [alfa-dom/src/style/block.ts:58](https://github.com/Siteimprove/alfa
 
 > **declaration**(`predicate`): `Option`\<[`Declaration`](Declaration-1.md)\>
 
-Defined in: [alfa-dom/src/style/block.ts:36](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts#L36)
+Defined in: [alfa-dom/src/style/block.ts:36](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
 
 #### Parameters
 
@@ -74,7 +74,7 @@ Defined in: [alfa-dom/src/style/block.ts:36](https://github.com/Siteimprove/alfa
 
 > **get** **declarations**(): `Iterable`\<[`Declaration`](Declaration-1.md)\>
 
-Defined in: [alfa-dom/src/style/block.ts:24](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts#L24)
+Defined in: [alfa-dom/src/style/block.ts:24](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
 
 ##### Returns
 
@@ -86,7 +86,7 @@ Defined in: [alfa-dom/src/style/block.ts:24](https://github.com/Siteimprove/alfa
 
 > **equals**(`value`): `value is Block`
 
-Defined in: [alfa-dom/src/style/block.ts:48](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts#L48)
+Defined in: [alfa-dom/src/style/block.ts:48](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
 
 Check if a value of the same type as this are equal.
 
@@ -114,7 +114,7 @@ This function does not further refine the type of the given value.
 
 > **isEmpty**(): `boolean`
 
-Defined in: [alfa-dom/src/style/block.ts:32](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts#L32)
+Defined in: [alfa-dom/src/style/block.ts:32](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
 
 #### Returns
 
@@ -126,7 +126,7 @@ Defined in: [alfa-dom/src/style/block.ts:32](https://github.com/Siteimprove/alfa
 
 > `static` **of**(`declarations`): `Block`
 
-Defined in: [alfa-dom/src/style/block.ts:14](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts#L14)
+Defined in: [alfa-dom/src/style/block.ts:14](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
 
 #### Parameters
 
@@ -146,7 +146,7 @@ Defined in: [alfa-dom/src/style/block.ts:14](https://github.com/Siteimprove/alfa
 
 > **get** **size**(): `number`
 
-Defined in: [alfa-dom/src/style/block.ts:28](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts#L28)
+Defined in: [alfa-dom/src/style/block.ts:28](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
 
 ##### Returns
 
@@ -158,7 +158,7 @@ Defined in: [alfa-dom/src/style/block.ts:28](https://github.com/Siteimprove/alfa
 
 > **toJSON**(): [`JSON`](Block/JSON.md)
 
-Defined in: [alfa-dom/src/style/block.ts:62](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts#L62)
+Defined in: [alfa-dom/src/style/block.ts:62](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
 
 #### Returns
 
@@ -174,7 +174,7 @@ Defined in: [alfa-dom/src/style/block.ts:62](https://github.com/Siteimprove/alfa
 
 > **toString**(): `string`
 
-Defined in: [alfa-dom/src/style/block.ts:66](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts#L66)
+Defined in: [alfa-dom/src/style/block.ts:66](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
 
 Returns a string representation of an object.
 

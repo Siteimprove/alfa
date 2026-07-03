@@ -6,7 +6,7 @@
 
 # Interface: JSON
 
-Defined in: [alfa-dom/src/node/shadow.ts:173](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L173)
+Defined in: [alfa-dom/src/node/shadow.ts:173](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: [alfa-dom/src/node/shadow.ts:173](https://github.com/Siteimprove/alf
 
 > `optional` **children?**: [`JSON`](../Node/JSON.md)[]
 
-Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L364)
+Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -58,7 +58,7 @@ Defined in: alfa-tree/dist/tree.d.ts:195
 
 > **mode**: `string`
 
-Defined in: [alfa-dom/src/node/shadow.ts:175](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L175)
+Defined in: [alfa-dom/src/node/shadow.ts:175](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 ## path
 
@@ -66,7 +66,7 @@ Defined in: [alfa-dom/src/node/shadow.ts:175](https://github.com/Siteimprove/alf
 
 > `optional` **path?**: `string`
 
-Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L363)
+Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -90,7 +90,7 @@ Defined in: alfa-tree/dist/tree.d.ts:196
 
 > **style**: [`JSON`](../Sheet/JSON.md)[]
 
-Defined in: [alfa-dom/src/node/shadow.ts:176](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L176)
+Defined in: [alfa-dom/src/node/shadow.ts:176](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 ## type
 
@@ -98,7 +98,7 @@ Defined in: [alfa-dom/src/node/shadow.ts:176](https://github.com/Siteimprove/alf
 
 > **type**: `"shadow"`
 
-Defined in: [alfa-dom/src/node/shadow.ts:174](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L174)
+Defined in: [alfa-dom/src/node/shadow.ts:174](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 #### Overrides
 

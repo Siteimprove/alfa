@@ -8,7 +8,7 @@
 
 > **fromLayerBlockRule**(`json`, `fromRule`): `Trampoline`\<[`Block`](../Block-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/layer.ts:126](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts#L126)
+Defined in: [alfa-dom/src/style/rule/layer.ts:126](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
 
 ## Parameters
 

@@ -6,7 +6,7 @@
 
 # Interface: Evaluate()\<I, T, Q, S\>
 
-Defined in: [alfa-act/src/rule.ts:232](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L232)
+Defined in: [alfa-act/src/rule.ts:232](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Remarks
 
@@ -41,7 +41,7 @@ rule evaluation procedures.
 
 > **Evaluate**(`input`, `oracle`, `outcomes`, `performance?`): `Promise`\<`Iterable`\<[`Outcome`](../Outcome-1.md)\<`I`, `T`, `Q`, `S`, [`Value`](../Outcome/Value.md)\>\>\>
 
-Defined in: [alfa-act/src/rule.ts:238](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L238)
+Defined in: [alfa-act/src/rule.ts:238](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Parameters
 

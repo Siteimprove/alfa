@@ -8,7 +8,7 @@
 
 > **fromFragment**(`json`, `fromNode`, `device?`): `Trampoline`\<[`Fragment`](../Fragment-1.md)\>
 
-Defined in: [alfa-dom/src/node/fragment.ts:77](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/fragment.ts#L77)
+Defined in: [alfa-dom/src/node/fragment.ts:77](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/fragment.ts)
 
 **`Internal`**
 

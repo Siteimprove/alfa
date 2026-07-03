@@ -8,7 +8,7 @@
 
 > `const` **hasChild**: (`predicate`, `options`) => `Predicate`\<[`Node`](../Node-1.md)\> = `predicate.hasChild`
 
-Defined in: [alfa-dom/src/node/index.ts:142](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L142)
+Defined in: [alfa-dom/src/node/index.ts:142](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
 
 ## Parameters
 

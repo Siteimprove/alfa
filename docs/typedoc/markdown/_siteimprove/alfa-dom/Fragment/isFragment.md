@@ -8,7 +8,7 @@
 
 > **isFragment**(`value`): `value is Fragment`
 
-Defined in: [alfa-dom/src/node/fragment.ts:70](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/fragment.ts#L70)
+Defined in: [alfa-dom/src/node/fragment.ts:70](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/fragment.ts)
 
 ## Parameters
 

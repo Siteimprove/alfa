@@ -8,4 +8,4 @@
 
 > **Type** = `"start"` \| `"end"`
 
-Defined in: [alfa-act/src/rule.ts:710](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L710)
+Defined in: [alfa-act/src/rule.ts:710](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

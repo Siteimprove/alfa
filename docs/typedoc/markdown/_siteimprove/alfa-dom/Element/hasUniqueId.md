@@ -8,4 +8,4 @@
 
 > `const` **hasUniqueId**: `Predicate`\<[`Element`](../Element-1.md)\<`string`\>\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:576](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L576)
+Defined in: [alfa-dom/src/node/slotable/element.ts:576](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)

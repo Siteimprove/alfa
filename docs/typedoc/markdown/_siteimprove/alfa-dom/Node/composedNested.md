@@ -8,4 +8,4 @@
 
 > `const` **composedNested**: [`Traversal`](Traversal.md) = `BaseNode.composedNested`
 
-Defined in: [alfa-dom/src/node/index.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L78)
+Defined in: [alfa-dom/src/node/index.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)

@@ -6,7 +6,7 @@
 
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/declaration.ts:131](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L131)
+Defined in: [alfa-dom/src/style/declaration.ts:131](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ## Indexable
 
@@ -18,7 +18,7 @@ Defined in: [alfa-dom/src/style/declaration.ts:131](https://github.com/Siteimpro
 
 > **important**: `boolean`
 
-Defined in: [alfa-dom/src/style/declaration.ts:135](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L135)
+Defined in: [alfa-dom/src/style/declaration.ts:135](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ## name
 
@@ -26,7 +26,7 @@ Defined in: [alfa-dom/src/style/declaration.ts:135](https://github.com/Siteimpro
 
 > **name**: `string`
 
-Defined in: [alfa-dom/src/style/declaration.ts:133](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L133)
+Defined in: [alfa-dom/src/style/declaration.ts:133](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ## value
 
@@ -34,4 +34,4 @@ Defined in: [alfa-dom/src/style/declaration.ts:133](https://github.com/Siteimpro
 
 > **value**: `string`
 
-Defined in: [alfa-dom/src/style/declaration.ts:134](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L134)
+Defined in: [alfa-dom/src/style/declaration.ts:134](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)

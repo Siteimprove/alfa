@@ -8,7 +8,7 @@
 
 > **text**(`data`, `box?`, `device?`, `externalId?`, `internalId?`, `extraData?`): [`Text`](../Text-1.md)
 
-Defined in: [alfa-dom/src/h.ts:146](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L146)
+Defined in: [alfa-dom/src/h.ts:146](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Parameters
 

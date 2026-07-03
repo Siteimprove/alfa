@@ -8,7 +8,7 @@
 
 > **isComposite**: \{\<`I`, `T`, `Q`\>(`value`): `value is Composite<I, T, Q, T>`; \<`I`, `T`, `Q`\>(`value`): `value is Composite<I, T, Q, T>`; \}
 
-Defined in: [alfa-act/src/rule.ts:643](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L643)
+Defined in: [alfa-act/src/rule.ts:643](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Call Signature
 

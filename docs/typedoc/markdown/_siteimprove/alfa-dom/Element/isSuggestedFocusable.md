@@ -8,7 +8,7 @@
 
 > **isSuggestedFocusable**: (`element`) => `boolean`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:572](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L572)
+Defined in: [alfa-dom/src/node/slotable/element.ts:572](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 [https://html.spec.whatwg.org/multipage/#tabindex-value](https://html.spec.whatwg.org/multipage/#tabindex-value)
 

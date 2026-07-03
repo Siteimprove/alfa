@@ -8,4 +8,4 @@
 
 > `const` **webauthn**: `"webauthn"` = `"webauthn"`
 
-Defined in: [alfa-dom/src/node/attribute/autocomplete.ts:79](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute/autocomplete.ts#L79)
+Defined in: [alfa-dom/src/node/attribute/autocomplete.ts:79](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute/autocomplete.ts)

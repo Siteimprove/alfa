@@ -8,7 +8,7 @@
 
 > **cantTell**: \<`I`, `T`, `Q`, `S`\>(`rule`, `target`, `diagnostic`, `mode`) => [`CantTell`](CantTell-2.md)\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/outcome.ts:702](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L702)
+Defined in: [alfa-act/src/outcome.ts:702](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## Type Parameters
 

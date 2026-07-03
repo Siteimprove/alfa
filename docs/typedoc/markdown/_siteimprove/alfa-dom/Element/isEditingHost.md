@@ -8,7 +8,7 @@
 
 > **isEditingHost**: (`element`) => `boolean`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:571](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L571)
+Defined in: [alfa-dom/src/node/slotable/element.ts:571](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 [https://html.spec.whatwg.org/#editing-host](https://html.spec.whatwg.org/#editing-host)
 

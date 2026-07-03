@@ -8,7 +8,7 @@
 
 > **hasAttribute**: \{(`predicate`): `Predicate`\<[`Element`](../Element-1.md)\<`string`\>\>; (`name`, `value?`): `Predicate`\<[`Element`](../Element-1.md)\<`string`\>\>; \}
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:562](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L562)
+Defined in: [alfa-dom/src/node/slotable/element.ts:562](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## Call Signature
 

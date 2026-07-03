@@ -8,7 +8,7 @@
 
 > **isRequirement**(`value`): `value is Requirement<string, string>`
 
-Defined in: [alfa-act/src/metadata/requirement.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts#L78)
+Defined in: [alfa-act/src/metadata/requirement.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
 
 ## Parameters
 

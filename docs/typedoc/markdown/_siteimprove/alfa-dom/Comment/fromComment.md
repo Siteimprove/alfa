@@ -8,7 +8,7 @@
 
 > **fromComment**(`json`): `Trampoline`\<[`Comment`](../Comment-1.md)\>
 
-Defined in: [alfa-dom/src/node/comment.ts:107](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/comment.ts#L107)
+Defined in: [alfa-dom/src/node/comment.ts:107](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/comment.ts)
 
 **`Internal`**
 

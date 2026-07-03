@@ -8,7 +8,7 @@
 
 > **fromFontFaceRule**(`json`): `Trampoline`\<[`FontFace`](../FontFace-2.md)\>
 
-Defined in: [alfa-dom/src/style/rule/font-face.ts:59](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/font-face.ts#L59)
+Defined in: [alfa-dom/src/style/rule/font-face.ts:59](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/font-face.ts)
 
 **`Internal`**
 

@@ -8,7 +8,7 @@
 
 > **isLayerStatementRule**: (`value`) => `value is Statement`
 
-Defined in: [alfa-dom/src/style/rule/index.ts:73](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L73)
+Defined in: [alfa-dom/src/style/rule/index.ts:73](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ## Parameters
 

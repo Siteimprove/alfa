@@ -8,7 +8,7 @@
 
 > **conclusive**\<`ANSWER`\>(`answer`, `oracleUsed?`): [`Finding`](../Finding-1.md)\<`ANSWER`\>
 
-Defined in: [alfa-act/src/expectation/finding.ts:20](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/finding.ts#L20)
+Defined in: [alfa-act/src/expectation/finding.ts:20](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/finding.ts)
 
 ## Type Parameters
 

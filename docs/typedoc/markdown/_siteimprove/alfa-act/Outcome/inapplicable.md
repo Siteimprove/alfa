@@ -8,7 +8,7 @@
 
 > **inapplicable**: \<`I`, `T`, `Q`, `S`\>(`rule`, `mode`) => [`Inapplicable`](Inapplicable-2.md)\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/outcome.ts:832](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L832)
+Defined in: [alfa-act/src/outcome.ts:832](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## Type Parameters
 

@@ -8,7 +8,7 @@
 
 > **getMode**(`oracleUsed`): [`Mode`](Mode.md)
 
-Defined in: [alfa-act/src/outcome.ts:907](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L907)
+Defined in: [alfa-act/src/outcome.ts:907](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## Parameters
 

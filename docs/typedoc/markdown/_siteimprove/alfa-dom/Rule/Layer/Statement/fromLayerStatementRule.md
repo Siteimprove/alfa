@@ -8,7 +8,7 @@
 
 > **fromLayerStatementRule**(`json`): `Trampoline`\<[`Statement`](../Statement-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/layer.ts:61](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts#L61)
+Defined in: [alfa-dom/src/style/rule/layer.ts:61](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
 
 ## Parameters
 

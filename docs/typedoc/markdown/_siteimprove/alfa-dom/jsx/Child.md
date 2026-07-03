@@ -8,4 +8,4 @@
 
 > **Child** = [`Node`](../Node-1.md) \| `string`
 
-Defined in: [alfa-dom/src/jsx.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts#L78)
+Defined in: [alfa-dom/src/jsx.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts)

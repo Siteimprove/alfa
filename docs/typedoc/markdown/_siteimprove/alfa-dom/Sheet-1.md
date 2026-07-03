@@ -6,7 +6,7 @@
 
 # Class: Sheet
 
-Defined in: [alfa-dom/src/style/sheet.ts:12](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L12)
+Defined in: [alfa-dom/src/style/sheet.ts:12](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 ## Implements
 
@@ -19,7 +19,7 @@ Defined in: [alfa-dom/src/style/sheet.ts:12](https://github.com/Siteimprove/alfa
 
 > `protected` **new Sheet**(`rules`, `disabled`, `condition`): `Sheet`
 
-Defined in: [alfa-dom/src/style/sheet.ts:29](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L29)
+Defined in: [alfa-dom/src/style/sheet.ts:29](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 #### Parameters
 
@@ -39,7 +39,7 @@ Defined in: [alfa-dom/src/style/sheet.ts:29](https://github.com/Siteimprove/alfa
 
 > **children**(): `Iterable`\<[`Rule`](Rule-1.md)\>
 
-Defined in: [alfa-dom/src/style/sheet.ts:51](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L51)
+Defined in: [alfa-dom/src/style/sheet.ts:51](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 #### Returns
 
@@ -53,7 +53,7 @@ Defined in: [alfa-dom/src/style/sheet.ts:51](https://github.com/Siteimprove/alfa
 
 > **get** **condition**(): `Option`\<`string`\>
 
-Defined in: [alfa-dom/src/style/sheet.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L47)
+Defined in: [alfa-dom/src/style/sheet.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 ##### Returns
 
@@ -65,7 +65,7 @@ Defined in: [alfa-dom/src/style/sheet.ts:47](https://github.com/Siteimprove/alfa
 
 > **descendants**(): `Iterable`\<[`Rule`](Rule-1.md)\>
 
-Defined in: [alfa-dom/src/style/sheet.ts:55](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L55)
+Defined in: [alfa-dom/src/style/sheet.ts:55](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 #### Returns
 
@@ -79,7 +79,7 @@ Defined in: [alfa-dom/src/style/sheet.ts:55](https://github.com/Siteimprove/alfa
 
 > **get** **disabled**(): `boolean`
 
-Defined in: [alfa-dom/src/style/sheet.ts:43](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L43)
+Defined in: [alfa-dom/src/style/sheet.ts:43](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 ##### Returns
 
@@ -91,7 +91,7 @@ Defined in: [alfa-dom/src/style/sheet.ts:43](https://github.com/Siteimprove/alfa
 
 > `static` **empty**(): `Sheet`
 
-Defined in: [alfa-dom/src/style/sheet.ts:21](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L21)
+Defined in: [alfa-dom/src/style/sheet.ts:21](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 #### Returns
 
@@ -103,7 +103,7 @@ Defined in: [alfa-dom/src/style/sheet.ts:21](https://github.com/Siteimprove/alfa
 
 > **equals**(`value`): `value is Sheet`
 
-Defined in: [alfa-dom/src/style/sheet.ts:62](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L62)
+Defined in: [alfa-dom/src/style/sheet.ts:62](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 Check if a value of the same type as this are equal.
 
@@ -131,7 +131,7 @@ This function does not further refine the type of the given value.
 
 > `static` **of**(`rules`, `disabled?`, `condition?`): `Sheet`
 
-Defined in: [alfa-dom/src/style/sheet.ts:13](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L13)
+Defined in: [alfa-dom/src/style/sheet.ts:13](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 #### Parameters
 
@@ -153,7 +153,7 @@ Defined in: [alfa-dom/src/style/sheet.ts:13](https://github.com/Siteimprove/alfa
 
 > **get** **rules**(): `Iterable`\<[`Rule`](Rule-1.md)\>
 
-Defined in: [alfa-dom/src/style/sheet.ts:39](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L39)
+Defined in: [alfa-dom/src/style/sheet.ts:39](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 ##### Returns
 
@@ -165,7 +165,7 @@ Defined in: [alfa-dom/src/style/sheet.ts:39](https://github.com/Siteimprove/alfa
 
 > **toJSON**(): [`JSON`](Sheet/JSON.md)
 
-Defined in: [alfa-dom/src/style/sheet.ts:72](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L72)
+Defined in: [alfa-dom/src/style/sheet.ts:72](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 #### Returns
 
@@ -181,7 +181,7 @@ Defined in: [alfa-dom/src/style/sheet.ts:72](https://github.com/Siteimprove/alfa
 
 > **toString**(): `string`
 
-Defined in: [alfa-dom/src/style/sheet.ts:80](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts#L80)
+Defined in: [alfa-dom/src/style/sheet.ts:80](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 Returns a string representation of an object.
 

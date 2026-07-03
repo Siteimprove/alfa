@@ -8,7 +8,7 @@
 
 > **layerBlock**: (`rules`, `layer?`) => [`Block`](Layer/Block-1.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:72](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L72)
+Defined in: [alfa-dom/src/style/rule/index.ts:72](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ## Parameters
 

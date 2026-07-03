@@ -8,7 +8,7 @@
 
 > **keyframe**: (`key`, `declarations`) => [`Keyframe`](Keyframe-2.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:70](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L70)
+Defined in: [alfa-dom/src/style/rule/index.ts:70](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ## Parameters
 

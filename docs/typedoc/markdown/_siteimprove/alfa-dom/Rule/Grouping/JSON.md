@@ -6,7 +6,7 @@
 
 # Interface: JSON\<T\>
 
-Defined in: [alfa-dom/src/style/rule/grouping.ts:40](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts#L40)
+Defined in: [alfa-dom/src/style/rule/grouping.ts:40](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
 
 ## Extends
 
@@ -33,7 +33,7 @@ Defined in: [alfa-dom/src/style/rule/grouping.ts:40](https://github.com/Siteimpr
 
 > **rules**: `Array`\<[`JSON`](../JSON.md)\>
 
-Defined in: [alfa-dom/src/style/rule/grouping.ts:41](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts#L41)
+Defined in: [alfa-dom/src/style/rule/grouping.ts:41](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
 
 ## type
 
@@ -41,7 +41,7 @@ Defined in: [alfa-dom/src/style/rule/grouping.ts:41](https://github.com/Siteimpr
 
 > **type**: `T`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L96)
+Defined in: [alfa-dom/src/style/rule/rule.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 

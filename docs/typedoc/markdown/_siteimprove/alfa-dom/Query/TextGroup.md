@@ -8,4 +8,4 @@
 
 > **TextGroup** = `descendants.TextGroup`
 
-Defined in: [alfa-dom/src/node/query/index.ts:17](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/query/index.ts#L17)
+Defined in: [alfa-dom/src/node/query/index.ts:17](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/query/index.ts)

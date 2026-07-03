@@ -8,7 +8,7 @@
 
 > **Element**\<`N`\> = [`Element`](../../Element-1.md)\<`N`\>
 
-Defined in: [alfa-dom/src/jsx.ts:109](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts#L109)
+Defined in: [alfa-dom/src/jsx.ts:109](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts)
 
 ## Type Parameters
 

@@ -6,7 +6,7 @@
 
 # Class: Diagnostic
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts:15](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L15)
+Defined in: [alfa-act/src/expectation/diagnostic.ts:15](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
 
 Diagnostics are associated with each Question or final Outcome. They at least
 contain an explanatory message. Diagnostics can be extended to include more
@@ -24,7 +24,7 @@ information for the rules that need it.
 
 > `protected` **new Diagnostic**(`message`): `Diagnostic`
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts:30](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L30)
+Defined in: [alfa-act/src/expectation/diagnostic.ts:30](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
 
 #### Parameters
 
@@ -42,7 +42,7 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts:30](https://github.com/Sitei
 
 > `protected` `readonly` **\_message**: `string`
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts:28](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L28)
+Defined in: [alfa-act/src/expectation/diagnostic.ts:28](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
 
 ## empty
 
@@ -50,7 +50,7 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts:28](https://github.com/Sitei
 
 > `static` **empty**(): `Diagnostic`
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts:24](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L24)
+Defined in: [alfa-act/src/expectation/diagnostic.ts:24](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
 
 #### Returns
 
@@ -64,7 +64,7 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts:24](https://github.com/Sitei
 
 > **equals**(`value`): `boolean`
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts:38](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L38)
+Defined in: [alfa-act/src/expectation/diagnostic.ts:38](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
 
 Check if a value of the same type as this are equal.
 
@@ -90,7 +90,7 @@ This function does not further refine the type of the given value.
 
 > **equals**(`value`): `value is Diagnostic`
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts:40](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L40)
+Defined in: [alfa-act/src/expectation/diagnostic.ts:40](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
 
 Check if a value of an unknown type is equal to this.
 
@@ -118,7 +118,7 @@ This function refines the type of the given value.
 
 > **hash**(`hash`): `void`
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts:46](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L46)
+Defined in: [alfa-act/src/expectation/diagnostic.ts:46](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
 
 #### Parameters
 
@@ -142,7 +142,7 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts:46](https://github.com/Sitei
 
 > **get** **message**(): `string`
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts:34](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L34)
+Defined in: [alfa-act/src/expectation/diagnostic.ts:34](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
 
 ##### Returns
 
@@ -154,7 +154,7 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts:34](https://github.com/Sitei
 
 > `static` **of**(`message`): `Diagnostic`
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts:18](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L18)
+Defined in: [alfa-act/src/expectation/diagnostic.ts:18](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
 
 #### Parameters
 
@@ -172,7 +172,7 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts:18](https://github.com/Sitei
 
 > **toJSON**(`options?`): [`JSON`](Diagnostic/JSON.md)
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts:50](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L50)
+Defined in: [alfa-act/src/expectation/diagnostic.ts:50](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
 
 #### Parameters
 

@@ -6,7 +6,7 @@
 
 # Interface: JSON\<T, U\>
 
-Defined in: [alfa-act/src/metadata/requirement.ts:64](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts#L64)
+Defined in: [alfa-act/src/metadata/requirement.ts:64](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
 
 ## Type Parameters
 
@@ -25,7 +25,7 @@ Defined in: [alfa-act/src/metadata/requirement.ts:64](https://github.com/Siteimp
 
 > **type**: `T`
 
-Defined in: [alfa-act/src/metadata/requirement.ts:66](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts#L66)
+Defined in: [alfa-act/src/metadata/requirement.ts:66](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
 
 ## uri
 
@@ -33,4 +33,4 @@ Defined in: [alfa-act/src/metadata/requirement.ts:66](https://github.com/Siteimp
 
 > **uri**: `U`
 
-Defined in: [alfa-act/src/metadata/requirement.ts:67](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts#L67)
+Defined in: [alfa-act/src/metadata/requirement.ts:67](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)

@@ -6,7 +6,7 @@
 
 # Interface: JSON
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts:61](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L61)
+Defined in: [alfa-act/src/expectation/diagnostic.ts:61](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
 
 ## Indexable
 
@@ -18,4 +18,4 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts:61](https://github.com/Sitei
 
 > **message**: `string`
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts:63](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L63)
+Defined in: [alfa-act/src/expectation/diagnostic.ts:63](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)

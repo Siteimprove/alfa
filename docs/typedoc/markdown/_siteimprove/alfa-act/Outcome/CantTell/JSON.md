@@ -6,7 +6,7 @@
 
 # Interface: JSON\<T\>
 
-Defined in: [alfa-act/src/outcome.ts:662](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L662)
+Defined in: [alfa-act/src/outcome.ts:662](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## Extends
 
@@ -28,7 +28,7 @@ Defined in: [alfa-act/src/outcome.ts:662](https://github.com/Siteimprove/alfa/bl
 
 > **diagnostic**: [`JSON`](../../Diagnostic/JSON.md)
 
-Defined in: [alfa-act/src/outcome.ts:665](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L665)
+Defined in: [alfa-act/src/outcome.ts:665](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## mode
 
@@ -36,7 +36,7 @@ Defined in: [alfa-act/src/outcome.ts:665](https://github.com/Siteimprove/alfa/bl
 
 > **mode**: [`Mode`](../Mode.md)
 
-Defined in: [alfa-act/src/outcome.ts:175](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L175)
+Defined in: [alfa-act/src/outcome.ts:175](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Inherited from
 
@@ -48,7 +48,7 @@ Defined in: [alfa-act/src/outcome.ts:175](https://github.com/Siteimprove/alfa/bl
 
 > **outcome**: [`CantTell`](../Value.md#canttell)
 
-Defined in: [alfa-act/src/outcome.ts:173](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L173)
+Defined in: [alfa-act/src/outcome.ts:173](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Inherited from
 
@@ -60,7 +60,7 @@ Defined in: [alfa-act/src/outcome.ts:173](https://github.com/Siteimprove/alfa/bl
 
 > **rule**: [`JSON`](../../Rule/JSON.md) \| [`MinimalJSON`](../../Rule/MinimalJSON.md)
 
-Defined in: [alfa-act/src/outcome.ts:174](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L174)
+Defined in: [alfa-act/src/outcome.ts:174](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Inherited from
 
@@ -72,4 +72,4 @@ Defined in: [alfa-act/src/outcome.ts:174](https://github.com/Siteimprove/alfa/bl
 
 > **target**: `ToJSON`\<`T`\>
 
-Defined in: [alfa-act/src/outcome.ts:664](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L664)
+Defined in: [alfa-act/src/outcome.ts:664](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

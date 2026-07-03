@@ -8,7 +8,7 @@
 
 > **isNamespaceRule**(`value`): `value is Namespace`
 
-Defined in: [alfa-dom/src/style/rule/namespace.ts:56](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts#L56)
+Defined in: [alfa-dom/src/style/rule/namespace.ts:56](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
 
 ## Parameters
 

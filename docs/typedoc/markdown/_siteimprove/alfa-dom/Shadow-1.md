@@ -6,7 +6,7 @@
 
 # Class: Shadow
 
-Defined in: [alfa-dom/src/node/shadow.ts:18](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L18)
+Defined in: [alfa-dom/src/node/shadow.ts:18](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [alfa-dom/src/node/shadow.ts:18](https://github.com/Siteimprove/alfa
 
 > `protected` **new Shadow**(`children`, `style`, `mode`, `externalId?`, `internalId?`, `extraData?`): `Shadow`
 
-Defined in: [alfa-dom/src/node/shadow.ts:45](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L45)
+Defined in: [alfa-dom/src/node/shadow.ts:45](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 #### Parameters
 
@@ -61,7 +61,7 @@ Defined in: alfa-tree/dist/tree.d.ts:176
 
 > **\_attachHost**(`host`): `boolean`
 
-Defined in: [alfa-dom/src/node/shadow.ts:150](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L150)
+Defined in: [alfa-dom/src/node/shadow.ts:150](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 **`Internal`**
 
@@ -81,7 +81,7 @@ Defined in: [alfa-dom/src/node/shadow.ts:150](https://github.com/Siteimprove/alf
 
 > **\_attachParent**(): `boolean`
 
-Defined in: [alfa-dom/src/node/shadow.ts:143](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L143)
+Defined in: [alfa-dom/src/node/shadow.ts:143](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 **`Internal`**
 
@@ -134,7 +134,7 @@ method.
 
 > `protected` **\_internalPath**(`options?`): `string`
 
-Defined in: [alfa-dom/src/node/shadow.ts:86](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L86)
+Defined in: [alfa-dom/src/node/shadow.ts:86](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 **`Internal`**
 
@@ -182,7 +182,7 @@ Defined in: alfa-tree/dist/tree.d.ts:29
 
 > **ancestors**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:333](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L333)
+Defined in: [alfa-dom/src/node/node.ts:333](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -204,7 +204,7 @@ Defined in: [alfa-dom/src/node/node.ts:333](https://github.com/Siteimprove/alfa/
 
 > **children**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:327](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L327)
+Defined in: [alfa-dom/src/node/node.ts:327](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -228,7 +228,7 @@ Defined in: [alfa-dom/src/node/node.ts:327](https://github.com/Siteimprove/alfa/
 
 > **closest**\<`T`\>(`refinement`, `options?`): `Option`\<`T`\>
 
-Defined in: [alfa-dom/src/node/node.ts:348](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L348)
+Defined in: [alfa-dom/src/node/node.ts:348](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 ##### Type Parameters
 
@@ -255,7 +255,7 @@ Defined in: [alfa-dom/src/node/node.ts:348](https://github.com/Siteimprove/alfa/
 
 > **closest**(`predicate`, `options?`): `Option`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:352](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L352)
+Defined in: [alfa-dom/src/node/node.ts:352](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 ##### Parameters
 
@@ -278,7 +278,7 @@ Defined in: [alfa-dom/src/node/node.ts:352](https://github.com/Siteimprove/alfa/
 
 > **descendants**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:329](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L329)
+Defined in: [alfa-dom/src/node/node.ts:329](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -300,7 +300,7 @@ Defined in: [alfa-dom/src/node/node.ts:329](https://github.com/Siteimprove/alfa/
 
 > `static` **empty**(): `Shadow`
 
-Defined in: [alfa-dom/src/node/shadow.ts:37](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L37)
+Defined in: [alfa-dom/src/node/shadow.ts:37](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 #### Returns
 
@@ -314,7 +314,7 @@ Defined in: [alfa-dom/src/node/shadow.ts:37](https://github.com/Siteimprove/alfa
 
 > **equals**(`value`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:264](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L264)
+Defined in: [alfa-dom/src/node/node.ts:264](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 ##### Parameters
 
@@ -334,7 +334,7 @@ Defined in: [alfa-dom/src/node/node.ts:264](https://github.com/Siteimprove/alfa/
 
 > **equals**(`value`): `value is Shadow`
 
-Defined in: [alfa-dom/src/node/node.ts:266](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L266)
+Defined in: [alfa-dom/src/node/node.ts:266](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 ##### Parameters
 
@@ -392,7 +392,7 @@ Defined in: alfa-tree/dist/tree.d.ts:48
 
 > **first**(`options?`): `Option`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:343](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L343)
+Defined in: [alfa-dom/src/node/node.ts:343](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -414,7 +414,7 @@ Defined in: [alfa-dom/src/node/node.ts:343](https://github.com/Siteimprove/alfa/
 
 > **following**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:342](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L342)
+Defined in: [alfa-dom/src/node/node.ts:342](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -497,7 +497,7 @@ Defined in: alfa-tree/dist/tree.d.ts:179
 
 > **get** **host**(): `Option`\<[`Element`](Element-1.md)\<`string`\>\>
 
-Defined in: [alfa-dom/src/node/shadow.ts:63](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L63)
+Defined in: [alfa-dom/src/node/shadow.ts:63](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 ##### Returns
 
@@ -509,7 +509,7 @@ Defined in: [alfa-dom/src/node/shadow.ts:63](https://github.com/Siteimprove/alfa
 
 > **inclusiveAncestors**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:335](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L335)
+Defined in: [alfa-dom/src/node/node.ts:335](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -531,7 +531,7 @@ Defined in: [alfa-dom/src/node/node.ts:335](https://github.com/Siteimprove/alfa/
 
 > **inclusiveDescendants**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:331](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L331)
+Defined in: [alfa-dom/src/node/node.ts:331](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -553,7 +553,7 @@ Defined in: [alfa-dom/src/node/node.ts:331](https://github.com/Siteimprove/alfa/
 
 > **inclusiveSiblings**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:339](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L339)
+Defined in: [alfa-dom/src/node/node.ts:339](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -575,7 +575,7 @@ Defined in: [alfa-dom/src/node/node.ts:339](https://github.com/Siteimprove/alfa/
 
 > **index**(`options?`, `predicate?`): `number`
 
-Defined in: [alfa-dom/src/node/node.ts:347](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L347)
+Defined in: [alfa-dom/src/node/node.ts:347](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -616,7 +616,7 @@ Defined in: alfa-tree/dist/tree.d.ts:49
 
 > **isAncestorOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:334](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L334)
+Defined in: [alfa-dom/src/node/node.ts:334](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -639,7 +639,7 @@ Defined in: [alfa-dom/src/node/node.ts:334](https://github.com/Siteimprove/alfa/
 
 > **isChildOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:328](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L328)
+Defined in: [alfa-dom/src/node/node.ts:328](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -662,7 +662,7 @@ Defined in: [alfa-dom/src/node/node.ts:328](https://github.com/Siteimprove/alfa/
 
 > **isDescendantOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:330](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L330)
+Defined in: [alfa-dom/src/node/node.ts:330](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -685,7 +685,7 @@ Defined in: [alfa-dom/src/node/node.ts:330](https://github.com/Siteimprove/alfa/
 
 > **isInclusiveAncestorOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:336](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L336)
+Defined in: [alfa-dom/src/node/node.ts:336](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -708,7 +708,7 @@ Defined in: [alfa-dom/src/node/node.ts:336](https://github.com/Siteimprove/alfa/
 
 > **isInclusiveDescendantsOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:332](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L332)
+Defined in: [alfa-dom/src/node/node.ts:332](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -731,7 +731,7 @@ Defined in: [alfa-dom/src/node/node.ts:332](https://github.com/Siteimprove/alfa/
 
 > **isInclusiveSiblingOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:340](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L340)
+Defined in: [alfa-dom/src/node/node.ts:340](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -754,7 +754,7 @@ Defined in: [alfa-dom/src/node/node.ts:340](https://github.com/Siteimprove/alfa/
 
 > **isParentOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:324](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L324)
+Defined in: [alfa-dom/src/node/node.ts:324](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -777,7 +777,7 @@ Defined in: [alfa-dom/src/node/node.ts:324](https://github.com/Siteimprove/alfa/
 
 > **isRootOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:326](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L326)
+Defined in: [alfa-dom/src/node/node.ts:326](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -800,7 +800,7 @@ Defined in: [alfa-dom/src/node/node.ts:326](https://github.com/Siteimprove/alfa/
 
 > **isSiblingOf**(`node`, `options?`): `boolean`
 
-Defined in: [alfa-dom/src/node/node.ts:338](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L338)
+Defined in: [alfa-dom/src/node/node.ts:338](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -823,7 +823,7 @@ Defined in: [alfa-dom/src/node/node.ts:338](https://github.com/Siteimprove/alfa/
 
 > **last**(`options?`): `Option`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:344](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L344)
+Defined in: [alfa-dom/src/node/node.ts:344](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -847,7 +847,7 @@ Defined in: [alfa-dom/src/node/node.ts:344](https://github.com/Siteimprove/alfa/
 
 > **get** **mode**(): [`Mode`](Shadow/Mode.md)
 
-Defined in: [alfa-dom/src/node/shadow.ts:59](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L59)
+Defined in: [alfa-dom/src/node/shadow.ts:59](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 ##### Returns
 
@@ -859,7 +859,7 @@ Defined in: [alfa-dom/src/node/shadow.ts:59](https://github.com/Siteimprove/alfa
 
 > **next**(`options?`): `Option`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:346](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L346)
+Defined in: [alfa-dom/src/node/node.ts:346](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -881,7 +881,7 @@ Defined in: [alfa-dom/src/node/node.ts:346](https://github.com/Siteimprove/alfa/
 
 > `static` **of**(`children`, `style?`, `mode?`, `externalId?`, `internalId?`, `extraData?`): `Shadow`
 
-Defined in: [alfa-dom/src/node/shadow.ts:19](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L19)
+Defined in: [alfa-dom/src/node/shadow.ts:19](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 #### Parameters
 
@@ -904,7 +904,7 @@ Defined in: [alfa-dom/src/node/shadow.ts:19](https://github.com/Siteimprove/alfa
 
 > **parent**(`options?`): `Option`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/shadow.ts:71](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L71)
+Defined in: [alfa-dom/src/node/shadow.ts:71](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 #### Parameters
 
@@ -937,7 +937,7 @@ to extends the one in `alfa-tree/Node`.
 
 > **path**(`options?`): `string`
 
-Defined in: [alfa-dom/src/node/node.ts:256](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L256)
+Defined in: [alfa-dom/src/node/node.ts:256](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 Get an XPath that uniquely identifies the node across descendants of its
 root.
@@ -962,7 +962,7 @@ root.
 
 > **preceding**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:341](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L341)
+Defined in: [alfa-dom/src/node/node.ts:341](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -984,7 +984,7 @@ Defined in: [alfa-dom/src/node/node.ts:341](https://github.com/Siteimprove/alfa/
 
 > **previous**(`options?`): `Option`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:345](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L345)
+Defined in: [alfa-dom/src/node/node.ts:345](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -1006,7 +1006,7 @@ Defined in: [alfa-dom/src/node/node.ts:345](https://github.com/Siteimprove/alfa/
 
 > **root**(`options?`): [`Node`](Node-1.md)
 
-Defined in: [alfa-dom/src/node/node.ts:325](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L325)
+Defined in: [alfa-dom/src/node/node.ts:325](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -1050,7 +1050,7 @@ Aliases to [Node#internalId](Attribute-1.md#internalid).
 
 > **siblings**(`options?`): `Sequence`\<[`Node`](Node-1.md)\>
 
-Defined in: [alfa-dom/src/node/node.ts:337](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L337)
+Defined in: [alfa-dom/src/node/node.ts:337](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Parameters
 
@@ -1074,7 +1074,7 @@ Defined in: [alfa-dom/src/node/node.ts:337](https://github.com/Siteimprove/alfa/
 
 > **get** **style**(): `Iterable`\<[`Sheet`](Sheet-1.md)\>
 
-Defined in: [alfa-dom/src/node/shadow.ts:67](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L67)
+Defined in: [alfa-dom/src/node/shadow.ts:67](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 ##### Returns
 
@@ -1086,7 +1086,7 @@ Defined in: [alfa-dom/src/node/shadow.ts:67](https://github.com/Siteimprove/alfa
 
 > **tabOrder**(`this`): `Sequence`\<[`Element`](Element-1.md)\<`string`\>\>
 
-Defined in: [alfa-dom/src/node/node.ts:59](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L59)
+Defined in: [alfa-dom/src/node/node.ts:59](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 Construct a sequence of descendants of this node sorted by tab index. Only
 nodes with a non-negative tab index are included in the sequence.
@@ -1113,7 +1113,7 @@ nodes with a non-negative tab index are included in the sequence.
 
 > **textContent**(`options?`): `string`
 
-Defined in: [alfa-dom/src/node/node.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L47)
+Defined in: [alfa-dom/src/node/node.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 [https://dom.spec.whatwg.org/#concept-descendant-text-content](https://dom.spec.whatwg.org/#concept-descendant-text-content)
 
@@ -1137,7 +1137,7 @@ Defined in: [alfa-dom/src/node/node.ts:47](https://github.com/Siteimprove/alfa/b
 
 > **toEARL**(): `EARL`
 
-Defined in: [alfa-dom/src/node/node.ts:291](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L291)
+Defined in: [alfa-dom/src/node/node.ts:291](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Returns
 
@@ -1155,7 +1155,7 @@ Defined in: [alfa-dom/src/node/node.ts:291](https://github.com/Siteimprove/alfa/
 
 > **toJSON**(`options`): [`MinimalJSON`](Shadow/MinimalJSON.md)
 
-Defined in: [alfa-dom/src/node/shadow.ts:103](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L103)
+Defined in: [alfa-dom/src/node/shadow.ts:103](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 ##### Parameters
 
@@ -1175,7 +1175,7 @@ Defined in: [alfa-dom/src/node/shadow.ts:103](https://github.com/Siteimprove/alf
 
 > **toJSON**(`options?`): [`JSON`](Shadow/JSON.md)
 
-Defined in: [alfa-dom/src/node/shadow.ts:110](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L110)
+Defined in: [alfa-dom/src/node/shadow.ts:110](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 ##### Parameters
 
@@ -1197,7 +1197,7 @@ Defined in: [alfa-dom/src/node/shadow.ts:110](https://github.com/Siteimprove/alf
 
 > **toSARIF**(): `Location`
 
-Defined in: [alfa-dom/src/node/node.ts:306](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L306)
+Defined in: [alfa-dom/src/node/node.ts:306](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Returns
 
@@ -1213,7 +1213,7 @@ Defined in: [alfa-dom/src/node/node.ts:306](https://github.com/Siteimprove/alfa/
 
 > **toString**(): `string`
 
-Defined in: [alfa-dom/src/node/shadow.ts:130](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L130)
+Defined in: [alfa-dom/src/node/shadow.ts:130](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 Returns a string representation of an object.
 

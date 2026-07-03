@@ -8,7 +8,7 @@
 
 > **style**: (`selector`, `declarations`, `hint`) => [`Style`](Style-2.md)
 
-Defined in: [alfa-dom/src/style/rule/index.ts:77](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts#L77)
+Defined in: [alfa-dom/src/style/rule/index.ts:77](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
 
 ## Parameters
 

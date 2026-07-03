@@ -6,7 +6,7 @@
 
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/rule/keyframe.ts:60](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts#L60)
+Defined in: [alfa-dom/src/style/rule/keyframe.ts:60](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: [alfa-dom/src/style/rule/keyframe.ts:60](https://github.com/Siteimpr
 
 > **key**: `string`
 
-Defined in: [alfa-dom/src/style/rule/keyframe.ts:61](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts#L61)
+Defined in: [alfa-dom/src/style/rule/keyframe.ts:61](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)
 
 ## style
 
@@ -30,7 +30,7 @@ Defined in: [alfa-dom/src/style/rule/keyframe.ts:61](https://github.com/Siteimpr
 
 > **style**: `string` \| [`JSON`](../../Block/JSON.md)
 
-Defined in: [alfa-dom/src/style/rule/keyframe.ts:62](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts#L62)
+Defined in: [alfa-dom/src/style/rule/keyframe.ts:62](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)
 
 ## type
 
@@ -38,7 +38,7 @@ Defined in: [alfa-dom/src/style/rule/keyframe.ts:62](https://github.com/Siteimpr
 
 > **type**: `"keyframe"`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L96)
+Defined in: [alfa-dom/src/style/rule/rule.ts:96](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 

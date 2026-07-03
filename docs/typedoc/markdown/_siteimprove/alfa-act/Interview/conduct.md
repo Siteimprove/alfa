@@ -8,7 +8,7 @@
 
 > **conduct**\<`INPUT`, `TARGET`, `QUESTION`, `SUBJECT`, `ANSWER`\>(`interview`, `rule`, `oracle`, `oracleUsed?`): `Promise`\<[`Finding`](../Finding-1.md)\<`ANSWER`\>\>
 
-Defined in: [alfa-act/src/expectation/interview.ts:92](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/interview.ts#L92)
+Defined in: [alfa-act/src/expectation/interview.ts:92](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/interview.ts)
 
 Conduct an interview:
  * if it is an answer, just send it back;

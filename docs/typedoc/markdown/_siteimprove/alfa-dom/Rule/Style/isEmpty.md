@@ -8,7 +8,7 @@
 
 > **isEmpty**(`rule`): `boolean`
 
-Defined in: [alfa-dom/src/style/rule/style.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/style.ts#L78)
+Defined in: [alfa-dom/src/style/rule/style.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/style.ts)
 
 ## Parameters
 

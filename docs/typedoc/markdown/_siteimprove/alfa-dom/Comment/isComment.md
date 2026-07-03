@@ -8,7 +8,7 @@
 
 > **isComment**(`value`): `value is Comment`
 
-Defined in: [alfa-dom/src/node/comment.ts:100](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/comment.ts#L100)
+Defined in: [alfa-dom/src/node/comment.ts:100](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/comment.ts)
 
 ## Parameters
 

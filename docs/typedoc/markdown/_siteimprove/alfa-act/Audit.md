@@ -6,7 +6,7 @@
 
 # Class: Audit\<I, T, Q, S\>
 
-Defined in: [alfa-act/src/audit.ts:25](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/audit.ts#L25)
+Defined in: [alfa-act/src/audit.ts:25](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/audit.ts)
 
 An Audit is built from an input (usually a page), a set of rules that apply
 to this kind of input, and optionally an oracle to answer questions arising
@@ -34,7 +34,7 @@ during the audit. Audits need to be explicitly evaluated to produce outcomes.
 
 > `protected` **new Audit**\<`I`, `T`, `Q`, `S`\>(`input`, `rules`, `oracle`): `Audit`\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/audit.ts:48](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/audit.ts#L48)
+Defined in: [alfa-act/src/audit.ts:48](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/audit.ts)
 
 #### Parameters
 
@@ -54,7 +54,7 @@ Defined in: [alfa-act/src/audit.ts:48](https://github.com/Siteimprove/alfa/blob/
 
 > **evaluate**(`performance?`): `Promise`\<`Iterable`\<[`Outcome`](Outcome-1.md)\<`I`, `T`, `Q`, `S`, [`Value`](Outcome/Value.md)\>\>\>
 
-Defined in: [alfa-act/src/audit.ts:58](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/audit.ts#L58)
+Defined in: [alfa-act/src/audit.ts:58](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/audit.ts)
 
 #### Parameters
 
@@ -72,7 +72,7 @@ Defined in: [alfa-act/src/audit.ts:58](https://github.com/Siteimprove/alfa/blob/
 
 > `static` **of**\<`I`, `T`, `Q`, `S`\>(`input`, `rules`, `oracle?`): `Audit`\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/audit.ts:31](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/audit.ts#L31)
+Defined in: [alfa-act/src/audit.ts:31](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/audit.ts)
 
 #### Type Parameters
 

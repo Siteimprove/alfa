@@ -8,7 +8,7 @@
 
 > **sheet**(`rules`, `disabled?`, `condition?`): [`Sheet`](../Sheet-1.md)
 
-Defined in: [alfa-dom/src/h.ts:234](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L234)
+Defined in: [alfa-dom/src/h.ts:234](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Parameters
 

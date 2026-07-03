@@ -6,7 +6,7 @@
 
 # Interface: JSON
 
-Defined in: [alfa-dom/src/node/slotable/text.ts:156](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts#L156)
+Defined in: [alfa-dom/src/node/slotable/text.ts:156](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: [alfa-dom/src/node/slotable/text.ts:156](https://github.com/Siteimpr
 
 > **box**: `JSON` \| `null`
 
-Defined in: [alfa-dom/src/node/slotable/text.ts:158](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts#L158)
+Defined in: [alfa-dom/src/node/slotable/text.ts:158](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
 
 ## children
 
@@ -30,7 +30,7 @@ Defined in: [alfa-dom/src/node/slotable/text.ts:158](https://github.com/Siteimpr
 
 > `optional` **children?**: [`JSON`](../Node/JSON.md)[]
 
-Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L364)
+Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -42,7 +42,7 @@ Defined in: [alfa-dom/src/node/node.ts:364](https://github.com/Siteimprove/alfa/
 
 > **data**: `string`
 
-Defined in: [alfa-dom/src/node/slotable/text.ts:157](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts#L157)
+Defined in: [alfa-dom/src/node/slotable/text.ts:157](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
 
 ## externalId
 
@@ -74,7 +74,7 @@ Defined in: alfa-tree/dist/tree.d.ts:195
 
 > `optional` **path?**: `string`
 
-Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts#L363)
+Defined in: [alfa-dom/src/node/node.ts:363](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 

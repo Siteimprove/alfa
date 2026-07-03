@@ -10,7 +10,7 @@
 
 > **isComposite**\<`I`, `T`, `Q`\>(`value`): `value is Composite<I, T, Q, T>`
 
-Defined in: [alfa-act/src/rule.ts:622](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L622)
+Defined in: [alfa-act/src/rule.ts:622](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ### Type Parameters
 
@@ -34,7 +34,7 @@ Defined in: [alfa-act/src/rule.ts:622](https://github.com/Siteimprove/alfa/blob/
 
 > **isComposite**\<`I`, `T`, `Q`\>(`value`): `value is Composite<I, T, Q, T>`
 
-Defined in: [alfa-act/src/rule.ts:628](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L628)
+Defined in: [alfa-act/src/rule.ts:628](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ### Type Parameters
 

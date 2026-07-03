@@ -6,7 +6,7 @@
 
 # Class: Declaration
 
-Defined in: [alfa-dom/src/style/declaration.ts:14](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L14)
+Defined in: [alfa-dom/src/style/declaration.ts:14](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ## Implements
 
@@ -19,7 +19,7 @@ Defined in: [alfa-dom/src/style/declaration.ts:14](https://github.com/Siteimprov
 
 > `protected` **new Declaration**(`name`, `value`, `important`): `Declaration`
 
-Defined in: [alfa-dom/src/style/declaration.ts:41](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L41)
+Defined in: [alfa-dom/src/style/declaration.ts:41](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 #### Parameters
 
@@ -39,7 +39,7 @@ Defined in: [alfa-dom/src/style/declaration.ts:41](https://github.com/Siteimprov
 
 > **\_attachOwner**(`owner`): `boolean`
 
-Defined in: [alfa-dom/src/style/declaration.ts:116](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L116)
+Defined in: [alfa-dom/src/style/declaration.ts:116](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 **`Internal`**
 
@@ -59,7 +59,7 @@ Defined in: [alfa-dom/src/style/declaration.ts:116](https://github.com/Siteimpro
 
 > **\_attachParent**(`parent`): `boolean`
 
-Defined in: [alfa-dom/src/style/declaration.ts:103](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L103)
+Defined in: [alfa-dom/src/style/declaration.ts:103](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 **`Internal`**
 
@@ -79,7 +79,7 @@ Defined in: [alfa-dom/src/style/declaration.ts:103](https://github.com/Siteimpro
 
 > **ancestors**(): `Iterable`\<[`Rule`](Rule-1.md)\>
 
-Defined in: [alfa-dom/src/style/declaration.ts:67](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L67)
+Defined in: [alfa-dom/src/style/declaration.ts:67](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 #### Returns
 
@@ -91,7 +91,7 @@ Defined in: [alfa-dom/src/style/declaration.ts:67](https://github.com/Siteimprov
 
 > **equals**(`value`): `value is Declaration`
 
-Defined in: [alfa-dom/src/style/declaration.ts:77](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L77)
+Defined in: [alfa-dom/src/style/declaration.ts:77](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 Parent rule or owner element are ignored for declaration equality.
 
@@ -117,7 +117,7 @@ Parent rule or owner element are ignored for declaration equality.
 
 > **get** **important**(): `boolean`
 
-Defined in: [alfa-dom/src/style/declaration.ts:55](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L55)
+Defined in: [alfa-dom/src/style/declaration.ts:55](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ##### Returns
 
@@ -131,7 +131,7 @@ Defined in: [alfa-dom/src/style/declaration.ts:55](https://github.com/Siteimprov
 
 > **get** **name**(): `string`
 
-Defined in: [alfa-dom/src/style/declaration.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L47)
+Defined in: [alfa-dom/src/style/declaration.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ##### Returns
 
@@ -143,7 +143,7 @@ Defined in: [alfa-dom/src/style/declaration.ts:47](https://github.com/Siteimprov
 
 > `static` **of**(`name`, `value`, `important?`): `Declaration`
 
-Defined in: [alfa-dom/src/style/declaration.ts:15](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L15)
+Defined in: [alfa-dom/src/style/declaration.ts:15](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 #### Parameters
 
@@ -165,7 +165,7 @@ Defined in: [alfa-dom/src/style/declaration.ts:15](https://github.com/Siteimprov
 
 > **get** **owner**(): `Option`\<[`Element`](Element-1.md)\<`string`\>\>
 
-Defined in: [alfa-dom/src/style/declaration.ts:63](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L63)
+Defined in: [alfa-dom/src/style/declaration.ts:63](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ##### Returns
 
@@ -179,7 +179,7 @@ Defined in: [alfa-dom/src/style/declaration.ts:63](https://github.com/Siteimprov
 
 > **get** **parent**(): `Option`\<[`Rule`](Rule-1.md)\>
 
-Defined in: [alfa-dom/src/style/declaration.ts:59](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L59)
+Defined in: [alfa-dom/src/style/declaration.ts:59](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ##### Returns
 
@@ -191,7 +191,7 @@ Defined in: [alfa-dom/src/style/declaration.ts:59](https://github.com/Siteimprov
 
 > **toJSON**(): [`JSON`](Declaration/JSON.md)
 
-Defined in: [alfa-dom/src/style/declaration.ts:86](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L86)
+Defined in: [alfa-dom/src/style/declaration.ts:86](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 #### Returns
 
@@ -207,7 +207,7 @@ Defined in: [alfa-dom/src/style/declaration.ts:86](https://github.com/Siteimprov
 
 > **toString**(): `string`
 
-Defined in: [alfa-dom/src/style/declaration.ts:94](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L94)
+Defined in: [alfa-dom/src/style/declaration.ts:94](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 Returns a string representation of an object.
 
@@ -223,7 +223,7 @@ Returns a string representation of an object.
 
 > **get** **value**(): `string`
 
-Defined in: [alfa-dom/src/style/declaration.ts:51](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts#L51)
+Defined in: [alfa-dom/src/style/declaration.ts:51](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ##### Returns
 

@@ -8,7 +8,7 @@
 
 > **isShadow**(`value`): `value is Shadow`
 
-Defined in: [alfa-dom/src/node/shadow.ts:179](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts#L179)
+Defined in: [alfa-dom/src/node/shadow.ts:179](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
 
 ## Parameters
 

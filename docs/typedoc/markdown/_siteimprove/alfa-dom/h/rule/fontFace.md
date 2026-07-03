@@ -8,7 +8,7 @@
 
 > **fontFace**(`declarations`): [`FontFace`](../../Rule/FontFace-2.md)
 
-Defined in: [alfa-dom/src/h.ts:273](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L273)
+Defined in: [alfa-dom/src/h.ts:273](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Parameters
 

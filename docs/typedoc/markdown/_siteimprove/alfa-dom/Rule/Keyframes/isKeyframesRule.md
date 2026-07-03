@@ -8,7 +8,7 @@
 
 > **isKeyframesRule**(`value`): `value is Keyframes`
 
-Defined in: [alfa-dom/src/style/rule/keyframes.ts:52](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframes.ts#L52)
+Defined in: [alfa-dom/src/style/rule/keyframes.ts:52](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframes.ts)
 
 ## Parameters
 

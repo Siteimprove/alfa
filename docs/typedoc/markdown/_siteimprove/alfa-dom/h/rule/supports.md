@@ -8,7 +8,7 @@
 
 > **supports**(`condition`, `rules`): [`Supports`](../../Rule/Supports-2.md)
 
-Defined in: [alfa-dom/src/h.ts:348](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L348)
+Defined in: [alfa-dom/src/h.ts:348](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Parameters
 

@@ -8,7 +8,7 @@
 
 > **fromMediaRule**(`json`, `fromRule`): `Trampoline`\<[`Media`](../Media-2.md)\>
 
-Defined in: [alfa-dom/src/style/rule/media.ts:64](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts#L64)
+Defined in: [alfa-dom/src/style/rule/media.ts:64](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts)
 
 **`Internal`**
 

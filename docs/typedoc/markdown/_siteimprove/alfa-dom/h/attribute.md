@@ -8,7 +8,7 @@
 
 > **attribute**\<`N`\>(`name`, `value`, `externalId?`, `internalId?`, `extraData?`): [`Attribute`](../Attribute-1.md)\<`N`\>
 
-Defined in: [alfa-dom/src/h.ts:128](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L128)
+Defined in: [alfa-dom/src/h.ts:128](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Type Parameters
 

@@ -8,7 +8,7 @@
 
 > **from**(`jsonOrText`): [`Block`](../Block-1.md)
 
-Defined in: [alfa-dom/src/style/block.ts:77](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts#L77)
+Defined in: [alfa-dom/src/style/block.ts:77](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
 
 ## Parameters
 

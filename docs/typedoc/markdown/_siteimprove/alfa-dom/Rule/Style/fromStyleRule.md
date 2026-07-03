@@ -8,7 +8,7 @@
 
 > **fromStyleRule**(`json`): `Trampoline`\<[`Style`](../Style-2.md)\>
 
-Defined in: [alfa-dom/src/style/rule/style.ts:85](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/style.ts#L85)
+Defined in: [alfa-dom/src/style/rule/style.ts:85](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/style.ts)
 
 **`Internal`**
 

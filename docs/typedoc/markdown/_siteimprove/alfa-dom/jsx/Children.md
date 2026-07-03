@@ -8,7 +8,7 @@
 
 > **Children** = ([`Child`](Child.md) \| `Children`)[]
 
-Defined in: [alfa-dom/src/jsx.ts:85](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts#L85)
+Defined in: [alfa-dom/src/jsx.ts:85](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts)
 
 ## Remarks
 

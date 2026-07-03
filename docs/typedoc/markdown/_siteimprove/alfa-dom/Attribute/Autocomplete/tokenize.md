@@ -8,7 +8,7 @@
 
 > **tokenize**(`autocomplete`): `Array`\<`string`\>
 
-Defined in: [alfa-dom/src/node/attribute/autocomplete.ts:108](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute/autocomplete.ts#L108)
+Defined in: [alfa-dom/src/node/attribute/autocomplete.ts:108](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute/autocomplete.ts)
 
 ## Parameters
 

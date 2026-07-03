@@ -10,7 +10,7 @@
 
 > **isCantTell**\<`I`, `T`, `Q`, `S`\>(`value`): `value is CantTell<I, T, Q, S>`
 
-Defined in: [alfa-act/src/outcome.ts:678](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L678)
+Defined in: [alfa-act/src/outcome.ts:678](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ### Type Parameters
 
@@ -35,7 +35,7 @@ Defined in: [alfa-act/src/outcome.ts:678](https://github.com/Siteimprove/alfa/bl
 
 > **isCantTell**\<`I`, `T`, `Q`, `S`\>(`value`): `value is CantTell<I, T, Q, S>`
 
-Defined in: [alfa-act/src/outcome.ts:685](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L685)
+Defined in: [alfa-act/src/outcome.ts:685](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ### Type Parameters
 

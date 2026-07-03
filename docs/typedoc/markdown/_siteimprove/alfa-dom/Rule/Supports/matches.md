@@ -8,7 +8,7 @@
 
 > **matches**(`device`): `Predicate`\<[`Supports`](../Supports-2.md)\>
 
-Defined in: [alfa-dom/src/style/rule/supports.ts:60](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/supports.ts#L60)
+Defined in: [alfa-dom/src/style/rule/supports.ts:60](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/supports.ts)
 
 ## Parameters
 

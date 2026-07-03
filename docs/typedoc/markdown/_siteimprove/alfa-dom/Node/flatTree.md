@@ -8,4 +8,4 @@
 
 > `const` **flatTree**: [`Traversal`](Traversal.md) = `BaseNode.flatTree`
 
-Defined in: [alfa-dom/src/node/index.ts:76](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L76)
+Defined in: [alfa-dom/src/node/index.ts:76](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)

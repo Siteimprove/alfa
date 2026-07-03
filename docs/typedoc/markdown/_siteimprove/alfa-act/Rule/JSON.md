@@ -6,7 +6,7 @@
 
 # Interface: JSON
 
-Defined in: [alfa-act/src/rule.ts:176](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L176)
+Defined in: [alfa-act/src/rule.ts:176](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Extended by
 
@@ -23,7 +23,7 @@ Defined in: [alfa-act/src/rule.ts:176](https://github.com/Siteimprove/alfa/blob/
 
 > **requirements**: `Array`\<[`JSON`](../Requirement/JSON.md)\<`string`, `string`\>\>
 
-Defined in: [alfa-act/src/rule.ts:180](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L180)
+Defined in: [alfa-act/src/rule.ts:180](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## tags
 
@@ -31,7 +31,7 @@ Defined in: [alfa-act/src/rule.ts:180](https://github.com/Siteimprove/alfa/blob/
 
 > **tags**: `Array`\<[`JSON`](../Tag/JSON.md)\<`string`\>\>
 
-Defined in: [alfa-act/src/rule.ts:181](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L181)
+Defined in: [alfa-act/src/rule.ts:181](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## type
 
@@ -39,7 +39,7 @@ Defined in: [alfa-act/src/rule.ts:181](https://github.com/Siteimprove/alfa/blob/
 
 > **type**: `string`
 
-Defined in: [alfa-act/src/rule.ts:178](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L178)
+Defined in: [alfa-act/src/rule.ts:178](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## uri
 
@@ -47,4 +47,4 @@ Defined in: [alfa-act/src/rule.ts:178](https://github.com/Siteimprove/alfa/blob/
 
 > **uri**: `string`
 
-Defined in: [alfa-act/src/rule.ts:179](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L179)
+Defined in: [alfa-act/src/rule.ts:179](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

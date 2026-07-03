@@ -8,7 +8,7 @@
 
 > **isReplaced**: (`element`) => element is Element\<"object" \| "input" \| "audio" \| "canvas" \| "embed" \| "iframe" \| "img" \| "video"\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:573](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L573)
+Defined in: [alfa-dom/src/node/slotable/element.ts:573](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 [https://html.spec.whatwg.org/#replaced-elements](https://html.spec.whatwg.org/#replaced-elements)
 

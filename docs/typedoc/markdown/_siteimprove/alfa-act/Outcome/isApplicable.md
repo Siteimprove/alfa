@@ -8,7 +8,7 @@
 
 > **isApplicable**: \{\<`I`, `T`, `Q`, `S`\>(`value`): `value is Applicable<I, T, Q, S>`; \<`I`, `T`, `Q`, `S`\>(`value`): `value is Applicable<I, T, Q, S>`; \}
 
-Defined in: [alfa-act/src/outcome.ts:736](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L736)
+Defined in: [alfa-act/src/outcome.ts:736](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## Call Signature
 

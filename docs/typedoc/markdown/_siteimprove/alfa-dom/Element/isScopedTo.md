@@ -8,7 +8,7 @@
 
 > `const` **isScopedTo**: (`name`, ...`rest`) => `Predicate`\<[`Element`](../Element-1.md)\<`string`\>\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:581](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L581)
+Defined in: [alfa-dom/src/node/slotable/element.ts:581](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 ## Parameters
 

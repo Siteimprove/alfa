@@ -6,7 +6,7 @@
 
 # Class: CantTell\<I, T, Q, S\>
 
-Defined in: [alfa-act/src/outcome.ts:553](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L553)
+Defined in: [alfa-act/src/outcome.ts:553](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## Extends
 
@@ -27,7 +27,7 @@ Defined in: [alfa-act/src/outcome.ts:553](https://github.com/Siteimprove/alfa/bl
 
 > `protected` **new CantTell**\<`I`, `T`, `Q`, `S`\>(`rule`, `target`, `diagnostic`, `mode`): `CantTell`\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/outcome.ts:571](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L571)
+Defined in: [alfa-act/src/outcome.ts:571](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Parameters
 
@@ -52,7 +52,7 @@ Defined in: [alfa-act/src/outcome.ts:571](https://github.com/Siteimprove/alfa/bl
 
 > `protected` `readonly` **\_mode**: [`Mode`](Mode.md)
 
-Defined in: [alfa-act/src/outcome.ts:55](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L55)
+Defined in: [alfa-act/src/outcome.ts:55](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 [https://www.w3.org/TR/EARL10-Schema/#mode](https://www.w3.org/TR/EARL10-Schema/#mode)
 
@@ -66,7 +66,7 @@ Defined in: [alfa-act/src/outcome.ts:55](https://github.com/Siteimprove/alfa/blo
 
 > `protected` `readonly` **\_rule**: [`Rule`](../Rule-1.md)\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/outcome.ts:51](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L51)
+Defined in: [alfa-act/src/outcome.ts:51](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 [https://www.w3.org/TR/EARL10-Schema/#test](https://www.w3.org/TR/EARL10-Schema/#test)
 While this is called a "test" in EARL, in Alfa this is always a "rule".
@@ -83,7 +83,7 @@ While this is called a "test" in EARL, in Alfa this is always a "rule".
 
 > **get** **diagnostic**(): [`Diagnostic`](../Diagnostic-1.md)
 
-Defined in: [alfa-act/src/outcome.ts:587](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L587)
+Defined in: [alfa-act/src/outcome.ts:587](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -97,7 +97,7 @@ Defined in: [alfa-act/src/outcome.ts:587](https://github.com/Siteimprove/alfa/bl
 
 > **equals**\<`I`, `T`, `Q`, `S`\>(`value`): `boolean`
 
-Defined in: [alfa-act/src/outcome.ts:591](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L591)
+Defined in: [alfa-act/src/outcome.ts:591](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 Check if a value of the same type as this are equal.
 
@@ -132,7 +132,7 @@ This function does not further refine the type of the given value.
 
 > **equals**(`value`): `value is CantTell<I, T, Q, S>`
 
-Defined in: [alfa-act/src/outcome.ts:595](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L595)
+Defined in: [alfa-act/src/outcome.ts:595](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 Check if a value of an unknown type is equal to this.
 
@@ -160,7 +160,7 @@ This function refines the type of the given value.
 
 > **hash**(`hash`): `void`
 
-Defined in: [alfa-act/src/outcome.ts:606](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L606)
+Defined in: [alfa-act/src/outcome.ts:606](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Parameters
 
@@ -184,7 +184,7 @@ Defined in: [alfa-act/src/outcome.ts:606](https://github.com/Siteimprove/alfa/bl
 
 > **get** **isSemiAuto**(): `boolean`
 
-Defined in: [alfa-act/src/outcome.ts:89](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L89)
+Defined in: [alfa-act/src/outcome.ts:89](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -202,7 +202,7 @@ Defined in: [alfa-act/src/outcome.ts:89](https://github.com/Siteimprove/alfa/blo
 
 > **get** **mode**(): [`Mode`](Mode.md)
 
-Defined in: [alfa-act/src/outcome.ts:85](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L85)
+Defined in: [alfa-act/src/outcome.ts:85](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 [https://www.w3.org/TR/EARL10-Schema/#mode](https://www.w3.org/TR/EARL10-Schema/#mode)
 
@@ -220,7 +220,7 @@ Defined in: [alfa-act/src/outcome.ts:85](https://github.com/Siteimprove/alfa/blo
 
 > `static` **of**\<`I`, `T`, `Q`, `S`\>(`rule`, `target`, `diagnostic`, `mode`): `CantTell`\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/outcome.ts:559](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L559)
+Defined in: [alfa-act/src/outcome.ts:559](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Type Parameters
 
@@ -252,7 +252,7 @@ Defined in: [alfa-act/src/outcome.ts:559](https://github.com/Siteimprove/alfa/bl
 
 > **get** **outcome**(): `V`
 
-Defined in: [alfa-act/src/outcome.ts:70](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L70)
+Defined in: [alfa-act/src/outcome.ts:70](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 [https://www.w3.org/TR/EARL10-Schema/#outcome](https://www.w3.org/TR/EARL10-Schema/#outcome)
 
@@ -272,7 +272,7 @@ Defined in: [alfa-act/src/outcome.ts:70](https://github.com/Siteimprove/alfa/blo
 
 > **get** **rule**(): [`Rule`](../Rule-1.md)\<`I`, `T`, `Q`, `S`\>
 
-Defined in: [alfa-act/src/outcome.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L78)
+Defined in: [alfa-act/src/outcome.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 [https://www.w3.org/TR/EARL10-Schema/#test](https://www.w3.org/TR/EARL10-Schema/#test)
 While this is called a "test" in EARL, in Alfa this is always a "rule".
@@ -293,7 +293,7 @@ While this is called a "test" in EARL, in Alfa this is always a "rule".
 
 > **get** **target**(): `T`
 
-Defined in: [alfa-act/src/outcome.ts:583](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L583)
+Defined in: [alfa-act/src/outcome.ts:583](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -309,7 +309,7 @@ Defined in: [alfa-act/src/outcome.ts:583](https://github.com/Siteimprove/alfa/bl
 
 > **toEARL**(): [`EARL`](CantTell/EARL.md)
 
-Defined in: [alfa-act/src/outcome.ts:620](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L620)
+Defined in: [alfa-act/src/outcome.ts:620](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Returns
 
@@ -325,7 +325,7 @@ Defined in: [alfa-act/src/outcome.ts:620](https://github.com/Siteimprove/alfa/bl
 
 > **toJSON**(`options?`): [`JSON`](CantTell/JSON.md)\<`T`\>
 
-Defined in: [alfa-act/src/outcome.ts:612](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L612)
+Defined in: [alfa-act/src/outcome.ts:612](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Parameters
 
@@ -347,7 +347,7 @@ Defined in: [alfa-act/src/outcome.ts:612](https://github.com/Siteimprove/alfa/bl
 
 > **toSARIF**(): `Result`
 
-Defined in: [alfa-act/src/outcome.ts:638](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L638)
+Defined in: [alfa-act/src/outcome.ts:638](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Returns
 

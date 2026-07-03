@@ -6,7 +6,7 @@
 
 # Interface: EARL
 
-Defined in: [alfa-act/src/outcome.ts:516](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L516)
+Defined in: [alfa-act/src/outcome.ts:516](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## Extends
 
@@ -76,7 +76,7 @@ Defined in: alfa-earl/dist/earl.d.ts:6
 
 > **@type**: `"earl:Assertion"`
 
-Defined in: [alfa-act/src/outcome.ts:179](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L179)
+Defined in: [alfa-act/src/outcome.ts:179](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Inherited from
 
@@ -88,7 +88,7 @@ Defined in: [alfa-act/src/outcome.ts:179](https://github.com/Siteimprove/alfa/bl
 
 > **earl:mode**: `"earl:automatic"` \| `"earl:semiAuto"` \| `"earl:manual"`
 
-Defined in: [alfa-act/src/outcome.ts:180](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L180)
+Defined in: [alfa-act/src/outcome.ts:180](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Inherited from
 
@@ -100,32 +100,32 @@ Defined in: [alfa-act/src/outcome.ts:180](https://github.com/Siteimprove/alfa/bl
 
 > **earl:result**: `object`
 
-Defined in: [alfa-act/src/outcome.ts:517](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L517)
+Defined in: [alfa-act/src/outcome.ts:517](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### @type
 
 | Name | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| `@type` | `"earl:TestResult"` |  | [alfa-act/src/outcome.ts:518](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L518) |
+| `@type` | `"earl:TestResult"` |  | [alfa-act/src/outcome.ts:518](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts) |
 
 #### earl:info
 
 | Name | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| `earl:info` | `string` |  | [alfa-act/src/outcome.ts:522](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L522) |
+| `earl:info` | `string` |  | [alfa-act/src/outcome.ts:522](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts) |
 
 #### earl:outcome
 
 | Name | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| `earl:outcome` | `object` |  | [alfa-act/src/outcome.ts:519](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L519) |
-| `earl:outcome.@id` | `"earl:failed"` |  | [alfa-act/src/outcome.ts:520](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L520) |
+| `earl:outcome` | `object` |  | [alfa-act/src/outcome.ts:519](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts) |
+| `earl:outcome.@id` | `"earl:failed"` |  | [alfa-act/src/outcome.ts:520](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts) |
 
 #### earl:pointer
 
 | Name | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| `earl:pointer?` | `EARL` |  | [alfa-act/src/outcome.ts:523](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L523) |
+| `earl:pointer?` | `EARL` |  | [alfa-act/src/outcome.ts:523](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts) |
 
 ## earl:test
 
@@ -133,13 +133,13 @@ Defined in: [alfa-act/src/outcome.ts:517](https://github.com/Siteimprove/alfa/bl
 
 > **earl:test**: `object`
 
-Defined in: [alfa-act/src/outcome.ts:181](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L181)
+Defined in: [alfa-act/src/outcome.ts:181](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### @id
 
 | Name | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| `@id` | `string` |  | [alfa-act/src/outcome.ts:182](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L182) |
+| `@id` | `string` |  | [alfa-act/src/outcome.ts:182](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts) |
 
 #### Inherited from
 

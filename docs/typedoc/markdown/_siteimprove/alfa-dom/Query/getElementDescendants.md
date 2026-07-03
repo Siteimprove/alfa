@@ -8,7 +8,7 @@
 
 > `const` **getElementDescendants**: (`node`, `options?`) => `Sequence`\<[`Element`](../Element-1.md)\<`string`\>\> = `descendants.getElementDescendants`
 
-Defined in: [alfa-dom/src/node/query/index.ts:11](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/query/index.ts#L11)
+Defined in: [alfa-dom/src/node/query/index.ts:11](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/query/index.ts)
 
 ## Parameters
 

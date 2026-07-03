@@ -8,7 +8,7 @@
 
 > **isDraggable**: (`element`) => `boolean`
 
-Defined in: [alfa-dom/src/node/slotable/element.ts:570](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts#L570)
+Defined in: [alfa-dom/src/node/slotable/element.ts:570](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
 
 [https://html.spec.whatwg.org/#dom-draggable](https://html.spec.whatwg.org/#dom-draggable)
 

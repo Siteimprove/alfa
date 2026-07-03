@@ -6,7 +6,7 @@
 
 # Class: Question\<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI\>
 
-Defined in: [alfa-act/src/expectation/question.ts:33](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L33)
+Defined in: [alfa-act/src/expectation/question.ts:33](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 * TYPE is a (JavaScript manipulable) representation of the expected type of
   answers. It allows oracles and such to act on it. It can be an Enum, an ID,
@@ -49,7 +49,7 @@ Defined in: [alfa-act/src/expectation/question.ts:33](https://github.com/Siteimp
 
 > `protected` **new Question**\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>(`type`, `uri`, `message`, `diagnostic`, `fallback`, `subject`, `context`, `quester`): `Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L78)
+Defined in: [alfa-act/src/expectation/question.ts:78](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 #### Parameters
 
@@ -74,7 +74,7 @@ Defined in: [alfa-act/src/expectation/question.ts:78](https://github.com/Siteimp
 
 > `protected` `readonly` **\_context**: `CONTEXT`
 
-Defined in: [alfa-act/src/expectation/question.ts:75](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L75)
+Defined in: [alfa-act/src/expectation/question.ts:75](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## _diagnostic
 
@@ -82,7 +82,7 @@ Defined in: [alfa-act/src/expectation/question.ts:75](https://github.com/Siteimp
 
 > `protected` `readonly` **\_diagnostic**: [`Diagnostic`](Diagnostic-1.md)
 
-Defined in: [alfa-act/src/expectation/question.ts:72](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L72)
+Defined in: [alfa-act/src/expectation/question.ts:72](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## _fallback
 
@@ -90,7 +90,7 @@ Defined in: [alfa-act/src/expectation/question.ts:72](https://github.com/Siteimp
 
 > `protected` `readonly` **\_fallback**: `Option`\<`ANSWER`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:73](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L73)
+Defined in: [alfa-act/src/expectation/question.ts:73](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## _message
 
@@ -98,7 +98,7 @@ Defined in: [alfa-act/src/expectation/question.ts:73](https://github.com/Siteimp
 
 > `protected` `readonly` **\_message**: `string`
 
-Defined in: [alfa-act/src/expectation/question.ts:71](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L71)
+Defined in: [alfa-act/src/expectation/question.ts:71](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## _quester
 
@@ -106,7 +106,7 @@ Defined in: [alfa-act/src/expectation/question.ts:71](https://github.com/Siteimp
 
 > `protected` `readonly` **\_quester**: `Mapper`\<`ANSWER`, `T`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:76](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L76)
+Defined in: [alfa-act/src/expectation/question.ts:76](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## _subject
 
@@ -114,7 +114,7 @@ Defined in: [alfa-act/src/expectation/question.ts:76](https://github.com/Siteimp
 
 > `protected` `readonly` **\_subject**: `SUBJECT`
 
-Defined in: [alfa-act/src/expectation/question.ts:74](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L74)
+Defined in: [alfa-act/src/expectation/question.ts:74](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## _type
 
@@ -122,7 +122,7 @@ Defined in: [alfa-act/src/expectation/question.ts:74](https://github.com/Siteimp
 
 > `protected` `readonly` **\_type**: `TYPE`
 
-Defined in: [alfa-act/src/expectation/question.ts:69](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L69)
+Defined in: [alfa-act/src/expectation/question.ts:69](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## _uri
 
@@ -130,7 +130,7 @@ Defined in: [alfa-act/src/expectation/question.ts:69](https://github.com/Siteimp
 
 > `protected` `readonly` **\_uri**: `URI`
 
-Defined in: [alfa-act/src/expectation/question.ts:70](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L70)
+Defined in: [alfa-act/src/expectation/question.ts:70](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## answer
 
@@ -138,7 +138,7 @@ Defined in: [alfa-act/src/expectation/question.ts:70](https://github.com/Siteimp
 
 > **answer**(`answer`): `T`
 
-Defined in: [alfa-act/src/expectation/question.ts:136](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L136)
+Defined in: [alfa-act/src/expectation/question.ts:136](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 #### Parameters
 
@@ -158,7 +158,7 @@ Defined in: [alfa-act/src/expectation/question.ts:136](https://github.com/Siteim
 
 > **answerIf**(`condition`, `answer`): `Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:140](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L140)
+Defined in: [alfa-act/src/expectation/question.ts:140](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Parameters
 
@@ -175,7 +175,7 @@ Defined in: [alfa-act/src/expectation/question.ts:140](https://github.com/Siteim
 
 > **answerIf**(`predicate`, `answer`): `Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:145](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L145)
+Defined in: [alfa-act/src/expectation/question.ts:145](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Parameters
 
@@ -192,7 +192,7 @@ Defined in: [alfa-act/src/expectation/question.ts:145](https://github.com/Siteim
 
 > **answerIf**(`answer`): `Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:150](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L150)
+Defined in: [alfa-act/src/expectation/question.ts:150](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Parameters
 
@@ -208,7 +208,7 @@ Defined in: [alfa-act/src/expectation/question.ts:150](https://github.com/Siteim
 
 > **answerIf**(`answer`, `merger?`): `Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:154](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L154)
+Defined in: [alfa-act/src/expectation/question.ts:154](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Parameters
 
@@ -225,7 +225,7 @@ Defined in: [alfa-act/src/expectation/question.ts:154](https://github.com/Siteim
 
 > **answerIf**(`answer`): `Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:159](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L159)
+Defined in: [alfa-act/src/expectation/question.ts:159](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Parameters
 
@@ -243,7 +243,7 @@ Defined in: [alfa-act/src/expectation/question.ts:159](https://github.com/Siteim
 
 > **apply**\<`U`\>(`mapper`): `Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `U`, `URI`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:253](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L253)
+Defined in: [alfa-act/src/expectation/question.ts:253](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 #### Type Parameters
 
@@ -273,7 +273,7 @@ Defined in: [alfa-act/src/expectation/question.ts:253](https://github.com/Siteim
 
 > **get** **context**(): `CONTEXT`
 
-Defined in: [alfa-act/src/expectation/question.ts:122](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L122)
+Defined in: [alfa-act/src/expectation/question.ts:122](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Returns
 
@@ -287,7 +287,7 @@ Defined in: [alfa-act/src/expectation/question.ts:122](https://github.com/Siteim
 
 > **get** **diagnostic**(): [`Diagnostic`](Diagnostic-1.md)
 
-Defined in: [alfa-act/src/expectation/question.ts:110](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L110)
+Defined in: [alfa-act/src/expectation/question.ts:110](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Returns
 
@@ -301,7 +301,7 @@ Defined in: [alfa-act/src/expectation/question.ts:110](https://github.com/Siteim
 
 > **get** **fallback**(): `Option`\<`ANSWER`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:114](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L114)
+Defined in: [alfa-act/src/expectation/question.ts:114](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Returns
 
@@ -313,7 +313,7 @@ Defined in: [alfa-act/src/expectation/question.ts:114](https://github.com/Siteim
 
 > **flatMap**\<`U`\>(`mapper`): `Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `U`, `URI`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:259](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L259)
+Defined in: [alfa-act/src/expectation/question.ts:259](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 #### Type Parameters
 
@@ -341,7 +341,7 @@ Defined in: [alfa-act/src/expectation/question.ts:259](https://github.com/Siteim
 
 > **flatten**\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`\>(`this`): `Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:274](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L274)
+Defined in: [alfa-act/src/expectation/question.ts:274](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 #### Type Parameters
 
@@ -373,7 +373,7 @@ Defined in: [alfa-act/src/expectation/question.ts:274](https://github.com/Siteim
 
 > **isRhetorical**(): `this is Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T, string>`
 
-Defined in: [alfa-act/src/expectation/question.ts:126](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L126)
+Defined in: [alfa-act/src/expectation/question.ts:126](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 #### Returns
 
@@ -385,7 +385,7 @@ Defined in: [alfa-act/src/expectation/question.ts:126](https://github.com/Siteim
 
 > **map**\<`U`\>(`mapper`): `Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `U`, `URI`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:238](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L238)
+Defined in: [alfa-act/src/expectation/question.ts:238](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 #### Type Parameters
 
@@ -415,7 +415,7 @@ Defined in: [alfa-act/src/expectation/question.ts:238](https://github.com/Siteim
 
 > **get** **message**(): `string`
 
-Defined in: [alfa-act/src/expectation/question.ts:106](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L106)
+Defined in: [alfa-act/src/expectation/question.ts:106](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Returns
 
@@ -427,7 +427,7 @@ Defined in: [alfa-act/src/expectation/question.ts:106](https://github.com/Siteim
 
 > `static` **of**\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `URI`\>(`type`, `uri`, `message`, `subject`, `context`, `options?`): `Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `ANSWER`, `URI`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L47)
+Defined in: [alfa-act/src/expectation/question.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 #### Type Parameters
 
@@ -462,7 +462,7 @@ Defined in: [alfa-act/src/expectation/question.ts:47](https://github.com/Siteimp
 
 > **get** **subject**(): `SUBJECT`
 
-Defined in: [alfa-act/src/expectation/question.ts:118](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L118)
+Defined in: [alfa-act/src/expectation/question.ts:118](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Returns
 
@@ -474,7 +474,7 @@ Defined in: [alfa-act/src/expectation/question.ts:118](https://github.com/Siteim
 
 > **toJSON**(`options?`): [`JSON`](Question/JSON.md)\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `URI`\>
 
-Defined in: [alfa-act/src/expectation/question.ts:295](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L295)
+Defined in: [alfa-act/src/expectation/question.ts:295](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 #### Parameters
 
@@ -498,7 +498,7 @@ Defined in: [alfa-act/src/expectation/question.ts:295](https://github.com/Siteim
 
 > **get** **type**(): `TYPE`
 
-Defined in: [alfa-act/src/expectation/question.ts:98](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L98)
+Defined in: [alfa-act/src/expectation/question.ts:98](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Returns
 
@@ -512,7 +512,7 @@ Defined in: [alfa-act/src/expectation/question.ts:98](https://github.com/Siteimp
 
 > **get** **uri**(): `URI`
 
-Defined in: [alfa-act/src/expectation/question.ts:102](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts#L102)
+Defined in: [alfa-act/src/expectation/question.ts:102](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Returns
 

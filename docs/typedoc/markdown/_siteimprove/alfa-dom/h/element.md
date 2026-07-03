@@ -8,7 +8,7 @@
 
 > **element**\<`N`\>(`name`, `attributes?`, `children?`, `style?`, `namespace?`, `box?`, `device?`, `externalId?`, `internalId?`, `extraData?`): [`Element`](../Element-1.md)\<`N`\>
 
-Defined in: [alfa-dom/src/h.ts:54](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts#L54)
+Defined in: [alfa-dom/src/h.ts:54](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
 
 ## Type Parameters
 

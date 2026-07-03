@@ -8,7 +8,7 @@
 
 > **isSupportsRule**(`value`): `value is Supports`
 
-Defined in: [alfa-dom/src/style/rule/supports.ts:56](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/supports.ts#L56)
+Defined in: [alfa-dom/src/style/rule/supports.ts:56](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/supports.ts)
 
 ## Parameters
 

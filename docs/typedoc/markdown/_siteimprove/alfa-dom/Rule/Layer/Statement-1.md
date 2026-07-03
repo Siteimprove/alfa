@@ -6,7 +6,7 @@
 
 # Class: Statement
 
-Defined in: [alfa-dom/src/style/rule/layer.ts:28](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts#L28)
+Defined in: [alfa-dom/src/style/rule/layer.ts:28](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
 
 [https://developer.mozilla.org/en-US/docs/Web/CSS/@layer](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer)
 [https://drafts.csswg.org/css-cascade-5/#layer-empty](https://drafts.csswg.org/css-cascade-5/#layer-empty)
@@ -22,7 +22,7 @@ Defined in: [alfa-dom/src/style/rule/layer.ts:28](https://github.com/Siteimprove
 
 > `protected` **new Statement**(`layers`): `StatementRule`
 
-Defined in: [alfa-dom/src/style/rule/layer.ts:35](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts#L35)
+Defined in: [alfa-dom/src/style/rule/layer.ts:35](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
 
 #### Parameters
 
@@ -44,7 +44,7 @@ Defined in: [alfa-dom/src/style/rule/layer.ts:35](https://github.com/Siteimprove
 
 > **\_attachOwner**(`owner`): `boolean`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:65](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L65)
+Defined in: [alfa-dom/src/style/rule/rule.ts:65](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 **`Internal`**
 
@@ -68,7 +68,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:65](https://github.com/Siteimprove/
 
 > **\_attachParent**(`parent`): `boolean`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:79](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L79)
+Defined in: [alfa-dom/src/style/rule/rule.ts:79](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 **`Internal`**
 
@@ -92,7 +92,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:79](https://github.com/Siteimprove/
 
 > `protected` **\_owner**: `Option`\<[`Sheet`](../../Sheet-1.md)\> = `None`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:18](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L18)
+Defined in: [alfa-dom/src/style/rule/rule.ts:18](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 
@@ -104,7 +104,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:18](https://github.com/Siteimprove/
 
 > `protected` **\_parent**: `Option`\<[`Rule`](../../Rule-1.md)\> = `None`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:19](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L19)
+Defined in: [alfa-dom/src/style/rule/rule.ts:19](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 
@@ -116,7 +116,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:19](https://github.com/Siteimprove/
 
 > **ancestors**(): `Iterable`\<[`Rule`](../../Rule-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L47)
+Defined in: [alfa-dom/src/style/rule/rule.ts:47](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Returns
 
@@ -132,7 +132,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:47](https://github.com/Siteimprove/
 
 > **children**(): `Iterable`\<[`Rule`](../../Rule-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:38](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L38)
+Defined in: [alfa-dom/src/style/rule/rule.ts:38](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Returns
 
@@ -148,7 +148,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:38](https://github.com/Siteimprove/
 
 > **descendants**(): `Iterable`\<[`Rule`](../../Rule-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:40](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L40)
+Defined in: [alfa-dom/src/style/rule/rule.ts:40](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Returns
 
@@ -164,7 +164,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:40](https://github.com/Siteimprove/
 
 > **equals**(`value`): `value is Statement`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:54](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L54)
+Defined in: [alfa-dom/src/style/rule/rule.ts:54](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 Check if a value of the same type as this are equal.
 
@@ -194,7 +194,7 @@ This function does not further refine the type of the given value.
 
 > **get** **layers**(): `Iterable`\<`string`\>
 
-Defined in: [alfa-dom/src/style/rule/layer.ts:40](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts#L40)
+Defined in: [alfa-dom/src/style/rule/layer.ts:40](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
 
 ##### Returns
 
@@ -206,7 +206,7 @@ Defined in: [alfa-dom/src/style/rule/layer.ts:40](https://github.com/Siteimprove
 
 > `static` **of**(`layers`): `StatementRule`
 
-Defined in: [alfa-dom/src/style/rule/layer.ts:29](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts#L29)
+Defined in: [alfa-dom/src/style/rule/layer.ts:29](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
 
 #### Parameters
 
@@ -226,7 +226,7 @@ Defined in: [alfa-dom/src/style/rule/layer.ts:29](https://github.com/Siteimprove
 
 > **get** **owner**(): `Option`\<[`Sheet`](../../Sheet-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:30](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L30)
+Defined in: [alfa-dom/src/style/rule/rule.ts:30](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 
@@ -244,7 +244,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:30](https://github.com/Siteimprove/
 
 > **get** **parent**(): `Option`\<[`Rule`](../../Rule-1.md)\>
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:34](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L34)
+Defined in: [alfa-dom/src/style/rule/rule.ts:34](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 
@@ -260,7 +260,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts:34](https://github.com/Siteimprove/
 
 > **toJSON**(): [`JSON`](Statement/JSON.md)
 
-Defined in: [alfa-dom/src/style/rule/layer.ts:44](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts#L44)
+Defined in: [alfa-dom/src/style/rule/layer.ts:44](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
 
 #### Returns
 
@@ -276,7 +276,7 @@ Defined in: [alfa-dom/src/style/rule/layer.ts:44](https://github.com/Siteimprove
 
 > **toString**(): `string`
 
-Defined in: [alfa-dom/src/style/rule/layer.ts:51](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts#L51)
+Defined in: [alfa-dom/src/style/rule/layer.ts:51](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
 
 Returns a string representation of an object.
 
@@ -292,7 +292,7 @@ Returns a string representation of an object.
 
 > **get** **type**(): `T`
 
-Defined in: [alfa-dom/src/style/rule/rule.ts:26](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts#L26)
+Defined in: [alfa-dom/src/style/rule/rule.ts:26](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 

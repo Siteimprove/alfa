@@ -8,7 +8,7 @@
 
 > `const` **hasInclusiveDescendant**: (`predicate`, `options`) => `Predicate`\<[`Node`](../Node-1.md)\> = `predicate.hasInclusiveDescendant`
 
-Defined in: [alfa-dom/src/node/index.ts:144](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts#L144)
+Defined in: [alfa-dom/src/node/index.ts:144](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
 
 ## Parameters
 

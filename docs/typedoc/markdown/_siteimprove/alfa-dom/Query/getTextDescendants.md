@@ -8,7 +8,7 @@
 
 > `const` **getTextDescendants**: \<`N`\>(`textOptions`) => (`node`, `options?`) => `Sequence`\<[`Text`](../Text-1.md) \| `TextGroup`\> = `descendants.getTextDescendants`
 
-Defined in: [alfa-dom/src/node/query/index.ts:14](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/query/index.ts#L14)
+Defined in: [alfa-dom/src/node/query/index.ts:14](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/query/index.ts)
 
 Get all text descendants of a node, optionally grouping some into labeled groups.
 

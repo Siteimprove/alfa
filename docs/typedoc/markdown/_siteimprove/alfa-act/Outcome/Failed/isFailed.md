@@ -10,7 +10,7 @@
 
 > **isFailed**\<`I`, `T`, `Q`, `S`\>(`value`): `value is Failed<I, T, Q, S>`
 
-Defined in: [alfa-act/src/outcome.ts:527](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L527)
+Defined in: [alfa-act/src/outcome.ts:527](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ### Type Parameters
 
@@ -35,7 +35,7 @@ Defined in: [alfa-act/src/outcome.ts:527](https://github.com/Siteimprove/alfa/bl
 
 > **isFailed**\<`I`, `T`, `Q`, `S`\>(`value`): `value is Failed<I, T, Q, S>`
 
-Defined in: [alfa-act/src/outcome.ts:534](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts#L534)
+Defined in: [alfa-act/src/outcome.ts:534](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ### Type Parameters
 

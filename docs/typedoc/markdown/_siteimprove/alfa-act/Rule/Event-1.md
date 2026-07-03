@@ -6,7 +6,7 @@
 
 # Class: Event\<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME\>
 
-Defined in: [alfa-act/src/rule.ts:648](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L648)
+Defined in: [alfa-act/src/rule.ts:648](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## Type Parameters
 
@@ -29,7 +29,7 @@ Defined in: [alfa-act/src/rule.ts:648](https://github.com/Siteimprove/alfa/blob/
 
 > **new Event**\<`INPUT`, `TARGET`, `QUESTION`, `SUBJECT`, `TYPE`, `NAME`\>(`type`, `rule`, `name`): `Event`\<`INPUT`, `TARGET`, `QUESTION`, `SUBJECT`, `TYPE`, `NAME`\>
 
-Defined in: [alfa-act/src/rule.ts:675](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L675)
+Defined in: [alfa-act/src/rule.ts:675](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Parameters
 
@@ -51,7 +51,7 @@ Defined in: [alfa-act/src/rule.ts:675](https://github.com/Siteimprove/alfa/blob/
 
 > **get** **name**(): `NAME`
 
-Defined in: [alfa-act/src/rule.ts:693](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L693)
+Defined in: [alfa-act/src/rule.ts:693](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 
@@ -63,7 +63,7 @@ Defined in: [alfa-act/src/rule.ts:693](https://github.com/Siteimprove/alfa/blob/
 
 > `static` **of**\<`INPUT`, `TARGET`, `QUESTION`, `SUBJECT`, `TYPE`, `NAME`\>(`type`, `rule`, `name`): `Event`\<`INPUT`, `TARGET`, `QUESTION`, `SUBJECT`, `TYPE`, `NAME`\>
 
-Defined in: [alfa-act/src/rule.ts:656](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L656)
+Defined in: [alfa-act/src/rule.ts:656](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Type Parameters
 
@@ -96,7 +96,7 @@ Defined in: [alfa-act/src/rule.ts:656](https://github.com/Siteimprove/alfa/blob/
 
 > **get** **rule**(): [`Rule`](../Rule-1.md)\<`INPUT`, `TARGET`, `QUESTION`, `SUBJECT`\>
 
-Defined in: [alfa-act/src/rule.ts:689](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L689)
+Defined in: [alfa-act/src/rule.ts:689](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 
@@ -108,7 +108,7 @@ Defined in: [alfa-act/src/rule.ts:689](https://github.com/Siteimprove/alfa/blob/
 
 > **toJSON**(): [`JSON`](Event/JSON.md)\<`TYPE`, `NAME`\>
 
-Defined in: [alfa-act/src/rule.ts:697](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L697)
+Defined in: [alfa-act/src/rule.ts:697](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Returns
 
@@ -126,7 +126,7 @@ Defined in: [alfa-act/src/rule.ts:697](https://github.com/Siteimprove/alfa/blob/
 
 > **get** **type**(): `TYPE`
 
-Defined in: [alfa-act/src/rule.ts:685](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L685)
+Defined in: [alfa-act/src/rule.ts:685](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 
