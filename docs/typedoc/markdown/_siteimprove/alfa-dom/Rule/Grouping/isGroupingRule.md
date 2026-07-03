@@ -1,0 +1,21 @@
+[**Alfa API documentation**](../../../../README.md)
+
+***
+
+[Alfa API documentation](../../../../README.md) / [@siteimprove/alfa-dom](../../../alfa-dom.md) / [Rule](../../Rule.md) / [Grouping](../Grouping.md) / isGroupingRule
+
+# Function: isGroupingRule()
+
+> **isGroupingRule**(`value`): `value is Grouping<string>`
+
+Defined in: [alfa-dom/src/style/rule/grouping.ts:44](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts#L44)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `value` | `unknown` |
+
+## Returns
+
+`value is Grouping<string>`

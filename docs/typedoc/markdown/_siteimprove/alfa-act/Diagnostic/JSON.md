@@ -1,0 +1,21 @@
+[**Alfa API documentation**](../../../README.md)
+
+***
+
+[Alfa API documentation](../../../README.md) / [@siteimprove/alfa-act](../../alfa-act.md) / [Diagnostic](../Diagnostic.md) / JSON
+
+# Interface: JSON
+
+Defined in: [alfa-act/src/expectation/diagnostic.ts:61](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L61)
+
+## Indexable
+
+> \[`key`: `string`\]: `JSON`
+
+## message
+
+### message
+
+> **message**: `string`
+
+Defined in: [alfa-act/src/expectation/diagnostic.ts:63](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts#L63)

@@ -1,0 +1,73 @@
+[**Alfa API documentation**](../../../../README.md)
+
+***
+
+[Alfa API documentation](../../../../README.md) / [@siteimprove/alfa-act](../../../alfa-act.md) / [Rule](../../Rule.md) / [Composite](../Composite.md) / JSON
+
+# Interface: JSON
+
+Defined in: [alfa-act/src/rule.ts:595](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L595)
+
+## Extends
+
+- [`JSON`](../JSON.md)
+
+## Indexable
+
+> \[`key`: `string`\]: `JSON`
+
+## composes
+
+### composes
+
+> **composes**: `Array`\<[`JSON`](../JSON.md)\>
+
+Defined in: [alfa-act/src/rule.ts:598](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L598)
+
+## requirements
+
+### requirements
+
+> **requirements**: `Array`\<[`JSON`](../../Requirement/JSON.md)\<`string`, `string`\>\>
+
+Defined in: [alfa-act/src/rule.ts:180](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L180)
+
+#### Inherited from
+
+[`JSON`](../JSON.md).[`requirements`](../JSON.md#requirements)
+
+## tags
+
+### tags
+
+> **tags**: `Array`\<[`JSON`](../../Tag/JSON.md)\<`string`\>\>
+
+Defined in: [alfa-act/src/rule.ts:181](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L181)
+
+#### Inherited from
+
+[`JSON`](../JSON.md).[`tags`](../JSON.md#tags)
+
+## type
+
+### type
+
+> **type**: `"composite"`
+
+Defined in: [alfa-act/src/rule.ts:596](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L596)
+
+#### Overrides
+
+[`JSON`](../JSON.md).[`type`](../JSON.md#type)
+
+## uri
+
+### uri
+
+> **uri**: `string`
+
+Defined in: [alfa-act/src/rule.ts:597](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts#L597)
+
+#### Overrides
+
+[`JSON`](../JSON.md).[`uri`](../JSON.md#uri)
