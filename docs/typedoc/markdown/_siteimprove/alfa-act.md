@@ -26,7 +26,7 @@ This package provides functionality for implementing rules specified in the
 | Name | Description |
 | ------ | ------ |
 | [Diagnostic (Namespace)](alfa-act/Diagnostic.md) | - |
-| [Diagnostic (Class)](alfa-act/Diagnostic-1.md) | Diagnostics are associated with each Question or final Outcome. They at least contain an explanatory message. Diagnostics can be extended to include more information for the rules that need it. |
+| [Diagnostic (Class)](alfa-act/Diagnostic-1.md) | Diagnostics are associated with each Question or final Outcome. They at least contain an explanatory message. Diagnostics can be extended to include more information for the rules that need it. test typedoc |
 
 ## Finding
 

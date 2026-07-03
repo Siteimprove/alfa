@@ -10,7 +10,7 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts:15](https://github.com/Sitei
 
 Diagnostics are associated with each Question or final Outcome. They at least
 contain an explanatory message. Diagnostics can be extended to include more
-information for the rules that need it.
+information for the rules that need it. test typedoc
 
 ## Implements
 
