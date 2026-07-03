@@ -1,4 +1,4 @@
-import { DOM, type Role } from "@siteimprove/alfa-aria";
+import { DOM, Role } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Document } from "@siteimprove/alfa-dom";
@@ -108,14 +108,23 @@ export function isTarget(device: Device): Predicate<Element> {
 }
 
 function hasTargetRole(role: Role): boolean {
-  return role.isWidget() && !isMenuContainer(role);
+  return role.isWidget() && !isNonClickableCompositeContainer(role);
 }
 
-function isMenuContainer(role: Role): boolean {
-  // Menus organize child menu items; the child items provide the pointer
-  // targets, not the container itself.
-  return role.hasName("menu") || role.hasName("menubar");
-}
+// These composite widgets normally delegate pointer actions to child widgets:
+// menuitem*, tab, radio, option, treeitem, or cell/row descendants. Combobox
+// and spinbutton stay targetable because their containers are commonly the
+// pointer-actionable controls.
+const isNonClickableCompositeContainer = Role.hasName(
+  "menu",
+  "menubar",
+  "tablist",
+  "radiogroup",
+  "listbox",
+  "tree",
+  "grid",
+  "treegrid",
+);
 
 function hasNonEmptyBoundingBox(device: Device): Predicate<Element> {
   return function (element) {

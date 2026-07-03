@@ -4,6 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 
+import { getApplicableTargets } from "../../src/common/applicability/targets-of-pointer-events.ts";
 import { TargetSize } from "../../src/common/outcome/target-size.ts";
 import R113 from "../../src/sia-r113/rule.ts";
 import { evaluate } from "../common/evaluate.ts";
@@ -653,6 +654,71 @@ test("evaluate() does not target exposed regions of menu containers", async (t) 
         item3.getBoundingBox(device).getUnsafe(),
       ),
     }),
+  ]);
+});
+
+test("getApplicableTargets() excludes non-clickable composite containers", (t) => {
+  const device = Device.standard();
+  const roles = [
+    "menu",
+    "menubar",
+    "tablist",
+    "radiogroup",
+    "listbox",
+    "tree",
+    "grid",
+    "treegrid",
+  ];
+
+  for (const [index, role] of roles.entries()) {
+    const target = (
+      <div
+        role={role}
+        tabindex="0"
+        box={{ device, x: 8, y: 8 + index * 40, width: 240, height: 32 }}
+      >
+        {role}
+      </div>
+    );
+
+    const document = h.document([target]);
+
+    t.deepEqual(getApplicableTargets(document, device).toArray(), []);
+  }
+});
+
+test("getApplicableTargets() keeps commonly clickable composite controls", (t) => {
+  const device = Device.standard();
+
+  const combobox = (
+    <div
+      role="combobox"
+      aria-expanded="false"
+      tabindex="0"
+      box={{ device, x: 8, y: 8, width: 240, height: 32 }}
+    >
+      Choose
+    </div>
+  );
+
+  const spinbutton = (
+    <div
+      role="spinbutton"
+      aria-valuemin="0"
+      aria-valuemax="10"
+      aria-valuenow="1"
+      tabindex="0"
+      box={{ device, x: 8, y: 48, width: 240, height: 32 }}
+    >
+      1
+    </div>
+  );
+
+  const document = h.document([combobox, spinbutton]);
+
+  t.deepEqual(getApplicableTargets(document, device).toArray(), [
+    combobox,
+    spinbutton,
   ]);
 });
 
