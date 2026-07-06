@@ -1,5 +1,5 @@
-// We use environment variabale to pass parameter because the script invokation
-// is mangled into yarn and typedoc own invokations.
+// We use environment variabales to pass parameters because the script
+// invokation is mangled into yarn and typedoc own invokations.
 
 // Check that we have a target (review/documentation)
 const target = process.env.ALFA_DOC_TARGET;
@@ -10,7 +10,7 @@ if (target !== "review" && target !== "documentation") {
   process.exit(1);
 }
 
-// Set up the source link parameters choose outputs, based on target.
+// Set up the source link parameters and choose outputs, based on target.
 // * For "review", we generate Markdown with a stable source link (main branch,
 //   no line number) as this is meant to be shipped with every PR and we want
 //   to avoid changes due to irrelevant details (git hash or adding a new line
@@ -28,8 +28,7 @@ let json = false;
 if (target === "review") {
   markdown = true;
   gitRevision = "main";
-  sourceLinkTemplate =
-    "https://github.com/Siteimprove/alfa/blob/{gitRevision}/{path}";
+  sourceLinkTemplate = "https://github.com/Siteimprove/alfa/blob/main/{path}";
 }
 
 if (target === "documentation") {
@@ -83,8 +82,8 @@ if (markdown) {
           args.kind === "Namespace" ? `${args.kind}: ${args.name}` : args.name,
       },
       // Add the kind to reflections with the same name in a table (typically
-      // class/diagnostic)
-      theme: "categorizeMarkdown",
+      // class/diagnostic), and remove line number from links' names.
+      theme: ["alfaTheme"],
     },
   });
 }
@@ -92,7 +91,7 @@ if (markdown) {
 /** @type {import('typedoc').TypeDocOptions & import('typedoc-plugin-markdown').PluginOptions} */
 export default {
   name: "Alfa API documentation",
-  entryPoints: ["../packages/alfa-act", "../packages/alfa-dom"],
+  entryPoints: ["../packages/alfa-*"],
   entryPointStrategy: "packages",
   readme: "none",
   includeVersion: true,
@@ -111,6 +110,7 @@ export default {
   },
   plugin: [
     "@siteimprove/alfa-toolchain/typedoc-plugin-categorize",
+    "@siteimprove/alfa-toolchain/typedoc-theme-alfa",
     "typedoc-plugin-markdown",
   ],
   outputs,
