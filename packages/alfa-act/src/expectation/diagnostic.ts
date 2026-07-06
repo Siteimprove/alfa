@@ -5,8 +5,6 @@ import { String } from "@siteimprove/alfa-string";
 
 import type * as json from "@siteimprove/alfa-json";
 
-// ignore?
-
 /**
  * Diagnostics are associated with each Question or final Outcome. They at least
  * contain an explanatory message. Diagnostics can be extended to include more
