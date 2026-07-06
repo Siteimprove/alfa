@@ -21,6 +21,7 @@
     "./dependency-graph/helpers.ts",
     "./dependency-graph/index.ts",
     "./dependency-graph/rainbow.ts",
+    "./typedoc/alfa-theme.ts",
     "./typedoc/categorize.ts",
     "./validation/has-extractor-config.ts",
     "./validation/index.ts",
