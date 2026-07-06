@@ -1,5 +1,17 @@
 # Alfa changelog
 
+## [0.118.0](../../compare/v0.117.0...v0.118.0) (2026-07-06)
+
+### Added
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#01180): A Typedoc plugin is now available to automatically categorize reflections by their name. ([#2124](https://github.com/Siteimprove/alfa/pull/2124))
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#01180): `validate-structure` now has a `has-typedoc-config` option to check presence of a Typedoc config. ([#2127](https://github.com/Siteimprove/alfa/pull/2127))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01180): Target size checks (SIA-R111, SIA-R113) no longer report non-clickable composite widget containers as pointer targets when their child widgets are the actual targets. ([#2129](https://github.com/Siteimprove/alfa/pull/2129))
+
 ## [0.117.0](../../compare/v0.116.0...v0.117.0) (2026-06-11)
 
 ### Breaking

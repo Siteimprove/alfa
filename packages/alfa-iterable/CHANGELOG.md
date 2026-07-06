@@ -1,5 +1,7 @@
 # @siteimprove/alfa-iterable
 
+## 0.118.0
+
 ## 0.117.0
 
 ## 0.116.0
