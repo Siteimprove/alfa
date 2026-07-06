@@ -25,7 +25,7 @@
     "document": "api-documenter generate -i docs/data/api -o docs/api",
     "knip": "knip --config config/knip.ts --no-config-hints",
     "typedoc-extract": "ALFA_DOC_TARGET=review yarn typedoc --options config/typedoc.mjs",
-    "typedoc-document": "ALFA_DOC_TARGET=document yarn typedoc --options config/typedoc.mjs"
+    "typedoc-document": "ALFA_DOC_TARGET=documentation yarn typedoc --options config/typedoc.mjs"
   },
   "engines": {
     "node": ">=22.0.0"
