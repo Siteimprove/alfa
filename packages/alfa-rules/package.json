@@ -76,7 +76,7 @@
   "devDependencies": {
     "@siteimprove/alfa-http": "workspace:^",
     "@siteimprove/alfa-test": "workspace:^",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.10"
   },
   "publishConfig": {
     "access": "public",
