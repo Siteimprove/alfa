@@ -12,21 +12,23 @@ if (target !== "review" && target !== "documentation") {
 
 // Set up the source link parameters and choose outputs, based on target.
 // * For "review", we generate Markdown with a stable source link (main branch,
-//   no line number) as this is meant to be shipped with every PR and we want
-//   to avoid changes due to irrelevant details (git hash or adding a new line
-//   and changing numbers).
-// * For "documentation", we generate HTML and JSON, linking to the git tag of
-//   the release. The tag cannot be guessed, as it should not have been created
-//   yet, as the newer documentation must be part of that tag… So we also pass
-//   it along. The JSON documentation is used for merging with other repos.
+//   no line number) and minimum text, as this is meant to be shipped with every
+//   PR and we want to avoid changes due to irrelevant details (git hash or
+//   adding a new line and changing numbers).
+// * For "documentation", we generate Markdown,  HTML and JSON, linking to the
+//   git tag of the release. The tag cannot be guessed, as it should not have
+//   been created yet, as the newer documentation must be part of that tag… So
+//   we also pass it along. The JSON documentation is used for merging with
+//   other repos.
 let gitRevision;
 let sourceLinkTemplate;
+let review = false;
 let markdown = false;
 let html = false;
 let json = false;
 
 if (target === "review") {
-  markdown = true;
+  review = true;
   gitRevision = "main";
   sourceLinkTemplate = "https://github.com/Siteimprove/alfa/blob/main/{path}";
 }
@@ -48,6 +50,7 @@ if (target === "documentation") {
     );
     process.exit(2);
   }
+  markdown = true;
   html = true;
   json = true;
   gitRevision = process.env.ALFA_DOC_VERSION;
@@ -62,6 +65,33 @@ if (json) {
   outputs.push({ name: "json", path: "../docs/typedoc/json" });
 }
 if (markdown) {
+  outputs.push({
+    name: "markdown",
+    path: "../docs/typedoc/review",
+    options: {
+      indexFormat: "table",
+      parametersFormat: "table",
+      interfacePropertiesFormat: "table",
+      classPropertiesFormat: "table",
+      typeAliasPropertiesFormat: "table",
+      enumMembersFormat: "table",
+      propertyMembersFormat: "table",
+      typeDeclarationFormat: "table",
+      pageTitleTemplates: {
+        // While Classes do have their kind added to the page, Namespace don't
+        // as they are usually used as modules, but in our case we want the
+        // kind to show on the documentation page.
+        module: (args) =>
+          args.kind === "Namespace" ? `${args.kind}: ${args.name}` : args.name,
+      },
+      // Add the kind to reflections with the same name in a table (typically
+      // class/diagnostic).
+      theme: ["categorizeMarkdown"],
+    },
+  });
+}
+
+if (review) {
   outputs.push({
     name: "markdown",
     path: "../docs/typedoc/markdown",
