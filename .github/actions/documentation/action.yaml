@@ -1,6 +1,11 @@
 name: Generate documentation
 description: This re-generates the API documentation and pushes it.
 
+inputs:
+  version-tag:
+    description: "The git tag to use as version for source links"
+    required: true
+
 runs:
   using: composite
 
@@ -14,13 +19,19 @@ runs:
         echo "This workflow can only be called from the main branch."
         exit 1
 
-    - name: Extract API documentation
+    - name: Extract API documentation (API extractor)
       shell: bash
       run: yarn extract
 
-    - name: Generate text documentation
+    - name: Generate text documentation (API documenter)
       shell: bash
       run: yarn document
+
+    - name: Generate HTML/Markdown/JSON documentation (Typedoc)
+      shell: bash
+      run: yarn typedoc-document
+      env:
+        ALFA_DOC_VERSION: ${{ inputs.version-tag }}
 
     - name: Stage changes
       shell: bash
@@ -34,6 +45,8 @@ runs:
         -name node_modules -prune
         -o
         -wholename "./*docs/api/*" -print0
+        -o
+        -wholename "./*docs/typedoc/*" -print0
         | xargs -0 git add
 
 

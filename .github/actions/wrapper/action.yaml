@@ -68,6 +68,13 @@ runs:
         # We only need graphviz to generate dependency graphs
         setup-graphviz: ${{ inputs.dependency-graphs }}
 
+    - name: Bump version
+      id: version
+      if: inputs.publish == 'true'
+      uses: siteimprove/alfa/.github/actions/version@main
+      with:
+        reference-package: ${{ input.reference-package }}
+
     - name: Generate coverage data
       if: inputs.coverage == 'true'
       uses: siteimprove/alfa/.github/actions/coverage@main
@@ -75,17 +82,12 @@ runs:
     - name: Generate documentation
       if: inputs.generate-documentation == 'true'
       uses: siteimprove/alfa/.github/actions/documentation@main
+      with:
+        version-tag: v${{ steps.version.outputs.version }}
 
     - name: Generate dependency graphs
       if: inputs.dependency-graphs == 'true'
       uses: siteimprove/alfa/.github/actions/dependency-graphs@main
-
-    - name: Bump version
-      id: version
-      if: inputs.publish == 'true'
-      uses: siteimprove/alfa/.github/actions/version@main
-      with:
-        reference-package: ${{ input.reference-package }}
 
     - name: Add version tag
       shell: bash
