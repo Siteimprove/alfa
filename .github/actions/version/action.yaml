@@ -109,13 +109,12 @@ runs:
         -name "package.json" -print0
         | xargs -0 git add
 
-    - name: Commit and tag changes
+    - name: Commit changes
       shell: bash
       # If the version has changed, there is something to commit. Otherwise, changeset should have failed.
       # So we do not allow empty commit and fail if one happens.
       run: |
         git commit --message=${VERSION}
-        git tag --annotate ${VERSION} --message=${VERSION}
       env:
         # Passing it as a variable rather than inline hardens against script injection.
         # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable

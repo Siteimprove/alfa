@@ -87,9 +87,19 @@ runs:
       with:
         reference-package: ${{ input.reference-package }}
 
+    - name: Add version tag
+      shell: bash
+      if: input.publish == 'true'
+      run: git tag --annotate ${VERSION} --message=${VERSION}
+      env:
+        # Passing it as a variable rather than inline hardens against script injection.
+        # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+        VERSION: v${{ steps.version.outputs.version }}
+
+
     - name: Push changes
       shell: bash
-      # "version" may create a new tag, so we need to push tags too.
+      # New version creates a new tag, so we need to push tags too.
       run: git push --follow-tags
 
     - name: Publish packages
