@@ -30,6 +30,9 @@ inputs:
     description: "Whether to create and publish a new version."
     required: false
     default: "false"
+  reference-package:
+    description: "Which package's version will be used to tag the release (default: @siteimprove/alfa-rules)."
+    required: false
   public:
     description: "Whether the packages are public and require a provenance statement."
     required: false
@@ -81,6 +84,8 @@ runs:
       id: version
       if: inputs.publish == 'true'
       uses: siteimprove/alfa/.github/actions/version@main
+      with:
+        reference-package: ${{ input.reference-package }}
 
     - name: Push changes
       shell: bash

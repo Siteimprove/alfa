@@ -3,6 +3,11 @@ description:
   "This workflow creates a new version, update packages and changelogs, and push the changes.
   It does not actually publish the packages, see .github/actions/publish/action.yml."
 
+inputs:
+  reference-package:
+    description: "The package whose (new) version to use as 'new version'"
+    default: "@siteimprove/alfa-rules"
+
 outputs:
   version:
     description: "The new version"
@@ -33,11 +38,26 @@ runs:
         GITHUB_TOKEN: ${{ github.token }}
 
     - name: Get new version
-      # This is needed to push the correct git tag
+      # The "source of truth" for the new version is inputs.package, which can be either a local package (workspace)
+      # or a dependency. We first look for it as a local package, else in node_modules.
       id: new
       shell: bash
       run: |
-        echo "version=$(grep \"version\": */alfa-*/package.json | cut -d\" -f 4 | sort -u)" >> $GITHUB_OUTPUT
+        node -e "
+          const fs = require('node:fs');
+          const { execSync } = require('node:child_process');
+          const pkgName = process.env.INPUT_PACKAGE;
+          const workspaces = execSync('yarn workspaces list --json', {encoding: 'utf8'})
+            .trim().split('\n').map(JSON.parse);
+          const ws = workspaces.find(w => w.name === pkgName);
+          const pkgJson = ws
+            ? JSON.parse(fs.readFileSync(ws.location + '/package.json', 'utf8'))
+            : JSON.parse(fs.readFileSync('node_modules/' + pkgName + '/package.json', 'utf8'));
+          console.log('version=' + pkgJson.version);
+        "
+        >> $GITHUB_OUTPUT
+      env:
+        INPUT_PACKAGE: ${{ inputs.reference-package }}
 
     - name: Run post version scripts
       shell: bash
