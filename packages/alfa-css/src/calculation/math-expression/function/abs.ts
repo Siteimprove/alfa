@@ -76,8 +76,10 @@ export class Abs extends Function<"abs", [Expression]> {
     }
 
     // reduced is an unreduced calculation, percentage, or relative length; we
-    // keep the `abs()` wrapper.
-    return new Abs([reduced], this._kind);
+    // keep the `abs()` wrapper. Rebuilding through `of` re-derives the kind
+    // from the reduced argument, whose kind may differ from the original one
+    // (e.g., a resolver substituting a percentage with a length).
+    return Abs.of(reduced);
   }
 
   public toString(): string {
