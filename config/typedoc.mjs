@@ -67,7 +67,7 @@ if (json) {
 if (markdown) {
   outputs.push({
     name: "markdown",
-    path: "../docs/typedoc/review",
+    path: "../docs/typedoc/markdown",
     options: {
       indexFormat: "table",
       parametersFormat: "table",
@@ -94,16 +94,12 @@ if (markdown) {
 if (review) {
   outputs.push({
     name: "markdown",
-    path: "../docs/typedoc/markdown",
+    path: "../docs/typedoc/review",
     options: {
-      indexFormat: "table",
-      parametersFormat: "table",
-      interfacePropertiesFormat: "table",
-      classPropertiesFormat: "table",
-      typeAliasPropertiesFormat: "table",
-      enumMembersFormat: "table",
-      propertyMembersFormat: "table",
-      typeDeclarationFormat: "table",
+      hidePageHeader: true,
+      hideBreadcrumbs: true,
+      useCodeBlocks: true,
+      // expandObjects: true,
       pageTitleTemplates: {
         // While Classes do have their kind added to the page, Namespace don't
         // as they are usually used as modules, but in our case we want the
