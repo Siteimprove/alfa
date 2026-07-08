@@ -38,11 +38,15 @@ export class Sign extends Function<"sign", [Expression]> {
     super("sign", args, kind);
   }
 
+  protected get _arg(): Expression {
+    return this._args[0];
+  }
+
   public reduce<
     L extends Unit.Length = Unit.Length.Canonical,
     P extends Numeric = Numeric,
   >(resolver: Expression.Resolver<L, P>): Expression {
-    const reduced = this._args[0].reduce(resolver);
+    const reduced = this._arg.reduce(resolver);
 
     if (isValueExpression(reduced)) {
       const value = reduced.value;
@@ -72,7 +76,7 @@ export class Sign extends Function<"sign", [Expression]> {
   }
 
   public toString(): string {
-    return `sign(${this._args[0]})`;
+    return `sign(${this._arg})`;
   }
 }
 
