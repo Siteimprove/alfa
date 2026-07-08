@@ -2,8 +2,8 @@
 
 ```ts
 hasName: {
-<N>  (predicate): Refinement<Attribute<string>, Attribute<N>>;
-<N>  (name, ...rest): Refinement<Attribute<string>, Attribute<N>>;
+<N>  (predicate: Refinement<string, N>): Refinement<Attribute<string>, Attribute<N>>;
+<N>  (name: N, ...rest: N[]): Refinement<Attribute<string>, Attribute<N>>;
 };
 ```
 
@@ -12,7 +12,7 @@ Defined in: [alfa-dom/src/node/attribute.ts](https://github.com/Siteimprove/alfa
 ## Call Signature
 
 ```ts
-<N>(predicate): Refinement<Attribute<string>, Attribute<N>>;
+<N>(predicate: Refinement<string, N>): Refinement<Attribute<string>, Attribute<N>>;
 ```
 
 ### Type Parameters
@@ -34,7 +34,7 @@ Defined in: [alfa-dom/src/node/attribute.ts](https://github.com/Siteimprove/alfa
 ## Call Signature
 
 ```ts
-<N>(name, ...rest): Refinement<Attribute<string>, Attribute<N>>;
+<N>(name: N, ...rest: N[]): Refinement<Attribute<string>, Attribute<N>>;
 ```
 
 ### Type Parameters

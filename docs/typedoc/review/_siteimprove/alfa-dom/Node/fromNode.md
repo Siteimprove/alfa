@@ -1,7 +1,7 @@
 # Function: fromNode()
 
 ```ts
-function fromNode(json, device?): Trampoline<Node>;
+function fromNode(json: JSON, device?: Device): Trampoline<Node>;
 ```
 
 Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)

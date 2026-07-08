@@ -1,7 +1,7 @@
 # Function: fromType()
 
 ```ts
-function fromType<N>(json): Trampoline<Type<N>>;
+function fromType<N>(json: JSON<N>): Trampoline<Type<N>>;
 ```
 
 Defined in: [alfa-dom/src/node/type.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts)

@@ -46,9 +46,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ```ts
 protected new Outcome<I, T, Q, S, V>(
-   outcome, 
-   rule, 
-mode): Outcome<I, T, Q, S, V>;
+   outcome: V, 
+   rule: Rule<I, T, Q, S>, 
+mode: Mode): Outcome<I, T, Q, S, V>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -98,7 +98,7 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 #### Call Signature
 
 ```ts
-equals<I, T, Q, S, V>(value): boolean;
+equals<I, T, Q, S, V>(value: Outcome<I, T, Q, S, V>): boolean;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -144,7 +144,7 @@ Equatable.equals
 #### Call Signature
 
 ```ts
-equals(value): value is Outcome<I, T, Q, S, V>;
+equals(value: unknown): value is Outcome<I, T, Q, S, V>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -170,7 +170,7 @@ Equatable.equals
 ### hash()
 
 ```ts
-hash(hash): void;
+hash(hash: Hash): void;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -296,7 +296,7 @@ earl.Serializable.toEARL
 ### toJSON()
 
 ```ts
-toJSON(options?): JSON<V>;
+toJSON(options?: Options): JSON<V>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

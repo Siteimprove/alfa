@@ -31,10 +31,10 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ```ts
 protected new CantTell<I, T, Q, S>(
-   rule, 
-   target, 
-   diagnostic, 
-mode): CantTell<I, T, Q, S>;
+   rule: Rule<I, T, Q, S>, 
+   target: T, 
+   diagnostic: Diagnostic, 
+mode: Mode): CantTell<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -116,7 +116,7 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 #### Call Signature
 
 ```ts
-equals<I, T, Q, S>(value): boolean;
+equals<I, T, Q, S>(value: CantTell<I, T, Q, S>): boolean;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -156,7 +156,7 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 #### Call Signature
 
 ```ts
-equals(value): value is CantTell<I, T, Q, S>;
+equals(value: unknown): value is CantTell<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -180,7 +180,7 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ### hash()
 
 ```ts
-hash(hash): void;
+hash(hash: Hash): void;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -245,10 +245,10 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ```ts
 static of<I, T, Q, S>(
-   rule, 
-   target, 
-   diagnostic, 
-mode): CantTell<I, T, Q, S>;
+   rule: Rule<I, T, Q, S>, 
+   target: T, 
+   diagnostic: Diagnostic, 
+mode: Mode): CantTell<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -376,7 +376,7 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ### toJSON()
 
 ```ts
-toJSON(options?): JSON<T>;
+toJSON(options?: Options): JSON<T>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

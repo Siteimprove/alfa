@@ -1,7 +1,7 @@
 # Function: keyframes()
 
 ```ts
-function keyframes(name, rules): Keyframes;
+function keyframes(name: string, rules: Rule[]): Keyframes;
 ```
 
 Defined in: [alfa-dom/src/h.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)

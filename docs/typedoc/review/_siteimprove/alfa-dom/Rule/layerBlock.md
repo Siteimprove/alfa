@@ -1,7 +1,7 @@
 # Variable: layerBlock
 
 ```ts
-layerBlock: (rules, layer?) => Block;
+layerBlock: (rules: Iterable<Rule>, layer?: string | null) => Block;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)

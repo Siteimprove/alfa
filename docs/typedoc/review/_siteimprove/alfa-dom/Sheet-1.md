@@ -13,9 +13,9 @@ Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/bl
 
 ```ts
 protected new Sheet(
-   rules, 
-   disabled, 
-   condition): Sheet;
+   rules: Rule[], 
+   disabled: boolean, 
+   condition: Option<string>): Sheet;
 ```
 
 Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
@@ -117,7 +117,7 @@ Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/bl
 ### equals()
 
 ```ts
-equals(value): value is Sheet;
+equals(value: unknown): value is Sheet;
 ```
 
 Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
@@ -144,9 +144,9 @@ Equatable.equals
 
 ```ts
 static of(
-   rules, 
-   disabled?, 
-   condition?): Sheet;
+   rules: Iterable<Rule>, 
+   disabled?: boolean, 
+   condition?: Option<string>): Sheet;
 ```
 
 Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)

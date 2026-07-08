@@ -1,7 +1,7 @@
 # Function: conclusive()
 
 ```ts
-function conclusive<ANSWER>(answer, oracleUsed?): Finding<ANSWER>;
+function conclusive<ANSWER>(answer: ANSWER, oracleUsed?: boolean): Finding<ANSWER>;
 ```
 
 Defined in: [alfa-act/src/expectation/finding.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/finding.ts)

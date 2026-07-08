@@ -2,8 +2,8 @@
 
 ```ts
 isAtomic: {
-<I, T, Q, S>  (value): value is Atomic<I, T, Q, S>;
-<I, T, Q, S>  (value): value is Atomic<I, T, Q, S>;
+<I, T, Q, S>  (value: Rule<I, T, Q, S>): value is Atomic<I, T, Q, S>;
+<I, T, Q, S>  (value: unknown): value is Atomic<I, T, Q, S>;
 };
 ```
 
@@ -12,7 +12,7 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ## Call Signature
 
 ```ts
-<I, T, Q, S>(value): value is Atomic<I, T, Q, S>;
+<I, T, Q, S>(value: Rule<I, T, Q, S>): value is Atomic<I, T, Q, S>;
 ```
 
 ### Type Parameters
@@ -46,7 +46,7 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ## Call Signature
 
 ```ts
-<I, T, Q, S>(value): value is Atomic<I, T, Q, S>;
+<I, T, Q, S>(value: unknown): value is Atomic<I, T, Q, S>;
 ```
 
 ### Type Parameters

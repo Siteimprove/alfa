@@ -2,18 +2,18 @@
 
 ```ts
 const Traversal: ReplaceFactories<{
-(kind, value): {
+(kind: "DOM traversal", value: number): {
   add: any;
   equals: boolean;
   has: boolean;
   is: boolean;
-  isSet: (flag) => boolean;
+  isSet: (flag: 0 | 2 | 1 | 4 | "composed" | "flattened" | "nested") => boolean;
   kind: "DOM traversal";
   remove: any;
-  set: (...flags) => any;
+  set: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
   toJSON: JSON<"DOM traversal"> & KeyedByArray<["composed", "flattened", "nested"], boolean>;
   toString: string;
-  unset: (...flags) => any;
+  unset: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
   value: number;
 };
   allFlags: [1, 2, 4];
@@ -22,13 +22,13 @@ const Traversal: ReplaceFactories<{
      equals: boolean;
      has: boolean;
      is: boolean;
-     isSet: (flag) => boolean;
+     isSet: (flag: 0 | 2 | 1 | 4 | "composed" | "flattened" | "nested") => boolean;
      kind: "DOM traversal";
      remove: any;
-     set: (...flags) => any;
+     set: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
      toJSON: JSON<"DOM traversal"> & KeyedByArray<["composed", "flattened", "nested"], boolean>;
      toString: string;
-     unset: (...flags) => any;
+     unset: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
      value: number;
   };
   named: ReplaceFactories<any & KeyedByArray<Shorten<string, A, NonZeroFlags>, Shorten<string, A, NonZeroFlags> extends infer T_1 ? T_1 extends Shorten<..., ..., ...> ? ... extends ... ? ... : ... : never : never[number]>, Shorten<string, A, NonZeroFlags>[number], 
@@ -38,13 +38,15 @@ const Traversal: ReplaceFactories<{
      equals: boolean;
      has: boolean;
      is: boolean;
-     isSet: (flag) => boolean;
+     isSet: (flag: 
+        | 0 | ...[...]
+       | Shorten<string, A, NonZeroFlags>[number]) => boolean;
      kind: K;
      remove: any;
-     set: (...flags) => any;
+     set: (...flags: Array<Shorten<..., ..., ...>[number] | ... | ...>) => any;
      toJSON: JSON<K> & KeyedByArray<A, boolean>;
      toString: string;
-     unset: (...flags) => any;
+     unset: (...flags: Array<Shorten<..., ..., ...>[number] | ... | ...>) => any;
      value: number;
   } & KeyedByArray<Shorten<string, A, NonZeroFlags>, boolean>>;
   nameOf: "composed" | "flattened" | "nested";
@@ -54,13 +56,13 @@ const Traversal: ReplaceFactories<{
      equals: boolean;
      has: boolean;
      is: boolean;
-     isSet: (flag) => boolean;
+     isSet: (flag: 0 | 2 | 1 | 4 | "composed" | "flattened" | "nested") => boolean;
      kind: "DOM traversal";
      remove: any;
-     set: (...flags) => any;
+     set: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
      toJSON: JSON<"DOM traversal"> & KeyedByArray<["composed", "flattened", "nested"], boolean>;
      toString: string;
-     unset: (...flags) => any;
+     unset: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
      value: number;
   };
   reduce: number;
@@ -69,13 +71,13 @@ const Traversal: ReplaceFactories<{
   equals: boolean;
   has: boolean;
   is: boolean;
-  isSet: (flag) => boolean;
+  isSet: (flag: 0 | 2 | 1 | 4 | "composed" | "flattened" | "nested") => boolean;
   kind: "DOM traversal";
   remove: any;
-  set: (...flags) => any;
+  set: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
   toJSON: JSON<"DOM traversal"> & KeyedByArray<["composed", "flattened", "nested"], boolean>;
   toString: string;
-  unset: (...flags) => any;
+  unset: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
   value: number;
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>>;
 ```

@@ -1,7 +1,7 @@
 # Variable: isReplaced
 
 ```ts
-isReplaced: (element) => element is Element<"object" | "input" | "audio" | "canvas" | "embed" | "iframe" | "img" | "video">;
+isReplaced: (element: Element) => element is Element<"object" | "input" | "audio" | "canvas" | "embed" | "iframe" | "img" | "video">;
 ```
 
 Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)

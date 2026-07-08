@@ -1,7 +1,7 @@
 # Function: isConclusive()
 
 ```ts
-function isConclusive<A>(finding): finding is Left<[A, boolean]>;
+function isConclusive<A>(finding: Finding<A>): finding is Left<[A, boolean]>;
 ```
 
 Defined in: [alfa-act/src/expectation/finding.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/finding.ts)

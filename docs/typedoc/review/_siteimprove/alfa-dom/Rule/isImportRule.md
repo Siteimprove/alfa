@@ -1,7 +1,7 @@
 # Variable: isImportRule
 
 ```ts
-isImportRule: (value) => value is Import;
+isImportRule: (value: unknown) => value is Import;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)

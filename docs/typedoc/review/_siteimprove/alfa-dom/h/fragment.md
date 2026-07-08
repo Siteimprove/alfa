@@ -2,9 +2,9 @@
 
 ```ts
 function fragment(
-   children, 
-   externalId?, 
-   extraData?): Fragment;
+   children: (string | Node)[], 
+   externalId?: string, 
+   extraData?: any): Fragment;
 ```
 
 Defined in: [alfa-dom/src/h.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)

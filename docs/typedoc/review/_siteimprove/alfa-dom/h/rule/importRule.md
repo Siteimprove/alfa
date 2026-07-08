@@ -2,11 +2,11 @@
 
 ```ts
 function importRule(
-   url, 
-   sheet, 
-   mediaCondition?, 
-   supportCondition?, 
-   layer?): Import;
+   url: string, 
+   sheet: Sheet, 
+   mediaCondition?: string, 
+   supportCondition?: string, 
+   layer?: string): Import;
 ```
 
 Defined in: [alfa-dom/src/h.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)

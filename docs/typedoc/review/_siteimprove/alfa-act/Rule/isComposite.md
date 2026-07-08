@@ -2,8 +2,8 @@
 
 ```ts
 isComposite: {
-<I, T, Q>  (value): value is Composite<I, T, Q, T>;
-<I, T, Q>  (value): value is Composite<I, T, Q, T>;
+<I, T, Q>  (value: Rule<I, T, Q>): value is Composite<I, T, Q, T>;
+<I, T, Q>  (value: unknown): value is Composite<I, T, Q, T>;
 };
 ```
 
@@ -12,7 +12,7 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ## Call Signature
 
 ```ts
-<I, T, Q>(value): value is Composite<I, T, Q, T>;
+<I, T, Q>(value: Rule<I, T, Q>): value is Composite<I, T, Q, T>;
 ```
 
 ### Type Parameters
@@ -42,7 +42,7 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ## Call Signature
 
 ```ts
-<I, T, Q>(value): value is Composite<I, T, Q, T>;
+<I, T, Q>(value: unknown): value is Composite<I, T, Q, T>;
 ```
 
 ### Type Parameters

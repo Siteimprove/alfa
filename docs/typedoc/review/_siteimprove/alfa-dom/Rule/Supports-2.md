@@ -11,7 +11,7 @@ Defined in: [alfa-dom/src/style/rule/supports.ts](https://github.com/Siteimprove
 ### Constructor
 
 ```ts
-protected new Supports(condition, rules): SupportsRule;
+protected new Supports(condition: string, rules: Rule[]): SupportsRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/supports.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/supports.ts)
@@ -41,7 +41,7 @@ ConditionRule<"supports">.constructor
 ### \_attachOwner()
 
 ```ts
-_attachOwner(owner): boolean;
+_attachOwner(owner: Sheet): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -67,7 +67,7 @@ ConditionRule._attachOwner
 ### \_attachParent()
 
 ```ts
-_attachParent(parent): boolean;
+_attachParent(parent: Rule): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -239,7 +239,7 @@ ConditionRule.descendants
 ### equals()
 
 ```ts
-equals(value): value is Supports;
+equals(value: unknown): value is Supports;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -265,7 +265,7 @@ ConditionRule.equals
 ### of()
 
 ```ts
-static of(condition, rules): SupportsRule;
+static of(condition: string, rules: Iterable<Rule>): SupportsRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/supports.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/supports.ts)

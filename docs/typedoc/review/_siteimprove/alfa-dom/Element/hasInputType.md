@@ -2,8 +2,8 @@
 
 ```ts
 hasInputType: {
-  (predicate): Predicate<Element<string>>;
-  (inputType, ...rest): Predicate<Element<string>>;
+  (predicate: Predicate<InputType>): Predicate<Element<string>>;
+  (inputType: InputType, ...rest: InputType[]): Predicate<Element<string>>;
 };
 ```
 
@@ -12,7 +12,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ## Call Signature
 
 ```ts
-(predicate): Predicate<Element<string>>;
+(predicate: Predicate<InputType>): Predicate<Element<string>>;
 ```
 
 ### Parameters
@@ -28,7 +28,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ## Call Signature
 
 ```ts
-(inputType, ...rest): Predicate<Element<string>>;
+(inputType: InputType, ...rest: InputType[]): Predicate<Element<string>>;
 ```
 
 ### Parameters

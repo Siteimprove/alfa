@@ -1,7 +1,7 @@
 # Variable: style
 
 ```ts
-style: (selector, declarations, hint) => Style;
+style: (selector: string, declarations: Iterable<Declaration>, hint: boolean) => Style;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)

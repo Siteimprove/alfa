@@ -1,7 +1,7 @@
 # Function: fromKeyframesRule()
 
 ```ts
-function fromKeyframesRule(json, fromRule): Trampoline<Keyframes>;
+function fromKeyframesRule(json: JSON, fromRule: (json: JSON) => Trampoline<Rule>): Trampoline<Keyframes>;
 ```
 
 Defined in: [alfa-dom/src/style/rule/keyframes.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframes.ts)
@@ -14,7 +14,7 @@ Defined in: [alfa-dom/src/style/rule/keyframes.ts](https://github.com/Siteimprov
 
 ### fromRule
 
-(`json`) => `Trampoline`\<[`Rule`](../../Rule-1.md)\>
+(`json`: [`JSON`](../JSON.md)) => `Trampoline`\<[`Rule`](../../Rule-1.md)\>
 
 ## Returns
 

@@ -1,7 +1,9 @@
 # Variable: failed
 
 ```ts
-failed: <I, T, Q, S>(rule, target, expectations, mode) => Failed<I, T, Q, S>;
+failed: <I, T, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record<{
+[key: string]: Result<Diagnostic, Diagnostic>;
+}>, mode: Mode) => Failed<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

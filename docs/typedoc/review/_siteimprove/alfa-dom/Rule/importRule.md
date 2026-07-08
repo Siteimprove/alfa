@@ -1,7 +1,7 @@
 # Variable: importRule
 
 ```ts
-importRule: (href, sheet, mediaCondition, supportCondition, layer) => Import;
+importRule: (href: string, sheet: Sheet, mediaCondition: Option<string>, supportCondition: Option<string>, layer: Option<string>) => Import;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)

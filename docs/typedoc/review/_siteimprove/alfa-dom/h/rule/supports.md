@@ -1,7 +1,7 @@
 # Function: supports()
 
 ```ts
-function supports(condition, rules): Supports;
+function supports(condition: string, rules: Rule[]): Supports;
 ```
 
 Defined in: [alfa-dom/src/h.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)

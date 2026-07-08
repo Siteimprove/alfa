@@ -1,7 +1,7 @@
 # Function: fromText()
 
 ```ts
-function fromText(json, device?): Trampoline<Text>;
+function fromText(json: JSON, device?: Device): Trampoline<Text>;
 ```
 
 Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)

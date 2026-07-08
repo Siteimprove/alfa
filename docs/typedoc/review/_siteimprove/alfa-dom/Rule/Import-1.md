@@ -12,11 +12,11 @@ Defined in: [alfa-dom/src/style/rule/import.ts](https://github.com/Siteimprove/a
 
 ```ts
 protected new Import(
-   href, 
-   sheet, 
-   mediaCondition, 
-   supportCondition, 
-   layer): ImportRule;
+   href: string, 
+   sheet: Sheet, 
+   mediaCondition: Option<string>, 
+   supportCondition: Option<string>, 
+   layer: Option<string>): ImportRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/import.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts)
@@ -58,7 +58,7 @@ ConditionRule<"import">.constructor
 ### \_attachOwner()
 
 ```ts
-_attachOwner(owner): boolean;
+_attachOwner(owner: Sheet): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -84,7 +84,7 @@ ConditionRule._attachOwner
 ### \_attachParent()
 
 ```ts
-_attachParent(parent): boolean;
+_attachParent(parent: Rule): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -256,7 +256,7 @@ ConditionRule.descendants
 ### equals()
 
 ```ts
-equals(value): value is Import;
+equals(value: unknown): value is Import;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -331,11 +331,11 @@ Defined in: [alfa-dom/src/style/rule/import.ts](https://github.com/Siteimprove/a
 
 ```ts
 static of(
-   href, 
-   sheet, 
-   mediaCondition?, 
-   supportCondition?, 
-   layer?): ImportRule;
+   href: string, 
+   sheet: Sheet, 
+   mediaCondition?: Option<string>, 
+   supportCondition?: Option<string>, 
+   layer?: Option<string>): ImportRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/import.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts)

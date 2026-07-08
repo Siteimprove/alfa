@@ -11,7 +11,7 @@ Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprov
 ### Constructor
 
 ```ts
-protected new FontFace(declarations): FontFaceRule;
+protected new FontFace(declarations: Declaration[]): FontFaceRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/font-face.ts)
@@ -37,7 +37,7 @@ BaseRule<"font-face">.constructor
 ### \_attachOwner()
 
 ```ts
-_attachOwner(owner): boolean;
+_attachOwner(owner: Sheet): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -63,7 +63,7 @@ BaseRule._attachOwner
 ### \_attachParent()
 
 ```ts
-_attachParent(parent): boolean;
+_attachParent(parent: Rule): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -181,7 +181,7 @@ BaseRule.descendants
 ### equals()
 
 ```ts
-equals(value): value is FontFace;
+equals(value: unknown): value is FontFace;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -207,7 +207,7 @@ BaseRule.equals
 ### of()
 
 ```ts
-static of(declarations): FontFaceRule;
+static of(declarations: Iterable<Declaration>): FontFaceRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/font-face.ts)

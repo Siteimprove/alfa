@@ -2,9 +2,9 @@
 
 ```ts
 function fromShadow(
-   json, 
-   fromNode, 
-device?): Trampoline<Shadow>;
+   json: JSON, 
+   fromNode: (json: JSON, device?: Device) => Trampoline<Node>, 
+device?: Device): Trampoline<Shadow>;
 ```
 
 Defined in: [alfa-dom/src/node/shadow.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/shadow.ts)
@@ -17,7 +17,7 @@ Defined in: [alfa-dom/src/node/shadow.ts](https://github.com/Siteimprove/alfa/bl
 
 ### fromNode
 
-(`json`, `device?`) => `Trampoline`\<[`Node`](../Node-1.md)\>
+(`json`: [`JSON`](../Node/JSON.md), `device?`: `Device`) => `Trampoline`\<[`Node`](../Node-1.md)\>
 
 ### device?
 

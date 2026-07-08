@@ -2,12 +2,12 @@
 
 ```ts
 function shadow(
-   children, 
-   style?, 
-   mode?, 
-   externalId?, 
-   internalId?, 
-   extraData?): Shadow;
+   children: (string | Node)[], 
+   style?: Sheet[], 
+   mode?: Mode, 
+   externalId?: string, 
+   internalId?: string, 
+   extraData?: any): Shadow;
 ```
 
 Defined in: [alfa-dom/src/h.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)

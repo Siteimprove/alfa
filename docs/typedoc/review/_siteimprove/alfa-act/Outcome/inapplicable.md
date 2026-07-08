@@ -1,7 +1,7 @@
 # Variable: inapplicable
 
 ```ts
-inapplicable: <I, T, Q, S>(rule, mode) => Inapplicable<I, T, Q, S>;
+inapplicable: <I, T, Q, S>(rule: Rule<I, T, Q, S>, mode: Mode) => Inapplicable<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

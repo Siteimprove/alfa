@@ -1,7 +1,7 @@
 # Function: namespace()
 
 ```ts
-function namespace(namespace, prefix?): Namespace;
+function namespace(namespace: string, prefix?: string): Namespace;
 ```
 
 Defined in: [alfa-dom/src/h.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)

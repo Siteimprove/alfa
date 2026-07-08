@@ -2,9 +2,9 @@
 
 ```ts
 function fromImportRule(
-   json, 
-   fromRule, 
-sheetFactory): Trampoline<Import>;
+   json: JSON, 
+   fromRule: (json: JSON) => Trampoline<Rule>, 
+sheetFactory: (rules: Iterable<Rule>) => Sheet): Trampoline<Import>;
 ```
 
 Defined in: [alfa-dom/src/style/rule/import.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts)
@@ -17,11 +17,11 @@ Defined in: [alfa-dom/src/style/rule/import.ts](https://github.com/Siteimprove/a
 
 ### fromRule
 
-(`json`) => `Trampoline`\<[`Rule`](../../Rule-1.md)\>
+(`json`: [`JSON`](../JSON.md)) => `Trampoline`\<[`Rule`](../../Rule-1.md)\>
 
 ### sheetFactory
 
-(`rules`) => [`Sheet`](../../Sheet-1.md)
+(`rules`: `Iterable`\<[`Rule`](../../Rule-1.md)\>) => [`Sheet`](../../Sheet-1.md)
 
 ## Returns
 

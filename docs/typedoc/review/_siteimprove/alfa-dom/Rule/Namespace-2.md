@@ -11,7 +11,7 @@ Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprov
 ### Constructor
 
 ```ts
-protected new Namespace(namespace, prefix): NamespaceRule;
+protected new Namespace(namespace: string, prefix: Option<string>): NamespaceRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
@@ -41,7 +41,7 @@ BaseRule<"namespace">.constructor
 ### \_attachOwner()
 
 ```ts
-_attachOwner(owner): boolean;
+_attachOwner(owner: Sheet): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -67,7 +67,7 @@ BaseRule._attachOwner
 ### \_attachParent()
 
 ```ts
-_attachParent(parent): boolean;
+_attachParent(parent: Rule): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -185,7 +185,7 @@ BaseRule.descendants
 ### equals()
 
 ```ts
-equals(value): value is Namespace;
+equals(value: unknown): value is Namespace;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -227,7 +227,7 @@ Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprov
 ### of()
 
 ```ts
-static of(namespace, prefix): NamespaceRule;
+static of(namespace: string, prefix: Option<string>): NamespaceRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)

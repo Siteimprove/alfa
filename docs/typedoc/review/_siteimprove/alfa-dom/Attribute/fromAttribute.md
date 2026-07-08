@@ -1,7 +1,7 @@
 # Function: fromAttribute()
 
 ```ts
-function fromAttribute<N>(attribute): Trampoline<Attribute<N>>;
+function fromAttribute<N>(attribute: JSON<N>): Trampoline<Attribute<N>>;
 ```
 
 Defined in: [alfa-dom/src/node/attribute.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/attribute.ts)

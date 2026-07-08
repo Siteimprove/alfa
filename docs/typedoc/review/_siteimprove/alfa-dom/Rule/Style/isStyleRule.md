@@ -1,7 +1,7 @@
 # Function: isStyleRule()
 
 ```ts
-function isStyleRule(value): value is Style;
+function isStyleRule(value: unknown): value is Style;
 ```
 
 Defined in: [alfa-dom/src/style/rule/style.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/style.ts)

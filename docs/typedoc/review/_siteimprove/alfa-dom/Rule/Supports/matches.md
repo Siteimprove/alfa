@@ -1,7 +1,7 @@
 # Function: matches()
 
 ```ts
-function matches(device): Predicate<Supports>;
+function matches(device: Device): Predicate<Supports>;
 ```
 
 Defined in: [alfa-dom/src/style/rule/supports.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/supports.ts)

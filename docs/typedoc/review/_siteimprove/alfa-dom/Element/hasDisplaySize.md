@@ -1,7 +1,7 @@
 # Variable: hasDisplaySize
 
 ```ts
-hasDisplaySize: (valueOrPredicate) => Predicate<Element<"select">>;
+hasDisplaySize: (valueOrPredicate: number | Predicate<number>) => Predicate<Element<"select">>;
 ```
 
 Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)

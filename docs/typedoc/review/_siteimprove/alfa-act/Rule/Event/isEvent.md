@@ -1,7 +1,7 @@
 # Function: isEvent()
 
 ```ts
-function isEvent<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>(value): value is Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
+function isEvent<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>(value: unknown): value is Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

@@ -1,7 +1,7 @@
 # Function: matches()
 
 ```ts
-function matches(device): Predicate<Media>;
+function matches(device: Device): Predicate<Media>;
 ```
 
 Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts)

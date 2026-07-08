@@ -31,10 +31,10 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 ```ts
 protected new Atomic<I, T, Q, S>(
-   uri, 
-   requirements, 
-   tags, 
-evaluate): Atomic<I, T, Q, S>;
+   uri: string, 
+   requirements: Array<Requirement<string, string>>, 
+   tags: Array<Tag<string>>, 
+evaluate: Evaluate<I, T, Q, S>): Atomic<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -128,7 +128,7 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 #### Call Signature
 
 ```ts
-equals<I, T, Q, S>(value): boolean;
+equals<I, T, Q, S>(value: Rule<I, T, Q, S>): boolean;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -168,7 +168,7 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 #### Call Signature
 
 ```ts
-equals(value): value is Atomic<I, T, Q, S>;
+equals(value: unknown): value is Atomic<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -193,10 +193,11 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 ```ts
 evaluate(
-   input, 
-   oracle?, 
-   outcomes?, 
-performance?): Promise<Iterable<Outcome<I, T, Q, S, Value>>>;
+   input: I, 
+   oracle?: {
+} extends Q ? any : Oracle<I, T, Q, S>, 
+   outcomes?: Cache, 
+performance?: Performance<Event<I, T, Q, S, Type, string>>): Promise<Iterable<Outcome<I, T, Q, S, Value>>>;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -233,7 +234,7 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ### hash()
 
 ```ts
-hash(hash): void;
+hash(hash: Hash): void;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -259,7 +260,7 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 #### Call Signature
 
 ```ts
-hasRequirement(requirement): boolean;
+hasRequirement(requirement: Requirement): boolean;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -281,7 +282,7 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 #### Call Signature
 
 ```ts
-hasRequirement(predicate): boolean;
+hasRequirement(predicate: Predicate<Requirement<string, string>>): boolean;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -307,7 +308,7 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 #### Call Signature
 
 ```ts
-hasTag(tag): boolean;
+hasTag(tag: Tag): boolean;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -329,7 +330,7 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 #### Call Signature
 
 ```ts
-hasTag(predicate): boolean;
+hasTag(predicate: Predicate<Tag<string>>): boolean;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -353,7 +354,12 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ### of()
 
 ```ts
-static of<I, T, Q, S>(properties): Atomic<I, T, Q, S>;
+static of<I, T, Q, S>(properties: {
+  evaluate: Evaluate<I, T, Q, S>;
+  requirements?: Iterable<Requirement<string, string>>;
+  tags?: Iterable<Tag<string>>;
+  uri: string;
+}): Atomic<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -466,7 +472,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 #### Call Signature
 
 ```ts
-toJSON(options): MinimalJSON;
+toJSON(options: {
+  verbosity: Minimal;
+}): MinimalJSON;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

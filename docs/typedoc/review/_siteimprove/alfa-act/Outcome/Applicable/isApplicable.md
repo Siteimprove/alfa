@@ -3,7 +3,7 @@
 ## Call Signature
 
 ```ts
-function isApplicable<I, T, Q, S>(value): value is Applicable<I, T, Q, S>;
+function isApplicable<I, T, Q, S>(value: Outcome<I, T, Q, S>): value is Applicable<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -39,7 +39,7 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ## Call Signature
 
 ```ts
-function isApplicable<I, T, Q, S>(value): value is Applicable<I, T, Q, S>;
+function isApplicable<I, T, Q, S>(value: unknown): value is Applicable<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

@@ -31,10 +31,12 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ```ts
 protected new Failed<I, T, Q, S>(
-   rule, 
-   target, 
-   expectations, 
-mode): Failed<I, T, Q, S>;
+   rule: Rule<I, T, Q, S>, 
+   target: T, 
+   expectations: Record<{
+[key: string]: Result<Diagnostic, Diagnostic>;
+}>, 
+mode: Mode): Failed<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -102,7 +104,7 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 #### Call Signature
 
 ```ts
-equals<I, T, Q, S>(value): boolean;
+equals<I, T, Q, S>(value: Failed<I, T, Q, S>): boolean;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -142,7 +144,7 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 #### Call Signature
 
 ```ts
-equals(value): value is Failed<I, T, Q, S>;
+equals(value: unknown): value is Failed<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -186,7 +188,7 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ### hash()
 
 ```ts
-hash(hash): void;
+hash(hash: Hash): void;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -251,10 +253,12 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ```ts
 static of<I, T, Q, S>(
-   rule, 
-   target, 
-   expectations, 
-mode): Failed<I, T, Q, S>;
+   rule: Rule<I, T, Q, S>, 
+   target: T, 
+   expectations: Record<{
+[key: string]: Result<Diagnostic, Diagnostic>;
+}>, 
+mode: Mode): Failed<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -384,7 +388,7 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ### toJSON()
 
 ```ts
-toJSON(options?): JSON<T>;
+toJSON(options?: Options): JSON<T>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

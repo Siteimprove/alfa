@@ -27,9 +27,9 @@ Defined in: [alfa-act/src/audit.ts](https://github.com/Siteimprove/alfa/blob/mai
 
 ```ts
 protected new Audit<I, T, Q, S>(
-   input, 
-   rules, 
-oracle): Audit<I, T, Q, S>;
+   input: I, 
+   rules: List<Rule<I, T, Q, S>>, 
+oracle: Oracle<I, T, Q, S>): Audit<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/audit.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/audit.ts)
@@ -57,7 +57,7 @@ Defined in: [alfa-act/src/audit.ts](https://github.com/Siteimprove/alfa/blob/mai
 ### evaluate()
 
 ```ts
-evaluate(performance?): Promise<Iterable<Outcome<I, T, Q, S, Value>>>;
+evaluate(performance?: Performance<Event<I, T, Q, S, Type, string>>): Promise<Iterable<Outcome<I, T, Q, S, Value>>>;
 ```
 
 Defined in: [alfa-act/src/audit.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/audit.ts)
@@ -78,9 +78,9 @@ Defined in: [alfa-act/src/audit.ts](https://github.com/Siteimprove/alfa/blob/mai
 
 ```ts
 static of<I, T, Q, S>(
-   input, 
-   rules, 
-oracle?): Audit<I, T, Q, S>;
+   input: I, 
+   rules: Iterable<Rule<I, T, Q, S>>, 
+oracle?: Oracle<I, T, Q, S>): Audit<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/audit.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/audit.ts)

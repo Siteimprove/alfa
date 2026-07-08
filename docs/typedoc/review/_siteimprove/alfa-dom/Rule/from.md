@@ -3,7 +3,7 @@
 ## Call Signature
 
 ```ts
-function from(json, sheetFactory): FontFace;
+function from(json: JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): FontFace;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
@@ -16,7 +16,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 
 #### sheetFactory
 
-(`rules`) => [`Sheet`](../Sheet-1.md)
+(`rules`: `Iterable`\<[`Rule`](../Rule-1.md)\>) => [`Sheet`](../Sheet-1.md)
 
 ### Returns
 
@@ -25,7 +25,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 ## Call Signature
 
 ```ts
-function from(json, sheetFactory): Import;
+function from(json: JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Import;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
@@ -38,7 +38,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 
 #### sheetFactory
 
-(`rules`) => [`Sheet`](../Sheet-1.md)
+(`rules`: `Iterable`\<[`Rule`](../Rule-1.md)\>) => [`Sheet`](../Sheet-1.md)
 
 ### Returns
 
@@ -47,7 +47,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 ## Call Signature
 
 ```ts
-function from(json, sheetFactory): Keyframe;
+function from(json: JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Keyframe;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
@@ -60,7 +60,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 
 #### sheetFactory
 
-(`rules`) => [`Sheet`](../Sheet-1.md)
+(`rules`: `Iterable`\<[`Rule`](../Rule-1.md)\>) => [`Sheet`](../Sheet-1.md)
 
 ### Returns
 
@@ -69,7 +69,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 ## Call Signature
 
 ```ts
-function from(json, sheetFactory): Keyframes;
+function from(json: JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Keyframes;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
@@ -82,7 +82,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 
 #### sheetFactory
 
-(`rules`) => [`Sheet`](../Sheet-1.md)
+(`rules`: `Iterable`\<[`Rule`](../Rule-1.md)\>) => [`Sheet`](../Sheet-1.md)
 
 ### Returns
 
@@ -91,7 +91,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 ## Call Signature
 
 ```ts
-function from(json, sheetFactory): Block;
+function from(json: JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Block;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
@@ -104,7 +104,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 
 #### sheetFactory
 
-(`rules`) => [`Sheet`](../Sheet-1.md)
+(`rules`: `Iterable`\<[`Rule`](../Rule-1.md)\>) => [`Sheet`](../Sheet-1.md)
 
 ### Returns
 
@@ -113,7 +113,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 ## Call Signature
 
 ```ts
-function from(json, sheetFactory): Statement;
+function from(json: JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Statement;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
@@ -126,7 +126,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 
 #### sheetFactory
 
-(`rules`) => [`Sheet`](../Sheet-1.md)
+(`rules`: `Iterable`\<[`Rule`](../Rule-1.md)\>) => [`Sheet`](../Sheet-1.md)
 
 ### Returns
 
@@ -135,7 +135,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 ## Call Signature
 
 ```ts
-function from(json, sheetFactory): Media;
+function from(json: JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Media;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
@@ -148,7 +148,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 
 #### sheetFactory
 
-(`rules`) => [`Sheet`](../Sheet-1.md)
+(`rules`: `Iterable`\<[`Rule`](../Rule-1.md)\>) => [`Sheet`](../Sheet-1.md)
 
 ### Returns
 
@@ -157,7 +157,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 ## Call Signature
 
 ```ts
-function from(json, sheetFactory): Namespace;
+function from(json: JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Namespace;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
@@ -170,7 +170,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 
 #### sheetFactory
 
-(`rules`) => [`Sheet`](../Sheet-1.md)
+(`rules`: `Iterable`\<[`Rule`](../Rule-1.md)\>) => [`Sheet`](../Sheet-1.md)
 
 ### Returns
 
@@ -179,7 +179,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 ## Call Signature
 
 ```ts
-function from(json, sheetFactory): Page;
+function from(json: JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Page;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
@@ -192,7 +192,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 
 #### sheetFactory
 
-(`rules`) => [`Sheet`](../Sheet-1.md)
+(`rules`: `Iterable`\<[`Rule`](../Rule-1.md)\>) => [`Sheet`](../Sheet-1.md)
 
 ### Returns
 
@@ -201,7 +201,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 ## Call Signature
 
 ```ts
-function from(json, sheetFactory): Style;
+function from(json: JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Style;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
@@ -214,7 +214,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 
 #### sheetFactory
 
-(`rules`) => [`Sheet`](../Sheet-1.md)
+(`rules`: `Iterable`\<[`Rule`](../Rule-1.md)\>) => [`Sheet`](../Sheet-1.md)
 
 ### Returns
 
@@ -223,7 +223,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 ## Call Signature
 
 ```ts
-function from(json, sheetFactory): Supports;
+function from(json: JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Supports;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
@@ -236,7 +236,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 
 #### sheetFactory
 
-(`rules`) => [`Sheet`](../Sheet-1.md)
+(`rules`: `Iterable`\<[`Rule`](../Rule-1.md)\>) => [`Sheet`](../Sheet-1.md)
 
 ### Returns
 
@@ -245,7 +245,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 ## Call Signature
 
 ```ts
-function from(json, sheetFactory): Rule;
+function from(json: JSON, sheetFactory: (rules: Iterable<Rule>) => Sheet): Rule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)
@@ -258,7 +258,7 @@ Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/al
 
 #### sheetFactory
 
-(`rules`) => [`Sheet`](../Sheet-1.md)
+(`rules`: `Iterable`\<[`Rule`](../Rule-1.md)\>) => [`Sheet`](../Sheet-1.md)
 
 ### Returns
 

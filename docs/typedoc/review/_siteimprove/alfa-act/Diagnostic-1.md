@@ -13,7 +13,7 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimpr
 ### Constructor
 
 ```ts
-protected new Diagnostic(message): Diagnostic;
+protected new Diagnostic(message: string): Diagnostic;
 ```
 
 Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
@@ -59,7 +59,7 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimpr
 #### Call Signature
 
 ```ts
-equals(value): boolean;
+equals(value: Diagnostic): boolean;
 ```
 
 Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
@@ -83,7 +83,7 @@ Equatable.equals
 #### Call Signature
 
 ```ts
-equals(value): value is Diagnostic;
+equals(value: unknown): value is Diagnostic;
 ```
 
 Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
@@ -109,7 +109,7 @@ Equatable.equals
 ### hash()
 
 ```ts
-hash(hash): void;
+hash(hash: Hash): void;
 ```
 
 Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
@@ -151,7 +151,7 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimpr
 ### of()
 
 ```ts
-static of(message): Diagnostic;
+static of(message: string): Diagnostic;
 ```
 
 Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
@@ -171,7 +171,7 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimpr
 ### toJSON()
 
 ```ts
-toJSON(options?): JSON;
+toJSON(options?: Options): JSON;
 ```
 
 Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)

@@ -1,7 +1,7 @@
 # Function: isEmpty()
 
 ```ts
-function isEmpty(rule): boolean;
+function isEmpty(rule: Style): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/style.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/style.ts)

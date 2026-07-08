@@ -3,7 +3,7 @@
 ## Call Signature
 
 ```ts
-function end<I, T, Q, S, N>(rule, name): Event<I, T, Q, S, "end", N>;
+function end<I, T, Q, S, N>(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "end", N>;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -47,7 +47,7 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ## Call Signature
 
 ```ts
-function end<I, T, Q, S>(rule): Event<I, T, Q, S, "end", "total">;
+function end<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "total">;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

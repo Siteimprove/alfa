@@ -2,8 +2,8 @@
 
 ```ts
 hasName: {
-<N>  (predicate): Refinement<Element<string>, Element<N>>;
-<N>  (name, ...rest): Refinement<Element<string>, Element<N>>;
+<N>  (predicate: Refinement<string, N>): Refinement<Element<string>, Element<N>>;
+<N>  (name: N, ...rest: N[]): Refinement<Element<string>, Element<N>>;
 };
 ```
 
@@ -12,7 +12,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ## Call Signature
 
 ```ts
-<N>(predicate): Refinement<Element<string>, Element<N>>;
+<N>(predicate: Refinement<string, N>): Refinement<Element<string>, Element<N>>;
 ```
 
 ### Type Parameters
@@ -34,7 +34,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ## Call Signature
 
 ```ts
-<N>(name, ...rest): Refinement<Element<string>, Element<N>>;
+<N>(name: N, ...rest: N[]): Refinement<Element<string>, Element<N>>;
 ```
 
 ### Type Parameters

@@ -38,13 +38,13 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 
 ```ts
 new Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>(
-   type, 
-   uri, 
-   message, 
-   diagnostic, 
-   subject, 
-   context, 
-answer): Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
+   type: TYPE, 
+   uri: URI, 
+   message: string, 
+   diagnostic: Diagnostic, 
+   subject: SUBJECT, 
+   context: CONTEXT, 
+answer: T): Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
 Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
@@ -224,7 +224,7 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 #### Call Signature
 
 ```ts
-answerIf(condition, answer): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
+answerIf(condition: boolean, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
 Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
@@ -250,7 +250,7 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 #### Call Signature
 
 ```ts
-answerIf(predicate, answer): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
+answerIf(predicate: Predicate<SUBJECT, [CONTEXT]>, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
 Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
@@ -276,7 +276,7 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 #### Call Signature
 
 ```ts
-answerIf(answer): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
+answerIf(answer: Option<ANSWER>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
 Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
@@ -298,7 +298,7 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 #### Call Signature
 
 ```ts
-answerIf(answer, merger?): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
+answerIf(answer: Result<ANSWER, Diagnostic>, merger?: Mapper<Diagnostic, Diagnostic, [Diagnostic]>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
 Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
@@ -324,7 +324,7 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 #### Call Signature
 
 ```ts
-answerIf(answer): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
+answerIf(answer: Result<ANSWER, unknown>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
 Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
@@ -348,7 +348,7 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 ### apply()
 
 ```ts
-apply<U>(mapper): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
+apply<U>(mapper: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Mapper<T, U>, URI>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
 ```
 
 Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
@@ -438,7 +438,7 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 ### flatMap()
 
 ```ts
-flatMap<U>(mapper): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
+flatMap<U>(mapper: Mapper<T, Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
 ```
 
 Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
@@ -468,7 +468,7 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 ### flatten()
 
 ```ts
-flatten<TYPE, SUBJECT, CONTEXT, ANSWER, T>(this): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T>;
+flatten<TYPE, SUBJECT, CONTEXT, ANSWER, T>(this: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, string>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T>;
 ```
 
 Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
@@ -532,7 +532,7 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 ### map()
 
 ```ts
-map<U>(mapper): Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
+map<U>(mapper: Mapper<T, U>): Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
 ```
 
 Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
@@ -583,12 +583,12 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 
 ```ts
 static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI>(
-   type, 
-   uri, 
-   message, 
-   subject, 
-   context, 
-options?): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI>;
+   type: TYPE, 
+   uri: URI, 
+   message: string, 
+   subject: SUBJECT, 
+   context: CONTEXT, 
+options?: Options<ANSWER>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI>;
 ```
 
 Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
@@ -674,7 +674,7 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 ### toJSON()
 
 ```ts
-toJSON(options?): JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI>;
+toJSON(options?: Options): JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI>;
 ```
 
 Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)

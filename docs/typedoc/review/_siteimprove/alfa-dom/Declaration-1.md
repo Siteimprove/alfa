@@ -13,9 +13,9 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 
 ```ts
 protected new Declaration(
-   name, 
-   value, 
-   important): Declaration;
+   name: string, 
+   value: string, 
+   important: boolean): Declaration;
 ```
 
 Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
@@ -43,7 +43,7 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 ### \_attachOwner()
 
 ```ts
-_attachOwner(owner): boolean;
+_attachOwner(owner: Element): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
@@ -63,7 +63,7 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 ### \_attachParent()
 
 ```ts
-_attachParent(parent): boolean;
+_attachParent(parent: Rule): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
@@ -97,7 +97,7 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 ### equals()
 
 ```ts
-equals(value): value is Declaration;
+equals(value: unknown): value is Declaration;
 ```
 
 Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
@@ -156,9 +156,9 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 
 ```ts
 static of(
-   name, 
-   value, 
-   important?): Declaration;
+   name: string, 
+   value: string, 
+   important?: boolean): Declaration;
 ```
 
 Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)

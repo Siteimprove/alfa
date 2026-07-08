@@ -1,7 +1,7 @@
 # Variable: isFontFaceRule
 
 ```ts
-isFontFaceRule: (value) => value is FontFace;
+isFontFaceRule: (value: unknown) => value is FontFace;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)

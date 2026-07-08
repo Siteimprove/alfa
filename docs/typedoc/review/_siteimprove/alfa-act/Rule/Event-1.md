@@ -38,9 +38,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 ```ts
 new Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>(
-   type, 
-   rule, 
-name): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
+   type: TYPE, 
+   rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, 
+name: NAME): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -85,9 +85,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 ```ts
 static of<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>(
-   type, 
-   rule, 
-name): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
+   type: TYPE, 
+   rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, 
+name: NAME): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

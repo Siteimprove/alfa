@@ -2,12 +2,12 @@
 
 ```ts
 function type<N>(
-   name, 
-   publicId?, 
-   systemId?, 
-   externalId?, 
-   internalId?, 
-extraData?): Type<N>;
+   name: N, 
+   publicId?: string, 
+   systemId?: string, 
+   externalId?: string, 
+   internalId?: string, 
+extraData?: any): Type<N>;
 ```
 
 Defined in: [alfa-dom/src/h.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)

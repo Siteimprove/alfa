@@ -35,7 +35,7 @@ Defined in: [alfa-act/src/cache.ts](https://github.com/Siteimprove/alfa/blob/mai
 ### get()
 
 ```ts
-get<I, T, Q, S>(rule, ifMissing): Promise<Iterable<Outcome<I, T, Q, S, Value>, any, any>>;
+get<I, T, Q, S>(rule: Rule<I, T, Q, S>, ifMissing: Thunk<Promise<Iterable<Outcome<I, T, Q, S, Value>, any, any>>>): Promise<Iterable<Outcome<I, T, Q, S, Value>, any, any>>;
 ```
 
 Defined in: [alfa-act/src/cache.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/cache.ts)

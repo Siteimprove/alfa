@@ -11,7 +11,7 @@ Defined in: [alfa-dom/src/style/rule/keyframe.ts](https://github.com/Siteimprove
 ### Constructor
 
 ```ts
-protected new Keyframe(key, declarations): KeyframeRule;
+protected new Keyframe(key: string, declarations: Declaration[]): KeyframeRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/keyframe.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)
@@ -41,7 +41,7 @@ BaseRule<"keyframe">.constructor
 ### \_attachOwner()
 
 ```ts
-_attachOwner(owner): boolean;
+_attachOwner(owner: Sheet): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -67,7 +67,7 @@ BaseRule._attachOwner
 ### \_attachParent()
 
 ```ts
-_attachParent(parent): boolean;
+_attachParent(parent: Rule): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -185,7 +185,7 @@ BaseRule.descendants
 ### equals()
 
 ```ts
-equals(value): value is Keyframe;
+equals(value: unknown): value is Keyframe;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -227,7 +227,7 @@ Defined in: [alfa-dom/src/style/rule/keyframe.ts](https://github.com/Siteimprove
 ### of()
 
 ```ts
-static of(key, declarations): KeyframeRule;
+static of(key: string, declarations: Iterable<Declaration>): KeyframeRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/keyframe.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)

@@ -2,16 +2,18 @@
 
 ```ts
 function element<N>(
-   name, 
-   attributes?, 
-   children?, 
-   style?, 
-   namespace?, 
-   box?, 
-   device?, 
-   externalId?, 
-   internalId?, 
-extraData?): Element<N>;
+   name: N, 
+   attributes?: 
+  | Attribute<string>[]
+  | Record<string, string | boolean>, 
+   children?: (string | Node)[], 
+   style?: Record<string, string> | Declaration[], 
+   namespace?: Namespace, 
+   box?: Rectangle, 
+   device?: Device, 
+   externalId?: string, 
+   internalId?: string, 
+extraData?: any): Element<N>;
 ```
 
 Defined in: [alfa-dom/src/h.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)

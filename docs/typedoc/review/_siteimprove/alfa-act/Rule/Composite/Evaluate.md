@@ -21,7 +21,10 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 `S`
 
 ```ts
-Evaluate(input, performance?): {
+Evaluate(input: I, performance?: {
+  mark: (name: string) => Mark<Event<I, T, Q, S, Type, string>>;
+  measure: (name: string, start?: number) => Measure<Event<I, T, Q, S, Type, string>>;
+}): {
   expectations: {
    [key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic, Diagnostic>>>;
   };
@@ -40,18 +43,18 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 #### mark
 
-(`name`) => `Mark`\<[`Event`](../Event-1.md)\<`I`, `T`, `Q`, `S`, [`Type`](../Event/Type.md), `string`\>\>
+(`name`: `string`) => `Mark`\<[`Event`](../Event-1.md)\<`I`, `T`, `Q`, `S`, [`Type`](../Event/Type.md), `string`\>\>
 
 #### measure
 
-(`name`, `start?`) => `Measure`\<[`Event`](../Event-1.md)\<`I`, `T`, `Q`, `S`, [`Type`](../Event/Type.md), `string`\>\>
+(`name`: `string`, `start?`: `number`) => `Measure`\<[`Event`](../Event-1.md)\<`I`, `T`, `Q`, `S`, [`Type`](../Event/Type.md), `string`\>\>
 
 ## Returns
 
 ### expectations()
 
 ```ts
-expectations(outcomes): {
+expectations(outcomes: Sequence<Applicable<I, T, Q, S>>): {
 [key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic, Diagnostic>>>;
 };
 ```

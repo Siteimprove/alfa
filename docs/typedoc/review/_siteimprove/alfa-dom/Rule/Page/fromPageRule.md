@@ -1,7 +1,7 @@
 # Function: fromPageRule()
 
 ```ts
-function fromPageRule(json): Trampoline<Page>;
+function fromPageRule(json: JSON): Trampoline<Page>;
 ```
 
 Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)

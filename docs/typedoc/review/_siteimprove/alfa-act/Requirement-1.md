@@ -23,7 +23,7 @@ Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprov
 ### Constructor
 
 ```ts
-protected new Requirement<T, U>(type, uri): Requirement<T, U>;
+protected new Requirement<T, U>(type: T, uri: U): Requirement<T, U>;
 ```
 
 Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
@@ -49,7 +49,7 @@ Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprov
 #### Call Signature
 
 ```ts
-equals(value): boolean;
+equals(value: Requirement): boolean;
 ```
 
 Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
@@ -73,7 +73,7 @@ Equatable.equals
 #### Call Signature
 
 ```ts
-equals(value): value is Requirement<T, U>;
+equals(value: unknown): value is Requirement<T, U>;
 ```
 
 Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)

@@ -13,7 +13,7 @@ Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/bl
 ### Constructor
 
 ```ts
-protected new Block(declarations): Block;
+protected new Block(declarations: Declaration[]): Block;
 ```
 
 Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
@@ -53,7 +53,7 @@ Iterable.[iterator]
 ### declaration()
 
 ```ts
-declaration(predicate): Option<Declaration>;
+declaration(predicate: string | Predicate<Declaration>): Option<Declaration>;
 ```
 
 Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
@@ -89,7 +89,7 @@ Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/bl
 ### equals()
 
 ```ts
-equals(value): value is Block;
+equals(value: unknown): value is Block;
 ```
 
 Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
@@ -129,7 +129,7 @@ Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/bl
 ### of()
 
 ```ts
-static of(declarations): Block;
+static of(declarations: Iterable<Declaration>): Block;
 ```
 
 Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)

@@ -2,8 +2,8 @@
 
 ```ts
 hasAttribute: {
-  (predicate): Predicate<Element<string>>;
-  (name, value?): Predicate<Element<string>>;
+  (predicate: Predicate<Attribute<string>>): Predicate<Element<string>>;
+  (name: string, value?: Predicate<string>): Predicate<Element<string>>;
 };
 ```
 
@@ -12,7 +12,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ## Call Signature
 
 ```ts
-(predicate): Predicate<Element<string>>;
+(predicate: Predicate<Attribute<string>>): Predicate<Element<string>>;
 ```
 
 ### Parameters
@@ -28,7 +28,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ## Call Signature
 
 ```ts
-(name, value?): Predicate<Element<string>>;
+(name: string, value?: Predicate<string>): Predicate<Element<string>>;
 ```
 
 ### Parameters

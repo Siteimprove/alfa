@@ -2,9 +2,9 @@
 
 ```ts
 hasId: {
-  (predicate?): Predicate<Element<string>>;
-  (id, ...rest): Predicate<Element<string>>;
-  (ids): Predicate<Element<string>>;
+  (predicate?: Predicate<string>): Predicate<Element<string>>;
+  (id: string, ...rest: string[]): Predicate<Element<string>>;
+  (ids: Iterable<string>): Predicate<Element<string>>;
 };
 ```
 
@@ -13,7 +13,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ## Call Signature
 
 ```ts
-(predicate?): Predicate<Element<string>>;
+(predicate?: Predicate<string>): Predicate<Element<string>>;
 ```
 
 ### Parameters
@@ -29,7 +29,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ## Call Signature
 
 ```ts
-(id, ...rest): Predicate<Element<string>>;
+(id: string, ...rest: string[]): Predicate<Element<string>>;
 ```
 
 ### Parameters
@@ -49,7 +49,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ## Call Signature
 
 ```ts
-(ids): Predicate<Element<string>>;
+(ids: Iterable<string>): Predicate<Element<string>>;
 ```
 
 ### Parameters

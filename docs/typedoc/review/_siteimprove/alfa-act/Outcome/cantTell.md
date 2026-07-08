@@ -1,7 +1,7 @@
 # Variable: cantTell
 
 ```ts
-cantTell: <I, T, Q, S>(rule, target, diagnostic, mode) => CantTell<I, T, Q, S>;
+cantTell: <I, T, Q, S>(rule: Rule<I, T, Q, S>, target: T, diagnostic: Diagnostic, mode: Mode) => CantTell<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

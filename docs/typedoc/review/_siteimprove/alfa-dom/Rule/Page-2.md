@@ -11,7 +11,7 @@ Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alf
 ### Constructor
 
 ```ts
-protected new Page(selector, declarations): PageRule;
+protected new Page(selector: string, declarations: Declaration[]): PageRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)
@@ -41,7 +41,7 @@ BaseRule<"page">.constructor
 ### \_attachOwner()
 
 ```ts
-_attachOwner(owner): boolean;
+_attachOwner(owner: Sheet): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -67,7 +67,7 @@ BaseRule._attachOwner
 ### \_attachParent()
 
 ```ts
-_attachParent(parent): boolean;
+_attachParent(parent: Rule): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -185,7 +185,7 @@ BaseRule.descendants
 ### equals()
 
 ```ts
-equals(value): value is Page;
+equals(value: unknown): value is Page;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -211,7 +211,7 @@ BaseRule.equals
 ### of()
 
 ```ts
-static of(selector, declarations): PageRule;
+static of(selector: string, declarations: Iterable<Declaration>): PageRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)

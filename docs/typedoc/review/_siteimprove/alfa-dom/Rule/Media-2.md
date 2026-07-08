@@ -11,7 +11,7 @@ Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/al
 ### Constructor
 
 ```ts
-protected new Media(condition, rules): MediaRule;
+protected new Media(condition: string, rules: Rule[]): MediaRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts)
@@ -41,7 +41,7 @@ ConditionRule<"media">.constructor
 ### \_attachOwner()
 
 ```ts
-_attachOwner(owner): boolean;
+_attachOwner(owner: Sheet): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -67,7 +67,7 @@ ConditionRule._attachOwner
 ### \_attachParent()
 
 ```ts
-_attachParent(parent): boolean;
+_attachParent(parent: Rule): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -239,7 +239,7 @@ ConditionRule.descendants
 ### equals()
 
 ```ts
-equals(value): value is Media;
+equals(value: unknown): value is Media;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -265,7 +265,7 @@ ConditionRule.equals
 ### of()
 
 ```ts
-static of(condition, rules): MediaRule;
+static of(condition: string, rules: Iterable<Rule>): MediaRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts)

@@ -1,7 +1,7 @@
 # Function: from()
 
 ```ts
-function from(json): Sheet;
+function from(json: JSON): Sheet;
 ```
 
 Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)

@@ -1,7 +1,7 @@
 # Function: isInconclusive()
 
 ```ts
-function isInconclusive<D>(finding): finding is Right<[D, boolean]>;
+function isInconclusive<D>(finding: Finding<unknown, D>): finding is Right<[D, boolean]>;
 ```
 
 Defined in: [alfa-act/src/expectation/finding.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/finding.ts)

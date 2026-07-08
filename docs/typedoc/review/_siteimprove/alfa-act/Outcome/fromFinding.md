@@ -1,7 +1,7 @@
 # Function: fromFinding()
 
 ```ts
-function fromFinding<I, T, Q, S>(rule, target): (finding) => Applicable<I, T, Q, S>;
+function fromFinding<I, T, Q, S>(rule: Rule<I, T, Q, S>, target: T): (finding: Finding<Iterable<[string, Option<Result<Diagnostic, Diagnostic>>]>>) => Applicable<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -36,4 +36,4 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ## Returns
 
-(`finding`) => [`Applicable`](Applicable-1.md)\<`I`, `T`, `Q`, `S`\>
+(`finding`: [`Finding`](../Finding-1.md)\<`Iterable`\<\[`string`, `Option`\<`Result`\<[`Diagnostic`](../Diagnostic-1.md), [`Diagnostic`](../Diagnostic-1.md)\>\>\]\>\>) => [`Applicable`](Applicable-1.md)\<`I`, `T`, `Q`, `S`\>

@@ -1,7 +1,7 @@
 # Function: fromStyleRule()
 
 ```ts
-function fromStyleRule(json): Trampoline<Style>;
+function fromStyleRule(json: JSON): Trampoline<Style>;
 ```
 
 Defined in: [alfa-dom/src/style/rule/style.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/style.ts)

@@ -1,7 +1,7 @@
 # Function: isRule()
 
 ```ts
-function isRule<I, T, Q, S>(value): value is Rule<I, T, Q, S>;
+function isRule<I, T, Q, S>(value: unknown): value is Rule<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

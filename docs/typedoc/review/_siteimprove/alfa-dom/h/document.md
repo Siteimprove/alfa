@@ -2,11 +2,11 @@
 
 ```ts
 function document(
-   children, 
-   style?, 
-   externalId?, 
-   internalId?, 
-   extraData?): Document;
+   children: (string | Node)[], 
+   style?: Sheet[], 
+   externalId?: string, 
+   internalId?: string, 
+   extraData?: any): Document;
 ```
 
 Defined in: [alfa-dom/src/h.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)

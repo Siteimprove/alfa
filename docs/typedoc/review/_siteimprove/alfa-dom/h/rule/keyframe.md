@@ -1,7 +1,9 @@
 # Function: keyframe()
 
 ```ts
-function keyframe(key, declarations): Keyframe;
+function keyframe(key: string, declarations: 
+  | Record<string, string>
+  | Declaration[]): Keyframe;
 ```
 
 Defined in: [alfa-dom/src/h.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)

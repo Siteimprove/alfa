@@ -1,7 +1,7 @@
 # Function: media()
 
 ```ts
-function media(condition, rules): Media;
+function media(condition: string, rules: Rule[]): Media;
 ```
 
 Defined in: [alfa-dom/src/h.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)

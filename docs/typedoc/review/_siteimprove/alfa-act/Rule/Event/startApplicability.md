@@ -1,7 +1,7 @@
 # Function: startApplicability()
 
 ```ts
-function startApplicability<I, T, Q, S>(rule): Event<I, T, Q, S, "start", "applicability">;
+function startApplicability<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "applicability">;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

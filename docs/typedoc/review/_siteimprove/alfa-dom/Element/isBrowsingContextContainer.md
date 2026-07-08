@@ -1,7 +1,7 @@
 # Variable: isBrowsingContextContainer
 
 ```ts
-isBrowsingContextContainer: (element) => boolean;
+isBrowsingContextContainer: (element: Element) => boolean;
 ```
 
 Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)

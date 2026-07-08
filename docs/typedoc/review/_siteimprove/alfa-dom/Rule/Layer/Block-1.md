@@ -11,7 +11,7 @@ Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/al
 ### Constructor
 
 ```ts
-protected new Block(layer, rules): BlockRule;
+protected new Block(layer: Option<string>, rules: Array<Rule>): BlockRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
@@ -39,7 +39,7 @@ Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/al
 ### \_attachOwner()
 
 ```ts
-_attachOwner(owner): boolean;
+_attachOwner(owner: Sheet): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -63,7 +63,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alf
 ### \_attachParent()
 
 ```ts
-_attachParent(parent): boolean;
+_attachParent(parent: Rule): boolean;
 ```
 
 Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
@@ -183,7 +183,7 @@ Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alf
 ### equals()
 
 ```ts
-equals(value): value is Block;
+equals(value: unknown): value is Block;
 ```
 
 Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
@@ -223,7 +223,7 @@ Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/al
 ### of()
 
 ```ts
-static of(rules, layer?): BlockRule;
+static of(rules: Iterable<Rule>, layer?: string | null): BlockRule;
 ```
 
 Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)

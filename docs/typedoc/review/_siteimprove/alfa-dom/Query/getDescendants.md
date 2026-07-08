@@ -2,8 +2,34 @@
 
 ```ts
 const getDescendants: {
-<T>  (refinement): (node, options?) => Sequence<T>;
-  (predicate): (node, options?) => Sequence<Node>;
+<T>  (refinement: Refinement<Node, T>): (node: Node, options?: {
+  add: any;
+  equals: boolean;
+  has: boolean;
+  is: boolean;
+  isSet: (flag: 0 | 2 | 1 | 4 | "composed" | "flattened" | "nested") => boolean;
+  kind: "DOM traversal";
+  remove: any;
+  set: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
+  toJSON: JSON<"DOM traversal"> & KeyedByArray<["composed", "flattened", "nested"], boolean>;
+  toString: string;
+  unset: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
+  value: number;
+} & KeyedByArray<["composed", "flattened", "nested"], boolean>) => Sequence<T>;
+  (predicate: Predicate<Node>): (node: Node, options?: {
+  add: any;
+  equals: boolean;
+  has: boolean;
+  is: boolean;
+  isSet: (flag: 0 | 2 | 1 | 4 | "composed" | "flattened" | "nested") => boolean;
+  kind: "DOM traversal";
+  remove: any;
+  set: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
+  toJSON: JSON<"DOM traversal"> & KeyedByArray<["composed", "flattened", "nested"], boolean>;
+  toString: string;
+  unset: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
+  value: number;
+} & KeyedByArray<["composed", "flattened", "nested"], boolean>) => Sequence<Node>;
 } = descendants.getDescendants;
 ```
 
@@ -12,7 +38,20 @@ Defined in: [alfa-dom/src/node/query/index.ts](https://github.com/Siteimprove/al
 ## Call Signature
 
 ```ts
-<T>(refinement): (node, options?) => Sequence<T>;
+<T>(refinement: Refinement<Node, T>): (node: Node, options?: {
+  add: any;
+  equals: boolean;
+  has: boolean;
+  is: boolean;
+  isSet: (flag: 0 | 2 | 1 | 4 | "composed" | "flattened" | "nested") => boolean;
+  kind: "DOM traversal";
+  remove: any;
+  set: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
+  toJSON: JSON<"DOM traversal"> & KeyedByArray<["composed", "flattened", "nested"], boolean>;
+  toString: string;
+  unset: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
+  value: number;
+} & KeyedByArray<["composed", "flattened", "nested"], boolean>) => Sequence<T>;
 ```
 
 ### Type Parameters
@@ -29,12 +68,38 @@ Defined in: [alfa-dom/src/node/query/index.ts](https://github.com/Siteimprove/al
 
 ### Returns
 
-(`node`, `options?`) => `Sequence`\<`T`\>
+(`node`: [`Node`](../Node-1.md), `options?`: \{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>) => `Sequence`\<`T`\>
 
 ## Call Signature
 
 ```ts
-(predicate): (node, options?) => Sequence<Node>;
+(predicate: Predicate<Node>): (node: Node, options?: {
+  add: any;
+  equals: boolean;
+  has: boolean;
+  is: boolean;
+  isSet: (flag: 0 | 2 | 1 | 4 | "composed" | "flattened" | "nested") => boolean;
+  kind: "DOM traversal";
+  remove: any;
+  set: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
+  toJSON: JSON<"DOM traversal"> & KeyedByArray<["composed", "flattened", "nested"], boolean>;
+  toString: string;
+  unset: (...flags: Array<0 | 2 | 1 | 4 | "composed" | "flattened" | "nested">) => any;
+  value: number;
+} & KeyedByArray<["composed", "flattened", "nested"], boolean>) => Sequence<Node>;
 ```
 
 ### Parameters
@@ -45,4 +110,17 @@ Defined in: [alfa-dom/src/node/query/index.ts](https://github.com/Siteimprove/al
 
 ### Returns
 
-(`node`, `options?`) => `Sequence`\<[`Node`](../Node-1.md)\>
+(`node`: [`Node`](../Node-1.md), `options?`: \{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>) => `Sequence`\<[`Node`](../Node-1.md)\>

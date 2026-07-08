@@ -1,7 +1,9 @@
 # Variable: passed
 
 ```ts
-passed: <I, T, Q, S>(rule, target, expectations, mode) => Passed<I, T, Q, S>;
+passed: <I, T, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record<{
+[key: string]: Result<Diagnostic, Diagnostic>;
+}>, mode: Mode) => Passed<I, T, Q, S>;
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

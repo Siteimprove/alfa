@@ -34,7 +34,7 @@ Defined in: [alfa-act/src/metadata/tag.ts](https://github.com/Siteimprove/alfa/b
 #### Call Signature
 
 ```ts
-equals(value): boolean;
+equals(value: Tag): boolean;
 ```
 
 Defined in: [alfa-act/src/metadata/tag.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
@@ -58,7 +58,7 @@ Equatable.equals
 #### Call Signature
 
 ```ts
-equals(value): value is Tag<T>;
+equals(value: unknown): value is Tag<T>;
 ```
 
 Defined in: [alfa-act/src/metadata/tag.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)

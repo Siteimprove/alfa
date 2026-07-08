@@ -3,7 +3,7 @@
 ## Call Signature
 
 ```ts
-function from(json, device?): Element;
+function from(json: JSON, device?: Device): Element;
 ```
 
 Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
@@ -25,7 +25,7 @@ Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blo
 ## Call Signature
 
 ```ts
-function from(json, device?): Attribute;
+function from(json: JSON, device?: Device): Attribute;
 ```
 
 Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
@@ -47,7 +47,7 @@ Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blo
 ## Call Signature
 
 ```ts
-function from(json, device?): Text;
+function from(json: JSON, device?: Device): Text;
 ```
 
 Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
@@ -69,7 +69,7 @@ Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blo
 ## Call Signature
 
 ```ts
-function from(json, device?): Comment;
+function from(json: JSON, device?: Device): Comment;
 ```
 
 Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
@@ -91,7 +91,7 @@ Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blo
 ## Call Signature
 
 ```ts
-function from(json, device?): Document;
+function from(json: JSON, device?: Device): Document;
 ```
 
 Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
@@ -113,7 +113,7 @@ Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blo
 ## Call Signature
 
 ```ts
-function from(json, device?): Document;
+function from(json: JSON, device?: Device): Document;
 ```
 
 Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
@@ -135,7 +135,7 @@ Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blo
 ## Call Signature
 
 ```ts
-function from(json, device?): Fragment;
+function from(json: JSON, device?: Device): Fragment;
 ```
 
 Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)
@@ -157,7 +157,7 @@ Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blo
 ## Call Signature
 
 ```ts
-function from(json, device?): Node;
+function from(json: JSON, device?: Device): Node;
 ```
 
 Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)

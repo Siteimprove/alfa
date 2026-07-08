@@ -1,7 +1,7 @@
 # Function: from()
 
 ```ts
-function from(json): Declaration;
+function from(json: JSON): Declaration;
 ```
 
 Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)

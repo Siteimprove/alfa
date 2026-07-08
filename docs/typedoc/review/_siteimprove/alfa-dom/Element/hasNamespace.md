@@ -2,8 +2,8 @@
 
 ```ts
 hasNamespace: {
-  (predicate): Predicate<Element<string>>;
-  (namespace, ...rest): Predicate<Element<string>>;
+  (predicate: Predicate<Namespace>): Predicate<Element<string>>;
+  (namespace: Namespace, ...rest: Namespace[]): Predicate<Element<string>>;
 };
 ```
 
@@ -12,7 +12,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ## Call Signature
 
 ```ts
-(predicate): Predicate<Element<string>>;
+(predicate: Predicate<Namespace>): Predicate<Element<string>>;
 ```
 
 ### Parameters
@@ -28,7 +28,7 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ## Call Signature
 
 ```ts
-(namespace, ...rest): Predicate<Element<string>>;
+(namespace: Namespace, ...rest: Namespace[]): Predicate<Element<string>>;
 ```
 
 ### Parameters

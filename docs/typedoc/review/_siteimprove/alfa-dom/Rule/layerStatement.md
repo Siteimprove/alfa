@@ -1,7 +1,7 @@
 # Variable: layerStatement
 
 ```ts
-layerStatement: (layers) => Statement;
+layerStatement: (layers: Iterable<string>) => Statement;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)

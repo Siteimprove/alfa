@@ -1,7 +1,7 @@
 # Variable: keyframe
 
 ```ts
-keyframe: (key, declarations) => Keyframe;
+keyframe: (key: string, declarations: Iterable<Declaration>) => Keyframe;
 ```
 
 Defined in: [alfa-dom/src/style/rule/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/index.ts)

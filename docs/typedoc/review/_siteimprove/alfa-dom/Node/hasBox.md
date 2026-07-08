@@ -1,7 +1,7 @@
 # Variable: hasBox
 
 ```ts
-hasBox: (predicate, device) => Predicate<Element<string> | Text>;
+hasBox: (predicate: Predicate<Rectangle>, device: Device) => Predicate<Element<string> | Text>;
 ```
 
 Defined in: [alfa-dom/src/node/index.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/index.ts)

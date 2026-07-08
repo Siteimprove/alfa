@@ -1,7 +1,7 @@
 # Function: isQuestion()
 
 ```ts
-function isQuestion<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>(value): value is Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
+function isQuestion<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>(value: unknown): value is Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
 Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)

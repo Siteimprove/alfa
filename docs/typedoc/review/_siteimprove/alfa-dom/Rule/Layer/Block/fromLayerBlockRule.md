@@ -1,7 +1,7 @@
 # Function: fromLayerBlockRule()
 
 ```ts
-function fromLayerBlockRule(json, fromRule): Trampoline<Block>;
+function fromLayerBlockRule(json: JSON, fromRule: (json: JSON) => Trampoline<Rule>): Trampoline<Block>;
 ```
 
 Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
@@ -14,7 +14,7 @@ Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/al
 
 ### fromRule
 
-(`json`) => `Trampoline`\<[`Rule`](../../../Rule-1.md)\>
+(`json`: [`JSON`](../../JSON.md)) => `Trampoline`\<[`Rule`](../../../Rule-1.md)\>
 
 ## Returns
 

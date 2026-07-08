@@ -3,7 +3,7 @@
 ## Call Signature
 
 ```ts
-function isComposite<I, T, Q>(value): value is Composite<I, T, Q, T>;
+function isComposite<I, T, Q>(value: Rule<I, T, Q>): value is Composite<I, T, Q, T>;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -35,7 +35,7 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ## Call Signature
 
 ```ts
-function isComposite<I, T, Q>(value): value is Composite<I, T, Q, T>;
+function isComposite<I, T, Q>(value: unknown): value is Composite<I, T, Q, T>;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

@@ -1,7 +1,9 @@
 # Function: page()
 
 ```ts
-function page(selector, declarations): Page;
+function page(selector: string, declarations: 
+  | Record<string, string>
+  | Declaration[]): Page;
 ```
 
 Defined in: [alfa-dom/src/h.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)

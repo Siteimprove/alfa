@@ -1,7 +1,7 @@
 # Function: layerBlock()
 
 ```ts
-function layerBlock(rules, layer?): Block;
+function layerBlock(rules: Rule[], layer?: string): Block;
 ```
 
 Defined in: [alfa-dom/src/h.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)

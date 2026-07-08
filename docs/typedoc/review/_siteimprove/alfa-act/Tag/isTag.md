@@ -1,7 +1,7 @@
 # Function: isTag()
 
 ```ts
-function isTag<T>(value, type?): value is Tag<T>;
+function isTag<T>(value: unknown, type?: T): value is Tag<T>;
 ```
 
 Defined in: [alfa-act/src/metadata/tag.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)

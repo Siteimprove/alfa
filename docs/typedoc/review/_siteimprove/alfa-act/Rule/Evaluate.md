@@ -22,10 +22,11 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 ```ts
 Evaluate(
-   input, 
-   oracle, 
-   outcomes, 
-performance?): Promise<Iterable<Outcome<I, T, Q, S, Value>>>;
+   input: Readonly<I>, 
+   oracle: {
+} extends Q ? any : Oracle<I, T, Q, S>, 
+   outcomes: Cache, 
+performance?: Performance<Event<I, T, Q, S, Type, string>>): Promise<Iterable<Outcome<I, T, Q, S, Value>>>;
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
