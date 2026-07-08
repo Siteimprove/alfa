@@ -44,6 +44,8 @@ class AlfaContext extends CategorizeMarkdownThemeContext {
       });
       return md.join(" ");
     };
+
+    this.partials.comment = () => "";
   }
 }
 
