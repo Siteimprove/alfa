@@ -17,7 +17,9 @@ Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprov
 ### @context
 
 ```ts
-@context: object;
+@context: {
+  earl: "http://www.w3.org/ns/earl#";
+};
 ```
 
 Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)

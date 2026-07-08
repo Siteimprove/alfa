@@ -17,7 +17,15 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ### @context?
 
 ```ts
-optional @context?: object;
+optional @context?: {
+  cnt?: "http://www.w3.org/2011/content#";
+  dct?: "http://purl.org/dc/terms/";
+  doap?: "http://usefulinc.com/ns/doap#";
+  earl?: "http://www.w3.org/ns/earl#";
+  foaf?: "http://xmlns.com/foaf/0.1/";
+  http?: "http://www.w3.org/2011/http#";
+  ptr?: "http://www.w3.org/2009/pointers#";
+};
 ```
 
 Defined in: alfa-earl/dist/earl.d.ts
@@ -115,7 +123,13 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ### earl:result
 
 ```ts
-earl:result: object;
+earl:result: {
+  @type: "earl:TestResult";
+  earl:outcome: {
+     @id: "earl:cantTell";
+  };
+  earl:pointer?: EARL;
+};
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
@@ -133,7 +147,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ##### earl:outcome
 
 ```ts
-earl:outcome: object;
+earl:outcome: {
+  @id: "earl:cantTell";
+};
 ```
 
 ###### earl:outcome.@id
@@ -155,7 +171,9 @@ optional earl:pointer?: EARL;
 ### earl:test
 
 ```ts
-earl:test: object;
+earl:test: {
+  @id: string;
+};
 ```
 
 Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

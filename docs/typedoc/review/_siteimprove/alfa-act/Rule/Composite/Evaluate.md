@@ -21,7 +21,11 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 `S`
 
 ```ts
-Evaluate(input, performance?): object;
+Evaluate(input, performance?): {
+  expectations: {
+   [key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic, Diagnostic>>>;
+  };
+};
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -47,7 +51,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ### expectations()
 
 ```ts
-expectations(outcomes): object;
+expectations(outcomes): {
+[key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic, Diagnostic>>>;
+};
 ```
 
 #### Parameters
@@ -58,4 +64,8 @@ expectations(outcomes): object;
 
 #### Returns
 
-`object`
+```ts
+{
+[key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic, Diagnostic>>>;
+}
+```

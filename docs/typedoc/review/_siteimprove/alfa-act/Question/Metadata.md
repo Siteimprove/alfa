@@ -1,7 +1,9 @@
 # Type Alias: Metadata
 
 ```ts
-type Metadata = object;
+type Metadata = {
+[uri: string]: [unknown, unknown];
+};
 ```
 
 Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)

@@ -21,7 +21,12 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 `S`
 
 ```ts
-Evaluate(input, performance?): object;
+Evaluate(input, performance?): {
+  applicability: Iterable<Interview<Q, S, T, Maybe<T>>>;
+  expectations: {
+   [key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic, Diagnostic>>>;
+  };
+};
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -57,7 +62,9 @@ applicability(): Iterable<Interview<Q, S, T, Maybe<T>>>;
 ### expectations()
 
 ```ts
-expectations(target): object;
+expectations(target): {
+[key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic, Diagnostic>>>;
+};
 ```
 
 #### Parameters
@@ -68,4 +75,8 @@ expectations(target): object;
 
 #### Returns
 
-`object`
+```ts
+{
+[key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic, Diagnostic>>>;
+}
+```

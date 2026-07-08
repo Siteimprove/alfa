@@ -17,7 +17,10 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ### @context
 
 ```ts
-@context: object;
+@context: {
+  dct: "http://purl.org/dc/terms/";
+  earl: "http://www.w3.org/ns/earl#";
+};
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
@@ -69,7 +72,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ### dct:isPartOf
 
 ```ts
-dct:isPartOf: object;
+dct:isPartOf: {
+  @set: Array<EARL>;
+};
 ```
 
 Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

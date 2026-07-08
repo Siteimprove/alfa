@@ -144,7 +144,20 @@ Defined in: [alfa-dom/src/node/shadow.ts](https://github.com/Siteimprove/alfa/bl
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\> = `BaseNode.Traversal.empty`
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\> = `BaseNode.Traversal.empty`
 
 #### Returns
 
@@ -222,7 +235,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -248,7 +274,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -286,7 +325,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ###### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 ##### Returns
 
@@ -314,7 +366,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ###### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 ##### Returns
 
@@ -340,7 +405,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -476,7 +554,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -502,7 +593,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -612,7 +716,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -638,7 +755,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -664,7 +794,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -690,7 +833,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 ##### predicate?
 
@@ -746,7 +902,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -776,7 +945,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -806,7 +988,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -836,7 +1031,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -866,7 +1074,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -896,7 +1117,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -926,7 +1160,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -956,7 +1203,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -986,7 +1246,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -1012,7 +1285,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -1054,7 +1340,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -1126,7 +1425,20 @@ Defined in: [alfa-dom/src/node/shadow.ts](https://github.com/Siteimprove/alfa/bl
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\> = `BaseNode.Traversal.empty`
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\> = `BaseNode.Traversal.empty`
 
 #### Returns
 
@@ -1152,7 +1464,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\> = `BaseNode.Traversal.empty`
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\> = `BaseNode.Traversal.empty`
 
 #### Returns
 
@@ -1178,7 +1503,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -1204,7 +1542,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -1230,7 +1581,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -1278,7 +1642,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
 
 #### Returns
 
@@ -1346,7 +1723,20 @@ Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob
 
 ##### options?
 
-`object` & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\> = `BaseNode.Traversal.empty`
+\{
+  `add`: `any`;
+  `equals`: `boolean`;
+  `has`: `boolean`;
+  `is`: `boolean`;
+  `isSet`: (`flag`) => `boolean`;
+  `kind`: `"DOM traversal"`;
+  `remove`: `any`;
+  `set`: (...`flags`) => `any`;
+  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
+  `toString`: `string`;
+  `unset`: (...`flags`) => `any`;
+  `value`: `number`;
+\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\> = `BaseNode.Traversal.empty`
 
 #### Returns
 
@@ -1394,7 +1784,9 @@ Defined in: [alfa-dom/src/node/shadow.ts](https://github.com/Siteimprove/alfa/bl
 
 ###### options
 
-`SerializationOptions` & `object`
+`SerializationOptions` & \{
+  `verbosity`: `Minimal` \| `Low`;
+\}
 
 ##### Returns
 

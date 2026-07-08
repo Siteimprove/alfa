@@ -99,7 +99,7 @@ if (review) {
       hidePageHeader: true,
       hideBreadcrumbs: true,
       useCodeBlocks: true,
-      // expandObjects: true,
+      expandObjects: true,
       pageTitleTemplates: {
         // While Classes do have their kind added to the page, Namespace don't
         // as they are usually used as modules, but in our case we want the
