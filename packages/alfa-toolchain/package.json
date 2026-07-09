@@ -25,8 +25,8 @@
     "./global-changelog.js": "./dist/changeset/build-changelog.js",
     "./typedoc-plugin-categorize": "./dist/typedoc/categorize.js",
     "./typedoc-plugin-categorize.js": "./dist/typedoc/categorize.js",
-    "./typedoc-theme-alfa": "./dist/typedoc/alfa-theme.js",
-    "./typedoc-theme-alfa.js": "./dist/typedoc/alfa-theme.js"
+    "./typedoc-markdown-theme-review": "./dist/typedoc/review-theme.js",
+    "./typedoc-markdown-theme-review.js": "./dist/typedoc/review-theme.js"
   },
   "types": "dist/index.d.ts",
   "bin": {

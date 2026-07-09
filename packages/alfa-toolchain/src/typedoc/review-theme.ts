@@ -1,29 +1,31 @@
 /// <reference lib="dom" />
-import { i18n } from "typedoc";
+import { i18n, ReflectionKind } from "typedoc";
 import * as TypeDoc from "typedoc";
 import { MarkdownPageEvent, MarkdownTheme } from "typedoc-plugin-markdown";
 
 import { CategorizeMarkdownThemeContext } from "./categorize.ts";
 
 export function load(application: TypeDoc.Application) {
-  application.renderer.defineTheme("alfaTheme", AlfaTheme);
+  application.renderer.defineTheme("reviewTheme", ReviewTheme);
 }
 
-class AlfaTheme extends MarkdownTheme {
+class ReviewTheme extends MarkdownTheme {
   getRenderContext(page: MarkdownPageEvent<TypeDoc.Reflection>) {
-    return new AlfaContext(this, page, this.application.options);
+    return new ReviewContext(this, page, this.application.options);
   }
 }
 
 // Since we can only use one theme, we need to merge in the changes from the
 // CategorizeMarkdownTheme and only expose this theme.
-class AlfaContext extends CategorizeMarkdownThemeContext {
+class ReviewContext extends CategorizeMarkdownThemeContext {
   constructor(
     theme: MarkdownTheme,
     page: MarkdownPageEvent<TypeDoc.Reflection>,
-    options: TypeDoc.Options,
+    themeOptions: TypeDoc.Options,
   ) {
-    super(theme, page, options);
+    super(theme, page, themeOptions);
+
+    const { options, partials } = this;
 
     // This is mostly copied from the default theme:
     // https://github.com/typedoc2md/typedoc-plugin-markdown/blob/main/packages/typedoc-plugin-markdown/src/theme/context/partials/member.sources.ts
@@ -46,6 +48,24 @@ class AlfaContext extends CategorizeMarkdownThemeContext {
     };
 
     this.partials.comment = () => "";
+
+    // this.partials.signature = function signature(
+    //   model,
+    //   { accessor, hideTitle, nested, multipleSignatures, headingLevel },
+    // ) {
+    //   const md = [];
+    //   if (!hideTitle) {
+    //     md.push(partials.signatureTitle(model, { accessor }));
+    //   }
+    //   if (!nested && model.sources && !options.getValue("disableSources")) {
+    //     md.push(partials.sources(model));
+    //   }
+    //   if (!multipleSignatures && model.parent?.documents) {
+    //     md.push(partials.documents(model?.parent, { headingLevel }));
+    //   }
+    //   md.push(partials.inheritance(model, { headingLevel }));
+    //   return md.join("\n\n");
+    // };
   }
 }
 
