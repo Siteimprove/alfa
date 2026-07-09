@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.118.0
+
+### Patch Changes
+
+- **Fixed:** Target size checks (SIA-R111, SIA-R113) no longer report non-clickable composite widget containers as pointer targets when their child widgets are the actual targets. ([#2129](https://github.com/Siteimprove/alfa/pull/2129))
+
 ## 0.117.0
 
 ## 0.116.0

@@ -4,6 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 
+import { getApplicableTargets } from "../../src/common/applicability/targets-of-pointer-events.ts";
 import { TargetSize } from "../../src/common/outcome/target-size.ts";
 import R113 from "../../src/sia-r113/rule.ts";
 import { evaluate } from "../common/evaluate.ts";
@@ -573,6 +574,152 @@ test("evaluate() is inapplicable to <area> elements", async (t) => {
   const document = h.document([img, map]);
 
   t.deepEqual(await evaluate(R113, { document, device }), [inapplicable(R113)]);
+});
+
+test("evaluate() does not target exposed regions of menu containers", async (t) => {
+  const device = Device.standard();
+
+  const item1 = (
+    <li
+      role="menuitem"
+      tabindex="0"
+      box={{ device, x: 8, y: 8, width: 240, height: 32 }}
+    >
+      Action Button
+    </li>
+  );
+
+  const item2 = (
+    <li
+      role="menuitem"
+      tabindex="-1"
+      box={{ device, x: 8, y: 40, width: 240, height: 32 }}
+    >
+      Action Link
+    </li>
+  );
+
+  const divider = (
+    <li
+      role="none"
+      aria-hidden="true"
+      tabindex="-1"
+      box={{ device, x: 8, y: 72, width: 240, height: 9 }}
+    >
+      <div box={{ device, x: 8, y: 76, width: 240, height: 1 }}></div>
+    </li>
+  );
+
+  const item3 = (
+    <li
+      role="menuitem"
+      tabindex="-1"
+      box={{ device, x: 8, y: 81, width: 240, height: 32 }}
+    >
+      Disabled Action Button
+    </li>
+  );
+
+  const menu = (
+    <ul
+      role="menu"
+      tabindex="-1"
+      box={{ device, x: 8, y: 8, width: 240, height: 105 }}
+    >
+      {item1}
+      {item2}
+      {divider}
+      {item3}
+    </ul>
+  );
+
+  const document = h.document([menu]);
+
+  t.deepEqual(await evaluate(R113, { document, device }), [
+    passed(R113, item1, {
+      1: TargetSize.HasSufficientSize(
+        "Action Button",
+        item1.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+    passed(R113, item2, {
+      1: TargetSize.HasSufficientSize(
+        "Action Link",
+        item2.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+    passed(R113, item3, {
+      1: TargetSize.HasSufficientSize(
+        "Disabled Action Button",
+        item3.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+  ]);
+});
+
+test("getApplicableTargets() excludes non-clickable composite containers", (t) => {
+  const device = Device.standard();
+  const roles = [
+    "menu",
+    "menubar",
+    "tablist",
+    "radiogroup",
+    "listbox",
+    "tree",
+    "grid",
+    "treegrid",
+  ];
+
+  for (const [index, role] of roles.entries()) {
+    const target = (
+      <div
+        role={role}
+        tabindex="0"
+        box={{ device, x: 8, y: 8 + index * 40, width: 240, height: 32 }}
+      >
+        {role}
+      </div>
+    );
+
+    const document = h.document([target]);
+
+    t.deepEqual(getApplicableTargets(document, device).toArray(), []);
+  }
+});
+
+test("getApplicableTargets() keeps commonly clickable composite controls", (t) => {
+  const device = Device.standard();
+
+  const combobox = (
+    <div
+      role="combobox"
+      aria-expanded="false"
+      tabindex="0"
+      box={{ device, x: 8, y: 8, width: 240, height: 32 }}
+    >
+      Choose
+    </div>
+  );
+
+  const spinbutton = (
+    <div
+      role="spinbutton"
+      aria-valuemin="0"
+      aria-valuemax="10"
+      aria-valuenow="1"
+      tabindex="0"
+      box={{ device, x: 8, y: 48, width: 240, height: 32 }}
+    >
+      1
+    </div>
+  );
+
+  const document = h.document([combobox, spinbutton]);
+
+  t.deepEqual(getApplicableTargets(document, device).toArray(), [
+    combobox,
+    spinbutton,
+  ]);
 });
 
 test("evaluate() is inapplicable to button with display: none", async (t) => {
