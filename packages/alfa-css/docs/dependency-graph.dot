@@ -81,10 +81,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   "src/value/color/current.ts";
   "src/value/color/system.ts";
   "exit_src/value/color";
+  "src/calculation/math-expression/function/abs.ts";
   "src/calculation/math-expression/function/calc.ts";
   "src/calculation/math-expression/function/clamp.ts";
   "src/calculation/math-expression/function/max.ts";
   "src/calculation/math-expression/function/min.ts";
+  "src/calculation/math-expression/function/sign.ts";
   "src/value/textual/custom-ident.ts";
   "src/value/textual/string.ts";
   "src/value/textual/url.ts";
@@ -251,6 +253,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
             "src/calculation/math-expression/function/function.ts" [
               label = "function.ts";
             ];
+            "src/calculation/math-expression/function/abs.ts" [
+              label = "abs.ts";
+            ];
+            "src/calculation/math-expression/function/sign.ts" [
+              label = "sign.ts";
+            ];
             "src/calculation/math-expression/function/max.ts" -> "exit_src/calculation/math-expression/function" [
               style = "invis";
             ];
@@ -267,6 +275,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
               style = "invis";
             ];
             "src/calculation/math-expression/function/function.ts" -> "exit_src/calculation/math-expression/function" [
+              style = "invis";
+            ];
+            "src/calculation/math-expression/function/abs.ts" -> "exit_src/calculation/math-expression/function" [
+              style = "invis";
+            ];
+            "src/calculation/math-expression/function/sign.ts" -> "exit_src/calculation/math-expression/function" [
               style = "invis";
             ];
           }
@@ -289,6 +303,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
             style = "invis";
           ];
           "src/calculation/math-expression/index.ts" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "exit_src/calculation/math-expression/function" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "exit_src/calculation/math-expression/function" -> "exit_src/calculation/math-expression" [
             style = "invis";
           ];
           "exit_src/calculation/math-expression/function" -> "exit_src/calculation/math-expression" [
@@ -410,6 +430,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           style = "invis";
         ];
         "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
           style = "invis";
         ];
         "exit_src/calculation/math-expression" -> "exit_src/calculation" [
@@ -1784,10 +1810,16 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
       "exit_src/value" -> "exit_src" [
         style = "invis";
       ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
       "exit_src/unit" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/value" -> "exit_src" [
@@ -1887,6 +1919,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
         style = "invis";
       ];
     }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
     "exit_src" -> "exit_src" [
       style = "invis";
     ];
@@ -2962,6 +3000,13 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     color = "#49ff00";
     ltail = "cluster_src/calculation/math-expression/function";
   ];
+  "src/calculation/math-expression/function/index.ts" -> "src/calculation/math-expression/function/abs.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/function/index.ts" -> "src/calculation/math-expression/function/abs.ts" [
+    style = "solid";
+    color = "black";
+  ];
   "src/calculation/math-expression/function/index.ts" -> "src/calculation/math-expression/function/calc.ts" [
     style = "invis";
   ];
@@ -2987,6 +3032,13 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     style = "invis";
   ];
   "src/calculation/math-expression/function/index.ts" -> "src/calculation/math-expression/function/min.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/calculation/math-expression/function/index.ts" -> "src/calculation/math-expression/function/sign.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/function/index.ts" -> "src/calculation/math-expression/function/sign.ts" [
     style = "solid";
     color = "black";
   ];
@@ -4765,6 +4817,55 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
+  "src/calculation/math-expression/function/abs.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
+  "src/calculation/math-expression/function/abs.ts" -> "src/calculation/math-expression/function/function.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/function/abs.ts" -> "src/calculation/math-expression/function/function.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/calculation/math-expression/function/abs.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/kind.ts" [
+    style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
+  "src/calculation/math-expression/function/abs.ts" -> "src/calculation/math-expression/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/value.ts" [
+    style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
+  "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
+    style = "invis";
+    color = "#00ffdb";
+    lhead = "cluster_src/calculation/numeric";
+    ltail = "cluster_src/calculation/math-expression";
+  ];
+  "exit_src/calculation" -> "name_src/syntax" [
+    style = "invis";
+    color = "#ff0049";
+    lhead = "cluster_src/syntax";
+    ltail = "cluster_src/calculation";
+  ];
+  "exit_src/calculation" -> "name_src/unit" [
+    style = "invis";
+    color = "#ff0049";
+    lhead = "cluster_src/unit";
+    ltail = "cluster_src/calculation";
+  ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
     color = "#4900ff";
@@ -4790,6 +4891,55 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     color = "#0000ff";
     lhead = "cluster_src/value/numeric";
     ltail = "cluster_src/value/image";
+  ];
+  "src/calculation/math-expression/function/sign.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
+  "src/calculation/math-expression/function/sign.ts" -> "src/calculation/math-expression/function/function.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/function/sign.ts" -> "src/calculation/math-expression/function/function.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/calculation/math-expression/function/sign.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/kind.ts" [
+    style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
+  "src/calculation/math-expression/function/sign.ts" -> "src/calculation/math-expression/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/calculation/math-expression/function" -> "src/calculation/math-expression/value.ts" [
+    style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/calculation/math-expression/function";
+  ];
+  "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
+    style = "invis";
+    color = "#00ffdb";
+    lhead = "cluster_src/calculation/numeric";
+    ltail = "cluster_src/calculation/math-expression";
+  ];
+  "exit_src/calculation" -> "name_src/syntax" [
+    style = "invis";
+    color = "#ff0049";
+    lhead = "cluster_src/syntax";
+    ltail = "cluster_src/calculation";
+  ];
+  "exit_src/calculation" -> "name_src/unit" [
+    style = "invis";
+    color = "#ff0049";
+    lhead = "cluster_src/unit";
+    ltail = "cluster_src/calculation";
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
