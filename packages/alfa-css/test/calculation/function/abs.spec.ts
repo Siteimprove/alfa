@@ -1,5 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
+import { Length } from "../../../src/calculation/numeric/index.ts";
 import { Math } from "../../../src/index.ts";
 import { parser, parserUnsafe, serializer } from "../../common/parse.ts";
 
@@ -106,4 +107,67 @@ test(".reduce() resolves a percentage against a resolver", (t) => {
       value: { value: 1.6, type: "length", unit: "px" },
     },
   });
+});
+
+test(".reduce() keeps the wrapper around an unreducible calculation", (t) => {
+  // The argument mixes a relative and an absolute length, so it reduces to a
+  // sum rather than a single value; `abs()` cannot be applied yet, and the
+  // wrapper is kept around the whole (still unreduced) calculation.
+  const calculation = parse("abs(1em - 30px)");
+
+  t.deepEqual(calculation.toJSON(), {
+    type: "math expression",
+    expression: {
+      type: "abs",
+      arguments: [
+        {
+          type: "sum",
+          operands: [
+            { type: "value", value: { value: 1, type: "length", unit: "em" } },
+            {
+              type: "value",
+              value: { value: -30, type: "length", unit: "px" },
+            },
+          ],
+        },
+      ],
+    },
+  });
+
+  // Once the relative length is resolved the calculation folds and `abs()`
+  // applies: 1em -> 16px, 16px - 30px = -14px, abs(-14px) = 14px.
+  const reduced = calculation.reduce(resolver);
+
+  t.deepEqual(reduced.toJSON(), {
+    type: "math expression",
+    expression: {
+      type: "value",
+      value: { value: 14, type: "length", unit: "px" },
+    },
+  });
+});
+
+test(".reduce() re-derives the kept wrapper's kind from the reduced argument", (t) => {
+  // A resolver may substitute a percentage with a value of a different type —
+  // here a *relative* length, which cannot be eagerly reduced, so the `abs()`
+  // wrapper is kept. Rebuilding through `Abs.of` re-derives the kind from the
+  // substituted argument (length) instead of freezing the original one
+  // (percentage), so the containing calculation reports the correct type.
+  const calculation = parse("abs(-10%)").reduce({
+    ...resolver,
+    percentage: (percentage) => Length.of(percentage.value * 16, "em"),
+  });
+
+  t.deepEqual(calculation.toJSON(), {
+    type: "math expression",
+    expression: {
+      type: "abs",
+      arguments: [
+        { type: "value", value: { value: -1.6, type: "length", unit: "em" } },
+      ],
+    },
+  });
+
+  t(calculation.isDimension("length"));
+  t(!calculation.isPercentage());
 });
