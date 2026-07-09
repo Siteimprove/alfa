@@ -25,7 +25,7 @@ test(".parse() parses a sign of a number or calculation", (t) => {
       type: "math expression",
       expression: {
         type: "value",
-        value: { type: "number", value: value },
+        value: { type: "number", value },
       },
     });
   }
@@ -50,7 +50,7 @@ test(".parse() resolves to a number for absolute dimensions", (t) => {
       type: "math expression",
       expression: {
         type: "value",
-        value: { type: "number", value: value },
+        value: { type: "number", value },
       },
     });
   }

@@ -28,17 +28,17 @@ const { map } = Parser;
  * @public
  */
 export class Sign extends Function<"sign", [Expression]> {
-  public static of(expression: Expression): Sign {
+  public static of(value: Expression): Sign {
     // `sign()` always resolves to a `<number>`, regardless of the type of its
     // argument.
-    return new Sign([expression], Kind.of());
+    return new Sign(value);
   }
 
-  protected constructor(args: [Expression], kind: Kind) {
-    super("sign", args, kind);
+  protected constructor(value: Expression) {
+    super("sign", [value], Kind.of());
   }
 
-  protected get _arg(): Expression {
+  public get value(): Expression {
     return this._args[0];
   }
 
@@ -46,7 +46,7 @@ export class Sign extends Function<"sign", [Expression]> {
     L extends Unit.Length = Unit.Length.Canonical,
     P extends Numeric = Numeric,
   >(resolver: Expression.Resolver<L, P>): Expression {
-    const reduced = this._arg.reduce(resolver);
+    const reduced = this.value.reduce(resolver);
 
     if (isValueExpression(reduced)) {
       const value = reduced.value;
@@ -72,11 +72,11 @@ export class Sign extends Function<"sign", [Expression]> {
 
     // reduced is an unreduced calculation, percentage, or relative length; we
     // keep the `sign()` wrapper.
-    return new Sign([reduced], this._kind);
+    return new Sign(reduced);
   }
 
   public toString(): string {
-    return `sign(${this._arg})`;
+    return `sign(${this.value})`;
   }
 }
 
@@ -88,7 +88,7 @@ export namespace Sign {
 
   export const parse = (parseSum: CSSParser<Expression>) =>
     map(
-      CSSFunction.parse("sign", (input) => parseSum(input)),
+      CSSFunction.parse("sign", parseSum),
       ([, expression]) => Sign.of(expression),
     );
 }

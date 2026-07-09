@@ -26,7 +26,7 @@ test(".parse() parses an abs of a number or calculation", (t) => {
       type: "math expression",
       expression: {
         type: "value",
-        value: { type: "number", value: value },
+        value: { type: "number", value },
       },
     });
   }
@@ -52,8 +52,8 @@ test(".parse() keeps the type of its argument for absolute dimensions", (t) => {
       expression: {
         type: "value",
         value: {
-          type: type,
-          value: value,
+          type,
+          value,
           unit: type === "length" ? "px" : "deg",
         },
       },

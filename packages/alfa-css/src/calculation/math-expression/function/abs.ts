@@ -28,16 +28,16 @@ const { map } = Parser;
  * @public
  */
 export class Abs extends Function<"abs", [Expression]> {
-  public static of(expression: Expression): Abs {
+  public static of(value: Expression): Abs {
     // `abs()` keeps the type of its argument.
-    return new Abs([expression], expression.kind);
+    return new Abs(value, value.kind);
   }
 
-  protected constructor(args: [Expression], kind: Kind) {
-    super("abs", args, kind);
+  protected constructor(value: Expression, kind: Kind) {
+    super("abs", [value], kind);
   }
 
-  protected get _arg(): Expression {
+  public get value(): Expression {
     return this._args[0];
   }
 
@@ -45,7 +45,7 @@ export class Abs extends Function<"abs", [Expression]> {
     L extends Unit.Length = Unit.Length.Canonical,
     P extends Numeric = Numeric,
   >(resolver: Expression.Resolver<L, P>): Expression {
-    const reduced = this._arg.reduce(resolver);
+    const reduced = this.value.reduce(resolver);
 
     if (isValueExpression(reduced)) {
       const value = reduced.value;
@@ -83,7 +83,7 @@ export class Abs extends Function<"abs", [Expression]> {
   }
 
   public toString(): string {
-    return `abs(${this._arg})`;
+    return `abs(${this.value})`;
   }
 }
 
@@ -95,7 +95,7 @@ export namespace Abs {
 
   export const parse = (parseSum: CSSParser<Expression>) =>
     map(
-      CSSFunction.parse("abs", (input) => parseSum(input)),
+      CSSFunction.parse("abs", parseSum),
       ([, expression]) => Abs.of(expression),
     );
 }
