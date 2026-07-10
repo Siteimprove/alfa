@@ -197,20 +197,19 @@ export namespace Length {
    * Build a (fixed) length resolver, using basis for the relative units.
    *
    * @remarks
-   * `lhBase` (and `rlhBase`) are thunks rather than plain lengths because they
-   * depend on the computed `line-height`, which itself may need to resolve
-   * lengths. Deferring their evaluation until an `lh` (resp. `rlh`) unit is
-   * actually encountered avoids re-entrancy when resolving the `line-height`
-   * property itself. They default to `1.2 * emBase` (resp. `1.2 * remBase`),
-   * assuming that it is a `normal` line-height.
+   * `lhBase` (and `rlhBase`) depend on the computed `line-height`, which
+   * itself may contain `lh` (resp. `rlh`) units; callers resolve these
+   * against the parent's (resp. initial) line-height, avoiding a circular
+   * dependency. They default to `1.2 * emBase` (resp. `1.2 * remBase`),
+   * assuming a `normal` line-height.
    */
   export function resolver(
     emBase: Canonical,
     remBase: Canonical,
     vwBase: Canonical,
     vhBase: Canonical,
-    lhBase: () => Canonical = () => emBase.scale(1.2),
-    rlhBase: () => Canonical = () => remBase.scale(1.2),
+    lhBase: Canonical,
+    rlhBase: Canonical,
   ): Mapper<Fixed<Unit.Length.Relative>, Canonical> {
     return (length) => {
       const { unit, value } = length;
@@ -229,11 +228,11 @@ export namespace Length {
 
         // https://www.w3.org/TR/css-values/#lh
         case "lh":
-          return lhBase().scale(value);
+          return lhBase.scale(value);
 
         // https://www.w3.org/TR/css-values/#rlh
         case "rlh":
-          return rlhBase().scale(value);
+          return rlhBase.scale(value);
 
         // https://www.w3.org/TR/css-values/#ex
         case "ex":

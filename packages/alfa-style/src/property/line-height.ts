@@ -1,5 +1,6 @@
 import {
   Keyword,
+  Length,
   LengthPercentage,
   Number,
   type Token,
@@ -25,6 +26,12 @@ export type Computed =
   | Number.Canonical
   | LengthPercentage.Canonical;
 
+/**
+ * The used `line-height` is always an absolute length: `normal` and numeric
+ * values are resolved against the font size.
+ */
+type Used = Length.Canonical;
+
 const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("normal"),
   Number.parse,
@@ -35,7 +42,11 @@ const parse = either<Slice<Token>, Specified, string>(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/line-height}
  * @internal
  */
-export default Longhand.of<Specified, Computed>(
+const property: Longhand<Specified, Computed, Used> = Longhand.of<
+  Specified,
+  Computed,
+  Used
+>(
   Keyword.of("normal"),
   parse,
   (value, style) =>
@@ -49,7 +60,12 @@ export default Longhand.of<Specified, Computed>(
           .if(
             LengthPercentage.isLengthPercentage,
             LengthPercentage.resolve(
-              Resolver.lengthPercentage(fontSize, style),
+              Resolver.lengthPercentage(fontSize, style, {
+                lineHeightBase: style.parent.used("line-height").value as Used,
+                rootLineHeightBase: (style.root() === style ? style.parent : style.root()).used(
+                  "line-height",
+                ).value as Used,
+              }),
             ),
           )
           .if(Number.isNumber, (value) => value.resolve())
@@ -59,5 +75,19 @@ export default Longhand.of<Specified, Computed>(
     }),
   {
     inherits: true,
+    use: (value, style) =>
+      value.map((height) => {
+        const fontSize = style.computed("font-size").value as FontSize;
+        return Selective.of(height)
+          .if(isNormal, () => fontSize.scale(1.2))
+          .if(Number.isNumber, (number) => fontSize.scale(number.value))
+          .get();
+      }),
   },
 );
+
+export default property;
+
+function isNormal(value: unknown): value is Keyword<"normal"> {
+  return Keyword.isKeyword(value, "normal");
+}

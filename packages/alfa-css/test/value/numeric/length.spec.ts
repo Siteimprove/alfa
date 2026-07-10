@@ -98,27 +98,13 @@ test("resolver() resolves lh against the provided line-height base", (t) => {
     Length.of(16, "px"), // rem
     Length.of(1920, "px"), // vw
     Length.of(1080, "px"), // vh
-    () => Length.of(24, "px"), // line-height base, e.g. `line-height: 24px`
+    Length.of(24, "px"), // line-height base, e.g. `line-height: 24px`
+    Length.of(19.2, "px"), // 1.2 * 16px
   );
 
   t.deepEqual(resolve(Length.of(2, "lh")).toJSON(), {
     type: "length",
     value: 48,
-    unit: "px",
-  });
-});
-
-test("resolver() defaults the lh base to 1.2 times the em base", (t) => {
-  const resolve = Length.resolver(
-    Length.of(10, "px"), // em -> default lh base is 12px
-    Length.of(16, "px"),
-    Length.of(1920, "px"),
-    Length.of(1080, "px"),
-  );
-
-  t.deepEqual(resolve(Length.of(2, "lh")).toJSON(), {
-    type: "length",
-    value: 24,
     unit: "px",
   });
 });
@@ -132,7 +118,8 @@ test("resolve() absolutizes lh in a calculation", (t) => {
         Length.of(16, "px"),
         Length.of(1920, "px"),
         Length.of(1080, "px"),
-        () => Length.of(24, "px"),
+        Length.of(24, "px"),
+        Length.of(19.2, "px"), // 1.2 * 16px
       ) })
       .toJSON(),
     {
@@ -149,8 +136,8 @@ test("resolver() resolves rlh against the provided root line-height base", (t) =
     Length.of(16, "px"), // rem
     Length.of(1920, "px"), // vw
     Length.of(1080, "px"), // vh
-    () => Length.of(24, "px"), // lh base
-    () => Length.of(32, "px"), // rlh base, e.g. root `line-height: 32px`
+    Length.of(24, "px"), // lh base
+    Length.of(32, "px"), // rlh base, e.g. root `line-height: 32px`
   );
 
   t.deepEqual(resolve(Length.of(2, "rlh")).toJSON(), {
@@ -160,20 +147,6 @@ test("resolver() resolves rlh against the provided root line-height base", (t) =
   });
 });
 
-test("resolver() defaults the rlh base to 1.2 times the rem base", (t) => {
-  const resolve = Length.resolver(
-    Length.of(16, "px"),
-    Length.of(10, "px"), // rem -> default rlh base is 12px
-    Length.of(1920, "px"),
-    Length.of(1080, "px"),
-  );
-
-  t.deepEqual(resolve(Length.of(2, "rlh")).toJSON(), {
-    type: "length",
-    value: 24,
-    unit: "px",
-  });
-});
 
 test("resolve() resolves dimension divisions", (t) => {
   t.deepEqual(
@@ -201,6 +174,8 @@ test("resolver() resolves rch against half the rem base", (t) => {
     Length.of(32, "px"), // rem
     Length.of(1920, "px"), // vw
     Length.of(1080, "px"), // vh
+    Length.of(19.2, "px"), // lh, 1.2 * 16px
+    Length.of(19.2, "px"), // rlh, 1.2 * 16px
   );
 
   t.deepEqual(resolve(Length.of(2, "rch")).toJSON(), {

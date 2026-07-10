@@ -206,6 +206,8 @@ test(".resolve() returns a canonical shadow", (t) => {
       Length.of(10, "px"),
       Length.of(16, "px"),
       Length.of(20, "px"),
+      Length.of(19.2, "px"), // 1.2 * 16px
+      Length.of(19.2, "px"), // 1.2 * 16px
     ),
     currentColor: Color.of("black").getUnsafe(),
   });
@@ -234,6 +236,8 @@ test("parse() accepts calculations", (t) => {
           Length.of(10, "px"),
           Length.of(16, "px"),
           Length.of(20, "px"),
+          Length.of(19.2, "px"), // 1.2 * 16px
+          Length.of(19.2, "px"), // 1.2 * 16px
         ),
         currentColor: Color.of("black").getUnsafe(),
       })

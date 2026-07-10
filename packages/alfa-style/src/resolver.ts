@@ -1,15 +1,12 @@
 import {
   Color,
-  Keyword,
   type LengthPercentage,
-  Number,
   Shadow,
   type Unit,
   type Value,
 } from "@siteimprove/alfa-css";
 import { Length, List } from "@siteimprove/alfa-css";
 import type { Mapper } from "@siteimprove/alfa-mapper";
-import { Selective } from "@siteimprove/alfa-selective";
 
 import type { Style } from "./style.ts";
 
@@ -38,6 +35,7 @@ export namespace Resolver {
    */
   function lengthResolver(
     style: Style,
+    options: Options = {},
   ): Mapper<Length.Fixed<Unit.Length.Relative>, Length.Canonical> {
     const { viewport } = style.device;
     const width = Length.of(viewport.width, "px");
@@ -46,23 +44,15 @@ export namespace Resolver {
     const fontSize = style.computed("font-size").value;
     const rootFontSize = style.root().computed("font-size").value;
 
-    const lineHeightBase = () => {
-      const lineHeight = style.computed("line-height").value;
-
-      return Selective.of(lineHeight)
-        .if(isNormal, () => fontSize.scale(1.2))
-        .if(Number.isNumber, (value) => fontSize.scale(value.value))
-        .get();
-    };
-
-    const rootLineHeightBase = () => {
-      const lineHeight = style.root().computed("line-height").value;
-
-      return Selective.of(lineHeight)
-        .if(isNormal, () => rootFontSize.scale(1.2))
-        .if(Number.isNumber, (value) => rootFontSize.scale(value.value))
-        .get();
-    };
+    // `lh` and `rlh` resolve against the used line-height of the element and
+    // the root element, respectively. They must be overridden when resolving
+    // the `line-height` property of the very element they refer to, which
+    // would otherwise create a circular dependency; resolving against the
+    // parent's line-height instead keeps the recursion well-founded.
+    const {
+      lineHeightBase = style.used("line-height").value,
+      rootLineHeightBase = style.root().used("line-height").value,
+    } = options;
 
     return Length.resolver(
       fontSize,
@@ -74,6 +64,11 @@ export namespace Resolver {
     );
   }
 
+  export interface Options {
+    lineHeightBase?: Length.Canonical;
+    rootLineHeightBase?: Length.Canonical;
+  }
+
   export function length(style: Style): Length.Resolver {
     return { length: lengthResolver(style) };
   }
@@ -81,8 +76,9 @@ export namespace Resolver {
   export function lengthPercentage(
     base: Length.Canonical,
     style: Style,
+    options?: Options,
   ): LengthPercentage.Resolver {
-    return { percentageBase: base, length: lengthResolver(style) };
+    return { percentageBase: base, length: lengthResolver(style, options) };
   }
 
   /**
@@ -114,8 +110,4 @@ export namespace Resolver {
   export function shadow(style: Style): Shadow.Resolver {
     return { ...length(style), ...color(style) };
   }
-}
-
-function isNormal(value: unknown): value is Keyword<"normal"> {
-  return Keyword.isKeyword(value, "normal");
 }
