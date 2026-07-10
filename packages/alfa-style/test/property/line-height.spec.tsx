@@ -36,6 +36,38 @@ test("#computed() resolves `line-height: calc(1 + 2)`", (t) => {
   });
 });
 
+test("#computed() resolves a relative `line-height` without re-entrancy", (t) => {
+  const element = <div style={{ lineHeight: "2em", fontSize: "16px" }} />;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("line-height").toJSON(), {
+    value: {
+      type: "length",
+      value: 32,
+      unit: "px",
+    },
+    source: h.declaration("line-height", "2em").toJSON(),
+  });
+});
+
+test("#computed() computes `line-height` of any shape without re-entrancy", (t) => {
+  for (const value of [
+    "normal",
+    "1.5",
+    "24px",
+    "150%",
+    "2em",
+    "calc(1em + 2px)",
+  ]) {
+    const element = <div style={{ lineHeight: value, fontSize: "16px" }} />;
+
+    const style = Style.from(element, device);
+
+    t(style.computed("line-height").value !== undefined);
+  }
+});
+
 test("#computed() resolves percentages from the element's `font-size`", (t) => {
   const target = (
     <div style={{ lineHeight: "150%", fontSize: "10px" }}>Hello</div>
