@@ -30,12 +30,17 @@ export namespace Resolver {
    * resolving font-size itself, in which case the parent's style is used.
    * Since the resolver doesn't know which property is resolved, the onus of
    * providing the correct style is left on the caller.
+   * This function is called when we need the computed value of the property.
+   * 
    *
    * {@link https://drafts.csswg.org/css-values/#relative-lengths}
+   * 
+   * @param style - used for viewport and font-size.
+   * @param lineHeightStyle - used for line height and root line height - default is the element's own style.
    */
   function lengthResolver(
     style: Style,
-    options: Options = {},
+    lineHeightStyle?: Style,
   ): Mapper<Length.Fixed<Unit.Length.Relative>, Length.Canonical> {
     const { viewport } = style.device;
     const width = Length.of(viewport.width, "px");
@@ -43,16 +48,9 @@ export namespace Resolver {
 
     const fontSize = style.computed("font-size").value;
     const rootFontSize = style.root().computed("font-size").value;
-
-    // `lh` and `rlh` resolve against the used line-height of the element and
-    // the root element, respectively. They must be overridden when resolving
-    // the `line-height` property of the very element they refer to, which
-    // would otherwise create a circular dependency; resolving against the
-    // parent's line-height instead keeps the recursion well-founded.
-    const {
-      lineHeightBase = style.used("line-height").value,
-      rootLineHeightBase = style.root().used("line-height").value,
-    } = options;
+    const extendedStyle = lineHeightStyle ?? style;
+    const lineHeightBase = extendedStyle.used("line-height").value;
+    const rootLineHeightBase = extendedStyle.root().used("line-height").value;
 
     return Length.resolver(
       fontSize,
@@ -64,11 +62,6 @@ export namespace Resolver {
     );
   }
 
-  export interface Options {
-    lineHeightBase?: Length.Canonical;
-    rootLineHeightBase?: Length.Canonical;
-  }
-
   export function length(style: Style): Length.Resolver {
     return { length: lengthResolver(style) };
   }
@@ -76,9 +69,9 @@ export namespace Resolver {
   export function lengthPercentage(
     base: Length.Canonical,
     style: Style,
-    options?: Options,
+    lineHeightStyle?: Style,
   ): LengthPercentage.Resolver {
-    return { percentageBase: base, length: lengthResolver(style, options) };
+    return { percentageBase: base, length: lengthResolver(style, lineHeightStyle) };
   }
 
   /**

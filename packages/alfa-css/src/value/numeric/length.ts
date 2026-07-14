@@ -195,13 +195,6 @@ export namespace Length {
 
   /**
    * Build a (fixed) length resolver, using basis for the relative units.
-   *
-   * @remarks
-   * `lhBase` (and `rlhBase`) depend on the computed `line-height`, which
-   * itself may contain `lh` (resp. `rlh`) units; callers resolve these
-   * against the parent's (resp. initial) line-height, avoiding a circular
-   * dependency. They default to `1.2 * emBase` (resp. `1.2 * remBase`),
-   * assuming a `normal` line-height.
    */
   export function resolver(
     emBase: Canonical,

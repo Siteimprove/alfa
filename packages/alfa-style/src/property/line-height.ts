@@ -60,12 +60,7 @@ const property: Longhand<Specified, Computed, Used> = Longhand.of<
           .if(
             LengthPercentage.isLengthPercentage,
             LengthPercentage.resolve(
-              Resolver.lengthPercentage(fontSize, style, {
-                lineHeightBase: style.parent.used("line-height").value as Used,
-                rootLineHeightBase: (style.root() === style ? style.parent : style.root()).used(
-                  "line-height",
-                ).value as Used,
-              }),
+              Resolver.lengthPercentage(fontSize, style, style.parent),
             ),
           )
           .if(Number.isNumber, (value) => value.resolve())
