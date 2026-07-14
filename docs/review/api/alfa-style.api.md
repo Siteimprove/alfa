@@ -333,14 +333,7 @@ export namespace Resolver {
     // (undocumented)
     export function length(style: Style): Length.Resolver;
     // (undocumented)
-    export function lengthPercentage(base: Length.Canonical, style: Style, options?: Options): LengthPercentage.Resolver;
-    // (undocumented)
-    export interface Options {
-        // (undocumented)
-        lineHeightBase?: Length.Canonical;
-        // (undocumented)
-        rootLineHeightBase?: Length.Canonical;
-    }
+    export function lengthPercentage(base: Length.Canonical, style: Style, lineHeightStyle?: Style): LengthPercentage.Resolver;
     // (undocumented)
     export function shadow(style: Style): Shadow.Resolver;
 }
