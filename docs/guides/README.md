@@ -24,6 +24,7 @@ Note that Dependabot is currently used almost everywhere for dependencies update
 
 * Shared setup (by most repos if not all):
   * All dependencies are auto-updated by Dependabot. Security updates asap, regular updates on Monday morning (CET). Problems are reported to the latest editor of the workflow (in each repository).
+  * Patch dependencies (all kind), as well as minor devDependencies, are automerged if the CI/CD workflow passes.
   * Packages are automatically deduped upon installation (through a yarn plugin).
   * API documentation is generated as part of the release workflow.
   * Use a `!pr <command>` comment to issue commands on a PR, e.g. `!pr help`; mostly useful for `!pr extract` when it was not issued before pushing.
