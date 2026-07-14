@@ -42,7 +42,7 @@
     "@siteimprove/alfa-string": "workspace:^",
     "@siteimprove/alfa-thunk": "workspace:^",
     "@siteimprove/alfa-tuple": "workspace:^",
-    "colorjs.io": "^0.6.1"
+    "colorjs.io": "^0.7.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-rng": "workspace:^",

@@ -1922,7 +1922,7 @@ __metadata:
     "@siteimprove/alfa-test": "workspace:^"
     "@siteimprove/alfa-thunk": "workspace:^"
     "@siteimprove/alfa-tuple": "workspace:^"
-    colorjs.io: "npm:^0.6.1"
+    colorjs.io: "npm:^0.7.0"
   languageName: unknown
   linkType: soft
 
@@ -3720,10 +3720,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"colorjs.io@npm:^0.6.1":
-  version: 0.6.1
-  resolution: "colorjs.io@npm:0.6.1"
-  checksum: 10c0/972aff12d88e86726898ff110aa15ea57a0348a3b958aeb93f4d6ae2d0ca91e487864e4d0d98b53943cc3ac3f747fb01b5ba3b6d922848d5c6888cb56e470b84
+"colorjs.io@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "colorjs.io@npm:0.7.0"
+  checksum: 10c0/528e52e25e8147c43138b4d6bda8c264325bbe38f5db0eacc915988f34c4bbb811e36805952eb5591d451babf206be7420f288859293e4167ce9f36ba301fe33
   languageName: node
   linkType: hard
 
