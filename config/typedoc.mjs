@@ -21,7 +21,7 @@ if (target !== "review" && target !== "documentation") {
 //   we also pass it along. The JSON documentation is used for merging with
 //   other repos.
 let gitRevision;
-let sourceLinkTemplate;
+let disableSources;
 let review = false;
 let markdown = false;
 let html = false;
@@ -30,7 +30,7 @@ let json = false;
 if (target === "review") {
   review = true;
   gitRevision = "main";
-  sourceLinkTemplate = "https://github.com/Siteimprove/alfa/blob/main/{path}";
+  disableSources = true;
 }
 
 if (target === "documentation") {
@@ -54,6 +54,14 @@ if (target === "documentation") {
   html = true;
   json = true;
   gitRevision = process.env.ALFA_DOC_VERSION;
+}
+
+// Validation
+if (review && markdown) {
+  console.error(
+    "'review' and 'markdown' cannot be generated together as they use the same post-processor, with different options",
+  );
+  process.exit(3);
 }
 
 // Set up the outputs parameters.
@@ -96,6 +104,7 @@ if (review) {
     name: "markdown",
     path: "../docs/typedoc/review",
     options: {
+      parametersFormat: "table",
       hidePageHeader: true,
       hideBreadcrumbs: true,
       useCodeBlocks: true,
@@ -110,7 +119,7 @@ if (review) {
       },
       // Add the kind to reflections with the same name in a table (typically
       // class/diagnostic), and remove line number from links' names.
-      theme: ["alfaTheme"],
+      theme: ["reviewTheme"],
     },
   });
 }
@@ -126,7 +135,7 @@ export default {
   packageOptions: {
     entryPoints: ["src/index.ts"],
     gitRevision,
-    sourceLinkTemplate,
+    disableSources,
     readme: "none",
     includeVersion: true,
     excludeExternals: true,
@@ -137,7 +146,7 @@ export default {
   },
   plugin: [
     "@siteimprove/alfa-toolchain/typedoc-plugin-categorize",
-    "@siteimprove/alfa-toolchain/typedoc-theme-alfa",
+    "@siteimprove/alfa-toolchain/typedoc-markdown-theme-review",
     "typedoc-plugin-markdown",
   ],
   outputs,
