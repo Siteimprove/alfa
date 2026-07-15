@@ -88,8 +88,7 @@ test(".parse() accepts calculated vertices", (t) => {
 
   t.deepEqual(
     serialize(
-      `polygon(${actual(1)} ${actual(0)} ${actual(1)} ${actual(1)}` +
-        ` ${actual(0)} ${actual(1)})`,
+      `polygon(${actual(1)} ${actual(0)}, ${actual(1)} ${actual(1)}, ${actual(0)} ${actual(1)})`,
     ),
     {
       type: "basic-shape",
