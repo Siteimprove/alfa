@@ -1,7 +1,5 @@
 # Abstract Class: Rule\<I, T, Q, S\>
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## Extended by
 
 - [`Atomic`](Rule/Atomic-1.md)
@@ -9,22 +7,12 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 ## Type Parameters
 
-### I
-
-`I`
-
-### T
-
-`T` *extends* `Hashable`
-
-### Q
-
-`Q` *extends* [`Metadata`](Question/Metadata.md) = \{
-\}
-
-### S
-
-`S` = `T`
+| Type Parameter | Default type |
+| ------ | ------ |
+| `I` | - |
+| `T` *extends* `Hashable` | - |
+| `Q` *extends* [`Metadata`](Question/Metadata.md) | \{ \} |
+| `S` | `T` |
 
 ## Implements
 
@@ -38,37 +26,15 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 ### Constructor
 
-```ts
-protected new Rule<I, T, Q, S>(
+```typescript
+protected new Rule<I, T extends Hashable, Q extends Metadata = {
+}, S = T>(
    uri: string, 
    requirements: Array<Requirement<string, string>>, 
    tags: Array<Tag<string>>, 
-evaluator: Evaluate<I, T, Q, S>): Rule<I, T, Q, S>;
+   evaluator: Evaluate<I, T, Q, S>
+): Rule<I, T, Q, S>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-#### Parameters
-
-##### uri
-
-`string`
-
-##### requirements
-
-`Array`\<[`Requirement`](Requirement-1.md)\<`string`, `string`\>\>
-
-##### tags
-
-`Array`\<[`Tag`](Tag-1.md)\<`string`\>\>
-
-##### evaluator
-
-[`Evaluate`](Rule/Evaluate.md)\<`I`, `T`, `Q`, `S`\>
-
-#### Returns
-
-`Rule`\<`I`, `T`, `Q`, `S`\>
 
 ## _evaluate
 
@@ -78,8 +44,6 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 protected readonly _evaluate: Evaluate<I, T, Q, S>;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## _requirements
 
 ### \_requirements
@@ -87,8 +51,6 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ```ts
 protected readonly _requirements: Array<Requirement<string, string>>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## _tags
 
@@ -98,8 +60,6 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 protected readonly _tags: Array<Tag<string>>;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## _uri
 
 ### \_uri
@@ -108,47 +68,15 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 protected readonly _uri: string;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## equals
 
 ### equals()
 
 #### Call Signature
 
-```ts
-equals<I, T, Q, S>(value: Rule<I, T, Q, S>): boolean;
+```typescript
+equals<I, T extends Hashable, Q extends Metadata, S>(value: Rule<I, T, Q, S>): boolean;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Type Parameters
-
-###### I
-
-`I`
-
-###### T
-
-`T` *extends* `Hashable`
-
-###### Q
-
-`Q` *extends* [`Metadata`](Question/Metadata.md)
-
-###### S
-
-`S`
-
-##### Parameters
-
-###### value
-
-`Rule`\<`I`, `T`, `Q`, `S`\>
-
-##### Returns
-
-`boolean`
 
 ##### Implementation of
 
@@ -158,21 +86,9 @@ Equatable.equals
 
 #### Call Signature
 
-```ts
+```typescript
 equals(value: unknown): value is Rule<I, T, Q, S>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Parameters
-
-###### value
-
-`unknown`
-
-##### Returns
-
-`value is Rule<I, T, Q, S>`
 
 ##### Implementation of
 
@@ -184,59 +100,23 @@ Equatable.equals
 
 ### evaluate()
 
-```ts
+```typescript
 evaluate(
    input: I, 
    oracle?: {
 } extends Q ? any : Oracle<I, T, Q, S>, 
    outcomes?: Cache, 
-performance?: Performance<Event<I, T, Q, S, Type, string>>): Promise<Iterable<Outcome<I, T, Q, S, Value>>>;
+   performance?: Performance<Event<I, T, Q, S, Type, string>>
+): Promise<Iterable<Outcome<I, T, Q, S, Value>>>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-#### Parameters
-
-##### input
-
-`I`
-
-##### oracle?
-
-\{
-\} *extends* `Q` ? `any` : [`Oracle`](Oracle.md)\<`I`, `T`, `Q`, `S`\> = `...`
-
-##### outcomes?
-
-[`Cache`](Cache.md) = `...`
-
-##### performance?
-
-`Performance`\<[`Event`](Rule/Event-1.md)\<`I`, `T`, `Q`, `S`, [`Type`](Rule/Event/Type.md), `string`\>\>
-
-#### Returns
-
-`Promise`\<`Iterable`\<[`Outcome`](Outcome-1.md)\<`I`, `T`, `Q`, `S`, [`Value`](Outcome/Value.md)\>\>\>
 
 ## hash
 
 ### hash()
 
-```ts
+```typescript
 hash(hash: Hash): void;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-#### Parameters
-
-##### hash
-
-`Hash`
-
-#### Returns
-
-`void`
 
 #### Implementation of
 
@@ -250,39 +130,15 @@ Hashable.hash
 
 #### Call Signature
 
-```ts
+```typescript
 hasRequirement(requirement: Requirement): boolean;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Parameters
-
-###### requirement
-
-[`Requirement`](Requirement-1.md)
-
-##### Returns
-
-`boolean`
-
 #### Call Signature
 
-```ts
+```typescript
 hasRequirement(predicate: Predicate<Requirement<string, string>>): boolean;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Parameters
-
-###### predicate
-
-`Predicate`\<[`Requirement`](Requirement-1.md)\<`string`, `string`\>\>
-
-##### Returns
-
-`boolean`
 
 ## hasTag
 
@@ -290,39 +146,15 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 #### Call Signature
 
-```ts
+```typescript
 hasTag(tag: Tag): boolean;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Parameters
-
-###### tag
-
-[`Tag`](Tag-1.md)
-
-##### Returns
-
-`boolean`
-
 #### Call Signature
 
-```ts
+```typescript
 hasTag(predicate: Predicate<Tag<string>>): boolean;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Parameters
-
-###### predicate
-
-`Predicate`\<[`Tag`](Tag-1.md)\<`string`\>\>
-
-##### Returns
-
-`boolean`
 
 ## requirements
 
@@ -330,11 +162,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 #### Get Signature
 
-```ts
+```typescript
 get requirements(): readonly Requirement<string, string>[];
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 
@@ -346,11 +176,9 @@ readonly [`Requirement`](Requirement-1.md)\<`string`, `string`\>[]
 
 #### Get Signature
 
-```ts
+```typescript
 get tags(): readonly Tag<string>[];
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 
@@ -360,15 +188,9 @@ readonly [`Tag`](Tag-1.md)\<`string`\>[]
 
 ### toEARL()
 
-```ts
+```typescript
 toEARL(): EARL;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-#### Returns
-
-[`EARL`](Rule/EARL.md)
 
 #### Implementation of
 
@@ -382,26 +204,12 @@ earl.Serializable.toEARL
 
 #### Call Signature
 
-```ts
+```typescript
 abstract toJSON(options: {
   verbosity: Minimal;
 }): MinimalJSON;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Parameters
-
-###### options
-
-###### verbosity
-
-`Minimal`
-
-##### Returns
-
-[`MinimalJSON`](Rule/MinimalJSON.md)
-
 ##### Implementation of
 
 ```ts
@@ -410,16 +218,10 @@ json.Serializable.toJSON
 
 #### Call Signature
 
-```ts
+```typescript
 abstract toJSON(): JSON;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Returns
-
-[`JSON`](Rule/JSON.md)
-
 ##### Implementation of
 
 ```ts
@@ -428,21 +230,9 @@ json.Serializable.toJSON
 
 #### Call Signature
 
-```ts
+```typescript
 abstract toJSON(options?: Options): JSON | MinimalJSON;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Parameters
-
-###### options?
-
-`Options`
-
-##### Returns
-
-[`JSON`](Rule/JSON.md) \| [`MinimalJSON`](Rule/MinimalJSON.md)
 
 ##### Implementation of
 
@@ -454,15 +244,9 @@ json.Serializable.toJSON
 
 ### toSARIF()
 
-```ts
+```typescript
 toSARIF(): ReportingDescriptor;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-#### Returns
-
-`ReportingDescriptor`
 
 #### Implementation of
 
@@ -476,11 +260,9 @@ sarif.Serializable.toSARIF
 
 #### Get Signature
 
-```ts
+```typescript
 get uri(): string;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 

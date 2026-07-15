@@ -1,7 +1,5 @@
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
-
 ## Extends
 
 - `JSON`\<`"layer-statement"`\>
@@ -20,8 +18,6 @@ Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/al
 layers: Array<string>;
 ```
 
-Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
-
 ## type
 
 ### type
@@ -29,8 +25,6 @@ Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/al
 ```ts
 type: "layer-statement";
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 

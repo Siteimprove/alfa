@@ -1,7 +1,5 @@
 # Class: Block
 
-Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
-
 ## Implements
 
 - `Iterable`\<[`Declaration`](Declaration-1.md)\>
@@ -12,35 +10,17 @@ Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/bl
 
 ### Constructor
 
-```ts
+```typescript
 protected new Block(declarations: Declaration[]): Block;
 ```
-
-Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
-
-#### Parameters
-
-##### declarations
-
-[`Declaration`](Declaration-1.md)[]
-
-#### Returns
-
-`Block`
 
 ## [iterator]
 
 ### \[iterator\]()
 
-```ts
+```typescript
 iterator: Iterator<Declaration>;
 ```
-
-Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
-
-#### Returns
-
-`Iterator`\<[`Declaration`](Declaration-1.md)\>
 
 #### Implementation of
 
@@ -52,21 +32,9 @@ Iterable.[iterator]
 
 ### declaration()
 
-```ts
+```typescript
 declaration(predicate: string | Predicate<Declaration>): Option<Declaration>;
 ```
-
-Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
-
-#### Parameters
-
-##### predicate
-
-`string` \| `Predicate`\<[`Declaration`](Declaration-1.md)\>
-
-#### Returns
-
-`Option`\<[`Declaration`](Declaration-1.md)\>
 
 ## declarations
 
@@ -74,11 +42,9 @@ Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/bl
 
 #### Get Signature
 
-```ts
+```typescript
 get declarations(): Iterable<Declaration>;
 ```
-
-Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
 
 ##### Returns
 
@@ -88,21 +54,9 @@ Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/bl
 
 ### equals()
 
-```ts
+```typescript
 equals(value: unknown): value is Block;
 ```
-
-Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
-
-#### Parameters
-
-##### value
-
-`unknown`
-
-#### Returns
-
-`value is Block`
 
 #### Implementation of
 
@@ -114,35 +68,17 @@ Equatable.equals
 
 ### isEmpty()
 
-```ts
+```typescript
 isEmpty(): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
-
-#### Returns
-
-`boolean`
 
 ## of
 
 ### of()
 
-```ts
+```typescript
 static of(declarations: Iterable<Declaration>): Block;
 ```
-
-Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
-
-#### Parameters
-
-##### declarations
-
-`Iterable`\<[`Declaration`](Declaration-1.md)\>
-
-#### Returns
-
-`Block`
 
 ## size
 
@@ -150,11 +86,9 @@ Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/bl
 
 #### Get Signature
 
-```ts
+```typescript
 get size(): number;
 ```
-
-Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
 
 ##### Returns
 
@@ -164,15 +98,9 @@ Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/bl
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(): JSON;
 ```
-
-Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
-
-#### Returns
-
-[`JSON`](Block/JSON.md)
 
 #### Implementation of
 
@@ -184,12 +112,6 @@ Serializable.toJSON
 
 ### toString()
 
-```ts
+```typescript
 toString(): string;
 ```
-
-Defined in: [alfa-dom/src/style/block.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/block.ts)
-
-#### Returns
-
-`string`

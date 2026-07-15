@@ -2,64 +2,12 @@
 
 ## Call Signature
 
-```ts
-function isComposite<I, T, Q>(value: Rule<I, T, Q>): value is Composite<I, T, Q, T>;
+```typescript
+function isComposite<I, T extends Hashable, Q extends Metadata>(value: Rule<I, T, Q>): value is Composite<I, T, Q, T>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-### Type Parameters
-
-#### I
-
-`I`
-
-#### T
-
-`T` *extends* `Hashable`
-
-#### Q
-
-`Q` *extends* [`Metadata`](../../Question/Metadata.md)
-
-### Parameters
-
-#### value
-
-[`Rule`](../../Rule-1.md)\<`I`, `T`, `Q`\>
-
-### Returns
-
-`value is Composite<I, T, Q, T>`
 
 ## Call Signature
 
-```ts
-function isComposite<I, T, Q>(value: unknown): value is Composite<I, T, Q, T>;
+```typescript
+function isComposite<I, T extends Hashable, Q extends Metadata>(value: unknown): value is Composite<I, T, Q, T>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-### Type Parameters
-
-#### I
-
-`I`
-
-#### T
-
-`T` *extends* `Hashable`
-
-#### Q
-
-`Q` *extends* [`Metadata`](../../Question/Metadata.md)
-
-### Parameters
-
-#### value
-
-`unknown`
-
-### Returns
-
-`value is Composite<I, T, Q, T>`

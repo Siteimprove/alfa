@@ -1,16 +1,11 @@
 # Interface: JSON\<T, U\>
 
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
-
 ## Type Parameters
 
-### T
-
-`T` *extends* `string` = `string`
-
-### U
-
-`U` *extends* `string` = `string`
+| Type Parameter | Default type |
+| ------ | ------ |
+| `T` *extends* `string` | `string` |
+| `U` *extends* `string` | `string` |
 
 ## Indexable
 
@@ -26,8 +21,6 @@ Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprov
 type: T;
 ```
 
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
-
 ## uri
 
 ### uri
@@ -35,5 +28,3 @@ Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprov
 ```ts
 uri: U;
 ```
-
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)

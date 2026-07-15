@@ -1,7 +1,5 @@
 # Class: Keyframes
 
-Defined in: [alfa-dom/src/style/rule/keyframes.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframes.ts)
-
 ## Extends
 
 - [`Grouping`](Grouping-1.md)\<`"keyframes"`\>
@@ -10,25 +8,9 @@ Defined in: [alfa-dom/src/style/rule/keyframes.ts](https://github.com/Siteimprov
 
 ### Constructor
 
-```ts
+```typescript
 protected new Keyframes(name: string, rules: Rule[]): KeyframesRule;
 ```
-
-Defined in: [alfa-dom/src/style/rule/keyframes.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframes.ts)
-
-#### Parameters
-
-##### name
-
-`string`
-
-##### rules
-
-[`Rule`](../Rule-1.md)[]
-
-#### Returns
-
-`KeyframesRule`
 
 #### Overrides
 
@@ -38,21 +20,9 @@ Defined in: [alfa-dom/src/style/rule/keyframes.ts](https://github.com/Siteimprov
 
 ### \_attachOwner()
 
-```ts
+```typescript
 _attachOwner(owner: Sheet): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### owner
-
-[`Sheet`](../Sheet-1.md)
-
-#### Returns
-
-`boolean`
 
 #### Inherited from
 
@@ -62,21 +32,9 @@ Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alf
 
 ### \_attachParent()
 
-```ts
+```typescript
 _attachParent(parent: Rule): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### parent
-
-[`Rule`](../Rule-1.md)
-
-#### Returns
-
-`boolean`
 
 #### Inherited from
 
@@ -90,8 +48,6 @@ Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alf
 protected _owner: Option<Sheet> = None;
 ```
 
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
 #### Inherited from
 
 [`Grouping`](Grouping-1.md).[`_owner`](Grouping-1.md#_owner)
@@ -103,8 +59,6 @@ Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alf
 ```ts
 protected _parent: Option<Rule> = None;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 
@@ -118,8 +72,6 @@ Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alf
 protected readonly _rules: Array<Rule>;
 ```
 
-Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
-
 #### Inherited from
 
 [`Grouping`](Grouping-1.md).[`_rules`](Grouping-1.md#_rules)
@@ -128,15 +80,9 @@ Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove
 
 ### ancestors()
 
-```ts
+```typescript
 ancestors(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -146,15 +92,9 @@ Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alf
 
 ### children()
 
-```ts
+```typescript
 children(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -164,15 +104,9 @@ Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove
 
 ### descendants()
 
-```ts
+```typescript
 descendants(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -182,21 +116,9 @@ Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alf
 
 ### equals()
 
-```ts
+```typescript
 equals(value: unknown): value is Keyframes;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### value
-
-`unknown`
-
-#### Returns
-
-`value is Keyframes`
 
 #### Inherited from
 
@@ -208,11 +130,9 @@ Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alf
 
 #### Get Signature
 
-```ts
+```typescript
 get name(): string;
 ```
-
-Defined in: [alfa-dom/src/style/rule/keyframes.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframes.ts)
 
 ##### Returns
 
@@ -222,25 +142,9 @@ Defined in: [alfa-dom/src/style/rule/keyframes.ts](https://github.com/Siteimprov
 
 ### of()
 
-```ts
+```typescript
 static of(name: string, rules: Iterable<Rule>): KeyframesRule;
 ```
-
-Defined in: [alfa-dom/src/style/rule/keyframes.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframes.ts)
-
-#### Parameters
-
-##### name
-
-`string`
-
-##### rules
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
-
-#### Returns
-
-`KeyframesRule`
 
 ## owner
 
@@ -248,11 +152,9 @@ Defined in: [alfa-dom/src/style/rule/keyframes.ts](https://github.com/Siteimprov
 
 #### Get Signature
 
-```ts
+```typescript
 get owner(): Option<Sheet>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 
@@ -268,11 +170,9 @@ Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alf
 
 #### Get Signature
 
-```ts
+```typescript
 get parent(): Option<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 
@@ -288,11 +188,9 @@ Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alf
 
 #### Get Signature
 
-```ts
+```typescript
 get rules(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
 
 ##### Returns
 
@@ -306,15 +204,9 @@ Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(): JSON;
 ```
-
-Defined in: [alfa-dom/src/style/rule/keyframes.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframes.ts)
-
-#### Returns
-
-[`JSON`](Keyframes/JSON.md)
 
 #### Overrides
 
@@ -324,15 +216,9 @@ Defined in: [alfa-dom/src/style/rule/keyframes.ts](https://github.com/Siteimprov
 
 ### toString()
 
-```ts
+```typescript
 toString(): string;
 ```
-
-Defined in: [alfa-dom/src/style/rule/keyframes.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframes.ts)
-
-#### Returns
-
-`string`
 
 ## type
 
@@ -340,11 +226,9 @@ Defined in: [alfa-dom/src/style/rule/keyframes.ts](https://github.com/Siteimprov
 
 #### Get Signature
 
-```ts
+```typescript
 get type(): T;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 

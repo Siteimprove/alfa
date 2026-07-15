@@ -1,7 +1,5 @@
 # Interface: EARL
 
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
-
 ## Extends
 
 - `EARL`
@@ -21,8 +19,6 @@ Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprov
   earl: "http://www.w3.org/ns/earl#";
 };
 ```
-
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
 
 #### earl
 
@@ -46,8 +42,6 @@ earl.EARL.@context
 @id: string;
 ```
 
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
-
 ## @type
 
 ### @type
@@ -55,5 +49,3 @@ Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprov
 ```ts
 @type: ["earl:TestCriterion", "earl:TestRequirement"];
 ```
-
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)

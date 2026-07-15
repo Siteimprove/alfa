@@ -1,7 +1,5 @@
 # Class: Declaration
 
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
-
 ## Implements
 
 - `Equatable`
@@ -11,106 +9,45 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 
 ### Constructor
 
-```ts
+```typescript
 protected new Declaration(
    name: string, 
    value: string, 
-   important: boolean): Declaration;
+   important: boolean
+): Declaration;
 ```
-
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
-
-#### Parameters
-
-##### name
-
-`string`
-
-##### value
-
-`string`
-
-##### important
-
-`boolean`
-
-#### Returns
-
-`Declaration`
 
 ## _attachOwner
 
 ### \_attachOwner()
 
-```ts
+```typescript
 _attachOwner(owner: Element): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
-
-#### Parameters
-
-##### owner
-
-[`Element`](Element-1.md)
-
-#### Returns
-
-`boolean`
 
 ## _attachParent
 
 ### \_attachParent()
 
-```ts
+```typescript
 _attachParent(parent: Rule): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
-
-#### Parameters
-
-##### parent
-
-[`Rule`](Rule-1.md)
-
-#### Returns
-
-`boolean`
 
 ## ancestors
 
 ### ancestors()
 
-```ts
+```typescript
 ancestors(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](Rule-1.md)\>
 
 ## equals
 
 ### equals()
 
-```ts
+```typescript
 equals(value: unknown): value is Declaration;
 ```
-
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
-
-#### Parameters
-
-##### value
-
-`unknown`
-
-#### Returns
-
-`value is Declaration`
 
 #### Implementation of
 
@@ -124,11 +61,9 @@ Equatable.equals
 
 #### Get Signature
 
-```ts
+```typescript
 get important(): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ##### Returns
 
@@ -140,11 +75,9 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 
 #### Get Signature
 
-```ts
+```typescript
 get name(): string;
 ```
-
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ##### Returns
 
@@ -154,32 +87,13 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 
 ### of()
 
-```ts
+```typescript
 static of(
    name: string, 
    value: string, 
-   important?: boolean): Declaration;
+   important?: boolean
+): Declaration;
 ```
-
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
-
-#### Parameters
-
-##### name
-
-`string`
-
-##### value
-
-`string`
-
-##### important?
-
-`boolean` = `false`
-
-#### Returns
-
-`Declaration`
 
 ## owner
 
@@ -187,11 +101,9 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 
 #### Get Signature
 
-```ts
+```typescript
 get owner(): Option<Element<string>>;
 ```
-
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ##### Returns
 
@@ -203,11 +115,9 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 
 #### Get Signature
 
-```ts
+```typescript
 get parent(): Option<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ##### Returns
 
@@ -217,15 +127,9 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(): JSON;
 ```
-
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
-
-#### Returns
-
-[`JSON`](Declaration/JSON.md)
 
 #### Implementation of
 
@@ -237,15 +141,9 @@ Serializable.toJSON
 
 ### toString()
 
-```ts
+```typescript
 toString(): string;
 ```
-
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
-
-#### Returns
-
-`string`
 
 ## value
 
@@ -253,11 +151,9 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 
 #### Get Signature
 
-```ts
+```typescript
 get value(): string;
 ```
-
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
 
 ##### Returns
 

@@ -1,70 +1,32 @@
 # Class: Composite\<I, T, Q, S\>
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## Extends
 
 - [`Rule`](../Rule-1.md)\<`I`, `T`, `Q`, `S`\>
 
 ## Type Parameters
 
-### I
-
-`I`
-
-### T
-
-`T` *extends* `Hashable`
-
-### Q
-
-`Q` *extends* [`Metadata`](../Question/Metadata.md) = \{
-\}
-
-### S
-
-`S` = `T`
+| Type Parameter | Default type |
+| ------ | ------ |
+| `I` | - |
+| `T` *extends* `Hashable` | - |
+| `Q` *extends* [`Metadata`](../Question/Metadata.md) | \{ \} |
+| `S` | `T` |
 
 ## Constructors
 
 ### Constructor
 
-```ts
-protected new Composite<I, T, Q, S>(
+```typescript
+protected new Composite<I, T extends Hashable, Q extends Metadata = {
+}, S = T>(
    uri: string, 
    requirements: Array<Requirement<string, string>>, 
    tags: Array<Tag<string>>, 
    composes: Array<Rule<I, T, Q, S>>, 
-evaluate: Evaluate<I, T, Q, S>): Composite<I, T, Q, S>;
+   evaluate: Evaluate<I, T, Q, S>
+): Composite<I, T, Q, S>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-#### Parameters
-
-##### uri
-
-`string`
-
-##### requirements
-
-`Array`\<[`Requirement`](../Requirement-1.md)\<`string`, `string`\>\>
-
-##### tags
-
-`Array`\<[`Tag`](../Tag-1.md)\<`string`\>\>
-
-##### composes
-
-`Array`\<[`Rule`](../Rule-1.md)\<`I`, `T`, `Q`, `S`\>\>
-
-##### evaluate
-
-[`Evaluate`](Composite/Evaluate.md)\<`I`, `T`, `Q`, `S`\>
-
-#### Returns
-
-`Composite`\<`I`, `T`, `Q`, `S`\>
 
 #### Overrides
 
@@ -78,8 +40,6 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 protected readonly _evaluate: Evaluate<I, T, Q, S>;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 #### Inherited from
 
 [`Rule`](../Rule-1.md).[`_evaluate`](../Rule-1.md#_evaluate)
@@ -91,8 +51,6 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ```ts
 protected readonly _requirements: Array<Requirement<string, string>>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### Inherited from
 
@@ -106,8 +64,6 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 protected readonly _tags: Array<Tag<string>>;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 #### Inherited from
 
 [`Rule`](../Rule-1.md).[`_tags`](../Rule-1.md#_tags)
@@ -120,8 +76,6 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 protected readonly _uri: string;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 #### Inherited from
 
 [`Rule`](../Rule-1.md).[`_uri`](../Rule-1.md#_uri)
@@ -132,11 +86,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 #### Get Signature
 
-```ts
+```typescript
 get composes(): readonly Rule<I, T, Q, S>[];
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 
@@ -148,39 +100,9 @@ readonly [`Rule`](../Rule-1.md)\<`I`, `T`, `Q`, `S`\>[]
 
 #### Call Signature
 
-```ts
-equals<I, T, Q, S>(value: Rule<I, T, Q, S>): boolean;
+```typescript
+equals<I, T extends Hashable, Q extends Metadata, S>(value: Rule<I, T, Q, S>): boolean;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Type Parameters
-
-###### I
-
-`I`
-
-###### T
-
-`T` *extends* `Hashable`
-
-###### Q
-
-`Q` *extends* [`Metadata`](../Question/Metadata.md)
-
-###### S
-
-`S`
-
-##### Parameters
-
-###### value
-
-[`Rule`](../Rule-1.md)\<`I`, `T`, `Q`, `S`\>
-
-##### Returns
-
-`boolean`
 
 ##### Inherited from
 
@@ -188,21 +110,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 #### Call Signature
 
-```ts
+```typescript
 equals(value: unknown): value is Composite<I, T, Q, S>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Parameters
-
-###### value
-
-`unknown`
-
-##### Returns
-
-`value is Composite<I, T, Q, S>`
 
 ##### Inherited from
 
@@ -212,39 +122,15 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 ### evaluate()
 
-```ts
+```typescript
 evaluate(
    input: I, 
    oracle?: {
 } extends Q ? any : Oracle<I, T, Q, S>, 
    outcomes?: Cache, 
-performance?: Performance<Event<I, T, Q, S, Type, string>>): Promise<Iterable<Outcome<I, T, Q, S, Value>>>;
+   performance?: Performance<Event<I, T, Q, S, Type, string>>
+): Promise<Iterable<Outcome<I, T, Q, S, Value>>>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-#### Parameters
-
-##### input
-
-`I`
-
-##### oracle?
-
-\{
-\} *extends* `Q` ? `any` : [`Oracle`](../Oracle.md)\<`I`, `T`, `Q`, `S`\> = `...`
-
-##### outcomes?
-
-[`Cache`](../Cache.md) = `...`
-
-##### performance?
-
-`Performance`\<[`Event`](Event-1.md)\<`I`, `T`, `Q`, `S`, [`Type`](Event/Type.md), `string`\>\>
-
-#### Returns
-
-`Promise`\<`Iterable`\<[`Outcome`](../Outcome-1.md)\<`I`, `T`, `Q`, `S`, [`Value`](../Outcome/Value.md)\>\>\>
 
 #### Inherited from
 
@@ -254,21 +140,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 ### hash()
 
-```ts
+```typescript
 hash(hash: Hash): void;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-#### Parameters
-
-##### hash
-
-`Hash`
-
-#### Returns
-
-`void`
 
 #### Inherited from
 
@@ -280,21 +154,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 #### Call Signature
 
-```ts
+```typescript
 hasRequirement(requirement: Requirement): boolean;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Parameters
-
-###### requirement
-
-[`Requirement`](../Requirement-1.md)
-
-##### Returns
-
-`boolean`
 
 ##### Inherited from
 
@@ -302,21 +164,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 #### Call Signature
 
-```ts
+```typescript
 hasRequirement(predicate: Predicate<Requirement<string, string>>): boolean;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Parameters
-
-###### predicate
-
-`Predicate`\<[`Requirement`](../Requirement-1.md)\<`string`, `string`\>\>
-
-##### Returns
-
-`boolean`
 
 ##### Inherited from
 
@@ -328,21 +178,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 #### Call Signature
 
-```ts
+```typescript
 hasTag(tag: Tag): boolean;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Parameters
-
-###### tag
-
-[`Tag`](../Tag-1.md)
-
-##### Returns
-
-`boolean`
 
 ##### Inherited from
 
@@ -350,21 +188,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 #### Call Signature
 
-```ts
+```typescript
 hasTag(predicate: Predicate<Tag<string>>): boolean;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Parameters
-
-###### predicate
-
-`Predicate`\<[`Tag`](../Tag-1.md)\<`string`\>\>
-
-##### Returns
-
-`boolean`
 
 ##### Inherited from
 
@@ -374,8 +200,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 ### of()
 
-```ts
-static of<I, T, Q, S>(properties: {
+```typescript
+static of<I, T extends Hashable, Q extends Metadata = {
+}, S = T>(properties: {
   composes: Iterable<Rule<I, T, Q, S>>;
   evaluate: Evaluate<I, T, Q, S>;
   requirements?: Iterable<Requirement<string, string>>;
@@ -384,66 +211,15 @@ static of<I, T, Q, S>(properties: {
 }): Composite<I, T, Q, S>;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-#### Type Parameters
-
-##### I
-
-`I`
-
-##### T
-
-`T` *extends* `Hashable`
-
-##### Q
-
-`Q` *extends* [`Metadata`](../Question/Metadata.md) = \{
-\}
-
-##### S
-
-`S` = `T`
-
-#### Parameters
-
-##### properties
-
-###### composes
-
-`Iterable`\<[`Rule`](../Rule-1.md)\<`I`, `T`, `Q`, `S`\>\>
-
-###### evaluate
-
-[`Evaluate`](Composite/Evaluate.md)\<`I`, `T`, `Q`, `S`\>
-
-###### requirements?
-
-`Iterable`\<[`Requirement`](../Requirement-1.md)\<`string`, `string`\>\>
-
-###### tags?
-
-`Iterable`\<[`Tag`](../Tag-1.md)\<`string`\>\>
-
-###### uri
-
-`string`
-
-#### Returns
-
-`Composite`\<`I`, `T`, `Q`, `S`\>
-
 ## requirements
 
 ### requirements
 
 #### Get Signature
 
-```ts
+```typescript
 get requirements(): readonly Requirement<string, string>[];
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 
@@ -459,11 +235,9 @@ readonly [`Requirement`](../Requirement-1.md)\<`string`, `string`\>[]
 
 #### Get Signature
 
-```ts
+```typescript
 get tags(): readonly Tag<string>[];
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 
@@ -477,15 +251,9 @@ readonly [`Tag`](../Tag-1.md)\<`string`\>[]
 
 ### toEARL()
 
-```ts
+```typescript
 toEARL(): EARL;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-#### Returns
-
-[`EARL`](EARL.md)
 
 #### Inherited from
 
@@ -497,25 +265,11 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 #### Call Signature
 
-```ts
+```typescript
 toJSON(options: {
   verbosity: Minimal;
 }): MinimalJSON;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Parameters
-
-###### options
-
-###### verbosity
-
-`Minimal`
-
-##### Returns
-
-[`MinimalJSON`](MinimalJSON.md)
 
 ##### Overrides
 
@@ -523,15 +277,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 #### Call Signature
 
-```ts
+```typescript
 toJSON(): JSON;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-##### Returns
-
-[`JSON`](Composite/JSON.md)
 
 ##### Overrides
 
@@ -541,15 +289,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 ### toSARIF()
 
-```ts
+```typescript
 toSARIF(): ReportingDescriptor;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-#### Returns
-
-`ReportingDescriptor`
 
 #### Inherited from
 
@@ -561,11 +303,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 #### Get Signature
 
-```ts
+```typescript
 get uri(): string;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 

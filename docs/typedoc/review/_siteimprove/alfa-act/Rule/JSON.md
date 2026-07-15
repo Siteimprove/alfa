@@ -1,7 +1,5 @@
 # Interface: JSON
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## Extended by
 
 - [`JSON`](Atomic/JSON.md)
@@ -21,8 +19,6 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 requirements: Array<JSON<string, string>>;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## tags
 
 ### tags
@@ -30,8 +26,6 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ```ts
 tags: Array<JSON<string>>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## type
 
@@ -41,8 +35,6 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 type: string;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## uri
 
 ### uri
@@ -50,5 +42,3 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ```ts
 uri: string;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

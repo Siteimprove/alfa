@@ -1,36 +1,19 @@
 # Class: Question\<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI\>
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
 ## Extended by
 
 - [`Rhetorical`](Question/Rhetorical.md)
 
 ## Type Parameters
 
-### TYPE
-
-`TYPE`
-
-### SUBJECT
-
-`SUBJECT`
-
-### CONTEXT
-
-`CONTEXT`
-
-### ANSWER
-
-`ANSWER`
-
-### T
-
-`T` = `ANSWER`
-
-### URI
-
-`URI` *extends* `string` = `string`
+| Type Parameter | Default type |
+| ------ | ------ |
+| `TYPE` | - |
+| `SUBJECT` | - |
+| `CONTEXT` | - |
+| `ANSWER` | - |
+| `T` | `ANSWER` |
+| `URI` *extends* `string` | `string` |
 
 ## Implements
 
@@ -43,8 +26,8 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 
 ### Constructor
 
-```ts
-protected new Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>(
+```typescript
+protected new Question<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string>(
    type: TYPE, 
    uri: URI, 
    message: string, 
@@ -52,48 +35,9 @@ protected new Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>(
    fallback: Option<ANSWER>, 
    subject: SUBJECT, 
    context: CONTEXT, 
-quester: Mapper<ANSWER, T>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
+   quester: Mapper<ANSWER, T>
+): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
-#### Parameters
-
-##### type
-
-`TYPE`
-
-##### uri
-
-`URI`
-
-##### message
-
-`string`
-
-##### diagnostic
-
-[`Diagnostic`](Diagnostic-1.md)
-
-##### fallback
-
-`Option`\<`ANSWER`\>
-
-##### subject
-
-`SUBJECT`
-
-##### context
-
-`CONTEXT`
-
-##### quester
-
-`Mapper`\<`ANSWER`, `T`\>
-
-#### Returns
-
-`Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>
 
 ## _context
 
@@ -103,8 +47,6 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 protected readonly _context: CONTEXT;
 ```
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
 ## _diagnostic
 
 ### \_diagnostic
@@ -112,8 +54,6 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 ```ts
 protected readonly _diagnostic: Diagnostic;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## _fallback
 
@@ -123,8 +63,6 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 protected readonly _fallback: Option<ANSWER>;
 ```
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
 ## _message
 
 ### \_message
@@ -132,8 +70,6 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 ```ts
 protected readonly _message: string;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## _quester
 
@@ -143,8 +79,6 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 protected readonly _quester: Mapper<ANSWER, T>;
 ```
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
 ## _subject
 
 ### \_subject
@@ -152,8 +86,6 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 ```ts
 protected readonly _subject: SUBJECT;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## _type
 
@@ -163,8 +95,6 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 protected readonly _type: TYPE;
 ```
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
 ## _uri
 
 ### \_uri
@@ -173,27 +103,13 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 protected readonly _uri: URI;
 ```
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
 ## answer
 
 ### answer()
 
-```ts
+```typescript
 answer(answer: ANSWER): T;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
-#### Parameters
-
-##### answer
-
-`ANSWER`
-
-#### Returns
-
-`T`
 
 ## answerIf
 
@@ -201,131 +117,41 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 
 #### Call Signature
 
-```ts
+```typescript
 answerIf(condition: boolean, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
-##### Parameters
-
-###### condition
-
-`boolean`
-
-###### answer
-
-`ANSWER`
-
-##### Returns
-
-`Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>
-
 #### Call Signature
 
-```ts
+```typescript
 answerIf(predicate: Predicate<SUBJECT, [CONTEXT]>, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
-##### Parameters
-
-###### predicate
-
-`Predicate`\<`SUBJECT`, \[`CONTEXT`\]\>
-
-###### answer
-
-`ANSWER`
-
-##### Returns
-
-`Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>
-
 #### Call Signature
 
-```ts
+```typescript
 answerIf(answer: Option<ANSWER>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
-##### Parameters
-
-###### answer
-
-`Option`\<`ANSWER`\>
-
-##### Returns
-
-`Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>
-
 #### Call Signature
 
-```ts
+```typescript
 answerIf(answer: Result<ANSWER, Diagnostic>, merger?: Mapper<Diagnostic, Diagnostic, [Diagnostic]>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
-##### Parameters
-
-###### answer
-
-`Result`\<`ANSWER`, [`Diagnostic`](Diagnostic-1.md)\>
-
-###### merger?
-
-`Mapper`\<[`Diagnostic`](Diagnostic-1.md), [`Diagnostic`](Diagnostic-1.md), \[[`Diagnostic`](Diagnostic-1.md)\]\>
-
-##### Returns
-
-`Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>
-
 #### Call Signature
 
-```ts
+```typescript
 answerIf(answer: Result<ANSWER, unknown>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
-##### Parameters
-
-###### answer
-
-`Result`\<`ANSWER`, `unknown`\>
-
-##### Returns
-
-`Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>
 
 ## apply
 
 ### apply()
 
-```ts
+```typescript
 apply<U>(mapper: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Mapper<T, U>, URI>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
-#### Type Parameters
-
-##### U
-
-`U`
-
-#### Parameters
-
-##### mapper
-
-`Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `Mapper`\<`T`, `U`\>, `URI`\>
-
-#### Returns
-
-`Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `U`, `URI`\>
 
 #### Implementation of
 
@@ -339,11 +165,9 @@ Applicative.apply
 
 #### Get Signature
 
-```ts
+```typescript
 get context(): CONTEXT;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Returns
 
@@ -355,11 +179,9 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 
 #### Get Signature
 
-```ts
+```typescript
 get diagnostic(): Diagnostic;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Returns
 
@@ -371,11 +193,9 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 
 #### Get Signature
 
-```ts
+```typescript
 get fallback(): Option<ANSWER>;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Returns
 
@@ -385,27 +205,9 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 
 ### flatMap()
 
-```ts
+```typescript
 flatMap<U>(mapper: Mapper<T, Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
-#### Type Parameters
-
-##### U
-
-`U`
-
-#### Parameters
-
-##### mapper
-
-`Mapper`\<`T`, `Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `U`, `URI`\>\>
-
-#### Returns
-
-`Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `U`, `URI`\>
 
 #### Implementation of
 
@@ -417,43 +219,9 @@ Monad.flatMap
 
 ### flatten()
 
-```ts
+```typescript
 flatten<TYPE, SUBJECT, CONTEXT, ANSWER, T>(this: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, string>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T>;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
-#### Type Parameters
-
-##### TYPE
-
-`TYPE`
-
-##### SUBJECT
-
-`SUBJECT`
-
-##### CONTEXT
-
-`CONTEXT`
-
-##### ANSWER
-
-`ANSWER`
-
-##### T
-
-`T`
-
-#### Parameters
-
-##### this
-
-`Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `string`\>\>
-
-#### Returns
-
-`Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`\>
 
 #### Implementation of
 
@@ -465,41 +233,17 @@ Monad.flatten
 
 ### isRhetorical()
 
-```ts
+```typescript
 isRhetorical(): this is Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T, string>;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
-#### Returns
-
-`this is Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T, string>`
 
 ## map
 
 ### map()
 
-```ts
+```typescript
 map<U>(mapper: Mapper<T, U>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
-#### Type Parameters
-
-##### U
-
-`U`
-
-#### Parameters
-
-##### mapper
-
-`Mapper`\<`T`, `U`\>
-
-#### Returns
-
-`Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `U`, `URI`\>
 
 #### Implementation of
 
@@ -513,11 +257,9 @@ Functor.map
 
 #### Get Signature
 
-```ts
+```typescript
 get message(): string;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Returns
 
@@ -527,69 +269,16 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 
 ### of()
 
-```ts
-static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI>(
+```typescript
+static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(
    type: TYPE, 
    uri: URI, 
    message: string, 
    subject: SUBJECT, 
    context: CONTEXT, 
-options?: Options<ANSWER>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI>;
+   options?: Options<ANSWER>
+): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI>;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
-#### Type Parameters
-
-##### TYPE
-
-`TYPE`
-
-##### SUBJECT
-
-`SUBJECT`
-
-##### CONTEXT
-
-`CONTEXT`
-
-##### ANSWER
-
-`ANSWER`
-
-##### URI
-
-`URI` *extends* `string` = `string`
-
-#### Parameters
-
-##### type
-
-`TYPE`
-
-##### uri
-
-`URI`
-
-##### message
-
-`string`
-
-##### subject
-
-`SUBJECT`
-
-##### context
-
-`CONTEXT`
-
-##### options?
-
-[`Options`](Question/Options.md)\<`ANSWER`\> = `{}`
-
-#### Returns
-
-`Question`\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `ANSWER`, `URI`\>
 
 ## subject
 
@@ -597,11 +286,9 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 
 #### Get Signature
 
-```ts
+```typescript
 get subject(): SUBJECT;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Returns
 
@@ -611,21 +298,9 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(options?: Options): JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI>;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
-#### Parameters
-
-##### options?
-
-`Options`
-
-#### Returns
-
-[`JSON`](Question/JSON.md)\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `URI`\>
 
 #### Implementation of
 
@@ -639,11 +314,9 @@ Serializable.toJSON
 
 #### Get Signature
 
-```ts
+```typescript
 get type(): TYPE;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Returns
 
@@ -655,11 +328,9 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 
 #### Get Signature
 
-```ts
+```typescript
 get uri(): URI;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ##### Returns
 

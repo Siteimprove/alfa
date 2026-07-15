@@ -1,7 +1,5 @@
 # Class: FontFace
 
-Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/font-face.ts)
-
 ## Extends
 
 - `BaseRule`\<`"font-face"`\>
@@ -10,21 +8,9 @@ Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprov
 
 ### Constructor
 
-```ts
+```typescript
 protected new FontFace(declarations: Declaration[]): FontFaceRule;
 ```
-
-Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/font-face.ts)
-
-#### Parameters
-
-##### declarations
-
-[`Declaration`](../Declaration-1.md)[]
-
-#### Returns
-
-`FontFaceRule`
 
 #### Overrides
 
@@ -36,21 +22,9 @@ BaseRule<"font-face">.constructor
 
 ### \_attachOwner()
 
-```ts
+```typescript
 _attachOwner(owner: Sheet): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### owner
-
-[`Sheet`](../Sheet-1.md)
-
-#### Returns
-
-`boolean`
 
 #### Inherited from
 
@@ -62,21 +36,9 @@ BaseRule._attachOwner
 
 ### \_attachParent()
 
-```ts
+```typescript
 _attachParent(parent: Rule): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### parent
-
-[`Rule`](../Rule-1.md)
-
-#### Returns
-
-`boolean`
 
 #### Inherited from
 
@@ -92,8 +54,6 @@ BaseRule._attachParent
 protected _owner: Option<Sheet> = None;
 ```
 
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
 #### Inherited from
 
 ```ts
@@ -108,8 +68,6 @@ BaseRule._owner
 protected _parent: Option<Rule> = None;
 ```
 
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
 #### Inherited from
 
 ```ts
@@ -120,15 +78,9 @@ BaseRule._parent
 
 ### ancestors()
 
-```ts
+```typescript
 ancestors(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -140,15 +92,9 @@ BaseRule.ancestors
 
 ### children()
 
-```ts
+```typescript
 children(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -160,15 +106,9 @@ BaseRule.children
 
 ### descendants()
 
-```ts
+```typescript
 descendants(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -180,21 +120,9 @@ BaseRule.descendants
 
 ### equals()
 
-```ts
+```typescript
 equals(value: unknown): value is FontFace;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### value
-
-`unknown`
-
-#### Returns
-
-`value is FontFace`
 
 #### Inherited from
 
@@ -206,21 +134,9 @@ BaseRule.equals
 
 ### of()
 
-```ts
+```typescript
 static of(declarations: Iterable<Declaration>): FontFaceRule;
 ```
-
-Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/font-face.ts)
-
-#### Parameters
-
-##### declarations
-
-`Iterable`\<[`Declaration`](../Declaration-1.md)\>
-
-#### Returns
-
-`FontFaceRule`
 
 ## owner
 
@@ -228,11 +144,9 @@ Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprov
 
 #### Get Signature
 
-```ts
+```typescript
 get owner(): Option<Sheet>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 
@@ -250,11 +164,9 @@ BaseRule.owner
 
 #### Get Signature
 
-```ts
+```typescript
 get parent(): Option<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 
@@ -272,11 +184,9 @@ BaseRule.parent
 
 #### Get Signature
 
-```ts
+```typescript
 get style(): Block;
 ```
-
-Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/font-face.ts)
 
 ##### Returns
 
@@ -286,15 +196,9 @@ Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprov
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(): JSON;
 ```
-
-Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/font-face.ts)
-
-#### Returns
-
-[`JSON`](FontFace/JSON.md)
 
 #### Overrides
 
@@ -306,15 +210,9 @@ BaseRule.toJSON
 
 ### toString()
 
-```ts
+```typescript
 toString(): string;
 ```
-
-Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/font-face.ts)
-
-#### Returns
-
-`string`
 
 ## type
 
@@ -322,11 +220,9 @@ Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprov
 
 #### Get Signature
 
-```ts
+```typescript
 get type(): T;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 

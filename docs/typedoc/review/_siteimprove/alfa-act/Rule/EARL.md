@@ -1,7 +1,5 @@
 # Interface: EARL
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## Extends
 
 - `EARL`
@@ -22,8 +20,6 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
   earl: "http://www.w3.org/ns/earl#";
 };
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### dct
 
@@ -55,8 +51,6 @@ earl.EARL.@context
 @id: string;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## @type
 
 ### @type
@@ -64,8 +58,6 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ```ts
 @type: ["earl:TestCriterion", "earl:TestCase"];
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ## dct:isPartOf
 
@@ -76,8 +68,6 @@ dct:isPartOf: {
   @set: Array<EARL>;
 };
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 #### @set
 

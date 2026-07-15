@@ -1,7 +1,5 @@
 # Enumeration: Mode
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## Enumeration Members
 
 ### Automatic
@@ -9,8 +7,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ```ts
 Automatic: "automatic";
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ***
 
@@ -20,8 +16,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 Manual: "manual";
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ***
 
 ### SemiAuto
@@ -29,5 +23,3 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ```ts
 SemiAuto: "semiAuto";
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

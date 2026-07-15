@@ -1,7 +1,5 @@
 # Class: Sheet
 
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
-
 ## Implements
 
 - `Equatable`
@@ -11,46 +9,21 @@ Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/bl
 
 ### Constructor
 
-```ts
+```typescript
 protected new Sheet(
    rules: Rule[], 
    disabled: boolean, 
-   condition: Option<string>): Sheet;
+   condition: Option<string>
+): Sheet;
 ```
-
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
-
-#### Parameters
-
-##### rules
-
-[`Rule`](Rule-1.md)[]
-
-##### disabled
-
-`boolean`
-
-##### condition
-
-`Option`\<`string`\>
-
-#### Returns
-
-`Sheet`
 
 ## children
 
 ### children()
 
-```ts
+```typescript
 children(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](Rule-1.md)\>
 
 ## condition
 
@@ -58,11 +31,9 @@ Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/bl
 
 #### Get Signature
 
-```ts
+```typescript
 get condition(): Option<string>;
 ```
-
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 ##### Returns
 
@@ -72,15 +43,9 @@ Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/bl
 
 ### descendants()
 
-```ts
+```typescript
 descendants(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](Rule-1.md)\>
 
 ## disabled
 
@@ -88,11 +53,9 @@ Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/bl
 
 #### Get Signature
 
-```ts
+```typescript
 get disabled(): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 ##### Returns
 
@@ -102,35 +65,17 @@ Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/bl
 
 ### empty()
 
-```ts
+```typescript
 static empty(): Sheet;
 ```
-
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
-
-#### Returns
-
-`Sheet`
 
 ## equals
 
 ### equals()
 
-```ts
+```typescript
 equals(value: unknown): value is Sheet;
 ```
-
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
-
-#### Parameters
-
-##### value
-
-`unknown`
-
-#### Returns
-
-`value is Sheet`
 
 #### Implementation of
 
@@ -142,32 +87,13 @@ Equatable.equals
 
 ### of()
 
-```ts
+```typescript
 static of(
    rules: Iterable<Rule>, 
    disabled?: boolean, 
-   condition?: Option<string>): Sheet;
+   condition?: Option<string>
+): Sheet;
 ```
-
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
-
-#### Parameters
-
-##### rules
-
-`Iterable`\<[`Rule`](Rule-1.md)\>
-
-##### disabled?
-
-`boolean` = `false`
-
-##### condition?
-
-`Option`\<`string`\> = `None`
-
-#### Returns
-
-`Sheet`
 
 ## rules
 
@@ -175,11 +101,9 @@ Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/bl
 
 #### Get Signature
 
-```ts
+```typescript
 get rules(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
 
 ##### Returns
 
@@ -189,15 +113,9 @@ Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/bl
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(): JSON;
 ```
-
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
-
-#### Returns
-
-[`JSON`](Sheet/JSON.md)
 
 #### Implementation of
 
@@ -209,12 +127,6 @@ Serializable.toJSON
 
 ### toString()
 
-```ts
+```typescript
 toString(): string;
 ```
-
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
-
-#### Returns
-
-`string`

@@ -1,7 +1,5 @@
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
-
 ## Indexable
 
 ```ts
@@ -16,8 +14,6 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 important: boolean;
 ```
 
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
-
 ## name
 
 ### name
@@ -26,8 +22,6 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 name: string;
 ```
 
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)
-
 ## value
 
 ### value
@@ -35,5 +29,3 @@ Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/a
 ```ts
 value: string;
 ```
-
-Defined in: [alfa-dom/src/style/declaration.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/declaration.ts)

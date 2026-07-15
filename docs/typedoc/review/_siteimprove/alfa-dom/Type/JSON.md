@@ -1,16 +1,14 @@
 # Interface: JSON\<N\>
 
-Defined in: [alfa-dom/src/node/type.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts)
-
 ## Extends
 
 - `JSON`\<`"type"`\>
 
 ## Type Parameters
 
-### N
-
-`N` *extends* `string` = `string`
+| Type Parameter | Default type |
+| ------ | ------ |
+| `N` *extends* `string` | `string` |
 
 ## Indexable
 
@@ -26,8 +24,6 @@ Defined in: [alfa-dom/src/node/type.ts](https://github.com/Siteimprove/alfa/blob
 optional children?: JSON[];
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
 #### Inherited from
 
 ```ts
@@ -41,8 +37,6 @@ BaseNode.JSON.children
 ```ts
 optional externalId?: string;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 #### Inherited from
 
@@ -58,8 +52,6 @@ BaseNode.JSON.externalId
 optional internalId?: string;
 ```
 
-Defined in: alfa-tree/dist/tree.d.ts
-
 #### Inherited from
 
 ```ts
@@ -74,8 +66,6 @@ BaseNode.JSON.internalId
 name: N;
 ```
 
-Defined in: [alfa-dom/src/node/type.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts)
-
 ## path
 
 ### path?
@@ -83,8 +73,6 @@ Defined in: [alfa-dom/src/node/type.ts](https://github.com/Siteimprove/alfa/blob
 ```ts
 optional path?: string;
 ```
-
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -100,8 +88,6 @@ BaseNode.JSON.path
 publicId: string | null;
 ```
 
-Defined in: [alfa-dom/src/node/type.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts)
-
 ## serializationId
 
 ### serializationId?
@@ -109,8 +95,6 @@ Defined in: [alfa-dom/src/node/type.ts](https://github.com/Siteimprove/alfa/blob
 ```ts
 optional serializationId?: string;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 #### Inherited from
 
@@ -126,8 +110,6 @@ BaseNode.JSON.serializationId
 systemId: string | null;
 ```
 
-Defined in: [alfa-dom/src/node/type.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/type.ts)
-
 ## type
 
 ### type
@@ -135,8 +117,6 @@ Defined in: [alfa-dom/src/node/type.ts](https://github.com/Siteimprove/alfa/blob
 ```ts
 type: "type";
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 #### Inherited from
 

@@ -1,7 +1,5 @@
 # Enumeration: Value
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## Enumeration Members
 
 ### CantTell
@@ -9,8 +7,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ```ts
 CantTell: "cantTell";
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ***
 
@@ -20,8 +16,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 Failed: "failed";
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ***
 
 ### Inapplicable
@@ -30,8 +24,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 Inapplicable: "inapplicable";
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ***
 
 ### Passed
@@ -39,5 +31,3 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ```ts
 Passed: "passed";
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

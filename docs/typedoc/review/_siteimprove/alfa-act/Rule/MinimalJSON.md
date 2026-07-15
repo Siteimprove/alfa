@@ -1,7 +1,5 @@
 # Interface: MinimalJSON
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## Indexable
 
 ```ts
@@ -15,5 +13,3 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ```ts
 uri: string;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

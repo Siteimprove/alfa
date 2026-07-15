@@ -1,24 +1,7 @@
 # Function: keyframe()
 
-```ts
+```typescript
 function keyframe(key: string, declarations: 
   | Record<string, string>
   | Declaration[]): Keyframe;
 ```
-
-Defined in: [alfa-dom/src/h.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/h.ts)
-
-## Parameters
-
-### key
-
-`string`
-
-### declarations
-
-  \| `Record`\<`string`, `string`\>
-  \| [`Declaration`](../../Declaration-1.md)[]
-
-## Returns
-
-[`Keyframe`](../../Rule/Keyframe-2.md)

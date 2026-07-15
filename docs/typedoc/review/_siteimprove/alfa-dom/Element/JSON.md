@@ -1,16 +1,14 @@
 # Interface: JSON\<N\>
 
-Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
-
 ## Extends
 
 - `JSON`\<`"element"`\>
 
 ## Type Parameters
 
-### N
-
-`N` *extends* `string` = `string`
+| Type Parameter | Default type |
+| ------ | ------ |
+| `N` *extends* `string` | `string` |
 
 ## Indexable
 
@@ -26,8 +24,6 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 attributes: JSON<string>[];
 ```
 
-Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
-
 ## box
 
 ### box
@@ -36,8 +32,6 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 box: JSON | null;
 ```
 
-Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
-
 ## children
 
 ### children?
@@ -45,8 +39,6 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ```ts
 optional children?: JSON[];
 ```
-
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -62,8 +54,6 @@ BaseNode.JSON.children
 content: JSON | null;
 ```
 
-Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
-
 ## externalId
 
 ### externalId?
@@ -71,8 +61,6 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ```ts
 optional externalId?: string;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 #### Inherited from
 
@@ -88,8 +76,6 @@ BaseNode.JSON.externalId
 optional internalId?: string;
 ```
 
-Defined in: alfa-tree/dist/tree.d.ts
-
 #### Inherited from
 
 ```ts
@@ -104,8 +90,6 @@ BaseNode.JSON.internalId
 name: N;
 ```
 
-Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
-
 ## namespace
 
 ### namespace
@@ -114,8 +98,6 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 namespace: string | null;
 ```
 
-Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
-
 ## path
 
 ### path?
@@ -123,8 +105,6 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ```ts
 optional path?: string;
 ```
-
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -140,8 +120,6 @@ BaseNode.JSON.path
 prefix: string | null;
 ```
 
-Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
-
 ## serializationId
 
 ### serializationId?
@@ -149,8 +127,6 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ```ts
 optional serializationId?: string;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 #### Inherited from
 
@@ -166,8 +142,6 @@ BaseNode.JSON.serializationId
 shadow: JSON | null;
 ```
 
-Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
-
 ## style
 
 ### style
@@ -176,8 +150,6 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 style: string | JSON | null;
 ```
 
-Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
-
 ## type
 
 ### type
@@ -185,8 +157,6 @@ Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimpro
 ```ts
 type: "element";
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 #### Inherited from
 

@@ -1,7 +1,5 @@
 # Class: Diagnostic
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
-
 ## Implements
 
 - `Equatable`
@@ -12,21 +10,9 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimpr
 
 ### Constructor
 
-```ts
+```typescript
 protected new Diagnostic(message: string): Diagnostic;
 ```
-
-Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
-
-#### Parameters
-
-##### message
-
-`string`
-
-#### Returns
-
-`Diagnostic`
 
 ## _message
 
@@ -36,21 +22,13 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimpr
 protected readonly _message: string;
 ```
 
-Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
-
 ## empty
 
 ### empty()
 
-```ts
+```typescript
 static empty(): Diagnostic;
 ```
-
-Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
-
-#### Returns
-
-`Diagnostic`
 
 ## equals
 
@@ -58,21 +36,9 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimpr
 
 #### Call Signature
 
-```ts
+```typescript
 equals(value: Diagnostic): boolean;
 ```
-
-Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
-
-##### Parameters
-
-###### value
-
-`Diagnostic`
-
-##### Returns
-
-`boolean`
 
 ##### Implementation of
 
@@ -82,21 +48,9 @@ Equatable.equals
 
 #### Call Signature
 
-```ts
+```typescript
 equals(value: unknown): value is Diagnostic;
 ```
-
-Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
-
-##### Parameters
-
-###### value
-
-`unknown`
-
-##### Returns
-
-`value is Diagnostic`
 
 ##### Implementation of
 
@@ -108,21 +62,9 @@ Equatable.equals
 
 ### hash()
 
-```ts
+```typescript
 hash(hash: Hash): void;
 ```
-
-Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
-
-#### Parameters
-
-##### hash
-
-`Hash`
-
-#### Returns
-
-`void`
 
 #### Implementation of
 
@@ -136,11 +78,9 @@ Hashable.hash
 
 #### Get Signature
 
-```ts
+```typescript
 get message(): string;
 ```
-
-Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
 
 ##### Returns
 
@@ -150,41 +90,17 @@ Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimpr
 
 ### of()
 
-```ts
+```typescript
 static of(message: string): Diagnostic;
 ```
-
-Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
-
-#### Parameters
-
-##### message
-
-`string`
-
-#### Returns
-
-`Diagnostic`
 
 ## toJSON
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(options?: Options): JSON;
 ```
-
-Defined in: [alfa-act/src/expectation/diagnostic.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/diagnostic.ts)
-
-#### Parameters
-
-##### options?
-
-`Options`
-
-#### Returns
-
-[`JSON`](Diagnostic/JSON.md)
 
 #### Implementation of
 

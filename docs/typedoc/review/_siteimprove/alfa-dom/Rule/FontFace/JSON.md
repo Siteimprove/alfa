@@ -1,7 +1,5 @@
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/font-face.ts)
-
 ## Extends
 
 - `JSON`\<`"font-face"`\>
@@ -20,8 +18,6 @@ Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprov
 style: string | JSON;
 ```
 
-Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/font-face.ts)
-
 ## type
 
 ### type
@@ -29,8 +25,6 @@ Defined in: [alfa-dom/src/style/rule/font-face.ts](https://github.com/Siteimprov
 ```ts
 type: "font-face";
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 

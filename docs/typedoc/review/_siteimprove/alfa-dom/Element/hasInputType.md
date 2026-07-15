@@ -7,40 +7,14 @@ hasInputType: {
 };
 ```
 
-Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
-
 ## Call Signature
 
-```ts
+```typescript
 (predicate: Predicate<InputType>): Predicate<Element<string>>;
 ```
 
-### Parameters
-
-#### predicate
-
-`Predicate`\<`InputType`\>
-
-### Returns
-
-`Predicate`\<[`Element`](../Element-1.md)\<`string`\>\>
-
 ## Call Signature
 
-```ts
+```typescript
 (inputType: InputType, ...rest: InputType[]): Predicate<Element<string>>;
 ```
-
-### Parameters
-
-#### inputType
-
-`InputType`
-
-#### rest
-
-...`InputType`[]
-
-### Returns
-
-`Predicate`\<[`Element`](../Element-1.md)\<`string`\>\>

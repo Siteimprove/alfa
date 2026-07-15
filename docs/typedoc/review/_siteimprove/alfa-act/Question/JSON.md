@@ -1,28 +1,14 @@
 # Interface: JSON\<TYPE, SUBJECT, CONTEXT, ANSWER, URI\>
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
 ## Type Parameters
 
-### TYPE
-
-`TYPE`
-
-### SUBJECT
-
-`SUBJECT`
-
-### CONTEXT
-
-`CONTEXT`
-
-### ANSWER
-
-`ANSWER`
-
-### URI
-
-`URI` *extends* `string` = `string`
+| Type Parameter | Default type |
+| ------ | ------ |
+| `TYPE` | - |
+| `SUBJECT` | - |
+| `CONTEXT` | - |
+| `ANSWER` | - |
+| `URI` *extends* `string` | `string` |
 
 ## Indexable
 
@@ -38,8 +24,6 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 context: ToJSON<CONTEXT>;
 ```
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
 ## diagnostic
 
 ### diagnostic
@@ -47,8 +31,6 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 ```ts
 diagnostic: JSON;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## fallback
 
@@ -58,8 +40,6 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 fallback: JSON<ANSWER>;
 ```
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
 ## message
 
 ### message
@@ -67,8 +47,6 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 ```ts
 message: string;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
 
 ## subject
 
@@ -78,8 +56,6 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 subject: ToJSON<SUBJECT>;
 ```
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
 ## type
 
 ### type
@@ -88,8 +64,6 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 type: ToJSON<TYPE>;
 ```
 
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)
-
 ## uri
 
 ### uri
@@ -97,5 +71,3 @@ Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprov
 ```ts
 uri: URI;
 ```
-
-Defined in: [alfa-act/src/expectation/question.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/expectation/question.ts)

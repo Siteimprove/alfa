@@ -1,17 +1,5 @@
 # Function: is()
 
-```ts
+```typescript
 function is(predicate: Predicate<string>): Predicate<Text>;
 ```
-
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
-
-## Parameters
-
-### predicate
-
-`Predicate`\<`string`\>
-
-## Returns
-
-`Predicate`\<[`Text`](../Text-1.md)\>

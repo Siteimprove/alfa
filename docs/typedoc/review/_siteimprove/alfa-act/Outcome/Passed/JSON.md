@@ -1,16 +1,14 @@
 # Interface: JSON\<T\>
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## Extends
 
 - [`JSON`](../JSON.md)\<[`Passed`](../Value.md#passed)\>
 
 ## Type Parameters
 
-### T
-
-`T`
+| Type Parameter |
+| ------ |
+| `T` |
 
 ## Indexable
 
@@ -26,8 +24,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 expectations: [string, JSON<JSON, JSON>][];
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## mode
 
 ### mode
@@ -35,8 +31,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ```ts
 mode: Mode;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Inherited from
 
@@ -50,8 +44,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 outcome: Passed;
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 #### Inherited from
 
 [`JSON`](../JSON.md).[`outcome`](../JSON.md#outcome)
@@ -64,8 +56,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 rule: JSON | MinimalJSON;
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 #### Inherited from
 
 [`JSON`](../JSON.md).[`rule`](../JSON.md#rule)
@@ -77,5 +67,3 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ```ts
 target: ToJSON<T>;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

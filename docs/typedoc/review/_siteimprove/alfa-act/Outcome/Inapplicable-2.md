@@ -1,53 +1,26 @@
 # Class: Inapplicable\<I, T, Q, S\>
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## Extends
 
 - [`Outcome`](../Outcome-1.md)\<`I`, `T`, `Q`, `S`, [`Inapplicable`](Value.md#inapplicable)\>
 
 ## Type Parameters
 
-### I
-
-`I`
-
-### T
-
-`T` *extends* `Hashable`
-
-### Q
-
-`Q` *extends* [`Metadata`](../Question/Metadata.md) = \{
-\}
-
-### S
-
-`S` = `T`
+| Type Parameter | Default type |
+| ------ | ------ |
+| `I` | - |
+| `T` *extends* `Hashable` | - |
+| `Q` *extends* [`Metadata`](../Question/Metadata.md) | \{ \} |
+| `S` | `T` |
 
 ## Constructors
 
 ### Constructor
 
-```ts
-protected new Inapplicable<I, T, Q, S>(rule: Rule<I, T, Q, S>, mode: Mode): Inapplicable<I, T, Q, S>;
+```typescript
+protected new Inapplicable<I, T extends Hashable, Q extends Metadata = {
+}, S = T>(rule: Rule<I, T, Q, S>, mode: Mode): Inapplicable<I, T, Q, S>;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-#### Parameters
-
-##### rule
-
-[`Rule`](../Rule-1.md)\<`I`, `T`, `Q`, `S`\>
-
-##### mode
-
-[`Mode`](Mode.md)
-
-#### Returns
-
-`Inapplicable`\<`I`, `T`, `Q`, `S`\>
 
 #### Overrides
 
@@ -61,8 +34,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 protected readonly _mode: Mode;
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 #### Inherited from
 
 [`Outcome`](../Outcome-1.md).[`_mode`](../Outcome-1.md#_mode)
@@ -75,8 +46,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 protected readonly _rule: Rule<I, T, Q, S>;
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 #### Inherited from
 
 [`Outcome`](../Outcome-1.md).[`_rule`](../Outcome-1.md#_rule)
@@ -87,39 +56,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 #### Call Signature
 
-```ts
-equals<I, T, Q, S>(value: Inapplicable<I, T, Q, S>): boolean;
+```typescript
+equals<I, T extends Hashable, Q extends Metadata, S>(value: Inapplicable<I, T, Q, S>): boolean;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-##### Type Parameters
-
-###### I
-
-`I`
-
-###### T
-
-`T` *extends* `Hashable`
-
-###### Q
-
-`Q` *extends* [`Metadata`](../Question/Metadata.md)
-
-###### S
-
-`S`
-
-##### Parameters
-
-###### value
-
-`Inapplicable`\<`I`, `T`, `Q`, `S`\>
-
-##### Returns
-
-`boolean`
 
 ##### Overrides
 
@@ -127,21 +66,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 #### Call Signature
 
-```ts
+```typescript
 equals(value: unknown): value is Inapplicable<I, T, Q, S>;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-##### Parameters
-
-###### value
-
-`unknown`
-
-##### Returns
-
-`value is Inapplicable<I, T, Q, S>`
 
 ##### Overrides
 
@@ -151,21 +78,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ### hash()
 
-```ts
+```typescript
 hash(hash: Hash): void;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-#### Parameters
-
-##### hash
-
-`Hash`
-
-#### Returns
-
-`void`
 
 #### Inherited from
 
@@ -177,11 +92,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 #### Get Signature
 
-```ts
+```typescript
 get isSemiAuto(): boolean;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -197,11 +110,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 #### Get Signature
 
-```ts
+```typescript
 get mode(): Mode;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -215,43 +126,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ### of()
 
-```ts
-static of<I, T, Q, S>(rule: Rule<I, T, Q, S>, mode: Mode): Inapplicable<I, T, Q, S>;
+```typescript
+static of<I, T extends Hashable, Q extends Metadata, S>(rule: Rule<I, T, Q, S>, mode: Mode): Inapplicable<I, T, Q, S>;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-#### Type Parameters
-
-##### I
-
-`I`
-
-##### T
-
-`T` *extends* `Hashable`
-
-##### Q
-
-`Q` *extends* [`Metadata`](../Question/Metadata.md)
-
-##### S
-
-`S`
-
-#### Parameters
-
-##### rule
-
-[`Rule`](../Rule-1.md)\<`I`, `T`, `Q`, `S`\>
-
-##### mode
-
-[`Mode`](Mode.md)
-
-#### Returns
-
-`Inapplicable`\<`I`, `T`, `Q`, `S`\>
 
 ## outcome
 
@@ -259,11 +136,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 #### Get Signature
 
-```ts
+```typescript
 get outcome(): V;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -279,11 +154,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 #### Get Signature
 
-```ts
+```typescript
 get rule(): Rule<I, T, Q, S>;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -299,11 +172,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 #### Get Signature
 
-```ts
+```typescript
 get target(): T | undefined;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -317,15 +188,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ### toEARL()
 
-```ts
+```typescript
 toEARL(): EARL;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-#### Returns
-
-[`EARL`](Inapplicable/EARL.md)
 
 #### Overrides
 
@@ -335,21 +200,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(options?: Options): JSON;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-#### Parameters
-
-##### options?
-
-`Options`
-
-#### Returns
-
-[`JSON`](Inapplicable/JSON.md)
 
 #### Overrides
 
@@ -359,15 +212,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ### toSARIF()
 
-```ts
+```typescript
 toSARIF(): Result;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-#### Returns
-
-`Result`
 
 #### Overrides
 

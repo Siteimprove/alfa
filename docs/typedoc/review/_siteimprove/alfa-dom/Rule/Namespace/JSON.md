@@ -1,7 +1,5 @@
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
-
 ## Extends
 
 - `JSON`\<`"namespace"`\>
@@ -20,8 +18,6 @@ Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprov
 namespace: string;
 ```
 
-Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
-
 ## prefix
 
 ### prefix
@@ -30,8 +26,6 @@ Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprov
 prefix: string | null;
 ```
 
-Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
-
 ## type
 
 ### type
@@ -39,8 +33,6 @@ Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprov
 ```ts
 type: "namespace";
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 

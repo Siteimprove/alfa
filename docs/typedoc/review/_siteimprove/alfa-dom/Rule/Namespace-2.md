@@ -1,7 +1,5 @@
 # Class: Namespace
 
-Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
-
 ## Extends
 
 - `BaseRule`\<`"namespace"`\>
@@ -10,25 +8,9 @@ Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprov
 
 ### Constructor
 
-```ts
+```typescript
 protected new Namespace(namespace: string, prefix: Option<string>): NamespaceRule;
 ```
-
-Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
-
-#### Parameters
-
-##### namespace
-
-`string`
-
-##### prefix
-
-`Option`\<`string`\>
-
-#### Returns
-
-`NamespaceRule`
 
 #### Overrides
 
@@ -40,21 +22,9 @@ BaseRule<"namespace">.constructor
 
 ### \_attachOwner()
 
-```ts
+```typescript
 _attachOwner(owner: Sheet): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### owner
-
-[`Sheet`](../Sheet-1.md)
-
-#### Returns
-
-`boolean`
 
 #### Inherited from
 
@@ -66,21 +36,9 @@ BaseRule._attachOwner
 
 ### \_attachParent()
 
-```ts
+```typescript
 _attachParent(parent: Rule): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### parent
-
-[`Rule`](../Rule-1.md)
-
-#### Returns
-
-`boolean`
 
 #### Inherited from
 
@@ -96,8 +54,6 @@ BaseRule._attachParent
 protected _owner: Option<Sheet> = None;
 ```
 
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
 #### Inherited from
 
 ```ts
@@ -112,8 +68,6 @@ BaseRule._owner
 protected _parent: Option<Rule> = None;
 ```
 
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
 #### Inherited from
 
 ```ts
@@ -124,15 +78,9 @@ BaseRule._parent
 
 ### ancestors()
 
-```ts
+```typescript
 ancestors(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -144,15 +92,9 @@ BaseRule.ancestors
 
 ### children()
 
-```ts
+```typescript
 children(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -164,15 +106,9 @@ BaseRule.children
 
 ### descendants()
 
-```ts
+```typescript
 descendants(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -184,21 +120,9 @@ BaseRule.descendants
 
 ### equals()
 
-```ts
+```typescript
 equals(value: unknown): value is Namespace;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### value
-
-`unknown`
-
-#### Returns
-
-`value is Namespace`
 
 #### Inherited from
 
@@ -212,11 +136,9 @@ BaseRule.equals
 
 #### Get Signature
 
-```ts
+```typescript
 get namespace(): string;
 ```
-
-Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
 
 ##### Returns
 
@@ -226,25 +148,9 @@ Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprov
 
 ### of()
 
-```ts
+```typescript
 static of(namespace: string, prefix: Option<string>): NamespaceRule;
 ```
-
-Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
-
-#### Parameters
-
-##### namespace
-
-`string`
-
-##### prefix
-
-`Option`\<`string`\>
-
-#### Returns
-
-`NamespaceRule`
 
 ## owner
 
@@ -252,11 +158,9 @@ Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprov
 
 #### Get Signature
 
-```ts
+```typescript
 get owner(): Option<Sheet>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 
@@ -274,11 +178,9 @@ BaseRule.owner
 
 #### Get Signature
 
-```ts
+```typescript
 get parent(): Option<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 
@@ -296,11 +198,9 @@ BaseRule.parent
 
 #### Get Signature
 
-```ts
+```typescript
 get prefix(): Option<string>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
 
 ##### Returns
 
@@ -310,15 +210,9 @@ Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprov
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(): JSON;
 ```
-
-Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
-
-#### Returns
-
-[`JSON`](Namespace/JSON.md)
 
 #### Overrides
 
@@ -330,15 +224,9 @@ BaseRule.toJSON
 
 ### toString()
 
-```ts
+```typescript
 toString(): string;
 ```
-
-Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/namespace.ts)
-
-#### Returns
-
-`string`
 
 ## type
 
@@ -346,11 +234,9 @@ Defined in: [alfa-dom/src/style/rule/namespace.ts](https://github.com/Siteimprov
 
 #### Get Signature
 
-```ts
+```typescript
 get type(): T;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 

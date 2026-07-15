@@ -1,17 +1,5 @@
 # Function: isRequirement()
 
-```ts
+```typescript
 function isRequirement(value: unknown): value is Requirement<string, string>;
 ```
-
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
-
-## Parameters
-
-### value
-
-`unknown`
-
-## Returns
-
-`value is Requirement<string, string>`

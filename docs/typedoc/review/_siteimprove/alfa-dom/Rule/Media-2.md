@@ -1,7 +1,5 @@
 # Class: Media
 
-Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts)
-
 ## Extends
 
 - `ConditionRule`\<`"media"`\>
@@ -10,25 +8,9 @@ Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/al
 
 ### Constructor
 
-```ts
+```typescript
 protected new Media(condition: string, rules: Rule[]): MediaRule;
 ```
-
-Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts)
-
-#### Parameters
-
-##### condition
-
-`string`
-
-##### rules
-
-[`Rule`](../Rule-1.md)[]
-
-#### Returns
-
-`MediaRule`
 
 #### Overrides
 
@@ -40,21 +22,9 @@ ConditionRule<"media">.constructor
 
 ### \_attachOwner()
 
-```ts
+```typescript
 _attachOwner(owner: Sheet): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### owner
-
-[`Sheet`](../Sheet-1.md)
-
-#### Returns
-
-`boolean`
 
 #### Inherited from
 
@@ -66,21 +36,9 @@ ConditionRule._attachOwner
 
 ### \_attachParent()
 
-```ts
+```typescript
 _attachParent(parent: Rule): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### parent
-
-[`Rule`](../Rule-1.md)
-
-#### Returns
-
-`boolean`
 
 #### Inherited from
 
@@ -96,8 +54,6 @@ ConditionRule._attachParent
 protected readonly _condition: string;
 ```
 
-Defined in: [alfa-dom/src/style/rule/condition.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/condition.ts)
-
 #### Inherited from
 
 ```ts
@@ -111,8 +67,6 @@ ConditionRule._condition
 ```ts
 protected _owner: Option<Sheet> = None;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 
@@ -128,8 +82,6 @@ ConditionRule._owner
 protected _parent: Option<Rule> = None;
 ```
 
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
 #### Inherited from
 
 ```ts
@@ -144,8 +96,6 @@ ConditionRule._parent
 protected readonly _rules: Array<Rule>;
 ```
 
-Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
-
 #### Inherited from
 
 ```ts
@@ -156,15 +106,9 @@ ConditionRule._rules
 
 ### ancestors()
 
-```ts
+```typescript
 ancestors(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -176,15 +120,9 @@ ConditionRule.ancestors
 
 ### children()
 
-```ts
+```typescript
 children(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -198,11 +136,9 @@ ConditionRule.children
 
 #### Get Signature
 
-```ts
+```typescript
 get condition(): string;
 ```
-
-Defined in: [alfa-dom/src/style/rule/condition.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/condition.ts)
 
 ##### Returns
 
@@ -218,15 +154,9 @@ ConditionRule.condition
 
 ### descendants()
 
-```ts
+```typescript
 descendants(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -238,21 +168,9 @@ ConditionRule.descendants
 
 ### equals()
 
-```ts
+```typescript
 equals(value: unknown): value is Media;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### value
-
-`unknown`
-
-#### Returns
-
-`value is Media`
 
 #### Inherited from
 
@@ -264,25 +182,9 @@ ConditionRule.equals
 
 ### of()
 
-```ts
+```typescript
 static of(condition: string, rules: Iterable<Rule>): MediaRule;
 ```
-
-Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts)
-
-#### Parameters
-
-##### condition
-
-`string`
-
-##### rules
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
-
-#### Returns
-
-`MediaRule`
 
 ## owner
 
@@ -290,11 +192,9 @@ Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/al
 
 #### Get Signature
 
-```ts
+```typescript
 get owner(): Option<Sheet>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 
@@ -312,11 +212,9 @@ ConditionRule.owner
 
 #### Get Signature
 
-```ts
+```typescript
 get parent(): Option<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 
@@ -334,11 +232,9 @@ ConditionRule.parent
 
 #### Get Signature
 
-```ts
+```typescript
 get queries(): List;
 ```
-
-Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts)
 
 ##### Returns
 
@@ -350,11 +246,9 @@ Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/al
 
 #### Get Signature
 
-```ts
+```typescript
 get rules(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
 
 ##### Returns
 
@@ -370,15 +264,9 @@ ConditionRule.rules
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(): JSON;
 ```
-
-Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts)
-
-#### Returns
-
-[`JSON`](Media/JSON.md)
 
 #### Overrides
 
@@ -390,15 +278,9 @@ ConditionRule.toJSON
 
 ### toString()
 
-```ts
+```typescript
 toString(): string;
 ```
-
-Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts)
-
-#### Returns
-
-`string`
 
 ## type
 
@@ -406,11 +288,9 @@ Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/al
 
 #### Get Signature
 
-```ts
+```typescript
 get type(): T;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 

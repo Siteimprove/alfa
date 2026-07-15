@@ -1,7 +1,5 @@
 # Interface: JSON
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## Extends
 
 - [`JSON`](../JSON.md)\<[`Inapplicable`](../Value.md#inapplicable)\>
@@ -20,8 +18,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 mode: Mode;
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 #### Inherited from
 
 [`JSON`](../JSON.md).[`mode`](../JSON.md#mode)
@@ -34,8 +30,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 outcome: Inapplicable;
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 #### Inherited from
 
 [`JSON`](../JSON.md).[`outcome`](../JSON.md#outcome)
@@ -47,8 +41,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ```ts
 rule: JSON | MinimalJSON;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Inherited from
 

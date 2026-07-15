@@ -1,7 +1,5 @@
 # Class: Text
 
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
-
 ## Extends
 
 - `Slotable`\<`"text"`\>
@@ -10,47 +8,16 @@ Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/
 
 ### Constructor
 
-```ts
+```typescript
 protected new Text(
    data: string, 
    box: Option<Rectangle>, 
    device: Option<Device>, 
    externalId?: string, 
    internalId?: string, 
-   extraData?: any): Text;
+   extraData?: any
+): Text;
 ```
-
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
-
-#### Parameters
-
-##### data
-
-`string`
-
-##### box
-
-`Option`\<`Rectangle`\>
-
-##### device
-
-`Option`\<`Device`\>
-
-##### externalId?
-
-`string`
-
-##### internalId?
-
-`string`
-
-##### extraData?
-
-`any`
-
-#### Returns
-
-`Text`
 
 #### Overrides
 
@@ -62,21 +29,9 @@ Slotable<"text">.constructor
 
 ### \_attachParent()
 
-```ts
+```typescript
 _attachParent(parent: Node<"DOM traversal", 1 | 2 | 4>): boolean;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
-
-#### Parameters
-
-##### parent
-
-`Node`\<`"DOM traversal"`, `1` \| `2` \| `4`\>
-
-#### Returns
-
-`boolean`
 
 #### Inherited from
 
@@ -92,8 +47,6 @@ Slotable._attachParent
 protected readonly _children: Node<"DOM traversal", 1 | 2 | 4, string>[];
 ```
 
-Defined in: alfa-tree/dist/tree.d.ts
-
 #### Inherited from
 
 ```ts
@@ -108,8 +61,6 @@ Slotable._children
 protected _frozen: boolean;
 ```
 
-Defined in: alfa-tree/dist/tree.d.ts
-
 #### Inherited from
 
 ```ts
@@ -120,7 +71,7 @@ Slotable._frozen
 
 ### \_internalPath()
 
-```ts
+```typescript
 protected _internalPath(options?: {
   add: any;
   equals: boolean;
@@ -137,31 +88,6 @@ protected _internalPath(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): string;
 ```
 
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`string`
-
 #### Overrides
 
 ```ts
@@ -175,8 +101,6 @@ Slotable._internalPath
 ```ts
 protected _parent: Option<Node<"DOM traversal", 1 | 2 | 4, string>>;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 #### Inherited from
 
@@ -192,8 +116,6 @@ Slotable._parent
 protected readonly _type: "text";
 ```
 
-Defined in: alfa-tree/dist/tree.d.ts
-
 #### Inherited from
 
 ```ts
@@ -204,15 +126,9 @@ Slotable._type
 
 ### \[iterator\]()
 
-```ts
+```typescript
 iterator: Iterator<Node<"DOM traversal", 1 | 2 | 4, string>>;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
-
-#### Returns
-
-`Iterator`\<`Node`\<`"DOM traversal"`, `1` \| `2` \| `4`, `string`\>\>
 
 #### Inherited from
 
@@ -224,7 +140,7 @@ Slotable.[iterator]
 
 ### ancestors()
 
-```ts
+```typescript
 ancestors(options?: {
   add: any;
   equals: boolean;
@@ -241,31 +157,6 @@ ancestors(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Sequence<Node>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`Sequence`\<[`Node`](Node-1.md)\>
-
 #### Inherited from
 
 ```ts
@@ -276,15 +167,9 @@ Slotable.ancestors
 
 ### assignedSlot()
 
-```ts
+```typescript
 assignedSlot(): Option<Slot>;
 ```
-
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
-
-#### Returns
-
-`Option`\<`Slot`\>
 
 #### Overrides
 
@@ -296,7 +181,7 @@ Slotable.assignedSlot
 
 ### children()
 
-```ts
+```typescript
 children(options?: {
   add: any;
   equals: boolean;
@@ -313,31 +198,6 @@ children(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Sequence<Node>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`Sequence`\<[`Node`](Node-1.md)\>
-
 #### Inherited from
 
 ```ts
@@ -350,8 +210,8 @@ Slotable.children
 
 #### Call Signature
 
-```ts
-closest<T>(refinement: Refinement<Node, T>, options?: {
+```typescript
+closest<T extends Node>(refinement: Refinement<Node, T>, options?: {
   add: any;
   equals: boolean;
   has: boolean;
@@ -367,41 +227,6 @@ closest<T>(refinement: Refinement<Node, T>, options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Option<T>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-##### Type Parameters
-
-###### T
-
-`T` *extends* [`Node`](Node-1.md)
-
-##### Parameters
-
-###### refinement
-
-`Refinement`\<[`Node`](Node-1.md), `T`\>
-
-###### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-##### Returns
-
-`Option`\<`T`\>
-
 ##### Inherited from
 
 ```ts
@@ -410,7 +235,7 @@ Slotable.closest
 
 #### Call Signature
 
-```ts
+```typescript
 closest(predicate: Predicate<Node>, options?: {
   add: any;
   equals: boolean;
@@ -427,35 +252,6 @@ closest(predicate: Predicate<Node>, options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Option<Node>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-##### Parameters
-
-###### predicate
-
-`Predicate`\<[`Node`](Node-1.md)\>
-
-###### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-##### Returns
-
-`Option`\<[`Node`](Node-1.md)\>
-
 ##### Inherited from
 
 ```ts
@@ -468,11 +264,9 @@ Slotable.closest
 
 #### Get Signature
 
-```ts
+```typescript
 get data(): string;
 ```
-
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
 
 ##### Returns
 
@@ -482,7 +276,7 @@ Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/
 
 ### descendants()
 
-```ts
+```typescript
 descendants(options?: {
   add: any;
   equals: boolean;
@@ -499,31 +293,6 @@ descendants(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Sequence<Node>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`Sequence`\<[`Node`](Node-1.md)\>
-
 #### Inherited from
 
 ```ts
@@ -534,15 +303,9 @@ Slotable.descendants
 
 ### empty()
 
-```ts
+```typescript
 static empty(): Text;
 ```
-
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
-
-#### Returns
-
-`Text`
 
 ## equals
 
@@ -550,21 +313,9 @@ Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/
 
 #### Call Signature
 
-```ts
+```typescript
 equals(value: BaseNode): boolean;
 ```
-
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-##### Parameters
-
-###### value
-
-`BaseNode`
-
-##### Returns
-
-`boolean`
 
 ##### Inherited from
 
@@ -574,21 +325,9 @@ Slotable.equals
 
 #### Call Signature
 
-```ts
+```typescript
 equals(value: unknown): value is Text;
 ```
-
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-##### Parameters
-
-###### value
-
-`unknown`
-
-##### Returns
-
-`value is Text`
 
 ##### Inherited from
 
@@ -602,11 +341,9 @@ Slotable.equals
 
 #### Get Signature
 
-```ts
+```typescript
 get externalId(): string | undefined;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 ##### Returns
 
@@ -624,11 +361,9 @@ Slotable.externalId
 
 #### Get Signature
 
-```ts
+```typescript
 get extraData(): any;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 ##### Returns
 
@@ -644,7 +379,7 @@ Slotable.extraData
 
 ### first()
 
-```ts
+```typescript
 first(options?: {
   add: any;
   equals: boolean;
@@ -661,31 +396,6 @@ first(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Option<Node>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`Option`\<[`Node`](Node-1.md)\>
-
 #### Inherited from
 
 ```ts
@@ -696,7 +406,7 @@ Slotable.first
 
 ### following()
 
-```ts
+```typescript
 following(options?: {
   add: any;
   equals: boolean;
@@ -713,31 +423,6 @@ following(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Sequence<Node>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`Sequence`\<[`Node`](Node-1.md)\>
-
 #### Inherited from
 
 ```ts
@@ -748,15 +433,9 @@ Slotable.following
 
 ### freeze()
 
-```ts
+```typescript
 freeze(): this;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
-
-#### Returns
-
-`this`
 
 #### Inherited from
 
@@ -770,11 +449,9 @@ Slotable.freeze
 
 #### Get Signature
 
-```ts
+```typescript
 get frozen(): boolean;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 ##### Returns
 
@@ -790,41 +467,17 @@ Slotable.frozen
 
 ### getBoundingBox()
 
-```ts
+```typescript
 getBoundingBox(device: Device): Option<Rectangle>;
 ```
-
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
-
-#### Parameters
-
-##### device
-
-`Device`
-
-#### Returns
-
-`Option`\<`Rectangle`\>
 
 ## hash
 
 ### hash()
 
-```ts
+```typescript
 hash(hash: Hash): void;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
-
-#### Parameters
-
-##### hash
-
-`Hash`
-
-#### Returns
-
-`void`
 
 #### Inherited from
 
@@ -836,7 +489,7 @@ Slotable.hash
 
 ### inclusiveAncestors()
 
-```ts
+```typescript
 inclusiveAncestors(options?: {
   add: any;
   equals: boolean;
@@ -853,31 +506,6 @@ inclusiveAncestors(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Sequence<Node>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`Sequence`\<[`Node`](Node-1.md)\>
-
 #### Inherited from
 
 ```ts
@@ -888,7 +516,7 @@ Slotable.inclusiveAncestors
 
 ### inclusiveDescendants()
 
-```ts
+```typescript
 inclusiveDescendants(options?: {
   add: any;
   equals: boolean;
@@ -905,31 +533,6 @@ inclusiveDescendants(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Sequence<Node>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`Sequence`\<[`Node`](Node-1.md)\>
-
 #### Inherited from
 
 ```ts
@@ -940,7 +543,7 @@ Slotable.inclusiveDescendants
 
 ### inclusiveSiblings()
 
-```ts
+```typescript
 inclusiveSiblings(options?: {
   add: any;
   equals: boolean;
@@ -957,31 +560,6 @@ inclusiveSiblings(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Sequence<Node>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`Sequence`\<[`Node`](Node-1.md)\>
-
 #### Inherited from
 
 ```ts
@@ -992,7 +570,7 @@ Slotable.inclusiveSiblings
 
 ### index()
 
-```ts
+```typescript
 index(options?: {
   add: any;
   equals: boolean;
@@ -1009,35 +587,6 @@ index(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>, predicate?: Predicate<Node>): number;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-##### predicate?
-
-`Predicate`\<[`Node`](Node-1.md)\>
-
-#### Returns
-
-`number`
-
 #### Inherited from
 
 ```ts
@@ -1050,11 +599,9 @@ Slotable.index
 
 #### Get Signature
 
-```ts
+```typescript
 get internalId(): string;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 ##### Returns
 
@@ -1070,27 +617,15 @@ Slotable.internalId
 
 ### is()
 
-```ts
+```typescript
 is(predicate: Predicate<string>): boolean;
 ```
-
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
-
-#### Parameters
-
-##### predicate
-
-`Predicate`\<`string`\>
-
-#### Returns
-
-`boolean`
 
 ## isAncestorOf
 
 ### isAncestorOf()
 
-```ts
+```typescript
 isAncestorOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -1107,35 +642,6 @@ isAncestorOf(node: Node, options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): boolean;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### node
-
-[`Node`](Node-1.md)
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`boolean`
-
 #### Inherited from
 
 ```ts
@@ -1146,7 +652,7 @@ Slotable.isAncestorOf
 
 ### isChildOf()
 
-```ts
+```typescript
 isChildOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -1163,35 +669,6 @@ isChildOf(node: Node, options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): boolean;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### node
-
-[`Node`](Node-1.md)
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`boolean`
-
 #### Inherited from
 
 ```ts
@@ -1202,7 +679,7 @@ Slotable.isChildOf
 
 ### isDescendantOf()
 
-```ts
+```typescript
 isDescendantOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -1219,35 +696,6 @@ isDescendantOf(node: Node, options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): boolean;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### node
-
-[`Node`](Node-1.md)
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`boolean`
-
 #### Inherited from
 
 ```ts
@@ -1258,7 +706,7 @@ Slotable.isDescendantOf
 
 ### isInclusiveAncestorOf()
 
-```ts
+```typescript
 isInclusiveAncestorOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -1275,35 +723,6 @@ isInclusiveAncestorOf(node: Node, options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): boolean;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### node
-
-[`Node`](Node-1.md)
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`boolean`
-
 #### Inherited from
 
 ```ts
@@ -1314,7 +733,7 @@ Slotable.isInclusiveAncestorOf
 
 ### isInclusiveDescendantsOf()
 
-```ts
+```typescript
 isInclusiveDescendantsOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -1331,35 +750,6 @@ isInclusiveDescendantsOf(node: Node, options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): boolean;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### node
-
-[`Node`](Node-1.md)
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`boolean`
-
 #### Inherited from
 
 ```ts
@@ -1370,7 +760,7 @@ Slotable.isInclusiveDescendantsOf
 
 ### isInclusiveSiblingOf()
 
-```ts
+```typescript
 isInclusiveSiblingOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -1387,35 +777,6 @@ isInclusiveSiblingOf(node: Node, options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): boolean;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### node
-
-[`Node`](Node-1.md)
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`boolean`
-
 #### Inherited from
 
 ```ts
@@ -1426,7 +787,7 @@ Slotable.isInclusiveSiblingOf
 
 ### isParentOf()
 
-```ts
+```typescript
 isParentOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -1443,35 +804,6 @@ isParentOf(node: Node, options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): boolean;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### node
-
-[`Node`](Node-1.md)
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`boolean`
-
 #### Inherited from
 
 ```ts
@@ -1482,7 +814,7 @@ Slotable.isParentOf
 
 ### isRootOf()
 
-```ts
+```typescript
 isRootOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -1499,35 +831,6 @@ isRootOf(node: Node, options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): boolean;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### node
-
-[`Node`](Node-1.md)
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`boolean`
-
 #### Inherited from
 
 ```ts
@@ -1538,7 +841,7 @@ Slotable.isRootOf
 
 ### isSiblingOf()
 
-```ts
+```typescript
 isSiblingOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -1555,35 +858,6 @@ isSiblingOf(node: Node, options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): boolean;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### node
-
-[`Node`](Node-1.md)
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`boolean`
-
 #### Inherited from
 
 ```ts
@@ -1594,7 +868,7 @@ Slotable.isSiblingOf
 
 ### last()
 
-```ts
+```typescript
 last(options?: {
   add: any;
   equals: boolean;
@@ -1611,31 +885,6 @@ last(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Option<Node>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`Option`\<[`Node`](Node-1.md)\>
-
 #### Inherited from
 
 ```ts
@@ -1646,7 +895,7 @@ Slotable.last
 
 ### next()
 
-```ts
+```typescript
 next(options?: {
   add: any;
   equals: boolean;
@@ -1663,31 +912,6 @@ next(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Option<Node>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`Option`\<[`Node`](Node-1.md)\>
-
 #### Inherited from
 
 ```ts
@@ -1698,47 +922,16 @@ Slotable.next
 
 ### of()
 
-```ts
+```typescript
 static of(
    data: string, 
    box?: Option<Rectangle>, 
    device?: Option<Device>, 
    externalId?: string, 
    internalId?: string, 
-   extraData?: any): Text;
+   extraData?: any
+): Text;
 ```
-
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
-
-#### Parameters
-
-##### data
-
-`string`
-
-##### box?
-
-`Option`\<`Rectangle`\> = `None`
-
-##### device?
-
-`Option`\<`Device`\> = `None`
-
-##### externalId?
-
-`string`
-
-##### internalId?
-
-`string`
-
-##### extraData?
-
-`any`
-
-#### Returns
-
-`Text`
 
 ## parent
 
@@ -1746,7 +939,7 @@ Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/
 
 #### Call Signature
 
-```ts
+```typescript
 parent(options?: {
   add: any;
   equals: boolean;
@@ -1762,31 +955,6 @@ parent(options?: {
   value: number;
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Option<Node>;
 ```
-
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-##### Parameters
-
-###### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\> = `BaseNode.Traversal.empty`
-
-##### Returns
-
-`Option`\<[`Node`](Node-1.md)\>
 
 ##### Inherited from
 
@@ -1796,7 +964,7 @@ Slotable.parent
 
 #### Call Signature
 
-```ts
+```typescript
 parent(options?: {
   add: any;
   equals: boolean;
@@ -1812,31 +980,6 @@ parent(options?: {
   value: number;
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Option<Node>;
 ```
-
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-##### Parameters
-
-###### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-##### Returns
-
-`Option`\<[`Node`](Node-1.md)\>
 
 ##### Inherited from
 
@@ -1848,7 +991,7 @@ Slotable.parent
 
 ### path()
 
-```ts
+```typescript
 path(options?: {
   add: any;
   equals: boolean;
@@ -1865,31 +1008,6 @@ path(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): string;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\> = `BaseNode.Traversal.empty`
-
-#### Returns
-
-`string`
-
 #### Inherited from
 
 ```ts
@@ -1900,7 +1018,7 @@ Slotable.path
 
 ### preceding()
 
-```ts
+```typescript
 preceding(options?: {
   add: any;
   equals: boolean;
@@ -1917,31 +1035,6 @@ preceding(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Sequence<Node>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`Sequence`\<[`Node`](Node-1.md)\>
-
 #### Inherited from
 
 ```ts
@@ -1952,7 +1045,7 @@ Slotable.preceding
 
 ### previous()
 
-```ts
+```typescript
 previous(options?: {
   add: any;
   equals: boolean;
@@ -1969,31 +1062,6 @@ previous(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Option<Node>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`Option`\<[`Node`](Node-1.md)\>
-
 #### Inherited from
 
 ```ts
@@ -2004,7 +1072,7 @@ Slotable.previous
 
 ### root()
 
-```ts
+```typescript
 root(options?: {
   add: any;
   equals: boolean;
@@ -2021,31 +1089,6 @@ root(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Node;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-[`Node`](Node-1.md)
-
 #### Inherited from
 
 ```ts
@@ -2058,11 +1101,9 @@ Slotable.root
 
 #### Get Signature
 
-```ts
+```typescript
 get serializationId(): string | undefined;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 ##### Returns
 
@@ -2078,7 +1119,7 @@ Slotable.serializationId
 
 ### siblings()
 
-```ts
+```typescript
 siblings(options?: {
   add: any;
   equals: boolean;
@@ -2095,31 +1136,6 @@ siblings(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): Sequence<Node>;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>
-
-#### Returns
-
-`Sequence`\<[`Node`](Node-1.md)\>
-
 #### Inherited from
 
 ```ts
@@ -2130,15 +1146,9 @@ Slotable.siblings
 
 ### slotableName()
 
-```ts
+```typescript
 slotableName(): string;
 ```
-
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
-
-#### Returns
-
-`string`
 
 #### Overrides
 
@@ -2150,21 +1160,9 @@ Slotable.slotableName
 
 ### tabOrder()
 
-```ts
+```typescript
 tabOrder(this: Node): Sequence<Element<string>>;
 ```
-
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### this
-
-[`Node`](Node-1.md)
-
-#### Returns
-
-`Sequence`\<[`Element`](Element-1.md)\<`string`\>\>
 
 #### Inherited from
 
@@ -2176,7 +1174,7 @@ Slotable.tabOrder
 
 ### textContent()
 
-```ts
+```typescript
 textContent(options?: {
   add: any;
   equals: boolean;
@@ -2193,31 +1191,6 @@ textContent(options?: {
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>): string;
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Parameters
-
-##### options?
-
-\{
-  `add`: `any`;
-  `equals`: `boolean`;
-  `has`: `boolean`;
-  `is`: `boolean`;
-  `isSet`: (`flag`: `0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`) => `boolean`;
-  `kind`: `"DOM traversal"`;
-  `remove`: `any`;
-  `set`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `toJSON`: `JSON`\<`"DOM traversal"`\> & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\>;
-  `toString`: `string`;
-  `unset`: (...`flags`: `Array`\<`0` \| `2` \| `1` \| `4` \| `"composed"` \| `"flattened"` \| `"nested"`\>) => `any`;
-  `value`: `number`;
-\} & `KeyedByArray`\<\[`"composed"`, `"flattened"`, `"nested"`\], `boolean`\> = `BaseNode.Traversal.empty`
-
-#### Returns
-
-`string`
-
 #### Inherited from
 
 ```ts
@@ -2228,15 +1201,9 @@ Slotable.textContent
 
 ### toEARL()
 
-```ts
+```typescript
 toEARL(): EARL;
 ```
-
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Returns
-
-`EARL`
 
 #### Inherited from
 
@@ -2250,25 +1217,11 @@ Slotable.toEARL
 
 #### Call Signature
 
-```ts
+```typescript
 toJSON(options: SerializationOptions & {
   verbosity: Minimal | Low;
 }): MinimalJSON;
 ```
-
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
-
-##### Parameters
-
-###### options
-
-`SerializationOptions` & \{
-  `verbosity`: `Minimal` \| `Low`;
-\}
-
-##### Returns
-
-[`MinimalJSON`](Text/MinimalJSON.md)
 
 ##### Overrides
 
@@ -2278,21 +1231,9 @@ Slotable.toJSON
 
 #### Call Signature
 
-```ts
+```typescript
 toJSON(options?: SerializationOptions): JSON;
 ```
-
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
-
-##### Parameters
-
-###### options?
-
-`SerializationOptions`
-
-##### Returns
-
-[`JSON`](Text/JSON.md)
 
 ##### Overrides
 
@@ -2304,15 +1245,9 @@ Slotable.toJSON
 
 ### toSARIF()
 
-```ts
+```typescript
 toSARIF(): Location;
 ```
-
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
-#### Returns
-
-`Location`
 
 #### Inherited from
 
@@ -2324,15 +1259,9 @@ Slotable.toSARIF
 
 ### toString()
 
-```ts
+```typescript
 toString(): string;
 ```
-
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
-
-#### Returns
-
-`string`
 
 ## type
 
@@ -2340,11 +1269,9 @@ Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/
 
 #### Get Signature
 
-```ts
+```typescript
 get type(): T;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 ##### Returns
 

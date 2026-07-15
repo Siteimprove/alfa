@@ -1,7 +1,5 @@
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/rule/import.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts)
-
 ## Extends
 
 - `JSON`\<`"import"`\>
@@ -20,8 +18,6 @@ Defined in: [alfa-dom/src/style/rule/import.ts](https://github.com/Siteimprove/a
 condition: string;
 ```
 
-Defined in: [alfa-dom/src/style/rule/condition.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/condition.ts)
-
 #### Inherited from
 
 ```ts
@@ -36,8 +32,6 @@ ConditionRule.JSON.condition
 href: string;
 ```
 
-Defined in: [alfa-dom/src/style/rule/import.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts)
-
 ## layer
 
 ### layer
@@ -46,8 +40,6 @@ Defined in: [alfa-dom/src/style/rule/import.ts](https://github.com/Siteimprove/a
 layer: string | null;
 ```
 
-Defined in: [alfa-dom/src/style/rule/import.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts)
-
 ## rules
 
 ### rules
@@ -55,8 +47,6 @@ Defined in: [alfa-dom/src/style/rule/import.ts](https://github.com/Siteimprove/a
 ```ts
 rules: Array<JSON>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
 
 #### Inherited from
 
@@ -72,8 +62,6 @@ ConditionRule.JSON.rules
 supportText: string | null;
 ```
 
-Defined in: [alfa-dom/src/style/rule/import.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/import.ts)
-
 ## type
 
 ### type
@@ -81,8 +69,6 @@ Defined in: [alfa-dom/src/style/rule/import.ts](https://github.com/Siteimprove/a
 ```ts
 type: "import";
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 

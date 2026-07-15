@@ -1,7 +1,5 @@
 # Interface: EARL
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## Extends
 
 - `EARL`
@@ -34,8 +32,6 @@ optional @context?: {
   ptr?: "http://www.w3.org/2009/pointers#";
 };
 ```
-
-Defined in: alfa-earl/dist/earl.d.ts
 
 #### cnt
 
@@ -107,8 +103,6 @@ earl.EARL.@context
 @type: "earl:Assertion";
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## earl:mode
 
 ### earl:mode
@@ -116,8 +110,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ```ts
 earl:mode: "earl:automatic" | "earl:semiAuto" | "earl:manual";
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ## earl:test
 
@@ -128,8 +120,6 @@ earl:test: {
   @id: string;
 };
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### @id
 

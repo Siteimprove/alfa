@@ -1,7 +1,5 @@
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
-
 ## Extends
 
 - [`JSON`](../../Grouping/JSON.md)\<`"layer-block"`\>
@@ -20,8 +18,6 @@ Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/al
 layer: string | null;
 ```
 
-Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/layer.ts)
-
 ## rules
 
 ### rules
@@ -29,8 +25,6 @@ Defined in: [alfa-dom/src/style/rule/layer.ts](https://github.com/Siteimprove/al
 ```ts
 rules: Array<JSON>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
 
 #### Inherited from
 
@@ -43,8 +37,6 @@ Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove
 ```ts
 type: "layer-block";
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 

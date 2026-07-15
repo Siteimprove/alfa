@@ -1,16 +1,11 @@
 # Abstract Class: Requirement\<T, U\>
 
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
-
 ## Type Parameters
 
-### T
-
-`T` *extends* `string` = `string`
-
-### U
-
-`U` *extends* `string` = `string`
+| Type Parameter | Default type |
+| ------ | ------ |
+| `T` *extends* `string` | `string` |
+| `U` *extends* `string` | `string` |
 
 ## Implements
 
@@ -22,25 +17,9 @@ Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprov
 
 ### Constructor
 
-```ts
-protected new Requirement<T, U>(type: T, uri: U): Requirement<T, U>;
+```typescript
+protected new Requirement<T extends string = string, U extends string = string>(type: T, uri: U): Requirement<T, U>;
 ```
-
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
-
-#### Parameters
-
-##### type
-
-`T`
-
-##### uri
-
-`U`
-
-#### Returns
-
-`Requirement`\<`T`, `U`\>
 
 ## equals
 
@@ -48,21 +27,9 @@ Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprov
 
 #### Call Signature
 
-```ts
+```typescript
 equals(value: Requirement): boolean;
 ```
-
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
-
-##### Parameters
-
-###### value
-
-`Requirement`
-
-##### Returns
-
-`boolean`
 
 ##### Implementation of
 
@@ -72,21 +39,9 @@ Equatable.equals
 
 #### Call Signature
 
-```ts
+```typescript
 equals(value: unknown): value is Requirement<T, U>;
 ```
-
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
-
-##### Parameters
-
-###### value
-
-`unknown`
-
-##### Returns
-
-`value is Requirement<T, U>`
 
 ##### Implementation of
 
@@ -98,15 +53,9 @@ Equatable.equals
 
 ### toEARL()
 
-```ts
+```typescript
 toEARL(): EARL;
 ```
-
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
-
-#### Returns
-
-[`EARL`](Requirement/EARL.md)
 
 #### Implementation of
 
@@ -118,15 +67,9 @@ earl.Serializable.toEARL
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(): JSON<T, U>;
 ```
-
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
-
-#### Returns
-
-[`JSON`](Requirement/JSON.md)\<`T`, `U`\>
 
 #### Implementation of
 
@@ -140,11 +83,9 @@ json.Serializable.toJSON
 
 #### Get Signature
 
-```ts
+```typescript
 get type(): T;
 ```
-
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
 
 ##### Returns
 
@@ -156,11 +97,9 @@ Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprov
 
 #### Get Signature
 
-```ts
+```typescript
 get uri(): U;
 ```
-
-Defined in: [alfa-act/src/metadata/requirement.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/requirement.ts)
 
 ##### Returns
 

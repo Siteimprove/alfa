@@ -1,7 +1,5 @@
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/rule/style.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/style.ts)
-
 ## Extends
 
 - `JSON`\<`"style"`\>
@@ -20,8 +18,6 @@ Defined in: [alfa-dom/src/style/rule/style.ts](https://github.com/Siteimprove/al
 selector: string;
 ```
 
-Defined in: [alfa-dom/src/style/rule/style.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/style.ts)
-
 ## style
 
 ### style
@@ -30,8 +26,6 @@ Defined in: [alfa-dom/src/style/rule/style.ts](https://github.com/Siteimprove/al
 style: string | JSON;
 ```
 
-Defined in: [alfa-dom/src/style/rule/style.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/style.ts)
-
 ## type
 
 ### type
@@ -39,8 +33,6 @@ Defined in: [alfa-dom/src/style/rule/style.ts](https://github.com/Siteimprove/al
 ```ts
 type: "style";
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 

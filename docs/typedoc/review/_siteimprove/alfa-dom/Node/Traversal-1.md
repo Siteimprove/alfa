@@ -81,5 +81,3 @@ const Traversal: ReplaceFactories<{
   value: number;
 } & KeyedByArray<["composed", "flattened", "nested"], boolean>>;
 ```
-
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)

@@ -1,7 +1,5 @@
 # Interface: Properties
 
-Defined in: [alfa-dom/src/jsx.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts)
-
 ## Indexable
 
 ```ts
@@ -15,5 +13,3 @@ Defined in: [alfa-dom/src/jsx.ts](https://github.com/Siteimprove/alfa/blob/main/
 ```ts
 optional style?: Record<string, string>;
 ```
-
-Defined in: [alfa-dom/src/jsx.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts)

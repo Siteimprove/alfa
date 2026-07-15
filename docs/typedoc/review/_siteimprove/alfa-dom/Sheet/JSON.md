@@ -1,7 +1,5 @@
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
-
 ## Indexable
 
 ```ts
@@ -16,8 +14,6 @@ Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/bl
 condition: string | null;
 ```
 
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
-
 ## disabled
 
 ### disabled
@@ -26,8 +22,6 @@ Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/bl
 disabled: boolean;
 ```
 
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)
-
 ## rules
 
 ### rules
@@ -35,5 +29,3 @@ Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/bl
 ```ts
 rules: JSON[];
 ```
-
-Defined in: [alfa-dom/src/style/sheet.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/sheet.ts)

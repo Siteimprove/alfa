@@ -8,56 +8,20 @@ hasId: {
 };
 ```
 
-Defined in: [alfa-dom/src/node/slotable/element.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/element.ts)
-
 ## Call Signature
 
-```ts
+```typescript
 (predicate?: Predicate<string>): Predicate<Element<string>>;
 ```
 
-### Parameters
-
-#### predicate?
-
-`Predicate`\<`string`\>
-
-### Returns
-
-`Predicate`\<[`Element`](../Element-1.md)\<`string`\>\>
-
 ## Call Signature
 
-```ts
+```typescript
 (id: string, ...rest: string[]): Predicate<Element<string>>;
 ```
 
-### Parameters
-
-#### id
-
-`string`
-
-#### rest
-
-...`string`[]
-
-### Returns
-
-`Predicate`\<[`Element`](../Element-1.md)\<`string`\>\>
-
 ## Call Signature
 
-```ts
+```typescript
 (ids: Iterable<string>): Predicate<Element<string>>;
 ```
-
-### Parameters
-
-#### ids
-
-`Iterable`\<`string`\>
-
-### Returns
-
-`Predicate`\<[`Element`](../Element-1.md)\<`string`\>\>

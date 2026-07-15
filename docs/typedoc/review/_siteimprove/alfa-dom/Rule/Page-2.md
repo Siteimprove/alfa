@@ -1,7 +1,5 @@
 # Class: Page
 
-Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)
-
 ## Extends
 
 - `BaseRule`\<`"page"`\>
@@ -10,25 +8,9 @@ Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alf
 
 ### Constructor
 
-```ts
+```typescript
 protected new Page(selector: string, declarations: Declaration[]): PageRule;
 ```
-
-Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)
-
-#### Parameters
-
-##### selector
-
-`string`
-
-##### declarations
-
-[`Declaration`](../Declaration-1.md)[]
-
-#### Returns
-
-`PageRule`
 
 #### Overrides
 
@@ -40,21 +22,9 @@ BaseRule<"page">.constructor
 
 ### \_attachOwner()
 
-```ts
+```typescript
 _attachOwner(owner: Sheet): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### owner
-
-[`Sheet`](../Sheet-1.md)
-
-#### Returns
-
-`boolean`
 
 #### Inherited from
 
@@ -66,21 +36,9 @@ BaseRule._attachOwner
 
 ### \_attachParent()
 
-```ts
+```typescript
 _attachParent(parent: Rule): boolean;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### parent
-
-[`Rule`](../Rule-1.md)
-
-#### Returns
-
-`boolean`
 
 #### Inherited from
 
@@ -96,8 +54,6 @@ BaseRule._attachParent
 protected _owner: Option<Sheet> = None;
 ```
 
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
 #### Inherited from
 
 ```ts
@@ -112,8 +68,6 @@ BaseRule._owner
 protected _parent: Option<Rule> = None;
 ```
 
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
 #### Inherited from
 
 ```ts
@@ -124,15 +78,9 @@ BaseRule._parent
 
 ### ancestors()
 
-```ts
+```typescript
 ancestors(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -144,15 +92,9 @@ BaseRule.ancestors
 
 ### children()
 
-```ts
+```typescript
 children(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -164,15 +106,9 @@ BaseRule.children
 
 ### descendants()
 
-```ts
+```typescript
 descendants(): Iterable<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -184,21 +120,9 @@ BaseRule.descendants
 
 ### equals()
 
-```ts
+```typescript
 equals(value: unknown): value is Page;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
-
-#### Parameters
-
-##### value
-
-`unknown`
-
-#### Returns
-
-`value is Page`
 
 #### Inherited from
 
@@ -210,25 +134,9 @@ BaseRule.equals
 
 ### of()
 
-```ts
+```typescript
 static of(selector: string, declarations: Iterable<Declaration>): PageRule;
 ```
-
-Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)
-
-#### Parameters
-
-##### selector
-
-`string`
-
-##### declarations
-
-`Iterable`\<[`Declaration`](../Declaration-1.md)\>
-
-#### Returns
-
-`PageRule`
 
 ## owner
 
@@ -236,11 +144,9 @@ Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alf
 
 #### Get Signature
 
-```ts
+```typescript
 get owner(): Option<Sheet>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 
@@ -258,11 +164,9 @@ BaseRule.owner
 
 #### Get Signature
 
-```ts
+```typescript
 get parent(): Option<Rule>;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 
@@ -280,11 +184,9 @@ BaseRule.parent
 
 #### Get Signature
 
-```ts
+```typescript
 get selector(): string;
 ```
-
-Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)
 
 ##### Returns
 
@@ -296,11 +198,9 @@ Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alf
 
 #### Get Signature
 
-```ts
+```typescript
 get style(): Block;
 ```
-
-Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)
 
 ##### Returns
 
@@ -310,15 +210,9 @@ Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alf
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(): JSON;
 ```
-
-Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)
-
-#### Returns
-
-[`JSON`](Page/JSON.md)
 
 #### Overrides
 
@@ -330,15 +224,9 @@ BaseRule.toJSON
 
 ### toString()
 
-```ts
+```typescript
 toString(): string;
 ```
-
-Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/page.ts)
-
-#### Returns
-
-`string`
 
 ## type
 
@@ -346,11 +234,9 @@ Defined in: [alfa-dom/src/style/rule/page.ts](https://github.com/Siteimprove/alf
 
 #### Get Signature
 
-```ts
+```typescript
 get type(): T;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 ##### Returns
 

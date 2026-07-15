@@ -1,32 +1,15 @@
 # Class: Event\<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME\>
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## Type Parameters
 
-### INPUT
-
-`INPUT`
-
-### TARGET
-
-`TARGET` *extends* `Hashable`
-
-### QUESTION
-
-`QUESTION` *extends* [`Metadata`](../Question/Metadata.md)
-
-### SUBJECT
-
-`SUBJECT`
-
-### TYPE
-
-`TYPE` *extends* [`Type`](Event/Type.md) = [`Type`](Event/Type.md)
-
-### NAME
-
-`NAME` *extends* `string` = `string`
+| Type Parameter | Default type |
+| ------ | ------ |
+| `INPUT` | - |
+| `TARGET` *extends* `Hashable` | - |
+| `QUESTION` *extends* [`Metadata`](../Question/Metadata.md) | - |
+| `SUBJECT` | - |
+| `TYPE` *extends* [`Type`](Event/Type.md) | [`Type`](Event/Type.md) |
+| `NAME` *extends* `string` | `string` |
 
 ## Implements
 
@@ -36,32 +19,13 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 ### Constructor
 
-```ts
-new Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>(
+```typescript
+new Event<INPUT, TARGET extends Hashable, QUESTION extends Metadata, SUBJECT, TYPE extends Type = Type, NAME extends string = string>(
    type: TYPE, 
    rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, 
-name: NAME): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
+   name: NAME
+): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-#### Parameters
-
-##### type
-
-`TYPE`
-
-##### rule
-
-[`Rule`](../Rule-1.md)\<`INPUT`, `TARGET`, `QUESTION`, `SUBJECT`\>
-
-##### name
-
-`NAME`
-
-#### Returns
-
-`Event`\<`INPUT`, `TARGET`, `QUESTION`, `SUBJECT`, `TYPE`, `NAME`\>
 
 ## name
 
@@ -69,11 +33,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 #### Get Signature
 
-```ts
+```typescript
 get name(): NAME;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 
@@ -83,58 +45,13 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 ### of()
 
-```ts
-static of<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>(
+```typescript
+static of<INPUT, TARGET extends Hashable, QUESTION extends Metadata, SUBJECT, TYPE extends Type, NAME extends string>(
    type: TYPE, 
    rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, 
-name: NAME): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
+   name: NAME
+): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-#### Type Parameters
-
-##### INPUT
-
-`INPUT`
-
-##### TARGET
-
-`TARGET` *extends* `Hashable`
-
-##### QUESTION
-
-`QUESTION` *extends* [`Metadata`](../Question/Metadata.md)
-
-##### SUBJECT
-
-`SUBJECT`
-
-##### TYPE
-
-`TYPE` *extends* [`Type`](Event/Type.md)
-
-##### NAME
-
-`NAME` *extends* `string`
-
-#### Parameters
-
-##### type
-
-`TYPE`
-
-##### rule
-
-[`Rule`](../Rule-1.md)\<`INPUT`, `TARGET`, `QUESTION`, `SUBJECT`\>
-
-##### name
-
-`NAME`
-
-#### Returns
-
-`Event`\<`INPUT`, `TARGET`, `QUESTION`, `SUBJECT`, `TYPE`, `NAME`\>
 
 ## rule
 
@@ -142,11 +59,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 #### Get Signature
 
-```ts
+```typescript
 get rule(): Rule<INPUT, TARGET, QUESTION, SUBJECT>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 
@@ -156,15 +71,9 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(): JSON<TYPE, NAME>;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
-#### Returns
-
-[`JSON`](Event/JSON.md)\<`TYPE`, `NAME`\>
 
 #### Implementation of
 
@@ -178,11 +87,9 @@ Serializable.toJSON
 
 #### Get Signature
 
-```ts
+```typescript
 get type(): TYPE;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
 
 ##### Returns
 

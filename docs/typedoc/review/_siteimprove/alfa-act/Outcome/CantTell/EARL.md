@@ -1,7 +1,5 @@
 # Interface: EARL
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## Extends
 
 - [`EARL`](../EARL.md)
@@ -27,8 +25,6 @@ optional @context?: {
   ptr?: "http://www.w3.org/2009/pointers#";
 };
 ```
-
-Defined in: alfa-earl/dist/earl.d.ts
 
 #### cnt
 
@@ -98,8 +94,6 @@ optional ptr?: "http://www.w3.org/2009/pointers#";
 @type: "earl:Assertion";
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 #### Inherited from
 
 [`EARL`](../EARL.md).[`@type`](../EARL.md#type)
@@ -111,8 +105,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ```ts
 earl:mode: "earl:automatic" | "earl:semiAuto" | "earl:manual";
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### Inherited from
 
@@ -131,8 +123,6 @@ earl:result: {
   earl:pointer?: EARL;
 };
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### @type
 
@@ -175,8 +165,6 @@ earl:test: {
   @id: string;
 };
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 #### @id
 

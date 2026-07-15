@@ -1,7 +1,5 @@
 # Abstract Class: Outcome\<I, T, Q, S, V\>
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## Extended by
 
 - [`Passed`](Outcome/Passed-2.md)
@@ -11,26 +9,13 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ## Type Parameters
 
-### I
-
-`I`
-
-### T
-
-`T` *extends* `Hashable`
-
-### Q
-
-`Q` *extends* [`Metadata`](Question/Metadata.md) = \{
-\}
-
-### S
-
-`S` = `T`
-
-### V
-
-`V` *extends* [`Value`](Outcome/Value.md) = [`Value`](Outcome/Value.md)
+| Type Parameter | Default type |
+| ------ | ------ |
+| `I` | - |
+| `T` *extends* `Hashable` | - |
+| `Q` *extends* [`Metadata`](Question/Metadata.md) | \{ \} |
+| `S` | `T` |
+| `V` *extends* [`Value`](Outcome/Value.md) | [`Value`](Outcome/Value.md) |
 
 ## Implements
 
@@ -44,32 +29,14 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ### Constructor
 
-```ts
-protected new Outcome<I, T, Q, S, V>(
+```typescript
+protected new Outcome<I, T extends Hashable, Q extends Metadata = {
+}, S = T, V extends Value = Value>(
    outcome: V, 
    rule: Rule<I, T, Q, S>, 
-mode: Mode): Outcome<I, T, Q, S, V>;
+   mode: Mode
+): Outcome<I, T, Q, S, V>;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-#### Parameters
-
-##### outcome
-
-`V`
-
-##### rule
-
-[`Rule`](Rule-1.md)\<`I`, `T`, `Q`, `S`\>
-
-##### mode
-
-[`Mode`](Outcome/Mode.md)
-
-#### Returns
-
-`Outcome`\<`I`, `T`, `Q`, `S`, `V`\>
 
 ## _mode
 
@@ -79,8 +46,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 protected readonly _mode: Mode;
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## _rule
 
 ### \_rule
@@ -89,51 +54,15 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 protected readonly _rule: Rule<I, T, Q, S>;
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## equals
 
 ### equals()
 
 #### Call Signature
 
-```ts
-equals<I, T, Q, S, V>(value: Outcome<I, T, Q, S, V>): boolean;
+```typescript
+equals<I, T extends Hashable, Q extends Metadata, S, V extends Value = Value>(value: Outcome<I, T, Q, S, V>): boolean;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-##### Type Parameters
-
-###### I
-
-`I`
-
-###### T
-
-`T` *extends* `Hashable`
-
-###### Q
-
-`Q` *extends* [`Metadata`](Question/Metadata.md)
-
-###### S
-
-`S`
-
-###### V
-
-`V` *extends* [`Value`](Outcome/Value.md) = [`Value`](Outcome/Value.md)
-
-##### Parameters
-
-###### value
-
-`Outcome`\<`I`, `T`, `Q`, `S`, `V`\>
-
-##### Returns
-
-`boolean`
 
 ##### Implementation of
 
@@ -143,21 +72,9 @@ Equatable.equals
 
 #### Call Signature
 
-```ts
+```typescript
 equals(value: unknown): value is Outcome<I, T, Q, S, V>;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-##### Parameters
-
-###### value
-
-`unknown`
-
-##### Returns
-
-`value is Outcome<I, T, Q, S, V>`
 
 ##### Implementation of
 
@@ -169,21 +86,9 @@ Equatable.equals
 
 ### hash()
 
-```ts
+```typescript
 hash(hash: Hash): void;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-#### Parameters
-
-##### hash
-
-`Hash`
-
-#### Returns
-
-`void`
 
 #### Implementation of
 
@@ -197,11 +102,9 @@ Hashable.hash
 
 #### Get Signature
 
-```ts
+```typescript
 get isSemiAuto(): boolean;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -213,11 +116,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 #### Get Signature
 
-```ts
+```typescript
 get mode(): Mode;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -229,11 +130,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 #### Get Signature
 
-```ts
+```typescript
 get outcome(): V;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -245,11 +144,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 #### Get Signature
 
-```ts
+```typescript
 get rule(): Rule<I, T, Q, S>;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -261,11 +158,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 #### Get Signature
 
-```ts
+```typescript
 get target(): T | undefined;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
 
 ##### Returns
 
@@ -275,15 +170,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ### toEARL()
 
-```ts
+```typescript
 toEARL(): EARL;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-#### Returns
-
-[`EARL`](Outcome/EARL.md)
 
 #### Implementation of
 
@@ -295,21 +184,9 @@ earl.Serializable.toEARL
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(options?: Options): JSON<V>;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-#### Parameters
-
-##### options?
-
-`Options`
-
-#### Returns
-
-[`JSON`](Outcome/JSON.md)\<`V`\>
 
 #### Implementation of
 
@@ -321,15 +198,9 @@ json.Serializable.toJSON
 
 ### toSARIF()
 
-```ts
+```typescript
 abstract toSARIF(): Result;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
-#### Returns
-
-`Result`
 
 #### Implementation of
 

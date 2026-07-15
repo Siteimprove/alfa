@@ -1,7 +1,5 @@
 # Interface: MinimalJSON
 
-Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/slotable/text.ts)
-
 ## Extends
 
 - `JSON`\<`"text"`\>
@@ -20,8 +18,6 @@ Defined in: [alfa-dom/src/node/slotable/text.ts](https://github.com/Siteimprove/
 optional children?: JSON[];
 ```
 
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
-
 #### Inherited from
 
 ```ts
@@ -35,8 +31,6 @@ BaseNode.JSON.children
 ```ts
 optional externalId?: string;
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 #### Inherited from
 
@@ -52,8 +46,6 @@ BaseNode.JSON.externalId
 optional internalId?: string;
 ```
 
-Defined in: alfa-tree/dist/tree.d.ts
-
 #### Inherited from
 
 ```ts
@@ -67,8 +59,6 @@ BaseNode.JSON.internalId
 ```ts
 optional path?: string;
 ```
-
-Defined in: [alfa-dom/src/node/node.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/node/node.ts)
 
 #### Inherited from
 
@@ -84,8 +74,6 @@ BaseNode.JSON.path
 optional serializationId?: string;
 ```
 
-Defined in: alfa-tree/dist/tree.d.ts
-
 #### Inherited from
 
 ```ts
@@ -99,8 +87,6 @@ BaseNode.JSON.serializationId
 ```ts
 type: "text";
 ```
-
-Defined in: alfa-tree/dist/tree.d.ts
 
 #### Inherited from
 

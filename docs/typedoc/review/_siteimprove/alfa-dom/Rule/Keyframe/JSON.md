@@ -1,7 +1,5 @@
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/rule/keyframe.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)
-
 ## Extends
 
 - `JSON`\<`"keyframe"`\>
@@ -20,8 +18,6 @@ Defined in: [alfa-dom/src/style/rule/keyframe.ts](https://github.com/Siteimprove
 key: string;
 ```
 
-Defined in: [alfa-dom/src/style/rule/keyframe.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)
-
 ## style
 
 ### style
@@ -30,8 +26,6 @@ Defined in: [alfa-dom/src/style/rule/keyframe.ts](https://github.com/Siteimprove
 style: string | JSON;
 ```
 
-Defined in: [alfa-dom/src/style/rule/keyframe.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/keyframe.ts)
-
 ## type
 
 ### type
@@ -39,8 +33,6 @@ Defined in: [alfa-dom/src/style/rule/keyframe.ts](https://github.com/Siteimprove
 ```ts
 type: "keyframe";
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 

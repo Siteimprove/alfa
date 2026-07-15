@@ -1,7 +1,5 @@
 # Interface: JSON\<V\>
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## Extended by
 
 - [`JSON`](Passed/JSON.md)
@@ -11,9 +9,9 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 
 ## Type Parameters
 
-### V
-
-`V` *extends* [`Value`](Value.md) = [`Value`](Value.md)
+| Type Parameter | Default type |
+| ------ | ------ |
+| `V` *extends* [`Value`](Value.md) | [`Value`](Value.md) |
 
 ## Indexable
 
@@ -29,8 +27,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 mode: Mode;
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## outcome
 
 ### outcome
@@ -39,8 +35,6 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 outcome: V;
 ```
 
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)
-
 ## rule
 
 ### rule
@@ -48,5 +42,3 @@ Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/m
 ```ts
 rule: JSON | MinimalJSON;
 ```
-
-Defined in: [alfa-act/src/outcome.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/outcome.ts)

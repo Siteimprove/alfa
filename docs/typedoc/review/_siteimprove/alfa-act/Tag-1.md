@@ -1,12 +1,10 @@
 # Abstract Class: Tag\<T\>
 
-Defined in: [alfa-act/src/metadata/tag.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
-
 ## Type Parameters
 
-### T
-
-`T` *extends* `string` = `string`
+| Type Parameter | Default type |
+| ------ | ------ |
+| `T` *extends* `string` | `string` |
 
 ## Implements
 
@@ -17,15 +15,9 @@ Defined in: [alfa-act/src/metadata/tag.ts](https://github.com/Siteimprove/alfa/b
 
 ### Constructor
 
-```ts
-protected new Tag<T>(): Tag<T>;
+```typescript
+protected new Tag<T extends string = string>(): Tag<T>;
 ```
-
-Defined in: [alfa-act/src/metadata/tag.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
-
-#### Returns
-
-`Tag`\<`T`\>
 
 ## equals
 
@@ -33,21 +25,9 @@ Defined in: [alfa-act/src/metadata/tag.ts](https://github.com/Siteimprove/alfa/b
 
 #### Call Signature
 
-```ts
+```typescript
 equals(value: Tag): boolean;
 ```
-
-Defined in: [alfa-act/src/metadata/tag.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
-
-##### Parameters
-
-###### value
-
-`Tag`
-
-##### Returns
-
-`boolean`
 
 ##### Implementation of
 
@@ -57,21 +37,9 @@ Equatable.equals
 
 #### Call Signature
 
-```ts
+```typescript
 equals(value: unknown): value is Tag<T>;
 ```
-
-Defined in: [alfa-act/src/metadata/tag.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
-
-##### Parameters
-
-###### value
-
-`unknown`
-
-##### Returns
-
-`value is Tag<T>`
 
 ##### Implementation of
 
@@ -83,15 +51,9 @@ Equatable.equals
 
 ### toJSON()
 
-```ts
+```typescript
 toJSON(): JSON<T>;
 ```
-
-Defined in: [alfa-act/src/metadata/tag.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
-
-#### Returns
-
-[`JSON`](Tag/JSON.md)\<`T`\>
 
 #### Implementation of
 
@@ -105,11 +67,9 @@ Serializable.toJSON
 
 #### Get Signature
 
-```ts
+```typescript
 get abstract type(): T;
 ```
-
-Defined in: [alfa-act/src/metadata/tag.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/metadata/tag.ts)
 
 ##### Returns
 

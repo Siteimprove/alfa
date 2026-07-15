@@ -1,7 +1,5 @@
 # Interface: JSON
 
-Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/media.ts)
-
 ## Extends
 
 - `JSON`\<`"media"`\>
@@ -20,8 +18,6 @@ Defined in: [alfa-dom/src/style/rule/media.ts](https://github.com/Siteimprove/al
 condition: string;
 ```
 
-Defined in: [alfa-dom/src/style/rule/condition.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/condition.ts)
-
 #### Inherited from
 
 ```ts
@@ -36,8 +32,6 @@ ConditionRule.JSON.condition
 rules: Array<JSON>;
 ```
 
-Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
-
 #### Inherited from
 
 ```ts
@@ -51,8 +45,6 @@ ConditionRule.JSON.rules
 ```ts
 type: "media";
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 

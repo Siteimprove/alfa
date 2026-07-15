@@ -1,16 +1,11 @@
 # Interface: JSON\<T, N\>
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## Type Parameters
 
-### T
-
-`T` *extends* [`Type`](Type.md) = [`Type`](Type.md)
-
-### N
-
-`N` *extends* `string` = `string`
+| Type Parameter | Default type |
+| ------ | ------ |
+| `T` *extends* [`Type`](Type.md) | [`Type`](Type.md) |
+| `N` *extends* `string` | `string` |
 
 ## Indexable
 
@@ -26,8 +21,6 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 name: N;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## rule
 
 ### rule
@@ -36,8 +29,6 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 rule: JSON;
 ```
 
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)
-
 ## type
 
 ### type
@@ -45,5 +36,3 @@ Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main
 ```ts
 type: T;
 ```
-
-Defined in: [alfa-act/src/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-act/src/rule.ts)

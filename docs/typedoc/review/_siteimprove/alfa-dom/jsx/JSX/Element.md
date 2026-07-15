@@ -4,10 +4,8 @@
 type Element<N> = Element<N>;
 ```
 
-Defined in: [alfa-dom/src/jsx.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/jsx.ts)
-
 ## Type Parameters
 
-### N
-
-`N` *extends* `string` = `string`
+| Type Parameter | Default type |
+| ------ | ------ |
+| `N` *extends* `string` | `string` |

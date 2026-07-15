@@ -1,7 +1,5 @@
 # Interface: JSON\<T\>
 
-Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
-
 ## Extends
 
 - `JSON`\<`T`\>
@@ -13,9 +11,9 @@ Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove
 
 ## Type Parameters
 
-### T
-
-`T` *extends* `string` = `string`
+| Type Parameter | Default type |
+| ------ | ------ |
+| `T` *extends* `string` | `string` |
 
 ## Indexable
 
@@ -31,8 +29,6 @@ Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove
 rules: Array<JSON>;
 ```
 
-Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/grouping.ts)
-
 ## type
 
 ### type
@@ -40,8 +36,6 @@ Defined in: [alfa-dom/src/style/rule/grouping.ts](https://github.com/Siteimprove
 ```ts
 type: T;
 ```
-
-Defined in: [alfa-dom/src/style/rule/rule.ts](https://github.com/Siteimprove/alfa/blob/main/packages/alfa-dom/src/style/rule/rule.ts)
 
 #### Inherited from
 
