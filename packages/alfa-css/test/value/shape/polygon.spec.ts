@@ -7,7 +7,7 @@ const parseErr = parser(Polygon.parse);
 const serialize = serializer(Polygon.parse);
 
 test(".parse() parses a polygon with no fill rule", (t) => {
-  t.deepEqual(serialize("polygon(1px 0px 1px 1px 0px 1px)"), {
+  t.deepEqual(serialize("polygon(1px 0px, 1px 1px, 0px 1px)"), {
     type: "basic-shape",
     kind: "polygon",
     fill: {
@@ -31,7 +31,7 @@ test(".parse() parses a polygon with no fill rule", (t) => {
 });
 
 test(".parse() parses a polygon with a fill rule", (t) => {
-  t.deepEqual(serialize("polygon(evenodd, 1px 0px 1px 1px 0px 1px)"), {
+  t.deepEqual(serialize("polygon(evenodd, 1px 0px, 1px 1px, 0px 1px)"), {
     type: "basic-shape",
     kind: "polygon",
     fill: {
@@ -56,7 +56,7 @@ test(".parse() parses a polygon with a fill rule", (t) => {
 });
 
 test(".parse() fails when there is an odd number of coordinates", (t) => {
-  t.deepEqual(parseErr("polygon(1px 0px 1px 1px 0px)").isErr(), true);
+  t.deepEqual(parseErr("polygon(1px 0px, 1px 1px, 0px)").isErr(), true);
 });
 
 test(".parse() accepts calculated vertices", (t) => {
