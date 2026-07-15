@@ -379,6 +379,8 @@ test("resolve() resolves a Translate", (t) => {
       Length.of(16, "px"),
       Length.of(16, "px"),
       Length.of(16, "px"),
+      Length.of(19.2, "px"), // 1.2 * 16px
+      Length.of(19.2, "px"), // 1.2 * 16px
     ),
     percentageBase: Length.of(10, "px"),
   });
