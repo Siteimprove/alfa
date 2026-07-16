@@ -2,7 +2,7 @@ export * from "./predicate/has-accessible-name.ts";
 export * from "./predicate/has-explicit-role.ts";
 export * from "./predicate/has-heading-level.ts";
 export * from "./predicate/has-implicit-role.ts";
-export * from "./predicate/has-incorrect-role-without-name.ts";
+export * from "./predicate/is-not-landmark-without-name.ts";
 export * from "./predicate/has-non-default-role.ts";
 export * from "./predicate/has-non-empty-accessible-name.ts";
 export * from "./predicate/has-role.ts";

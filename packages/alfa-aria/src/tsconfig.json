@@ -10,7 +10,7 @@
     "./dom/predicate/has-explicit-role.ts",
     "./dom/predicate/has-heading-level.ts",
     "./dom/predicate/has-implicit-role.ts",
-    "./dom/predicate/has-incorrect-role-without-name.ts",
+    "./dom/predicate/is-not-landmark-without-name.ts",
     "./dom/predicate/has-non-default-role.ts",
     "./dom/predicate/has-non-empty-accessible-name.ts",
     "./dom/predicate/has-role.ts",

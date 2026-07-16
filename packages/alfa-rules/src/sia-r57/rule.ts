@@ -16,7 +16,7 @@ import { ARIA } from "../requirements/index.ts";
 import { Scope, Stability } from "../tags/index.ts";
 
 const {
-  hasIncorrectRoleWithoutName,
+  isNotLandmarkWithoutName,
   hasRole,
   isIncludedInTheAccessibilityTree,
 } = DOM;
@@ -47,8 +47,8 @@ export default Rule.Atomic.of<Page, Text>({
           getElementDescendants(document, dom.Node.fullTree).some(
             and(
               hasRole(device, (role) => role.isLandmark()),
-              // Circumventing https://github.com/Siteimprove/alfa/issues/298
-              not(hasIncorrectRoleWithoutName(device)),
+              // `<form>` without name are not landmarks.
+              not(isNotLandmarkWithoutName(device)),
             ),
           )
         ) {
@@ -73,11 +73,10 @@ export default Rule.Atomic.of<Page, Text>({
               // landmark
               and(
                 (ancestor) => ancestor.role.some((role) => role.isLandmark()),
-                // Circumventing https://github.com/Siteimprove/alfa/issues/298
-                // by discarding the "landmark" ancestor if the role is incorrect
+                // `<form>` without name are not landmarks.
                 (ancestor) =>
                   test(
-                    and(isElement, not(hasIncorrectRoleWithoutName(device))),
+                    and(isElement, not(isNotLandmarkWithoutName(device))),
                     ancestor.node,
                   ),
               ),

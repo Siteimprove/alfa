@@ -9,17 +9,21 @@ const { hasName, isScopedTo } = Element;
 const { and, not, or } = Predicate;
 
 /**
- * `<aside>`, `<form>` and `<section>` elements have a non-generic implicit role
- * only if they have an accessible name.
- * Alfa currently can't handle that and always give them a role.
- * {@link https://github.com/Siteimprove/alfa/issues/298}
+ * `<form>` elements are not treated as landmarks if they do not have a name.
+ *
+ * @remarks
+ * Since they still have a role of form (sort of, but Assistive Technologies
+ * need to treat them as forms), we can't really handle that in the features,
+ * and need a separate test.
+ * {@link https://www.w3.org/TR/html-aam-1.0/#el-form}
+ *
  * @public
  */
-export function hasIncorrectRoleWithoutName(
+export function isNotLandmarkWithoutName(
   device: Device,
 ): Predicate<Element> {
   return and(
-    hasSuspiciousRole,
+    hasName("form"),
     not(hasExplicitRole()),
     not(hasAccessibleName(device)),
   );
