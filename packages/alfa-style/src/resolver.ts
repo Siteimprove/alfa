@@ -30,11 +30,17 @@ export namespace Resolver {
    * resolving font-size itself, in which case the parent's style is used.
    * Since the resolver doesn't know which property is resolved, the onus of
    * providing the correct style is left on the caller.
+   * This function is called when we need the computed value of the property.
+   * 
    *
    * {@link https://drafts.csswg.org/css-values/#relative-lengths}
+   * 
+   * @param style - used for viewport and font-size.
+   * @param lineHeightStyle - used for line height and root line height - default is the element's own style.
    */
   function lengthResolver(
     style: Style,
+    lineHeightStyle?: Style,
   ): Mapper<Length.Fixed<Unit.Length.Relative>, Length.Canonical> {
     const { viewport } = style.device;
     const width = Length.of(viewport.width, "px");
@@ -42,8 +48,18 @@ export namespace Resolver {
 
     const fontSize = style.computed("font-size").value;
     const rootFontSize = style.root().computed("font-size").value;
+    const extendedStyle = lineHeightStyle ?? style;
+    const lineHeightBase = extendedStyle.used("line-height").value;
+    const rootLineHeightBase = extendedStyle.root().used("line-height").value;
 
-    return Length.resolver(fontSize, rootFontSize, width, height);
+    return Length.resolver(
+      fontSize,
+      rootFontSize,
+      width,
+      height,
+      lineHeightBase,
+      rootLineHeightBase,
+    );
   }
 
   export function length(style: Style): Length.Resolver {
@@ -53,8 +69,9 @@ export namespace Resolver {
   export function lengthPercentage(
     base: Length.Canonical,
     style: Style,
+    lineHeightStyle?: Style,
   ): LengthPercentage.Resolver {
-    return { percentageBase: base, length: lengthResolver(style) };
+    return { percentageBase: base, length: lengthResolver(style, lineHeightStyle) };
   }
 
   /**

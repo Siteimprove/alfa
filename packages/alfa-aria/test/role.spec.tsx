@@ -156,21 +156,26 @@ test(`.from() maps \`<select>\` to listboxes`, (t) => {
   });
 });
 
-test(`.from() maps \`<img>\` with no source to presentational role`, (t) => {
-  const empty = {
-    type: "container",
-    node: "/img[1]",
-    role: null,
-    children: [],
-  };
-
-  const images = [<img />, <img src="" />, <img alt="Hello" src="" />];
-
-  for (const img of images) {
-    t.deepEqual(Node.from(img, device).toJSON(), empty);
-  }
-});
-
+// The role of src-less images is still "img" in the specs (and major browsers),
+// however, there seems to be consensus ARIA side that it should be "none", but
+// the exact phrasing is complicated due to empty `<img>` inside `<picture>`.
+// See https://github.com/w3c/aria/pull/2221
+// Keeping this here for memory purpose.
+// test(`.from() maps \`<img>\` with no source to image role`, (t) => {
+//   const empty = {
+//     type: "container",
+//     node: "/img[1]",
+//     role: null,
+//     children: [],
+//   };
+//
+//   const images = [<img />, <img src="" />, <img alt="Hello" src="" />];
+//
+//   for (const img of images) {
+//     t.deepEqual(Node.from(img, device).toJSON(), empty);
+//   }
+// });
+//
 test(`.from() correctly handles slotted list items`, (t) => {
   const target = (
     <div>

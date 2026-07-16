@@ -22,7 +22,7 @@ export namespace Unit {
       /**
        * {@link https://drafts.csswg.org/css-values/#font-relative-lengths}
        */
-      export type Font = "em" | "ex" | "ch" | "rem";
+      export type Font = "em" | "ex" | "ch" | "rem" | "lh" | "rlh" | "rch";
 
       /**
        * {@link https://drafts.csswg.org/css-values/#viewport-relative-lengths}
@@ -40,6 +40,9 @@ export namespace Unit {
         case "ex":
         case "ch":
         case "rem":
+        case "lh":
+        case "rlh":
+        case "rch":
           return true;
       }
 

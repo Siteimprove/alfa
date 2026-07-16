@@ -491,10 +491,15 @@ const Features: Features = {
           }
         }
 
-        // if there is no src attribute, or it is empty
-        if (element.attribute("src").every((src) => src.value.trim() === "")) {
-          yield Role.of("presentation");
-        }
+        // The role of src-less images is still "img" in the specs (and major browsers),
+        // however, there seems to be consensus ARIA side that it should be "none", but
+        // the exact phrasing is complicated due to empty `<img>` inside `<picture>`.
+        // See https://github.com/w3c/aria/pull/2221
+        // Keeping this here for memory purpose.
+        // // if there is no src attribute, or it is empty
+        // if (element.attribute("src").every((src) => src.value.trim() === "")) {
+        //   yield Role.of("presentation");
+        // }
 
         yield Role.of("img");
       },
