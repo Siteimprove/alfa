@@ -25,7 +25,7 @@ test("isNotLandmarkWithoutName returns true for nameless `<form>`", (t) => {
 test("isNotLandmarkWithoutName returns false for named `<form>`", (t) => {
   const target = (
     <form aria-label="My form">
-      Forms with name have landmark role
+      Forms with name are landmarks
     </form>
   );
 
@@ -38,7 +38,7 @@ test("isNotLandmarkWithoutName returns false for named `<form>`", (t) => {
 test("isNotLandmarkWithoutName returns false for explicit `<form>`", (t) => {
   const target = (
     <div role="form">
-      Forms with name have landmark role
+      Forms with explicit role are landmarks
     </div>
   );
 

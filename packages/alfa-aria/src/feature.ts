@@ -247,7 +247,7 @@ function ifHasAttribute<T = Role.Name | Iterable<Role>>(
  * `<form>` is also handled differently based on its name, it is always a "form"
  * but sometimes not a landmark. This cannot be handled here.
  *
- * The ways to name by author for these elements are: title aria-label,
+ * The ways to name by author for these elements are: title, aria-label, and
  * aria-labelledby.
  *
  * Browsers are not consistent in the way they handle the "apparently good but
@@ -473,11 +473,11 @@ const Features: Features = {
           if (
             test(
               isLikelyNamedByAuthor({
-                // Chrome 150.0.7871.115 treats totally empty title as not giving
-                // a name, but whitespace ones as giving a name, Firefox 152.0.6
-                // treats both as giving a name. Here, we follow Firefox for the
-                // sake of simplicity, but this clearly indicates some confusion
-                // in the specs/browsers.
+                // Chrome 150.0.7871.115 treats totally empty title as not
+                // giving a name, but whitespace ones as giving a name, Firefox
+                // 152.0.6 treats both as giving a name. Here, we follow Firefox
+                // for the sake of simplicity, but this clearly indicates some
+                // confusion in the specs/browsers.
                 emptyTitle: true,
                 emptyAriaLabel: true,
                 invalidAriaLabelledby: true,

@@ -252,7 +252,7 @@ test(`.from() gives a role to named sections`, (t) => {
 test(`.from() doesn't give a role to unnamed sections`, (t) => {
   for (const target of [
     <section></section>,
-    // Empty/whitespace aria-label as not considered named.
+    // Empty/whitespace aria-label are not considered named.
     <section aria-label=""></section>,
     <section aria-label=" "></section>,
   ]) {
@@ -301,7 +301,7 @@ test(`.from() gives a role to sectioned named asides`, (t) => {
 test(`.from() doesn't give a role to unnamed sectioned asides`, (t) => {
   for (const target of [
     <aside></aside>,
-    // Empty/whitespace aria-label as not considered named.
+    // Empty/whitespace aria-label are not considered named.
     <aside aria-label=""></aside>,
     <aside aria-label=" "></aside>,
   ]) {
@@ -353,20 +353,20 @@ test(`.from() gives a role to all unscoped asides`, (t) => {
 
 test(`.from() gives a role to named alt-less images`, (t) => {
   for (const target of [
-    <img alt="" src="foo.jpg" aria-label="named"></img>,
-    // Empty/whitespace aria-label as not considered named.
-    <img alt="" src="foo.jpg" aria-label=""></img>,
-    <img alt="" src="foo.jpg" aria-label=" "></img>,
-    <img alt="" src="foo.jpg" title="named"></img>,
+    <img alt="" src="foo.jpg" aria-label="named" />,
+    // Empty/whitespace aria-label are considered named.
+    <img alt="" src="foo.jpg" aria-label="" />,
+    <img alt="" src="foo.jpg" aria-label=" " />,
+    <img alt="" src="foo.jpg" title="named" />,
     // Empty/whitespace titles are considered as named.
-    <img alt="" src="foo.jpg" title=""></img>,
-    <img alt="" src="foo.jpg" title=" "></img>,
+    <img alt="" src="foo.jpg" title="" />,
+    <img alt="" src="foo.jpg" title=" " />,
   ]) {
     t.deepEqual(Node.from(target, device).toJSON().role, "img");
   }
 
   {
-    const target = <img alt="" src="foo.jpg" aria-labelledby="name"></img>;
+    const target = <img alt="" src="foo.jpg" aria-labelledby="name" />;
     <div>
       {target}
       <span id="name">Named</span>
@@ -375,7 +375,7 @@ test(`.from() gives a role to named alt-less images`, (t) => {
   }
   {
     // Empty aria-labelledby target is still considered as named.
-    const target = <img alt="" src="foo.jpg" aria-labelledby="name"></img>;
+    const target = <img alt="" src="foo.jpg" aria-labelledby="name" />;
     <div>
       {target}
       <span id="name"></span>
@@ -385,14 +385,14 @@ test(`.from() gives a role to named alt-less images`, (t) => {
 
   {
     // Invalid aria-labelledby is still considered as named
-    const target = <img alt="" src="foo.jpg" aria-labelledby="invalid"></img>;
+    const target = <img alt="" src="foo.jpg" aria-labelledby="invalid" />;
     <div>{target}</div>;
     t.deepEqual(Node.from(target, device).toJSON().role, "img");
   }
 });
 
 test(`.from() doesn't create a node for unnamed alt-less images`, (t) => {
-  for (const target of [<img alt="" src="foo.jpg"></img>]) {
-    t.deepEqual(Node.from(target, device).toJSON().role, null);
-  }
+  const target=<img alt="" src="foo.jpg" />;
+
+  t.deepEqual(Node.from(target, device).toJSON().role, null);
 });

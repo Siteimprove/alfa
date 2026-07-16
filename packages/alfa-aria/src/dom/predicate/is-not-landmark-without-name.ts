@@ -5,8 +5,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { hasExplicitRole } from "./has-explicit-role.ts";
 import { hasAccessibleName } from "./has-accessible-name.ts";
 
-const { hasName, isScopedTo } = Element;
-const { and, not, or } = Predicate;
+const { hasName } = Element;
+const { and, not } = Predicate;
 
 /**
  * `<form>` elements are not treated as landmarks if they do not have a name.
@@ -28,12 +28,3 @@ export function isNotLandmarkWithoutName(
     not(hasAccessibleName(device)),
   );
 }
-
-/**
- * form and section without name are always roleless.
- * aside elements are roleless when scoped to sectioning content.
- */
-const hasSuspiciousRole = or(
-  hasName("form", "section"),
-  and(hasName("aside"), isScopedTo("article", "aside", "nav", "section")),
-);
