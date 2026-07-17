@@ -10,8 +10,6 @@ import { DOM } from "../../../src/index.ts";
 
 const device = Device.standard();
 
-test("foo", t => t(true))
-
 test("isNotLandmarkWithoutName returns true for nameless `<form>`", (t) => {
   const target = <form>Forms without name are not landmarks</form>;
 
