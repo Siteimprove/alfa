@@ -1,19 +1,8 @@
-# Class: Question\<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI\>
+# Class: Question\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T` = `ANSWER`, `URI` *extends* `string` = `string`\>
 
 ## Extended by
 
 - [`Rhetorical`](Question/Rhetorical.md)
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `TYPE` | - |
-| `SUBJECT` | - |
-| `CONTEXT` | - |
-| `ANSWER` | - |
-| `T` | `ANSWER` |
-| `URI` *extends* `string` | `string` |
 
 ## Implements
 

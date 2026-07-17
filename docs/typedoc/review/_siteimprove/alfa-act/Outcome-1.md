@@ -1,4 +1,4 @@
-# Abstract Class: Outcome\<I, T, Q, S, V\>
+# Abstract Class: Outcome\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](Question/Metadata.md) = \{ \}, `S` = `T`, `V` *extends* [`Value`](Outcome/Value.md) = [`Value`](Outcome/Value.md)\>
 
 ## Extended by
 
@@ -6,16 +6,6 @@
 - [`Failed`](Outcome/Failed-2.md)
 - [`CantTell`](Outcome/CantTell-2.md)
 - [`Inapplicable`](Outcome/Inapplicable-2.md)
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `I` | - |
-| `T` *extends* `Hashable` | - |
-| `Q` *extends* [`Metadata`](Question/Metadata.md) | \{ \} |
-| `S` | `T` |
-| `V` *extends* [`Value`](Outcome/Value.md) | [`Value`](Outcome/Value.md) |
 
 ## Implements
 

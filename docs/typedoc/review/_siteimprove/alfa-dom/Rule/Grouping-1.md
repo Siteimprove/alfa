@@ -1,4 +1,4 @@
-# Abstract Class: Grouping\<T\>
+# Abstract Class: Grouping\<`T` *extends* `string` = `string`\>
 
 ## Extends
 
@@ -8,12 +8,6 @@
 
 - [`Keyframes`](Keyframes-2.md)
 - [`Block`](Layer/Block-1.md)
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `T` *extends* `string` | `string` |
 
 ## Constructors
 

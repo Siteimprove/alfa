@@ -1,17 +1,8 @@
-# Class: Failed\<I, T, Q, S\>
+# Class: Failed\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](../Question/Metadata.md) = \{ \}, `S` = `T`\>
 
 ## Extends
 
 - [`Outcome`](../Outcome-1.md)\<`I`, `T`, `Q`, `S`, [`Failed`](Value.md#failed)\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `I` | - |
-| `T` *extends* `Hashable` | - |
-| `Q` *extends* [`Metadata`](../Question/Metadata.md) | \{ \} |
-| `S` | `T` |
 
 ## Constructors
 

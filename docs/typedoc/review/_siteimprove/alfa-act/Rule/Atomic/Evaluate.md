@@ -1,13 +1,4 @@
-# Interface: Evaluate()\<I, T, Q, S\>
-
-## Type Parameters
-
-| Type Parameter |
-| ------ |
-| `I` |
-| `T` *extends* `Hashable` |
-| `Q` *extends* [`Metadata`](../../Question/Metadata.md) |
-| `S` |
+# Interface: Evaluate()\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](../../Question/Metadata.md), `S`\>
 
 ```typescript
 Evaluate(input: I, performance?: {

@@ -1,11 +1,4 @@
-# Abstract Class: Requirement\<T, U\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `T` *extends* `string` | `string` |
-| `U` *extends* `string` | `string` |
+# Abstract Class: Requirement\<`T` *extends* `string` = `string`, `U` *extends* `string` = `string`\>
 
 ## Implements
 

@@ -1,4 +1,4 @@
-# Interface: JSON\<V\>
+# Interface: JSON\<`V` *extends* [`Value`](Value.md) = [`Value`](Value.md)\>
 
 ## Extended by
 
@@ -6,12 +6,6 @@
 - [`JSON`](Failed/JSON.md)
 - [`JSON`](CantTell/JSON.md)
 - [`JSON`](Inapplicable/JSON.md)
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `V` *extends* [`Value`](Value.md) | [`Value`](Value.md) |
 
 ## Indexable
 

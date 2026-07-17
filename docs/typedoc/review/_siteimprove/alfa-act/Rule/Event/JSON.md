@@ -1,11 +1,4 @@
-# Interface: JSON\<T, N\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `T` *extends* [`Type`](Type.md) | [`Type`](Type.md) |
-| `N` *extends* `string` | `string` |
+# Interface: JSON\<`T` *extends* [`Type`](Type.md) = [`Type`](Type.md), `N` *extends* `string` = `string`\>
 
 ## Indexable
 

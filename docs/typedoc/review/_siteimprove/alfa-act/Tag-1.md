@@ -1,10 +1,4 @@
-# Abstract Class: Tag\<T\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `T` *extends* `string` | `string` |
+# Abstract Class: Tag\<`T` *extends* `string` = `string`\>
 
 ## Implements
 

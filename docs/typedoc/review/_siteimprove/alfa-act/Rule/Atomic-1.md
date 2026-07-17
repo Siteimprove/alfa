@@ -1,17 +1,8 @@
-# Class: Atomic\<I, T, Q, S\>
+# Class: Atomic\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](../Question/Metadata.md) = \{ \}, `S` = `T`\>
 
 ## Extends
 
 - [`Rule`](../Rule-1.md)\<`I`, `T`, `Q`, `S`\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `I` | - |
-| `T` *extends* `Hashable` | - |
-| `Q` *extends* [`Metadata`](../Question/Metadata.md) | \{ \} |
-| `S` | `T` |
 
 ## Constructors
 

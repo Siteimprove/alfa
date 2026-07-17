@@ -1,15 +1,4 @@
-# Class: Event\<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `INPUT` | - |
-| `TARGET` *extends* `Hashable` | - |
-| `QUESTION` *extends* [`Metadata`](../Question/Metadata.md) | - |
-| `SUBJECT` | - |
-| `TYPE` *extends* [`Type`](Event/Type.md) | [`Type`](Event/Type.md) |
-| `NAME` *extends* `string` | `string` |
+# Class: Event\<`INPUT`, `TARGET` *extends* `Hashable`, `QUESTION` *extends* [`Metadata`](../Question/Metadata.md), `SUBJECT`, `TYPE` *extends* [`Type`](Event/Type.md) = [`Type`](Event/Type.md), `NAME` *extends* `string` = `string`\>
 
 ## Implements
 

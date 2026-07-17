@@ -1,18 +1,9 @@
-# Abstract Class: Rule\<I, T, Q, S\>
+# Abstract Class: Rule\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](Question/Metadata.md) = \{ \}, `S` = `T`\>
 
 ## Extended by
 
 - [`Atomic`](Rule/Atomic-1.md)
 - [`Composite`](Rule/Composite-1.md)
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `I` | - |
-| `T` *extends* `Hashable` | - |
-| `Q` *extends* [`Metadata`](Question/Metadata.md) | \{ \} |
-| `S` | `T` |
 
 ## Implements
 

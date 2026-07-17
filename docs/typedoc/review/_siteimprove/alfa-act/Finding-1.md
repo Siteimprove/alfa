@@ -1,12 +1,5 @@
-# Type Alias: Finding\<ANSWER, DIAGNOSTIC\>
+# Type Alias: Finding\<`ANSWER`, `DIAGNOSTIC` *extends* [`Diagnostic`](Diagnostic-1.md) = [`Diagnostic`](Diagnostic-1.md)\>
 
 ```ts
 type Finding<ANSWER, DIAGNOSTIC> = Either<[ANSWER, boolean], [DIAGNOSTIC, boolean]>;
 ```
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `ANSWER` | - |
-| `DIAGNOSTIC` *extends* [`Diagnostic`](Diagnostic-1.md) | [`Diagnostic`](Diagnostic-1.md) |

@@ -1,14 +1,8 @@
-# Interface: JSON\<T\>
+# Interface: JSON\<`T`\>
 
 ## Extends
 
 - [`JSON`](../JSON.md)\<[`Passed`](../Value.md#passed)\>
-
-## Type Parameters
-
-| Type Parameter |
-| ------ |
-| `T` |
 
 ## Indexable
 

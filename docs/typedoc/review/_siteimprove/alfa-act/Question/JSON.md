@@ -1,14 +1,4 @@
-# Interface: JSON\<TYPE, SUBJECT, CONTEXT, ANSWER, URI\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `TYPE` | - |
-| `SUBJECT` | - |
-| `CONTEXT` | - |
-| `ANSWER` | - |
-| `URI` *extends* `string` | `string` |
+# Interface: JSON\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `URI` *extends* `string` = `string`\>
 
 ## Indexable
 

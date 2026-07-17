@@ -1,19 +1,8 @@
-# Class: Rhetorical\<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI\>
+# Class: Rhetorical\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T` = `ANSWER`, `URI` *extends* `string` = `string`\>
 
 ## Extends
 
 - [`Question`](../Question-1.md)\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T`, `URI`\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `TYPE` | - |
-| `SUBJECT` | - |
-| `CONTEXT` | - |
-| `ANSWER` | - |
-| `T` | `ANSWER` |
-| `URI` *extends* `string` | `string` |
 
 ## Constructors
 

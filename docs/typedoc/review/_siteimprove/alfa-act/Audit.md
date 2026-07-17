@@ -1,13 +1,4 @@
-# Class: Audit\<I, T, Q, S\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `I` | - |
-| `T` *extends* `Hashable` | - |
-| `Q` *extends* [`Metadata`](Question/Metadata.md) | \{ \} |
-| `S` | `T` |
+# Class: Audit\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](Question/Metadata.md) = \{ \}, `S` = `T`\>
 
 ## Constructors
 

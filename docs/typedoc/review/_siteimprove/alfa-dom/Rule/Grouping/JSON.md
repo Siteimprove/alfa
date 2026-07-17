@@ -1,4 +1,4 @@
-# Interface: JSON\<T\>
+# Interface: JSON\<`T` *extends* `string` = `string`\>
 
 ## Extends
 
@@ -8,12 +8,6 @@
 
 - [`JSON`](../Keyframes/JSON.md)
 - [`JSON`](../Layer/Block/JSON.md)
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `T` *extends* `string` | `string` |
 
 ## Indexable
 

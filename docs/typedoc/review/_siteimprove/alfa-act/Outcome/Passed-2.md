@@ -1,17 +1,8 @@
-# Class: Passed\<I, T, Q, S\>
+# Class: Passed\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](../Question/Metadata.md) = \{ \}, `S` = `T`\>
 
 ## Extends
 
 - [`Outcome`](../Outcome-1.md)\<`I`, `T`, `Q`, `S`, [`Passed`](Value.md#passed)\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `I` | - |
-| `T` *extends* `Hashable` | - |
-| `Q` *extends* [`Metadata`](../Question/Metadata.md) | \{ \} |
-| `S` | `T` |
 
 ## Constructors
 

@@ -1,14 +1,8 @@
-# Class: Attribute\<N\>
+# Class: Attribute\<`N` *extends* `string` = `string`\>
 
 ## Extends
 
 - `BaseNode`\<`"attribute"`\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `N` *extends* `string` | `string` |
 
 ## Constructors
 

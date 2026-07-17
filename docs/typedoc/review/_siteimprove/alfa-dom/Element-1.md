@@ -1,14 +1,8 @@
-# Class: Element\<N\>
+# Class: Element\<`N` *extends* `string` = `string`\>
 
 ## Extends
 
 - `Slotable`\<`"element"`\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `N` *extends* `string` | `string` |
 
 ## Constructors
 

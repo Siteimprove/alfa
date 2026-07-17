@@ -1,14 +1,8 @@
-# Interface: JSON\<T\>
+# Interface: JSON\<`T`\>
 
 ## Extends
 
 - [`JSON`](../JSON.md)\<[`CantTell`](../Value.md#canttell)\>
-
-## Type Parameters
-
-| Type Parameter |
-| ------ |
-| `T` |
 
 ## Indexable
 

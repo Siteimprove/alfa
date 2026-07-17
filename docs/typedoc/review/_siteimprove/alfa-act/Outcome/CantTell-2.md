@@ -1,17 +1,8 @@
-# Class: CantTell\<I, T, Q, S\>
+# Class: CantTell\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](../Question/Metadata.md) = \{ \}, `S` = `T`\>
 
 ## Extends
 
 - [`Outcome`](../Outcome-1.md)\<`I`, `T`, `Q`, `S`, [`CantTell`](Value.md#canttell)\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `I` | - |
-| `T` *extends* `Hashable` | - |
-| `Q` *extends* [`Metadata`](../Question/Metadata.md) | \{ \} |
-| `S` | `T` |
 
 ## Constructors
 

@@ -1,11 +1,5 @@
-# Type Alias: TextGroupOptions\<N\>
+# Type Alias: TextGroupOptions\<`N` *extends* [`Node`](../Node-1.md) = [`Node`](../Node-1.md)\>
 
 ```ts
 type TextGroupOptions<N> = descendants.TextGroupOptions<N>;
 ```
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `N` *extends* [`Node`](../Node-1.md) | [`Node`](../Node-1.md) |

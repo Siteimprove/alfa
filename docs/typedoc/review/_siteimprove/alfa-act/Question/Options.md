@@ -1,10 +1,4 @@
-# Interface: Options\<A\>
-
-## Type Parameters
-
-| Type Parameter |
-| ------ |
-| `A` |
+# Interface: Options\<`A`\>
 
 ## diagnostic
 

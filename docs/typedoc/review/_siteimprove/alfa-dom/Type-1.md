@@ -1,14 +1,8 @@
-# Class: Type\<N\>
+# Class: Type\<`N` *extends* `string` = `string`\>
 
 ## Extends
 
 - `BaseNode`\<`"type"`\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `N` *extends* `string` | `string` |
 
 ## Constructors
 

@@ -1,4 +1,4 @@
-# Type Alias: Applicable\<I, T, Q, S\>
+# Type Alias: Applicable\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](../Question/Metadata.md) = \{ \}, `S` = `T`\>
 
 ```ts
 type Applicable<I, T, Q, S> = 
@@ -6,12 +6,3 @@ type Applicable<I, T, Q, S> =
   | Failed<I, T, Q, S>
 | CantTell<I, T, Q, S>;
 ```
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `I` | - |
-| `T` *extends* `Hashable` | - |
-| `Q` *extends* [`Metadata`](../Question/Metadata.md) | \{ \} |
-| `S` | `T` |

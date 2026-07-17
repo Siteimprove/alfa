@@ -1,14 +1,8 @@
-# Interface: JSON\<N\>
+# Interface: JSON\<`N` *extends* `string` = `string`\>
 
 ## Extends
 
 - `JSON`\<`"attribute"`\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `N` *extends* `string` | `string` |
 
 ## Indexable
 

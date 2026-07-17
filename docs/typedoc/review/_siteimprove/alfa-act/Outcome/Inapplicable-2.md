@@ -1,17 +1,8 @@
-# Class: Inapplicable\<I, T, Q, S\>
+# Class: Inapplicable\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](../Question/Metadata.md) = \{ \}, `S` = `T`\>
 
 ## Extends
 
 - [`Outcome`](../Outcome-1.md)\<`I`, `T`, `Q`, `S`, [`Inapplicable`](Value.md#inapplicable)\>
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `I` | - |
-| `T` *extends* `Hashable` | - |
-| `Q` *extends* [`Metadata`](../Question/Metadata.md) | \{ \} |
-| `S` | `T` |
 
 ## Constructors
 

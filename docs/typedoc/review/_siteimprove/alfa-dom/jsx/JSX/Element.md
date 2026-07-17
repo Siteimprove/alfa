@@ -1,11 +1,5 @@
-# Type Alias: Element\<N\>
+# Type Alias: Element\<`N` *extends* `string` = `string`\>
 
 ```ts
 type Element<N> = Element<N>;
 ```
-
-## Type Parameters
-
-| Type Parameter | Default type |
-| ------ | ------ |
-| `N` *extends* `string` | `string` |
