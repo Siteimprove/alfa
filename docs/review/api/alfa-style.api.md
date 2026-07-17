@@ -250,7 +250,7 @@ export namespace Longhands {
         left: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
         "letter-spacing": Longhand<Length | Keyword<"normal">, Length, Length>;
         "line-break": Longhand<Keyword.ToKeywords<"auto" | "strict" | "normal" | "loose" | "anywhere">, Keyword.ToKeywords<"auto" | "strict" | "normal" | "loose" | "anywhere">, Keyword.ToKeywords<"auto" | "strict" | "normal" | "loose" | "anywhere">>;
-        "line-height": Longhand<Number_2 | LengthPercentage | Keyword<"normal">, Computed, Computed>;
+        "line-height": Longhand<Number_2 | LengthPercentage | Keyword<"normal">, Computed, Length>;
         "margin-bottom": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
         "margin-left": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
         "margin-right": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
@@ -333,7 +333,7 @@ export namespace Resolver {
     // (undocumented)
     export function length(style: Style): Length.Resolver;
     // (undocumented)
-    export function lengthPercentage(base: Length.Canonical, style: Style): LengthPercentage.Resolver;
+    export function lengthPercentage(base: Length.Canonical, style: Style, lineHeightStyle?: Style): LengthPercentage.Resolver;
     // (undocumented)
     export function shadow(style: Style): Shadow.Resolver;
 }

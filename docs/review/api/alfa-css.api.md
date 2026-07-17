@@ -1185,7 +1185,7 @@ export namespace Length {
         // (undocumented)
         length: Mapper<Fixed<Unit.Length.Relative>, Canonical>;
     }
-    export function resolver(emBase: Canonical, remBase: Canonical, vwBase: Canonical, vhBase: Canonical): Mapper<Fixed<Unit.Length.Relative>, Canonical>;
+    export function resolver(emBase: Canonical, remBase: Canonical, vwBase: Canonical, vhBase: Canonical, lhBase: Canonical, rlhBase: Canonical): Mapper<Fixed<Unit.Length.Relative>, Canonical>;
     // @internal (undocumented)
     export function toExpressionResolver(resolver: Resolver): Expression.LengthResolver;
     // @internal (undocumented)
@@ -3438,7 +3438,7 @@ export namespace Unit {
         // (undocumented)
         export namespace Relative {
             // (undocumented)
-            export type Font = "em" | "ex" | "ch" | "rem";
+            export type Font = "em" | "ex" | "ch" | "rem" | "lh" | "rlh" | "rch";
             // (undocumented)
             export type Viewport = "vw" | "vh" | "vmin" | "vmax";
         }

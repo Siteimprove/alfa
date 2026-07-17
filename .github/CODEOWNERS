@@ -1,2 +1,9 @@
 # https://help.github.com/articles/about-codeowners/
 * @siteimprove/alfa-owners
+
+# Give the Siteimprove builduser ownership of manifest files and the lockfile, to let it approve dependabot PRs.
+# We must re-state alfa-owners as the latest declaration steals full ownership.
+# See https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners#codeowners-syntax
+yarn.lock @siteimprove/alfa-owners @siteimprove-builduser
+package.json @siteimprove/alfa-owners @siteimprove-builduser
+**/package.json @siteimprove/alfa-owners @siteimprove-builduser

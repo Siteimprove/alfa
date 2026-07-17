@@ -421,6 +421,8 @@ test(".resolve() fully resolves positions", (t) => {
           Length.of(0, "px"),
           Length.of(0, "px"),
           Length.of(0, "px"),
+          Length.of(19.2, "px"), // 1.2 * 16px
+          Length.of(19.2, "px"), // 1.2 * 16px
         ),
         percentageHBase: Length.of(10, "px"),
         percentageVBase: Length.of(20, "px"),
@@ -451,6 +453,8 @@ test(".partiallyResolve() partially resolves positions", (t) => {
       Length.of(0, "px"),
       Length.of(0, "px"),
       Length.of(0, "px"),
+      Length.of(19.2, "px"), // 1.2 * 16px
+      Length.of(19.2, "px"), // 1.2 * 16px
     ),
   });
 
