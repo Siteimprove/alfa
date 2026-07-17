@@ -23,9 +23,9 @@ const { either } = Parser;
  * @public
  */
 export class Shape<
-    S extends Shape.Basic = Shape.Basic,
-    B extends Box.Geometry = Box.Geometry,
-  >
+  S extends Shape.Basic = Shape.Basic,
+  B extends Box.Geometry = Box.Geometry,
+>
   extends Value<"shape", Value.HasCalculation<[S]>>
   implements
     Resolvable<Shape.Canonical, Shape.Resolver>,
@@ -117,11 +117,7 @@ export namespace Shape {
       | Rectangle.Canonical;
 
     export type JSON =
-      | Circle.JSON
-      | Ellipse.JSON
-      | Inset.JSON
-      | Polygon.JSON
-      | Rectangle.JSON;
+      Circle.JSON | Ellipse.JSON | Inset.JSON | Polygon.JSON | Rectangle.JSON;
 
     export type Resolver = Circle.Resolver &
       Ellipse.Resolver &
@@ -175,6 +171,10 @@ export namespace Shape {
   export type PartiallyResolved = Shape<Basic.PartiallyResolved, Box.Geometry>;
 
   export type PartialResolver = Basic.PartialResolver;
+
+  export function isShape(value: unknown): value is Shape {
+    return value instanceof Shape;
+  }
 
   /**
    * @remarks

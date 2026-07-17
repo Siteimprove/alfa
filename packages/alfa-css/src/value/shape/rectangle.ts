@@ -21,11 +21,10 @@ const { either, map, option, separatedList } = Parser;
  * {@link https://drafts.fxtf.org/css-masking/#funcdef-clip-rect}
  *
  * @public
- * @deprecated Deprecated as of CSS Masking Module Level 1
  */
 export class Rectangle<
-    O extends Length | Rectangle.Auto = Length | Rectangle.Auto,
-  >
+  O extends Length | Rectangle.Auto = Length | Rectangle.Auto,
+>
   extends BasicShape<"rectangle", Value.HasCalculation<[O, O, O, O]>>
   implements Resolvable<Rectangle.Canonical, Rectangle.Resolver>
 {
@@ -115,7 +114,6 @@ export class Rectangle<
 
 /**
  * @public
- * @deprecated Deprecated as of CSS Masking Module Level 1
  */
 export namespace Rectangle {
   export type Canonical = Rectangle<Length.Canonical | Auto>;
@@ -138,6 +136,23 @@ export namespace Rectangle {
   const parseLengthAuto = either(Length.parse, Keyword.parse("auto"));
 
   export const parse: CSSParser<Rectangle> = map(
+    Function.parse("rect", separatedList(parseLengthAuto, Comma.parse, 4, 4)),
+    ([_, [top, right, bottom, left]]) => Rectangle.of(top, right, bottom, left),
+  );
+
+  /**
+   * Parse argument as a comma or whitespace separated list.
+   *
+   * @remarks
+   * The deprecated `clip` property accepts `rect()` as a comma separated list,
+   * and optionally as a whitespace separated one.
+   * The current `<basic-shape>` type only accepts whitespace separated
+   * rectangles.
+   *
+   * @public
+   * @deprecated Deprecated as of CSS Masking Module Level 1
+   */
+  export const parseLegacy: CSSParser<Rectangle> = map(
     Function.parse(
       "rect",
       either(

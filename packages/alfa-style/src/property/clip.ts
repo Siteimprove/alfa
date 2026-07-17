@@ -23,7 +23,7 @@ type Computed = Specified;
  */
 const parse = either(
   Keyword.parse("auto"),
-  map(Rectangle.parse, (rectangle) =>
+  map(Rectangle.parseLegacy, (rectangle) =>
     Shape.of(rectangle, Keyword.of("border-box")),
   ),
 );
