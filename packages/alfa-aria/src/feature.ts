@@ -285,21 +285,15 @@ function isLikelyNamedByAuthor({
     // accept invalid aria-labelledby. We can't really check whether these
     // existing elements will actually produce a name.
     (element) =>
-      test(
-        hasAttribute(
-          "aria-labelledby",
-          orDefault(
-            (tokens) =>
-              tokens
-                .split(" ")
-                .some((token) =>
-                  Query.getElementIdMap(element.root()).has(token),
-                ),
-            invalidAriaLabelledby,
-          ),
-        ),
-        element,
-      ),
+      element.attribute("aria-labelledby").some((attribute) => {
+        if (invalidAriaLabelledby) {
+          return true;
+        }
+
+        const ids = Query.getElementIdMap(element.root());
+
+        return attribute.tokens().some((token) => ids.has(token));
+      }),
   );
 }
 
