@@ -1,13 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import {
-  Circle,
-  Ellipse,
-  Inset,
-  Polygon,
-  Rectangle,
-  Shape,
-} from "../../../src/value/shape/index.ts";
+import { Shape } from "../../../src/value/shape/index.ts";
 
 import { parser, parserUnsafe, serializer } from "../../common/parse.ts";
 
@@ -93,17 +86,13 @@ test(".parse() fails if no <basic-shape> is provided", (t) => {
  *
  *********************************************************************/
 
-const parseCircle = parserUnsafe(Circle.parse);
-const parseEllipse = parserUnsafe(Ellipse.parse);
-const parseInset = parserUnsafe(Inset.parse);
-const parsePolygon = parserUnsafe(Polygon.parse);
-const parseRectangle = parserUnsafe(Rectangle.parse);
+const parse = (input: string) => parserUnsafe(Shape.parse)(input).shape;
 
 test("isEmpty() returns true for a circle of provable 0 radius", (t) => {
   for (const shape of [
-    parseCircle("circle(0)"),
-    parseCircle("circle(0px)"),
-    parseCircle("circle(0%)"),
+    parse("circle(0)"),
+    parse("circle(0px)"),
+    parse("circle(0%)"),
   ]) {
     t(Shape.isEmpty(shape));
   }
@@ -111,9 +100,9 @@ test("isEmpty() returns true for a circle of provable 0 radius", (t) => {
 
 test("isEmpty() returns false for a circle that isn't provably of 0 radius", (t) => {
   for (const shape of [
-    parseCircle("circle(closest-side)"),
-    parseCircle("circle(1px)"),
-    parseCircle("circle(20%)"),
+    parse("circle(closest-side)"),
+    parse("circle(1px)"),
+    parse("circle(20%)"),
   ]) {
     t(!Shape.isEmpty(shape));
   }
@@ -121,8 +110,8 @@ test("isEmpty() returns false for a circle that isn't provably of 0 radius", (t)
 
 test("isEmpty() returns true for a polygon with a single vertex", (t) => {
   for (const shape of [
-    parsePolygon("polygon(0px 0px)"),
-    parsePolygon("polygon(nonzero, 10px 10px)"),
+    parse("polygon(0px 0px)"),
+    parse("polygon(nonzero, 10px 10px)"),
   ]) {
     t(Shape.isEmpty(shape));
   }
@@ -130,9 +119,9 @@ test("isEmpty() returns true for a polygon with a single vertex", (t) => {
 
 test("isEmpty() returns true for an ellipse with either radius of provable 0", (t) => {
   for (const shape of [
-    parseEllipse("ellipse(0px 10px at center)"),
-    parseEllipse("ellipse(10px 0px at center)"),
-    parseEllipse("ellipse(0% 10% at center)"),
+    parse("ellipse(0px 10px at center)"),
+    parse("ellipse(10px 0px at center)"),
+    parse("ellipse(0% 10% at center)"),
   ]) {
     t(Shape.isEmpty(shape));
   }
@@ -140,8 +129,8 @@ test("isEmpty() returns true for an ellipse with either radius of provable 0", (
 
 test("isEmpty() returns false for an ellipse with no radius provably 0", (t) => {
   for (const shape of [
-    parseEllipse("ellipse(10px 10px at center)"),
-    parseEllipse("ellipse(closest-side closest-side at center)"),
+    parse("ellipse(10px 10px at center)"),
+    parse("ellipse(closest-side closest-side at center)"),
   ]) {
     t(!Shape.isEmpty(shape));
   }
@@ -149,8 +138,8 @@ test("isEmpty() returns false for an ellipse with no radius provably 0", (t) => 
 
 test("isEmpty() returns true for a polygon whose vertices are all identical", (t) => {
   for (const shape of [
-    parsePolygon("polygon(10px 10px 10px 10px 10px 10px)"),
-    parsePolygon("polygon(evenodd, 10px 10px 10px 10px 10px 10px)"),
+    parse("polygon(10px 10px 10px 10px 10px 10px)"),
+    parse("polygon(evenodd, 10px 10px 10px 10px 10px 10px)"),
   ]) {
     t(Shape.isEmpty(shape));
   }
@@ -158,10 +147,10 @@ test("isEmpty() returns true for a polygon whose vertices are all identical", (t
 
 test("isEmpty() returns false for a polygon with several distinct vertices", (t) => {
   for (const shape of [
-    parsePolygon("polygon(0px 0px 10px 0px 10px 10px)"),
-    parsePolygon("polygon(evenodd, 0px 0px 10px 0px 10px 10px)"),
+    parse("polygon(0px 0px 10px 0px 10px 10px)"),
+    parse("polygon(evenodd, 0px 0px 10px 0px 10px 10px)"),
     // Two out of three vertices coincide, but not all of them.
-    parsePolygon("polygon(0px 0px 0px 0px 10px 10px)"),
+    parse("polygon(0px 0px 0px 0px 10px 10px)"),
   ]) {
     t(!Shape.isEmpty(shape));
   }
@@ -169,9 +158,9 @@ test("isEmpty() returns false for a polygon with several distinct vertices", (t)
 
 test("isEmpty() returns true for an inset whose opposite offsets sum to at least 100%", (t) => {
   for (const shape of [
-    parseInset("inset(60% 0% 40% 0%)"), // top + bottom
-    parseInset("inset(0% 70% 0% 30%)"), // right + left
-    parseInset("inset(100% 0% 0% 0%)"),
+    parse("inset(60% 0% 40% 0%)"), // top + bottom
+    parse("inset(0% 70% 0% 30%)"), // right + left
+    parse("inset(100% 0% 0% 0%)"),
   ]) {
     t(Shape.isEmpty(shape));
   }
@@ -179,10 +168,10 @@ test("isEmpty() returns true for an inset whose opposite offsets sum to at least
 
 test("isEmpty() returns false for an inset whose opposite offsets do not sum to 100%", (t) => {
   for (const shape of [
-    parseInset("inset(10% 0% 10% 0%)"),
-    parseInset("inset(40% 40% 40% 40%)"),
+    parse("inset(10% 0% 10% 0%)"),
+    parse("inset(40% 40% 40% 40%)"),
     // Offsets are lengths, not percentages, so they never sum to a clip.
-    parseInset("inset(999px 0px 999px 0px)"),
+    parse("inset(999px 0px 999px 0px)"),
   ]) {
     t(!Shape.isEmpty(shape));
   }
@@ -190,8 +179,8 @@ test("isEmpty() returns false for an inset whose opposite offsets do not sum to 
 
 test("isEmpty() returns true for a rectangle with identical top/bottom or left/right offsets", (t) => {
   for (const shape of [
-    parseRectangle("rect(10px, 20px, 10px, 30px)"), // top === bottom
-    parseRectangle("rect(10px, 20px, 30px, 20px)"), // right === left
+    parse("rect(10px 20px 10px 30px)"), // top === bottom
+    parse("rect(10px 20px 30px 20px)"), // right === left
   ]) {
     t(Shape.isEmpty(shape));
   }
@@ -199,9 +188,9 @@ test("isEmpty() returns true for a rectangle with identical top/bottom or left/r
 
 test("isEmpty() returns false for a rectangle with distinct top/bottom and left/right offsets", (t) => {
   for (const shape of [
-    parseRectangle("rect(10px, 20px, 30px, 40px)"),
+    parse("rect(10px 20px 30px 40px)"),
     // "auto" offsets are never fixed, so they can't trigger a match.
-    parseRectangle("rect(auto, 20px, auto, 40px)"),
+    parse("rect(auto 20px auto 40px)"),
   ]) {
     t(!Shape.isEmpty(shape));
   }

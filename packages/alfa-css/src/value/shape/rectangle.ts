@@ -108,7 +108,7 @@ export class Rectangle<
   }
 
   public toString(): string {
-    return `rect(${this._top}, ${this._right}, ${this._bottom}, ${this._left})`;
+    return `rect(${this._top} ${this._right} ${this._bottom} ${this._left})`;
   }
 }
 
@@ -136,7 +136,7 @@ export namespace Rectangle {
   const parseLengthAuto = either(Length.parse, Keyword.parse("auto"));
 
   export const parse: CSSParser<Rectangle> = map(
-    Function.parse("rect", separatedList(parseLengthAuto, Comma.parse, 4, 4)),
+    Function.parse("rect", separatedList(parseLengthAuto, option(Token.parseWhitespace), 4, 4)),
     ([_, [top, right, bottom, left]]) => Rectangle.of(top, right, bottom, left),
   );
 

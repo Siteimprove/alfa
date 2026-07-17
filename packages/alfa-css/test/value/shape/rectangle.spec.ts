@@ -9,8 +9,8 @@ const serialize = serializer(Rectangle.parse);
 const parseLegacyErr = parser(Rectangle.parseLegacy);
 const serializeLegacy = serializer(Rectangle.parseLegacy);
 
-test(".parse() parses comma separated rectangles", (t) => {
-  t.deepEqual(serialize("rect(1px, auto, 2em, auto)"), {
+test(".parse() parses space separated rectangles", (t) => {
+  t.deepEqual(serialize("rect(1px auto 2em auto)"), {
     type: "basic-shape",
     kind: "rectangle",
     bottom: { type: "length", unit: "em", value: 2 },
@@ -19,7 +19,7 @@ test(".parse() parses comma separated rectangles", (t) => {
     top: { type: "length", unit: "px", value: 1 },
   });
 
-  t.deepEqual(serialize("rect(1px , auto , 2em,auto)"), {
+  t.deepEqual(serialize("rect(1px  auto  2em auto)"), {
     type: "basic-shape",
     kind: "rectangle",
     bottom: { type: "length", unit: "em", value: 2 },
@@ -29,8 +29,8 @@ test(".parse() parses comma separated rectangles", (t) => {
   });
 });
 
-test(".parse() doesn't parse space separated rectangles", (t) => {
-  t(parseErr("rect(1px auto 2em auto)").isErr());
+test(".parse() doesn't parse comma separated rectangles", (t) => {
+  t(parseErr("rect(1px, auto, 2em, auto)").isErr());
 });
 
 test(".parseLegacy() parses comma separated rectangles", (t) => {
@@ -102,7 +102,7 @@ test(".parse() accepts calculated lengths", (t) => {
   });
 
   t.deepEqual(
-    serialize(`rect(${actual(1)}, ${actual(2)}, ${actual(3)}, ${actual(4)})`),
+    serialize(`rect(${actual(1)} ${actual(2)} ${actual(3)} ${actual(4)})`),
     {
       type: "basic-shape",
       kind: "rectangle",
