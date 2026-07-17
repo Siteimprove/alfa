@@ -11,10 +11,10 @@ if (target !== "review" && target !== "documentation") {
 }
 
 // Set up the source link parameters and choose outputs, based on target.
-// * For "review", we generate Markdown with a stable source link (main branch,
-//   no line number) and minimum text, as this is meant to be shipped with every
-//   PR and we want to avoid changes due to irrelevant details (git hash or
-//   adding a new line and changing numbers).
+// * For "review", we generate Markdown with no source link and minimum text,
+//   as this is meant to be shipped with every PR and we want to avoid changes
+//   due to irrelevant details (git hash, or adding a new line and changing
+//   numbers, or fixing a typo in a comment, …)
 // * For "documentation", we generate Markdown,  HTML and JSON, linking to the
 //   git tag of the release. The tag cannot be guessed, as it should not have
 //   been created yet, as the newer documentation must be part of that tag… So
@@ -29,7 +29,6 @@ let json = false;
 
 if (target === "review") {
   review = true;
-  gitRevision = "main";
   disableSources = true;
 }
 
@@ -92,8 +91,7 @@ if (markdown) {
         module: (args) =>
           args.kind === "Namespace" ? `${args.kind}: ${args.name}` : args.name,
       },
-      // Add the kind to reflections with the same name in a table (typically
-      // class/diagnostic).
+      // Aggressively discard anything else than the strict signatures.
       theme: ["categorizeMarkdown"],
     },
   });

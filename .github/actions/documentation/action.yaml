@@ -39,6 +39,7 @@ runs:
       # If the name is "node_modules", skip it, don't look inside it;
       # or
       # If the name contains "docs/api", print it with \0 separator (shell glob expansion protection)
+      # If the name contains "docs/typedoc", print it with \0 separator (shell glob expansion protection)
       # Feed that list to git, through xargs to handle the \0 separator.
       run: >
         find .
