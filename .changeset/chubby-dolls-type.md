@@ -2,4 +2,4 @@
 "@siteimprove/alfa-aria": patch
 ---
 
-**Fixed:** `<aside>` and `<region>` elements without names have now their role correctly computed and do not need to use the `DOM.hasIncorrectRoleWithoutName` predicate.
+**Fixed:** `<aside>` and `<section>` elements without names now have their role correctly computed and no longer need the `DOM.hasIncorrectRoleWithoutName` predicate.
