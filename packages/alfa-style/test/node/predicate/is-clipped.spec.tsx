@@ -2,7 +2,6 @@ import { Device } from "@siteimprove/alfa-device";
 import type { Element, Text } from "@siteimprove/alfa-dom";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-import { Context } from "@siteimprove/alfa-selector";
 
 import * as predicate from "../../../src/node/predicate/is-clipped.ts";
 
@@ -331,7 +330,7 @@ test("isClipped() returns true for elements clipped by an empty shape via clip-p
   }
 });
 
-test("isClipped() returns false for elements not clipped by a non-empty shape via clip-path", (t) => {
+test("isClipped() returns false for elements clipped by a non-empty shape via clip-path", (t) => {
   for (const element of [
     target({ clipPath: "circle(20%)" }),
     target({ clipPath: "polygon(0px 0px 10px 0px 10px 10px)" }),

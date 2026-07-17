@@ -108,15 +108,6 @@ test("isEmpty() returns false for a circle that isn't provably of 0 radius", (t)
   }
 });
 
-test("isEmpty() returns true for a polygon with a single vertex", (t) => {
-  for (const shape of [
-    parse("polygon(0px 0px)"),
-    parse("polygon(nonzero, 10px 10px)"),
-  ]) {
-    t(Shape.isEmpty(shape));
-  }
-});
-
 test("isEmpty() returns true for an ellipse with either radius of provable 0", (t) => {
   for (const shape of [
     parse("ellipse(0px 10px at center)"),
@@ -133,6 +124,16 @@ test("isEmpty() returns false for an ellipse with no radius provably 0", (t) => 
     parse("ellipse(closest-side closest-side at center)"),
   ]) {
     t(!Shape.isEmpty(shape));
+  }
+});
+
+test("isEmpty() returns true for a polygon with a one or two vertices", (t) => {
+  for (const shape of [
+    parse("polygon(0px 0px)"),
+    parse("polygon(nonzero, 10px 10px)"),
+    parse("polygon(0px 0px 10px 10px)"),
+  ]) {
+    t(Shape.isEmpty(shape));
   }
 });
 
@@ -170,7 +171,7 @@ test("isEmpty() returns false for an inset whose opposite offsets do not sum to 
   for (const shape of [
     parse("inset(10% 0% 10% 0%)"),
     parse("inset(40% 40% 40% 40%)"),
-    // Offsets are lengths, not percentages, so they never sum to a clip.
+    // Offsets are lengths, and we don't know the size of the containing box.
     parse("inset(999px 0px 999px 0px)"),
   ]) {
     t(!Shape.isEmpty(shape));

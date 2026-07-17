@@ -197,10 +197,10 @@ export namespace Shape {
 
     if (Polygon.isPolygon(shape)) {
       // Polygon with all vertices at the same point (including the trivial
-      // case of a single vertex).
+      // case of a single vertex), or with only two vertices (line)
       const [[x, y], ...rest] = shape.vertices;
 
-      return rest.every(([vx, vy]) => vx.equals(x) && vy.equals(y));
+      return rest.length <= 1 || rest.every(([vx, vy]) => vx.equals(x) && vy.equals(y));
     }
 
     if (Inset.isInset(shape)) {
