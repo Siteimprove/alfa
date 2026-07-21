@@ -6742,9 +6742,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc-plugin-markdown@portal:../../../playground/typedoc-plugin-markdown/packages/typedoc-plugin-markdown/::locator=%40siteimprove%2Falfa%40workspace%3A.":
+"typedoc-plugin-markdown@portal:./vendor/typedoc-plugin-markdown/::locator=%40siteimprove%2Falfa%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "typedoc-plugin-markdown@portal:../../../playground/typedoc-plugin-markdown/packages/typedoc-plugin-markdown/::locator=%40siteimprove%2Falfa%40workspace%3A."
+  resolution: "typedoc-plugin-markdown@portal:./vendor/typedoc-plugin-markdown/::locator=%40siteimprove%2Falfa%40workspace%3A."
   peerDependencies:
     typedoc: 0.28.x
   languageName: node
