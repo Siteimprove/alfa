@@ -6742,14 +6742,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc-plugin-markdown@npm:^4.12.0":
-  version: 4.12.0
-  resolution: "typedoc-plugin-markdown@npm:4.12.0"
+"typedoc-plugin-markdown@portal:../../../playground/typedoc-plugin-markdown/packages/typedoc-plugin-markdown/::locator=%40siteimprove%2Falfa%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "typedoc-plugin-markdown@portal:../../../playground/typedoc-plugin-markdown/packages/typedoc-plugin-markdown/::locator=%40siteimprove%2Falfa%40workspace%3A."
   peerDependencies:
     typedoc: 0.28.x
-  checksum: 10c0/2977f5c3d98f778e02952ab2e6d47d0ec5245a84f459dc6727d34698e78d1837211a01ce568529671681d4f67117476a45caba33097de5f88d2feeb0d443507d
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "typedoc@npm:^0.28.20":
   version: 0.28.20

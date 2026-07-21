@@ -51,7 +51,8 @@
   },
   "comment-resolution": "Circumventing https://github.com/vitest-dev/vitest/issues/9876 until it is fixed upstream.",
   "resolutions": {
-    "vite": "7.3.2"
+    "vite": "7.3.2",
+    "typedoc-plugin-markdown": "portal:../../../playground/typedoc-plugin-markdown/packages/typedoc-plugin-markdown/"
   },
   "packageManager": "yarn@4.17.1"
 }
