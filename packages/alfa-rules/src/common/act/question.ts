@@ -278,5 +278,29 @@ export namespace Question {
       message:
         "Does the accessible name of this element present the same information as the image?",
     },
+    // R118 (experimental)
+    "is-image-text-human-language": {
+      type: "boolean",
+      message:
+        "Does the image contain visible text that expresses something in a human language?",
+    },
+    "is-image-text-decorative": {
+      type: "boolean",
+      message: "Is the image with text purely decorative?",
+    },
+    "is-image-text-incidental": {
+      type: "boolean",
+      message: "Is the text an insignificant part of the image?",
+    },
+    "is-image-text-essential": {
+      type: "boolean",
+      message:
+        "Is the presentation of the text essential (for example, a logo)?",
+    },
+    "is-image-text-redundant": {
+      type: "boolean",
+      message:
+        "Is the same information also available as regular text in the same page?",
+    },
   } as const;
 }
