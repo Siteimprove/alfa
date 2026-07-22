@@ -18,7 +18,7 @@ test(`evaluate() passes an image whose text does not express anything in a
     await evaluate(
       R118,
       { document },
-      oracle({ "is-image-text-human-language": false }),
+      oracle({ "does-image-contain-human-language-text": false }),
     ),
     [
       passed(
@@ -41,7 +41,7 @@ test("evaluate() passes an image with text that is purely decorative", async (t)
       R118,
       { document },
       oracle({
-        "is-image-text-human-language": true,
+        "does-image-contain-human-language-text": true,
         "is-image-text-decorative": true,
       }),
     ),
@@ -59,7 +59,7 @@ test("evaluate() passes an image whose text is an insignificant part", async (t)
       R118,
       { document },
       oracle({
-        "is-image-text-human-language": true,
+        "does-image-contain-human-language-text": true,
         "is-image-text-decorative": false,
         "is-image-text-incidental": true,
       }),
@@ -78,7 +78,7 @@ test("evaluate() passes an image whose text presentation is essential", async (t
       R118,
       { document },
       oracle({
-        "is-image-text-human-language": true,
+        "does-image-contain-human-language-text": true,
         "is-image-text-decorative": false,
         "is-image-text-incidental": false,
         "is-image-text-essential": true,
@@ -98,7 +98,7 @@ test("evaluate() passes an image whose text is redundant", async (t) => {
       R118,
       { document },
       oracle({
-        "is-image-text-human-language": true,
+        "does-image-contain-human-language-text": true,
         "is-image-text-decorative": false,
         "is-image-text-incidental": false,
         "is-image-text-essential": false,
@@ -119,7 +119,7 @@ test(`evaluate() fails an image of text when none of the exceptions apply`, asyn
       R118,
       { document },
       oracle({
-        "is-image-text-human-language": true,
+        "does-image-contain-human-language-text": true,
         "is-image-text-decorative": false,
         "is-image-text-incidental": false,
         "is-image-text-essential": false,

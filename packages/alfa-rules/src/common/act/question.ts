@@ -279,7 +279,7 @@ export namespace Question {
         "Does the accessible name of this element present the same information as the image?",
     },
     // R118 (experimental)
-    "is-image-text-human-language": {
+    "does-image-contain-human-language-text": {
       type: "boolean",
       message:
         "Does the image contain visible text that expresses something in a human language?",
@@ -295,7 +295,7 @@ export namespace Question {
     "is-image-text-essential": {
       type: "boolean",
       message:
-        "Is the presentation of the text essential (for example, a logo)?",
+        "Is the presentation of the text in the image essential (for example, a logo)?",
     },
     "is-image-text-redundant": {
       type: "boolean",

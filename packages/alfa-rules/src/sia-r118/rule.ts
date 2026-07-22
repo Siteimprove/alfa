@@ -78,7 +78,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
           );
 
         return {
-          1: Question.of("is-image-text-human-language", target).map(
+          1: Question.of("does-image-contain-human-language-text", target).map(
             (humanLanguage) =>
               expectation<Question.Metadata, Element, Element, 2>(
                 humanLanguage,

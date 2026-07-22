@@ -412,7 +412,7 @@ export namespace Question {
             readonly type: "boolean";
             readonly message: "Does the accessible name of this element present the same information as the image?";
         };
-        readonly "is-image-text-human-language": {
+        readonly "does-image-contain-human-language-text": {
             readonly type: "boolean";
             readonly message: "Does the image contain visible text that expresses something in a human language?";
         };
@@ -426,7 +426,7 @@ export namespace Question {
         };
         readonly "is-image-text-essential": {
             readonly type: "boolean";
-            readonly message: "Is the presentation of the text essential (for example, a logo)?";
+            readonly message: "Is the presentation of the text in the image essential (for example, a logo)?";
         };
         readonly "is-image-text-redundant": {
             readonly type: "boolean";
