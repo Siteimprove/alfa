@@ -126,7 +126,7 @@ if (review) {
 /** @type {import('typedoc').TypeDocOptions & import('typedoc-plugin-markdown').PluginOptions} */
 export default {
   name: "Alfa API documentation",
-  entryPoints: ["../packages/alfa-act", "../packages/alfa-dom"],
+  entryPoints: ["../packages/alfa-*"],
   entryPointStrategy: "packages",
   readme: "none",
   includeVersion: true,
