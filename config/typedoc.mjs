@@ -114,7 +114,7 @@ if (review) {
         // kind to show on the documentation page.
         module: (args) =>
           args.kind === "Namespace" ? `${args.kind}: ${args.name}` : args.name,
-        "member": "{keyword} {kind}: `{rawName}`"
+        member: "{keyword} {kind}: `{rawName}`"
       },
       // Add the kind to reflections with the same name in a table (typically
       // class/diagnostic), and remove line number from links' names.
