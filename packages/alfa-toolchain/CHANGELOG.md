@@ -1,5 +1,29 @@
 # @siteimprove/alfa-toolchain
 
+## 0.118.0
+
+### Minor Changes
+
+- **Added:** A Typedoc plugin is now available to automatically categorize reflections by their name. ([#2124](https://github.com/Siteimprove/alfa/pull/2124))
+
+  Reflections without a group nor category are automatically added to a category with the same name as the reflection. This notably means that for our default pattern of having a class and namespace of the same name, they will both receive the same (unique) category and be grouped together in outputs.
+
+  For the Markdown output, a `categorizeMarkdown` theme also adds the kind of the reflection to its name. This prevents class `Foo` and namespace `Foo` to be listed side by side with no differentiation; they now appear as "Foo (Class)" and "Foo (Namespace)" in the indexes.
+
+- **Added:** `validate-structure` now has a `has-typedoc-config` option to check presence of a Typedoc config. ([#2127](https://github.com/Siteimprove/alfa/pull/2127))
+
+## 0.117.0
+
+## 0.116.0
+
+## 0.115.1
+
+### Patch Changes
+
+- **Changed:** Empty release to retrigger publication. ([`1e92bbe`](https://github.com/Siteimprove/alfa/commit/1e92bbe73028301bab9b3b3ebaa98d5b49d04102))
+
+## 0.115.0
+
 ## 0.114.3
 
 ### Patch Changes

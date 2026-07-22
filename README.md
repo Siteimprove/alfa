@@ -28,15 +28,13 @@ Alfa is an open and standards-based accessibility conformance testing engine. It
 
 ## Usage
 
-Alfa is distributed through [GitHub Packages](../../packages) as a set of separate packages that can be installed via your favourite [npm](https://www.npmjs.com/)-compatible package manager:
+Alfa is distributed through [npm Packages](https://www.npmjs.com/~si-npm) as a set of separate packages that can be installed via your favourite [npm](https://www.npmjs.com/)-compatible package manager:
 
 ```console
 $ npm install @siteimprove/alfa-<package-name>
 ```
 
-> :warning: Make sure to instruct your client to pull packages belonging to the `@siteimprove` scope from GitHub by adding the line `@siteimprove:registry=https://npm.pkg.github.com/siteimprove` to your `.npmrc` file. See [Installing a package from Github registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#installing-a-package) for details.
-
-On their own, each of these packages do very little, but when put together they provide a full suite of tools for performing accessibility comformance testing across all stages of the content development and publication workflow. If you are looking for an easy way to started using Alfa, check out the section on [integrations](#integrations); we might already have a ready-made solution for you!
+On their own, each of these packages do very little, but when put together they provide a full suite of tools for performing accessibility conformance testing across all stages of the content development and publication workflow. If you are looking for an easy way to started using Alfa, check out the section on [integrations](#integrations); we might already have a ready-made solution for you!
 
 At a high level, Alfa consumes implementations of rules specified in the [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/) and produces audit results in the [Evaluation and Report Language (EARL) Schema](https://www.w3.org/TR/EARL10-Schema/) encoded as [JSON-LD](https://www.w3.org/TR/json-ld/). 
 
@@ -104,6 +102,8 @@ Crawler.with(async (crawler) => {
 });
 ```
 
+Note that both the scraper and the crawler live in the [Alfa integrations][] repository, they can also be installed from the npmjs registry.
+
 For more complex use cases, please check the [Alfa examples](https://github.com/Siteimprove/alfa-examples) repository. It shows how to use Alfa to test components or full web pages; how to filter outcomes based on conformance level, WCAG version, or more; how to interact with pages (e.g. open a menu) before running an audit; how to answer questions asked by Alfa (`cantTell` outcomes); or how to add custom rules to the default rule set.
 
 ## Command Line Interface
@@ -112,17 +112,17 @@ Alfa ships with a Command Line Interface, making it easy to audit a single page.
 
 ## Integrations
 
-Alfa ships with several ready-made integrations to various tools, making it easy and simple to integrate accessibility conformance testing as part of your development workflow. If you have suggestions for additional integerations, feel free to [open an issue][]! We are always looking for new places where Alfa can be put to good use. Integrations live in the [Alfa integrations][] repository.
+Alfa ships with several ready-made integrations to various tools, making it easy and simple to integrate accessibility conformance testing as part of your development workflow. If you have suggestions for additional integrations, feel free to [open an issue][]! We are always looking for new places where Alfa can be put to good use. Integrations live in the [Alfa integrations][] repository.
 
-> :warning: The integrations are still experimental and subject to change.
+> :warning: Most integrations are still experimental and subject to change.
 
 ## Requirements
 
-Alfa will run in any [ECMAScript 2020](https://262.ecma-international.org/11.0/) compatible JavaScript environment including, but not limited to, recent versions of [Node.js][], [Chrome](https://www.google.com/chrome/), [Firefox](https://www.mozilla.org/en-US/firefox/), [Safari](https://www.apple.com/lae/safari/), and [Edge](https://www.microsoft.com/en-us/windows/microsoft-edge). While it should be possible to [build](#building) Alfa from source targeting older environments, we do not explicitly provide support for doing so as Alfa is reliant on data structures introduced in newer versions of ECMAScript.
+Alfa will run in any [ECMAScript 2022](https://tc39.es/ecma262/2022/) compatible JavaScript environment including, but not limited to, recent versions of [Node.js][], [Chrome](https://www.google.com/chrome/), [Firefox](https://www.mozilla.org/en-US/firefox/), [Safari](https://www.apple.com/lae/safari/), and [Edge](https://www.microsoft.com/en-us/windows/microsoft-edge). While it should be possible to [build](#building) Alfa from source targeting older environments, we do not explicitly provide support for doing so as Alfa is reliant on data structures introduced in newer versions of ECMAScript.
 
 ## Building
 
-In order to build Alfa, a recent version (>= 14) of [Node.js][] is required in addition to the [Yarn](https://yarnpkg.com/) package manager. Once Node.js and Yarn are installed, go ahead and install the Alfa development dependencies:
+In order to build Alfa, a recent version (>= 20) of [Node.js][] is required in addition to the [Yarn](https://yarnpkg.com/) package manager. Once Node.js and Yarn are installed, go ahead and install the Alfa development dependencies:
 
 ```console
 $ yarn install
@@ -154,8 +154,6 @@ When working on a specific package, you can run only these tests:
 $ yarn test packages/alfa-<package-name>
 ```
 
-If you would like to contribute to Alfa, make sure to check out the [contribution guidelines](docs/contributing.md). If you have any questions, you are also welcome to [open an issue][].
-
 ## Experimenting
 
 The special [`scratches`](scratches) directory is reserved for _scratch files_, which are useful for quickly running small code examples or even larger experiments. The directory is primed with a TypeScript configuration that sets up the needed project references and compiler options. All files within the directory, with the exception of the TypeScript configuration, are ignored by version control and so any files may be added without risk of them being checked into version control.
@@ -186,11 +184,11 @@ At its core, Alfa is built around a tree structure that mirrors a subset of the 
 
 By implementing browser aspects, such as a style system and the accessibility tree, directly within Alfa, we gain the ability to do some things that would otherwise not be possible had we relied on only the APIs provided by the browser. The most radical difference is perhaps the computation of CSS properties, where Alfa can follow declared CSS properties up through cascade, inheritance, and absolutisation.
 
-At the code level, Alfa is structured as a monolithic repository consisting of several packages that each have their own area of responsibility. You can find more information on the overall architecture of Alfa in the [architecture documentation](docs/architecture). We also write and maintain [architecture decision reports](docs/architecture/decisions) if you want to get the complete picture of how Alfa came to be.
+At the code level, Alfa is structured as a monolithic repository consisting of several packages that each have their own area of responsibility. You can find more information on the overall architecture of Alfa in the [architecture documentation](https://github.com/Siteimprove/alfa/tree/main/docs/architecture). We also write and maintain [architecture decision reports](https://github.com/Siteimprove/alfa/tree/main/docs/architecture/decisions) if you want to get the complete picture of how Alfa came to be.
 
 ## Guides
 
-A list of guides on how to develop with Alfa can be found under [guides](docs/guides).
+A list of guides on how to develop with Alfa can be found under [guides](https://github.com/Siteimprove/alfa/tree/main/docs/guides).
 
 ## Funding
 
@@ -202,6 +200,7 @@ Alfa is part of a project that has received funding from the European Union's [H
 
 Copyright &copy; [Siteimprove A/S](https://siteimprove.com/). Released under the terms of the [MIT license](LICENSE.md).
 
-[alfa integrations]: https://github.com/Siteimprove/alfa-integrations
-[open an issue]: ../../issues/new/choose "Open a new issue"
-[node.js]: https://nodejs.org/en/
+[alfa integrations]: https://github.com/Siteimprove/alfa-integrations "Alfa integrations repository"
+[node.js]: https://nodejs.org/en/ "NodeJS"
+[open an issue]: https://github.com/Siteimprove/alfa/issues/new/choose "Open a new issue"
+[scratches]: https://github.com/Siteimprove/alfa/tree/main/scratches "Scratches directory"

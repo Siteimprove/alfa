@@ -50,20 +50,7 @@
     },
     {
       "name": "Computations",
-      "children": [
-        {
-          "name": "Asynchronous",
-          "children": [
-            "@siteimprove/alfa-future",
-            "@siteimprove/alfa-promise",
-            "@siteimprove/alfa-thenable"
-          ]
-        },
-        {
-          "name": "Synchronous",
-          "children": ["@siteimprove/alfa-lazy", "@siteimprove/alfa-trampoline"]
-        }
-      ]
+      "children": ["@siteimprove/alfa-lazy", "@siteimprove/alfa-trampoline"]
     },
     {
       "name": "Graphs",

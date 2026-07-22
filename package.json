@@ -16,38 +16,41 @@
     "test": "vitest run --config ./config/vitest.config.ts",
     "#coverage:comment": "We use --coverage.enabled instead of --coverage to allow overriding options in the CLI. See warning at https://vitest.dev/config/#coverage",
     "coverage": "vitest run --coverage.enabled --config ./config/vitest.config.ts",
-    "#coverage:package:comment": "Run coverage for a single package. Usage: yarn workspace @siteimprove/alfa-foo coverage:package.",
-    "coverage:package": "vitest run --coverage.enabled --config ./config/vitest.config.ts --coverage.reportsDirectory ${INIT_CWD}/docs/coverage --coverage.include $(echo ${INIT_CWD} | sed \"s+$(pwd)/++\") ${INIT_CWD}",
+    "#coverage:package:comment": "Run coverage for a single package. Usage: yarn workspace @siteimprove/alfa-foo coverage:package. ALFA_PATH is used in vitest config.",
+    "coverage:package": "ALFA_PATH=$(echo ${INIT_CWD} | sed \"s+$(pwd)/++\") yarn coverage",
     "watch": "node scripts/watch.mjs --pretty",
     "extract": "node scripts/api-extractor.mjs --pretty",
     "extract:self": "CI=false yarn extract ${INIT_CWD}",
     "depgraph:self": "yarn generate-dependency-graphs $(pwd) $(echo ${INIT_CWD} | sed \"s+$(pwd)/packages/++\")",
     "document": "api-documenter generate -i docs/data/api -o docs/api",
-    "knip": "knip --config config/knip.ts --no-config-hints"
+    "knip": "knip --config config/knip.ts --no-config-hints",
+    "typedoc": "typedoc --options config/typedoc.mjs"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.0.0"
   },
   "type": "module",
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
-    "@changesets/cli": "^2.31.0",
-    "@microsoft/api-documenter": "^7.30.5",
+    "@changesets/cli": "^2.31.1",
+    "@microsoft/api-documenter": "^7.30.9",
     "@microsoft/api-extractor": "^7.52.10",
-    "@siteimprove/alfa-toolchain": "workspace:^0.114.3",
-    "@types/node": "^25.6.0",
-    "@vitest/coverage-v8": "^4.1.5",
-    "knip": "^6.7.0",
+    "@siteimprove/alfa-toolchain": "workspace:^0.118.0",
+    "@types/node": "^26.1.1",
+    "@vitest/coverage-v8": "^4.1.10",
+    "knip": "^6.27.0",
     "minimist": "^1.2.6",
-    "prettier": "^3.8.3",
+    "prettier": "^3.9.5",
+    "typedoc": "^0.28.20",
+    "typedoc-plugin-markdown": "^4.12.0",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.5"
+    "vitest": "^4.1.10"
   },
   "comment-resolution": "Circumventing https://github.com/vitest-dev/vitest/issues/9876 until it is fixed upstream.",
   "resolutions": {
-    "vite": "7.3.2"
+    "vite": "7.3.5"
   },
-  "packageManager": "yarn@4.14.1"
+  "packageManager": "yarn@4.17.1"
 }

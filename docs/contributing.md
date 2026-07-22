@@ -4,7 +4,7 @@
 
 Alfa accepts contributions in the form of bug reports submitted to the [issue tracker][] and feature suggestions submitted to the [discussion board][]. Prior to opening a new issue, please make sure to [search for existing issues][] that might already cover what you intended to report.
 
-For legal reasons, Alfa only accepts code contributions from members of the [@siteimprove][] organization. We therefore ask that you do not submit pull requests unless you're a member of the Alfa development team or are otherwise affiliated with the [@siteimprove][] organization. Thank you!
+For legal reasons, Alfa only accepts code contributions from members of the [@siteimprove][] organization. Creation of Pull Requests is not possible for others.
 
 [issue tracker]: ../../../issues
 [discussion board]: ../../../discussions

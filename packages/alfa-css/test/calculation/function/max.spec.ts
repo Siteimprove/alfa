@@ -25,7 +25,7 @@ test(".parse() parses a max of one or more numbers or calculations", (t) => {
       type: "math expression",
       expression: {
         type: "value",
-        value: { type: "number", value: value },
+        value: { type: "number", value },
       },
     });
   }
@@ -48,8 +48,8 @@ test(".parse() parses a max of absolute dimensions", (t) => {
       expression: {
         type: "value",
         value: {
-          type: type,
-          value: value,
+          type,
+          value,
           unit: type === "length" ? "px" : "deg",
         },
       },

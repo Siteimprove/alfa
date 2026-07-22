@@ -10,11 +10,11 @@ import * as earl from '@siteimprove/alfa-earl';
 import { Either } from '@siteimprove/alfa-either';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import type { Functor } from '@siteimprove/alfa-functor';
-import { Future } from '@siteimprove/alfa-future';
 import type { Hash } from '@siteimprove/alfa-hash';
 import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
+import { Left } from '@siteimprove/alfa-either';
 import { List } from '@siteimprove/alfa-list';
 import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Maybe } from '@siteimprove/alfa-option';
@@ -24,6 +24,7 @@ import type { Performance } from '@siteimprove/alfa-performance';
 import type { Predicate } from '@siteimprove/alfa-predicate';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import type { Result } from '@siteimprove/alfa-result';
+import { Right } from '@siteimprove/alfa-either';
 import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
@@ -33,7 +34,7 @@ import type { Thunk } from '@siteimprove/alfa-thunk';
 export class Audit<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> {
     protected constructor(input: I, rules: List<Rule<I, T, Q, S>>, oracle: Oracle<I, T, Q, S>);
     // (undocumented)
-    evaluate(performance?: Performance<Rule.Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
+    evaluate(performance?: Performance<Rule.Event<I, T, Q, S>>): Promise<Iterable_2<Outcome<I, T, Q, S>>>;
     // (undocumented)
     static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(input: I, rules: Iterable_2<Rule<I, T, Q, S>>, oracle?: Oracle<I, T, Q, S>): Audit<I, T, Q, S>;
 }
@@ -44,7 +45,7 @@ export class Cache {
     // (undocumented)
     static empty(): Cache;
     // (undocumented)
-    get<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q, S>>>>): Future<Iterable<Outcome<I, T, Q, S>>>;
+    get<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, ifMissing: Thunk<Promise<Iterable<Outcome<I, T, Q, S>>>>): Promise<Iterable<Outcome<I, T, Q, S>>>;
 }
 
 // @public
@@ -90,6 +91,10 @@ export namespace Finding {
     export function conclusive<ANSWER>(answer: ANSWER, oracleUsed?: boolean): Finding<ANSWER>;
     // (undocumented)
     export function inconclusive<DIAGNOSTIC extends Diagnostic>(diagnostic: DIAGNOSTIC, oracleUsed?: boolean): Finding<never, DIAGNOSTIC>;
+    // (undocumented)
+    export function isConclusive<A>(finding: Finding<A>): finding is Left<[A, boolean]>;
+    // (undocumented)
+    export function isInconclusive<D extends Diagnostic>(finding: Finding<unknown, D>): finding is Right<[D, boolean]>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Depths" needs to be exported by the entry point index.d.ts
@@ -101,7 +106,7 @@ export type Interview<QUESTION extends Question.Metadata, SUBJECT, CONTEXT, ANSW
 
 // @public (undocumented)
 export namespace Interview {
-    export function conduct<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>, oracleUsed?: boolean): Future<Finding<ANSWER>>;
+    export function conduct<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>, oracleUsed?: boolean): Promise<Finding<ANSWER>>;
     // @internal (undocumented)
     export type MaxDepth = 3;
 }
@@ -109,7 +114,7 @@ export namespace Interview {
 // @public
 export type Oracle<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT> = (rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, question: {
     [URI in keyof QUESTION]: Question<QUESTION[URI][0], SUBJECT, TARGET, QUESTION[URI][1], unknown, URI extends string ? URI : never>;
-}[keyof QUESTION]) => Future<Option<QUESTION[keyof QUESTION][1]>>;
+}[keyof QUESTION]) => Promise<Option<QUESTION[keyof QUESTION][1]>>;
 
 // @public
 export abstract class Outcome<I, T extends Hashable, Q extends Question.Metadata = {}, S = T, V extends Outcome.Value = Outcome.Value> implements Equatable, Hashable, json.Serializable<Outcome.JSON<V>>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> {
@@ -588,7 +593,7 @@ export abstract class Rule<I, T extends Hashable, Q extends Question.Metadata = 
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    evaluate(input: I, oracle?: {} extends Q ? any : Oracle<I, T, Q, S>, outcomes?: Cache, performance?: Performance<Rule.Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
+    evaluate(input: I, oracle?: {} extends Q ? any : Oracle<I, T, Q, S>, outcomes?: Cache, performance?: Performance<Rule.Event<I, T, Q, S>>): Promise<Iterable_2<Outcome<I, T, Q, S>>>;
     // (undocumented)
     protected readonly _evaluate: Rule.Evaluate<I, T, Q, S>;
     // (undocumented)
@@ -738,7 +743,7 @@ export namespace Rule {
     // (undocumented)
     export interface Evaluate<I, T extends Hashable, Q extends Question.Metadata, S> {
         // (undocumented)
-        (input: Readonly<I>, oracle: {} extends Q ? any : Oracle<I, T, Q, S>, outcomes: Cache, performance?: Performance<Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
+        (input: Readonly<I>, oracle: {} extends Q ? any : Oracle<I, T, Q, S>, outcomes: Cache, performance?: Performance<Event<I, T, Q, S>>): Promise<Iterable_2<Outcome<I, T, Q, S>>>;
     }
     // (undocumented)
     export class Event<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, TYPE extends Event.Type = Event.Type, NAME extends string = string> implements Serializable<Event.JSON<TYPE, NAME>> {

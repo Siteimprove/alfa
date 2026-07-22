@@ -27,7 +27,7 @@ import { Tag } from '@siteimprove/alfa-act';
 import { Text as Text_2 } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
-export const alfaVersion = "0.114.3";
+export const alfaVersion = "0.118.0";
 
 // @public (undocumented)
 export class ARIA extends Requirement<"ARIA"> {
@@ -72,13 +72,13 @@ const _default: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 const _default_10: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 
 // @public @deprecated (undocumented)
-const _default_11: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
+const _default_11: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 const _default_12: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
-// @public (undocumented)
-const _default_13: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
+// @public @deprecated (undocumented)
+const _default_13: Rule.Atomic<Page, Text_2, {}, Text_2>;
 
 // @public
 const _default_2: Rule.Atomic<Page, Document_2, Question.Metadata, Element_2<string>>;
@@ -106,10 +106,11 @@ const _default_9: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Elemen
 
 declare namespace deprecatedRules {
     export {
-        _default_10 as DR3,
-        _default_11 as DR6,
-        _default_12 as DR34,
-        _default_13 as DR36
+        _default_9 as DR3,
+        _default_10 as DR6,
+        _default_11 as DR34,
+        _default_12 as DR36,
+        _default_13 as DR83
     }
 }
 export { deprecatedRules }

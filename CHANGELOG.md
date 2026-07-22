@@ -1,5 +1,65 @@
 # Alfa changelog
 
+## [0.118.0](../../compare/v0.117.0...v0.118.0) (2026-07-06)
+
+### Added
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#01180): A Typedoc plugin is now available to automatically categorize reflections by their name. ([#2124](https://github.com/Siteimprove/alfa/pull/2124))
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#01180): `validate-structure` now has a `has-typedoc-config` option to check presence of a Typedoc config. ([#2127](https://github.com/Siteimprove/alfa/pull/2127))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01180): Target size checks (SIA-R111, SIA-R113) no longer report non-clickable composite widget containers as pointer targets when their child widgets are the actual targets. ([#2129](https://github.com/Siteimprove/alfa/pull/2129))
+
+## [0.117.0](../../compare/v0.116.0...v0.117.0) (2026-06-11)
+
+### Breaking
+
+- [@siteimprove/alfa-promise](packages/alfa-promise/CHANGELOG.md#01170): The `@siteimprove/alfa-promise` package is now deprecated. ([#2107](https://github.com/Siteimprove/alfa/pull/2107))
+
+- [@siteimprove/alfa-thenable](packages/alfa-thenable/CHANGELOG.md#01170): The `@siteimprove/alfa-thenable` package is now deprecated. ([#2107](https://github.com/Siteimprove/alfa/pull/2107))
+
+## [0.116.0](../../compare/v0.115.1...v0.116.0) (2026-06-11)
+
+### Breaking
+
+- [@siteimprove/alfa-future](packages/alfa-future/CHANGELOG.md#01160): The `@siteimprove/alfa-future` package is now deprecated. ([#2104](https://github.com/Siteimprove/alfa/pull/2104))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01160): "start expectation" performance mark for inapplicable rules is no longer emitted (the "end expectation" measure was never emitted). ([#2104](https://github.com/Siteimprove/alfa/pull/2104))
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#01160): All functionalities now use `Promise` instead of `Future`. ([#2104](https://github.com/Siteimprove/alfa/pull/2104))
+
+### Added
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#01160): `Finding.isConclusive` and `Finding.isInconclusive` type guards are now available. ([#2103](https://github.com/Siteimprove/alfa/pull/2103))
+
+### Fixed
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#01160): `Question.answerIf` now correctly handles being chained. ([#2103](https://github.com/Siteimprove/alfa/pull/2103))
+
+## [0.115.1](../../compare/v0.115.0...v0.115.1) (2026-05-29)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#01151): Empty release to retrigger publication.
+
+## [0.115.0](../../compare/v0.114.3...v0.115.0) (2026-05-29)
+
+### Breaking
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01150): SIA-R3 is now deprecated as Success Criterion 4.1.1 has been removed from WCAG 2.2 (and WCAG 2.1 for HTML). ([#2066](https://github.com/Siteimprove/alfa/pull/2066))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01150): SIA-R83 is now deprecated and will be removed in a later version. ([#2079](https://github.com/Siteimprove/alfa/pull/2079))
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01150): New rule SIA-R101 added. The rule asks for repeated content before main content, unless there is no content. ([#2070](https://github.com/Siteimprove/alfa/pull/2070))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01150): SIA-R95 now correctly handles `<iframe>` made inert by an `inert` attribute. ([#2059](https://github.com/Siteimprove/alfa/pull/2059))
+
 ## [0.114.3](../../compare/v0.114.2...v0.114.3) (2026-04-10)
 
 ### Changed

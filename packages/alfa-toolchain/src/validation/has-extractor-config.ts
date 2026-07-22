@@ -10,7 +10,10 @@ import * as path from "node:path";
  *
  * @public
  */
-export function hasExtractorConfig(name: string, dir: string): Array<string> {
+export function hasAPIExtractorConfig(
+  name: string,
+  dir: string,
+): Array<string> {
   const errors: Array<string> = [];
 
   const configDir = path.join(dir, "config");
@@ -19,6 +22,31 @@ export function hasExtractorConfig(name: string, dir: string): Array<string> {
   }
 
   const configFile = path.join(configDir, "api-extractor.json");
+  if (!fs.existsSync(configFile)) {
+    errors.push(`${name}: ${configFile} does not exist.`);
+  }
+
+  return errors;
+}
+
+/**
+ * Checks that a directory includes a Typedoc config file.
+ *
+ * @remarks
+ * `dir` is coming from \@manypkg/get-packages, which sets it to the OS
+ * specific syntax.
+ *
+ * @public
+ */
+export function hasTypedocConfig(name: string, dir: string): Array<string> {
+  const errors: Array<string> = [];
+
+  const configDir = path.join(dir, "config");
+  if (!fs.existsSync(configDir)) {
+    errors.push(`${name}: ${configDir} does not exist.`);
+  }
+
+  const configFile = path.join(configDir, "typedoc.mjs");
   if (!fs.existsSync(configFile)) {
     errors.push(`${name}: ${configFile} does not exist.`);
   }

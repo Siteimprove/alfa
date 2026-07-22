@@ -1,4 +1,4 @@
-import { Either } from "@siteimprove/alfa-either";
+import { Either, type Left, type Right } from "@siteimprove/alfa-either";
 
 import type { Diagnostic } from "./diagnostic.ts";
 
@@ -24,10 +24,22 @@ export namespace Finding {
     return Either.left([answer, oracleUsed]);
   }
 
+  export function isConclusive<A>(
+    finding: Finding<A>,
+  ): finding is Left<[A, boolean]> {
+    return finding.isLeft();
+  }
+
   export function inconclusive<DIAGNOSTIC extends Diagnostic>(
     diagnostic: DIAGNOSTIC,
     oracleUsed: boolean = false,
   ): Finding<never, DIAGNOSTIC> {
     return Either.right([diagnostic, oracleUsed]);
+  }
+
+  export function isInconclusive<D extends Diagnostic>(
+    finding: Finding<unknown, D>,
+  ): finding is Right<[D, boolean]> {
+    return finding.isRight();
   }
 }

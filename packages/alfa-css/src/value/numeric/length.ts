@@ -194,13 +194,15 @@ export namespace Length {
   }
 
   /**
-   * Build a (fixed) length resolver, using basis for the relative units
+   * Build a (fixed) length resolver, using basis for the relative units.
    */
   export function resolver(
     emBase: Canonical,
     remBase: Canonical,
     vwBase: Canonical,
     vhBase: Canonical,
+    lhBase: Canonical,
+    rlhBase: Canonical,
   ): Mapper<Fixed<Unit.Length.Relative>, Canonical> {
     return (length) => {
       const { unit, value } = length;
@@ -217,11 +219,23 @@ export namespace Length {
           return remBase.scale(value);
         }
 
+        // https://www.w3.org/TR/css-values/#lh
+        case "lh":
+          return lhBase.scale(value);
+
+        // https://www.w3.org/TR/css-values/#rlh
+        case "rlh":
+          return rlhBase.scale(value);
+
         // https://www.w3.org/TR/css-values/#ex
         case "ex":
         // https://www.w3.org/TR/css-values/#ch
         case "ch":
           return emBase.scale(value * 0.5);
+
+        // https://www.w3.org/TR/css-values/#rch
+        case "rch":
+          return remBase.scale(value * 0.5);
 
         // https://www.w3.org/TR/css-values/#vh
         case "vh":

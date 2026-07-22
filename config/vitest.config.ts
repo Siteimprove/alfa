@@ -1,12 +1,20 @@
 import { coverageConfigDefaults, defineConfig } from "vitest/config";
 
+// ALFA_PATH is set by the coverage:package script in the global package.json
+// manifest file.
+// The default for alfaPath is to include all packages, unless overwritten by
+// ALFA_PATH.
+const alfaPath = process.env.ALFA_PATH ?? "packages/alfa-*";
+
+console.log(`Testing ${alfaPath}`);
+
 export default defineConfig({
   test: {
-    include: ["packages/alfa-*/test/**/*.spec.ts?(x)"],
+    include: [`${alfaPath}/test/**/*.spec.ts?(x)`],
     typecheck: {
       enabled: true,
       checker: "tsc",
-      include: ["packages/alfa-*/test/**/*.spec-d.ts?(x)"],
+      include: [`${alfaPath}/test/**/*.spec-d.ts?(x)`],
     },
     coverage: {
       provider: "v8",
@@ -20,8 +28,8 @@ export default defineConfig({
         lines: [75, 85],
         statements: [75, 85],
       },
-      reportsDirectory: "./docs/coverage",
-      include: ["packages/alfa-*/**/*.{js,jsx,ts,tsx}"],
+      reportsDirectory: `${process.env.ALFA_PATH ?? "."}/docs/coverage`,
+      include: [`${alfaPath}/**/*.{js,jsx,ts,tsx}`],
       exclude: [
         "packages/alfa-test/**",
         "**/config/**",

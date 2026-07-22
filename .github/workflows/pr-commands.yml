@@ -29,7 +29,7 @@ jobs:
 
       - name: "Set up Node"
         if: env.PR_COMMAND_WILL_RUN == 'true'
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           # 24 is Active from October 2025 to October 2026.
           node-version: 24

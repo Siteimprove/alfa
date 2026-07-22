@@ -3,7 +3,6 @@ import { Outcome } from "@siteimprove/alfa-act";
 import { Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
-import { Future } from "@siteimprove/alfa-future";
 import { None } from "@siteimprove/alfa-option";
 import { Style } from "@siteimprove/alfa-style";
 import { test } from "@siteimprove/alfa-test";
@@ -723,7 +722,7 @@ test(`evaluate() does not consider ancestors as interposed elements`, async (t) 
     }
 
     t.deepEqual(question.uri, expected);
-    return Future.now(None);
+    return Promise.resolve(None);
   });
 });
 

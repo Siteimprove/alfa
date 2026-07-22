@@ -1,5 +1,37 @@
 # @siteimprove/alfa-rules
 
+## 0.118.0
+
+### Patch Changes
+
+- **Fixed:** Target size checks (SIA-R111, SIA-R113) no longer report non-clickable composite widget containers as pointer targets when their child widgets are the actual targets. ([#2129](https://github.com/Siteimprove/alfa/pull/2129))
+
+## 0.117.0
+
+## 0.116.0
+
+### Minor Changes
+
+- **Breaking:** "start expectation" performance mark for inapplicable rules is no longer emitted (the "end expectation" measure was never emitted). ([#2104](https://github.com/Siteimprove/alfa/pull/2104))
+
+## 0.115.1
+
+## 0.115.0
+
+### Minor Changes
+
+- **Breaking:** SIA-R3 is now deprecated as Success Criterion 4.1.1 has been removed from WCAG 2.2 (and WCAG 2.1 for HTML). ([#2066](https://github.com/Siteimprove/alfa/pull/2066))
+
+  It is still available as `DR3`.
+
+- **Breaking:** SIA-R83 is now deprecated and will be removed in a later version. ([#2079](https://github.com/Siteimprove/alfa/pull/2079))
+
+- **Added:** New rule SIA-R101 added. The rule asks for repeated content before main content, unless there is no content. ([#2070](https://github.com/Siteimprove/alfa/pull/2070))
+
+### Patch Changes
+
+- **Fixed:** SIA-R95 now correctly handles `<iframe>` made inert by an `inert` attribute. ([#2059](https://github.com/Siteimprove/alfa/pull/2059))
+
 ## 0.114.3
 
 ### Patch Changes

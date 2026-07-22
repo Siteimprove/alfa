@@ -191,7 +191,7 @@ export namespace Longhands {
         "border-bottom-right-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
         "border-bottom-style": Longhand<Keyword.ToKeywords<"none" | "inset" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "inset" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "inset" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         "border-bottom-width": Longhand<Specified_9, Length, Length>;
-        "border-collapse": Longhand<Keyword.ToKeywords<"separate" | "collapse">, Keyword.ToKeywords<"separate" | "collapse">, Keyword.ToKeywords<"separate" | "collapse">>;
+        "border-collapse": Longhand<Keyword.ToKeywords<"collapse" | "separate">, Keyword.ToKeywords<"collapse" | "separate">, Keyword.ToKeywords<"collapse" | "separate">>;
         "border-end-end-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
         "border-end-start-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
         "border-image-outset": Longhand<Specified_10, Tuple<[top: Length | Number_2, right: Length | Number_2, bottom: Length | Number_2, left: Length | Number_2]>, Tuple<[top: Length | Number_2, right: Length | Number_2, bottom: Length | Number_2, left: Length | Number_2]>>;
@@ -250,7 +250,7 @@ export namespace Longhands {
         left: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
         "letter-spacing": Longhand<Length | Keyword<"normal">, Length, Length>;
         "line-break": Longhand<Keyword.ToKeywords<"auto" | "strict" | "normal" | "loose" | "anywhere">, Keyword.ToKeywords<"auto" | "strict" | "normal" | "loose" | "anywhere">, Keyword.ToKeywords<"auto" | "strict" | "normal" | "loose" | "anywhere">>;
-        "line-height": Longhand<Number_2 | LengthPercentage | Keyword<"normal">, Computed, Computed>;
+        "line-height": Longhand<Number_2 | LengthPercentage | Keyword<"normal">, Computed, Length>;
         "margin-bottom": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
         "margin-left": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
         "margin-right": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
@@ -297,7 +297,7 @@ export namespace Longhands {
         transform: Longhand<Keyword<"none"> | List<Transform>, Keyword<"none"> | List<Transform.PartiallyResolved>, Keyword<"none"> | List<Transform.PartiallyResolved>>;
         translate: Longhand<Keyword<"none"> | Translate<LengthPercentage, LengthPercentage, Length>, Keyword<"none"> | Translate<LengthPercentage, LengthPercentage, Length>, Keyword<"none"> | Translate<LengthPercentage, LengthPercentage, Length>>;
         "vertical-align": Longhand<LengthPercentage | (Keyword<"top"> | Keyword<"bottom"> | Keyword<"sub"> | Keyword<"super"> | Keyword<"baseline"> | Keyword<"text-top"> | Keyword<"text-bottom"> | Keyword<"middle">), Length | (Keyword<"top"> | Keyword<"bottom"> | Keyword<"sub"> | Keyword<"super"> | Keyword<"baseline"> | Keyword<"text-top"> | Keyword<"text-bottom"> | Keyword<"middle">), Length | (Keyword<"top"> | Keyword<"bottom"> | Keyword<"sub"> | Keyword<"super"> | Keyword<"baseline"> | Keyword<"text-top"> | Keyword<"text-bottom"> | Keyword<"middle">)>;
-        visibility: Longhand<Keyword.ToKeywords<"hidden" | "collapse" | "visible">, Keyword.ToKeywords<"hidden" | "collapse" | "visible">, Keyword.ToKeywords<"hidden" | "collapse" | "visible">>;
+        visibility: Longhand<Keyword.ToKeywords<"collapse" | "hidden" | "visible">, Keyword.ToKeywords<"collapse" | "hidden" | "visible">, Keyword.ToKeywords<"collapse" | "hidden" | "visible">>;
         "wrap-after": Longhand<Keyword.ToKeywords<"auto" | "flex" | "avoid" | "avoid-line" | "avoid-flex" | "line">, Keyword.ToKeywords<"auto" | "flex" | "avoid" | "avoid-line" | "avoid-flex" | "line">, Option_2<Keyword<"auto"> | Keyword<"flex"> | Keyword<"avoid"> | Keyword<"avoid-line"> | Keyword<"avoid-flex"> | Keyword<"line">>>;
         "wrap-before": Longhand<Keyword.ToKeywords<"auto" | "flex" | "avoid" | "avoid-line" | "avoid-flex" | "line">, Keyword.ToKeywords<"auto" | "flex" | "avoid" | "avoid-line" | "avoid-flex" | "line">, Option_2<Keyword<"auto"> | Keyword<"flex"> | Keyword<"avoid"> | Keyword<"avoid-line"> | Keyword<"avoid-flex"> | Keyword<"line">>>;
         "wrap-inside": Longhand<Keyword.ToKeywords<"auto" | "avoid">, Keyword.ToKeywords<"auto" | "avoid">, Option_2<Keyword<"auto"> | Keyword<"avoid">>>;
@@ -333,7 +333,7 @@ export namespace Resolver {
     // (undocumented)
     export function length(style: Style): Length.Resolver;
     // (undocumented)
-    export function lengthPercentage(base: Length.Canonical, style: Style): LengthPercentage.Resolver;
+    export function lengthPercentage(base: Length.Canonical, style: Style, lineHeightStyle?: Style): LengthPercentage.Resolver;
     // (undocumented)
     export function shadow(style: Style): Shadow.Resolver;
 }

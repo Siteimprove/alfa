@@ -40,7 +40,7 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
       "name_src" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#0066ff";
+        color = "#00ffff";
         label = "src";
       ];
       "exit_src" [
@@ -54,16 +54,35 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
       ];
       "src/index.ts" [
         label = "index.ts";
-        color = "#0066ff";
+        color = "#00ffff";
         penwidth = 5;
       ];
+      subgraph "cluster_src/typedoc" {
+        color = "#000000";
+        label = "";
+        "name_src/typedoc" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#0000ff";
+          label = "typedoc";
+        ];
+        "exit_src/typedoc" [
+          style = "invis";
+        ];
+        "src/typedoc/categorize.ts" [
+          label = "categorize.ts";
+        ];
+        "src/typedoc/categorize.ts" -> "exit_src/typedoc" [
+          style = "invis";
+        ];
+      }
       subgraph "cluster_src/dependency-graph" {
         color = "#000000";
         label = "";
         "name_src/dependency-graph" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#00ff66";
+          color = "#00ff00";
           label = "dependency-graph";
         ];
         "exit_src/dependency-graph" [
@@ -74,7 +93,7 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
         ];
         "src/dependency-graph/index.ts" [
           label = "index.ts";
-          color = "#00ff66";
+          color = "#00ff00";
           penwidth = 5;
         ];
         "src/dependency-graph/generate-graphs.ts" [
@@ -139,7 +158,7 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
         "name_src/validation" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#ccff00";
+          color = "#ffff00";
           label = "validation";
         ];
         "exit_src/validation" [
@@ -150,7 +169,7 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
         ];
         "src/validation/index.ts" [
           label = "index.ts";
-          color = "#ccff00";
+          color = "#ffff00";
           penwidth = 5;
         ];
         "src/validation/has-extractor-config.ts" [
@@ -196,7 +215,7 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
         "name_src/changeset" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#cc00ff";
+          color = "#ff00ff";
           label = "changeset";
         ];
         "exit_src/changeset" [
@@ -233,6 +252,9 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
           style = "invis";
         ];
       }
+      "exit_src/typedoc" -> "exit_src" [
+        style = "invis";
+      ];
       "src/create-alfa-package.ts" -> "exit_src" [
         style = "invis";
       ];
@@ -372,6 +394,9 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
     "exit_src" -> "exit_src" [
       style = "invis";
     ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
   }
   "src/dependency-graph/dependency-graph.ts" -> "src/dependency-graph/rainbow.ts" [
     style = "invis";
@@ -411,7 +436,7 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
   ];
   "exit_src/validation" -> "name_src/changeset" [
     style = "solid";
-    color = "#ccff00";
+    color = "#ffff00";
     lhead = "cluster_src/changeset";
     ltail = "cluster_src/validation";
   ];
@@ -420,7 +445,7 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
   ];
   "exit_src/dependency-graph" -> "src/common.ts" [
     style = "solid";
-    color = "#00ff66";
+    color = "#00ff00";
     ltail = "cluster_src/dependency-graph";
   ];
   "src/dependency-graph/generate-graphs.ts" -> "src/dependency-graph/dependency-graph.ts" [
@@ -495,37 +520,37 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
   ];
   "src/index.ts" -> "name_src/changeset" [
     style = "solid";
-    color = "#0066ff";
+    color = "#00ffff";
     lhead = "cluster_src/changeset";
   ];
   "src/index.ts" -> "name_src/changeset" [
     style = "invis";
-    color = "#0066ff";
+    color = "#00ffff";
     lhead = "cluster_src/changeset";
   ];
   "src/index.ts" -> "name_src/changeset" [
     style = "invis";
-    color = "#0066ff";
+    color = "#00ffff";
     lhead = "cluster_src/changeset";
   ];
   "src/index.ts" -> "name_src/coverage" [
     style = "solid";
-    color = "#0066ff";
+    color = "#00ffff";
     lhead = "cluster_src/coverage";
   ];
   "src/index.ts" -> "name_src/coverage" [
     style = "invis";
-    color = "#0066ff";
+    color = "#00ffff";
     lhead = "cluster_src/coverage";
   ];
   "src/index.ts" -> "name_src/dependency-graph" [
     style = "solid";
-    color = "#0066ff";
+    color = "#00ffff";
     lhead = "cluster_src/dependency-graph";
   ];
   "src/index.ts" -> "name_src/validation" [
     style = "solid";
-    color = "#0066ff";
+    color = "#00ffff";
     lhead = "cluster_src/validation";
   ];
   "src/dependency-graph/helpers.ts" -> "src/dependency-graph/dependency-graph.ts" [
@@ -540,7 +565,7 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
   ];
   "exit_src/validation" -> "src/common.ts" [
     style = "solid";
-    color = "#ccff00";
+    color = "#ffff00";
     ltail = "cluster_src/validation";
   ];
   "src/validation/validate-all.ts" -> "src/validation/has-extractor-config.ts" [

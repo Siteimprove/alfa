@@ -31,6 +31,8 @@ test("resolve() resolves all values in a tuple", (t) => {
       Length.of(16, "px"),
       Length.of(16, "px"),
       Length.of(16, "px"),
+      Length.of(19.2, "px"), // 1.2 * 16px
+      Length.of(19.2, "px"), // 1.2 * 16px
     ),
     percentageBase: Length.of(20, "px"),
   };

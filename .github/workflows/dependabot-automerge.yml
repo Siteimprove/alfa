@@ -1,0 +1,55 @@
+name: Dependabot auto-approve and auto-merge
+# Failures of this workflow will be reported to the latest editor; currently Jym77.
+on:
+  # We need to run on `pull_request_target`, not `pull_request`, i.e. as the `main` branch, otherwise we do not have access to the builduser tokens.
+  # This creates risks as the permissions are higher.
+  # See https://securitylab.github.com/resources/github-actions-preventing-pwn-requests/
+  # Since the workflow does not actually read the content of the PR, and is gated by only running on Dependabot PRs, this is OK.
+  pull_request_target:
+    types:
+      - opened
+
+permissions:
+  # The github token doesn't need many permissions as we let the builduser do the actual work.
+  contents: read
+  pull-requests: read
+
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    # Checking the author prevents the workflow running and failing on non-Dependabot PRs.
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'siteimprove/alfa'
+    steps:
+      - name: Dependabot metadata
+        # Fetch dependabot metadata. This fails if the PR is not from dependabot, acting as a safeguard.
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@v3
+
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Approve a PR if not already approved
+        run: |
+          gh pr checkout "${PR_URL}" # sets the upstream metadata for `gh pr status`
+          if [ "$(gh pr status --json reviewDecision -q .currentBranch.reviewDecision)" != "APPROVED" ];
+          then gh pr review --approve "${PR_URL}"
+          else echo "PR already approved, skipping additional approvals to minimize emails/notification noise.";
+          fi
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.BUILDUSER_GITHUB_WRITE }}
+
+      - name: Enable auto-merge for Patch updates
+        if: ${{ steps.dependabot-metadata.outputs.update-type == 'version-update:semver-patch' }}
+        run: gh pr merge --auto --merge "${PR_URL}"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.BUILDUSER_GITHUB_WRITE }}
+
+      - name: Enable auto-merge for Minor development updates
+        if: ${{ steps.dependabot-metadata.outputs.update-type == 'version-update:semver-minor' && steps.dependabot-metadata.outputs.dependency-type == 'direct:development' }}
+        run: gh pr merge --auto --merge "${PR_URL}"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.BUILDUSER_GITHUB_WRITE }}

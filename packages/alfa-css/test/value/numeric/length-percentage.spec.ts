@@ -15,6 +15,8 @@ const resolver: LengthPercentage.Resolver = {
     Length.of(16, "px"),
     Length.of(1920, "px"),
     Length.of(1080, "px"),
+    Length.of(19.2, "px"), // 1.2 * 16px
+    Length.of(19.2, "px"), // 1.2 * 16px
   ),
 };
 
