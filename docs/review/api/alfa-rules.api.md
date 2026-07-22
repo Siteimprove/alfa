@@ -72,13 +72,16 @@ const _default: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 const _default_10: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 
 // @public @deprecated (undocumented)
-const _default_11: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
+const _default_11: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 
 // @public @deprecated (undocumented)
 const _default_12: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
 // @public @deprecated (undocumented)
-const _default_13: Rule.Atomic<Page, Text_2, {}, Text_2>;
+const _default_13: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
+
+// @public @deprecated (undocumented)
+const _default_14: Rule.Atomic<Page, Text_2, {}, Text_2>;
 
 // @public
 const _default_2: Rule.Atomic<Page, Document_2, Question.Metadata, Element_2<string>>;
@@ -101,16 +104,16 @@ const _default_7: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Elemen
 // @public
 const _default_8: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
-// @public @deprecated (undocumented)
-const _default_9: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
+// @public
+const _default_9: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
 declare namespace deprecatedRules {
     export {
-        _default_9 as DR3,
-        _default_10 as DR6,
-        _default_11 as DR34,
-        _default_12 as DR36,
-        _default_13 as DR83
+        _default_10 as DR3,
+        _default_11 as DR6,
+        _default_12 as DR34,
+        _default_13 as DR36,
+        _default_14 as DR83
     }
 }
 export { deprecatedRules }
@@ -148,7 +151,8 @@ declare namespace experimentalRules {
         _default_5 as R109,
         _default_6 as R114,
         _default_7 as R115,
-        _default_8 as R117
+        _default_8 as R117,
+        _default_9 as R118
     }
 }
 export { experimentalRules }
@@ -407,6 +411,26 @@ export namespace Question {
         readonly "is-image-accessible-name-descriptive": {
             readonly type: "boolean";
             readonly message: "Does the accessible name of this element present the same information as the image?";
+        };
+        readonly "does-image-contain-human-language-text": {
+            readonly type: "boolean";
+            readonly message: "Does the image contain visible text that expresses something in a human language?";
+        };
+        readonly "is-image-text-decorative": {
+            readonly type: "boolean";
+            readonly message: "Is the image with text purely decorative?";
+        };
+        readonly "is-image-text-incidental": {
+            readonly type: "boolean";
+            readonly message: "Is the text an insignificant part of the image?";
+        };
+        readonly "is-image-text-essential": {
+            readonly type: "boolean";
+            readonly message: "Is the presentation of the text in the image essential (for example, a logo)?";
+        };
+        readonly "is-image-text-redundant": {
+            readonly type: "boolean";
+            readonly message: "Is the same information also available as regular text in the same page?";
         };
     };
         {};
