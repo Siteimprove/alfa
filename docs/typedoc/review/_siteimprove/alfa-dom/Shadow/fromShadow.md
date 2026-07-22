@@ -1,4 +1,4 @@
-# Function: fromShadow()
+# Function: `fromShadow()`
 
 ```ts
 function fromShadow(

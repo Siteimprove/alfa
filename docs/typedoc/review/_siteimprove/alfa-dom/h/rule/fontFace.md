@@ -1,4 +1,4 @@
-# Function: fontFace()
+# Function: `fontFace()`
 
 ```ts
 function fontFace(declarations: 

@@ -1,4 +1,4 @@
-# Function: element()
+# Function: `element()`
 
 ```ts
 function element<N extends string = string>(

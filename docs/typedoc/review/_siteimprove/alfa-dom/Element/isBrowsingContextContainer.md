@@ -1,4 +1,4 @@
-# Variable: isBrowsingContextContainer
+# Variable: `isBrowsingContextContainer`
 
 ```ts
 isBrowsingContextContainer: (element: Element) => boolean;

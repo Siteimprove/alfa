@@ -1,4 +1,4 @@
-# Variable: modifiers
+# Variable: `modifiers`
 
 ```ts
 const modifiers: string[];

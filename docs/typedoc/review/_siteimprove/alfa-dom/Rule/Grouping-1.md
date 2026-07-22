@@ -1,4 +1,4 @@
-# Abstract Class: Grouping\<T extends string = string\>
+# Abstract Class: `Grouping<T extends string = string>`
 
 ## Extends
 

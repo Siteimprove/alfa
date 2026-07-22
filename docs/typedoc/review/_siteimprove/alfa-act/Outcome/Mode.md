@@ -1,4 +1,4 @@
-# Enumeration: Mode
+# Enumeration: `Mode`
 
 ## Enumeration Members
 

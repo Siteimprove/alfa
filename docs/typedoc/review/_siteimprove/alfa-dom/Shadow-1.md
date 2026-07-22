@@ -1,4 +1,4 @@
-# Class: Shadow
+# Class: `Shadow`
 
 ## Extends
 

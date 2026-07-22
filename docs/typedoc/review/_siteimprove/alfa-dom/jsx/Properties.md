@@ -1,4 +1,4 @@
-# Interface: Properties
+# Interface: `Properties`
 
 ## Indexable
 

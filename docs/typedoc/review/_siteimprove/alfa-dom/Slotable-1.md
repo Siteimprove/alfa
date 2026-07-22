@@ -1,4 +1,4 @@
-# Type Alias: Slotable
+# Type Alias: `Slotable`
 
 ```ts
 type Slotable = Element | Text;

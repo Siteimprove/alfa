@@ -1,4 +1,4 @@
-# Variable: getDescendants
+# Variable: `getDescendants`
 
 ```ts
 const getDescendants: {

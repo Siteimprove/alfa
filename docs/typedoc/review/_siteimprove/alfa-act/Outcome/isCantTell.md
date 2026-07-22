@@ -1,4 +1,4 @@
-# Variable: isCantTell
+# Variable: `isCantTell`
 
 ```ts
 isCantTell: {

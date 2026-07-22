@@ -1,4 +1,4 @@
-# Interface: MinimalJSON
+# Interface: `MinimalJSON`
 
 ## Extends
 

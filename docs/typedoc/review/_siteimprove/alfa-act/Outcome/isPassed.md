@@ -1,4 +1,4 @@
-# Variable: isPassed
+# Variable: `isPassed`
 
 ```ts
 isPassed: {

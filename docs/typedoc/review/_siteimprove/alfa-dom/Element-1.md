@@ -1,4 +1,4 @@
-# Class: Element\<N extends string = string\>
+# Class: `Element<N extends string = string>`
 
 ## Extends
 

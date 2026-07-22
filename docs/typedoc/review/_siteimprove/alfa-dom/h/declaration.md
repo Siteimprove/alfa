@@ -1,4 +1,4 @@
-# Function: declaration()
+# Function: `declaration()`
 
 ```ts
 function declaration(

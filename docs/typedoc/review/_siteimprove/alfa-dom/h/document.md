@@ -1,4 +1,4 @@
-# Function: document()
+# Function: `document()`
 
 ```ts
 function document(

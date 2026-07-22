@@ -1,4 +1,4 @@
-# Variable: unmodifiables
+# Variable: `unmodifiables`
 
 ```ts
 const unmodifiables: string[];

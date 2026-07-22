@@ -1,4 +1,4 @@
-# Variable: isAtomic
+# Variable: `isAtomic`
 
 ```ts
 isAtomic: {

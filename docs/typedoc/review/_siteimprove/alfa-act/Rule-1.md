@@ -1,4 +1,4 @@
-# Abstract Class: Rule\<I, T extends Hashable, Q extends Metadata = { }, S = T\>
+# Abstract Class: `Rule<I, T extends Hashable, Q extends Metadata = { }, S = T>`
 
 ## Extended by
 

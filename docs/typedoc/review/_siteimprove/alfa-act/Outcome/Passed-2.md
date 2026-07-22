@@ -1,4 +1,4 @@
-# Class: Passed\<I, T extends Hashable, Q extends Metadata = { }, S = T\>
+# Class: `Passed<I, T extends Hashable, Q extends Metadata = { }, S = T>`
 
 ## Extends
 

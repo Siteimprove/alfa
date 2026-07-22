@@ -1,4 +1,4 @@
-# Variable: isComposite
+# Variable: `isComposite`
 
 ```ts
 isComposite: {

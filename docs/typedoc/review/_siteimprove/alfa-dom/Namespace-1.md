@@ -1,4 +1,4 @@
-# Enumeration: Namespace
+# Enumeration: `Namespace`
 
 ## Enumeration Members
 

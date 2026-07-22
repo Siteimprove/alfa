@@ -1,4 +1,4 @@
-# Type Alias: SerializationOptions
+# Type Alias: `SerializationOptions`
 
 ```ts
 type SerializationOptions = BaseNode.SerializationOptions;

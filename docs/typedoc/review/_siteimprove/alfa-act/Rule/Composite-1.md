@@ -1,4 +1,4 @@
-# Class: Composite\<I, T extends Hashable, Q extends Metadata = { }, S = T\>
+# Class: `Composite<I, T extends Hashable, Q extends Metadata = { }, S = T>`
 
 ## Extends
 

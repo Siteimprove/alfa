@@ -1,4 +1,4 @@
-# Class: Supports
+# Class: `Supports`
 
 ## Extends
 

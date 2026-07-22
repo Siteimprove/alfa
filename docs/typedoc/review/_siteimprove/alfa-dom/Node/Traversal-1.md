@@ -1,4 +1,4 @@
-# Variable: Traversal
+# Variable: `Traversal`
 
 ```ts
 const Traversal: ReplaceFactories<{

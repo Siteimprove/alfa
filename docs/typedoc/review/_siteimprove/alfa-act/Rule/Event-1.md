@@ -1,4 +1,4 @@
-# Class: Event\<INPUT, TARGET extends Hashable, QUESTION extends Metadata, SUBJECT, TYPE extends Type = Type, NAME extends string = string\>
+# Class: `Event<INPUT, TARGET extends Hashable, QUESTION extends Metadata, SUBJECT, TYPE extends Type = Type, NAME extends string = string>`
 
 ## Implements
 

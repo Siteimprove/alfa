@@ -1,4 +1,4 @@
-# Type Alias: InputType
+# Type Alias: `InputType`
 
 ```ts
 type InputType = helpers.InputType;

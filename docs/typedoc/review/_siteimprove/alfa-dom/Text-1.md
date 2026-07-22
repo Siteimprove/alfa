@@ -1,4 +1,4 @@
-# Class: Text
+# Class: `Text`
 
 ## Extends
 

@@ -1,4 +1,4 @@
-# Class: Audit\<I, T extends Hashable, Q extends Metadata = { }, S = T\>
+# Class: `Audit<I, T extends Hashable, Q extends Metadata = { }, S = T>`
 
 ## Constructors
 

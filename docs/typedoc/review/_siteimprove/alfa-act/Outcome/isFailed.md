@@ -1,4 +1,4 @@
-# Variable: isFailed
+# Variable: `isFailed`
 
 ```ts
 isFailed: {

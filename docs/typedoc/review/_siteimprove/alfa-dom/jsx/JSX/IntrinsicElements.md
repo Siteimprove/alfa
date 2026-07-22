@@ -1,4 +1,4 @@
-# Interface: IntrinsicElements
+# Interface: `IntrinsicElements`
 
 ## Indexable
 

@@ -1,4 +1,4 @@
-# Variable: hasDescendant
+# Variable: `hasDescendant`
 
 ```ts
 const hasDescendant: (predicate: Predicate<Node>, options: {

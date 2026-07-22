@@ -1,4 +1,4 @@
-# Type Alias: Metadata
+# Type Alias: `Metadata`
 
 ```ts
 type Metadata = {

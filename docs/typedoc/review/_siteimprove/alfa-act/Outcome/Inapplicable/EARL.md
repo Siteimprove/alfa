@@ -1,4 +1,4 @@
-# Interface: EARL
+# Interface: `EARL`
 
 ## Extends
 

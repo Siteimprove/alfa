@@ -1,4 +1,4 @@
-# Variable: failed
+# Variable: `failed`
 
 ```ts
 failed: <I, T, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record<{

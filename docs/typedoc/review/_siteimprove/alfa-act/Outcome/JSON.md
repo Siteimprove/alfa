@@ -1,4 +1,4 @@
-# Interface: JSON\<V extends Value = Value\>
+# Interface: `JSON<V extends Value = Value>`
 
 ## Extended by
 

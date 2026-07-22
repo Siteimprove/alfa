@@ -1,4 +1,4 @@
-# Class: Declaration
+# Class: `Declaration`
 
 ## Implements
 

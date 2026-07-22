@@ -1,4 +1,4 @@
-# Variable: hasInclusiveDescendant
+# Variable: `hasInclusiveDescendant`
 
 ```ts
 const hasInclusiveDescendant: (predicate: Predicate<Node>, options: {

@@ -1,4 +1,4 @@
-# Class: Comment
+# Class: `Comment`
 
 ## Extends
 

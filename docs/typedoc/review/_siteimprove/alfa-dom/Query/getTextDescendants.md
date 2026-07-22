@@ -1,4 +1,4 @@
-# Variable: getTextDescendants
+# Variable: `getTextDescendants`
 
 ```ts
 const getTextDescendants: <N>(textOptions: TextGroupOptions<N>) => (node: Node, options?: {

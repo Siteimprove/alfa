@@ -1,4 +1,4 @@
-# Type Alias: Rule
+# Type Alias: `Rule`
 
 ```ts
 type Rule = 

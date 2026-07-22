@@ -1,4 +1,4 @@
-# Class: Diagnostic
+# Class: `Diagnostic`
 
 ## Implements
 

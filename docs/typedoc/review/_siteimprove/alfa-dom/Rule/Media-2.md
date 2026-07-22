@@ -1,4 +1,4 @@
-# Class: Media
+# Class: `Media`
 
 ## Extends
 

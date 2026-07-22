@@ -1,4 +1,4 @@
-# Class: CantTell\<I, T extends Hashable, Q extends Metadata = { }, S = T\>
+# Class: `CantTell<I, T extends Hashable, Q extends Metadata = { }, S = T>`
 
 ## Extends
 

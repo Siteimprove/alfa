@@ -1,4 +1,4 @@
-# Variable: hasTextContent
+# Variable: `hasTextContent`
 
 ```ts
 const hasTextContent: (predicate: Predicate<string>, options: {

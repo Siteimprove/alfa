@@ -1,4 +1,4 @@
-# Class: Failed\<I, T extends Hashable, Q extends Metadata = { }, S = T\>
+# Class: `Failed<I, T extends Hashable, Q extends Metadata = { }, S = T>`
 
 ## Extends
 

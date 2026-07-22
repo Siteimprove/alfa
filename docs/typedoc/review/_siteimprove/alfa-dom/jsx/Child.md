@@ -1,4 +1,4 @@
-# Type Alias: Child
+# Type Alias: `Child`
 
 ```ts
 type Child = Node | string;

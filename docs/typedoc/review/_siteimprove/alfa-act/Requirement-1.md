@@ -1,4 +1,4 @@
-# Abstract Class: Requirement\<T extends string = string, U extends string = string\>
+# Abstract Class: `Requirement<T extends string = string, U extends string = string>`
 
 ## Implements
 

@@ -1,4 +1,4 @@
-# Class: Import
+# Class: `Import`
 
 ## Extends
 

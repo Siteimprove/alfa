@@ -1,4 +1,4 @@
-# Variable: hasNamespace
+# Variable: `hasNamespace`
 
 ```ts
 hasNamespace: {

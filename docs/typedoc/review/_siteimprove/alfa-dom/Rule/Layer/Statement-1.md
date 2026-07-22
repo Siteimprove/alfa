@@ -1,4 +1,4 @@
-# Class: Statement
+# Class: `Statement`
 
 ## Extends
 

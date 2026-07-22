@@ -1,4 +1,4 @@
-# Function: fromElement()
+# Function: `fromElement()`
 
 ```ts
 function fromElement<N extends string = string>(

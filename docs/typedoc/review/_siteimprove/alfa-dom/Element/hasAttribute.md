@@ -1,4 +1,4 @@
-# Variable: hasAttribute
+# Variable: `hasAttribute`
 
 ```ts
 hasAttribute: {

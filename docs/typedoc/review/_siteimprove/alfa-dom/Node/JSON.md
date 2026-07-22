@@ -1,4 +1,4 @@
-# Type Alias: JSON
+# Type Alias: `JSON`
 
 ```ts
 type JSON = 

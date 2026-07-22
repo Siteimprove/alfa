@@ -1,4 +1,4 @@
-# Variable: hasTabIndex
+# Variable: `hasTabIndex`
 
 ```ts
 hasTabIndex: {

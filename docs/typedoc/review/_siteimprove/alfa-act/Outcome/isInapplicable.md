@@ -1,4 +1,4 @@
-# Variable: isInapplicable
+# Variable: `isInapplicable`
 
 ```ts
 isInapplicable: {

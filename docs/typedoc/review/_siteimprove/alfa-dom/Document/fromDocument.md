@@ -1,4 +1,4 @@
-# Function: fromDocument()
+# Function: `fromDocument()`
 
 ```ts
 function fromDocument(

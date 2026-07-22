@@ -1,4 +1,4 @@
-# Class: Page
+# Class: `Page`
 
 ## Extends
 

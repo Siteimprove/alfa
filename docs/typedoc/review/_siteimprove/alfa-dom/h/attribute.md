@@ -1,4 +1,4 @@
-# Function: attribute()
+# Function: `attribute()`
 
 ```ts
 function attribute<N extends string = string>(

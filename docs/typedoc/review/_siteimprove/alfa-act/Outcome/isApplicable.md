@@ -1,4 +1,4 @@
-# Variable: isApplicable
+# Variable: `isApplicable`
 
 ```ts
 isApplicable: {

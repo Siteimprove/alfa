@@ -1,4 +1,4 @@
-# Function: sheet()
+# Function: `sheet()`
 
 ```ts
 function sheet(

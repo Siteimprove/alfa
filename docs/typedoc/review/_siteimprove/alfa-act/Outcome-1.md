@@ -1,4 +1,4 @@
-# Abstract Class: Outcome\<I, T extends Hashable, Q extends Metadata = { }, S = T, V extends Value = Value\>
+# Abstract Class: `Outcome<I, T extends Hashable, Q extends Metadata = { }, S = T, V extends Value = Value>`
 
 ## Extended by
 

@@ -1,4 +1,4 @@
-# Function: isPassed()
+# Function: `isPassed()`
 
 ## Call Signature
 

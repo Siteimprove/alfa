@@ -1,4 +1,4 @@
-# Type Alias: Node
+# Type Alias: `Node`
 
 ```ts
 type Node = 

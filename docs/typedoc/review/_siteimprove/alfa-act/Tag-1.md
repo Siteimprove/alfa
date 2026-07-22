@@ -1,4 +1,4 @@
-# Abstract Class: Tag\<T extends string = string\>
+# Abstract Class: `Tag<T extends string = string>`
 
 ## Implements
 

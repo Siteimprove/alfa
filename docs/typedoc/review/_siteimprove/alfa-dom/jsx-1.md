@@ -1,4 +1,4 @@
-# Function: jsx()
+# Function: `jsx()`
 
 ```ts
 function jsx<N extends string = string>(

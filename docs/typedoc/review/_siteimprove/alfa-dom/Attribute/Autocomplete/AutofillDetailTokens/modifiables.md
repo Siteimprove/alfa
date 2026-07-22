@@ -1,4 +1,4 @@
-# Variable: modifiables
+# Variable: `modifiables`
 
 ```ts
 const modifiables: string[];

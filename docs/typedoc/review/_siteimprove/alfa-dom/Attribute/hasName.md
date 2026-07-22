@@ -1,4 +1,4 @@
-# Variable: hasName
+# Variable: `hasName`
 
 ```ts
 hasName: {

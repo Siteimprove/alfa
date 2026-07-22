@@ -1,4 +1,4 @@
-# Function: end()
+# Function: `end()`
 
 ## Call Signature
 

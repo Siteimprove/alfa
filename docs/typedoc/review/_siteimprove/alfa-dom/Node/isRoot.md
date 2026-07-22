@@ -1,4 +1,4 @@
-# Variable: isRoot
+# Variable: `isRoot`
 
 ```ts
 isRoot: (options?: {

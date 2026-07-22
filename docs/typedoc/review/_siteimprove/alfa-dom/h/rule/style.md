@@ -1,4 +1,4 @@
-# Function: style()
+# Function: `style()`
 
 ```ts
 function style(

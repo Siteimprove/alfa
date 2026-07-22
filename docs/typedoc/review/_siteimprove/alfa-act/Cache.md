@@ -1,4 +1,4 @@
-# Class: Cache
+# Class: `Cache`
 
 ## Constructors
 

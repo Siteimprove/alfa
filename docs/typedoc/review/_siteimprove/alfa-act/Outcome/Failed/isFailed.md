@@ -1,4 +1,4 @@
-# Function: isFailed()
+# Function: `isFailed()`
 
 ## Call Signature
 

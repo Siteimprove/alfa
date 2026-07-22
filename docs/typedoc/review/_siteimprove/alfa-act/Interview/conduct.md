@@ -1,4 +1,4 @@
-# Function: conduct()
+# Function: `conduct()`
 
 ```ts
 function conduct<INPUT, TARGET extends Hashable, QUESTION extends Metadata, SUBJECT, ANSWER>(

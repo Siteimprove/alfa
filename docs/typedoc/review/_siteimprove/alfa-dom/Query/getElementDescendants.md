@@ -1,4 +1,4 @@
-# Variable: getElementDescendants
+# Variable: `getElementDescendants`
 
 ```ts
 const getElementDescendants: (node: Node, options?: {

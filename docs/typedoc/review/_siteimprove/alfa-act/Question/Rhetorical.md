@@ -1,4 +1,4 @@
-# Class: Rhetorical\<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string\>
+# Class: `Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string>`
 
 ## Extends
 

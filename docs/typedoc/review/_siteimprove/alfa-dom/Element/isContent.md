@@ -1,4 +1,4 @@
-# Variable: isContent
+# Variable: `isContent`
 
 ```ts
 const isContent: (options: {

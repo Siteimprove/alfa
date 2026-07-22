@@ -1,4 +1,4 @@
-# Function: fragment()
+# Function: `fragment()`
 
 ```ts
 function fragment(

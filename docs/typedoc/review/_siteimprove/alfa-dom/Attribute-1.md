@@ -1,4 +1,4 @@
-# Class: Attribute\<N extends string = string\>
+# Class: `Attribute<N extends string = string>`
 
 ## Extends
 

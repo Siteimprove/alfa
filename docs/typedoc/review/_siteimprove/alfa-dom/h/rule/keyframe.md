@@ -1,4 +1,4 @@
-# Function: keyframe()
+# Function: `keyframe()`
 
 ```ts
 function keyframe(key: string, declarations: 

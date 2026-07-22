@@ -1,4 +1,4 @@
-# Class: Sheet
+# Class: `Sheet`
 
 ## Implements
 

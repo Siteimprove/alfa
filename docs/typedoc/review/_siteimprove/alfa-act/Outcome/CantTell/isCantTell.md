@@ -1,4 +1,4 @@
-# Function: isCantTell()
+# Function: `isCantTell()`
 
 ## Call Signature
 

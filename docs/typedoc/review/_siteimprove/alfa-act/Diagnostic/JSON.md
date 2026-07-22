@@ -1,4 +1,4 @@
-# Interface: JSON
+# Interface: `JSON`
 
 ## Indexable
 

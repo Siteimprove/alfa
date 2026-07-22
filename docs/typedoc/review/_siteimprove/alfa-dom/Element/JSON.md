@@ -1,4 +1,4 @@
-# Interface: JSON\<N extends string = string\>
+# Interface: `JSON<N extends string = string>`
 
 ## Extends
 

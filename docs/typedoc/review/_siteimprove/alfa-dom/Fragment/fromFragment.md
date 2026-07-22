@@ -1,4 +1,4 @@
-# Function: fromFragment()
+# Function: `fromFragment()`
 
 ```ts
 function fromFragment(

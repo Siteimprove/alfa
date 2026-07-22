@@ -1,4 +1,4 @@
-# Function: from()
+# Function: `from()`
 
 ```ts
 function from<I, T extends Hashable, Q extends Metadata, S>(

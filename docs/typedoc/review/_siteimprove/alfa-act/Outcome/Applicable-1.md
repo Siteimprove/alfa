@@ -1,4 +1,4 @@
-# Type Alias: Applicable\<I, T extends Hashable, Q extends Metadata = { }, S = T\>
+# Type Alias: `Applicable<I, T extends Hashable, Q extends Metadata = { }, S = T>`
 
 ```ts
 type Applicable<I, T extends Hashable, Q extends Metadata = {

@@ -1,4 +1,4 @@
-# Class: Keyframe
+# Class: `Keyframe`
 
 ## Extends
 

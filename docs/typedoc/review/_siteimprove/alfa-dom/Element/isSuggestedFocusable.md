@@ -1,4 +1,4 @@
-# Variable: isSuggestedFocusable
+# Variable: `isSuggestedFocusable`
 
 ```ts
 isSuggestedFocusable: (element: Element) => boolean;

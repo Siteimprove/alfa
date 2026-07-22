@@ -1,4 +1,4 @@
-# Enumeration: Value
+# Enumeration: `Value`
 
 ## Enumeration Members
 

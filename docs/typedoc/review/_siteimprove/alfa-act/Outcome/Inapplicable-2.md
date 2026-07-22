@@ -1,4 +1,4 @@
-# Class: Inapplicable\<I, T extends Hashable, Q extends Metadata = { }, S = T\>
+# Class: `Inapplicable<I, T extends Hashable, Q extends Metadata = { }, S = T>`
 
 ## Extends
 

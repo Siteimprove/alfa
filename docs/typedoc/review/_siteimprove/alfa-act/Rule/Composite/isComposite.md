@@ -1,4 +1,4 @@
-# Function: isComposite()
+# Function: `isComposite()`
 
 ## Call Signature
 

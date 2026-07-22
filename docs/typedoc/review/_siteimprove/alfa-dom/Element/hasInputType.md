@@ -1,4 +1,4 @@
-# Variable: hasInputType
+# Variable: `hasInputType`
 
 ```ts
 hasInputType: {

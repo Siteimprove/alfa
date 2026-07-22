@@ -1,4 +1,4 @@
-# Class: Type\<N extends string = string\>
+# Class: `Type<N extends string = string>`
 
 ## Extends
 

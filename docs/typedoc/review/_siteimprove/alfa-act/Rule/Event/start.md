@@ -1,4 +1,4 @@
-# Function: start()
+# Function: `start()`
 
 ## Call Signature
 

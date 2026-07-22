@@ -1,4 +1,4 @@
-# Variable: getInclusiveElementDescendants
+# Variable: `getInclusiveElementDescendants`
 
 ```ts
 const getInclusiveElementDescendants: (node: Element, options: {

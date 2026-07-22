@@ -1,4 +1,4 @@
-# Class: Question\<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string\>
+# Class: `Question<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string>`
 
 ## Extended by
 

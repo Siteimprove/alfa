@@ -1,4 +1,4 @@
-# Class: Document
+# Class: `Document`
 
 ## Extends
 

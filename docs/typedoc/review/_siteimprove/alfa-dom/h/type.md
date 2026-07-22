@@ -1,4 +1,4 @@
-# Function: type()
+# Function: `type()`
 
 ```ts
 function type<N extends string = string>(

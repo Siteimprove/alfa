@@ -1,4 +1,4 @@
-# Class: Block
+# Class: `Block`
 
 ## Extends
 

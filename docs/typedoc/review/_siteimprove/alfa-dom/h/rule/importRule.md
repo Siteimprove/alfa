@@ -1,4 +1,4 @@
-# Function: importRule()
+# Function: `importRule()`
 
 ```ts
 function importRule(

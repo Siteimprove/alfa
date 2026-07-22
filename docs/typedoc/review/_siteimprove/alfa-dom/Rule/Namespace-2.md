@@ -1,4 +1,4 @@
-# Class: Namespace
+# Class: `Namespace`
 
 ## Extends
 

@@ -1,4 +1,4 @@
-# Function: isAtomic()
+# Function: `isAtomic()`
 
 ## Call Signature
 

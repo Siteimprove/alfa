@@ -1,4 +1,4 @@
-# Interface: JSON\<T extends Type = Type, N extends string = string\>
+# Interface: `JSON<T extends Type = Type, N extends string = string>`
 
 ## Indexable
 

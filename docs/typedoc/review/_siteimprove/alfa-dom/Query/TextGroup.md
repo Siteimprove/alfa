@@ -1,4 +1,4 @@
-# Type Alias: TextGroup
+# Type Alias: `TextGroup`
 
 ```ts
 type TextGroup = descendants.TextGroup;

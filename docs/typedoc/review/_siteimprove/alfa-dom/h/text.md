@@ -1,4 +1,4 @@
-# Function: text()
+# Function: `text()`
 
 ```ts
 function text(

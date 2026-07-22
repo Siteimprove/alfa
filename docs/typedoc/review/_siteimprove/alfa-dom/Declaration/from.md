@@ -1,4 +1,4 @@
-# Function: from()
+# Function: `from()`
 
 ```ts
 function from(json: JSON): Declaration;

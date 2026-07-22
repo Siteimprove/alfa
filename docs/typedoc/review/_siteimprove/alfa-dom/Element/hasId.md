@@ -1,4 +1,4 @@
-# Variable: hasId
+# Variable: `hasId`
 
 ```ts
 hasId: {

@@ -1,4 +1,4 @@
-# Function: shadow()
+# Function: `shadow()`
 
 ```ts
 function shadow(

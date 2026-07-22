@@ -1,4 +1,4 @@
-# Variable: isValid
+# Variable: `isValid`
 
 ```ts
 const isValid: Predicate<string>;

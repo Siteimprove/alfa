@@ -1,4 +1,4 @@
-# Class: Style
+# Class: `Style`
 
 ## Extends
 

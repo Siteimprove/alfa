@@ -1,4 +1,4 @@
-# Function: page()
+# Function: `page()`
 
 ```ts
 function page(selector: string, declarations: 

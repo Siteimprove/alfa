@@ -1,4 +1,4 @@
-# Interface: Evaluate()\<I, T extends Hashable, Q extends Metadata, S\>
+# Interface: `Evaluate()<I, T extends Hashable, Q extends Metadata, S>`
 
 ```ts
 Evaluate(

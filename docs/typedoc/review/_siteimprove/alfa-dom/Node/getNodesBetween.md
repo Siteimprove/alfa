@@ -1,4 +1,4 @@
-# Variable: getNodesBetween
+# Variable: `getNodesBetween`
 
 ```ts
 const getNodesBetween: (node1: Node, node2: Node, includeOptions: Options, treeOptions: {

@@ -1,4 +1,4 @@
-# Variable: hasChild
+# Variable: `hasChild`
 
 ```ts
 const hasChild: (predicate: Predicate<Node>, options: {

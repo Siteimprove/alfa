@@ -1,4 +1,4 @@
-# Function: isApplicable()
+# Function: `isApplicable()`
 
 ## Call Signature
 
