@@ -248,7 +248,7 @@ export namespace Question {
       type: "boolean",
       message: `Is this element visible when it's focused?`,
     },
-    // R101 (experimental)
+    // R98, R101 (experimental)
     "main-landmark-elements": {
       type: "node[]",
       message: "Where are the main landmark elements of the page?",
