@@ -71,12 +71,14 @@ runs:
     - name: Hack around toplevel dependencies
       shell: bash
       # https://github.com/changesets/changesets/issues/1229
-      # Need to unescape the sed string to interpret ${VERSION} and re-escape it again.
-      run: sed -i 's/workspace:^[0-9\.]*/workspace:^'${VERSION}'/' package.json
-      env:
-        # Passing it as a variable rather than inline hardens against script injection.
-        # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
-        VERSION: ${{ steps.new.outputs.version }}
+      # `changeset version` does not touch the toplevel package.json, so any workspace:
+      # dependency there is left pointing at its old version. For each such dependency,
+      # look up the actual (new) version in its own package.json and update it here too.
+      run: |
+        for dep in $(grep -oP '"@siteimprove/\K[^"]+(?="\s*:\s*"workspace:)' package.json); do
+          version=$(grep -m1 -oP '"version": "\K[^"]+' "packages/${dep}/package.json")
+          sed -i "s|\"@siteimprove/${dep}\": \"workspace:\^[0-9.]*\"|\"@siteimprove/${dep}\": \"workspace:^${version}\"|" package.json
+        done
 
     - name: Update lockfile
       shell: bash
