@@ -1,5 +1,4 @@
 name: Dependabot auto-approve and auto-merge
-# Failures of this workflow will be reported to the latest editor; currently Jym77.
 on:
   # We need to run on `pull_request_target`, not `pull_request`, i.e. as the `main` branch, otherwise we do not have access to the builduser tokens.
   # This creates risks as the permissions are higher.

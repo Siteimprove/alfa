@@ -37,7 +37,7 @@
     "@changesets/cli": "^2.31.1",
     "@microsoft/api-documenter": "^7.30.9",
     "@microsoft/api-extractor": "^7.52.10",
-    "@siteimprove/alfa-toolchain": "workspace:^0.118.0",
+    "@siteimprove/alfa-toolchain": "workspace:^0.119.0",
     "@types/node": "^26.1.1",
     "@vitest/coverage-v8": "^4.1.10",
     "knip": "^6.27.0",
@@ -50,7 +50,7 @@
   },
   "comment-resolution": "Circumventing https://github.com/vitest-dev/vitest/issues/9876 until it is fixed upstream.",
   "resolutions": {
-    "vite": "7.3.2"
+    "vite": "7.3.5"
   },
   "packageManager": "yarn@4.17.1"
 }
