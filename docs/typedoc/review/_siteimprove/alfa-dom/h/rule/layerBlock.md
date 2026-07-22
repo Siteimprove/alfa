@@ -1,5 +1,5 @@
 # Function: layerBlock()
 
-```typescript
+```ts
 function layerBlock(rules: Rule[], layer?: string): Block;
 ```

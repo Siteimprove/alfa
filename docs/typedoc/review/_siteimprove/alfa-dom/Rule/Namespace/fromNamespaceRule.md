@@ -1,5 +1,5 @@
 # Function: fromNamespaceRule()
 
-```typescript
+```ts
 function fromNamespaceRule(json: JSON): Trampoline<Namespace>;
 ```

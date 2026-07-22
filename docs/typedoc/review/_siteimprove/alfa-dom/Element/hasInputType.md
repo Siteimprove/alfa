@@ -9,12 +9,12 @@ hasInputType: {
 
 ## Call Signature
 
-```typescript
+```ts
 (predicate: Predicate<InputType>): Predicate<Element<string>>;
 ```
 
 ## Call Signature
 
-```typescript
+```ts
 (inputType: InputType, ...rest: InputType[]): Predicate<Element<string>>;
 ```

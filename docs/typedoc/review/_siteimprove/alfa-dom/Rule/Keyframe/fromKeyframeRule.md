@@ -1,5 +1,5 @@
 # Function: fromKeyframeRule()
 
-```typescript
+```ts
 function fromKeyframeRule(json: JSON): Trampoline<Keyframe>;
 ```

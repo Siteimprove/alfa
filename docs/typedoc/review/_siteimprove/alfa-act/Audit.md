@@ -1,10 +1,10 @@
-# Class: Audit\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](Question/Metadata.md) = \{ \}, `S` = `T`\>
+# Class: Audit\<I, T extends Hashable, Q extends Metadata = { }, S = T\>
 
 ## Constructors
 
 ### Constructor
 
-```typescript
+```ts
 protected new Audit<I, T extends Hashable, Q extends Metadata = {
 }, S = T>(
    input: I, 
@@ -17,7 +17,7 @@ protected new Audit<I, T extends Hashable, Q extends Metadata = {
 
 ### evaluate()
 
-```typescript
+```ts
 evaluate(performance?: Performance<Event<I, T, Q, S, Type, string>>): Promise<Iterable<Outcome<I, T, Q, S, Value>>>;
 ```
 
@@ -25,7 +25,7 @@ evaluate(performance?: Performance<Event<I, T, Q, S, Type, string>>): Promise<It
 
 ### of()
 
-```typescript
+```ts
 static of<I, T extends Hashable, Q extends Metadata = {
 }, S = T>(
    input: I, 

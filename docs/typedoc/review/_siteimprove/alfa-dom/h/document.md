@@ -1,6 +1,6 @@
 # Function: document()
 
-```typescript
+```ts
 function document(
    children: (string | Node)[], 
    style?: Sheet[], 

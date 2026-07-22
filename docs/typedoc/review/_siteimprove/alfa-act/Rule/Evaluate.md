@@ -1,6 +1,6 @@
-# Interface: Evaluate()\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](../Question/Metadata.md), `S`\>
+# Interface: Evaluate()\<I, T extends Hashable, Q extends Metadata, S\>
 
-```typescript
+```ts
 Evaluate(
    input: Readonly<I>, 
    oracle: {

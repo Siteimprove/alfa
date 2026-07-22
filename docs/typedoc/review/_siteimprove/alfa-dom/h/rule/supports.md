@@ -1,5 +1,5 @@
 # Function: supports()
 
-```typescript
+```ts
 function supports(condition: string, rules: Rule[]): Supports;
 ```

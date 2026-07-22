@@ -1,6 +1,6 @@
 # Function: shadow()
 
-```typescript
+```ts
 function shadow(
    children: (string | Node)[], 
    style?: Sheet[], 

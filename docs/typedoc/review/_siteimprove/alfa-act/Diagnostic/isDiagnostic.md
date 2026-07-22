@@ -1,5 +1,5 @@
 # Function: isDiagnostic()
 
-```typescript
+```ts
 function isDiagnostic(value: unknown): value is Diagnostic;
 ```

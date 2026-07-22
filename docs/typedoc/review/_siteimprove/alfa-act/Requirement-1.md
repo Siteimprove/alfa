@@ -1,4 +1,4 @@
-# Abstract Class: Requirement\<`T` *extends* `string` = `string`, `U` *extends* `string` = `string`\>
+# Abstract Class: Requirement\<T extends string = string, U extends string = string\>
 
 ## Implements
 
@@ -10,7 +10,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Requirement<T extends string = string, U extends string = string>(type: T, uri: U): Requirement<T, U>;
 ```
 
@@ -20,7 +20,7 @@ protected new Requirement<T extends string = string, U extends string = string>(
 
 #### Call Signature
 
-```typescript
+```ts
 equals(value: Requirement): boolean;
 ```
 
@@ -32,7 +32,7 @@ Equatable.equals
 
 #### Call Signature
 
-```typescript
+```ts
 equals(value: unknown): value is Requirement<T, U>;
 ```
 
@@ -46,7 +46,7 @@ Equatable.equals
 
 ### toEARL()
 
-```typescript
+```ts
 toEARL(): EARL;
 ```
 
@@ -60,7 +60,7 @@ earl.Serializable.toEARL
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(): JSON<T, U>;
 ```
 
@@ -76,13 +76,9 @@ json.Serializable.toJSON
 
 #### Get Signature
 
-```typescript
+```ts
 get type(): T;
 ```
-
-##### Returns
-
-`T`
 
 ## uri
 
@@ -90,10 +86,6 @@ get type(): T;
 
 #### Get Signature
 
-```typescript
+```ts
 get uri(): U;
 ```
-
-##### Returns
-
-`U`

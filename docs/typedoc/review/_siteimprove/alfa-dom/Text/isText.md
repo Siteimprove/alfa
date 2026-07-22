@@ -1,5 +1,5 @@
 # Function: isText()
 
-```typescript
+```ts
 function isText(value: unknown): value is Text;
 ```

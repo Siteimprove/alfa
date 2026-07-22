@@ -1,5 +1,5 @@
 # Function: isFragment()
 
-```typescript
+```ts
 function isFragment(value: unknown): value is Fragment;
 ```

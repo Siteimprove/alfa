@@ -9,12 +9,12 @@ hasTabIndex: {
 
 ## Call Signature
 
-```typescript
+```ts
 (predicate?: Predicate<number>): Predicate<Element<string>>;
 ```
 
 ## Call Signature
 
-```typescript
+```ts
 (value: number, ...rest: Array<number>): Predicate<Element<string>>;
 ```

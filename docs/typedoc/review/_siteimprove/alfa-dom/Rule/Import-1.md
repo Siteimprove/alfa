@@ -8,7 +8,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Import(
    href: string, 
    sheet: Sheet, 
@@ -28,7 +28,7 @@ ConditionRule<"import">.constructor
 
 ### \_attachOwner()
 
-```typescript
+```ts
 _attachOwner(owner: Sheet): boolean;
 ```
 
@@ -42,7 +42,7 @@ ConditionRule._attachOwner
 
 ### \_attachParent()
 
-```typescript
+```ts
 _attachParent(parent: Rule): boolean;
 ```
 
@@ -112,7 +112,7 @@ ConditionRule._rules
 
 ### ancestors()
 
-```typescript
+```ts
 ancestors(): Iterable<Rule>;
 ```
 
@@ -126,7 +126,7 @@ ConditionRule.ancestors
 
 ### children()
 
-```typescript
+```ts
 children(): Iterable<Rule>;
 ```
 
@@ -142,13 +142,9 @@ ConditionRule.children
 
 #### Get Signature
 
-```typescript
+```ts
 get condition(): string;
 ```
-
-##### Returns
-
-`string`
 
 #### Inherited from
 
@@ -160,7 +156,7 @@ ConditionRule.condition
 
 ### descendants()
 
-```typescript
+```ts
 descendants(): Iterable<Rule>;
 ```
 
@@ -174,7 +170,7 @@ ConditionRule.descendants
 
 ### equals()
 
-```typescript
+```ts
 equals(value: unknown): value is Import;
 ```
 
@@ -190,13 +186,9 @@ ConditionRule.equals
 
 #### Get Signature
 
-```typescript
+```ts
 get href(): string;
 ```
-
-##### Returns
-
-`string`
 
 ## layer
 
@@ -204,13 +196,9 @@ get href(): string;
 
 #### Get Signature
 
-```typescript
+```ts
 get layer(): Option<string>;
 ```
-
-##### Returns
-
-`Option`\<`string`\>
 
 ## mediaQueries
 
@@ -218,19 +206,15 @@ get layer(): Option<string>;
 
 #### Get Signature
 
-```typescript
+```ts
 get mediaQueries(): List;
 ```
-
-##### Returns
-
-`List`
 
 ## of
 
 ### of()
 
-```typescript
+```ts
 static of(
    href: string, 
    sheet: Sheet, 
@@ -246,13 +230,9 @@ static of(
 
 #### Get Signature
 
-```typescript
+```ts
 get owner(): Option<Sheet>;
 ```
-
-##### Returns
-
-`Option`\<[`Sheet`](../Sheet-1.md)\>
 
 #### Inherited from
 
@@ -266,13 +246,9 @@ ConditionRule.owner
 
 #### Get Signature
 
-```typescript
+```ts
 get parent(): Option<Rule>;
 ```
-
-##### Returns
-
-`Option`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -286,13 +262,9 @@ ConditionRule.parent
 
 #### Get Signature
 
-```typescript
+```ts
 get rules(): Iterable<Rule>;
 ```
-
-##### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Overrides
 
@@ -306,13 +278,9 @@ ConditionRule.rules
 
 #### Get Signature
 
-```typescript
+```ts
 get sheet(): Sheet;
 ```
-
-##### Returns
-
-[`Sheet`](../Sheet-1.md)
 
 ## supportCondition
 
@@ -320,13 +288,9 @@ get sheet(): Sheet;
 
 #### Get Signature
 
-```typescript
+```ts
 get supportCondition(): Option<string>;
 ```
-
-##### Returns
-
-`Option`\<`string`\>
 
 ## supportQuery
 
@@ -334,19 +298,15 @@ get supportCondition(): Option<string>;
 
 #### Get Signature
 
-```typescript
+```ts
 get supportQuery(): Option<Option<Query>>;
 ```
-
-##### Returns
-
-`Option`\<`Option`\<`Query`\>\>
 
 ## toJSON
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(): JSON;
 ```
 
@@ -360,7 +320,7 @@ ConditionRule.toJSON
 
 ### toString()
 
-```typescript
+```ts
 toString(): string;
 ```
 
@@ -370,13 +330,9 @@ toString(): string;
 
 #### Get Signature
 
-```typescript
+```ts
 get type(): T;
 ```
-
-##### Returns
-
-`T`
 
 #### Inherited from
 

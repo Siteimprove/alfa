@@ -1,4 +1,4 @@
-# Abstract Class: Outcome\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](Question/Metadata.md) = \{ \}, `S` = `T`, `V` *extends* [`Value`](Outcome/Value.md) = [`Value`](Outcome/Value.md)\>
+# Abstract Class: Outcome\<I, T extends Hashable, Q extends Metadata = { }, S = T, V extends Value = Value\>
 
 ## Extended by
 
@@ -19,7 +19,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Outcome<I, T extends Hashable, Q extends Metadata = {
 }, S = T, V extends Value = Value>(
    outcome: V, 
@@ -50,7 +50,7 @@ protected readonly _rule: Rule<I, T, Q, S>;
 
 #### Call Signature
 
-```typescript
+```ts
 equals<I, T extends Hashable, Q extends Metadata, S, V extends Value = Value>(value: Outcome<I, T, Q, S, V>): boolean;
 ```
 
@@ -62,7 +62,7 @@ Equatable.equals
 
 #### Call Signature
 
-```typescript
+```ts
 equals(value: unknown): value is Outcome<I, T, Q, S, V>;
 ```
 
@@ -76,7 +76,7 @@ Equatable.equals
 
 ### hash()
 
-```typescript
+```ts
 hash(hash: Hash): void;
 ```
 
@@ -92,13 +92,9 @@ Hashable.hash
 
 #### Get Signature
 
-```typescript
+```ts
 get isSemiAuto(): boolean;
 ```
-
-##### Returns
-
-`boolean`
 
 ## mode
 
@@ -106,13 +102,9 @@ get isSemiAuto(): boolean;
 
 #### Get Signature
 
-```typescript
+```ts
 get mode(): Mode;
 ```
-
-##### Returns
-
-[`Mode`](Outcome/Mode.md)
 
 ## outcome
 
@@ -120,13 +112,9 @@ get mode(): Mode;
 
 #### Get Signature
 
-```typescript
+```ts
 get outcome(): V;
 ```
-
-##### Returns
-
-`V`
 
 ## rule
 
@@ -134,13 +122,9 @@ get outcome(): V;
 
 #### Get Signature
 
-```typescript
+```ts
 get rule(): Rule<I, T, Q, S>;
 ```
-
-##### Returns
-
-[`Rule`](Rule-1.md)\<`I`, `T`, `Q`, `S`\>
 
 ## target
 
@@ -148,19 +132,15 @@ get rule(): Rule<I, T, Q, S>;
 
 #### Get Signature
 
-```typescript
+```ts
 get target(): T | undefined;
 ```
-
-##### Returns
-
-`T` \| `undefined`
 
 ## toEARL
 
 ### toEARL()
 
-```typescript
+```ts
 toEARL(): EARL;
 ```
 
@@ -174,7 +154,7 @@ earl.Serializable.toEARL
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(options?: Options): JSON<V>;
 ```
 
@@ -188,7 +168,7 @@ json.Serializable.toJSON
 
 ### toSARIF()
 
-```typescript
+```ts
 abstract toSARIF(): Result;
 ```
 

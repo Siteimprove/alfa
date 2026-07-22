@@ -1,5 +1,5 @@
 # Function: isRequirement()
 
-```typescript
+```ts
 function isRequirement(value: unknown): value is Requirement<string, string>;
 ```

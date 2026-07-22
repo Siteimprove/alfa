@@ -1,5 +1,5 @@
 # Function: getMode()
 
-```typescript
+```ts
 function getMode(oracleUsed: boolean): Mode;
 ```

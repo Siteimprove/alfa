@@ -1,5 +1,5 @@
 # Function: media()
 
-```typescript
+```ts
 function media(condition: string, rules: Rule[]): Media;
 ```

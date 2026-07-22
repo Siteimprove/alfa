@@ -1,6 +1,6 @@
 # Function: from()
 
-```typescript
+```ts
 function from<I, T extends Hashable, Q extends Metadata, S>(
    rule: Rule<I, T, Q, S>, 
    target: T, 

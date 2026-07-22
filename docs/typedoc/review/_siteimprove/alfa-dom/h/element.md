@@ -1,6 +1,6 @@
 # Function: element()
 
-```typescript
+```ts
 function element<N extends string = string>(
    name: N, 
    attributes?: 

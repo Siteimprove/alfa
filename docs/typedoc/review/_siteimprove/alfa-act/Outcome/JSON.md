@@ -1,4 +1,4 @@
-# Interface: JSON\<`V` *extends* [`Value`](Value.md) = [`Value`](Value.md)\>
+# Interface: JSON\<V extends Value = Value\>
 
 ## Extended by
 

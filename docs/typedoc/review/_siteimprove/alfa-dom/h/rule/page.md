@@ -1,6 +1,6 @@
 # Function: page()
 
-```typescript
+```ts
 function page(selector: string, declarations: 
   | Record<string, string>
   | Declaration[]): Page;

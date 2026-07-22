@@ -1,5 +1,5 @@
 # Function: isGroupingRule()
 
-```typescript
+```ts
 function isGroupingRule(value: unknown): value is Grouping<string>;
 ```

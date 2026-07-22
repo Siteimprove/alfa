@@ -1,4 +1,4 @@
-# Type Alias: Finding\<`ANSWER`, `DIAGNOSTIC` *extends* [`Diagnostic`](Diagnostic-1.md) = [`Diagnostic`](Diagnostic-1.md)\>
+# Type Alias: Finding\<ANSWER, DIAGNOSTIC extends Diagnostic = Diagnostic\>
 
 ```ts
 type Finding<ANSWER, DIAGNOSTIC extends Diagnostic = Diagnostic> = Either<[ANSWER, boolean], [DIAGNOSTIC, boolean]>;

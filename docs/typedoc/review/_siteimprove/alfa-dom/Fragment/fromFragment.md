@@ -1,6 +1,6 @@
 # Function: fromFragment()
 
-```typescript
+```ts
 function fromFragment(
    json: JSON, 
    fromNode: (json: JSON, device?: Device) => Trampoline<Node>, 

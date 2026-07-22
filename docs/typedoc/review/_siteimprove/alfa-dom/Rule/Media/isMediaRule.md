@@ -1,5 +1,5 @@
 # Function: isMediaRule()
 
-```typescript
+```ts
 function isMediaRule(value: unknown): value is Media;
 ```

@@ -1,5 +1,5 @@
 # Function: matches()
 
-```typescript
+```ts
 function matches(device: Device): Predicate<Supports>;
 ```

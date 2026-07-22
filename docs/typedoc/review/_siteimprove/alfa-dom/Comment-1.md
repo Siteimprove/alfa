@@ -8,7 +8,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Comment(
    data: string, 
    externalId?: string, 
@@ -27,7 +27,7 @@ BaseNode<"comment">.constructor
 
 ### \_attachParent()
 
-```typescript
+```ts
 _attachParent(parent: Node<"DOM traversal", 1 | 2 | 4>): boolean;
 ```
 
@@ -69,7 +69,7 @@ BaseNode._frozen
 
 ### \_internalPath()
 
-```typescript
+```ts
 protected _internalPath(options?: {
   add: any;
   equals: boolean;
@@ -124,7 +124,7 @@ BaseNode._type
 
 ### \[iterator\]()
 
-```typescript
+```ts
 iterator: Iterator<Node<"DOM traversal", 1 | 2 | 4, string>>;
 ```
 
@@ -138,7 +138,7 @@ BaseNode.[iterator]
 
 ### ancestors()
 
-```typescript
+```ts
 ancestors(options?: {
   add: any;
   equals: boolean;
@@ -165,7 +165,7 @@ BaseNode.ancestors
 
 ### children()
 
-```typescript
+```ts
 children(options?: {
   add: any;
   equals: boolean;
@@ -194,7 +194,7 @@ BaseNode.children
 
 #### Call Signature
 
-```typescript
+```ts
 closest<T extends Node>(refinement: Refinement<Node, T>, options?: {
   add: any;
   equals: boolean;
@@ -219,7 +219,7 @@ BaseNode.closest
 
 #### Call Signature
 
-```typescript
+```ts
 closest(predicate: Predicate<Node>, options?: {
   add: any;
   equals: boolean;
@@ -248,19 +248,15 @@ BaseNode.closest
 
 #### Get Signature
 
-```typescript
+```ts
 get data(): string;
 ```
-
-##### Returns
-
-`string`
 
 ## descendants
 
 ### descendants()
 
-```typescript
+```ts
 descendants(options?: {
   add: any;
   equals: boolean;
@@ -287,7 +283,7 @@ BaseNode.descendants
 
 ### empty()
 
-```typescript
+```ts
 static empty(): Comment;
 ```
 
@@ -297,7 +293,7 @@ static empty(): Comment;
 
 #### Call Signature
 
-```typescript
+```ts
 equals(value: BaseNode): boolean;
 ```
 
@@ -309,7 +305,7 @@ BaseNode.equals
 
 #### Call Signature
 
-```typescript
+```ts
 equals(value: unknown): value is Comment;
 ```
 
@@ -325,13 +321,9 @@ BaseNode.equals
 
 #### Get Signature
 
-```typescript
+```ts
 get externalId(): string | undefined;
 ```
-
-##### Returns
-
-`string` \| `undefined`
 
 #### Inherited from
 
@@ -345,13 +337,9 @@ BaseNode.externalId
 
 #### Get Signature
 
-```typescript
+```ts
 get extraData(): any;
 ```
-
-##### Returns
-
-`any`
 
 #### Inherited from
 
@@ -363,7 +351,7 @@ BaseNode.extraData
 
 ### first()
 
-```typescript
+```ts
 first(options?: {
   add: any;
   equals: boolean;
@@ -390,7 +378,7 @@ BaseNode.first
 
 ### following()
 
-```typescript
+```ts
 following(options?: {
   add: any;
   equals: boolean;
@@ -417,7 +405,7 @@ BaseNode.following
 
 ### freeze()
 
-```typescript
+```ts
 freeze(): this;
 ```
 
@@ -433,13 +421,9 @@ BaseNode.freeze
 
 #### Get Signature
 
-```typescript
+```ts
 get frozen(): boolean;
 ```
-
-##### Returns
-
-`boolean`
 
 #### Inherited from
 
@@ -451,7 +435,7 @@ BaseNode.frozen
 
 ### hash()
 
-```typescript
+```ts
 hash(hash: Hash): void;
 ```
 
@@ -465,7 +449,7 @@ BaseNode.hash
 
 ### inclusiveAncestors()
 
-```typescript
+```ts
 inclusiveAncestors(options?: {
   add: any;
   equals: boolean;
@@ -492,7 +476,7 @@ BaseNode.inclusiveAncestors
 
 ### inclusiveDescendants()
 
-```typescript
+```ts
 inclusiveDescendants(options?: {
   add: any;
   equals: boolean;
@@ -519,7 +503,7 @@ BaseNode.inclusiveDescendants
 
 ### inclusiveSiblings()
 
-```typescript
+```ts
 inclusiveSiblings(options?: {
   add: any;
   equals: boolean;
@@ -546,7 +530,7 @@ BaseNode.inclusiveSiblings
 
 ### index()
 
-```typescript
+```ts
 index(options?: {
   add: any;
   equals: boolean;
@@ -575,13 +559,9 @@ BaseNode.index
 
 #### Get Signature
 
-```typescript
+```ts
 get internalId(): string;
 ```
-
-##### Returns
-
-`string`
 
 #### Inherited from
 
@@ -593,7 +573,7 @@ BaseNode.internalId
 
 ### isAncestorOf()
 
-```typescript
+```ts
 isAncestorOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -620,7 +600,7 @@ BaseNode.isAncestorOf
 
 ### isChildOf()
 
-```typescript
+```ts
 isChildOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -647,7 +627,7 @@ BaseNode.isChildOf
 
 ### isDescendantOf()
 
-```typescript
+```ts
 isDescendantOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -674,7 +654,7 @@ BaseNode.isDescendantOf
 
 ### isInclusiveAncestorOf()
 
-```typescript
+```ts
 isInclusiveAncestorOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -701,7 +681,7 @@ BaseNode.isInclusiveAncestorOf
 
 ### isInclusiveDescendantsOf()
 
-```typescript
+```ts
 isInclusiveDescendantsOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -728,7 +708,7 @@ BaseNode.isInclusiveDescendantsOf
 
 ### isInclusiveSiblingOf()
 
-```typescript
+```ts
 isInclusiveSiblingOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -755,7 +735,7 @@ BaseNode.isInclusiveSiblingOf
 
 ### isParentOf()
 
-```typescript
+```ts
 isParentOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -782,7 +762,7 @@ BaseNode.isParentOf
 
 ### isRootOf()
 
-```typescript
+```ts
 isRootOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -809,7 +789,7 @@ BaseNode.isRootOf
 
 ### isSiblingOf()
 
-```typescript
+```ts
 isSiblingOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -836,7 +816,7 @@ BaseNode.isSiblingOf
 
 ### last()
 
-```typescript
+```ts
 last(options?: {
   add: any;
   equals: boolean;
@@ -863,7 +843,7 @@ BaseNode.last
 
 ### next()
 
-```typescript
+```ts
 next(options?: {
   add: any;
   equals: boolean;
@@ -890,7 +870,7 @@ BaseNode.next
 
 ### of()
 
-```typescript
+```ts
 static of(
    data: string, 
    externalId?: string, 
@@ -905,7 +885,7 @@ static of(
 
 #### Call Signature
 
-```typescript
+```ts
 parent(options?: {
   add: any;
   equals: boolean;
@@ -930,7 +910,7 @@ BaseNode.parent
 
 #### Call Signature
 
-```typescript
+```ts
 parent(options?: {
   add: any;
   equals: boolean;
@@ -957,7 +937,7 @@ BaseNode.parent
 
 ### path()
 
-```typescript
+```ts
 path(options?: {
   add: any;
   equals: boolean;
@@ -984,7 +964,7 @@ BaseNode.path
 
 ### preceding()
 
-```typescript
+```ts
 preceding(options?: {
   add: any;
   equals: boolean;
@@ -1011,7 +991,7 @@ BaseNode.preceding
 
 ### previous()
 
-```typescript
+```ts
 previous(options?: {
   add: any;
   equals: boolean;
@@ -1038,7 +1018,7 @@ BaseNode.previous
 
 ### root()
 
-```typescript
+```ts
 root(options?: {
   add: any;
   equals: boolean;
@@ -1067,13 +1047,9 @@ BaseNode.root
 
 #### Get Signature
 
-```typescript
+```ts
 get serializationId(): string | undefined;
 ```
-
-##### Returns
-
-`string` \| `undefined`
 
 #### Inherited from
 
@@ -1085,7 +1061,7 @@ BaseNode.serializationId
 
 ### siblings()
 
-```typescript
+```ts
 siblings(options?: {
   add: any;
   equals: boolean;
@@ -1112,7 +1088,7 @@ BaseNode.siblings
 
 ### tabOrder()
 
-```typescript
+```ts
 tabOrder(this: Node): Sequence<Element<string>>;
 ```
 
@@ -1126,7 +1102,7 @@ BaseNode.tabOrder
 
 ### textContent()
 
-```typescript
+```ts
 textContent(options?: {
   add: any;
   equals: boolean;
@@ -1153,7 +1129,7 @@ BaseNode.textContent
 
 ### toEARL()
 
-```typescript
+```ts
 toEARL(): EARL;
 ```
 
@@ -1169,7 +1145,7 @@ BaseNode.toEARL
 
 #### Call Signature
 
-```typescript
+```ts
 toJSON(options: SerializationOptions & {
   verbosity: Minimal | Low;
 }): MinimalJSON;
@@ -1183,7 +1159,7 @@ BaseNode.toJSON
 
 #### Call Signature
 
-```typescript
+```ts
 toJSON(options?: SerializationOptions): JSON;
 ```
 
@@ -1197,7 +1173,7 @@ BaseNode.toJSON
 
 ### toSARIF()
 
-```typescript
+```ts
 toSARIF(): Location;
 ```
 
@@ -1211,7 +1187,7 @@ BaseNode.toSARIF
 
 ### toString()
 
-```typescript
+```ts
 toString(): string;
 ```
 
@@ -1221,13 +1197,9 @@ toString(): string;
 
 #### Get Signature
 
-```typescript
+```ts
 get type(): T;
 ```
-
-##### Returns
-
-`T`
 
 #### Inherited from
 

@@ -1,5 +1,5 @@
 # Function: isStyleRule()
 
-```typescript
+```ts
 function isStyleRule(value: unknown): value is Style;
 ```

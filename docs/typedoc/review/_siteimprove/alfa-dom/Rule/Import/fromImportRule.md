@@ -1,6 +1,6 @@
 # Function: fromImportRule()
 
-```typescript
+```ts
 function fromImportRule(
    json: JSON, 
    fromRule: (json: JSON) => Trampoline<Rule>, 

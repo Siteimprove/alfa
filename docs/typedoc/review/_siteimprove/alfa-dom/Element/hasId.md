@@ -10,18 +10,18 @@ hasId: {
 
 ## Call Signature
 
-```typescript
+```ts
 (predicate?: Predicate<string>): Predicate<Element<string>>;
 ```
 
 ## Call Signature
 
-```typescript
+```ts
 (id: string, ...rest: string[]): Predicate<Element<string>>;
 ```
 
 ## Call Signature
 
-```typescript
+```ts
 (ids: Iterable<string>): Predicate<Element<string>>;
 ```

@@ -1,5 +1,5 @@
 # Function: isNamespace()
 
-```typescript
+```ts
 function isNamespace(value: string): value is Namespace;
 ```

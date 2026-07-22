@@ -1,6 +1,6 @@
 # Function: attribute()
 
-```typescript
+```ts
 function attribute<N extends string = string>(
    name: N, 
    value: string, 

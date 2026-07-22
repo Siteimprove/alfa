@@ -1,6 +1,6 @@
-# Interface: Evaluate()\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](../../Question/Metadata.md), `S`\>
+# Interface: Evaluate()\<I, T extends Hashable, Q extends Metadata, S\>
 
-```typescript
+```ts
 Evaluate(input: I, performance?: {
   mark: (name: string) => Mark<Event<I, T, Q, S, Type, string>>;
   measure: (name: string, start?: number) => Measure<Event<I, T, Q, S, Type, string>>;

@@ -1,6 +1,6 @@
 # Function: fragment()
 
-```typescript
+```ts
 function fragment(
    children: (string | Node)[], 
    externalId?: string, 

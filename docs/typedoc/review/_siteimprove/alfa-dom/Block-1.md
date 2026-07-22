@@ -10,7 +10,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Block(declarations: Declaration[]): Block;
 ```
 
@@ -18,7 +18,7 @@ protected new Block(declarations: Declaration[]): Block;
 
 ### \[iterator\]()
 
-```typescript
+```ts
 iterator: Iterator<Declaration>;
 ```
 
@@ -32,7 +32,7 @@ Iterable.[iterator]
 
 ### declaration()
 
-```typescript
+```ts
 declaration(predicate: string | Predicate<Declaration>): Option<Declaration>;
 ```
 
@@ -42,19 +42,15 @@ declaration(predicate: string | Predicate<Declaration>): Option<Declaration>;
 
 #### Get Signature
 
-```typescript
+```ts
 get declarations(): Iterable<Declaration>;
 ```
-
-##### Returns
-
-`Iterable`\<[`Declaration`](Declaration-1.md)\>
 
 ## equals
 
 ### equals()
 
-```typescript
+```ts
 equals(value: unknown): value is Block;
 ```
 
@@ -68,7 +64,7 @@ Equatable.equals
 
 ### isEmpty()
 
-```typescript
+```ts
 isEmpty(): boolean;
 ```
 
@@ -76,7 +72,7 @@ isEmpty(): boolean;
 
 ### of()
 
-```typescript
+```ts
 static of(declarations: Iterable<Declaration>): Block;
 ```
 
@@ -86,19 +82,15 @@ static of(declarations: Iterable<Declaration>): Block;
 
 #### Get Signature
 
-```typescript
+```ts
 get size(): number;
 ```
-
-##### Returns
-
-`number`
 
 ## toJSON
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(): JSON;
 ```
 
@@ -112,6 +104,6 @@ Serializable.toJSON
 
 ### toString()
 
-```typescript
+```ts
 toString(): string;
 ```

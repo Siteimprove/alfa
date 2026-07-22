@@ -1,4 +1,4 @@
-# Class: Question\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T` = `ANSWER`, `URI` *extends* `string` = `string`\>
+# Class: Question\<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string\>
 
 ## Extended by
 
@@ -15,7 +15,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Question<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string>(
    type: TYPE, 
    uri: URI, 
@@ -96,7 +96,7 @@ protected readonly _uri: URI;
 
 ### answer()
 
-```typescript
+```ts
 answer(answer: ANSWER): T;
 ```
 
@@ -106,31 +106,31 @@ answer(answer: ANSWER): T;
 
 #### Call Signature
 
-```typescript
+```ts
 answerIf(condition: boolean, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
 #### Call Signature
 
-```typescript
+```ts
 answerIf(predicate: Predicate<SUBJECT, [CONTEXT]>, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
 #### Call Signature
 
-```typescript
+```ts
 answerIf(answer: Option<ANSWER>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
 #### Call Signature
 
-```typescript
+```ts
 answerIf(answer: Result<ANSWER, Diagnostic>, merger?: Mapper<Diagnostic, Diagnostic, [Diagnostic]>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
 #### Call Signature
 
-```typescript
+```ts
 answerIf(answer: Result<ANSWER, unknown>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
@@ -138,7 +138,7 @@ answerIf(answer: Result<ANSWER, unknown>): Question<TYPE, SUBJECT, CONTEXT, ANSW
 
 ### apply()
 
-```typescript
+```ts
 apply<U>(mapper: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Mapper<T, U>, URI>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
 ```
 
@@ -154,13 +154,9 @@ Applicative.apply
 
 #### Get Signature
 
-```typescript
+```ts
 get context(): CONTEXT;
 ```
-
-##### Returns
-
-`CONTEXT`
 
 ## diagnostic
 
@@ -168,13 +164,9 @@ get context(): CONTEXT;
 
 #### Get Signature
 
-```typescript
+```ts
 get diagnostic(): Diagnostic;
 ```
-
-##### Returns
-
-[`Diagnostic`](Diagnostic-1.md)
 
 ## fallback
 
@@ -182,19 +174,15 @@ get diagnostic(): Diagnostic;
 
 #### Get Signature
 
-```typescript
+```ts
 get fallback(): Option<ANSWER>;
 ```
-
-##### Returns
-
-`Option`\<`ANSWER`\>
 
 ## flatMap
 
 ### flatMap()
 
-```typescript
+```ts
 flatMap<U>(mapper: Mapper<T, Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
 ```
 
@@ -208,7 +196,7 @@ Monad.flatMap
 
 ### flatten()
 
-```typescript
+```ts
 flatten<TYPE, SUBJECT, CONTEXT, ANSWER, T>(this: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, string>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T>;
 ```
 
@@ -222,7 +210,7 @@ Monad.flatten
 
 ### isRhetorical()
 
-```typescript
+```ts
 isRhetorical(): this is Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T, string>;
 ```
 
@@ -230,7 +218,7 @@ isRhetorical(): this is Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T, string>;
 
 ### map()
 
-```typescript
+```ts
 map<U>(mapper: Mapper<T, U>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
 ```
 
@@ -246,19 +234,15 @@ Functor.map
 
 #### Get Signature
 
-```typescript
+```ts
 get message(): string;
 ```
-
-##### Returns
-
-`string`
 
 ## of
 
 ### of()
 
-```typescript
+```ts
 static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(
    type: TYPE, 
    uri: URI, 
@@ -275,19 +259,15 @@ static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(
 
 #### Get Signature
 
-```typescript
+```ts
 get subject(): SUBJECT;
 ```
-
-##### Returns
-
-`SUBJECT`
 
 ## toJSON
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(options?: Options): JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI>;
 ```
 
@@ -303,13 +283,9 @@ Serializable.toJSON
 
 #### Get Signature
 
-```typescript
+```ts
 get type(): TYPE;
 ```
-
-##### Returns
-
-`TYPE`
 
 ## uri
 
@@ -317,10 +293,6 @@ get type(): TYPE;
 
 #### Get Signature
 
-```typescript
+```ts
 get uri(): URI;
 ```
-
-##### Returns
-
-`URI`

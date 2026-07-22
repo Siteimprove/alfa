@@ -1,5 +1,5 @@
 # Function: isLayerStatementRule()
 
-```typescript
+```ts
 function isLayerStatementRule(value: unknown): value is Statement;
 ```

@@ -1,6 +1,6 @@
 # Function: fromShadow()
 
-```typescript
+```ts
 function fromShadow(
    json: JSON, 
    fromNode: (json: JSON, device?: Device) => Trampoline<Node>, 

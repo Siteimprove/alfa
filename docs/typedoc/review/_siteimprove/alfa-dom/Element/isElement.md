@@ -1,5 +1,5 @@
 # Function: isElement()
 
-```typescript
+```ts
 function isElement(value: unknown): value is Element<string>;
 ```

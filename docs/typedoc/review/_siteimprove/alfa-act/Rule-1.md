@@ -1,4 +1,4 @@
-# Abstract Class: Rule\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](Question/Metadata.md) = \{ \}, `S` = `T`\>
+# Abstract Class: Rule\<I, T extends Hashable, Q extends Metadata = { }, S = T\>
 
 ## Extended by
 
@@ -17,7 +17,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Rule<I, T extends Hashable, Q extends Metadata = {
 }, S = T>(
    uri: string, 
@@ -65,7 +65,7 @@ protected readonly _uri: string;
 
 #### Call Signature
 
-```typescript
+```ts
 equals<I, T extends Hashable, Q extends Metadata, S>(value: Rule<I, T, Q, S>): boolean;
 ```
 
@@ -77,7 +77,7 @@ Equatable.equals
 
 #### Call Signature
 
-```typescript
+```ts
 equals(value: unknown): value is Rule<I, T, Q, S>;
 ```
 
@@ -91,7 +91,7 @@ Equatable.equals
 
 ### evaluate()
 
-```typescript
+```ts
 evaluate(
    input: I, 
    oracle?: {
@@ -105,7 +105,7 @@ evaluate(
 
 ### hash()
 
-```typescript
+```ts
 hash(hash: Hash): void;
 ```
 
@@ -121,13 +121,13 @@ Hashable.hash
 
 #### Call Signature
 
-```typescript
+```ts
 hasRequirement(requirement: Requirement): boolean;
 ```
 
 #### Call Signature
 
-```typescript
+```ts
 hasRequirement(predicate: Predicate<Requirement<string, string>>): boolean;
 ```
 
@@ -137,13 +137,13 @@ hasRequirement(predicate: Predicate<Requirement<string, string>>): boolean;
 
 #### Call Signature
 
-```typescript
+```ts
 hasTag(tag: Tag): boolean;
 ```
 
 #### Call Signature
 
-```typescript
+```ts
 hasTag(predicate: Predicate<Tag<string>>): boolean;
 ```
 
@@ -153,13 +153,9 @@ hasTag(predicate: Predicate<Tag<string>>): boolean;
 
 #### Get Signature
 
-```typescript
+```ts
 get requirements(): readonly Requirement<string, string>[];
 ```
-
-##### Returns
-
-readonly [`Requirement`](Requirement-1.md)\<`string`, `string`\>[]
 
 ## tags
 
@@ -167,19 +163,15 @@ readonly [`Requirement`](Requirement-1.md)\<`string`, `string`\>[]
 
 #### Get Signature
 
-```typescript
+```ts
 get tags(): readonly Tag<string>[];
 ```
-
-##### Returns
-
-readonly [`Tag`](Tag-1.md)\<`string`\>[]
 
 ## toEARL
 
 ### toEARL()
 
-```typescript
+```ts
 toEARL(): EARL;
 ```
 
@@ -195,7 +187,7 @@ earl.Serializable.toEARL
 
 #### Call Signature
 
-```typescript
+```ts
 abstract toJSON(options: {
   verbosity: Minimal;
 }): MinimalJSON;
@@ -209,7 +201,7 @@ json.Serializable.toJSON
 
 #### Call Signature
 
-```typescript
+```ts
 abstract toJSON(): JSON;
 ```
 
@@ -221,7 +213,7 @@ json.Serializable.toJSON
 
 #### Call Signature
 
-```typescript
+```ts
 abstract toJSON(options?: Options): JSON | MinimalJSON;
 ```
 
@@ -235,7 +227,7 @@ json.Serializable.toJSON
 
 ### toSARIF()
 
-```typescript
+```ts
 toSARIF(): ReportingDescriptor;
 ```
 
@@ -251,10 +243,6 @@ sarif.Serializable.toSARIF
 
 #### Get Signature
 
-```typescript
+```ts
 get uri(): string;
 ```
-
-##### Returns
-
-`string`

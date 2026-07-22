@@ -1,6 +1,6 @@
 # Function: fromDocument()
 
-```typescript
+```ts
 function fromDocument(
    json: JSON, 
    fromNode: (json: JSON, device?: Device) => Trampoline<Node>, 

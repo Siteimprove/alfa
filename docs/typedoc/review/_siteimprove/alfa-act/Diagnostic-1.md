@@ -10,7 +10,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Diagnostic(message: string): Diagnostic;
 ```
 
@@ -26,7 +26,7 @@ protected readonly _message: string;
 
 ### empty()
 
-```typescript
+```ts
 static empty(): Diagnostic;
 ```
 
@@ -36,7 +36,7 @@ static empty(): Diagnostic;
 
 #### Call Signature
 
-```typescript
+```ts
 equals(value: Diagnostic): boolean;
 ```
 
@@ -48,7 +48,7 @@ Equatable.equals
 
 #### Call Signature
 
-```typescript
+```ts
 equals(value: unknown): value is Diagnostic;
 ```
 
@@ -62,7 +62,7 @@ Equatable.equals
 
 ### hash()
 
-```typescript
+```ts
 hash(hash: Hash): void;
 ```
 
@@ -78,19 +78,15 @@ Hashable.hash
 
 #### Get Signature
 
-```typescript
+```ts
 get message(): string;
 ```
-
-##### Returns
-
-`string`
 
 ## of
 
 ### of()
 
-```typescript
+```ts
 static of(message: string): Diagnostic;
 ```
 
@@ -98,7 +94,7 @@ static of(message: string): Diagnostic;
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(options?: Options): JSON;
 ```
 

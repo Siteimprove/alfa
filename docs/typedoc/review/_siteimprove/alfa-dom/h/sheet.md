@@ -1,6 +1,6 @@
 # Function: sheet()
 
-```typescript
+```ts
 function sheet(
    rules: Rule[], 
    disabled?: boolean, 

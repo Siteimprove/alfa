@@ -1,6 +1,6 @@
 # Function: style()
 
-```typescript
+```ts
 function style(
    selector: string, 
    declarations: 

@@ -1,5 +1,5 @@
 # Function: isDocument()
 
-```typescript
+```ts
 function isDocument(value: unknown): value is Document;
 ```

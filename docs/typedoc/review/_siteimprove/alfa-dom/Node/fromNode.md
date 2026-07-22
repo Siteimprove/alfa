@@ -1,5 +1,5 @@
 # Function: fromNode()
 
-```typescript
+```ts
 function fromNode(json: JSON, device?: Device): Trampoline<Node>;
 ```

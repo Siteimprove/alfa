@@ -1,5 +1,5 @@
 # Function: namespace()
 
-```typescript
+```ts
 function namespace(namespace: string, prefix?: string): Namespace;
 ```

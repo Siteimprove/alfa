@@ -9,12 +9,12 @@ hasNamespace: {
 
 ## Call Signature
 
-```typescript
+```ts
 (predicate: Predicate<Namespace>): Predicate<Element<string>>;
 ```
 
 ## Call Signature
 
-```typescript
+```ts
 (namespace: Namespace, ...rest: Namespace[]): Predicate<Element<string>>;
 ```

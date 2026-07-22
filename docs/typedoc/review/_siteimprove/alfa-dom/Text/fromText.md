@@ -1,5 +1,5 @@
 # Function: fromText()
 
-```typescript
+```ts
 function fromText(json: JSON, device?: Device): Trampoline<Text>;
 ```

@@ -1,4 +1,4 @@
-# Type Alias: Interview\<`QUESTION` *extends* [`Metadata`](Question/Metadata.md), `SUBJECT`, `CONTEXT`, `ANSWER`, `D` *extends* `number` = [`MaxDepth`](Interview/MaxDepth.md)\>
+# Type Alias: Interview\<QUESTION extends Metadata, SUBJECT, CONTEXT, ANSWER, D extends number = MaxDepth\>
 
 ```ts
 type Interview<QUESTION extends Metadata, SUBJECT, CONTEXT, ANSWER, D extends number = MaxDepth> = 

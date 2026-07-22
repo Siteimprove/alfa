@@ -1,4 +1,4 @@
-# Class: Inapplicable\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](../Question/Metadata.md) = \{ \}, `S` = `T`\>
+# Class: Inapplicable\<I, T extends Hashable, Q extends Metadata = { }, S = T\>
 
 ## Extends
 
@@ -8,7 +8,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Inapplicable<I, T extends Hashable, Q extends Metadata = {
 }, S = T>(rule: Rule<I, T, Q, S>, mode: Mode): Inapplicable<I, T, Q, S>;
 ```
@@ -47,7 +47,7 @@ protected readonly _rule: Rule<I, T, Q, S>;
 
 #### Call Signature
 
-```typescript
+```ts
 equals<I, T extends Hashable, Q extends Metadata, S>(value: Inapplicable<I, T, Q, S>): boolean;
 ```
 
@@ -57,7 +57,7 @@ equals<I, T extends Hashable, Q extends Metadata, S>(value: Inapplicable<I, T, Q
 
 #### Call Signature
 
-```typescript
+```ts
 equals(value: unknown): value is Inapplicable<I, T, Q, S>;
 ```
 
@@ -69,7 +69,7 @@ equals(value: unknown): value is Inapplicable<I, T, Q, S>;
 
 ### hash()
 
-```typescript
+```ts
 hash(hash: Hash): void;
 ```
 
@@ -83,13 +83,9 @@ hash(hash: Hash): void;
 
 #### Get Signature
 
-```typescript
+```ts
 get isSemiAuto(): boolean;
 ```
-
-##### Returns
-
-`boolean`
 
 #### Inherited from
 
@@ -101,13 +97,9 @@ get isSemiAuto(): boolean;
 
 #### Get Signature
 
-```typescript
+```ts
 get mode(): Mode;
 ```
-
-##### Returns
-
-[`Mode`](Mode.md)
 
 #### Inherited from
 
@@ -117,7 +109,7 @@ get mode(): Mode;
 
 ### of()
 
-```typescript
+```ts
 static of<I, T extends Hashable, Q extends Metadata, S>(rule: Rule<I, T, Q, S>, mode: Mode): Inapplicable<I, T, Q, S>;
 ```
 
@@ -127,13 +119,9 @@ static of<I, T extends Hashable, Q extends Metadata, S>(rule: Rule<I, T, Q, S>, 
 
 #### Get Signature
 
-```typescript
+```ts
 get outcome(): V;
 ```
-
-##### Returns
-
-`V`
 
 #### Inherited from
 
@@ -145,13 +133,9 @@ get outcome(): V;
 
 #### Get Signature
 
-```typescript
+```ts
 get rule(): Rule<I, T, Q, S>;
 ```
-
-##### Returns
-
-[`Rule`](../Rule-1.md)\<`I`, `T`, `Q`, `S`\>
 
 #### Inherited from
 
@@ -163,13 +147,9 @@ get rule(): Rule<I, T, Q, S>;
 
 #### Get Signature
 
-```typescript
+```ts
 get target(): T | undefined;
 ```
-
-##### Returns
-
-`T` \| `undefined`
 
 #### Inherited from
 
@@ -179,7 +159,7 @@ get target(): T | undefined;
 
 ### toEARL()
 
-```typescript
+```ts
 toEARL(): EARL;
 ```
 
@@ -191,7 +171,7 @@ toEARL(): EARL;
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(options?: Options): JSON;
 ```
 
@@ -203,7 +183,7 @@ toJSON(options?: Options): JSON;
 
 ### toSARIF()
 
-```typescript
+```ts
 toSARIF(): Result;
 ```
 

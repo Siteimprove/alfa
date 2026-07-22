@@ -8,7 +8,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Media(condition: string, rules: Rule[]): MediaRule;
 ```
 
@@ -22,7 +22,7 @@ ConditionRule<"media">.constructor
 
 ### \_attachOwner()
 
-```typescript
+```ts
 _attachOwner(owner: Sheet): boolean;
 ```
 
@@ -36,7 +36,7 @@ ConditionRule._attachOwner
 
 ### \_attachParent()
 
-```typescript
+```ts
 _attachParent(parent: Rule): boolean;
 ```
 
@@ -106,7 +106,7 @@ ConditionRule._rules
 
 ### ancestors()
 
-```typescript
+```ts
 ancestors(): Iterable<Rule>;
 ```
 
@@ -120,7 +120,7 @@ ConditionRule.ancestors
 
 ### children()
 
-```typescript
+```ts
 children(): Iterable<Rule>;
 ```
 
@@ -136,13 +136,9 @@ ConditionRule.children
 
 #### Get Signature
 
-```typescript
+```ts
 get condition(): string;
 ```
-
-##### Returns
-
-`string`
 
 #### Inherited from
 
@@ -154,7 +150,7 @@ ConditionRule.condition
 
 ### descendants()
 
-```typescript
+```ts
 descendants(): Iterable<Rule>;
 ```
 
@@ -168,7 +164,7 @@ ConditionRule.descendants
 
 ### equals()
 
-```typescript
+```ts
 equals(value: unknown): value is Media;
 ```
 
@@ -182,7 +178,7 @@ ConditionRule.equals
 
 ### of()
 
-```typescript
+```ts
 static of(condition: string, rules: Iterable<Rule>): MediaRule;
 ```
 
@@ -192,13 +188,9 @@ static of(condition: string, rules: Iterable<Rule>): MediaRule;
 
 #### Get Signature
 
-```typescript
+```ts
 get owner(): Option<Sheet>;
 ```
-
-##### Returns
-
-`Option`\<[`Sheet`](../Sheet-1.md)\>
 
 #### Inherited from
 
@@ -212,13 +204,9 @@ ConditionRule.owner
 
 #### Get Signature
 
-```typescript
+```ts
 get parent(): Option<Rule>;
 ```
-
-##### Returns
-
-`Option`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -232,13 +220,9 @@ ConditionRule.parent
 
 #### Get Signature
 
-```typescript
+```ts
 get queries(): List;
 ```
-
-##### Returns
-
-`List`
 
 ## rules
 
@@ -246,13 +230,9 @@ get queries(): List;
 
 #### Get Signature
 
-```typescript
+```ts
 get rules(): Iterable<Rule>;
 ```
-
-##### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -264,7 +244,7 @@ ConditionRule.rules
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(): JSON;
 ```
 
@@ -278,7 +258,7 @@ ConditionRule.toJSON
 
 ### toString()
 
-```typescript
+```ts
 toString(): string;
 ```
 
@@ -288,13 +268,9 @@ toString(): string;
 
 #### Get Signature
 
-```typescript
+```ts
 get type(): T;
 ```
-
-##### Returns
-
-`T`
 
 #### Inherited from
 

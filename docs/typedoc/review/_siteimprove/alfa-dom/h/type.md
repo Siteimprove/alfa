@@ -1,6 +1,6 @@
 # Function: type()
 
-```typescript
+```ts
 function type<N extends string = string>(
    name: N, 
    publicId?: string, 

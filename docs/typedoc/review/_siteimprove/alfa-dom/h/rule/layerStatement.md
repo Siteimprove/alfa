@@ -1,5 +1,5 @@
 # Function: layerStatement()
 
-```typescript
+```ts
 function layerStatement(layers: string[]): Statement;
 ```

@@ -1,5 +1,5 @@
 # Function: isShadow()
 
-```typescript
+```ts
 function isShadow(value: unknown): value is Shadow;
 ```

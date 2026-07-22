@@ -1,6 +1,6 @@
 # Function: jsx()
 
-```typescript
+```ts
 function jsx<N extends string = string>(
    name: N, 
    properties?: Properties | null, 

@@ -8,7 +8,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Text(
    data: string, 
    box: Option<Rectangle>, 
@@ -29,7 +29,7 @@ Slotable<"text">.constructor
 
 ### \_attachParent()
 
-```typescript
+```ts
 _attachParent(parent: Node<"DOM traversal", 1 | 2 | 4>): boolean;
 ```
 
@@ -71,7 +71,7 @@ Slotable._frozen
 
 ### \_internalPath()
 
-```typescript
+```ts
 protected _internalPath(options?: {
   add: any;
   equals: boolean;
@@ -126,7 +126,7 @@ Slotable._type
 
 ### \[iterator\]()
 
-```typescript
+```ts
 iterator: Iterator<Node<"DOM traversal", 1 | 2 | 4, string>>;
 ```
 
@@ -140,7 +140,7 @@ Slotable.[iterator]
 
 ### ancestors()
 
-```typescript
+```ts
 ancestors(options?: {
   add: any;
   equals: boolean;
@@ -167,7 +167,7 @@ Slotable.ancestors
 
 ### assignedSlot()
 
-```typescript
+```ts
 assignedSlot(): Option<Slot>;
 ```
 
@@ -181,7 +181,7 @@ Slotable.assignedSlot
 
 ### children()
 
-```typescript
+```ts
 children(options?: {
   add: any;
   equals: boolean;
@@ -210,7 +210,7 @@ Slotable.children
 
 #### Call Signature
 
-```typescript
+```ts
 closest<T extends Node>(refinement: Refinement<Node, T>, options?: {
   add: any;
   equals: boolean;
@@ -235,7 +235,7 @@ Slotable.closest
 
 #### Call Signature
 
-```typescript
+```ts
 closest(predicate: Predicate<Node>, options?: {
   add: any;
   equals: boolean;
@@ -264,19 +264,15 @@ Slotable.closest
 
 #### Get Signature
 
-```typescript
+```ts
 get data(): string;
 ```
-
-##### Returns
-
-`string`
 
 ## descendants
 
 ### descendants()
 
-```typescript
+```ts
 descendants(options?: {
   add: any;
   equals: boolean;
@@ -303,7 +299,7 @@ Slotable.descendants
 
 ### empty()
 
-```typescript
+```ts
 static empty(): Text;
 ```
 
@@ -313,7 +309,7 @@ static empty(): Text;
 
 #### Call Signature
 
-```typescript
+```ts
 equals(value: BaseNode): boolean;
 ```
 
@@ -325,7 +321,7 @@ Slotable.equals
 
 #### Call Signature
 
-```typescript
+```ts
 equals(value: unknown): value is Text;
 ```
 
@@ -341,13 +337,9 @@ Slotable.equals
 
 #### Get Signature
 
-```typescript
+```ts
 get externalId(): string | undefined;
 ```
-
-##### Returns
-
-`string` \| `undefined`
 
 #### Inherited from
 
@@ -361,13 +353,9 @@ Slotable.externalId
 
 #### Get Signature
 
-```typescript
+```ts
 get extraData(): any;
 ```
-
-##### Returns
-
-`any`
 
 #### Inherited from
 
@@ -379,7 +367,7 @@ Slotable.extraData
 
 ### first()
 
-```typescript
+```ts
 first(options?: {
   add: any;
   equals: boolean;
@@ -406,7 +394,7 @@ Slotable.first
 
 ### following()
 
-```typescript
+```ts
 following(options?: {
   add: any;
   equals: boolean;
@@ -433,7 +421,7 @@ Slotable.following
 
 ### freeze()
 
-```typescript
+```ts
 freeze(): this;
 ```
 
@@ -449,13 +437,9 @@ Slotable.freeze
 
 #### Get Signature
 
-```typescript
+```ts
 get frozen(): boolean;
 ```
-
-##### Returns
-
-`boolean`
 
 #### Inherited from
 
@@ -467,7 +451,7 @@ Slotable.frozen
 
 ### getBoundingBox()
 
-```typescript
+```ts
 getBoundingBox(device: Device): Option<Rectangle>;
 ```
 
@@ -475,7 +459,7 @@ getBoundingBox(device: Device): Option<Rectangle>;
 
 ### hash()
 
-```typescript
+```ts
 hash(hash: Hash): void;
 ```
 
@@ -489,7 +473,7 @@ Slotable.hash
 
 ### inclusiveAncestors()
 
-```typescript
+```ts
 inclusiveAncestors(options?: {
   add: any;
   equals: boolean;
@@ -516,7 +500,7 @@ Slotable.inclusiveAncestors
 
 ### inclusiveDescendants()
 
-```typescript
+```ts
 inclusiveDescendants(options?: {
   add: any;
   equals: boolean;
@@ -543,7 +527,7 @@ Slotable.inclusiveDescendants
 
 ### inclusiveSiblings()
 
-```typescript
+```ts
 inclusiveSiblings(options?: {
   add: any;
   equals: boolean;
@@ -570,7 +554,7 @@ Slotable.inclusiveSiblings
 
 ### index()
 
-```typescript
+```ts
 index(options?: {
   add: any;
   equals: boolean;
@@ -599,13 +583,9 @@ Slotable.index
 
 #### Get Signature
 
-```typescript
+```ts
 get internalId(): string;
 ```
-
-##### Returns
-
-`string`
 
 #### Inherited from
 
@@ -617,7 +597,7 @@ Slotable.internalId
 
 ### is()
 
-```typescript
+```ts
 is(predicate: Predicate<string>): boolean;
 ```
 
@@ -625,7 +605,7 @@ is(predicate: Predicate<string>): boolean;
 
 ### isAncestorOf()
 
-```typescript
+```ts
 isAncestorOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -652,7 +632,7 @@ Slotable.isAncestorOf
 
 ### isChildOf()
 
-```typescript
+```ts
 isChildOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -679,7 +659,7 @@ Slotable.isChildOf
 
 ### isDescendantOf()
 
-```typescript
+```ts
 isDescendantOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -706,7 +686,7 @@ Slotable.isDescendantOf
 
 ### isInclusiveAncestorOf()
 
-```typescript
+```ts
 isInclusiveAncestorOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -733,7 +713,7 @@ Slotable.isInclusiveAncestorOf
 
 ### isInclusiveDescendantsOf()
 
-```typescript
+```ts
 isInclusiveDescendantsOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -760,7 +740,7 @@ Slotable.isInclusiveDescendantsOf
 
 ### isInclusiveSiblingOf()
 
-```typescript
+```ts
 isInclusiveSiblingOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -787,7 +767,7 @@ Slotable.isInclusiveSiblingOf
 
 ### isParentOf()
 
-```typescript
+```ts
 isParentOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -814,7 +794,7 @@ Slotable.isParentOf
 
 ### isRootOf()
 
-```typescript
+```ts
 isRootOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -841,7 +821,7 @@ Slotable.isRootOf
 
 ### isSiblingOf()
 
-```typescript
+```ts
 isSiblingOf(node: Node, options?: {
   add: any;
   equals: boolean;
@@ -868,7 +848,7 @@ Slotable.isSiblingOf
 
 ### last()
 
-```typescript
+```ts
 last(options?: {
   add: any;
   equals: boolean;
@@ -895,7 +875,7 @@ Slotable.last
 
 ### next()
 
-```typescript
+```ts
 next(options?: {
   add: any;
   equals: boolean;
@@ -922,7 +902,7 @@ Slotable.next
 
 ### of()
 
-```typescript
+```ts
 static of(
    data: string, 
    box?: Option<Rectangle>, 
@@ -939,7 +919,7 @@ static of(
 
 #### Call Signature
 
-```typescript
+```ts
 parent(options?: {
   add: any;
   equals: boolean;
@@ -964,7 +944,7 @@ Slotable.parent
 
 #### Call Signature
 
-```typescript
+```ts
 parent(options?: {
   add: any;
   equals: boolean;
@@ -991,7 +971,7 @@ Slotable.parent
 
 ### path()
 
-```typescript
+```ts
 path(options?: {
   add: any;
   equals: boolean;
@@ -1018,7 +998,7 @@ Slotable.path
 
 ### preceding()
 
-```typescript
+```ts
 preceding(options?: {
   add: any;
   equals: boolean;
@@ -1045,7 +1025,7 @@ Slotable.preceding
 
 ### previous()
 
-```typescript
+```ts
 previous(options?: {
   add: any;
   equals: boolean;
@@ -1072,7 +1052,7 @@ Slotable.previous
 
 ### root()
 
-```typescript
+```ts
 root(options?: {
   add: any;
   equals: boolean;
@@ -1101,13 +1081,9 @@ Slotable.root
 
 #### Get Signature
 
-```typescript
+```ts
 get serializationId(): string | undefined;
 ```
-
-##### Returns
-
-`string` \| `undefined`
 
 #### Inherited from
 
@@ -1119,7 +1095,7 @@ Slotable.serializationId
 
 ### siblings()
 
-```typescript
+```ts
 siblings(options?: {
   add: any;
   equals: boolean;
@@ -1146,7 +1122,7 @@ Slotable.siblings
 
 ### slotableName()
 
-```typescript
+```ts
 slotableName(): string;
 ```
 
@@ -1160,7 +1136,7 @@ Slotable.slotableName
 
 ### tabOrder()
 
-```typescript
+```ts
 tabOrder(this: Node): Sequence<Element<string>>;
 ```
 
@@ -1174,7 +1150,7 @@ Slotable.tabOrder
 
 ### textContent()
 
-```typescript
+```ts
 textContent(options?: {
   add: any;
   equals: boolean;
@@ -1201,7 +1177,7 @@ Slotable.textContent
 
 ### toEARL()
 
-```typescript
+```ts
 toEARL(): EARL;
 ```
 
@@ -1217,7 +1193,7 @@ Slotable.toEARL
 
 #### Call Signature
 
-```typescript
+```ts
 toJSON(options: SerializationOptions & {
   verbosity: Minimal | Low;
 }): MinimalJSON;
@@ -1231,7 +1207,7 @@ Slotable.toJSON
 
 #### Call Signature
 
-```typescript
+```ts
 toJSON(options?: SerializationOptions): JSON;
 ```
 
@@ -1245,7 +1221,7 @@ Slotable.toJSON
 
 ### toSARIF()
 
-```typescript
+```ts
 toSARIF(): Location;
 ```
 
@@ -1259,7 +1235,7 @@ Slotable.toSARIF
 
 ### toString()
 
-```typescript
+```ts
 toString(): string;
 ```
 
@@ -1269,13 +1245,9 @@ toString(): string;
 
 #### Get Signature
 
-```typescript
+```ts
 get type(): T;
 ```
-
-##### Returns
-
-`T`
 
 #### Inherited from
 

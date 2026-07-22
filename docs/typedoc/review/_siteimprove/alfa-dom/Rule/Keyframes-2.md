@@ -8,7 +8,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Keyframes(name: string, rules: Rule[]): KeyframesRule;
 ```
 
@@ -20,7 +20,7 @@ protected new Keyframes(name: string, rules: Rule[]): KeyframesRule;
 
 ### \_attachOwner()
 
-```typescript
+```ts
 _attachOwner(owner: Sheet): boolean;
 ```
 
@@ -32,7 +32,7 @@ _attachOwner(owner: Sheet): boolean;
 
 ### \_attachParent()
 
-```typescript
+```ts
 _attachParent(parent: Rule): boolean;
 ```
 
@@ -80,7 +80,7 @@ protected readonly _rules: Array<Rule>;
 
 ### ancestors()
 
-```typescript
+```ts
 ancestors(): Iterable<Rule>;
 ```
 
@@ -92,7 +92,7 @@ ancestors(): Iterable<Rule>;
 
 ### children()
 
-```typescript
+```ts
 children(): Iterable<Rule>;
 ```
 
@@ -104,7 +104,7 @@ children(): Iterable<Rule>;
 
 ### descendants()
 
-```typescript
+```ts
 descendants(): Iterable<Rule>;
 ```
 
@@ -116,7 +116,7 @@ descendants(): Iterable<Rule>;
 
 ### equals()
 
-```typescript
+```ts
 equals(value: unknown): value is Keyframes;
 ```
 
@@ -130,19 +130,15 @@ equals(value: unknown): value is Keyframes;
 
 #### Get Signature
 
-```typescript
+```ts
 get name(): string;
 ```
-
-##### Returns
-
-`string`
 
 ## of
 
 ### of()
 
-```typescript
+```ts
 static of(name: string, rules: Iterable<Rule>): KeyframesRule;
 ```
 
@@ -152,13 +148,9 @@ static of(name: string, rules: Iterable<Rule>): KeyframesRule;
 
 #### Get Signature
 
-```typescript
+```ts
 get owner(): Option<Sheet>;
 ```
-
-##### Returns
-
-`Option`\<[`Sheet`](../Sheet-1.md)\>
 
 #### Inherited from
 
@@ -170,13 +162,9 @@ get owner(): Option<Sheet>;
 
 #### Get Signature
 
-```typescript
+```ts
 get parent(): Option<Rule>;
 ```
-
-##### Returns
-
-`Option`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -188,13 +176,9 @@ get parent(): Option<Rule>;
 
 #### Get Signature
 
-```typescript
+```ts
 get rules(): Iterable<Rule>;
 ```
-
-##### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -204,7 +188,7 @@ get rules(): Iterable<Rule>;
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(): JSON;
 ```
 
@@ -216,7 +200,7 @@ toJSON(): JSON;
 
 ### toString()
 
-```typescript
+```ts
 toString(): string;
 ```
 
@@ -226,13 +210,9 @@ toString(): string;
 
 #### Get Signature
 
-```typescript
+```ts
 get type(): T;
 ```
-
-##### Returns
-
-`T`
 
 #### Inherited from
 

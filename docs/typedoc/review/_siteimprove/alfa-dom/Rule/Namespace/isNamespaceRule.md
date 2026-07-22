@@ -1,5 +1,5 @@
 # Function: isNamespaceRule()
 
-```typescript
+```ts
 function isNamespaceRule(value: unknown): value is Namespace;
 ```

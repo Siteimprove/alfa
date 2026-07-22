@@ -1,6 +1,6 @@
 # Function: text()
 
-```typescript
+```ts
 function text(
    data: string, 
    box?: Rectangle, 

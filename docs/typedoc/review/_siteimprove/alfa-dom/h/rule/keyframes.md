@@ -1,5 +1,5 @@
 # Function: keyframes()
 
-```typescript
+```ts
 function keyframes(name: string, rules: Rule[]): Keyframes;
 ```

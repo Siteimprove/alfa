@@ -1,6 +1,6 @@
 # Function: importRule()
 
-```typescript
+```ts
 function importRule(
    url: string, 
    sheet: Sheet, 

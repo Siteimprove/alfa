@@ -1,4 +1,4 @@
-# Class: Event\<`INPUT`, `TARGET` *extends* `Hashable`, `QUESTION` *extends* [`Metadata`](../Question/Metadata.md), `SUBJECT`, `TYPE` *extends* [`Type`](Event/Type.md) = [`Type`](Event/Type.md), `NAME` *extends* `string` = `string`\>
+# Class: Event\<INPUT, TARGET extends Hashable, QUESTION extends Metadata, SUBJECT, TYPE extends Type = Type, NAME extends string = string\>
 
 ## Implements
 
@@ -8,7 +8,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 new Event<INPUT, TARGET extends Hashable, QUESTION extends Metadata, SUBJECT, TYPE extends Type = Type, NAME extends string = string>(
    type: TYPE, 
    rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, 
@@ -22,19 +22,15 @@ new Event<INPUT, TARGET extends Hashable, QUESTION extends Metadata, SUBJECT, TY
 
 #### Get Signature
 
-```typescript
+```ts
 get name(): NAME;
 ```
-
-##### Returns
-
-`NAME`
 
 ## of
 
 ### of()
 
-```typescript
+```ts
 static of<INPUT, TARGET extends Hashable, QUESTION extends Metadata, SUBJECT, TYPE extends Type, NAME extends string>(
    type: TYPE, 
    rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, 
@@ -48,19 +44,15 @@ static of<INPUT, TARGET extends Hashable, QUESTION extends Metadata, SUBJECT, TY
 
 #### Get Signature
 
-```typescript
+```ts
 get rule(): Rule<INPUT, TARGET, QUESTION, SUBJECT>;
 ```
-
-##### Returns
-
-[`Rule`](../Rule-1.md)\<`INPUT`, `TARGET`, `QUESTION`, `SUBJECT`\>
 
 ## toJSON
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(): JSON<TYPE, NAME>;
 ```
 
@@ -76,10 +68,6 @@ Serializable.toJSON
 
 #### Get Signature
 
-```typescript
+```ts
 get type(): TYPE;
 ```
-
-##### Returns
-
-`TYPE`

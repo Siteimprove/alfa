@@ -1,5 +1,5 @@
 # Function: conclusive()
 
-```typescript
+```ts
 function conclusive<ANSWER>(answer: ANSWER, oracleUsed?: boolean): Finding<ANSWER>;
 ```

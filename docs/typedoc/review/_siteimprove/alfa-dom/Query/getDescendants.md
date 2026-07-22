@@ -35,7 +35,7 @@ const getDescendants: {
 
 ## Call Signature
 
-```typescript
+```ts
 <T extends Node>(refinement: Refinement<Node, T>): (node: Node, options?: {
   add: any;
   equals: boolean;
@@ -54,7 +54,7 @@ const getDescendants: {
 
 ## Call Signature
 
-```typescript
+```ts
 (predicate: Predicate<Node>): (node: Node, options?: {
   add: any;
   equals: boolean;

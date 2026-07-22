@@ -8,7 +8,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Style(
    selector: string, 
    declarations: Declaration[], 
@@ -26,7 +26,7 @@ BaseRule<"style">.constructor
 
 ### \_attachOwner()
 
-```typescript
+```ts
 _attachOwner(owner: Sheet): boolean;
 ```
 
@@ -40,7 +40,7 @@ BaseRule._attachOwner
 
 ### \_attachParent()
 
-```typescript
+```ts
 _attachParent(parent: Rule): boolean;
 ```
 
@@ -82,7 +82,7 @@ BaseRule._parent
 
 ### ancestors()
 
-```typescript
+```ts
 ancestors(): Iterable<Rule>;
 ```
 
@@ -96,7 +96,7 @@ BaseRule.ancestors
 
 ### children()
 
-```typescript
+```ts
 children(): Iterable<Rule>;
 ```
 
@@ -110,7 +110,7 @@ BaseRule.children
 
 ### descendants()
 
-```typescript
+```ts
 descendants(): Iterable<Rule>;
 ```
 
@@ -124,7 +124,7 @@ BaseRule.descendants
 
 ### equals()
 
-```typescript
+```ts
 equals(value: unknown): value is Style;
 ```
 
@@ -140,19 +140,15 @@ BaseRule.equals
 
 #### Get Signature
 
-```typescript
+```ts
 get hint(): boolean;
 ```
-
-##### Returns
-
-`boolean`
 
 ## of
 
 ### of()
 
-```typescript
+```ts
 static of(
    selector: string, 
    declarations: Iterable<Declaration>, 
@@ -166,13 +162,9 @@ static of(
 
 #### Get Signature
 
-```typescript
+```ts
 get owner(): Option<Sheet>;
 ```
-
-##### Returns
-
-`Option`\<[`Sheet`](../Sheet-1.md)\>
 
 #### Inherited from
 
@@ -186,13 +178,9 @@ BaseRule.owner
 
 #### Get Signature
 
-```typescript
+```ts
 get parent(): Option<Rule>;
 ```
-
-##### Returns
-
-`Option`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -206,13 +194,9 @@ BaseRule.parent
 
 #### Get Signature
 
-```typescript
+```ts
 get selector(): string;
 ```
-
-##### Returns
-
-`string`
 
 ## style
 
@@ -220,19 +204,15 @@ get selector(): string;
 
 #### Get Signature
 
-```typescript
+```ts
 get style(): Block;
 ```
-
-##### Returns
-
-[`Block`](../Block-1.md)
 
 ## toJSON
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(): JSON;
 ```
 
@@ -246,7 +226,7 @@ BaseRule.toJSON
 
 ### toString()
 
-```typescript
+```ts
 toString(): string;
 ```
 
@@ -256,13 +236,9 @@ toString(): string;
 
 #### Get Signature
 
-```typescript
+```ts
 get type(): T;
 ```
-
-##### Returns
-
-`T`
 
 #### Inherited from
 

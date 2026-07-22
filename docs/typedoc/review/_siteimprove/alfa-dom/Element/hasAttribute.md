@@ -9,12 +9,12 @@ hasAttribute: {
 
 ## Call Signature
 
-```typescript
+```ts
 (predicate: Predicate<Attribute<string>>): Predicate<Element<string>>;
 ```
 
 ## Call Signature
 
-```typescript
+```ts
 (name: string, value?: Predicate<string>): Predicate<Element<string>>;
 ```

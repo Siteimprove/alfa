@@ -1,5 +1,5 @@
 # Function: fromFontFaceRule()
 
-```typescript
+```ts
 function fromFontFaceRule(json: JSON): Trampoline<FontFace>;
 ```

@@ -8,7 +8,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Namespace(namespace: string, prefix: Option<string>): NamespaceRule;
 ```
 
@@ -22,7 +22,7 @@ BaseRule<"namespace">.constructor
 
 ### \_attachOwner()
 
-```typescript
+```ts
 _attachOwner(owner: Sheet): boolean;
 ```
 
@@ -36,7 +36,7 @@ BaseRule._attachOwner
 
 ### \_attachParent()
 
-```typescript
+```ts
 _attachParent(parent: Rule): boolean;
 ```
 
@@ -78,7 +78,7 @@ BaseRule._parent
 
 ### ancestors()
 
-```typescript
+```ts
 ancestors(): Iterable<Rule>;
 ```
 
@@ -92,7 +92,7 @@ BaseRule.ancestors
 
 ### children()
 
-```typescript
+```ts
 children(): Iterable<Rule>;
 ```
 
@@ -106,7 +106,7 @@ BaseRule.children
 
 ### descendants()
 
-```typescript
+```ts
 descendants(): Iterable<Rule>;
 ```
 
@@ -120,7 +120,7 @@ BaseRule.descendants
 
 ### equals()
 
-```typescript
+```ts
 equals(value: unknown): value is Namespace;
 ```
 
@@ -136,19 +136,15 @@ BaseRule.equals
 
 #### Get Signature
 
-```typescript
+```ts
 get namespace(): string;
 ```
-
-##### Returns
-
-`string`
 
 ## of
 
 ### of()
 
-```typescript
+```ts
 static of(namespace: string, prefix: Option<string>): NamespaceRule;
 ```
 
@@ -158,13 +154,9 @@ static of(namespace: string, prefix: Option<string>): NamespaceRule;
 
 #### Get Signature
 
-```typescript
+```ts
 get owner(): Option<Sheet>;
 ```
-
-##### Returns
-
-`Option`\<[`Sheet`](../Sheet-1.md)\>
 
 #### Inherited from
 
@@ -178,13 +170,9 @@ BaseRule.owner
 
 #### Get Signature
 
-```typescript
+```ts
 get parent(): Option<Rule>;
 ```
-
-##### Returns
-
-`Option`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -198,19 +186,15 @@ BaseRule.parent
 
 #### Get Signature
 
-```typescript
+```ts
 get prefix(): Option<string>;
 ```
-
-##### Returns
-
-`Option`\<`string`\>
 
 ## toJSON
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(): JSON;
 ```
 
@@ -224,7 +208,7 @@ BaseRule.toJSON
 
 ### toString()
 
-```typescript
+```ts
 toString(): string;
 ```
 
@@ -234,13 +218,9 @@ toString(): string;
 
 #### Get Signature
 
-```typescript
+```ts
 get type(): T;
 ```
-
-##### Returns
-
-`T`
 
 #### Inherited from
 

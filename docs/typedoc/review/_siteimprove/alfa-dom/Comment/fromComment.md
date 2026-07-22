@@ -1,5 +1,5 @@
 # Function: fromComment()
 
-```typescript
+```ts
 function fromComment(json: JSON): Trampoline<Comment>;
 ```

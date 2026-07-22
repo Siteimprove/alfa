@@ -1,5 +1,5 @@
 # Function: isComment()
 
-```typescript
+```ts
 function isComment(value: unknown): value is Comment;
 ```

@@ -1,5 +1,5 @@
 # Function: isEmpty()
 
-```typescript
+```ts
 function isEmpty(rule: Style): boolean;
 ```

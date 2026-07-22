@@ -1,4 +1,4 @@
-# Abstract Class: Tag\<`T` *extends* `string` = `string`\>
+# Abstract Class: Tag\<T extends string = string\>
 
 ## Implements
 
@@ -9,7 +9,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Tag<T extends string = string>(): Tag<T>;
 ```
 
@@ -19,7 +19,7 @@ protected new Tag<T extends string = string>(): Tag<T>;
 
 #### Call Signature
 
-```typescript
+```ts
 equals(value: Tag): boolean;
 ```
 
@@ -31,7 +31,7 @@ Equatable.equals
 
 #### Call Signature
 
-```typescript
+```ts
 equals(value: unknown): value is Tag<T>;
 ```
 
@@ -45,7 +45,7 @@ Equatable.equals
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(): JSON<T>;
 ```
 
@@ -61,10 +61,6 @@ Serializable.toJSON
 
 #### Get Signature
 
-```typescript
+```ts
 get abstract type(): T;
 ```
-
-##### Returns
-
-`T`

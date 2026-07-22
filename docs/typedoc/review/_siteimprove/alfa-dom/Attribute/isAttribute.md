@@ -1,5 +1,5 @@
 # Function: isAttribute()
 
-```typescript
+```ts
 function isAttribute(value: unknown): value is Attribute<string>;
 ```

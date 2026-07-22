@@ -1,5 +1,5 @@
 # Function: fromStyleRule()
 
-```typescript
+```ts
 function fromStyleRule(json: JSON): Trampoline<Style>;
 ```

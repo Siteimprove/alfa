@@ -1,6 +1,6 @@
 # Function: declaration()
 
-```typescript
+```ts
 function declaration(
    name: string, 
    value: string, 

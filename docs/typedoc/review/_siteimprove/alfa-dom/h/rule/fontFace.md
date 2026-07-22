@@ -1,6 +1,6 @@
 # Function: fontFace()
 
-```typescript
+```ts
 function fontFace(declarations: 
   | Record<string, string>
   | Declaration[]): FontFace;

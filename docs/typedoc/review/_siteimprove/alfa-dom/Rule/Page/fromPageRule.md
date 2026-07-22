@@ -1,5 +1,5 @@
 # Function: fromPageRule()
 
-```typescript
+```ts
 function fromPageRule(json: JSON): Trampoline<Page>;
 ```

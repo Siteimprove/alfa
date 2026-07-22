@@ -1,4 +1,4 @@
-# Interface: Options\<`A`\>
+# Interface: Options\<A\>
 
 ## diagnostic
 

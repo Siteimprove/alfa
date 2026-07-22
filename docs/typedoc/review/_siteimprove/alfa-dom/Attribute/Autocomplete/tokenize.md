@@ -1,5 +1,5 @@
 # Function: tokenize()
 
-```typescript
+```ts
 function tokenize(autocomplete: string): Array<string>;
 ```

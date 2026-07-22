@@ -1,4 +1,4 @@
-# Class: Composite\<`I`, `T` *extends* `Hashable`, `Q` *extends* [`Metadata`](../Question/Metadata.md) = \{ \}, `S` = `T`\>
+# Class: Composite\<I, T extends Hashable, Q extends Metadata = { }, S = T\>
 
 ## Extends
 
@@ -8,7 +8,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Composite<I, T extends Hashable, Q extends Metadata = {
 }, S = T>(
    uri: string, 
@@ -77,13 +77,9 @@ protected readonly _uri: string;
 
 #### Get Signature
 
-```typescript
+```ts
 get composes(): readonly Rule<I, T, Q, S>[];
 ```
-
-##### Returns
-
-readonly [`Rule`](../Rule-1.md)\<`I`, `T`, `Q`, `S`\>[]
 
 ## equals
 
@@ -91,7 +87,7 @@ readonly [`Rule`](../Rule-1.md)\<`I`, `T`, `Q`, `S`\>[]
 
 #### Call Signature
 
-```typescript
+```ts
 equals<I, T extends Hashable, Q extends Metadata, S>(value: Rule<I, T, Q, S>): boolean;
 ```
 
@@ -101,7 +97,7 @@ equals<I, T extends Hashable, Q extends Metadata, S>(value: Rule<I, T, Q, S>): b
 
 #### Call Signature
 
-```typescript
+```ts
 equals(value: unknown): value is Composite<I, T, Q, S>;
 ```
 
@@ -113,7 +109,7 @@ equals(value: unknown): value is Composite<I, T, Q, S>;
 
 ### evaluate()
 
-```typescript
+```ts
 evaluate(
    input: I, 
    oracle?: {
@@ -131,7 +127,7 @@ evaluate(
 
 ### hash()
 
-```typescript
+```ts
 hash(hash: Hash): void;
 ```
 
@@ -145,7 +141,7 @@ hash(hash: Hash): void;
 
 #### Call Signature
 
-```typescript
+```ts
 hasRequirement(requirement: Requirement): boolean;
 ```
 
@@ -155,7 +151,7 @@ hasRequirement(requirement: Requirement): boolean;
 
 #### Call Signature
 
-```typescript
+```ts
 hasRequirement(predicate: Predicate<Requirement<string, string>>): boolean;
 ```
 
@@ -169,7 +165,7 @@ hasRequirement(predicate: Predicate<Requirement<string, string>>): boolean;
 
 #### Call Signature
 
-```typescript
+```ts
 hasTag(tag: Tag): boolean;
 ```
 
@@ -179,7 +175,7 @@ hasTag(tag: Tag): boolean;
 
 #### Call Signature
 
-```typescript
+```ts
 hasTag(predicate: Predicate<Tag<string>>): boolean;
 ```
 
@@ -191,7 +187,7 @@ hasTag(predicate: Predicate<Tag<string>>): boolean;
 
 ### of()
 
-```typescript
+```ts
 static of<I, T extends Hashable, Q extends Metadata = {
 }, S = T>(properties: {
   composes: Iterable<Rule<I, T, Q, S>>;
@@ -208,13 +204,9 @@ static of<I, T extends Hashable, Q extends Metadata = {
 
 #### Get Signature
 
-```typescript
+```ts
 get requirements(): readonly Requirement<string, string>[];
 ```
-
-##### Returns
-
-readonly [`Requirement`](../Requirement-1.md)\<`string`, `string`\>[]
 
 #### Inherited from
 
@@ -226,13 +218,9 @@ readonly [`Requirement`](../Requirement-1.md)\<`string`, `string`\>[]
 
 #### Get Signature
 
-```typescript
+```ts
 get tags(): readonly Tag<string>[];
 ```
-
-##### Returns
-
-readonly [`Tag`](../Tag-1.md)\<`string`\>[]
 
 #### Inherited from
 
@@ -242,7 +230,7 @@ readonly [`Tag`](../Tag-1.md)\<`string`\>[]
 
 ### toEARL()
 
-```typescript
+```ts
 toEARL(): EARL;
 ```
 
@@ -256,7 +244,7 @@ toEARL(): EARL;
 
 #### Call Signature
 
-```typescript
+```ts
 toJSON(options: {
   verbosity: Minimal;
 }): MinimalJSON;
@@ -268,7 +256,7 @@ toJSON(options: {
 
 #### Call Signature
 
-```typescript
+```ts
 toJSON(): JSON;
 ```
 
@@ -280,7 +268,7 @@ toJSON(): JSON;
 
 ### toSARIF()
 
-```typescript
+```ts
 toSARIF(): ReportingDescriptor;
 ```
 
@@ -294,13 +282,9 @@ toSARIF(): ReportingDescriptor;
 
 #### Get Signature
 
-```typescript
+```ts
 get uri(): string;
 ```
-
-##### Returns
-
-`string`
 
 #### Inherited from
 

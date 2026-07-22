@@ -1,5 +1,5 @@
 # Function: isSlotable()
 
-```typescript
+```ts
 function isSlotable(value: unknown): value is Slotable;
 ```

@@ -1,5 +1,5 @@
 # Function: isKeyframesRule()
 
-```typescript
+```ts
 function isKeyframesRule(value: unknown): value is Keyframes;
 ```

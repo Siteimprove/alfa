@@ -1,4 +1,4 @@
-# Interface: JSON\<`T` *extends* `string` = `string`\>
+# Interface: JSON\<T extends string = string\>
 
 ## Indexable
 

@@ -1,5 +1,5 @@
 # Function: isFontFaceRule()
 
-```typescript
+```ts
 function isFontFaceRule(value: unknown): value is FontFace;
 ```

@@ -1,5 +1,5 @@
 # Function: isLayerBlockRule()
 
-```typescript
+```ts
 function isLayerBlockRule(value: unknown): value is Block;
 ```

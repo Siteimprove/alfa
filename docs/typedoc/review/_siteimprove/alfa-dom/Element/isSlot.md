@@ -1,5 +1,5 @@
 # Function: isSlot()
 
-```typescript
+```ts
 function isSlot(value: unknown): value is Slot;
 ```

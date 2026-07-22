@@ -1,5 +1,5 @@
 # Function: isSupportsRule()
 
-```typescript
+```ts
 function isSupportsRule(value: unknown): value is Supports;
 ```

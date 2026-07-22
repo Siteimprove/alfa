@@ -1,4 +1,4 @@
-# Abstract Class: Grouping\<`T` *extends* `string` = `string`\>
+# Abstract Class: Grouping\<T extends string = string\>
 
 ## Extends
 
@@ -13,7 +13,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Grouping<T extends string = string>(type: T, rules: Array<Rule>): GroupingRule<T>;
 ```
 
@@ -27,7 +27,7 @@ BaseRule<T>.constructor
 
 ### \_attachOwner()
 
-```typescript
+```ts
 _attachOwner(owner: Sheet): boolean;
 ```
 
@@ -41,7 +41,7 @@ BaseRule._attachOwner
 
 ### \_attachParent()
 
-```typescript
+```ts
 _attachParent(parent: Rule): boolean;
 ```
 
@@ -91,7 +91,7 @@ protected readonly _rules: Array<Rule>;
 
 ### ancestors()
 
-```typescript
+```ts
 ancestors(): Iterable<Rule>;
 ```
 
@@ -105,7 +105,7 @@ BaseRule.ancestors
 
 ### children()
 
-```typescript
+```ts
 children(): Iterable<Rule>;
 ```
 
@@ -119,7 +119,7 @@ BaseRule.children
 
 ### descendants()
 
-```typescript
+```ts
 descendants(): Iterable<Rule>;
 ```
 
@@ -133,7 +133,7 @@ BaseRule.descendants
 
 ### equals()
 
-```typescript
+```ts
 equals(value: unknown): value is Grouping<T>;
 ```
 
@@ -149,13 +149,9 @@ BaseRule.equals
 
 #### Get Signature
 
-```typescript
+```ts
 get owner(): Option<Sheet>;
 ```
-
-##### Returns
-
-`Option`\<[`Sheet`](../Sheet-1.md)\>
 
 #### Inherited from
 
@@ -169,13 +165,9 @@ BaseRule.owner
 
 #### Get Signature
 
-```typescript
+```ts
 get parent(): Option<Rule>;
 ```
-
-##### Returns
-
-`Option`\<[`Rule`](../Rule-1.md)\>
 
 #### Inherited from
 
@@ -189,19 +181,15 @@ BaseRule.parent
 
 #### Get Signature
 
-```typescript
+```ts
 get rules(): Iterable<Rule>;
 ```
-
-##### Returns
-
-`Iterable`\<[`Rule`](../Rule-1.md)\>
 
 ## toJSON
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(): JSON<T>;
 ```
 
@@ -217,13 +205,9 @@ BaseRule.toJSON
 
 #### Get Signature
 
-```typescript
+```ts
 get type(): T;
 ```
-
-##### Returns
-
-`T`
 
 #### Inherited from
 

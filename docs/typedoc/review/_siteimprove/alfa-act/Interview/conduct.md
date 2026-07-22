@@ -1,6 +1,6 @@
 # Function: conduct()
 
-```typescript
+```ts
 function conduct<INPUT, TARGET extends Hashable, QUESTION extends Metadata, SUBJECT, ANSWER>(
    interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, 
    rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, 

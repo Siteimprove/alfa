@@ -9,7 +9,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Declaration(
    name: string, 
    value: string, 
@@ -21,7 +21,7 @@ protected new Declaration(
 
 ### \_attachOwner()
 
-```typescript
+```ts
 _attachOwner(owner: Element): boolean;
 ```
 
@@ -29,7 +29,7 @@ _attachOwner(owner: Element): boolean;
 
 ### \_attachParent()
 
-```typescript
+```ts
 _attachParent(parent: Rule): boolean;
 ```
 
@@ -37,7 +37,7 @@ _attachParent(parent: Rule): boolean;
 
 ### ancestors()
 
-```typescript
+```ts
 ancestors(): Iterable<Rule>;
 ```
 
@@ -45,7 +45,7 @@ ancestors(): Iterable<Rule>;
 
 ### equals()
 
-```typescript
+```ts
 equals(value: unknown): value is Declaration;
 ```
 
@@ -61,13 +61,9 @@ Equatable.equals
 
 #### Get Signature
 
-```typescript
+```ts
 get important(): boolean;
 ```
-
-##### Returns
-
-`boolean`
 
 ## name
 
@@ -75,19 +71,15 @@ get important(): boolean;
 
 #### Get Signature
 
-```typescript
+```ts
 get name(): string;
 ```
-
-##### Returns
-
-`string`
 
 ## of
 
 ### of()
 
-```typescript
+```ts
 static of(
    name: string, 
    value: string, 
@@ -101,13 +93,9 @@ static of(
 
 #### Get Signature
 
-```typescript
+```ts
 get owner(): Option<Element<string>>;
 ```
-
-##### Returns
-
-`Option`\<[`Element`](Element-1.md)\<`string`\>\>
 
 ## parent
 
@@ -115,19 +103,15 @@ get owner(): Option<Element<string>>;
 
 #### Get Signature
 
-```typescript
+```ts
 get parent(): Option<Rule>;
 ```
-
-##### Returns
-
-`Option`\<[`Rule`](Rule-1.md)\>
 
 ## toJSON
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(): JSON;
 ```
 
@@ -141,7 +125,7 @@ Serializable.toJSON
 
 ### toString()
 
-```typescript
+```ts
 toString(): string;
 ```
 
@@ -151,10 +135,6 @@ toString(): string;
 
 #### Get Signature
 
-```typescript
+```ts
 get value(): string;
 ```
-
-##### Returns
-
-`string`

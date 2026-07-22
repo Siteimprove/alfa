@@ -1,4 +1,4 @@
-# Class: Rhetorical\<`TYPE`, `SUBJECT`, `CONTEXT`, `ANSWER`, `T` = `ANSWER`, `URI` *extends* `string` = `string`\>
+# Class: Rhetorical\<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string\>
 
 ## Extends
 
@@ -8,7 +8,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 new Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string>(
    type: TYPE, 
    uri: URI, 
@@ -124,7 +124,7 @@ protected readonly _uri: URI;
 
 ### answer()
 
-```typescript
+```ts
 answer(): T;
 ```
 
@@ -138,7 +138,7 @@ answer(): T;
 
 #### Call Signature
 
-```typescript
+```ts
 answerIf(condition: boolean, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
@@ -148,7 +148,7 @@ answerIf(condition: boolean, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, A
 
 #### Call Signature
 
-```typescript
+```ts
 answerIf(predicate: Predicate<SUBJECT, [CONTEXT]>, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
@@ -158,7 +158,7 @@ answerIf(predicate: Predicate<SUBJECT, [CONTEXT]>, answer: ANSWER): Question<TYP
 
 #### Call Signature
 
-```typescript
+```ts
 answerIf(answer: Option<ANSWER>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
@@ -168,7 +168,7 @@ answerIf(answer: Option<ANSWER>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, UR
 
 #### Call Signature
 
-```typescript
+```ts
 answerIf(answer: Result<ANSWER, Diagnostic>, merger?: Mapper<Diagnostic, Diagnostic, [Diagnostic]>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
@@ -178,7 +178,7 @@ answerIf(answer: Result<ANSWER, Diagnostic>, merger?: Mapper<Diagnostic, Diagnos
 
 #### Call Signature
 
-```typescript
+```ts
 answerIf(answer: Result<ANSWER, unknown>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 ```
 
@@ -190,7 +190,7 @@ answerIf(answer: Result<ANSWER, unknown>): Question<TYPE, SUBJECT, CONTEXT, ANSW
 
 ### apply()
 
-```typescript
+```ts
 apply<U>(mapper: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Mapper<T, U>, URI>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
 ```
 
@@ -204,13 +204,9 @@ apply<U>(mapper: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Mapper<T, U>, URI>): Q
 
 #### Get Signature
 
-```typescript
+```ts
 get context(): CONTEXT;
 ```
-
-##### Returns
-
-`CONTEXT`
 
 #### Inherited from
 
@@ -222,13 +218,9 @@ get context(): CONTEXT;
 
 #### Get Signature
 
-```typescript
+```ts
 get diagnostic(): Diagnostic;
 ```
-
-##### Returns
-
-[`Diagnostic`](../Diagnostic-1.md)
 
 #### Inherited from
 
@@ -240,13 +232,9 @@ get diagnostic(): Diagnostic;
 
 #### Get Signature
 
-```typescript
+```ts
 get fallback(): Option<ANSWER>;
 ```
-
-##### Returns
-
-`Option`\<`ANSWER`\>
 
 #### Inherited from
 
@@ -256,7 +244,7 @@ get fallback(): Option<ANSWER>;
 
 ### flatMap()
 
-```typescript
+```ts
 flatMap<U>(mapper: Mapper<T, Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
 ```
 
@@ -268,7 +256,7 @@ flatMap<U>(mapper: Mapper<T, Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>>):
 
 ### flatten()
 
-```typescript
+```ts
 flatten<TYPE, SUBJECT, CONTEXT, ANSWER, T>(this: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, string>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T>;
 ```
 
@@ -280,7 +268,7 @@ flatten<TYPE, SUBJECT, CONTEXT, ANSWER, T>(this: Question<TYPE, SUBJECT, CONTEXT
 
 ### isRhetorical()
 
-```typescript
+```ts
 isRhetorical(): this is Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T, string>;
 ```
 
@@ -292,7 +280,7 @@ isRhetorical(): this is Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T, string>;
 
 ### map()
 
-```typescript
+```ts
 map<U>(mapper: Mapper<T, U>): Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
 ```
 
@@ -306,13 +294,9 @@ map<U>(mapper: Mapper<T, U>): Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>
 
 #### Get Signature
 
-```typescript
+```ts
 get message(): string;
 ```
-
-##### Returns
-
-`string`
 
 #### Inherited from
 
@@ -322,7 +306,7 @@ get message(): string;
 
 ### of()
 
-```typescript
+```ts
 static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(
    type: TYPE, 
    uri: URI, 
@@ -343,13 +327,9 @@ static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(
 
 #### Get Signature
 
-```typescript
+```ts
 get subject(): SUBJECT;
 ```
-
-##### Returns
-
-`SUBJECT`
 
 #### Inherited from
 
@@ -359,7 +339,7 @@ get subject(): SUBJECT;
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(options?: Options): JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI>;
 ```
 
@@ -373,13 +353,9 @@ toJSON(options?: Options): JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI>;
 
 #### Get Signature
 
-```typescript
+```ts
 get type(): TYPE;
 ```
-
-##### Returns
-
-`TYPE`
 
 #### Inherited from
 
@@ -391,13 +367,9 @@ get type(): TYPE;
 
 #### Get Signature
 
-```typescript
+```ts
 get uri(): URI;
 ```
-
-##### Returns
-
-`URI`
 
 #### Inherited from
 

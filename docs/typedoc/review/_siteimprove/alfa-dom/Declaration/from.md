@@ -1,5 +1,5 @@
 # Function: from()
 
-```typescript
+```ts
 function from(json: JSON): Declaration;
 ```

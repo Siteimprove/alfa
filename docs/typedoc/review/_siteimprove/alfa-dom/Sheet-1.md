@@ -9,7 +9,7 @@
 
 ### Constructor
 
-```typescript
+```ts
 protected new Sheet(
    rules: Rule[], 
    disabled: boolean, 
@@ -21,7 +21,7 @@ protected new Sheet(
 
 ### children()
 
-```typescript
+```ts
 children(): Iterable<Rule>;
 ```
 
@@ -31,19 +31,15 @@ children(): Iterable<Rule>;
 
 #### Get Signature
 
-```typescript
+```ts
 get condition(): Option<string>;
 ```
-
-##### Returns
-
-`Option`\<`string`\>
 
 ## descendants
 
 ### descendants()
 
-```typescript
+```ts
 descendants(): Iterable<Rule>;
 ```
 
@@ -53,19 +49,15 @@ descendants(): Iterable<Rule>;
 
 #### Get Signature
 
-```typescript
+```ts
 get disabled(): boolean;
 ```
-
-##### Returns
-
-`boolean`
 
 ## empty
 
 ### empty()
 
-```typescript
+```ts
 static empty(): Sheet;
 ```
 
@@ -73,7 +65,7 @@ static empty(): Sheet;
 
 ### equals()
 
-```typescript
+```ts
 equals(value: unknown): value is Sheet;
 ```
 
@@ -87,7 +79,7 @@ Equatable.equals
 
 ### of()
 
-```typescript
+```ts
 static of(
    rules: Iterable<Rule>, 
    disabled?: boolean, 
@@ -101,19 +93,15 @@ static of(
 
 #### Get Signature
 
-```typescript
+```ts
 get rules(): Iterable<Rule>;
 ```
-
-##### Returns
-
-`Iterable`\<[`Rule`](Rule-1.md)\>
 
 ## toJSON
 
 ### toJSON()
 
-```typescript
+```ts
 toJSON(): JSON;
 ```
 
@@ -127,6 +115,6 @@ Serializable.toJSON
 
 ### toString()
 
-```typescript
+```ts
 toString(): string;
 ```

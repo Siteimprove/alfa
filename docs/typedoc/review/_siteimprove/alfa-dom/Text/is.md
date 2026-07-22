@@ -1,5 +1,5 @@
 # Function: is()
 
-```typescript
+```ts
 function is(predicate: Predicate<string>): Predicate<Text>;
 ```

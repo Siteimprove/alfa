@@ -1,4 +1,4 @@
-# Interface: JSON\<`T`\>
+# Interface: JSON\<T\>
 
 ## Extends
 
