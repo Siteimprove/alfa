@@ -90,6 +90,7 @@ if (markdown) {
         // kind to show on the documentation page.
         module: (args) =>
           args.kind === "Namespace" ? `${args.kind}: ${args.name}` : args.name,
+        member: "{keyword} {kind}: `{rawName}`"
       },
       // Aggressively discard anything else than the strict signatures.
       theme: ["categorizeMarkdown"],
