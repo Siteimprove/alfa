@@ -1,5 +1,25 @@
 # Alfa changelog
 
+## [0.119.0](../../compare/v0.118.0...v0.119.0) (2026-07-22)
+
+### Breaking
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01190): `Length.resolver` now requires two extra parameters, `lhBase` and `rlhBase`, used to resolve the `lh` and `rlh`. They must be provided after the existing `vhBase` parameter, so callers building a length resolver must be updated accordingly. ([#2135](https://github.com/Siteimprove/alfa/pull/2135))
+
+### Added
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01190), [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#01190): The `lh`, `rlh` and `rch` units are now supported. ([#2135](https://github.com/Siteimprove/alfa/pull/2135))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01190): The `abs()` and `sign()` CSS math functions are now supported in calculations. ([#2134](https://github.com/Siteimprove/alfa/pull/2134))
+
+### Changed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#01190): `<img>` elements with no `src` attribute now map to `img` role again. ([#2144](https://github.com/Siteimprove/alfa/pull/2144))
+
+### Fixed
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01190): `polygon()` is now correctly parsed as a comma-separated list of vertices, not a whitespace separated one. ([#2143](https://github.com/Siteimprove/alfa/pull/2143))
+
 ## [0.118.0](../../compare/v0.117.0...v0.118.0) (2026-07-06)
 
 ### Added
