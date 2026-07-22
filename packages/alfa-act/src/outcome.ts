@@ -16,7 +16,7 @@ import {
   type Finding,
   type Question,
 } from "./expectation/index.ts";
-import type { Rule } from "./rule.ts";
+import type { Rule } from "./rule/index.ts";
 
 /**
  * @public

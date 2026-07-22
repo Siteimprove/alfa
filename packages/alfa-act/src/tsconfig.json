@@ -19,7 +19,12 @@
     "./metadata/requirement.ts",
     "./metadata/tag.ts",
     "./outcome.ts",
-    "./rule.ts"
+    "./rule/atomic.ts",
+    "./rule/composite.ts",
+    "./rule/event.ts",
+    "./rule/index.ts",
+    "./rule/resolve.ts",
+    "./rule/rule.ts"
   ],
   "references": [
     { "path": "../../alfa-applicative" },
