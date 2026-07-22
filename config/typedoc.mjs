@@ -1,4 +1,4 @@
-// We use environment variabales to pass parameters because the script
+// We use environment variables to pass parameters because the script
 // invokation is mangled into yarn and typedoc own invokations.
 
 // Check that we have a target (review/documentation)
