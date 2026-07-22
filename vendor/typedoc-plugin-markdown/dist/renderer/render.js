@@ -1,0 +1,195 @@
+import { MarkdownPageEvent, MarkdownRendererEvent, } from '../events/index.js';
+import { constants } from '../options/index.js';
+import { CategoryRouter, GroupRouter, KindDirRouter, KindRouter, MemberRouter, ModuleRouter, StructureDirRouter, StructureRouter, } from '../router/index.js';
+import { MarkdownTheme } from '../theme/index.js';
+import * as fs from 'fs';
+import * as path from 'path';
+import { i18n, } from 'typedoc';
+import { formatWithPrettierIfAvailable } from './prettier.js';
+import { copyMediaFiles, writeFileSync } from './utils.js';
+/**
+ * The render method for the Markdown plugin
+ *
+ * @remarks
+ *
+ * This is essentially a copy the default theme render method with some adjustments.
+ *
+ * - Removes unnecessary async calls to load highlighters only required for html theme.
+ * - Removes hooks logic that are jsx specific.
+ * - Adds any logic specific to markdown rendering.
+ */
+export async function render(renderer, project, outputDirectory) {
+    // Setup output directory
+    if (!prepareRouter(renderer) ||
+        !(await prepareOutputDirectory(renderer, outputDirectory))) {
+        return;
+    }
+    if (!prepareTheme(renderer)) {
+        return;
+    }
+    const pages = renderer.router.buildPages(project);
+    const output = new MarkdownRendererEvent(outputDirectory, project, pages);
+    output.navigation = renderer.theme.getNavigation(project);
+    renderer.trigger(MarkdownRendererEvent.BEGIN, output);
+    await executeAsyncRendererJobs(renderer.preRenderAsyncJobs, output); // for backwards compatibility
+    await executeAsyncRendererJobs(renderer.preMarkdownRenderAsyncJobs, output);
+    renderer.application.logger.verbose(`There are ${pages.length} pages to write.`);
+    for (const page of pages) {
+        await renderDocument(renderer, outputDirectory, page, project);
+    }
+    writeNavigationJson(renderer, output.navigation);
+    await executeAsyncRendererJobs(renderer.postRenderAsyncJobs, output); // for backwards compatibility
+    await executeAsyncRendererJobs(renderer.postMarkdownRenderAsyncJobs, output);
+    renderer.trigger(MarkdownRendererEvent.END, output);
+    copyMediaFiles(project, outputDirectory);
+    renderer.router = void 0;
+    renderer.theme = void 0;
+}
+function writeNavigationJson(renderer, navigation) {
+    const navigationJson = renderer.application.options.getValue('navigationJson');
+    if (!navigationJson)
+        return;
+    try {
+        writeFileSync(navigationJson, JSON.stringify(navigation, null, 2));
+    }
+    catch {
+        renderer.application.logger.warn(i18n.could_not_write_0(navigationJson));
+    }
+}
+/**
+ * Output directory setup (this is essentially copied from TypeDoc)
+ */
+async function prepareOutputDirectory(renderer, outputDirectory) {
+    if (renderer.application.options.getValue('cleanOutputDir')) {
+        try {
+            fs.rmSync(outputDirectory, { recursive: true, force: true });
+        }
+        catch {
+            renderer.application.logger.warn(i18n.could_not_empty_output_directory_0(outputDirectory));
+            return false;
+        }
+    }
+    try {
+        fs.mkdirSync(outputDirectory, { recursive: true });
+    }
+    catch {
+        renderer.application.logger.error(i18n.could_not_create_output_directory_0(outputDirectory));
+        return false;
+    }
+    if (renderer.application.options.isSet('githubPages') &&
+        renderer.application.options.getValue('githubPages')) {
+        try {
+            writeFileSync(path.join(outputDirectory, '.nojekyll'), '');
+        }
+        catch {
+            renderer.application.logger.warn(i18n.could_not_write_0(path.join(outputDirectory, '.nojekyll')));
+        }
+    }
+    return true;
+}
+/**
+ * Prepare the Router for the renderer
+ */
+function prepareRouter(renderer) {
+    const routerName = getRouterName(renderer);
+    const router = getRouter(renderer, routerName);
+    if (!router) {
+        renderer.application.logger.error(i18n.router_0_is_not_defined_available_are_1(routerName, constants.AVAILABLE_ROUTERS.join(', ')));
+        return false;
+    }
+    renderer.router = new router(renderer.application);
+    return true;
+}
+function getRouterName(renderer) {
+    const routerOption = renderer.application.options.getValue('router');
+    if (!renderer.application.options.isSet('router')) {
+        if (renderer.application.options.isSet('outputFileStrategy')) {
+            const outputFileStrategy = renderer.application.options.getValue('outputFileStrategy');
+            return outputFileStrategy === 'modules' ? 'module' : 'member';
+        }
+        else {
+            return 'member';
+        }
+    }
+    return routerOption;
+}
+function getRouter(renderer, routerName) {
+    const routers = renderer.routers;
+    const pluginRouters = new Map([
+        // custom routers
+        ['member', MemberRouter],
+        ['module', ModuleRouter],
+        // core routers (decorated)
+        ['kind', KindRouter],
+        ['kind-dir', KindDirRouter],
+        ['structure', StructureRouter],
+        ['structure-dir', StructureDirRouter],
+        ['group', GroupRouter],
+        ['category', CategoryRouter],
+    ]);
+    if (constants.AVAILABLE_ROUTERS.includes(routerName)) {
+        return pluginRouters.get(routerName);
+    }
+    return routers.get(routerName);
+}
+/**
+ * Prepare the Theme for the renderer
+ */
+function prepareTheme(renderer) {
+    const themes = renderer.themes;
+    const themeName = getThemeName(renderer);
+    const theme = themes.get(themeName);
+    if (!theme) {
+        renderer.application.logger.error(i18n.theme_0_is_not_defined_available_are_1(themeName, [...themes.keys()].join(', ')));
+        return false;
+    }
+    const ctor = new theme(renderer);
+    if (ctor instanceof MarkdownTheme) {
+        renderer.theme = ctor;
+        return true;
+    }
+    renderer.application.logger.warn(`[typedoc-plugin-markdown]: Skipping theme "${themeName}" as it is not an instance of the Markdown theme.`);
+    renderer.theme = new (themes.get('markdown'))(renderer);
+    return true;
+}
+function getThemeName(renderer) {
+    const themeOption = renderer.application.options.getValue('theme');
+    return themeOption === 'default' ? 'markdown' : themeOption;
+}
+/**
+ * The main rendering method for a document.
+ */
+async function renderDocument(renderer, outputDirectory, page, project) {
+    const formatWithPrettier = renderer.application.options.getValue('formatWithPrettier');
+    const pageEvent = new MarkdownPageEvent(page.model);
+    pageEvent.url = page.url;
+    pageEvent.filename = path.join(outputDirectory, page.url);
+    pageEvent.pageKind = page.kind;
+    pageEvent.project = project;
+    renderer.trigger(MarkdownPageEvent.BEGIN, pageEvent);
+    pageEvent.contents = renderer.theme.render(pageEvent);
+    if (formatWithPrettier) {
+        pageEvent.preWriteAsyncJobs.push(async (pageEvent) => {
+            pageEvent.contents = await formatWithPrettierIfAvailable(renderer, pageEvent.contents);
+        });
+    }
+    renderer.trigger(MarkdownPageEvent.END, pageEvent);
+    await executeAsyncPageJobs(pageEvent.preWriteAsyncJobs, pageEvent);
+    try {
+        writeFileSync(pageEvent.filename, pageEvent.contents);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    }
+    catch (error) {
+        renderer.application.logger.error(i18n.could_not_write_0(pageEvent.filename));
+    }
+}
+// Helper to execute async renderer jobs
+export async function executeAsyncRendererJobs(jobs, output) {
+    await Promise.all(jobs.map((job) => job(output)));
+}
+// Helper to execute async page jobs (page jobs should be run in series)
+export async function executeAsyncPageJobs(jobs, page) {
+    for (const job of jobs) {
+        await job(page);
+    }
+}
