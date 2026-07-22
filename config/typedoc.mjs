@@ -102,7 +102,7 @@ if (review) {
     name: "markdown",
     path: "../docs/typedoc/review",
     options: {
-      parametersFormat: "table",
+      parametersFormat: "none",
       hidePageHeader: true,
       hideBreadcrumbs: true,
       useCodeBlocks: true,
