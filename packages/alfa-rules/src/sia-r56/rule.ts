@@ -20,12 +20,12 @@ import { ARIA } from "../requirements/index.ts";
 import { Scope, Stability } from "../tags/index.ts";
 
 const {
-  hasIncorrectRoleWithoutName,
+  isNotLandmarkWithoutName,
   hasRole,
   isIncludedInTheAccessibilityTree,
 } = DOM;
 const { hasNamespace } = Element;
-const { and, equals } = Predicate;
+const { and, equals, not } = Predicate;
 const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Group<Element>>({
@@ -46,10 +46,10 @@ export default Rule.Atomic.of<Page, Group<Element>>({
                 hasNamespace(equals(Namespace.HTML)),
                 isIncludedInTheAccessibilityTree(device),
                 hasRole(device, (role) => role.is("landmark")),
+                // `<form>` without name are not landmarks.
+                not(isNotLandmarkWithoutName(device))
               ),
             )
-            // circumventing https://github.com/Siteimprove/alfa/issues/298
-            .reject(hasIncorrectRoleWithoutName(device))
             // We have already filter by having a landmark role.
             .groupBy((landmark) => Node.from(landmark, device).role.getUnsafe())
             .filter((elements) => elements.size > 1)

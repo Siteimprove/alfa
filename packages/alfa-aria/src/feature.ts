@@ -8,6 +8,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Sequence } from "@siteimprove/alfa-sequence";
+import { String } from "@siteimprove/alfa-string";
 import { Cell, Table } from "@siteimprove/alfa-table";
 
 import { Attribute } from "./attribute.ts";
@@ -16,7 +17,7 @@ import { Name, Source } from "./name/index.ts";
 import { Role } from "./role.ts";
 
 const { hasAttribute, hasInputType, hasName, isElement, isScopedTo } = Element;
-const { or, test } = Predicate;
+const { not, or, test } = Predicate;
 const { and } = Refinement;
 const { getElementDescendants } = Query;
 
@@ -236,6 +237,86 @@ function ifHasAttribute<T = Role.Name | Iterable<Role>>(
     test(hasAttribute(attribute), element) ? ifHas : ifDoesNotHave;
 }
 
+/**
+ * Helpers for elements whose role depends on a name.
+ *
+ * @remarks
+ * These are `<aside>` (scoped to sectioning content), `<section>`, and `<img>`
+ * with empty alt; all cases only depend on author-provided name.
+ *
+ * `<form>` is also handled differently based on its name, it is always a "form"
+ * but sometimes not a landmark. This cannot be handled here.
+ *
+ * The ways to name by author for these elements are: title, aria-label, and
+ * aria-labelledby.
+ *
+ * Browsers are not consistent in the way they handle the "apparently good but
+ * actually bad" cases (empty title/aria-label, aria-labelledby pointing to an
+ * invalid element or an empty one). This implementation follows what Chrome
+ * 150.0.7871.115 is doing (Firefox behaves differently). Note that
+ * "aria-labelledby pointing to elements that result in empty name" is not
+ * something we can really detect at that point since it depends too much on
+ * the rest of the accessibility tree.
+ *
+ * The parameters configure what to do with these special cases, with "true"
+ * meaning "it is considered as likely named by author"
+ *
+ * We do not need to test the presence of an alt attribute since the `<img>`
+ * exception only triggers when it is present and empty.
+ */
+function isLikelyNamedByAuthor({
+  emptyTitle,
+  emptyAriaLabel,
+  invalidAriaLabelledby,
+}: {
+  emptyTitle: boolean;
+  emptyAriaLabel: boolean;
+  invalidAriaLabelledby: boolean;
+}): Predicate<Element> {
+  return or(
+    // There is a title which is non-empty, or we accept empty ones.
+    hasAttribute("title", orDefault(not(String.isWhitespace), emptyTitle)),
+    // There is an aria-label which is non-empty, or we accept empty ones.
+    hasAttribute(
+      "aria-label",
+      orDefault(not(String.isWhitespace), emptyAriaLabel),
+    ),
+    // There is an aria-labelledby which points to existing elements, or we
+    // accept invalid aria-labelledby. We can't really check whether these
+    // existing elements will actually produce a name.
+    (element) =>
+      element.attribute("aria-labelledby").some((attribute) => {
+        if (invalidAriaLabelledby) {
+          return true;
+        }
+
+        const ids = Query.getElementIdMap(element.root());
+
+        return attribute.tokens().some((token) => ids.has(token));
+      }),
+  );
+}
+
+function orDefault<T>(
+  predicate: Predicate<T>,
+  defaultValue: boolean,
+): Predicate<T> {
+  return (value) => defaultValue || test(predicate, value);
+}
+
+function ifLikelyNamedByAuthor<T = Role.Name | Iterable<Role>>(
+  options: {
+    emptyTitle: boolean;
+    emptyAriaLabel: boolean;
+    invalidAriaLabelledby: boolean;
+  },
+  ifNamed: T,
+  ifNotNamed: T,
+): Feature.Aspect<T> {
+  return (element) =>
+    test(isLikelyNamedByAuthor(options), element) ? ifNamed : ifNotNamed;
+}
+
 type Features = {
   [N in Namespace]?: {
     [element: string]: Feature | undefined;
@@ -269,10 +350,27 @@ const Features: Features = {
 
     article: html("article"),
 
-    // We currently cannot detect at this point if the element has an accessible
-    // name, and always map to complementary.
-    // see https://github.com/Siteimprove/alfa/issues/298
-    aside: html("complementary"),
+    aside: html((element) => {
+      if (test(isScopedTo("article", "aside", "nav", "section"), element)) {
+        if (
+          test(
+            isLikelyNamedByAuthor({
+              emptyTitle: true,
+              emptyAriaLabel: false,
+              invalidAriaLabelledby: false,
+            }),
+            element,
+          )
+        ) {
+          return "complementary";
+        }
+        return "generic";
+      }
+
+      // This normally only applies if the `<aside>` is scoped to `<body>` or
+      // `<main>`, but that should always be true in real pages.
+      return "complementary";
+    }),
 
     button: html("button", function* (element) {
       // https://w3c.github.io/html-aam/#att-disabled
@@ -366,7 +464,25 @@ const Features: Features = {
       function* (element) {
         // If there is an alt attribute and it is totally empty
         if (element.attribute("alt").some((alt) => alt.value === "")) {
-          yield Role.of("presentation");
+          if (
+            test(
+              isLikelyNamedByAuthor({
+                // Chrome 150.0.7871.115 treats totally empty title as not
+                // giving a name, but whitespace ones as giving a name, Firefox
+                // 152.0.6 treats both as giving a name. Here, we follow Firefox
+                // for the sake of simplicity, but this clearly indicates some
+                // confusion in the specs/browsers.
+                emptyTitle: true,
+                emptyAriaLabel: true,
+                invalidAriaLabelledby: true,
+              }),
+              element,
+            )
+          ) {
+            yield Role.of("img");
+          } else {
+            yield Role.of("presentation");
+          }
         }
 
         // The role of src-less images is still "img" in the specs (and major browsers),
@@ -653,10 +769,17 @@ const Features: Features = {
 
     search: html("search"),
 
-    // We currently cannot detect at this point if the element has an accessible
-    // name, and always map to region.
-    // see https://github.com/Siteimprove/alfa/issues/298
-    section: html("region"),
+    section: html(
+      ifLikelyNamedByAuthor(
+        {
+          emptyTitle: true,
+          emptyAriaLabel: false,
+          invalidAriaLabelledby: false,
+        },
+        "region",
+        "generic",
+      ),
+    ),
 
     select: html(
       // mono-line <select> are mapped to combobox by HTML AAM, but their child

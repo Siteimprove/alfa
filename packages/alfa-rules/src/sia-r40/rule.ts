@@ -11,12 +11,8 @@ import { ARIA } from "../requirements/index.ts";
 
 import { Scope, Stability } from "../tags/index.ts";
 
-const {
-  hasIncorrectRoleWithoutName,
-  hasNonEmptyAccessibleName,
-  hasRole,
-  isIncludedInTheAccessibilityTree,
-} = DOM;
+const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
+  DOM;
 const { and } = Predicate;
 const { getElementDescendants } = Query;
 
@@ -32,16 +28,11 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return (
-          getElementDescendants(document, Node.fullTree)
-            .filter(
-              and(
-                hasRole(device, (role) => role.is("region")),
-                isIncludedInTheAccessibilityTree(device),
-              ),
-            )
-            // circumventing https://github.com/Siteimprove/alfa/issues/298
-            .reject(hasIncorrectRoleWithoutName(device))
+        return getElementDescendants(document, Node.fullTree).filter(
+          and(
+            hasRole(device, (role) => role.is("region")),
+            isIncludedInTheAccessibilityTree(device),
+          ),
         );
       },
 
