@@ -5,6 +5,8 @@ import { Composite as CompositeRule } from "./composite.ts";
 import { Event as RuleEvent } from "./event.ts";
 import { Rule as BaseRule } from "./rule.ts";
 
+export { Instrument } from "./instrument.ts";
+
 import { type Question } from "../expectation/index.ts";
 
 /**

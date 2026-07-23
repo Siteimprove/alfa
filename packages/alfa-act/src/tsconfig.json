@@ -24,7 +24,7 @@
     "./rule/evaluation.ts",
     "./rule/event.ts",
     "./rule/index.ts",
-    "./rule/rule-performance.ts",
+    "./rule/instrument.ts",
     "./rule/rule.ts"
   ],
   "references": [

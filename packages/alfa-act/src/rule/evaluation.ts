@@ -14,8 +14,8 @@ import type { Diagnostic, Oracle } from "../expectation/index.ts";
 import { Finding, Interview, type Question } from "../expectation/index.ts";
 import { Outcome } from "../outcome.ts";
 
-import { Event } from "./event.ts";
-import { RulePerformance } from "./rule-performance.ts";
+import type { Event } from "./event.ts";
+import { Instrument } from "./instrument.ts";
 import type { Rule } from "./index.ts";
 
 const { reduce } = Iterable;
@@ -42,15 +42,15 @@ export interface Resolvable<
 /**
  * What a rule's target-collecting step hands back: the ordered targets to
  * resolve, the global oracle-used flag (used for the Inapplicable mode when
- * there are no targets), and an optional wrapper used to time the resolve stage
- * (Atomic's "expectation" phase; omitted by Composite).
+ * there are no targets), and an optional name for the phase that should bracket
+ * the resolve stage (Atomic supplies "expectation"; Composite omits it).
  *
  * @internal
  */
 export interface Collected<T extends Hashable, Q extends Question.Metadata, S> {
   items: Sequence<Resolvable<T, Q, S>>;
   oracleUsed: boolean;
-  measureResolve?: <O>(run: () => Promise<O>) => Promise<O>;
+  resolvePhase?: string;
 }
 
 /**
@@ -68,22 +68,19 @@ export function evaluate<I, T extends Hashable, Q extends Question.Metadata, S>(
   outcomes: Cache,
   performance: Performance<Event<I, T, Q, S>> | undefined,
   collect: (
-    rulePerformance: RulePerformance<I, T, Q, S> | undefined,
+    instrument: Instrument<I, T, Q, S>,
   ) => Promise<Collected<T, Q, S>>,
 ): Promise<Iterable<Outcome<I, T, Q, S>>> {
-  return outcomes.get(rule, async () => {
-    const startRule = performance?.mark(Event.start(rule)).start;
+  return outcomes.get(rule, () => {
+    const instrument = Instrument.of(rule, performance);
 
-    const rulePerformance = RulePerformance.wrap(rule, performance);
+    return instrument.phase("total", async () => {
+      const { items, oracleUsed, resolvePhase } = await collect(instrument);
 
-    const { items, oracleUsed, measureResolve } =
-      await collect(rulePerformance);
+      if (items.isEmpty()) {
+        return [Outcome.Inapplicable.of(rule, Outcome.getMode(oracleUsed))];
+      }
 
-    let result: Iterable<Outcome<I, T, Q, S>>;
-
-    if (items.isEmpty()) {
-      result = [Outcome.Inapplicable.of(rule, Outcome.getMode(oracleUsed))];
-    } else {
       const run = () =>
         Promise.all(
           Array.from(items).map((item) =>
@@ -97,12 +94,8 @@ export function evaluate<I, T extends Hashable, Q extends Question.Metadata, S>(
           ),
         );
 
-      result = await (measureResolve ? measureResolve(run) : run());
-    }
-
-    performance?.measure(Event.end(rule), startRule);
-
-    return result;
+      return resolvePhase ? instrument.phase(resolvePhase, run) : run();
+    });
   });
 }
 

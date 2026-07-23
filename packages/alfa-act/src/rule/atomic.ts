@@ -13,9 +13,8 @@ import { Interview } from "../expectation/index.ts";
 import type { Requirement, Tag } from "../metadata/index.ts";
 
 import { evaluate as evaluateRule } from "./evaluation.ts";
-import { Event } from "./event.ts";
+import type { Instrument } from "./instrument.ts";
 import { Rule } from "./rule.ts";
-import { RulePerformance } from "./rule-performance.ts";
 
 /**
  * @public
@@ -57,29 +56,8 @@ export class Atomic<
         oracle,
         outcomes,
         performance,
-        async (rulePerformance) => {
-          const { applicability, expectations } = evaluate(
-            input,
-            rulePerformance,
-          );
-
-          const startApplicability = performance?.mark(
-            Event.startApplicability(this),
-          ).start;
-
-          const conducted = await Promise.all(
-            Array.from(applicability()).map((interview) =>
-              Interview.conduct(interview, this, oracle).then((target) =>
-                target.either(
-                  // We have a target, wrap it properly and return it.
-                  ([target, oracleUsed]) =>
-                    Tuple.of(Maybe.toOption(target), oracleUsed),
-                  // We have an unanswered question and return None
-                  ([_, oracleUsed]) => Tuple.of(None, oracleUsed),
-                ),
-              ),
-            ),
-          );
+        async (instrument) => {
+          const { applicability, expectations } = evaluate(input, instrument);
 
           // We both need to keep with each target whether the oracle was used,
           // and with the global sequence whether it was used at all.
@@ -91,18 +69,34 @@ export class Atomic<
           // For efficiency, we prepend the targets and reverse the full
           // sequence later to conserve the order.
           // This result in a O(n) rather than O(n²) process.
-          const [targets, oracleUsed] = Sequence.from(conducted).reduce(
-            ([acc, wasUsed], [cur, isUsed]) =>
-              Tuple.of(
-                cur.isSome() ? acc.prepend(Tuple.of(cur.get(), isUsed)) : acc,
-                wasUsed || isUsed,
-              ),
-            Tuple.of(Sequence.empty<Tuple<[T, boolean]>>(), false),
-          );
+          const [targets, oracleUsed] = await instrument.phase(
+            "applicability",
+            async () => {
+              const conducted = await Promise.all(
+                Array.from(applicability()).map((interview) =>
+                  Interview.conduct(interview, this, oracle).then((target) =>
+                    target.either(
+                      // We have a target, wrap it properly and return it.
+                      ([target, oracleUsed]) =>
+                        Tuple.of(Maybe.toOption(target), oracleUsed),
+                      // We have an unanswered question and return None
+                      ([_, oracleUsed]) => Tuple.of(None, oracleUsed),
+                    ),
+                  ),
+                ),
+              );
 
-          performance?.measure(
-            Event.endApplicability(this),
-            startApplicability,
+              return Sequence.from(conducted).reduce(
+                ([acc, wasUsed], [cur, isUsed]) =>
+                  Tuple.of(
+                    cur.isSome()
+                      ? acc.prepend(Tuple.of(cur.get(), isUsed))
+                      : acc,
+                    wasUsed || isUsed,
+                  ),
+                Tuple.of(Sequence.empty<Tuple<[T, boolean]>>(), false),
+              );
+            },
           );
 
           if (targets.isEmpty()) {
@@ -119,21 +113,8 @@ export class Atomic<
               oracleUsed: oracleUsedInApplicability,
             }));
 
-          // Bracket the resolve stage with the "expectation" phase marks.
-          const measureResolve = <O>(run: () => Promise<O>): Promise<O> => {
-            const startExpectation = performance?.mark(
-              Event.startExpectation(this),
-            ).start;
-
-            return run().finally(() =>
-              performance?.measure(
-                Event.endExpectation(this),
-                startExpectation,
-              ),
-            );
-          };
-
-          return { items, oracleUsed, measureResolve };
+          // The resolve stage is timed as the "expectation" phase.
+          return { items, oracleUsed, resolvePhase: "expectation" };
         },
       ),
     );
@@ -181,7 +162,7 @@ export namespace Atomic {
   > {
     (
       input: I,
-      performance?: RulePerformance<I, T, Q, S>,
+      instrument?: Instrument<I, T, Q, S>,
     ): {
       applicability(): Iterable<Interview<Q, S, T, Maybe<T>>>;
       expectations(target: T): {

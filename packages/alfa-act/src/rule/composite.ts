@@ -14,7 +14,7 @@ import type { Requirement, Tag } from "../metadata/index.ts";
 import { Outcome } from "../outcome.ts";
 
 import { evaluate as evaluateRule } from "./evaluation.ts";
-import { RulePerformance } from "./rule-performance.ts";
+import type { Instrument } from "./instrument.ts";
 import { Rule } from "./rule.ts";
 
 const { flatten } = Iterable;
@@ -65,7 +65,7 @@ export class Composite<
         oracle,
         outcomes,
         performance,
-        async (rulePerformance) => {
+        async (instrument) => {
           const evaluated = await Promise.all(
             this._composes.map((rule) =>
               rule.evaluate(input, oracle, outcomes, performance),
@@ -98,7 +98,7 @@ export class Composite<
             return { items: Sequence.empty(), oracleUsed };
           }
 
-          const { expectations } = evaluate(input, rulePerformance);
+          const { expectations } = evaluate(input, instrument);
 
           // Since targets were prepended when Applicability was processed, we now
           // need to reverse the sequence to restore initial order.
@@ -169,7 +169,7 @@ export namespace Composite {
   > {
     (
       input: I,
-      performance?: RulePerformance<I, T, Q, S>,
+      instrument?: Instrument<I, T, Q, S>,
     ): {
       expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
         [key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic>>>;

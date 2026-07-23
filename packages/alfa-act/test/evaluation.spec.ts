@@ -1,4 +1,5 @@
 import type { Maybe } from "@siteimprove/alfa-option";
+import { Performance } from "@siteimprove/alfa-performance";
 import { Record } from "@siteimprove/alfa-record";
 import type { Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -13,6 +14,7 @@ import {
   passed,
   Rule as RuleFixture,
   Target,
+  usePerformance,
 } from "./fixtures/index.ts";
 
 const rule = RuleFixture.alwaysPass;
@@ -128,7 +130,9 @@ test("evaluate() memoizes on the shared Cache, invoking collect once", async (t)
   t.equal(calls, 1);
 });
 
-test("evaluate() runs the resolve stage through measureResolve when provided", async (t) => {
+test("evaluate() brackets the resolve stage with the phase named by resolvePhase", async (t) => {
+  const [perf, entries] = usePerformance();
+
   const items: Array<Resolvable<Target, {}, Target>> = [
     {
       target: target1,
@@ -137,37 +141,66 @@ test("evaluate() runs the resolve stage through measureResolve when provided", a
     },
   ];
 
-  let wrapped = false;
-  const measureResolve = <O>(run: () => Promise<O>): Promise<O> => {
-    wrapped = true;
-    return run();
-  };
-
   await evaluate(
     rule,
     undefined,
     Cache.empty(),
-    undefined,
-    collecting({ items: Sequence.from(items), oracleUsed: false, measureResolve }),
+    perf,
+    collecting({
+      items: Sequence.from(items),
+      oracleUsed: false,
+      resolvePhase: "expectation",
+    }),
   );
 
-  t(wrapped);
+  // A start mark and an end measure, both named by resolvePhase, bracket the
+  // resolve stage.
+  const resolveEntries = entries.filter(
+    (entry) => entry.data.name === "expectation",
+  );
+
+  t.equal(resolveEntries.length, 2);
+  t(Performance.isMark(resolveEntries[0]));
+  t(Performance.isMeasure(resolveEntries[1]));
 });
 
-test("evaluate() does not invoke measureResolve when no target is collected", async (t) => {
-  let wrapped = false;
-  const measureResolve = <O>(run: () => Promise<O>): Promise<O> => {
-    wrapped = true;
-    return run();
-  };
+test("evaluate() omits the resolve phase when resolvePhase is absent", async (t) => {
+  const [perf, entries] = usePerformance();
+
+  const items: Array<Resolvable<Target, {}, Target>> = [
+    {
+      target: target1,
+      expectations: expectations(Outcomes.Passed),
+      oracleUsed: false,
+    },
+  ];
 
   await evaluate(
     rule,
     undefined,
     Cache.empty(),
-    undefined,
-    collecting({ items: Sequence.empty(), oracleUsed: false, measureResolve }),
+    perf,
+    collecting({ items: Sequence.from(items), oracleUsed: false }),
   );
 
-  t(!wrapped);
+  // Only the surrounding "total" phase is timed.
+  t(entries.every((entry) => entry.data.name === "total"));
+});
+
+test("evaluate() does not emit the resolve phase when no target is collected", async (t) => {
+  const [perf, entries] = usePerformance();
+
+  await evaluate(
+    rule,
+    undefined,
+    Cache.empty(),
+    perf,
+    collecting({
+      items: Sequence.empty(),
+      oracleUsed: false,
+      resolvePhase: "expectation",
+    }),
+  );
+
+  t(entries.every((entry) => entry.data.name === "total"));
 });
