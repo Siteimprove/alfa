@@ -12,6 +12,7 @@
     "./fixtures/rule.ts",
     "./fixtures/target.ts",
     "./fixtures/types.ts",
+    "./evaluation.spec.ts",
     "./outcome.spec.ts",
     "./performance.spec.ts",
     "./rule.spec.ts",

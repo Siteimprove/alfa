@@ -2,7 +2,6 @@ import { Array } from "@siteimprove/alfa-array";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Maybe } from "@siteimprove/alfa-option";
-import type { Performance } from "@siteimprove/alfa-performance";
 import { Record } from "@siteimprove/alfa-record";
 import type { Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -14,8 +13,8 @@ import type { Diagnostic, Interview, Question } from "../expectation/index.ts";
 import type { Requirement, Tag } from "../metadata/index.ts";
 import { Outcome } from "../outcome.ts";
 
-import { Event } from "./event.ts";
-import { resolve } from "./resolve.ts";
+import { evaluate as evaluateRule } from "./evaluation.ts";
+import { RulePerformance } from "./rule-performance.ts";
 import { Rule } from "./rule.ts";
 
 const { flatten } = Iterable;
@@ -61,75 +60,61 @@ export class Composite<
     evaluate: Composite.Evaluate<I, T, Q, S>,
   ) {
     super(uri, requirements, tags, (input, oracle, outcomes, performance) =>
-      outcomes.get(this, async () => {
-        const startRule = performance?.mark(Event.start(this)).start;
-
-        // In the evaluate function in Atomic.of, "this" is not yet built.
-        // So we need a helper to wrap it…
-        const rulePerformance =
-          performance !== undefined
-            ? {
-                mark: (name: string) =>
-                  performance?.mark(Event.start(this, name)),
-                measure: (name: string, start?: number) =>
-                  performance?.measure(Event.end(this, name), start),
-              }
-            : undefined;
-
-        const evaluated = await Promise.all(
-          this._composes.map((rule) =>
-            rule.evaluate(input, oracle, outcomes, performance),
-          ),
-        );
-
-        // We both need to keep with each outcome whether the oracle was used,
-        // and with the global sequence whether it was used at all.
-        // The second case is needed to decide whether the oracle was used
-        // when producing an Inapplicable result (empty sequence).
-        // Inapplicable outcomes one are cleared from the sequence.
-        //
-        // For efficiency, we prepend the targets and reverse the full
-        // sequence later to conserve the order.
-        // This result in a O(n) rather than O(n²) process.
-        const [targets, oracleUsed] = Sequence.from(flatten(evaluated)).reduce(
-          ([acc, wasUsed], outcome) =>
-            Tuple.of(
-              Applicable.isApplicable<I, T, Q, S>(outcome)
-                ? acc.prepend(outcome)
-                : acc,
-              wasUsed || outcome.isSemiAuto,
-            ),
-          Tuple.of(Sequence.empty<Outcome.Applicable<I, T, Q, S>>(), false),
-        );
-
-        let result: Iterable<Outcome<I, T, Q, S>>;
-
-        if (targets.isEmpty()) {
-          result = [Outcome.Inapplicable.of(this, Outcome.getMode(oracleUsed))];
-        } else {
-          const { expectations } = evaluate(input, rulePerformance);
-
-          result = await Promise.all(
-            // Since targets were prepended when Applicability was processed,
-            // we now need to reverse the sequence to restore initial order.
-            Array.from(
-              targets.reverse().groupBy((outcome) => outcome.target),
-            ).map(([target, outcomes]) =>
-              resolve(
-                target,
-                Record.of(expectations(outcomes)),
-                this,
-                oracle,
-                oracleUsed,
-              ),
+      evaluateRule(
+        this,
+        oracle,
+        outcomes,
+        performance,
+        async (rulePerformance) => {
+          const evaluated = await Promise.all(
+            this._composes.map((rule) =>
+              rule.evaluate(input, oracle, outcomes, performance),
             ),
           );
-        }
 
-        performance?.measure(Event.end(this), startRule);
+          // We both need to keep with each outcome whether the oracle was used,
+          // and with the global sequence whether it was used at all.
+          // The second case is needed to decide whether the oracle was used
+          // when producing an Inapplicable result (empty sequence).
+          // Inapplicable outcomes one are cleared from the sequence.
+          //
+          // For efficiency, we prepend the targets and reverse the full
+          // sequence later to conserve the order.
+          // This result in a O(n) rather than O(n²) process.
+          const [targets, oracleUsed] = Sequence.from(
+            flatten(evaluated),
+          ).reduce(
+            ([acc, wasUsed], outcome) =>
+              Tuple.of(
+                Applicable.isApplicable<I, T, Q, S>(outcome)
+                  ? acc.prepend(outcome)
+                  : acc,
+                wasUsed || outcome.isSemiAuto,
+              ),
+            Tuple.of(Sequence.empty<Outcome.Applicable<I, T, Q, S>>(), false),
+          );
 
-        return result;
-      }),
+          if (targets.isEmpty()) {
+            return { items: Sequence.empty(), oracleUsed };
+          }
+
+          const { expectations } = evaluate(input, rulePerformance);
+
+          // Since targets were prepended when Applicability was processed, we now
+          // need to reverse the sequence to restore initial order.
+          const items = Sequence.from(
+            Array.from(
+              targets.reverse().groupBy((outcome) => outcome.target),
+            ).map(([target, outcomes]) => ({
+              target,
+              expectations: Record.of(expectations(outcomes)),
+              oracleUsed,
+            })),
+          );
+
+          return { items, oracleUsed };
+        },
+      ),
     );
 
     this._composes = composes;
@@ -184,13 +169,7 @@ export namespace Composite {
   > {
     (
       input: I,
-      performance?: {
-        mark: (name: string) => Performance.Mark<Event<I, T, Q, S>>;
-        measure: (
-          name: string,
-          start?: number,
-        ) => Performance.Measure<Event<I, T, Q, S>>;
-      },
+      performance?: RulePerformance<I, T, Q, S>,
     ): {
       expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
         [key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic>>>;

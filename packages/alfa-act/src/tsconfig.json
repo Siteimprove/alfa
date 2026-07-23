@@ -21,9 +21,10 @@
     "./outcome.ts",
     "./rule/atomic.ts",
     "./rule/composite.ts",
+    "./rule/evaluation.ts",
     "./rule/event.ts",
     "./rule/index.ts",
-    "./rule/resolve.ts",
+    "./rule/rule-performance.ts",
     "./rule/rule.ts"
   ],
   "references": [
