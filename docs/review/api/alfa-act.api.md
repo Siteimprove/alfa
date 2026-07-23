@@ -99,6 +99,14 @@ export namespace Finding {
     export function isInconclusive<D extends Diagnostic>(finding: Finding<unknown, D>): finding is Right<[D, boolean]>;
 }
 
+// @public
+export class Instrument<I, T extends Hashable, Q extends Question.Metadata, S> {
+    protected constructor(rule: Rule<I, T, Q, S>, performance?: Performance<Event<I, T, Q, S>>);
+    // (undocumented)
+    static of<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, performance?: Performance<Event<I, T, Q, S>>): Instrument<I, T, Q, S>;
+    phase<O>(name: string, work: () => O | Promise<O>): Promise<O>;
+}
+
 // Warning: (ae-forgotten-export) The symbol "Depths" needs to be exported by the entry point index.d.ts
 //
 // @public
