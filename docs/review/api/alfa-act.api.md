@@ -33,8 +33,10 @@ import type { Thunk } from '@siteimprove/alfa-thunk';
 // @public
 export class Audit<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> {
     protected constructor(input: I, rules: List<Rule<I, T, Q, S>>, oracle: Oracle<I, T, Q, S>);
+    // Warning: (ae-forgotten-export) The symbol "Event" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
-    evaluate(performance?: Performance<Rule.Event<I, T, Q, S>>): Promise<Iterable_2<Outcome<I, T, Q, S>>>;
+    evaluate(performance?: Performance<Event<I, T, Q, S>>): Promise<Iterable_2<Outcome<I, T, Q, S>>>;
     // (undocumented)
     static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(input: I, rules: Iterable_2<Rule<I, T, Q, S>>, oracle?: Oracle<I, T, Q, S>): Audit<I, T, Q, S>;
 }
@@ -585,248 +587,43 @@ export namespace Requirement {
     }
 }
 
+// Warning: (ae-forgotten-export) The symbol "Atomic" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "Composite" needs to be exported by the entry point index.d.ts
+//
 // @public
-export abstract class Rule<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> implements Equatable, Hashable, json.Serializable<Rule.JSON>, earl.Serializable<Rule.EARL>, sarif.Serializable<sarif.ReportingDescriptor> {
-    protected constructor(uri: string, requirements: Array_2<Requirement>, tags: Array_2<Tag>, evaluator: Rule.Evaluate<I, T, Q, S>);
-    // (undocumented)
-    equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: Rule<I, T, Q, S>): boolean;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    evaluate(input: I, oracle?: {} extends Q ? any : Oracle<I, T, Q, S>, outcomes?: Cache, performance?: Performance<Rule.Event<I, T, Q, S>>): Promise<Iterable_2<Outcome<I, T, Q, S>>>;
-    // (undocumented)
-    protected readonly _evaluate: Rule.Evaluate<I, T, Q, S>;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    hasRequirement(requirement: Requirement): boolean;
-    // (undocumented)
-    hasRequirement(predicate: Predicate<Requirement>): boolean;
-    // (undocumented)
-    hasTag(tag: Tag): boolean;
-    // (undocumented)
-    hasTag(predicate: Predicate<Tag>): boolean;
-    // (undocumented)
-    get requirements(): ReadonlyArray<Requirement>;
-    // (undocumented)
-    protected readonly _requirements: Array_2<Requirement>;
-    // (undocumented)
-    get tags(): ReadonlyArray<Tag>;
-    // (undocumented)
-    protected readonly _tags: Array_2<Tag>;
-    // (undocumented)
-    toEARL(): Rule.EARL;
-    // (undocumented)
-    abstract toJSON(options: {
-        verbosity: json.Serializable.Verbosity.Minimal;
-    }): Rule.MinimalJSON;
-    // (undocumented)
-    abstract toJSON(): Rule.JSON;
-    // (undocumented)
-    abstract toJSON(options?: json.Serializable.Options): Rule.MinimalJSON | Rule.JSON;
-    // (undocumented)
-    toSARIF(): sarif.ReportingDescriptor;
-    // (undocumented)
-    get uri(): string;
-    // (undocumented)
-    protected readonly _uri: string;
-}
+export type Rule<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> = Atomic<I, T, Q, S> | Composite<I, T, Q, S>;
 
 // @public (undocumented)
 export namespace Rule {
     // (undocumented)
-    export class Atomic<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Rule<I, T, Q, S> {
-        protected constructor(uri: string, requirements: Array_2<Requirement>, tags: Array_2<Tag>, evaluate: Atomic.Evaluate<I, T, Q, S>);
-        // (undocumented)
-        static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(properties: {
-            uri: string;
-            requirements?: Iterable_2<Requirement>;
-            tags?: Iterable_2<Tag>;
-            evaluate: Atomic.Evaluate<I, T, Q, S>;
-        }): Atomic<I, T, Q, S>;
-        // (undocumented)
-        toJSON(options: {
-            verbosity: json.Serializable.Verbosity.Minimal;
-        }): Rule.MinimalJSON;
-        // (undocumented)
-        toJSON(): Atomic.JSON;
-    }
+    export type EARL = Rule_2.EARL;
     // (undocumented)
-    export namespace Atomic {
-        // (undocumented)
-        export interface Evaluate<I, T extends Hashable, Q extends Question.Metadata, S> {
-            // (undocumented)
-            (input: I, performance?: {
-                mark: (name: string) => Performance.Mark<Event<I, T, Q, S>>;
-                measure: (name: string, start?: number) => Performance.Measure<Event<I, T, Q, S>>;
-            }): {
-                applicability(): Iterable_2<Interview<Q, S, T, Maybe<T>>>;
-                expectations(target: T): {
-                    [key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic>>>;
-                };
-            };
-        }
-        // (undocumented)
-        export function isAtomic<I, T extends Hashable, Q extends Question.Metadata, S>(value: Rule<I, T, Q, S>): value is Atomic<I, T, Q, S>;
-        // (undocumented)
-        export function isAtomic<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Atomic<I, T, Q, S>;
-        // (undocumented)
-        export interface JSON extends Rule.JSON {
-            // (undocumented)
-            type: "atomic";
-        }
-    }
+    export type Evaluate<I, T extends Hashable, Q extends Question.Metadata, S> = Rule_2.Evaluate<I, T, Q, S>;
     // (undocumented)
-    export class Composite<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Rule<I, T, Q, S> {
-        protected constructor(uri: string, requirements: Array_2<Requirement>, tags: Array_2<Tag>, composes: Array_2<Rule<I, T, Q, S>>, evaluate: Composite.Evaluate<I, T, Q, S>);
-        // (undocumented)
-        get composes(): ReadonlyArray<Rule<I, T, Q, S>>;
-        // (undocumented)
-        static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(properties: {
-            uri: string;
-            requirements?: Iterable_2<Requirement>;
-            tags?: Iterable_2<Tag>;
-            composes: Iterable_2<Rule<I, T, Q, S>>;
-            evaluate: Composite.Evaluate<I, T, Q, S>;
-        }): Composite<I, T, Q, S>;
-        // (undocumented)
-        toJSON(options: {
-            verbosity: json.Serializable.Verbosity.Minimal;
-        }): Rule.MinimalJSON;
-        // (undocumented)
-        toJSON(): Composite.JSON;
-    }
-    // (undocumented)
-    export namespace Composite {
-        // (undocumented)
-        export interface Evaluate<I, T extends Hashable, Q extends Question.Metadata, S> {
-            // (undocumented)
-            (input: I, performance?: {
-                mark: (name: string) => Performance.Mark<Event<I, T, Q, S>>;
-                measure: (name: string, start?: number) => Performance.Measure<Event<I, T, Q, S>>;
-            }): {
-                expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
-                    [key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic>>>;
-                };
-            };
-        }
-        // (undocumented)
-        export function isComposite<I, T extends Hashable, Q extends Question.Metadata>(value: Rule<I, T, Q>): value is Composite<I, T, Q>;
-        // (undocumented)
-        export function isComposite<I, T extends Hashable, Q extends Question.Metadata>(value: unknown): value is Composite<I, T, Q>;
-        // (undocumented)
-        export interface JSON extends Rule.JSON {
-            // (undocumented)
-            composes: Array_2<Rule.JSON>;
-            // (undocumented)
-            type: "composite";
-            // (undocumented)
-            uri: string;
-        }
-    }
-    // (undocumented)
-    export interface EARL extends earl.EARL {
-        // (undocumented)
-        "@context": {
-            earl: "http://www.w3.org/ns/earl#";
-            dct: "http://purl.org/dc/terms/";
-        };
-        // (undocumented)
-        "@id": string;
-        // (undocumented)
-        "@type": ["earl:TestCriterion", "earl:TestCase"];
-        // (undocumented)
-        "dct:isPartOf": {
-            "@set": Array_2<Requirement.EARL>;
-        };
-    }
-    // (undocumented)
-    export interface Evaluate<I, T extends Hashable, Q extends Question.Metadata, S> {
-        // (undocumented)
-        (input: Readonly<I>, oracle: {} extends Q ? any : Oracle<I, T, Q, S>, outcomes: Cache, performance?: Performance<Event<I, T, Q, S>>): Promise<Iterable_2<Outcome<I, T, Q, S>>>;
-    }
-    // (undocumented)
-    export class Event<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, TYPE extends Event.Type = Event.Type, NAME extends string = string> implements Serializable<Event.JSON<TYPE, NAME>> {
-        constructor(type: TYPE, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, name: NAME);
-        // (undocumented)
-        get name(): NAME;
-        // (undocumented)
-        static of<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, TYPE extends Event.Type, NAME extends string>(type: TYPE, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, name: NAME): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
-        // (undocumented)
-        get rule(): Rule<INPUT, TARGET, QUESTION, SUBJECT>;
-        // (undocumented)
-        toJSON(): Event.JSON<TYPE, NAME>;
-        // (undocumented)
-        get type(): TYPE;
-    }
-    // (undocumented)
-    export namespace Event {
-        // (undocumented)
-        export function end<I, T extends Hashable, Q extends Question.Metadata, S, N extends string = string>(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "end", N>;
-        // (undocumented)
-        export function end<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "total">;
-        // (undocumented)
-        export function endApplicability<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "applicability">;
-        // (undocumented)
-        export function endExpectation<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "expectation">;
-        // (undocumented)
-        export function isEvent<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, TYPE extends Event.Type = Event.Type, NAME extends string = string>(value: unknown): value is Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
-        // (undocumented)
-        export interface JSON<T extends Type = Type, N extends string = string> {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            name: N;
-            // (undocumented)
-            rule: Rule.JSON;
-            // (undocumented)
-            type: T;
-        }
-        // (undocumented)
-        export function start<I, T extends Hashable, Q extends Question.Metadata, S, N extends string = string>(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "start", N>;
-        // (undocumented)
-        export function start<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "total">;
-        // (undocumented)
-        export function startApplicability<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "applicability">;
-        // (undocumented)
-        export function startExpectation<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "expectation">;
-        // (undocumented)
-        export type Type = "start" | "end";
-    }
-    // (undocumented)
-    export type Input<R> = R extends Rule<infer I, any, any, any> ? I : never;
+    export type Input<R> = R extends Rule_2<infer I, any, any, any> ? I : never;
     // (undocumented)
     export function isRule<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Rule<I, T, Q, S>;
     // (undocumented)
-    export interface JSON {
-        // (undocumented)
-        [key: string]: json.JSON;
-        // (undocumented)
-        requirements: Array_2<Requirement.JSON>;
-        // (undocumented)
-        tags: Array_2<Tag.JSON>;
-        // (undocumented)
-        type: string;
-        // (undocumented)
-        uri: string;
-    }
+    export type JSON = Rule_2.JSON;
+    // Warning: (ae-forgotten-export) The symbol "Rule_2" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    export type MinimalJSON = Rule_2.MinimalJSON;
+    // (undocumented)
+    export type Question<R> = R extends Rule_2<any, any, infer Q, any> ? Q : never;
+    // (undocumented)
+    export type Subject<R> = R extends Rule_2<any, any, any, infer S> ? S : never;
+    // (undocumented)
+    export type Target<R> = R extends Rule_2<any, infer T, any, any> ? T : never;
+    import Atomic = AtomicRule;
     const // (undocumented)
     isAtomic: typeof Atomic.isAtomic;
-    // (undocumented)
-    export interface MinimalJSON {
-        // (undocumented)
-        [key: string]: json.JSON;
-        // (undocumented)
-        uri: string;
-    }
-    // (undocumented)
-    export type Question<R> = R extends Rule<any, any, infer Q, any> ? Q : never;
+    import Composite = CompositeRule;
     const // (undocumented)
     isComposite: typeof Composite.isComposite;
-    // (undocumented)
-    export type Subject<R> = R extends Rule<any, any, any, infer S> ? S : never;
-    // (undocumented)
-    export type Target<R> = R extends Rule<any, infer T, any, any> ? T : never;
+    import Event = RuleEvent;
+    const // (undocumented)
+    isEvent: typeof Event.isEvent;
 }
 
 // @public (undocumented)
