@@ -304,9 +304,40 @@ test(`isClipped() returns true for a text node with hidden overflow and a -999px
 
 test(`isClipped() returns false for a relatively positioned element clipped by
       \`rect(1px, 1px, 1px, 1px)\``, (t) => {
+  // `clip` only applies to absolutely positioned elements.
   const element = target({ clip: "rect(1px, 1px, 1px, 1px)" });
 
-  t.equal(isClipped(element), false);
+  t(!isClipped(element));
+});
+
+test(`isClipped() returns true for an absolutely positioned element clipped by
+      \`rect(1px, 1px, 1px, 1px)\``, (t) => {
+  const element = target({
+    clip: "rect(1px, 1px, 1px, 1px)",
+    position: "absolute",
+  });
+
+  t(isClipped(element));
+});
+
+test("isClipped() returns true for elements clipped by an empty shape via clip-path", (t) => {
+  for (const element of [
+    target({ clipPath: "circle(0)" }),
+    target({ clipPath: "polygon(0px 0px)" }),
+    target({ clipPath: "inset(60% 0% 40% 0%)" }),
+  ]) {
+    t(isClipped(element));
+  }
+});
+
+test("isClipped() returns false for elements clipped by a non-empty shape via clip-path", (t) => {
+  for (const element of [
+    target({ clipPath: "circle(20%)" }),
+    target({ clipPath: "polygon(0px 0px 10px 0px 10px 10px)" }),
+    target({ clipPath: "inset(10% 0% 10% 0%)" }),
+  ]) {
+    t(!isClipped(element));
+  }
 });
 
 /*********************************************************************
