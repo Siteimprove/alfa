@@ -4,7 +4,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { Finding } from "./finding.ts";
 import type { Oracle } from "./oracle.ts";
 import { Question } from "./question.ts";
-import type { Rule } from "../rule.ts";
+import type { Rule } from "../rule/index.ts";
 
 /**
  * As `Interview` is a recursive type that models nested chains of `Question`s,
