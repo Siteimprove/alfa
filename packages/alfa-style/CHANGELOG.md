@@ -1,5 +1,11 @@
 # @siteimprove/alfa-style
 
+## 0.119.0
+
+### Minor Changes
+
+- **Added:** The `lh`, `rlh` and `rch` units are now supported. ([#2135](https://github.com/Siteimprove/alfa/pull/2135))
+
 ## 0.118.0
 
 ## 0.117.0

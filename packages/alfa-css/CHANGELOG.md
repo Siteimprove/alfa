@@ -1,5 +1,23 @@
 # @siteimprove/alfa-css
 
+## 0.119.0
+
+### Minor Changes
+
+- **Added:** The `lh`, `rlh` and `rch` units are now supported. ([#2135](https://github.com/Siteimprove/alfa/pull/2135))
+
+- **Breaking:** `Length.resolver` now requires two extra parameters, `lhBase` and `rlhBase`, used to resolve the `lh` and `rlh`. They must be provided after the existing `vhBase` parameter, so callers building a length resolver must be updated accordingly. ([#2135](https://github.com/Siteimprove/alfa/pull/2135))
+
+- **Added:** The `abs()` and `sign()` CSS math functions are now supported in calculations. ([#2134](https://github.com/Siteimprove/alfa/pull/2134))
+
+  `abs(A)` resolves to the absolute value of its argument, keeping its type. `sign(A)` resolves to `-1`, `0`, or `1` as a `<number>`, regardless of the type of its argument. As with the other math functions, arguments that are percentages or relative lengths are only resolved once a resolver is provided. See [CSS Values and Units 4, § Sign-Related Functions](https://drafts.csswg.org/css-values-4/#sign-funcs).
+
+### Patch Changes
+
+- **Fixed:** `polygon()` is now correctly parsed as a comma-separated list of vertices, not a whitespace separated one. ([#2143](https://github.com/Siteimprove/alfa/pull/2143))
+
+  Thanks to [Jeff Witt](https://github.com/wittjeff) for reporting the problem and suggesting a fix.
+
 ## 0.118.0
 
 ## 0.117.0

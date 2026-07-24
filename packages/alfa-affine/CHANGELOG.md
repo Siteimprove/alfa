@@ -1,5 +1,7 @@
 # @siteimprove/alfa-affine
 
+## 0.119.0
+
 ## 0.118.0
 
 ## 0.117.0
