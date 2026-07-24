@@ -131,7 +131,7 @@ test("isEmpty() returns true for a polygon with a one or two vertices", (t) => {
   for (const shape of [
     parse("polygon(0px 0px)"),
     parse("polygon(nonzero, 10px 10px)"),
-    parse("polygon(0px 0px 10px 10px)"),
+    parse("polygon(0px 0px, 10px 10px)"),
   ]) {
     t(Shape.isEmpty(shape));
   }
@@ -139,8 +139,8 @@ test("isEmpty() returns true for a polygon with a one or two vertices", (t) => {
 
 test("isEmpty() returns true for a polygon whose vertices are all identical", (t) => {
   for (const shape of [
-    parse("polygon(10px 10px 10px 10px 10px 10px)"),
-    parse("polygon(evenodd, 10px 10px 10px 10px 10px 10px)"),
+    parse("polygon(10px 10px, 10px 10px, 10px 10px)"),
+    parse("polygon(evenodd, 10px 10px, 10px 10px, 10px 10px)"),
   ]) {
     t(Shape.isEmpty(shape));
   }
@@ -148,10 +148,10 @@ test("isEmpty() returns true for a polygon whose vertices are all identical", (t
 
 test("isEmpty() returns false for a polygon with several distinct vertices", (t) => {
   for (const shape of [
-    parse("polygon(0px 0px 10px 0px 10px 10px)"),
-    parse("polygon(evenodd, 0px 0px 10px 0px 10px 10px)"),
+    parse("polygon(0px 0px, 10px 0px, 10px 10px)"),
+    parse("polygon(evenodd, 0px 0px, 10px 0px, 10px 10px)"),
     // Two out of three vertices coincide, but not all of them.
-    parse("polygon(0px 0px 0px 0px 10px 10px)"),
+    parse("polygon(0px 0px, 0px 0px, 10px 10px)"),
   ]) {
     t(!Shape.isEmpty(shape));
   }
