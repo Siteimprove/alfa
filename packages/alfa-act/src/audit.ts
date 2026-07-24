@@ -7,7 +7,8 @@ import type { Performance } from "@siteimprove/alfa-performance";
 import { Cache } from "./cache.ts";
 import type { Oracle, Question } from "./expectation/index.ts";
 import type { Outcome } from "./outcome.ts";
-import type { Rule } from "./rule.ts";
+import type { Rule } from "./rule/index.ts";
+import type { Event } from "./rule/event.ts";
 
 /**
  * An Audit is built from an input (usually a page), a set of rules that apply
@@ -56,7 +57,7 @@ export class Audit<
   }
 
   public evaluate(
-    performance?: Performance<Rule.Event<I, T, Q, S>>,
+    performance?: Performance<Event<I, T, Q, S>>,
   ): Promise<Iterable<Outcome<I, T, Q, S>>> {
     const outcomes = Cache.empty();
 
