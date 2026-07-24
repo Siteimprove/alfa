@@ -67,9 +67,7 @@ export function evaluate<I, T extends Hashable, Q extends Question.Metadata, S>(
   oracle: {} extends Q ? any : Oracle<I, T, Q, S>,
   outcomes: Cache,
   performance: Performance<Event<I, T, Q, S>> | undefined,
-  collect: (
-    instrument: Instrument<I, T, Q, S>,
-  ) => Promise<Collected<T, Q, S>>,
+  collect: (instrument: Instrument<I, T, Q, S>) => Promise<Collected<T, Q, S>>,
 ): Promise<Iterable<Outcome<I, T, Q, S>>> {
   return outcomes.get(rule, () => {
     const instrument = Instrument.of(rule, performance);
@@ -81,7 +79,7 @@ export function evaluate<I, T extends Hashable, Q extends Question.Metadata, S>(
         return [Outcome.Inapplicable.of(rule, Outcome.getMode(oracleUsed))];
       }
 
-      const run = () =>
+      return instrument.phase(resolvePhase, () =>
         Promise.all(
           Array.from(items).map((item) =>
             resolve(
@@ -92,9 +90,8 @@ export function evaluate<I, T extends Hashable, Q extends Question.Metadata, S>(
               item.oracleUsed,
             ),
           ),
-        );
-
-      return resolvePhase ? instrument.phase(resolvePhase, run) : run();
+        ),
+      );
     });
   });
 }

@@ -38,13 +38,16 @@ export class Instrument<I, T extends Hashable, Q extends Question.Metadata, S> {
   /**
    * Runs `work`, bracketing it with a `start` mark and an `end` measure both
    * named `name`. Returns the result of `work`. The `end` measure is emitted
-   * even if `work` rejects. When no performance instance is present, `work`
-   * runs with no marks at all.
+   * even if `work` rejects. When no performance instance is present, or `name`
+   * is undefined, `work` runs with no marks at all.
    */
-  public async phase<O>(name: string, work: () => O | Promise<O>): Promise<O> {
+  public async phase<O>(
+    name: string | undefined,
+    work: () => O | Promise<O>,
+  ): Promise<O> {
     const performance = this._performance;
 
-    if (performance === undefined) {
+    if (performance === undefined || name === undefined) {
       return work();
     }
 
