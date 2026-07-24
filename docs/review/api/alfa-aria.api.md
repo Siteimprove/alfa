@@ -114,7 +114,7 @@ export namespace DOM {
     hasExplicitRole: typeof dom.hasExplicitRole, // (undocumented)
     hasHeadingLevel: typeof dom.hasHeadingLevel, // (undocumented)
     hasImplicitRole: typeof dom.hasImplicitRole, // (undocumented)
-    hasIncorrectRoleWithoutName: typeof dom.hasIncorrectRoleWithoutName, // (undocumented)
+    isNotLandmarkWithoutName: typeof dom.isNotLandmarkWithoutName, // (undocumented)
     hasNonDefaultRole: typeof dom.hasNonDefaultRole, // (undocumented)
     hasNonEmptyAccessibleName: typeof dom.hasNonEmptyAccessibleName, // (undocumented)
     hasRole: typeof dom.hasRole, // (undocumented)

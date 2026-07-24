@@ -218,3 +218,181 @@ test(`.from() correctly handles slotted list items`, (t) => {
     },
   );
 });
+
+test(`.from() gives a role to named sections`, (t) => {
+  for (const target of [
+    <section aria-label="named"></section>,
+    <section title="named"></section>,
+    // Empty/whitespace titles are considered as named.
+    <section title=""></section>,
+    <section title=" "></section>,
+  ]) {
+    t.deepEqual(Node.from(target, device).toJSON().role, "region");
+  }
+
+  {
+    const target = <section aria-labelledby="name"></section>;
+    <div>
+      {target}
+      <span id="name">Named</span>
+    </div>;
+    t.deepEqual(Node.from(target, device).toJSON().role, "region");
+  }
+  {
+    // Empty aria-labelledby target is still considered as named.
+    const target = <section aria-labelledby="name"></section>;
+    <div>
+      {target}
+      <span id="name"></span>
+    </div>;
+    t.deepEqual(Node.from(target, device).toJSON().role, "region");
+  }
+});
+
+test(`.from() doesn't give a role to unnamed sections`, (t) => {
+  for (const target of [
+    <section></section>,
+    // Empty/whitespace aria-label are not considered named.
+    <section aria-label=""></section>,
+    <section aria-label=" "></section>,
+  ]) {
+    t.deepEqual(Node.from(target, device).toJSON().role, "generic");
+  }
+
+  const target = <section aria-labelledby="invalid"></section>;
+  <div>
+    {target}
+    <span id="name">Named</span>
+  </div>;
+  t.deepEqual(Node.from(target, device).toJSON().role, "generic");
+});
+
+test(`.from() gives a role to sectioned named asides`, (t) => {
+  for (const target of [
+    <aside aria-label="named"></aside>,
+    <aside title="named"></aside>,
+    // Empty/whitespace titles are considered as named.
+    <aside title=""></aside>,
+    <aside title=" "></aside>,
+  ]) {
+    <section>{target}</section>;
+    t.deepEqual(Node.from(target, device).toJSON().role, "complementary");
+  }
+
+  {
+    const target = <aside aria-labelledby="name"></aside>;
+    <section>
+      {target}
+      <span id="name">Named</span>
+    </section>;
+    t.deepEqual(Node.from(target, device).toJSON().role, "complementary");
+  }
+  {
+    // Empty aria-labelledby target is still considered as named.
+    const target = <aside aria-labelledby="name"></aside>;
+    <section>
+      {target}
+      <span id="name"></span>
+    </section>;
+    t.deepEqual(Node.from(target, device).toJSON().role, "complementary");
+  }
+});
+
+test(`.from() doesn't give a role to unnamed sectioned asides`, (t) => {
+  for (const target of [
+    <aside></aside>,
+    // Empty/whitespace aria-label are not considered named.
+    <aside aria-label=""></aside>,
+    <aside aria-label=" "></aside>,
+  ]) {
+    <section>{target}</section>;
+    t.deepEqual(Node.from(target, device).toJSON().role, "generic");
+  }
+
+  const target = <aside aria-labelledby="invalid"></aside>;
+  <section>{target}</section>;
+  t.deepEqual(Node.from(target, device).toJSON().role, "generic");
+});
+
+test(`.from() gives a role to all unscoped asides`, (t) => {
+  for (const target of [
+    <aside aria-label="named"></aside>,
+    <aside title="named"></aside>,
+    <aside title=""></aside>,
+    <aside title=" "></aside>,
+    <aside></aside>,
+    <aside aria-label=""></aside>,
+    <aside aria-label=" "></aside>,
+  ]) {
+    t.deepEqual(Node.from(target, device).toJSON().role, "complementary");
+  }
+
+  {
+    const target = <aside aria-labelledby="name"></aside>;
+    <div>
+      {target}
+      <span id="name">Named</span>
+    </div>;
+    t.deepEqual(Node.from(target, device).toJSON().role, "complementary");
+  }
+  {
+    const target = <aside aria-labelledby="name"></aside>;
+    <div>
+      {target}
+      <span id="name"></span>
+    </div>;
+    t.deepEqual(Node.from(target, device).toJSON().role, "complementary");
+  }
+
+  {
+    const target = <aside aria-labelledby="invalid"></aside>;
+    <div>{target}</div>;
+    t.deepEqual(Node.from(target, device).toJSON().role, "complementary");
+  }
+});
+
+test(`.from() gives a role to named alt-less images`, (t) => {
+  for (const target of [
+    <img alt="" src="foo.jpg" aria-label="named" />,
+    // Empty/whitespace aria-label are considered named.
+    <img alt="" src="foo.jpg" aria-label="" />,
+    <img alt="" src="foo.jpg" aria-label=" " />,
+    <img alt="" src="foo.jpg" title="named" />,
+    // Empty/whitespace titles are considered as named.
+    <img alt="" src="foo.jpg" title="" />,
+    <img alt="" src="foo.jpg" title=" " />,
+  ]) {
+    t.deepEqual(Node.from(target, device).toJSON().role, "img");
+  }
+
+  {
+    const target = <img alt="" src="foo.jpg" aria-labelledby="name" />;
+    <div>
+      {target}
+      <span id="name">Named</span>
+    </div>;
+    t.deepEqual(Node.from(target, device).toJSON().role, "img");
+  }
+  {
+    // Empty aria-labelledby target is still considered as named.
+    const target = <img alt="" src="foo.jpg" aria-labelledby="name" />;
+    <div>
+      {target}
+      <span id="name"></span>
+    </div>;
+    t.deepEqual(Node.from(target, device).toJSON().role, "img");
+  }
+
+  {
+    // Invalid aria-labelledby is still considered as named
+    const target = <img alt="" src="foo.jpg" aria-labelledby="invalid" />;
+    <div>{target}</div>;
+    t.deepEqual(Node.from(target, device).toJSON().role, "img");
+  }
+});
+
+test(`.from() doesn't create a node for unnamed alt-less images`, (t) => {
+  const target=<img alt="" src="foo.jpg" />;
+
+  t.deepEqual(Node.from(target, device).toJSON().role, null);
+});
