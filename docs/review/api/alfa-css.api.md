@@ -17,6 +17,7 @@ import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import type * as json from '@siteimprove/alfa-json';
 import { Keywords as Keywords_2 } from '../position/keywords.ts';
+import { Length as Length_3 } from '../index.ts';
 import { LengthPercentage as LengthPercentage_2 } from '../index.ts';
 import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Maybe } from '@siteimprove/alfa-option';
@@ -1981,7 +1982,7 @@ export namespace Radius {
 
 // Warning: (ae-incompatible-release-tags) The symbol "Rectangle" is marked as @public, but its signature references "Resolvable" which is marked as @internal
 //
-// @public @deprecated (undocumented)
+// @public (undocumented)
 export class Rectangle<O extends Length | Rectangle.Auto = Length | Rectangle.Auto> extends BasicShape<"rectangle", Value.HasCalculation<[O, O, O, O]>> implements Resolvable<Rectangle.Canonical, Rectangle.Resolver> {
     protected constructor(top: O, right: O, bottom: O, left: O);
     // (undocumented)
@@ -2016,7 +2017,7 @@ export class Rectangle<O extends Length | Rectangle.Auto = Length | Rectangle.Au
     toString(): string;
 }
 
-// @public @deprecated (undocumented)
+// @public (undocumented)
 export namespace Rectangle {
     // (undocumented)
     export type Auto = Keyword<"auto">;
@@ -2039,6 +2040,8 @@ export namespace Rectangle {
     export type Resolver = Length.Resolver;
     const // (undocumented)
     parse: Parser<Rectangle>;
+    const // @deprecated
+    parseLegacy: Parser<Rectangle>;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "Resolvable" should be prefixed with an underscore because the declaration is marked as @internal
@@ -2282,10 +2285,13 @@ export namespace Shape {
         // (undocumented)
         export type Resolver = Circle.Resolver & Ellipse.Resolver & Inset.Resolver & Polygon.Resolver & Rectangle.Resolver;
         const // @internal (undocumented)
-        parse: Parser_2<Slice<Token>, Circle<Radius_3<LengthPercentage_2 | Radius_3.Side>, Position_3<Keywords_2.Horizontal, Keywords_2.Vertical, Component_3<Keywords_2.Horizontal>, Component_3<Keywords_2.Vertical>>> | Ellipse<Radius_3<LengthPercentage_2 | Radius_3.Side>, Position_3<Keywords_2.Horizontal, Keywords_2.Vertical, Component_3<Keywords_2.Horizontal>, Component_3<Keywords_2.Vertical>>> | Inset<Inset.Offset, Corner_3> | Polygon<Polygon.Fill, LengthPercentage_2>, string, []>;
+        parse: Parser_2<Slice<Token>, Circle<Radius_3<LengthPercentage_2 | Radius_3.Side>, Position_3<Keywords_2.Horizontal, Keywords_2.Vertical, Component_3<Keywords_2.Horizontal>, Component_3<Keywords_2.Vertical>>> | Ellipse<Radius_3<LengthPercentage_2 | Radius_3.Side>, Position_3<Keywords_2.Horizontal, Keywords_2.Vertical, Component_3<Keywords_2.Horizontal>, Component_3<Keywords_2.Vertical>>> | Inset<Inset.Offset, Corner_3> | Polygon<Polygon.Fill, LengthPercentage_2> | Rectangle<Length_3 | Rectangle.Auto>, string, []>;
     }
     // (undocumented)
     export type Canonical = Shape<Basic.Canonical, Box.Geometry>;
+    export function isEmpty(shape: Basic): boolean;
+    // (undocumented)
+    export function isShape(value: unknown): value is Shape;
     // (undocumented)
     export interface JSON extends Value.JSON<"shape"> {
         // (undocumented)
@@ -2300,7 +2306,7 @@ export namespace Shape {
     // (undocumented)
     export type Resolver = Basic.Resolver;
     const // (undocumented)
-    parse: Parser<Shape<Circle | Ellipse | Inset | Polygon>>;
+    parse: Parser<Shape<Circle | Ellipse | Inset | Polygon | Rectangle>>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Skew" is marked as @public, but its signature references "Resolvable" which is marked as @internal

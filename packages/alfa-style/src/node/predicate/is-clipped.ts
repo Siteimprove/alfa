@@ -1,5 +1,10 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { Length, LengthPercentage, Numeric } from "@siteimprove/alfa-css";
+import {
+  Length,
+  LengthPercentage,
+  Numeric,
+  Shape,
+} from "@siteimprove/alfa-css";
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -220,15 +225,15 @@ function isClippedByMasking(
   return function isClipped(element: Element): boolean {
     const style = Style.from(element, device, context);
 
+    const { value: clipPath } = style.computed("clip-path");
+
+    if (Shape.isShape(clipPath) && Shape.isEmpty(clipPath.shape)) {
+      return true;
+    }
+
     const { value: clip } = style.computed("clip");
 
-    return (
-      clip.type === "shape" &&
-      ((clip.shape.top.type === "length" &&
-        clip.shape.top.equals(clip.shape.bottom)) ||
-        (clip.shape.left.type === "length" &&
-          clip.shape.left.equals(clip.shape.right)))
-    );
+    return Shape.isShape(clip) && Shape.isEmpty(clip.shape);
   };
 }
 
