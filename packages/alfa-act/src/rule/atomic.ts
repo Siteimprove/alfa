@@ -56,6 +56,8 @@ export class Atomic<
         oracle,
         outcomes,
         performance,
+        // For atomic rules, we collect the final outcomes by first running the Applicability,
+        // and then running the expectations on each target.
         async (instrument) => {
           const { applicability, expectations } = evaluate(input, instrument);
 

@@ -65,6 +65,8 @@ export class Composite<
         oracle,
         outcomes,
         performance,
+        // For composite rules, we collect the final outcomes by first evalutaing every
+        // atomic rule in it, and then running the composition logic.
         async (instrument) => {
           const evaluated = await Promise.all(
             this._composes.map((rule) =>
