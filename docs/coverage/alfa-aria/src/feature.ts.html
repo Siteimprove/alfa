@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.55% </span>
+                <span class="strong">82.37% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>246/298</span>
+                <span class='fraction'>243/295</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.19% </span>
+                <span class="strong">77.86% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>104/133</span>
+                <span class='fraction'>102/131</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.17% </span>
+                <span class="strong">82.08% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>166/202</span>
+                <span class='fraction'>165/201</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.73% </span>
+                <span class="strong">80.55% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>176/218</span>
+                <span class='fraction'>174/216</span>
             </div>
         
             
@@ -952,7 +952,12 @@
 <a name='L887'></a><a href='#L887'>887</a>
 <a name='L888'></a><a href='#L888'>888</a>
 <a name='L889'></a><a href='#L889'>889</a>
-<a name='L890'></a><a href='#L890'>890</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L890'></a><a href='#L890'>890</a>
+<a name='L891'></a><a href='#L891'>891</a>
+<a name='L892'></a><a href='#L892'>892</a>
+<a name='L893'></a><a href='#L893'>893</a>
+<a name='L894'></a><a href='#L894'>894</a>
+<a name='L895'></a><a href='#L895'>895</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -999,16 +1004,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7030x</span>
-<span class="cline-any cline-yes">6982x</span>
+<span class="cline-any cline-yes">6976x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2998x</span>
+<span class="cline-any cline-yes">2992x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7030x</span>
 <span class="cline-any cline-yes">7030x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2998x</span>
+<span class="cline-any cline-yes">2992x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1033,7 +1038,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">82x</span>
-<span class="cline-any cline-yes">5856x</span>
+<span class="cline-any cline-yes">5850x</span>
 <span class="cline-any cline-yes">820x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">820x</span>
@@ -1319,13 +1324,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">83x</span>
+<span class="cline-any cline-yes">77x</span>
 <span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">69x</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">63x</span>
@@ -2212,10 +2222,15 @@ const Features: Features = {
           yield Role.of("presentation");
         }
 &nbsp;
-        // if there is no src attribute, or it is empty
-        if (element.attribute("src").every((src) =&gt; src.value.trim() === "")) {
-          yield Role.of("presentation");
-        }
+        // The role of src-less images is still "img" in the specs (and major browsers),
+        // however, there seems to be consensus ARIA side that it should be "none", but
+        // the exact phrasing is complicated due to empty `&lt;img&gt;` inside `&lt;picture&gt;`.
+        // See https://github.com/w3c/aria/pull/2221
+        // Keeping this here for memory purpose.
+        // // if there is no src attribute, or it is empty
+        // if (element.attribute("src").every((src) =&gt; src.value.trim() === "")) {
+        //   yield Role.of("presentation");
+        // }
 &nbsp;
         yield Role.of("img");
       },
@@ -2737,7 +2752,7 @@ const Features: Features = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-06T08:17:08.474Z
+                at 2026-07-22T12:45:00.069Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
