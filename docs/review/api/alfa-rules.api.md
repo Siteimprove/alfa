@@ -68,20 +68,23 @@ export namespace BestPractice {
 // @public (undocumented)
 const _default: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 
-// @public @deprecated (undocumented)
-const _default_10: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
+// @public
+const _default_10: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
 // @public @deprecated (undocumented)
 const _default_11: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 
 // @public @deprecated (undocumented)
-const _default_12: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
+const _default_12: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 
 // @public @deprecated (undocumented)
 const _default_13: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
 // @public @deprecated (undocumented)
-const _default_14: Rule.Atomic<Page, Text_2, {}, Text_2>;
+const _default_14: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
+
+// @public @deprecated (undocumented)
+const _default_15: Rule.Atomic<Page, Text_2, {}, Text_2>;
 
 // @public
 const _default_2: Rule.Atomic<Page, Document_2, Question.Metadata, Element_2<string>>;
@@ -109,11 +112,11 @@ const _default_9: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Elemen
 
 declare namespace deprecatedRules {
     export {
-        _default_10 as DR3,
-        _default_11 as DR6,
-        _default_12 as DR34,
-        _default_13 as DR36,
-        _default_14 as DR83
+        _default_11 as DR3,
+        _default_12 as DR6,
+        _default_13 as DR34,
+        _default_14 as DR36,
+        _default_15 as DR83
     }
 }
 export { deprecatedRules }
@@ -153,7 +156,7 @@ declare namespace experimentalRules {
         _default_7 as R114,
         _default_8 as R115,
         _default_9 as R117,
-        _default_9 as R118
+        _default_10 as R118
     }
 }
 export { experimentalRules }
