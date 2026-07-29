@@ -19,12 +19,12 @@ import { ARIA } from "../requirements/index.ts";
 import { Scope, Stability } from "../tags/index.ts";
 
 const {
-  hasIncorrectRoleWithoutName,
+  isNotLandmarkWithoutName,
   hasRole,
   isIncludedInTheAccessibilityTree,
 } = DOM;
 const { hasNamespace } = Element;
-const { and, equals } = Predicate;
+const { and, equals, not } = Predicate;
 const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
@@ -45,10 +45,10 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
                 hasNamespace(equals(Namespace.HTML)),
                 isIncludedInTheAccessibilityTree(device),
                 hasRole(device, (role) => role.is("landmark")),
+                // `<form>` without name are not landmarks.
+                not(isNotLandmarkWithoutName(device))
               ),
             )
-            // circumventing https://github.com/Siteimprove/alfa/issues/298
-            .reject(hasIncorrectRoleWithoutName(device))
             // We first group by name, under the assumption that duplicated
             // names are less frequent than duplicated roles.
             .groupBy((landmark) =>

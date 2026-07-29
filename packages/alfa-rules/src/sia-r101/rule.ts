@@ -2,7 +2,7 @@ import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Document } from "@siteimprove/alfa-dom";
-import { Element, Node, Query, Text } from "@siteimprove/alfa-dom";
+import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -11,11 +11,11 @@ import { String } from "@siteimprove/alfa-string";
 import type { Page } from "@siteimprove/alfa-web";
 
 import { expectation, Question } from "../common/act/index.ts";
-
 import { withDocumentElement } from "../common/applicability/with-document-element.ts";
+import { getMainElements } from "../common/dom/get-main-elements.ts";
 import { Scope, Stability } from "../tags/index.ts";
 
-const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
+const { isIncludedInTheAccessibilityTree } = DOM;
 const { isContent } = Element;
 const { not } = Predicate;
 const { and } = Refinement;
@@ -38,10 +38,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Node>({
       },
 
       expectations(target) {
-        const mains = Query.getElementDescendants(
-          document,
-          Node.flatTree,
-        ).filter(hasRole(device, "main"));
+        const mains = getMainElements(device, document);
 
         return {
           1: Question.of("main-landmark-elements", target)

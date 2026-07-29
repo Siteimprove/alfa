@@ -9,6 +9,8 @@ import { Value } from "../value.ts";
 import { type Parser as CSSParser, Token } from "../../syntax/index.ts";
 
 import { Box } from "../box.ts";
+import { Numeric } from "../numeric/numeric.ts";
+import { Percentage } from "../numeric/percentage.ts";
 import { Keyword } from "../textual/keyword.ts";
 
 import { Circle } from "./circle.ts";
@@ -23,9 +25,9 @@ const { either } = Parser;
  * @public
  */
 export class Shape<
-    S extends Shape.Basic = Shape.Basic,
-    B extends Box.Geometry = Box.Geometry,
-  >
+  S extends Shape.Basic = Shape.Basic,
+  B extends Box.Geometry = Box.Geometry,
+>
   extends Value<"shape", Value.HasCalculation<[S]>>
   implements
     Resolvable<Shape.Canonical, Shape.Resolver>,
@@ -117,11 +119,7 @@ export namespace Shape {
       | Rectangle.Canonical;
 
     export type JSON =
-      | Circle.JSON
-      | Ellipse.JSON
-      | Inset.JSON
-      | Polygon.JSON
-      | Rectangle.JSON;
+      Circle.JSON | Ellipse.JSON | Inset.JSON | Polygon.JSON | Rectangle.JSON;
 
     export type Resolver = Circle.Resolver &
       Ellipse.Resolver &
@@ -152,17 +150,12 @@ export namespace Shape {
           .get();
     }
 
-    /**
-     * @remarks
-     * This does not parse the deprecated `rect()` shape.
-     *
-     * @internal
-     */
+    /** @internal */
     export const parse = either<
       Slice<Token>,
-      Circle | Ellipse | Inset | Polygon,
+      Circle | Ellipse | Inset | Polygon | Rectangle,
       string
-    >(Circle.parse, Ellipse.parse, Inset.parse, Polygon.parse);
+    >(Circle.parse, Ellipse.parse, Inset.parse, Polygon.parse, Rectangle.parse);
   }
 
   export interface JSON extends Value.JSON<"shape"> {
@@ -176,14 +169,69 @@ export namespace Shape {
 
   export type PartialResolver = Basic.PartialResolver;
 
+  export function isShape(value: unknown): value is Shape {
+    return value instanceof Shape;
+  }
+
   /**
-   * @remarks
-   * This does not parse the deprecated `rect()` shape.
+   * Whether a basic shape is provably empty, i.e. degenerated to 0 size.
    */
-  export const parse: CSSParser<Shape<Circle | Ellipse | Inset | Polygon>> = (
-    input,
-  ) => {
-    let shape: Circle | Ellipse | Inset | Polygon | undefined;
+  export function isEmpty(shape: Basic): boolean {
+    if (Circle.isCircle(shape)) {
+      // Circle of provable 0 radius.
+      const radius = shape.radius.value;
+
+      return Numeric.isFixed(radius) && Numeric.isZero(radius);
+    }
+
+    if (Ellipse.isEllipse(shape)) {
+      // Ellipse with either radius of provable 0.
+      const rx = shape.rx.value;
+      const ry = shape.ry.value;
+
+      return (
+        (Numeric.isFixed(rx) && Numeric.isZero(rx)) ||
+        (Numeric.isFixed(ry) && Numeric.isZero(ry))
+      );
+    }
+
+    if (Polygon.isPolygon(shape)) {
+      // Polygon with all vertices at the same point (including the trivial
+      // case of a single vertex), or with only two vertices (line)
+      const [[x, y], ...rest] = shape.vertices;
+
+      return rest.length <= 1 || rest.every(([vx, vy]) => vx.equals(x) && vy.equals(y));
+    }
+
+    if (Inset.isInset(shape)) {
+      // Inset with opposite offsets summing up to 100%.
+      const [top, right, bottom, left] = shape.offsets;
+
+      return (
+        (Percentage.isFixed(top) &&
+          Percentage.isFixed(bottom) &&
+          top.value + bottom.value >= 1) ||
+        (Percentage.isFixed(right) &&
+          Percentage.isFixed(left) &&
+          right.value + left.value >= 1)
+      );
+    }
+
+    if (Rectangle.isRectangle(shape)) {
+      // Rectangle with identical top/bottom or left/right offsets.
+      return (
+        (Numeric.isFixed(shape.top) && shape.top.equals(shape.bottom)) ||
+        (Numeric.isFixed(shape.left) && shape.left.equals(shape.right))
+      );
+    }
+
+    return false;
+  }
+
+  export const parse: CSSParser<
+    Shape<Circle | Ellipse | Inset | Polygon | Rectangle>
+  > = (input) => {
+    let shape: Circle | Ellipse | Inset | Polygon | Rectangle | undefined;
     let box: Box.Geometry | undefined;
 
     const skipWhitespace = () => {

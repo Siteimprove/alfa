@@ -57,3 +57,27 @@ test(`evaluate() is inapplicable to a non-draggable <img> element with a
 
   t.deepEqual(await evaluate(R2, { document }), [inapplicable(R2)]);
 });
+
+test("evaluate() passes an <img> element with an empty alt and an accessible name", async (t) => {
+  const target = <img alt="" aria-label="Hello world" src="foo.jpg" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R2, { document }), [
+    passed(R2, target, {
+      1: Outcomes.HasAccessibleName,
+    }),
+  ]);
+});
+
+test("evaluate() fails an <img> element with an empty alt and an empty aria-label", async (t) => {
+  const target = <img alt="" aria-label="" src="foo.jpg" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R2, { document }), [
+    failed(R2, target, {
+      1: Outcomes.HasNoAccessibleName,
+    }),
+  ]);
+});

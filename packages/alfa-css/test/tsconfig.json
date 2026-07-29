@@ -39,7 +39,7 @@
     "./value/numeric/percentage.spec.ts",
     "./value/position.spec.ts",
     "./value/shadow.spec.ts",
-    "./value/shape.spec.ts",
+    "./value/shape/shape.spec.ts",
     "./value/shape/circle.spec.ts",
     "./value/shape/ellipse.spec.ts",
     "./value/shape/inset.spec.ts",

@@ -2,7 +2,7 @@ import type { Hashable } from "@siteimprove/alfa-hash";
 import type { Option } from "@siteimprove/alfa-option";
 
 import type { Question } from "./question.ts";
-import type { Rule } from "../rule.ts";
+import type { Rule } from "../rule/index.ts";
 
 /**
  * @public

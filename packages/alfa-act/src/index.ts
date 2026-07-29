@@ -10,4 +10,4 @@ export * from "./cache.ts";
 export * from "./expectation/index.ts";
 export * from "./metadata/index.ts";
 export * from "./outcome.ts";
-export * from "./rule.ts";
+export * from "./rule/index.ts";
