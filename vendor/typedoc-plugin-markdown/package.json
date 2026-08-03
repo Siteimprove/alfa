@@ -1,0 +1,52 @@
+{
+  "name": "typedoc-plugin-markdown",
+  "version": "4.12.0",
+  "description": "Generates TypeScript API documentation as Markdown.",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "type": "module",
+  "files": [
+    "/dist",
+    "/typedoc-plugin-markdown.schema.json"
+  ],
+  "scripts": {
+    "lint": "eslint ./src",
+    "prepublishOnly": "npm run lint && npm run build && npm run schema",
+    "prebuild": "rm -rf dist && prebuild-options && tsx ./scripts/prebuild",
+    "build": "tsc && tsc-alias",
+    "build-and-run": "npm run build && npm run fixtures -- -isDEV",
+    "fixtures": "rm -rf ./test/fixtures/out && node ./test/scripts/build-fixtures.mjs",
+    "validate": "node test/lint/lint.md.mjs && tsx test/lint/lint.mdx.mjs",
+    "pretest": "rm -rf test/out && npm run fixtures -- -isCI",
+    "test": "npm run validate && npm run mocha",
+    "test:update": "npm run build && npm run fixtures && rm -rf test/__snapshots__ && npm run mocha",
+    "mocha": "mocha --config ./mocha.config.json",
+    "schema": "tsx ./scripts/schema/generate-schema.ts",
+    "docs": "npm run build && typedoc --options ./typedoc.public.json"
+  },
+  "author": "Thomas Grey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/typedoc2md/typedoc-plugin-markdown/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/typedoc2md/typedoc-plugin-markdown.git",
+    "directory": "packages/typedoc-plugin-markdown"
+  },
+  "homepage": "https://typedoc-plugin-markdown.org",
+  "peerDependencies": {
+    "typedoc": "0.28.x"
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "keywords": [
+    "documentation",
+    "markdown",
+    "typedoc",
+    "typescript",
+    "typedoc-plugin"
+  ]
+}
