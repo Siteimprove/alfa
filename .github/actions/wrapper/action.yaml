@@ -30,6 +30,9 @@ inputs:
     description: "Whether to create and publish a new version."
     required: false
     default: "false"
+  reference-package:
+    description: "Which package's version will be used to tag the release (default: @siteimprove/alfa-rules)."
+    required: false
   public:
     description: "Whether the packages are public and require a provenance statement."
     required: false
@@ -65,6 +68,13 @@ runs:
         # We only need graphviz to generate dependency graphs
         setup-graphviz: ${{ inputs.dependency-graphs }}
 
+    - name: Bump version
+      id: version
+      if: inputs.publish == 'true'
+      uses: siteimprove/alfa/.github/actions/version@main
+      with:
+        reference-package: ${{ input.reference-package }}
+
     - name: Generate coverage data
       if: inputs.coverage == 'true'
       uses: siteimprove/alfa/.github/actions/coverage@main
@@ -72,19 +82,26 @@ runs:
     - name: Generate documentation
       if: inputs.generate-documentation == 'true'
       uses: siteimprove/alfa/.github/actions/documentation@main
+      with:
+        version-tag: v${{ steps.version.outputs.version }}
 
     - name: Generate dependency graphs
       if: inputs.dependency-graphs == 'true'
       uses: siteimprove/alfa/.github/actions/dependency-graphs@main
 
-    - name: Bump version
-      id: version
-      if: inputs.publish == 'true'
-      uses: siteimprove/alfa/.github/actions/version@main
+    - name: Add version tag
+      shell: bash
+      if: input.publish == 'true'
+      run: git tag --annotate ${VERSION} --message=${VERSION}
+      env:
+        # Passing it as a variable rather than inline hardens against script injection.
+        # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+        VERSION: v${{ steps.version.outputs.version }}
+
 
     - name: Push changes
       shell: bash
-      # "version" may create a new tag, so we need to push tags too.
+      # New version creates a new tag, so we need to push tags too.
       run: git push --follow-tags
 
     - name: Publish packages
