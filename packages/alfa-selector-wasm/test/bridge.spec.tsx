@@ -137,3 +137,24 @@ test("matches sibling combinators across a list of siblings", (t) => {
   engine.clear();
 });
 
+test("matches :has() against a real tree", (t) => {
+  const { document, div, table } = fixture();
+
+  const engine = SelectorEngine.load();
+  engine.loadDom(document);
+
+  // The div has a `.table` descendant, so `:has(.table)` should match it.
+  const hasTable = engine.parseSelector(".foo:has(.table)");
+  t.equal(engine.matches(hasTable, div), true);
+  t.equal(engine.matches(hasTable, table), false);
+
+  const hasMissing = engine.parseSelector(".foo:has(.missing)");
+  t.equal(engine.matches(hasMissing, div), false);
+
+  // Combined with the desugared nesting form from the original bug report.
+  const combined = engine.parseSelector(":is(.lfr-layout-structure-item):has(#cell)");
+  t.equal(engine.matches(combined, div), true);
+
+  engine.clear();
+});
+

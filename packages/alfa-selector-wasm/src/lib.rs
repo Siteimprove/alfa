@@ -125,3 +125,168 @@ pub fn matches(selector_id: u32, element_id: u32) -> bool {
             .any(|selector| matches_selector(selector, 0, None, &element, &mut context))
     })
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::dom::{set_dom, ElementData};
+
+    #[derive(Default, Clone, Copy)]
+    struct Node<'a> {
+        name: &'a str,
+        classes: &'a [&'a str],
+        parent: Option<usize>,
+        first_child: Option<usize>,
+        next_sibling: Option<usize>,
+        prev_sibling: Option<usize>,
+    }
+
+    fn build(nodes: &[Node]) {
+        set_dom(
+            nodes
+                .iter()
+                .map(|n| ElementData {
+                    local_name: n.name.to_string(),
+                    namespace: String::new(),
+                    id: None,
+                    classes: n.classes.iter().map(|s| s.to_string()).collect(),
+                    attributes: vec![],
+                    parent: n.parent,
+                    first_child: n.first_child,
+                    next_sibling: n.next_sibling,
+                    prev_sibling: n.prev_sibling,
+                    is_root: n.parent.is_none(),
+                })
+                .collect(),
+        );
+    }
+
+    fn matches(selector: &str, element_id: u32) -> bool {
+        let id = crate::parse_selector(selector);
+        assert!(id >= 0, "failed to parse {selector:?}");
+        crate::matches(id as u32, element_id)
+    }
+
+    #[test]
+    fn has_matches_direct_child() {
+        // <div class="container"><span class="target"></span></div>
+        build(&[
+            Node {
+                name: "div",
+                classes: &["container"],
+                first_child: Some(1),
+                ..Default::default()
+            },
+            Node {
+                name: "span",
+                classes: &["target"],
+                parent: Some(0),
+                ..Default::default()
+            },
+        ]);
+
+        assert!(matches(".container:has(.target)", 0));
+    }
+
+    #[test]
+    fn has_matches_deep_descendant() {
+        // <div class="container"><p><span class="target"></span></p></div>
+        build(&[
+            Node {
+                name: "div",
+                classes: &["container"],
+                first_child: Some(1),
+                ..Default::default()
+            },
+            Node {
+                name: "p",
+                parent: Some(0),
+                first_child: Some(2),
+                ..Default::default()
+            },
+            Node {
+                name: "span",
+                classes: &["target"],
+                parent: Some(1),
+                ..Default::default()
+            },
+        ]);
+
+        assert!(matches(".container:has(.target)", 0));
+    }
+
+    #[test]
+    fn has_does_not_match_when_absent() {
+        // <div class="container"><span class="other"></span></div>
+        build(&[
+            Node {
+                name: "div",
+                classes: &["container"],
+                first_child: Some(1),
+                ..Default::default()
+            },
+            Node {
+                name: "span",
+                classes: &["other"],
+                parent: Some(0),
+                ..Default::default()
+            },
+        ]);
+
+        assert!(!matches(".container:has(.target)", 0));
+    }
+
+    #[test]
+    fn has_matches_next_sibling_combinator() {
+        // <div class="anchor"></div><span class="target"></span>
+        build(&[
+            Node {
+                name: "div",
+                classes: &["anchor"],
+                next_sibling: Some(1),
+                ..Default::default()
+            },
+            Node {
+                name: "span",
+                classes: &["target"],
+                prev_sibling: Some(0),
+                ..Default::default()
+            },
+        ]);
+
+        assert!(matches(".anchor:has(+ .target)", 0));
+        assert!(!matches(".anchor:has(+ .other)", 0));
+    }
+
+    #[test]
+    fn has_composes_with_is() {
+        // Original motivating bug: a desugared `& .table` nested rule, wrapped in
+        // `:has()`, should still resolve correctly against a real tree.
+        // <div class="lfr-layout-structure-item foo"><table class="table"><span id="cell"/></table></div>
+        build(&[
+            Node {
+                name: "div",
+                classes: &["lfr-layout-structure-item", "foo"],
+                first_child: Some(1),
+                ..Default::default()
+            },
+            Node {
+                name: "table",
+                classes: &["table"],
+                parent: Some(0),
+                first_child: Some(2),
+                ..Default::default()
+            },
+            Node {
+                name: "span",
+                parent: Some(1),
+                ..Default::default()
+            },
+        ]);
+
+        assert!(matches(
+            ":is(.lfr-layout-structure-item):has(.table)",
+            0
+        ));
+        assert!(!matches(":is(.lfr-layout-structure-item):has(.missing)", 0));
+    }
+}

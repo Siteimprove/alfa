@@ -7,6 +7,7 @@
 //! TypeScript side (see `serialization.rs`).
 
 use std::cell::RefCell;
+use std::ptr::NonNull;
 
 use selectors::attr::{AttrSelectorOperation, CaseSensitivity, NamespaceConstraint};
 use selectors::bloom::BloomFilter;
@@ -68,9 +69,17 @@ impl Element for ElementRef {
     type Impl = AlfaSelectorImpl;
 
     fn opaque(&self) -> OpaqueElement {
-        // The index uniquely identifies the element; hand the crate a pointer
-        // derived from it purely for identity comparisons.
-        OpaqueElement::new(&self.0)
+        // `ElementRef` is a `Copy` index handle: it gets reconstructed at every
+        // traversal step (`parent_element`, `next_sibling_element`, ...), so two
+        // `ElementRef`s for the same node are distinct stack values with distinct
+        // addresses. `OpaqueElement::new(&self.0)` would take the address of
+        // *that* transient copy, so two references to the same logical element
+        // would never compare equal — breaking any identity check (`:has()`'s
+        // relative-selector anchor, in particular). Synthesize the token from
+        // the index itself instead, so it is stable and shared across copies.
+        OpaqueElement::from_non_null_ptr(
+            NonNull::new((self.0 + 1) as *mut ()).expect("index + 1 is never zero"),
+        )
     }
 
     fn parent_element(&self) -> Option<Self> {
