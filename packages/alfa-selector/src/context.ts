@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 
@@ -49,8 +50,18 @@ export class Context {
     return this.addState(element, Context.State.Hover);
   }
 
+  private static _hovered = Cache.empty<Element, Context>();
+
+  /**
+   * @remarks
+   * Interned per element: repeated calls for the same element return the
+   * same instance, so downstream `Cache<Context, _>` lookups (e.g. in
+   * `Cascade`/`Style`) can actually hit across separate call sites querying
+   * the same single-element context instead of always missing on a fresh
+   * object.
+   */
   public static hover(element: Element): Context {
-    return this.empty().hover(element);
+    return this._hovered.get(element, () => this.empty().hover(element));
   }
 
   public isHovered(element: Element): boolean {
@@ -61,8 +72,10 @@ export class Context {
     return this.addState(element, Context.State.Active);
   }
 
+  private static _activated = Cache.empty<Element, Context>();
+
   public static active(element: Element): Context {
-    return this.empty().active(element);
+    return this._activated.get(element, () => this.empty().active(element));
   }
 
   public isActive(element: Element): boolean {
@@ -73,8 +86,10 @@ export class Context {
     return this.addState(element, Context.State.Focus);
   }
 
+  private static _focused = Cache.empty<Element, Context>();
+
   public static focus(element: Element): Context {
-    return this.empty().focus(element);
+    return this._focused.get(element, () => this.empty().focus(element));
   }
 
   public isFocused(element: Element): boolean {
@@ -85,8 +100,10 @@ export class Context {
     return this.addState(element, Context.State.Visited);
   }
 
+  private static _visited = Cache.empty<Element, Context>();
+
   public static visit(element: Element): Context {
-    return this.empty().visit(element);
+    return this._visited.get(element, () => this.empty().visit(element));
   }
 
   public isVisited(element: Element): boolean {
