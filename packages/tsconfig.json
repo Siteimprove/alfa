@@ -61,6 +61,7 @@
     { "path": "alfa-sarif" },
     { "path": "alfa-selective" },
     { "path": "alfa-selector" },
+    { "path": "alfa-selector-wasm" },
     { "path": "alfa-sequence" },
     { "path": "alfa-set" },
     { "path": "alfa-slice" },
