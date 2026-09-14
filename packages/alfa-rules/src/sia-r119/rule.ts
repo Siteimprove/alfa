@@ -71,11 +71,15 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
-const isScriptSupporting = hasName("script", "template");
+function hasHtmlName<N extends string>(name: N, ...rest: Array<N>) {
+  return and(hasNamespace(Namespace.HTML), hasName(name, ...rest));
+}
+
+const isScriptSupporting = hasHtmlName("script", "template");
 
 function elementChildren(element: Element): Sequence<Element> {
   return element
-    .children(Node.fullTree)
+    .children()
     .filter(isElement)
     .reject(isScriptSupporting);
 }
@@ -88,7 +92,7 @@ function hasTextContent(element: Element): boolean {
 }
 
 function listContent(target: Element): Result<Diagnostic> {
-  const disallowed = elementChildren(target).reject(hasName("li"));
+  const disallowed = elementChildren(target).reject(hasHtmlName("li"));
 
   return disallowed.isEmpty()
     ? Outcomes.HasValidContent
@@ -97,7 +101,7 @@ function listContent(target: Element): Result<Diagnostic> {
 
 function descriptionListContent(target: Element): Result<Diagnostic> {
   const children = elementChildren(target);
-  const disallowed = children.reject(hasName("div", "dt", "dd"));
+  const disallowed = children.reject(hasHtmlName("div", "dt", "dd"));
 
   if (!disallowed.isEmpty()) {
     return Outcomes.HasDisallowedElements(disallowed);
@@ -132,7 +136,7 @@ function isWellFormedGroup(wrapper: Element): boolean {
 
   const children = elementChildren(wrapper);
 
-  if (!children.reject(hasName("dt", "dd")).isEmpty()) {
+  if (!children.reject(hasHtmlName("dt", "dd")).isEmpty()) {
     return false;
   }
 

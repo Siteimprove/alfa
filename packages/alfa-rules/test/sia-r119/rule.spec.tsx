@@ -1,4 +1,4 @@
-import { h } from "@siteimprove/alfa-dom";
+import { h, Namespace } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import R119, { Outcomes } from "../../src/sia-r119/rule.ts";
@@ -82,6 +82,23 @@ test(`evaluate() fails a <ul> whose items carry the listitem role without being 
   const error = <div role="listitem">Foo</div>;
 
   const target = <ul role="list">{error}</ul>;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R119, { document }), [
+    failed(R119, target, {
+      1: Outcomes.HasDisallowedElements([error]),
+    }),
+  ]);
+});
+
+test(`evaluate() fails a <ul> with an SVG-namespaced <li> child`, async (t) => {
+  // Content models are written in terms of HTML elements, so sharing a local
+  // name is not enough. No HTML syntax produces this; it has to be built with
+  // createElementNS or moved out of an inline SVG.
+  const error = h.element("li", [], ["Foo"], [], Namespace.SVG);
+
+  const target = <ul>{error}</ul>;
 
   const document = h.document([target]);
 
