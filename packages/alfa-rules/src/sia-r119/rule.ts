@@ -86,7 +86,7 @@ function elementChildren(element: Element): Sequence<Element> {
 
 function hasTextContent(element: Element): boolean {
   return element
-    .children(Node.fullTree)
+    .children()
     .filter(isText)
     .some((text) => !String.isWhitespace(text.data));
 }
@@ -168,7 +168,7 @@ export namespace Outcomes {
   );
 
   export const HasDisallowedText = Err.of(
-    Diagnostic.of(`The element contains text outside of any list item.`),
+    Diagnostic.of(`The element contains text that its content model does not allow.`),
   );
 
   export const HasDisallowedElements = (errors: Iterable<Element>) =>
