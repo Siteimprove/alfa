@@ -109,6 +109,97 @@ test(`evaluate() fails a <ul> with an SVG-namespaced <li> child`, async (t) => {
   ]);
 });
 
+/*
+ * Children are read from the flat tree, so a slot is replaced by whatever is
+ * assigned to it. The first two cases below are the benefit: a list assembled by
+ * a web component passes, and text slotted into one is still reported as text
+ * outside a list item rather than being blamed on the slot.
+ *
+ * The third case is the one the flat tree cannot see on its own. A slot outside
+ * any shadow tree is never assigned anything, so flattening replaces it with
+ * nothing and the list looks empty. `straySlots` reads the node tree for exactly
+ * that case, which is why it is reported without the first two being affected.
+ */
+
+test(`evaluate() passes a list whose items are slotted in from light DOM`, async (t) => {
+  const target = (
+    <ul>
+      <slot></slot>
+    </ul>
+  );
+
+  const document = h.document([
+    h.element("my-list", [], [h.shadow([target]), <li>One</li>, <li>Two</li>]),
+  ]);
+
+  t.deepEqual(await evaluate(R119, { document }), [
+    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  ]);
+});
+
+test(`evaluate() fails a list with a stray <slot> outside any shadow tree`, async (t) => {
+  const error = <slot></slot>;
+
+  const target = <ul>{error}</ul>;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R119, { document }), [
+    failed(R119, target, {
+      1: Outcomes.HasDisallowedElements([error]),
+    }),
+  ]);
+});
+
+test(`evaluate() fails a list with a stray <slot> beside a valid item`, async (t) => {
+  const error = <slot></slot>;
+
+  const target = (
+    <ul>
+      {error}
+      <li>One</li>
+    </ul>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R119, { document }), [
+    failed(R119, target, {
+      1: Outcomes.HasDisallowedElements([error]),
+    }),
+  ]);
+});
+
+test(`evaluate() passes an unassigned <slot> inside a shadow tree`, async (t) => {
+  const target = (
+    <ul>
+      <slot></slot>
+    </ul>
+  );
+
+  const document = h.document([h.element("my-list", [], [h.shadow([target])])]);
+
+  t.deepEqual(await evaluate(R119, { document }), [
+    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  ]);
+});
+
+test(`evaluate() fails a list containing text slotted in from light DOM`, async (t) => {
+  const target = (
+    <ul>
+      <slot></slot>
+    </ul>
+  );
+
+  const document = h.document([
+    h.element("my-list", [], [h.shadow([target]), "Loose text", <li>One</li>]),
+  ]);
+
+  t.deepEqual(await evaluate(R119, { document }), [
+    failed(R119, target, { 1: Outcomes.HasDisallowedText }),
+  ]);
+});
+
 /* <dl> with groups written out directly */
 
 test(`evaluate() passes a <dl> with a single name-value group`, async (t) => {
@@ -261,6 +352,26 @@ test(`every malformed group in a <dl> is evaluated, not only the first`, async (
   t.deepEqual(await evaluate(R119, { document }), [
     failed(R119, target, {
       1: Outcomes.HasMalformedGroups([first, last]),
+    }),
+  ]);
+});
+
+test(`evaluate() fails a <dl> with a stray <slot>`, async (t) => {
+  const error = <slot></slot>;
+
+  const target = (
+    <dl>
+      {error}
+      <dt>Foo</dt>
+      <dd>Bar</dd>
+    </dl>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R119, { document }), [
+    failed(R119, target, {
+      1: Outcomes.HasDisallowedElements([error]),
     }),
   ]);
 });
@@ -432,6 +543,26 @@ test(`evaluate() fails a <dl> with a wrapper that holds more than one group`, as
       <dd>Bar</dd>
       <dt>Baz</dt>
       <dd>Qux</dd>
+    </div>
+  );
+
+  const target = <dl>{error}</dl>;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R119, { document }), [
+    failed(R119, target, {
+      1: Outcomes.HasMalformedGroups([error]),
+    }),
+  ]);
+});
+
+test(`evaluate() fails a <dl> with a wrapper holding a stray <slot>`, async (t) => {
+  const error = (
+    <div>
+      <slot></slot>
+      <dt>Foo</dt>
+      <dd>Bar</dd>
     </div>
   );
 

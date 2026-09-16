@@ -1,5 +1,12 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Element, Namespace, Node, Query, Text } from "@siteimprove/alfa-dom";
+import {
+  Element,
+  Namespace,
+  Node,
+  Query,
+  Shadow,
+  Text,
+} from "@siteimprove/alfa-dom";
 import { EAA } from "@siteimprove/alfa-eaa";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Result } from "@siteimprove/alfa-result";
@@ -15,7 +22,7 @@ import { WithBadElements } from "../common/diagnostic/with-bad-elements.ts";
 
 import { Scope, Stability } from "../tags/index.ts";
 
-const { hasName, hasNamespace, isElement } = Element;
+const { hasName, hasNamespace, isElement, isSlot } = Element;
 const { and } = Refinement;
 const { isRendered } = Style;
 const { isText } = Text;
@@ -77,22 +84,36 @@ function hasHtmlName<N extends string>(name: N, ...rest: Array<N>) {
 
 const isScriptSupporting = hasHtmlName("script", "template");
 
-function elementChildren(element: Element): Sequence<Element> {
+// A <slot> only slots inside a shadow tree. Anywhere else no assignment
+// algorithm reaches it, so it is an inert element in a position the content
+// model forbids. The flat tree replaces it with nothing, which is why this is
+// the one check that has to read the node tree.
+function straySlots(element: Element): Sequence<Element> {
   return element
     .children()
+    .filter(isElement)
+    .filter(isSlot)
+    .reject((slot) => Shadow.isShadow(slot.root()));
+}
+
+function elementChildren(element: Element): Sequence<Element> {
+  return element
+    .children(Node.fullTree)
     .filter(isElement)
     .reject(isScriptSupporting);
 }
 
 function hasTextContent(element: Element): boolean {
   return element
-    .children()
+    .children(Node.fullTree)
     .filter(isText)
     .some((text) => !String.isWhitespace(text.data));
 }
 
 function listContent(target: Element): Result<Diagnostic> {
-  const disallowed = elementChildren(target).reject(hasHtmlName("li"));
+  const disallowed = elementChildren(target)
+    .reject(hasHtmlName("li"))
+    .concat(straySlots(target));
 
   return disallowed.isEmpty()
     ? Outcomes.HasValidContent
@@ -101,7 +122,9 @@ function listContent(target: Element): Result<Diagnostic> {
 
 function descriptionListContent(target: Element): Result<Diagnostic> {
   const children = elementChildren(target);
-  const disallowed = children.reject(hasHtmlName("div", "dt", "dd"));
+  const disallowed = children
+    .reject(hasHtmlName("div", "dt", "dd"))
+    .concat(straySlots(target));
 
   if (!disallowed.isEmpty()) {
     return Outcomes.HasDisallowedElements(disallowed);
@@ -136,7 +159,10 @@ function isWellFormedGroup(wrapper: Element): boolean {
 
   const children = elementChildren(wrapper);
 
-  if (!children.reject(hasHtmlName("dt", "dd")).isEmpty()) {
+  if (
+    !children.reject(hasHtmlName("dt", "dd")).isEmpty() ||
+    !straySlots(wrapper).isEmpty()
+  ) {
     return false;
   }
 
@@ -168,7 +194,9 @@ export namespace Outcomes {
   );
 
   export const HasDisallowedText = Err.of(
-    Diagnostic.of(`The element contains text that its content model does not allow.`),
+    Diagnostic.of(
+      `The element contains text that its content model does not allow.`,
+    ),
   );
 
   export const HasDisallowedElements = (errors: Iterable<Element>) =>
