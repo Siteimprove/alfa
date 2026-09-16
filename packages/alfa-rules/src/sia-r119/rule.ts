@@ -14,7 +14,7 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Sequence } from "@siteimprove/alfa-sequence";
 import { String } from "@siteimprove/alfa-string";
 import { Style } from "@siteimprove/alfa-style";
-import { Criterion } from "@siteimprove/alfa-wcag";
+import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/index.ts";
@@ -47,7 +47,7 @@ const { getElementDescendants } = Query;
  */
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r119",
-  requirements: [Criterion.of("1.3.1"), EAA.of("9.1.3.1")],
+  requirements: [Criterion.of("1.3.1"), EAA.of("9.1.3.1"), Technique.of("H40")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
