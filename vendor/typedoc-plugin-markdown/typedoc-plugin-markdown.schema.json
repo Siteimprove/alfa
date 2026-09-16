@@ -1,0 +1,492 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "allOf": [
+    {
+      "$ref": "../typedoc/typedoc-config.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "anchorPrefix": {
+          "type": "string",
+          "description": "[typedoc-plugin-markdown] Custom anchor prefix to add to anchor links."
+        },
+        "blockTagsPreserveOrder": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "[typedoc-plugin-markdown] Specifies comment block tags that should preserve their position.",
+          "default": []
+        },
+        "classPropertiesFormat": {
+          "type": "string",
+          "enum": [
+            "list",
+            "table",
+            "htmlTable"
+          ],
+          "description": "[typedoc-plugin-markdown] Sets the format of property groups for classes.",
+          "default": "list"
+        },
+        "customAnchorsFormat": {
+          "type": "string",
+          "enum": [
+            "curlyBrace",
+            "escapedCurlyBrace",
+            "squareBracket"
+          ],
+          "description": "[typedoc-plugin-markdown] The format of custom anchors.",
+          "default": "curlyBrace"
+        },
+        "entryFileName": {
+          "type": "string",
+          "description": "[typedoc-plugin-markdown] The file name of the entry page.",
+          "default": "README"
+        },
+        "entryModule": {
+          "type": "string",
+          "deprecated": "This functionality has been deprecated in favour of the",
+          "description": "[typedoc-plugin-markdown] This functionality has been deprecated in favour of the"
+        },
+        "enumMembersFormat": {
+          "type": "string",
+          "enum": [
+            "list",
+            "table",
+            "htmlTable"
+          ],
+          "description": "[typedoc-plugin-markdown] Sets the format of enumeration members.",
+          "default": "list"
+        },
+        "excludeGroups": {
+          "type": "boolean",
+          "deprecated": "This option has been renamed hideGroupHeadings to better reflect its purpose.",
+          "description": "[typedoc-plugin-markdown] This option has been renamed hideGroupHeadings to better reflect its purpose."
+        },
+        "excludeScopesInPaths": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Exclude writing @ scope directories in paths."
+        },
+        "expandObjects": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Expand objects inside declarations."
+        },
+        "expandParameters": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Expand parameters in signature parentheses to display type information."
+        },
+        "fileExtension": {
+          "type": "string",
+          "description": "[typedoc-plugin-markdown] Specify the file extension for generated output files.",
+          "default": ".md"
+        },
+        "flattenOutputFiles": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Flatten output files to a single directory."
+        },
+        "formatWithPrettier": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Apply additional output formatting with Prettier."
+        },
+        "hideBreadcrumbs": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Hide the page breadcrumbs."
+        },
+        "hideGroupHeadings": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Excludes grouping by kind so all members are rendered at the same level."
+        },
+        "hidePageHeader": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Hide the page header."
+        },
+        "hidePageTitle": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Hide the page title."
+        },
+        "indexFormat": {
+          "type": "string",
+          "enum": [
+            "list",
+            "table",
+            "htmlTable"
+          ],
+          "description": "[typedoc-plugin-markdown] Sets the format of index items.",
+          "default": "list"
+        },
+        "interfacePropertiesFormat": {
+          "type": "string",
+          "enum": [
+            "list",
+            "table",
+            "htmlTable"
+          ],
+          "description": "[typedoc-plugin-markdown] Sets the format of property groups for interfaces.",
+          "default": "list"
+        },
+        "membersWithOwnFile": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Enum",
+              "Variable",
+              "Function",
+              "Class",
+              "Interface",
+              "TypeAlias"
+            ]
+          },
+          "description": "[typedoc-plugin-markdown] Determines which members are exported to their own file.",
+          "default": [
+            "Enum",
+            "Variable",
+            "Function",
+            "Class",
+            "Interface",
+            "TypeAlias"
+          ]
+        },
+        "mergeReadme": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Appends the documentation index page to the readme page."
+        },
+        "modulesFileName": {
+          "type": "string",
+          "description": "[typedoc-plugin-markdown] The file name of the separate modules / index page."
+        },
+        "navigationJson": {
+          "type": "string",
+          "description": "[typedoc-plugin-markdown] Specifies the file path where the navigation JSON will be written."
+        },
+        "navigationModel": {
+          "type": "object",
+          "properties": {
+            "excludeGroups": {
+              "type": "boolean"
+            },
+            "excludeCategories": {
+              "type": "boolean"
+            },
+            "excludeFolders": {
+              "type": "boolean"
+            }
+          },
+          "deprecated": "This option has been deprecated in favour of TypeDoc `navigation` option.",
+          "description": "[typedoc-plugin-markdown] This option has been deprecated in favour of TypeDoc `navigation` option.",
+          "default": {
+            "excludeGroups": false,
+            "excludeCategories": false,
+            "excludeFolders": false
+          }
+        },
+        "outputFileStrategy": {
+          "type": "string",
+          "enum": [
+            "members",
+            "modules"
+          ],
+          "deprecated": "Deprecated in favour of `--router`.",
+          "description": "[typedoc-plugin-markdown] Deprecated in favour of `--router`.",
+          "default": "members"
+        },
+        "pageTitleTemplates": {
+          "type": "object",
+          "properties": {
+            "index": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$comment": "(name: { projectName: string; version: string }) => string",
+                  "type": "object",
+                  "properties": {
+                    "namedArgs": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "object",
+                          "properties": {
+                            "projectName": {
+                              "type": "string"
+                            },
+                            "version": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "projectName",
+                            "version"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              ]
+            },
+            "member": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$comment": "(name: {\n          name: string;\n          rawName: string;\n          kind: string;\n          isDeprecated: boolean;\n          group?: string;\n          codeKeyword?: string;\n          keyword?: string;\n        }) => string",
+                  "type": "object",
+                  "properties": {
+                    "namedArgs": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "rawName": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "type": "string"
+                            },
+                            "isDeprecated": {
+                              "type": "boolean"
+                            },
+                            "group": {
+                              "type": "string"
+                            },
+                            "codeKeyword": {
+                              "type": "string"
+                            },
+                            "keyword": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "rawName",
+                            "kind",
+                            "isDeprecated"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              ]
+            },
+            "module": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$comment": "(name: {\n          name: string;\n          rawName: string;\n          kind: string;\n          isDeprecated: boolean;\n        }) => string",
+                  "type": "object",
+                  "properties": {
+                    "namedArgs": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "rawName": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "type": "string"
+                            },
+                            "isDeprecated": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "rawName",
+                            "kind",
+                            "isDeprecated"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "[typedoc-plugin-markdown] Configure page title output with placeholders.",
+          "default": {
+            "index": "{projectName} {version}",
+            "member": "{keyword} {kind}: {name}",
+            "module": "{name}"
+          }
+        },
+        "parametersFormat": {
+          "type": "string",
+          "enum": [
+            "list",
+            "table",
+            "htmlTable",
+            "none"
+          ],
+          "description": "[typedoc-plugin-markdown] Sets the format of parameter and type parameter groups.",
+          "default": "list"
+        },
+        "preserveAnchorCasing": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Preserve anchor casing when generating link to symbols."
+        },
+        "prettierConfigFile": {
+          "type": "string",
+          "description": "[typedoc-plugin-markdown] Specify a custom Prettier configuration file location."
+        },
+        "propertiesFormat": {
+          "type": "string",
+          "enum": [
+            "list",
+            "table",
+            "htmlTable"
+          ],
+          "deprecated": "This option has been deprecated in favour of `--interfacePropertiesFormat` and `--classPropertiesFormat`.",
+          "description": "[typedoc-plugin-markdown] This option has been deprecated in favour of `--interfacePropertiesFormat` and `--classPropertiesFormat`.",
+          "default": "list"
+        },
+        "propertyMembersFormat": {
+          "type": "string",
+          "enum": [
+            "list",
+            "table",
+            "htmlTable"
+          ],
+          "description": "[typedoc-plugin-markdown] Sets the format of style for property members for interfaces and classes.",
+          "default": "list"
+        },
+        "publicPath": {
+          "type": "string",
+          "description": "[typedoc-plugin-markdown] Specify the base path for all urls."
+        },
+        "sanitizeComments": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Sanitize HTML and JSX inside JsDoc comments."
+        },
+        "strikeDeprecatedPageTitles": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Controls whether to strikethrough page titles of deprecated items.",
+          "default": true
+        },
+        "tableColumnSettings": {
+          "type": "object",
+          "properties": {
+            "hideDefaults": {
+              "type": "boolean"
+            },
+            "hideInherited": {
+              "type": "boolean"
+            },
+            "hideModifiers": {
+              "type": "boolean"
+            },
+            "hideOverrides": {
+              "type": "boolean"
+            },
+            "hideSources": {
+              "type": "boolean"
+            },
+            "hideValues": {
+              "type": "boolean"
+            },
+            "leftAlignHeaders": {
+              "type": "boolean"
+            }
+          },
+          "description": "[typedoc-plugin-markdown] Control how table columns are configured and displayed.",
+          "default": {
+            "hideDefaults": false,
+            "hideInherited": false,
+            "hideModifiers": false,
+            "hideOverrides": false,
+            "hideSources": false,
+            "hideValues": false,
+            "leftAlignHeaders": false
+          }
+        },
+        "textContentMappings": {
+          "type": "object",
+          "deprecated": "This option has been deprecated in favour of `--pageTitleTemplates`.",
+          "description": "[typedoc-plugin-markdown] This option has been deprecated in favour of `--pageTitleTemplates`.",
+          "default": {
+            "header.title": "{projectName} {version}",
+            "breadcrumbs.home": "{projectName} {version}",
+            "title.indexPage": "{projectName} {version}",
+            "title.memberPage": "{keyword} {kind}: {name}",
+            "title.modulePage": "{name}"
+          }
+        },
+        "typeAliasPropertiesFormat": {
+          "type": "string",
+          "enum": [
+            "list",
+            "table",
+            "htmlTable"
+          ],
+          "description": "[typedoc-plugin-markdown] Sets the format of style for type alias properties.",
+          "default": "list"
+        },
+        "typeDeclarationFormat": {
+          "type": "string",
+          "enum": [
+            "list",
+            "table",
+            "htmlTable"
+          ],
+          "description": "[typedoc-plugin-markdown] Sets the format of style for type declaration members.",
+          "default": "list"
+        },
+        "typeDeclarationVisibility": {
+          "type": "string",
+          "enum": [
+            "compact",
+            "verbose"
+          ],
+          "description": "[typedoc-plugin-markdown] Set the visibility level for type declaration documentation.",
+          "default": "verbose"
+        },
+        "useCodeBlocks": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Wraps signatures and declarations in code blocks."
+        },
+        "useCustomAnchors": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Add custom anchors like `{#custom-id}` to headings."
+        },
+        "useHTMLAnchors": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Add HTML anchors to page headings."
+        },
+        "useHTMLEncodedBrackets": {
+          "type": "boolean",
+          "description": "[typedoc-plugin-markdown] Use HTML encoded entities for angle brackets."
+        }
+      },
+      "description": "Describes the options declared by the plugin.",
+      "definitions": {}
+    }
+  ]
+}

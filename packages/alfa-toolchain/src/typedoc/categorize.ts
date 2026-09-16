@@ -62,7 +62,8 @@ class CategorizeMarkdownTheme extends MarkdownTheme {
   }
 }
 
-class CategorizeMarkdownThemeContext extends MarkdownThemeContext {
+/** @internal */
+export class CategorizeMarkdownThemeContext extends MarkdownThemeContext {
   constructor(
     theme: MarkdownTheme,
     page: MarkdownPageEvent<TypeDoc.Reflection>,
