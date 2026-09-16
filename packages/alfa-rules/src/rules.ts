@@ -88,6 +88,7 @@ import R111 from "./sia-r111/rule.ts";
 import R113 from "./sia-r113/rule.ts";
 import R116 from "./sia-r116/rule.ts";
 import R119 from "./sia-r119/rule.ts";
+import R120 from "./sia-r120/rule.ts";
 
 export {
   R1,
@@ -180,4 +181,5 @@ export {
   R113,
   R116,
   R119,
+  R120,
 };
