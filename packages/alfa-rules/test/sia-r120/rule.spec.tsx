@@ -107,6 +107,59 @@ test(`evaluate() passes an access key shared only with an element that is not re
   ]);
 });
 
+test(`evaluate() reports a key shared across a frame boundary`, async (t) => {
+  // Access keys are treated as unique across the whole page, frames included,
+  // rather than per document.
+  const outer = <button accesskey="a">Parent</button>;
+  const inner = <button accesskey="a">Framed</button>;
+
+  const document = h.document([outer, <iframe>{h.document([inner])}</iframe>]);
+
+  t.deepEqual(await evaluate(R120, { document }), [
+    failed(R120, outer, { 1: Outcomes.HasNonUniqueAccesskeys(["a"]) }),
+    failed(R120, inner, { 1: Outcomes.HasNonUniqueAccesskeys(["a"]) }),
+  ]);
+});
+
+test(`evaluate() passes distinct keys either side of a frame boundary`, async (t) => {
+  const outer = <button accesskey="a">Parent</button>;
+  const inner = <button accesskey="b">Framed</button>;
+
+  const document = h.document([outer, <iframe>{h.document([inner])}</iframe>]);
+
+  t.deepEqual(await evaluate(R120, { document }), [
+    passed(R120, outer, { 1: Outcomes.HasUniqueAccesskeys }),
+    passed(R120, inner, { 1: Outcomes.HasUniqueAccesskeys }),
+  ]);
+});
+
+test(`evaluate() reports a key shared between two frames`, async (t) => {
+  const first = <button accesskey="a">First</button>;
+  const second = <button accesskey="a">Second</button>;
+
+  const document = h.document([
+    <iframe>{h.document([first])}</iframe>,
+    <iframe>{h.document([second])}</iframe>,
+  ]);
+
+  t.deepEqual(await evaluate(R120, { document }), [
+    failed(R120, first, { 1: Outcomes.HasNonUniqueAccesskeys(["a"]) }),
+    failed(R120, second, { 1: Outcomes.HasNonUniqueAccesskeys(["a"]) }),
+  ]);
+});
+
+test(`evaluate() reports a key shared across a shadow boundary in one document`, async (t) => {
+  const light = <button accesskey="a">Light</button>;
+  const shadowed = <button accesskey="a">Shadowed</button>;
+
+  const document = h.document([light, <div>{h.shadow([shadowed])}</div>]);
+
+  t.deepEqual(await evaluate(R120, { document }), [
+    failed(R120, light, { 1: Outcomes.HasNonUniqueAccesskeys(["a"]) }),
+    failed(R120, shadowed, { 1: Outcomes.HasNonUniqueAccesskeys(["a"]) }),
+  ]);
+});
+
 test(`evaluate() is inapplicable to a document with no access key`, async (t) => {
   const document = h.document([<button>Foo</button>]);
 
