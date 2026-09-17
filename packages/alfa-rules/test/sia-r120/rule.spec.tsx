@@ -92,6 +92,40 @@ test(`evaluate() passes multi-token access keys that share no token`, async (t) 
   ]);
 });
 
+test(`evaluate() does not report an element against itself for a repeated token`, async (t) => {
+  const target = <button accesskey="a a">Foo</button>;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R120, { document }), [
+    passed(R120, target, { 1: Outcomes.HasUniqueAccesskeys }),
+  ]);
+});
+
+test(`evaluate() treats a multi-character token as its own key`, async (t) => {
+  const first = <button accesskey="aa">Foo</button>;
+  const second = <button accesskey="a">Bar</button>;
+
+  const document = h.document([first, second]);
+
+  t.deepEqual(await evaluate(R120, { document }), [
+    passed(R120, first, { 1: Outcomes.HasUniqueAccesskeys }),
+    passed(R120, second, { 1: Outcomes.HasUniqueAccesskeys }),
+  ]);
+});
+
+test(`evaluate() reports two elements sharing a multi-character token`, async (t) => {
+  const first = <button accesskey="aa">Foo</button>;
+  const second = <button accesskey="aa">Bar</button>;
+
+  const document = h.document([first, second]);
+
+  t.deepEqual(await evaluate(R120, { document }), [
+    failed(R120, first, { 1: Outcomes.HasNonUniqueAccesskeys(["aa"]) }),
+    failed(R120, second, { 1: Outcomes.HasNonUniqueAccesskeys(["aa"]) }),
+  ]);
+});
+
 test(`evaluate() passes an access key shared only with an element that is not rendered`, async (t) => {
   const target = <button accesskey="a">Foo</button>;
 

@@ -72,8 +72,15 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 function accesskeys(element: Element): Sequence<string> {
-  return Sequence.from(element.attribute("accesskey")).flatMap((attribute) =>
-    attribute.tokens().map((token) => token.toLowerCase()),
+  return (
+    Sequence.from(element.attribute("accesskey"))
+      .flatMap((attribute) =>
+        attribute.tokens().map((token) => token.toLowerCase()),
+      )
+      // The specification requires the tokens to be distinct across the document,
+      // but a repeated one within the same element would otherwise enter the same group twice and the element would be
+      // reported as competing with itself.
+      .distinct()
   );
 }
 
