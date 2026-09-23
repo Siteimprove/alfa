@@ -46,7 +46,7 @@ const { getElementDescendants } = Query;
  * {@link https://html.spec.whatwg.org/multipage/grouping-content.html#the-dl-element}
  */
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://alfa.siteimprove.com/rules/sia-r119",
+  uri: "https://alfa.siteimprove.com/rules/sia-r121",
   requirements: [Criterion.of("1.3.1"), EAA.of("9.1.3.1"), Technique.of("H40")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {

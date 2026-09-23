@@ -1,7 +1,7 @@
 import { h, Namespace } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R119, { Outcomes } from "../../src/sia-r119/rule.ts";
+import R121, { Outcomes } from "../../src/sia-r121/rule.ts";
 
 import { evaluate } from "../common/evaluate.ts";
 import { failed, inapplicable, passed } from "../common/outcome.ts";
@@ -18,8 +18,8 @@ test(`evaluate() passes a <ul> whose children are all <li>`, async (t) => {
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
   ]);
 });
 
@@ -34,8 +34,8 @@ test(`evaluate() passes an <ol> that intermixes script-supporting elements`, asy
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
   ]);
 });
 
@@ -44,8 +44,8 @@ test(`evaluate() passes an empty <ul>`, async (t) => {
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
   ]);
 });
 
@@ -56,8 +56,8 @@ test(`evaluate() fails a <ul> with a <div> child`, async (t) => {
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasDisallowedElements([error]),
     }),
   ]);
@@ -73,8 +73,8 @@ test(`evaluate() fails a <ul> containing text outside of a list item`, async (t)
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, { 1: Outcomes.HasDisallowedText }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, { 1: Outcomes.HasDisallowedText }),
   ]);
 });
 
@@ -85,8 +85,8 @@ test(`evaluate() fails a <ul> whose items carry the listitem role without being 
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasDisallowedElements([error]),
     }),
   ]);
@@ -102,8 +102,8 @@ test(`evaluate() fails a <ul> with an SVG-namespaced <li> child`, async (t) => {
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasDisallowedElements([error]),
     }),
   ]);
@@ -132,8 +132,8 @@ test(`evaluate() passes a list whose items are slotted in from light DOM`, async
     h.element("my-list", [], [h.shadow([target]), <li>One</li>, <li>Two</li>]),
   ]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
   ]);
 });
 
@@ -144,8 +144,8 @@ test(`evaluate() fails a list with a stray <slot> outside any shadow tree`, asyn
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasDisallowedElements([error]),
     }),
   ]);
@@ -163,8 +163,8 @@ test(`evaluate() fails a list with a stray <slot> beside a valid item`, async (t
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasDisallowedElements([error]),
     }),
   ]);
@@ -179,8 +179,8 @@ test(`evaluate() passes an unassigned <slot> inside a shadow tree`, async (t) =>
 
   const document = h.document([h.element("my-list", [], [h.shadow([target])])]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
   ]);
 });
 
@@ -195,8 +195,8 @@ test(`evaluate() fails a list containing text slotted in from light DOM`, async 
     h.element("my-list", [], [h.shadow([target]), "Loose text", <li>One</li>]),
   ]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, { 1: Outcomes.HasDisallowedText }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, { 1: Outcomes.HasDisallowedText }),
   ]);
 });
 
@@ -212,8 +212,8 @@ test(`evaluate() passes a <dl> with a single name-value group`, async (t) => {
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
   ]);
 });
 
@@ -229,8 +229,8 @@ test(`evaluate() passes a <dl> with several names and values per group`, async (
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
   ]);
 });
 
@@ -246,8 +246,8 @@ test(`evaluate() passes a <dl> with consecutive name-value groups`, async (t) =>
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
   ]);
 });
 
@@ -256,8 +256,8 @@ test(`evaluate() passes an empty <dl>`, async (t) => {
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
   ]);
 });
 
@@ -274,8 +274,8 @@ test(`evaluate() passes a <dl> that intermixes script-supporting elements`, asyn
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
   ]);
 });
 
@@ -289,8 +289,8 @@ test(`evaluate() passes a <dl> that contains only script-supporting elements`, a
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
   ]);
 });
 
@@ -307,8 +307,8 @@ test(`evaluate() fails a <dl> with a description without a term`, async (t) => {
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasMalformedGroups([error]),
     }),
   ]);
@@ -327,8 +327,8 @@ test(`evaluate() fails a <dl> with a trailing term that is given no description`
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasMalformedGroups([error]),
     }),
   ]);
@@ -349,8 +349,8 @@ test(`every malformed group in a <dl> is evaluated, not only the first`, async (
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasMalformedGroups([first, last]),
     }),
   ]);
@@ -369,8 +369,8 @@ test(`evaluate() fails a <dl> with a stray <slot>`, async (t) => {
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasDisallowedElements([error]),
     }),
   ]);
@@ -389,8 +389,8 @@ test(`evaluate() fails a <dl> with a child that is neither <dt>, <dd> nor <div>`
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasDisallowedElements([error]),
     }),
   ]);
@@ -407,8 +407,8 @@ test(`evaluate() fails a <dl> containing text outside of a name or value`, async
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, { 1: Outcomes.HasDisallowedText }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, { 1: Outcomes.HasDisallowedText }),
   ]);
 });
 
@@ -430,8 +430,8 @@ test(`evaluate() passes a <dl> whose groups are each wrapped in a <div>`, async 
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
   ]);
 });
 
@@ -452,8 +452,8 @@ test(`evaluate() passes a <dl> with a script-supporting element between wrappers
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
   ]);
 });
 
@@ -470,8 +470,8 @@ test(`evaluate() passes a <dl> with a script-supporting element inside a wrapper
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    passed(R119, target, { 1: Outcomes.HasValidContent }),
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
   ]);
 });
 
@@ -492,8 +492,8 @@ test(`evaluate() fails a <dl> that mixes wrapped and unwrapped groups`, async (t
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasMixedGroups([name, value]),
     }),
   ]);
@@ -510,8 +510,8 @@ test(`evaluate() fails a <dl> with a wrapper that holds a name and no value`, as
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasMalformedGroups([error]),
     }),
   ]);
@@ -529,8 +529,8 @@ test(`a <dl> with a wrapper with wrong order of elements`, async (t) => {
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasMalformedGroups([error]),
     }),
   ]);
@@ -550,8 +550,8 @@ test(`evaluate() fails a <dl> with a wrapper that holds more than one group`, as
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasMalformedGroups([error]),
     }),
   ]);
@@ -570,8 +570,8 @@ test(`evaluate() fails a <dl> with a wrapper holding a stray <slot>`, async (t) 
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasMalformedGroups([error]),
     }),
   ]);
@@ -590,8 +590,8 @@ test(`evaluate() fails a <dl> with a wrapper that holds a disallowed element`, a
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R119, { document }), [
-    failed(R119, target, {
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
       1: Outcomes.HasMalformedGroups([error]),
     }),
   ]);
@@ -606,7 +606,7 @@ test(`evaluate() is inapplicable to a document with no list`, async (t) => {
     </div>,
   ]);
 
-  t.deepEqual(await evaluate(R119, { document }), [inapplicable(R119)]);
+  t.deepEqual(await evaluate(R121, { document }), [inapplicable(R121)]);
 });
 
 test(`evaluate() is inapplicable to a list that is not rendered`, async (t) => {
@@ -616,5 +616,5 @@ test(`evaluate() is inapplicable to a list that is not rendered`, async (t) => {
     </ul>,
   ]);
 
-  t.deepEqual(await evaluate(R119, { document }), [inapplicable(R119)]);
+  t.deepEqual(await evaluate(R121, { document }), [inapplicable(R121)]);
 });
