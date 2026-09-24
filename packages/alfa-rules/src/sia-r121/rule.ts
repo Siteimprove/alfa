@@ -47,7 +47,12 @@ const { getElementDescendants } = Query;
  */
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r121",
-  requirements: [Criterion.of("1.3.1"), EAA.of("9.1.3.1"), Technique.of("H40")],
+  requirements: [
+    Criterion.of("1.3.1"),
+    EAA.of("9.1.3.1"),
+    Technique.of("H40"),
+    Technique.of("H48"),
+  ],
   tags: [Scope.Component, Stability.Experimental],
   evaluate({ device, document }) {
     return {
