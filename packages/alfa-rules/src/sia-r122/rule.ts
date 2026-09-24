@@ -39,7 +39,7 @@ const { getElementDescendants } = Query;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r122",
   requirements: [BestPractice.of("accesskey-unique")],
-  tags: [Scope.Page, Stability.Stable],
+  tags: [Scope.Page, Stability.Experimental],
   evaluate({ device, document }) {
     const elements = getElementDescendants(document, Node.fullTree)
       .filter(and(hasNamespace(Namespace.HTML), declaresAccesskey))

@@ -2,7 +2,7 @@
 "@siteimprove/alfa-rules": minor
 ---
 
-**Added:** The new rule R122 checks that the access keys an element declares are usable.
+**Added:** A new experimental rule SIA-R122 is available. It checks that the access keys an element declares are usable.
 
 It makes three checks. No other element may declare the same key, since two elements competing for one key means at most one of them can be reached and which one wins is left to the user agent. Each key must be a single character, since anything longer is not a key a user can press. And an element may not declare the same key twice.
 

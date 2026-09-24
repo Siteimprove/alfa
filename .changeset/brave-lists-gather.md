@@ -2,7 +2,7 @@
 "@siteimprove/alfa-rules": minor
 ---
 
-**Added:** The new rule R121 checks that `<ul>`, `<ol>` and `<dl>` elements only contain the children allowed by the HTML content model.
+**Added:** A new experimental rule SIA-R121 is available. It checks that `<ul>`, `<ol>` and `<dl>` elements only contain the children allowed by the HTML content model.
 
 The rule follows the content model as the HTML specification states it, rather than a relaxed reading of it:
 
