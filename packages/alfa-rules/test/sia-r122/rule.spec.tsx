@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R120, { Outcomes } from "../../src/sia-r120/rule.ts";
+import R122, { Outcomes } from "../../src/sia-r122/rule.ts";
 
 import { evaluate } from "../common/evaluate.ts";
 import { failed, inapplicable, passed } from "../common/outcome.ts";
@@ -12,13 +12,13 @@ test(`evaluate() passes elements with distinct access keys`, async (t) => {
 
   const document = h.document([first, second]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    passed(R120, first, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    passed(R122, first, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    passed(R120, second, {
+    passed(R122, second, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -32,13 +32,13 @@ test(`evaluate() fails both elements sharing an access key`, async (t) => {
 
   const document = h.document([first, second]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, first, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, first, {
       1: Outcomes.HasNonUniqueAccesskeys(["a"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    failed(R120, second, {
+    failed(R122, second, {
       1: Outcomes.HasNonUniqueAccesskeys(["a"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -52,13 +52,13 @@ test(`evaluate() compares access keys without regard to case`, async (t) => {
 
   const document = h.document([first, second]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, first, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, first, {
       1: Outcomes.HasNonUniqueAccesskeys(["a"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    failed(R120, second, {
+    failed(R122, second, {
       1: Outcomes.HasNonUniqueAccesskeys(["a"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -72,13 +72,13 @@ test(`evaluate() compares access keys with surrounding whitespace removed`, asyn
 
   const document = h.document([first, second]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, first, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, first, {
       1: Outcomes.HasNonUniqueAccesskeys(["a"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    failed(R120, second, {
+    failed(R122, second, {
       1: Outcomes.HasNonUniqueAccesskeys(["a"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -92,13 +92,13 @@ test(`evaluate() names only the contested key of a multi-token access key`, asyn
 
   const document = h.document([both, other]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, both, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, both, {
       1: Outcomes.HasNonUniqueAccesskeys(["b"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    failed(R120, other, {
+    failed(R122, other, {
       1: Outcomes.HasNonUniqueAccesskeys(["b"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -113,18 +113,18 @@ test(`evaluate() names every contested key of a multi-token access key`, async (
 
   const document = h.document([both, first, second]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, both, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, both, {
       1: Outcomes.HasNonUniqueAccesskeys(["a", "b"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    failed(R120, first, {
+    failed(R122, first, {
       1: Outcomes.HasNonUniqueAccesskeys(["a"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    failed(R120, second, {
+    failed(R122, second, {
       1: Outcomes.HasNonUniqueAccesskeys(["b"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -138,13 +138,13 @@ test(`evaluate() passes multi-token access keys that share no token`, async (t) 
 
   const document = h.document([first, second]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    passed(R120, first, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    passed(R122, first, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    passed(R120, second, {
+    passed(R122, second, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -157,8 +157,8 @@ test(`evaluate() reports a key the element declares twice`, async (t) => {
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, target, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, target, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasRepeatedAccesskeys(["a"]),
@@ -174,8 +174,8 @@ test(`evaluate() reports a key declared twice in different cases`, async (t) => 
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, target, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, target, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasRepeatedAccesskeys(["a"]),
@@ -189,13 +189,13 @@ test(`evaluate() reports a multi-character key, which no user can press`, async 
 
   const document = h.document([first, second]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, first, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, first, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasMultiCharacterAccesskeys(["aa"]),
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    passed(R120, second, {
+    passed(R122, second, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -209,13 +209,13 @@ test(`evaluate() reports two elements sharing a multi-character key`, async (t) 
 
   const document = h.document([first, second]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, first, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, first, {
       1: Outcomes.HasNonUniqueAccesskeys(["aa"]),
       2: Outcomes.HasMultiCharacterAccesskeys(["aa"]),
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    failed(R120, second, {
+    failed(R122, second, {
       1: Outcomes.HasNonUniqueAccesskeys(["aa"]),
       2: Outcomes.HasMultiCharacterAccesskeys(["aa"]),
       3: Outcomes.HasDistinctAccesskeys,
@@ -228,8 +228,8 @@ test(`evaluate() accepts a single Japanese character as a key`, async (t) => {
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    passed(R120, target, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    passed(R122, target, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -242,8 +242,8 @@ test(`evaluate() accepts several Japanese characters as separate keys`, async (t
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    passed(R120, target, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    passed(R122, target, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -257,13 +257,13 @@ test(`evaluate() reports two elements sharing a Japanese key`, async (t) => {
 
   const document = h.document([first, second]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, first, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, first, {
       1: Outcomes.HasNonUniqueAccesskeys(["ぬ"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    failed(R120, second, {
+    failed(R122, second, {
       1: Outcomes.HasNonUniqueAccesskeys(["ぬ"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -277,8 +277,8 @@ test(`evaluate() reports a Japanese key an element declares twice`, async (t) =>
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, target, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, target, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasRepeatedAccesskeys(["ぬ"]),
@@ -294,8 +294,8 @@ test(`evaluate() reports a multi-character Japanese key`, async (t) => {
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, target, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, target, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasMultiCharacterAccesskeys(["ほす"]),
       3: Outcomes.HasDistinctAccesskeys,
@@ -308,8 +308,8 @@ test(`evaluate() reports every multi-character key of one element`, async (t) =>
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, target, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, target, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasMultiCharacterAccesskeys(["aa", "bb"]),
       3: Outcomes.HasDistinctAccesskeys,
@@ -322,8 +322,8 @@ test(`evaluate() reports every key an element declares twice`, async (t) => {
 
   const document = h.document([target]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, target, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, target, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasRepeatedAccesskeys(["a", "b"]),
@@ -341,8 +341,8 @@ test(`evaluate() passes an access key shared only with an element that is not re
     </button>,
   ]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    passed(R120, target, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    passed(R122, target, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -358,13 +358,13 @@ test(`evaluate() reports a key shared across a frame boundary`, async (t) => {
 
   const document = h.document([outer, <iframe>{h.document([inner])}</iframe>]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, outer, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, outer, {
       1: Outcomes.HasNonUniqueAccesskeys(["a"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    failed(R120, inner, {
+    failed(R122, inner, {
       1: Outcomes.HasNonUniqueAccesskeys(["a"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -378,13 +378,13 @@ test(`evaluate() passes distinct keys either side of a frame boundary`, async (t
 
   const document = h.document([outer, <iframe>{h.document([inner])}</iframe>]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    passed(R120, outer, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    passed(R122, outer, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    passed(R120, inner, {
+    passed(R122, inner, {
       1: Outcomes.HasUniqueAccesskeys,
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -401,13 +401,13 @@ test(`evaluate() reports a key shared between two frames`, async (t) => {
     <iframe>{h.document([second])}</iframe>,
   ]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, first, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, first, {
       1: Outcomes.HasNonUniqueAccesskeys(["a"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    failed(R120, second, {
+    failed(R122, second, {
       1: Outcomes.HasNonUniqueAccesskeys(["a"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -421,13 +421,13 @@ test(`evaluate() reports a key shared across a shadow boundary in one document`,
 
   const document = h.document([light, <div>{h.shadow([shadowed])}</div>]);
 
-  t.deepEqual(await evaluate(R120, { document }), [
-    failed(R120, light, {
+  t.deepEqual(await evaluate(R122, { document }), [
+    failed(R122, light, {
       1: Outcomes.HasNonUniqueAccesskeys(["a"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
     }),
-    failed(R120, shadowed, {
+    failed(R122, shadowed, {
       1: Outcomes.HasNonUniqueAccesskeys(["a"]),
       2: Outcomes.HasSingleCharacterAccesskeys,
       3: Outcomes.HasDistinctAccesskeys,
@@ -438,11 +438,11 @@ test(`evaluate() reports a key shared across a shadow boundary in one document`,
 test(`evaluate() is inapplicable to a document with no access key`, async (t) => {
   const document = h.document([<button>Foo</button>]);
 
-  t.deepEqual(await evaluate(R120, { document }), [inapplicable(R120)]);
+  t.deepEqual(await evaluate(R122, { document }), [inapplicable(R122)]);
 });
 
 test(`evaluate() is inapplicable to an access key that is only whitespace`, async (t) => {
   const document = h.document([<button accesskey=" ">Foo</button>]);
 
-  t.deepEqual(await evaluate(R120, { document }), [inapplicable(R120)]);
+  t.deepEqual(await evaluate(R122, { document }), [inapplicable(R122)]);
 });

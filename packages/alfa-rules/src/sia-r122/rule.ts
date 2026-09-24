@@ -37,7 +37,7 @@ const { getElementDescendants } = Query;
  * {@link https://html.spec.whatwg.org/multipage/interaction.html#the-accesskey-attribute}
  */
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://alfa.siteimprove.com/rules/sia-r120",
+  uri: "https://alfa.siteimprove.com/rules/sia-r122",
   requirements: [BestPractice.of("accesskey-unique")],
   tags: [Scope.Page, Stability.Stable],
   evaluate({ device, document }) {
