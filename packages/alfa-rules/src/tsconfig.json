@@ -165,6 +165,8 @@
     "./sia-r116/rule.ts",
     "./sia-r117/rule.ts",
     "./sia-r118/rule.ts",
+    "./sia-r121/rule.ts",
+    "./sia-r122/rule.ts",
     "./tags/index.ts",
     "./tags/stability.ts",
     "./tags/scope.ts",
