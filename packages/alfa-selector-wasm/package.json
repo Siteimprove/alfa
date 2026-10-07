@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json.schemastore.org/package",
+  "name": "@siteimprove/alfa-selector-wasm",
+  "homepage": "https://alfa.siteimprove.com",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "description": "WASM bindings around Servo's selectors crate for Alfa's cascade engine",
+  "repository": {
+    "type": "git",
+    "url": "github:Siteimprove/alfa",
+    "directory": "packages/alfa-selector-wasm"
+  },
+  "bugs": "https://github.com/siteimprove/alfa/issues",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "pkg/*.wasm",
+    "pkg/*.js",
+    "pkg/*.d.ts"
+  ],
+  "dependencies": {
+    "@siteimprove/alfa-dom": "workspace:^"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "workspace:^"
+  }
+}

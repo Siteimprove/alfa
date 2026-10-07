@@ -290,7 +290,9 @@ export abstract class WithIndexAndSelector<
   }
 
   public toString(): string {
-    return `:${this.name}(${this._index} of ${this._selector})`;
+    return this._selector.isSome()
+      ? `:${this.name}(${this._index} of ${this._selector.get()})`
+      : `:${this.name}(${this._index})`;
   }
 }
 

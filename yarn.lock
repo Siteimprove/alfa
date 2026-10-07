@@ -1804,6 +1804,7 @@ __metadata:
     "@siteimprove/alfa-refinement": "workspace:^"
     "@siteimprove/alfa-selective": "workspace:^"
     "@siteimprove/alfa-selector": "workspace:^"
+    "@siteimprove/alfa-selector-wasm": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
   languageName: unknown
   linkType: soft
@@ -2501,6 +2502,15 @@ __metadata:
     "@siteimprove/alfa-monad": "workspace:^"
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
+    "@siteimprove/alfa-test": "workspace:^"
+  languageName: unknown
+  linkType: soft
+
+"@siteimprove/alfa-selector-wasm@workspace:^, @siteimprove/alfa-selector-wasm@workspace:packages/alfa-selector-wasm":
+  version: 0.0.0-use.local
+  resolution: "@siteimprove/alfa-selector-wasm@workspace:packages/alfa-selector-wasm"
+  dependencies:
+    "@siteimprove/alfa-dom": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
   languageName: unknown
   linkType: soft
