@@ -9,5 +9,20 @@ import R114 from "./sia-r114/rule.ts";
 import R115 from "./sia-r115/rule.ts";
 import R117 from "./sia-r117/rule.ts";
 import R118 from "./sia-r118/rule.ts";
+import R121 from "./sia-r121/rule.ts";
+import R122 from "./sia-r122/rule.ts";
 
-export { ER8, ER87, R82, R98, R101, R109, R114, R115, R117, R118 };
+export {
+  ER8,
+  ER87,
+  R82,
+  R98,
+  R101,
+  R109,
+  R114,
+  R115,
+  R117,
+  R118,
+  R121,
+  R122,
+};
