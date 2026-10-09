@@ -1,4 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import type { Device } from "@siteimprove/alfa-device";
 import {
   Element,
   Namespace,
@@ -16,6 +17,8 @@ import { String } from "@siteimprove/alfa-string";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
+
+import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/index.ts";
 import { WithBadElements } from "../common/diagnostic/with-bad-elements.ts";
@@ -42,6 +45,10 @@ const { getElementDescendants } = Query;
  *   with no `<dd>` is reported.
  * - Children are matched by element name, so a `<div role="listitem">` does not
  *   satisfy a content model asking for an `<li>`.
+ *
+ * Children hidden from assistive technologies, by `aria-hidden`, by not being
+ * rendered, or by `inert`, are skipped. They never reach the accessibility
+ * tree, so they cannot break the list structure that users perceive.
  *
  * {@link https://html.spec.whatwg.org/multipage/grouping-content.html#the-dl-element}
  */
@@ -73,8 +80,8 @@ export default Rule.Atomic.of<Page, Element>({
             () =>
               expectation(
                 hasName("dl")(target),
-                () => descriptionListContent(target),
-                () => listContent(target),
+                () => descriptionListContent(target, device),
+                () => listContent(target, device),
               ),
           ),
         };
@@ -89,6 +96,10 @@ function hasHtmlName<N extends string>(name: N, ...rest: Array<N>) {
 
 const isScriptSupporting = hasHtmlName("script", "template");
 
+function isHidden(device: Device): (element: Element) => boolean {
+  return (element) => aria.Node.from(element, device) instanceof aria.Inert;
+}
+
 // A <slot> only slots inside a shadow tree. Anywhere else no assignment
 // algorithm reaches it, so it is an inert element in a position the content
 // model forbids. The flat tree replaces it with nothing, which is why this is
@@ -101,11 +112,12 @@ function straySlots(element: Element): Sequence<Element> {
     .reject((slot) => Shadow.isShadow(slot.root()));
 }
 
-function elementChildren(element: Element): Sequence<Element> {
+function elementChildren(element: Element, device: Device): Sequence<Element> {
   return element
     .children(Node.fullTree)
     .filter(isElement)
-    .reject(isScriptSupporting);
+    .reject(isScriptSupporting)
+    .reject(isHidden(device));
 }
 
 function hasTextContent(element: Element): boolean {
@@ -115,8 +127,8 @@ function hasTextContent(element: Element): boolean {
     .some((text) => !String.isWhitespace(text.data));
 }
 
-function listContent(target: Element): Result<Diagnostic> {
-  const disallowed = elementChildren(target)
+function listContent(target: Element, device: Device): Result<Diagnostic> {
+  const disallowed = elementChildren(target, device)
     .reject(hasHtmlName("li"))
     .concat(straySlots(target));
 
@@ -125,8 +137,11 @@ function listContent(target: Element): Result<Diagnostic> {
     : Outcomes.HasDisallowedElements(disallowed);
 }
 
-function descriptionListContent(target: Element): Result<Diagnostic> {
-  const children = elementChildren(target);
+function descriptionListContent(
+  target: Element,
+  device: Device,
+): Result<Diagnostic> {
+  const children = elementChildren(target, device);
   const disallowed = children
     .reject(hasHtmlName("div", "dt", "dd"))
     .concat(straySlots(target));
@@ -143,7 +158,9 @@ function descriptionListContent(target: Element): Result<Diagnostic> {
       return Outcomes.HasMixedGroups(items);
     }
 
-    const malformed = wrappers.reject(isWellFormedGroup);
+    const malformed = wrappers.reject((wrapper) =>
+      isWellFormedGroup(wrapper, device),
+    );
 
     return malformed.isEmpty()
       ? Outcomes.HasValidContent
@@ -157,12 +174,12 @@ function descriptionListContent(target: Element): Result<Diagnostic> {
     : Outcomes.HasMalformedGroups(ungrouped);
 }
 
-function isWellFormedGroup(wrapper: Element): boolean {
+function isWellFormedGroup(wrapper: Element, device: Device): boolean {
   if (hasTextContent(wrapper)) {
     return false;
   }
 
-  const children = elementChildren(wrapper);
+  const children = elementChildren(wrapper, device);
 
   if (
     !children.reject(hasHtmlName("dt", "dd")).isEmpty() ||

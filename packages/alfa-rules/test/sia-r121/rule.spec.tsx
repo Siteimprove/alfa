@@ -597,6 +597,123 @@ test(`evaluate() fails a <dl> with a wrapper that holds a disallowed element`, a
   ]);
 });
 
+test(`evaluate() passes a list with otherwise-invalid children which are not in the a11y tree`, async (t) => {
+  const target = (
+    <ul>
+      <p aria-hidden="true">Loading</p>
+      <p hidden>Out of stock</p>
+      <p style={{ display: "none" }}>Discontinued</p>
+    </ul>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
+  ]);
+});
+
+test(`evaluate() passes a list with an inert child beside a valid item`, async (t) => {
+  const target = (
+    <ul>
+      <div inert>Foo</div>
+      <li>Bar</li>
+    </ul>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
+  ]);
+});
+
+test(`evaluate() fails a list with a hidden child beside a visible one`, async (t) => {
+  const error = <div>Bar</div>;
+
+  const target = (
+    <ul>
+      <p aria-hidden="true">Foo</p>
+      {error}
+    </ul>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
+      1: Outcomes.HasDisallowedElements([error]),
+    }),
+  ]);
+});
+
+test(`evaluate() fails a list with a child hidden by visibility`, async (t) => {
+  const error = <p style={{ visibility: "hidden" }}>Foo</p>;
+
+  const target = <ul>{error}</ul>;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
+      1: Outcomes.HasDisallowedElements([error]),
+    }),
+  ]);
+});
+
+test(`evaluate() passes a <dl> with a hidden child beside a valid group`, async (t) => {
+  const target = (
+    <dl>
+      <p hidden>Foo</p>
+      <dt>Bar</dt>
+      <dd>Baz</dd>
+    </dl>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
+  ]);
+});
+
+test(`evaluate() passes a <div> group with a hidden child`, async (t) => {
+  const target = (
+    <dl>
+      <div>
+        <dt>Foo</dt>
+        <span aria-hidden="true">*</span>
+        <dd>Bar</dd>
+      </div>
+    </dl>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R121, { document }), [
+    passed(R121, target, { 1: Outcomes.HasValidContent }),
+  ]);
+});
+
+test(`evaluate() fails a <dl> whose only visible <dd> leads, after a hidden <dt>`, async (t) => {
+  const error = <dd>Bar</dd>;
+
+  const target = (
+    <dl>
+      <dt hidden>Foo</dt>
+      {error}
+    </dl>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R121, { document }), [
+    failed(R121, target, {
+      1: Outcomes.HasMalformedGroups([error]),
+    }),
+  ]);
+});
+
 /* Applicability */
 
 test(`evaluate() is inapplicable to a document with no list`, async (t) => {
