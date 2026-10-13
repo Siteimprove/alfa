@@ -23,12 +23,10 @@
   ],
   "//": [
     "For scripts:",
-    "We need to update the version number after creating a new one.",
-    "We also need to update the documentation, which includes the version number; updating the documentation from a CI tool requires CI=false to allow changes.",
-    "Finally we need to stage the changed files that will be commited later in the release process."
+    "We need to update the version number after creating a new one, and stage the changes."
   ],
   "scripts": {
-    "alfa-postversion": "./get-version.sh > src/version.ts && yarn extract:self && git add src/version.ts ../../docs/review/api/alfa-rules.api.md"
+    "alfa-postversion": "./get-version.sh > src/version.ts && git add src/version.ts"
   },
   "dependencies": {
     "@siteimprove/alfa-act": "workspace:^",
