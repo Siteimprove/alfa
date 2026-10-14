@@ -735,3 +735,45 @@ test(`evaluate() is inapplicable to a list that is not rendered`, async (t) => {
 
   t.deepEqual(await evaluate(R121, { document }), [inapplicable(R121)]);
 });
+
+test(`evaluate() is inapplicable to a list that is aria-hidden`, async (t) => {
+  const document = h.document([
+    <ul aria-hidden="true">
+      <div>Foo</div>
+    </ul>,
+  ]);
+
+  t.deepEqual(await evaluate(R121, { document }), [inapplicable(R121)]);
+});
+
+test(`evaluate() is inapplicable to a list inside an aria-hidden ancestor`, async (t) => {
+  const document = h.document([
+    <div aria-hidden="true">
+      <ul>
+        <div>Foo</div>
+      </ul>
+    </div>,
+  ]);
+
+  t.deepEqual(await evaluate(R121, { document }), [inapplicable(R121)]);
+});
+
+test(`evaluate() is inapplicable to a list that has role="none"`, async (t) => {
+  const document = h.document([
+    <ul role="none">
+      <div>Foo</div>
+    </ul>,
+  ]);
+
+  t.deepEqual(await evaluate(R121, { document }), [inapplicable(R121)]);
+});
+
+test(`evaluate() is inapplicable to a <dl> that has role="presentation"`, async (t) => {
+  const document = h.document([
+    <dl role="presentation">
+      <div>Foo</div>
+    </dl>,
+  ]);
+
+  t.deepEqual(await evaluate(R121, { document }), [inapplicable(R121)]);
+});

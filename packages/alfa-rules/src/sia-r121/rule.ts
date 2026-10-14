@@ -14,7 +14,6 @@ import type { Result } from "@siteimprove/alfa-result";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Sequence } from "@siteimprove/alfa-sequence";
 import { String } from "@siteimprove/alfa-string";
-import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
@@ -26,8 +25,8 @@ import { WithBadElements } from "../common/diagnostic/with-bad-elements.ts";
 import { Scope, Stability } from "../tags/index.ts";
 
 const { hasName, hasNamespace, isElement, isSlot } = Element;
+const { hasExplicitRole } = aria.DOM;
 const { and } = Refinement;
-const { isRendered } = Style;
 const { isText } = Text;
 const { getElementDescendants } = Query;
 
@@ -46,8 +45,10 @@ const { getElementDescendants } = Query;
  * - Children are matched by element name, so a `<div role="listitem">` does not
  *   satisfy a content model asking for an `<li>`.
  *
- * Children hidden from assistive technologies, by `aria-hidden`, by not being
- * rendered, or by `inert`, are skipped. They never reach the accessibility
+ * Lists hidden from assistive technologies, or whose role is removed with
+ * `none` or `presentation`, are not applicable. Children hidden from assistive
+ * technologies, by `aria-hidden`, by not being rendered, or by `inert`, are
+ * skipped. They never reach the accessibility
  * tree, so they cannot break the list structure that users perceive.
  *
  * {@link https://html.spec.whatwg.org/multipage/grouping-content.html#the-dl-element}
@@ -64,12 +65,10 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return getElementDescendants(document, Node.fullTree).filter(
-          and(
-            hasNamespace(Namespace.HTML),
-            and(hasName("ul", "ol", "dl"), isRendered(device)),
-          ),
-        );
+        return getElementDescendants(document, Node.fullTree)
+          .filter(and(hasNamespace(Namespace.HTML), hasName("ul", "ol", "dl")))
+          .reject(isHidden(device))
+          .reject(isPresentational);
       },
 
       expectations(target) {
@@ -99,6 +98,8 @@ const isScriptSupporting = hasHtmlName("script", "template");
 function isHidden(device: Device): (element: Element) => boolean {
   return (element) => aria.Node.from(element, device) instanceof aria.Inert;
 }
+
+const isPresentational = hasExplicitRole("none", "presentation");
 
 // A <slot> only slots inside a shadow tree. Anywhere else no assignment
 // algorithm reaches it, so it is an inert element in a position the content

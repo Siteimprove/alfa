@@ -4,7 +4,7 @@
 
 **Added:** A new experimental rule SIA-R121 is available. It checks that `<ul>`, `<ol>` and `<dl>` elements only contain the children allowed by the HTML content model.
 
-Children hidden from assistive technologies, by `aria-hidden`, by not being rendered, or by `inert`, are skipped, since they cannot affect the list structure users perceive. Children hidden only by `visibility: hidden` are still checked, as they may have visible descendants.
+Lists hidden from assistive technologies, or whose role is removed with `none` or `presentation`, are not applicable. Children hidden from assistive technologies, by `aria-hidden`, by not being rendered, or by `inert`, are skipped, since they cannot affect the list structure users perceive. Children hidden only by `visibility: hidden` are still checked, as they may have visible descendants.
 
 The rule follows the content model as the HTML specification states it, rather than a relaxed reading of it:
 
