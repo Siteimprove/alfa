@@ -70,16 +70,23 @@ export class Style implements Serializable<Style.JSON> {
     // Second step: since CSS variables are always inherited, and inheritance
     // takes precedence over fallback, we can merge the current variables with
     // the parent ones, this will effectively resolve variable inheritance.
-    const cascadedVariables = parent
+    const parentVariables = parent
       .map((parent) => parent.variables)
-      .getOr(Map.empty<string, Value<Slice<Token>>>())
-      .concat(declaredVariables);
+      .getOr(Map.empty<string, Value<Slice<Token>>>());
 
     // Third step: pre-substitute the resolved cascading variables from above,
     // replacing any `var()` function references with their substituted tokens.
     // This effectively takes care of deleting variables with syntactically
     // invalid values, circular references, too many substitutions, …
-    const variables = Variable.flatten(cascadedVariables);
+    //
+    // `parentVariables` is already flattened (it's some other element's
+    // `variables`, always produced by this same function), so flattening it
+    // again when this element declares no variables of its own would be a
+    // no-op that still costs O(number of inherited variables) - skip it in
+    // that (common) case and reuse the parent's map directly.
+    const variables = declaredVariables.isEmpty()
+      ? parentVariables
+      : Variable.flatten(parentVariables.concat(declaredVariables));
 
     /**
      * Second pass: Resolve cascading properties using the cascading variables
