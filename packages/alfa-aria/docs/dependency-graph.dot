@@ -5,12 +5,12 @@ digraph "dependency-graph-@siteimprove/alfa-aria" {
   "src/dom/predicate/has-explicit-role.ts";
   "src/dom/predicate/has-heading-level.ts";
   "src/dom/predicate/has-implicit-role.ts";
-  "src/dom/predicate/has-incorrect-role-without-name.ts";
   "src/dom/predicate/has-non-default-role.ts";
   "src/dom/predicate/has-non-empty-accessible-name.ts";
   "src/dom/predicate/has-role.ts";
   "src/dom/predicate/is-included-accessibility-tree.ts";
   "src/dom/predicate/is-marked-decorative.ts";
+  "src/dom/predicate/is-not-landmark-without-name.ts";
   "src/dom/predicate/is-perceivable.ts";
   "src/dom/predicate/is-programmatically-hidden.ts";
   "src/dom/predicate/is-semantically-disabled.ts";
@@ -134,8 +134,8 @@ digraph "dependency-graph-@siteimprove/alfa-aria" {
           "src/dom/predicate/has-non-empty-accessible-name.ts" [
             label = "has-non-empty-accessible-name.ts";
           ];
-          "src/dom/predicate/has-incorrect-role-without-name.ts" [
-            label = "has-incorrect-role-without-name.ts";
+          "src/dom/predicate/is-not-landmark-without-name.ts" [
+            label = "is-not-landmark-without-name.ts";
           ];
           "src/dom/predicate/has-role.ts" [
             label = "has-role.ts";
@@ -175,7 +175,7 @@ digraph "dependency-graph-@siteimprove/alfa-aria" {
           "src/dom/predicate/has-non-empty-accessible-name.ts" -> "exit_src/dom/predicate" [
             style = "invis";
           ];
-          "src/dom/predicate/has-incorrect-role-without-name.ts" -> "exit_src/dom/predicate" [
+          "src/dom/predicate/is-not-landmark-without-name.ts" -> "exit_src/dom/predicate" [
             style = "invis";
           ];
           "src/dom/predicate/has-role.ts" -> "exit_src/dom/predicate" [
@@ -885,17 +885,17 @@ digraph "dependency-graph-@siteimprove/alfa-aria" {
     style = "solid";
     color = "black";
   ];
-  "src/dom/predicate/has-incorrect-role-without-name.ts" -> "src/dom/predicate/has-accessible-name.ts" [
+  "src/dom/predicate/is-not-landmark-without-name.ts" -> "src/dom/predicate/has-accessible-name.ts" [
     style = "invis";
   ];
-  "src/dom/predicate/has-incorrect-role-without-name.ts" -> "src/dom/predicate/has-accessible-name.ts" [
+  "src/dom/predicate/is-not-landmark-without-name.ts" -> "src/dom/predicate/has-accessible-name.ts" [
     style = "solid";
     color = "black";
   ];
-  "src/dom/predicate/has-incorrect-role-without-name.ts" -> "src/dom/predicate/has-explicit-role.ts" [
+  "src/dom/predicate/is-not-landmark-without-name.ts" -> "src/dom/predicate/has-explicit-role.ts" [
     style = "invis";
   ];
-  "src/dom/predicate/has-incorrect-role-without-name.ts" -> "src/dom/predicate/has-explicit-role.ts" [
+  "src/dom/predicate/is-not-landmark-without-name.ts" -> "src/dom/predicate/has-explicit-role.ts" [
     style = "solid";
     color = "black";
   ];

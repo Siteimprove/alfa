@@ -1,20 +1,28 @@
 digraph "dependency-graph-@siteimprove/alfa-act" {
   compound = true;
-  "src/metadata/requirement.ts";
-  "src/metadata/tag.ts";
-  "src/cache.ts";
   "src/expectation/index.ts";
+  "exit_src/rule";
   "name_src/expectation";
   "src/metadata/index.ts";
   "name_src/metadata";
-  "src/outcome.ts";
+  "src/rule/evaluation.ts";
+  "src/rule/instrument.ts";
+  "src/rule/rule.ts";
+  "src/metadata/requirement.ts";
+  "src/metadata/tag.ts";
   "src/expectation/diagnostic.ts";
+  "src/rule/atomic.ts";
+  "src/rule/composite.ts";
+  "src/rule/event.ts";
+  "src/cache.ts";
+  "src/outcome.ts";
+  "src/rule/index.ts";
   "src/expectation/finding.ts";
   "src/expectation/interview.ts";
   "src/expectation/oracle.ts";
   "src/expectation/question.ts";
   "src/audit.ts";
-  "src/rule.ts";
+  "name_src/rule";
   "exit_src/expectation";
   subgraph "cluster_src" {
     color = "#000000";
@@ -28,18 +36,15 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
       "name_src" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#00ff00";
+        color = "#80ff00";
         label = "src";
       ];
       "exit_src" [
         style = "invis";
       ];
-      "src/rule.ts" [
-        label = "rule.ts";
-      ];
       "src/index.ts" [
         label = "index.ts";
-        color = "#00ff00";
+        color = "#80ff00";
         penwidth = 5;
       ];
       "src/outcome.ts" [
@@ -51,6 +56,63 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
       "src/audit.ts" [
         label = "audit.ts";
       ];
+      subgraph "cluster_src/rule" {
+        color = "#000000";
+        label = "";
+        "name_src/rule" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ffff";
+          label = "rule";
+        ];
+        "exit_src/rule" [
+          style = "invis";
+        ];
+        "src/rule/atomic.ts" [
+          label = "atomic.ts";
+        ];
+        "src/rule/index.ts" [
+          label = "index.ts";
+          color = "#00ffff";
+          penwidth = 5;
+        ];
+        "src/rule/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/rule/composite.ts" [
+          label = "composite.ts";
+        ];
+        "src/rule/evaluation.ts" [
+          label = "evaluation.ts";
+        ];
+        "src/rule/event.ts" [
+          label = "event.ts";
+        ];
+        "src/rule/instrument.ts" [
+          label = "instrument.ts";
+        ];
+        "src/rule/atomic.ts" -> "exit_src/rule" [
+          style = "invis";
+        ];
+        "src/rule/index.ts" -> "exit_src/rule" [
+          style = "invis";
+        ];
+        "src/rule/rule.ts" -> "exit_src/rule" [
+          style = "invis";
+        ];
+        "src/rule/composite.ts" -> "exit_src/rule" [
+          style = "invis";
+        ];
+        "src/rule/evaluation.ts" -> "exit_src/rule" [
+          style = "invis";
+        ];
+        "src/rule/event.ts" -> "exit_src/rule" [
+          style = "invis";
+        ];
+        "src/rule/instrument.ts" -> "exit_src/rule" [
+          style = "invis";
+        ];
+      }
       subgraph "cluster_src/metadata" {
         color = "#000000";
         label = "";
@@ -90,7 +152,7 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
         "name_src/expectation" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#0000ff";
+          color = "#8000ff";
           label = "expectation";
         ];
         "exit_src/expectation" [
@@ -107,7 +169,7 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
         ];
         "src/expectation/index.ts" [
           label = "index.ts";
-          color = "#0000ff";
+          color = "#8000ff";
           penwidth = 5;
         ];
         "src/expectation/interview.ts" [
@@ -135,16 +197,28 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
           style = "invis";
         ];
       }
-      "exit_src/metadata" -> "exit_src" [
+      "exit_src/rule" -> "exit_src" [
         style = "invis";
       ];
-      "src/rule.ts" -> "exit_src" [
+      "exit_src/metadata" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/expectation" -> "exit_src" [
         style = "invis";
       ];
+      "exit_src/rule" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/rule" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/rule" -> "exit_src" [
+        style = "invis";
+      ];
       "exit_src/metadata" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/rule" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/expectation" -> "exit_src" [
@@ -163,6 +237,12 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
         style = "invis";
       ];
       "src/outcome.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/rule" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/rule" -> "exit_src" [
         style = "invis";
       ];
       "src/cache.ts" -> "exit_src" [
@@ -220,42 +300,69 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     "exit_src" -> "exit_src" [
       style = "invis";
     ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
   }
-  "src/metadata/index.ts" -> "src/metadata/requirement.ts" [
-    style = "invis";
-  ];
-  "src/metadata/index.ts" -> "src/metadata/requirement.ts" [
+  "exit_src/rule" -> "name_src/expectation" [
     style = "solid";
-    color = "black";
-  ];
-  "src/metadata/index.ts" -> "src/metadata/tag.ts" [
-    style = "invis";
-  ];
-  "src/metadata/index.ts" -> "src/metadata/tag.ts" [
-    style = "solid";
-    color = "black";
-  ];
-  "src/rule.ts" -> "src/cache.ts" [
-    style = "invis";
-  ];
-  "src/rule.ts" -> "src/cache.ts" [
-    style = "solid";
-    color = "black";
-  ];
-  "src/rule.ts" -> "name_src/expectation" [
-    style = "solid";
-    color = "#00ff00";
+    color = "#00ffff";
     lhead = "cluster_src/expectation";
+    ltail = "cluster_src/rule";
   ];
-  "src/rule.ts" -> "name_src/metadata" [
-    style = "solid";
-    color = "#00ff00";
+  "exit_src/rule" -> "name_src/metadata" [
+    style = "dotted";
+    color = "#00ffff";
     lhead = "cluster_src/metadata";
+    ltail = "cluster_src/rule";
   ];
-  "src/rule.ts" -> "src/outcome.ts" [
+  "src/rule/atomic.ts" -> "src/rule/evaluation.ts" [
     style = "invis";
   ];
-  "src/rule.ts" -> "src/outcome.ts" [
+  "src/rule/atomic.ts" -> "src/rule/evaluation.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/rule/atomic.ts" -> "src/rule/instrument.ts" [
+    style = "invis";
+  ];
+  "src/rule/atomic.ts" -> "src/rule/instrument.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "src/rule/atomic.ts" -> "src/rule/rule.ts" [
+    style = "invis";
+  ];
+  "src/rule/atomic.ts" -> "src/rule/rule.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/metadata/index.ts" -> "src/metadata/requirement.ts" [
+    style = "invis";
+  ];
+  "src/metadata/index.ts" -> "src/metadata/requirement.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/metadata/index.ts" -> "src/metadata/tag.ts" [
+    style = "invis";
+  ];
+  "src/metadata/index.ts" -> "src/metadata/tag.ts" [
     style = "solid";
     color = "black";
   ];
@@ -263,6 +370,166 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     style = "invis";
   ];
   "src/expectation/question.ts" -> "src/expectation/diagnostic.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "exit_src/rule" -> "name_src/expectation" [
+    style = "invis";
+    color = "#00ffff";
+    lhead = "cluster_src/expectation";
+    ltail = "cluster_src/rule";
+  ];
+  "src/rule/index.ts" -> "src/rule/atomic.ts" [
+    style = "invis";
+  ];
+  "src/rule/index.ts" -> "src/rule/atomic.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/rule/index.ts" -> "src/rule/composite.ts" [
+    style = "invis";
+  ];
+  "src/rule/index.ts" -> "src/rule/composite.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/rule/index.ts" -> "src/rule/event.ts" [
+    style = "invis";
+  ];
+  "src/rule/index.ts" -> "src/rule/event.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/rule/index.ts" -> "src/rule/instrument.ts" [
+    style = "invis";
+  ];
+  "src/rule/index.ts" -> "src/rule/instrument.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/rule/index.ts" -> "src/rule/rule.ts" [
+    style = "invis";
+  ];
+  "src/rule/index.ts" -> "src/rule/rule.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/rule/rule.ts" -> "src/cache.ts" [
+    style = "invis";
+  ];
+  "exit_src/rule" -> "src/cache.ts" [
+    style = "solid";
+    color = "#00ffff";
+    ltail = "cluster_src/rule";
+  ];
+  "exit_src/rule" -> "name_src/expectation" [
+    style = "invis";
+    color = "#00ffff";
+    lhead = "cluster_src/expectation";
+    ltail = "cluster_src/rule";
+  ];
+  "exit_src/rule" -> "name_src/metadata" [
+    style = "invis";
+    color = "#00ffff";
+    lhead = "cluster_src/metadata";
+    ltail = "cluster_src/rule";
+  ];
+  "src/rule/rule.ts" -> "src/outcome.ts" [
+    style = "invis";
+  ];
+  "exit_src/rule" -> "src/outcome.ts" [
+    style = "dotted";
+    color = "#00ffff";
+    ltail = "cluster_src/rule";
+  ];
+  "src/rule/rule.ts" -> "src/rule/event.ts" [
+    style = "invis";
+  ];
+  "src/rule/rule.ts" -> "src/rule/event.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "exit_src/rule" -> "name_src/expectation" [
+    style = "invis";
+    color = "#00ffff";
+    lhead = "cluster_src/expectation";
+    ltail = "cluster_src/rule";
+  ];
+  "exit_src/rule" -> "name_src/metadata" [
+    style = "invis";
+    color = "#00ffff";
+    lhead = "cluster_src/metadata";
+    ltail = "cluster_src/rule";
+  ];
+  "src/rule/composite.ts" -> "src/outcome.ts" [
+    style = "invis";
+  ];
+  "exit_src/rule" -> "src/outcome.ts" [
+    style = "invis";
+    color = "#00ffff";
+    ltail = "cluster_src/rule";
+  ];
+  "src/rule/composite.ts" -> "src/rule/evaluation.ts" [
+    style = "invis";
+  ];
+  "src/rule/composite.ts" -> "src/rule/evaluation.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/rule/composite.ts" -> "src/rule/instrument.ts" [
+    style = "invis";
+  ];
+  "src/rule/composite.ts" -> "src/rule/instrument.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "src/rule/composite.ts" -> "src/rule/rule.ts" [
+    style = "invis";
+  ];
+  "src/rule/composite.ts" -> "src/rule/rule.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/rule/evaluation.ts" -> "src/cache.ts" [
+    style = "invis";
+  ];
+  "exit_src/rule" -> "src/cache.ts" [
+    style = "invis";
+    color = "#00ffff";
+    ltail = "cluster_src/rule";
+  ];
+  "exit_src/rule" -> "name_src/expectation" [
+    style = "invis";
+    color = "#00ffff";
+    lhead = "cluster_src/expectation";
+    ltail = "cluster_src/rule";
+  ];
+  "src/rule/evaluation.ts" -> "src/outcome.ts" [
+    style = "invis";
+  ];
+  "exit_src/rule" -> "src/outcome.ts" [
+    style = "invis";
+    color = "#00ffff";
+    ltail = "cluster_src/rule";
+  ];
+  "src/rule/evaluation.ts" -> "src/rule/event.ts" [
+    style = "invis";
+  ];
+  "src/rule/evaluation.ts" -> "src/rule/event.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "src/rule/evaluation.ts" -> "src/rule/index.ts" [
+    style = "invis";
+  ];
+  "src/rule/evaluation.ts" -> "src/rule/index.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "src/rule/evaluation.ts" -> "src/rule/instrument.ts" [
+    style = "invis";
+  ];
+  "src/rule/evaluation.ts" -> "src/rule/instrument.ts" [
     style = "solid";
     color = "black";
   ];
@@ -324,12 +591,12 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
   ];
   "src/index.ts" -> "name_src/expectation" [
     style = "solid";
-    color = "#00ff00";
+    color = "#80ff00";
     lhead = "cluster_src/expectation";
   ];
   "src/index.ts" -> "name_src/metadata" [
     style = "solid";
-    color = "#00ff00";
+    color = "#80ff00";
     lhead = "cluster_src/metadata";
   ];
   "src/index.ts" -> "src/outcome.ts" [
@@ -339,28 +606,57 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     style = "solid";
     color = "black";
   ];
-  "src/index.ts" -> "src/rule.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/rule.ts" [
+  "src/index.ts" -> "name_src/rule" [
     style = "solid";
-    color = "black";
+    color = "#80ff00";
+    lhead = "cluster_src/rule";
   ];
   "src/outcome.ts" -> "name_src/expectation" [
     style = "solid";
-    color = "#00ff00";
+    color = "#80ff00";
     lhead = "cluster_src/expectation";
   ];
-  "src/outcome.ts" -> "src/rule.ts" [
+  "src/outcome.ts" -> "name_src/rule" [
+    style = "dotted";
+    color = "#80ff00";
+    lhead = "cluster_src/rule";
+  ];
+  "exit_src/rule" -> "name_src/expectation" [
+    style = "invis";
+    color = "#00ffff";
+    lhead = "cluster_src/expectation";
+    ltail = "cluster_src/rule";
+  ];
+  "src/rule/event.ts" -> "src/rule/index.ts" [
     style = "invis";
   ];
-  "src/outcome.ts" -> "src/rule.ts" [
+  "src/rule/event.ts" -> "src/rule/index.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "exit_src/rule" -> "name_src/expectation" [
+    style = "invis";
+    color = "#00ffff";
+    lhead = "cluster_src/expectation";
+    ltail = "cluster_src/rule";
+  ];
+  "src/rule/instrument.ts" -> "src/rule/event.ts" [
+    style = "invis";
+  ];
+  "src/rule/instrument.ts" -> "src/rule/event.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/rule/instrument.ts" -> "src/rule/index.ts" [
+    style = "invis";
+  ];
+  "src/rule/instrument.ts" -> "src/rule/index.ts" [
     style = "dotted";
     color = "black";
   ];
   "src/cache.ts" -> "name_src/expectation" [
     style = "dotted";
-    color = "#00ff00";
+    color = "#80ff00";
     lhead = "cluster_src/expectation";
   ];
   "src/cache.ts" -> "src/outcome.ts" [
@@ -370,12 +666,10 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     style = "dotted";
     color = "black";
   ];
-  "src/cache.ts" -> "src/rule.ts" [
-    style = "invis";
-  ];
-  "src/cache.ts" -> "src/rule.ts" [
+  "src/cache.ts" -> "name_src/rule" [
     style = "dotted";
-    color = "black";
+    color = "#80ff00";
+    lhead = "cluster_src/rule";
   ];
   "src/expectation/interview.ts" -> "src/expectation/finding.ts" [
     style = "invis";
@@ -398,12 +692,10 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     style = "solid";
     color = "black";
   ];
-  "src/expectation/interview.ts" -> "src/rule.ts" [
-    style = "invis";
-  ];
-  "exit_src/expectation" -> "src/rule.ts" [
+  "exit_src/expectation" -> "name_src/rule" [
     style = "dotted";
-    color = "#0000ff";
+    color = "#8000ff";
+    lhead = "cluster_src/rule";
     ltail = "cluster_src/expectation";
   ];
   "src/audit.ts" -> "src/cache.ts" [
@@ -415,7 +707,7 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
   ];
   "src/audit.ts" -> "name_src/expectation" [
     style = "dotted";
-    color = "#00ff00";
+    color = "#80ff00";
     lhead = "cluster_src/expectation";
   ];
   "src/audit.ts" -> "src/outcome.ts" [
@@ -425,12 +717,15 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     style = "dotted";
     color = "black";
   ];
-  "src/audit.ts" -> "src/rule.ts" [
-    style = "invis";
-  ];
-  "src/audit.ts" -> "src/rule.ts" [
+  "src/audit.ts" -> "name_src/rule" [
     style = "dotted";
-    color = "black";
+    color = "#80ff00";
+    lhead = "cluster_src/rule";
+  ];
+  "src/audit.ts" -> "name_src/rule" [
+    style = "invis";
+    color = "#80ff00";
+    lhead = "cluster_src/rule";
   ];
   "src/expectation/oracle.ts" -> "src/expectation/question.ts" [
     style = "invis";
@@ -439,12 +734,10 @@ digraph "dependency-graph-@siteimprove/alfa-act" {
     style = "dotted";
     color = "black";
   ];
-  "src/expectation/oracle.ts" -> "src/rule.ts" [
+  "exit_src/expectation" -> "name_src/rule" [
     style = "invis";
-  ];
-  "exit_src/expectation" -> "src/rule.ts" [
-    style = "invis";
-    color = "#0000ff";
+    color = "#8000ff";
+    lhead = "cluster_src/rule";
     ltail = "cluster_src/expectation";
   ];
 }

@@ -3406,6 +3406,18 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     color = "#00dbff";
     ltail = "cluster_src/value/shape";
   ];
+  "exit_src/value/shape" -> "name_src/value/numeric" [
+    style = "invis";
+    color = "#00dbff";
+    lhead = "cluster_src/value/numeric";
+    ltail = "cluster_src/value/shape";
+  ];
+  "exit_src/value/shape" -> "name_src/value/numeric" [
+    style = "invis";
+    color = "#00dbff";
+    lhead = "cluster_src/value/numeric";
+    ltail = "cluster_src/value/shape";
+  ];
   "src/value/shape/shape.ts" -> "src/value/resolvable.ts" [
     style = "invis";
   ];
