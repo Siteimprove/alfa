@@ -1,5 +1,48 @@
 # @siteimprove/alfa-rules
 
+## 0.120.0
+
+### Minor Changes
+
+- **Added:** A new experimental rule SIA-R121 is available. It checks that `<ul>`, `<ol>` and `<dl>` elements only contain the children allowed by the HTML content model. ([#2174](https://github.com/Siteimprove/alfa/pull/2174))
+
+  Lists hidden from assistive technologies, or whose role is removed with `none` or `presentation`, are not applicable. Children hidden from assistive technologies, by `aria-hidden`, by not being rendered, or by `inert`, are skipped, since they cannot affect the list structure users perceive. Children hidden only by `visibility: hidden` are still checked, as they may have visible descendants.
+
+  The rule follows the content model as the HTML specification states it, rather than a relaxed reading of it:
+
+  - A `<dl>` either wraps every name-value group in a `<div>` or wraps none of them. The two forms cannot be mixed in one list.
+  - A `<div>` inside a `<dl>` holds exactly one group. Its content model is one or more `<dt>` elements followed by one or more `<dd>` elements, so packing a second group into the same wrapper is reported and each group needs its own.
+  - Every group must be well formed, not only the first, so a trailing `<dt>` with no `<dd>` of its own is reported.
+  - Children are matched by element name rather than by role, so a `<div role="listitem">` does not satisfy a content model asking for an `<li>`. See the [`listitem` role best practices](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/listitem_role#best_practices). Pasting the following into <https://validator.w3.org/nu> reports `Element "div" not allowed as child of element "ul" in this context`:
+
+    ```html
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <title>List content model check</title>
+      </head>
+      <body>
+        <ul>
+          <div role="listitem">List item 1</div>
+          <div role="listitem">List item 2</div>
+        </ul>
+      </body>
+    </html>
+    ```
+
+- **Added:** A new experimental rule SIA-R118: "HTML images contain no text" is now available. ([#2149](https://github.com/Siteimprove/alfa/pull/2149))
+
+- **Added:** A new experimental rule SIA-R122 is available. It checks that the access keys an element declares are usable. ([#2174](https://github.com/Siteimprove/alfa/pull/2174))
+
+  It makes three checks. No other element may declare the same key, since two elements competing for one key means at most one of them can be reached and which one wins is left to the user agent. Each key must be a single character, since anything longer is not a key a user can press. And an element may not declare the same key twice.
+
+  Case is folded throughout, so `A` and `a` are the same key. Two elements declaring them compete, and `accesskey="a A"` on one element declares that key twice and is reported for the repeat. That is stricter than the W3C checker, which compares the tokens of a single value literally and accepts it.
+
+  The attribute holds a set of space-separated tokens, so `accesskey="a b"` declares two keys and each is checked separately.
+
+- **Added:** New rule SIA-R98 added. The rule asks for main landmarks and checks that they start with a heading. ([#2080](https://github.com/Siteimprove/alfa/pull/2080))
+
 ## 0.119.0
 
 ## 0.118.0

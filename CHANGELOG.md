@@ -1,5 +1,37 @@
 # Alfa changelog
 
+## [0.120.0](../../compare/v0.119.0...v0.120.0) (2026-10-21)
+
+### Breaking
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01200): The `Rectangle` shape is no longer deprecated; `Rectangle.parse` now rejects comma-separated rectangles, a new `Rectangle.parseLegacy` parses comma- or space- separated rectangles as used in the deprecated `clip` property. `Shape.parse` now parses space-separated rectangles. ([#2146](https://github.com/Siteimprove/alfa/pull/2146))
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#01200): The `Rule.Event` factory helpers `start`, `end`, `startApplicability`, `endApplicability`, `startExpectation`, and `endExpectation` have been removed. ([#2152](https://github.com/Siteimprove/alfa/pull/2152))
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#01200): `Rule` is now a type alias (`Atomic | Composite`) rather than an exported abstract class. ([#2152](https://github.com/Siteimprove/alfa/pull/2152))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#01200): The `DOM.hasIncorrectRoleWithoutName` predicate has been removed and a new `DOM.isNotLandmarkWithoutName` predicate replaces it, specifically for `<form>` elements. ([#2145](https://github.com/Siteimprove/alfa/pull/2145))
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01200): A new experimental rule SIA-R121 is available. It checks that `<ul>`, `<ol>` and `<dl>` elements only contain the children allowed by the HTML content model. ([#2174](https://github.com/Siteimprove/alfa/pull/2174))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01200): A new experimental rule SIA-R118: "HTML images contain no text" is now available. ([#2149](https://github.com/Siteimprove/alfa/pull/2149))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01200): A new experimental rule SIA-R122 is available. It checks that the access keys an element declares are usable. ([#2174](https://github.com/Siteimprove/alfa/pull/2174))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01200): New rule SIA-R98 added. The rule asks for main landmarks and checks that they start with a heading. ([#2080](https://github.com/Siteimprove/alfa/pull/2080))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01200): A `Shape.isEmpty` predicate is now available to detect common cases of provably empty shapes (circles of 0 radius, insets whose offsets add up to 100%, …). ([#2146](https://github.com/Siteimprove/alfa/pull/2146))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#01200): `<aside>` and `<section>` elements without names now have their role correctly computed and no longer need the `DOM.hasIncorrectRoleWithoutName` predicate. ([#2145](https://github.com/Siteimprove/alfa/pull/2145))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#01200): `isVisible` now correctly returns false for elements with a `clip-path` that is a provably empty shape. ([#2146](https://github.com/Siteimprove/alfa/pull/2146))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#01200): Images with an empty alt but an accessible name are now correctly exposed with a role of `img`. ([#2145](https://github.com/Siteimprove/alfa/pull/2145))
+
 ## [0.119.0](../../compare/v0.118.0...v0.119.0) (2026-07-22)
 
 ### Breaking

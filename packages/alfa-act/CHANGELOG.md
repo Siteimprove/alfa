@@ -1,5 +1,22 @@
 # @siteimprove/alfa-act
 
+## 0.120.0
+
+### Minor Changes
+
+- **Breaking:** The `Rule.Event` factory helpers `start`, `end`, `startApplicability`, `endApplicability`, `startExpectation`, and `endExpectation` have been removed. ([#2152](https://github.com/Siteimprove/alfa/pull/2152))
+
+  Emitting the paired `start`/`end` performance marks is now the responsibility of the new `Rule.Instrument`, whose
+  `phase(name, work)` operation brackets a named span of work. Code that constructed these events directly should
+  route timing through the `Instrument` instead. `Rule.Event.of` and `Rule.Event.isEvent` remain available.
+
+- **Breaking:** `Rule` is now a type alias (`Atomic | Composite`) rather than an exported abstract class. ([#2152](https://github.com/Siteimprove/alfa/pull/2152))
+
+  The abstract base class is no longer re-exported, so `Rule` is no longer a class or constructor at runtime.
+  The `Rule` namespace object still exists (it carries `isRule`, `Atomic`, `Composite`, and `Event`), but code that
+  used `Rule` as a value, `instanceof Rule` checks, or subclassing the abstract base, must be updated to reference
+  `Rule.Atomic` or `Rule.Composite` directly, or use `Rule.isRule` in place of `instanceof`.
+
 ## 0.119.0
 
 ## 0.118.0

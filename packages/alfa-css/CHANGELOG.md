@@ -1,5 +1,15 @@
 # @siteimprove/alfa-css
 
+## 0.120.0
+
+### Minor Changes
+
+- **Breaking:** The `Rectangle` shape is no longer deprecated; `Rectangle.parse` now rejects comma-separated rectangles, a new `Rectangle.parseLegacy` parses comma- or space- separated rectangles as used in the deprecated `clip` property. `Shape.parse` now parses space-separated rectangles. ([#2146](https://github.com/Siteimprove/alfa/pull/2146))
+
+- **Added:** A `Shape.isEmpty` predicate is now available to detect common cases of provably empty shapes (circles of 0 radius, insets whose offsets add up to 100%, …) ([#2146](https://github.com/Siteimprove/alfa/pull/2146))
+
+  Thanks to [Jeff Witt](https://github.com/wittjeff) for investing frequently used clipping shapes.
+
 ## 0.119.0
 
 ### Minor Changes

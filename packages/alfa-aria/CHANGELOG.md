@@ -1,5 +1,21 @@
 # @siteimprove/alfa-aria
 
+## 0.120.0
+
+### Minor Changes
+
+- **Breaking:** The `DOM.hasIncorrectRoleWithoutName` predicate has been removed and a new `DOM.isNotLandmarkWithoutName` predicate replaces it, specifically for `<form>` elements. ([#2145](https://github.com/Siteimprove/alfa/pull/2145))
+
+### Patch Changes
+
+- **Fixed:** `<aside>` and `<section>` elements without names now have their role correctly computed and no longer need the `DOM.hasIncorrectRoleWithoutName` predicate. ([#2145](https://github.com/Siteimprove/alfa/pull/2145))
+
+- **Fixed:** Images with an empty alt but an accessible name are now correctly exposed with a role of `img`. ([#2145](https://github.com/Siteimprove/alfa/pull/2145))
+
+  This does mostly follow Chrome behaviour for the corner cases (empty or whitespace `aria-label` or `title`); browsers do differ on how they treat them.
+
+  Thanks to [Jeff Witt](https://github.com/wittjeff) for investigating browsers behaviour.
+
 ## 0.119.0
 
 ### Minor Changes

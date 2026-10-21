@@ -1,5 +1,11 @@
 # @siteimprove/alfa-style
 
+## 0.120.0
+
+### Patch Changes
+
+- **Fixed:** `isVisible` now correctly returns false for elements with a `clip-path` that is a provably empty shape. ([#2146](https://github.com/Siteimprove/alfa/pull/2146))
+
 ## 0.119.0
 
 ### Minor Changes
