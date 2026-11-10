@@ -2,7 +2,7 @@ import type { Array } from "@siteimprove/alfa-array";
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
 import type { Device } from "@siteimprove/alfa-device";
-import type { Element, Sheet } from "@siteimprove/alfa-dom";
+import type { Document, Element, Sheet, Shadow } from "@siteimprove/alfa-dom";
 import { Rule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
@@ -10,8 +10,9 @@ import { Maybe, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Selective } from "@siteimprove/alfa-selective";
-import type { Context } from "@siteimprove/alfa-selector";
+import type { Compound, Context, Simple } from "@siteimprove/alfa-selector";
 import { Combinator, Complex, Selector } from "@siteimprove/alfa-selector";
+import { SelectorEngine } from "@siteimprove/alfa-selector-wasm";
 
 import type * as json from "@siteimprove/alfa-json";
 
@@ -88,8 +89,20 @@ export class SelectorMap implements Serializable {
     types: SelectorMap.Bucket,
     other: Array<Block<Block.Source>>,
     shadow: Array<Block<Block.Source>>,
+    root: Document | Shadow,
+    engine: SelectorEngine,
+    wasmIds: ReadonlyMap<Compound | Complex | Simple, number>,
   ): SelectorMap {
-    return new SelectorMap(ids, classes, types, other, shadow);
+    return new SelectorMap(
+      ids,
+      classes,
+      types,
+      other,
+      shadow,
+      root,
+      engine,
+      wasmIds,
+    );
   }
 
   private readonly _ids: SelectorMap.Bucket;
@@ -97,6 +110,15 @@ export class SelectorMap implements Serializable {
   private readonly _types: SelectorMap.Bucket;
   private readonly _other: Array<Block<Block.Source>>;
   private readonly _shadow: Array<Block<Block.Source>>;
+  private readonly _root: Document | Shadow;
+  private readonly _engine: SelectorEngine;
+  // Selectors that the WASM engine can parse map here to their WASM selector
+  // id; matching for them is delegated to the engine. Selectors that WASM
+  // can't yet parse (currently: anything using a Context-dependent
+  // pseudo-class, e.g. `:hover`/`:focus-within` — see
+  // packages/alfa-selector-wasm's README) are simply absent, and fall back to
+  // the TS `Selector#matches` implementation.
+  private readonly _wasmIds: ReadonlyMap<Compound | Complex | Simple, number>;
 
   protected constructor(
     ids: SelectorMap.Bucket,
@@ -104,12 +126,18 @@ export class SelectorMap implements Serializable {
     types: SelectorMap.Bucket,
     other: Array<Block<Block.Source>>,
     shadow: Array<Block<Block.Source>>,
+    root: Document | Shadow,
+    engine: SelectorEngine,
+    wasmIds: ReadonlyMap<Compound | Complex | Simple, number>,
   ) {
     this._ids = ids;
     this._classes = classes;
     this._types = types;
     this._other = other;
     this._shadow = shadow;
+    this._root = root;
+    this._engine = engine;
+    this._wasmIds = wasmIds;
   }
 
   /**
@@ -125,6 +153,19 @@ export class SelectorMap implements Serializable {
     context: Context,
     filter: AncestorFilter,
   ): Iterable<Block<Block.Source, true>> {
+    // The WASM engine's DOM arena is process-global (see SelectorEngine), so
+    // it must be (re)asserted before every query; this is a no-op unless some
+    // other tree was matched against in the meantime.
+    this._engine.loadDom(this._root);
+
+    const matches = (block: Block<Block.Source>): boolean => {
+      const wasmId = this._wasmIds.get(block.selector);
+
+      return wasmId === undefined
+        ? block.selector.matches(element, context)
+        : this._engine.matches(wasmId, element);
+    };
+
     function* collect(
       candidates: Iterable<Block<Block.Source>>,
     ): Iterable<Block<Block.Source, true>> {
@@ -138,10 +179,7 @@ export class SelectorMap implements Serializable {
         }
 
         // otherwise, do the actual match.
-        if (
-          block.precedence.layer.isOrdered &&
-          block.selector.matches(element, context)
-        ) {
+        if (block.precedence.layer.isOrdered && matches(block)) {
           yield block as Block<Block.Source, true>;
         }
       }
@@ -241,6 +279,7 @@ export namespace SelectorMap {
     sheets: Iterable<Sheet>,
     device: Device,
     encapsulationDepth: number,
+    root: Document | Shadow,
   ): SelectorMap {
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
@@ -248,6 +287,9 @@ export namespace SelectorMap {
     // otherwise no longer be available once rules from different buckets are
     // combined.
     let order: Order = 0;
+
+    const engine = SelectorEngine.load();
+    const wasmIds = new Map<Compound | Complex | Simple, number>();
 
     // Create buckets for storing the rules, based on their key selector.
     const ids = Bucket.empty();
@@ -347,15 +389,39 @@ export namespace SelectorMap {
      * Adds a block to the correct bucket
      */
     function add(block: Block<Block.Source>): void {
-      const keySelector = block.selector.key;
+      const selector: Compound | Complex | Simple = block.selector;
 
-      if (Selector.isShadow(block.selector)) {
+      // Binding to a plainly-typed `boolean` (rather than branching on
+      // `Selector.isShadow(selector)` directly) avoids a bogus narrowing:
+      // `Selector.isShadow` is built via `or(isHostSelector, hasSlotted)`,
+      // and `hasSlotted` isn't a type predicate, so `or`'s overloads type the
+      // combined guard as `selector is Selector` — the full base type. That
+      // narrows `selector` (currently `Compound | Complex | Simple`) to
+      // `never` in the `else` branch, breaking every use of `selector` below.
+      const isShadow: boolean = Selector.isShadow(selector);
+
+      if (isShadow) {
         // These selectors select nodes in the light tree, they are stored
         // separately and need to be checked when building the cascade of
-        // the hosting tree, not of the same tree.
+        // the hosting tree, not of the same tree. They always match through
+        // `matchHost`/`matchSlotted`, never through the WASM engine, so
+        // there's no need to parse them into it.
         shadow.push(block);
         return;
       }
+
+      // Try to hand matching off to the WASM engine; selectors it can't parse
+      // (currently: anything using a Context-dependent pseudo-class) fall
+      // back to the TS `Selector#matches` implementation at match time.
+      if (!wasmIds.has(selector)) {
+        const wasmId = engine.parseSelector(selector.toString());
+
+        if (wasmId !== -1) {
+          wasmIds.set(selector, wasmId);
+        }
+      }
+
+      const keySelector = selector.key;
 
       if (!keySelector.isSome()) {
         other.push(block);
@@ -465,7 +531,16 @@ export namespace SelectorMap {
     // This mutates the layers, thus updating the blocks accordingly.
     Layer.sortUnordered(layers);
 
-    return SelectorMap.of(ids, classes, types, other, shadow);
+    return SelectorMap.of(
+      ids,
+      classes,
+      types,
+      other,
+      shadow,
+      root,
+      engine,
+      wasmIds,
+    );
   }
 
   /**

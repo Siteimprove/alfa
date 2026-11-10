@@ -78,6 +78,34 @@ test(".get() returns the rule tree node of the given element", (t) => {
   });
 });
 
+test(".get() matches a WASM-backed selector combining :is() and :has() through the full cascade", (t) => {
+  const span = <span id="cell">text</span>;
+  const table = <table class="table">{span}</table>;
+  const div = <div class="lfr-layout-structure-item foo">{table}</div>;
+
+  // The desugared form of a nested `& .table` rule — see
+  // packages/alfa-selector-wasm's motivating bug report — combined with
+  // :has() to also exercise Milestone 3's newly added :has() matching.
+  const rule = h.rule.style(
+    ":is(.lfr-layout-structure-item):has(#cell) .table",
+    { color: "red" },
+  );
+  const document = h.document([div], [h.sheet([rule])]);
+  const cascade = Cascade.from(document, device);
+
+  const declarations = [
+    ...cascade.get(table).inclusiveAncestors(),
+  ].flatMap((node) => [...node.block.declarations]);
+
+  t.equal(
+    declarations.some(
+      (declaration) =>
+        declaration.name === "color" && declaration.value === "red",
+    ),
+    true,
+  );
+});
+
 test(".get() fetches `:host` rules from shadow, when relevant.", (t) => {
   const innerNormalRule = h.rule.style(":host(div)", { color: "red" });
   const innerImportantRule = h.rule.style(":host", {

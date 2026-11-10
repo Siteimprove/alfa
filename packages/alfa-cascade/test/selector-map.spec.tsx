@@ -19,9 +19,13 @@ import { parse } from "./common/parser.ts";
 
 const device = Device.standard();
 
+// A placeholder root for tests that only assert on bucketing/ordering and
+// never call `.get()`, so never need the WASM engine to actually load a DOM.
+const root = h.document([]);
+
 test(".from() builds a selector map with a single rule", (t) => {
   const rule = h.rule.style("div", { foo: "not parsed" });
-  const actual = SelectorMap.from([h.sheet([rule])], device, 1);
+  const actual = SelectorMap.from([h.sheet([rule])], device, 1, root);
 
   t.deepEqual(actual.toJSON(), {
     ids: [],
@@ -37,6 +41,7 @@ test(".from() rejects rules with invalid selectors", (t) => {
     [h.sheet([h.rule.style(":non-existent", { foo: "not parsed" })])],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -69,6 +74,7 @@ test(".from() stores rules in increasing order, amongst all non-disabled sheets"
     ],
     device,
     1,
+    root,
   );
 
   // Each block is computed with an order equal to the index of the rule in the array.
@@ -93,7 +99,7 @@ test(".from() stores rules in increasing order, amongst all non-disabled sheets"
 test(".from() split important and non-important declarations in two blocks", (t) => {
   const rule = h.rule.style("div", { foo: "bar", hello: "world !important" });
   const selector = parse("div") as Compound | Complex | Simple;
-  const actual = SelectorMap.from([h.sheet([rule])], device, 1);
+  const actual = SelectorMap.from([h.sheet([rule])], device, 1, root);
 
   // Each of the split blocks contain the full rule (with both declarations), but only one
   // of the declarations.
@@ -145,6 +151,7 @@ test(".from() only recurses into media rules that match the device", (t) => {
     ],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -171,6 +178,7 @@ test(".from() only recurses into import rules whose media condition match the de
     ],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -200,6 +208,7 @@ test(".from() only recurses into import rules whose support condition match the 
     ],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -241,6 +250,7 @@ test(".from() only recurses into import rules when both media and support condit
     ],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -286,6 +296,7 @@ test(".from() add imports rules to a layer when needed", (t) => {
     ],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -327,6 +338,7 @@ test(".from() only recurses into supports rules whose condition matches", (t) =>
     ],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -345,6 +357,7 @@ test(".from() recurses into block layer rules", (t) => {
     [h.sheet([h.rule.layerBlock([rule], "hello")])],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -363,6 +376,7 @@ test(".from() creates anonymous layer for unammed layer block rules", (t) => {
     [h.sheet([h.rule.layerBlock([rule])])],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -389,6 +403,7 @@ test(".from() orders incomparable layers in reverse declaration order", (t) => {
     ],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -415,6 +430,7 @@ test(".from() orders comparable layers in reverse nesting order", (t) => {
     ],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -447,6 +463,7 @@ test(".from() creates sublayers for nested layer block rules", (t) => {
     ],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -481,6 +498,7 @@ test(".form() order layers according to statement rules coming before block rule
     ],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -508,6 +526,7 @@ test(".form() order layers according to block rules coming before statement rule
     ],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -537,6 +556,7 @@ test(".from() merge layers from import and layer rules", (t) => {
     ],
     device,
     1,
+    root,
   );
 
   t.deepEqual(actual.toJSON(), {
@@ -565,11 +585,15 @@ test("#get() returns all blocks whose selector match an element", (t) => {
     h.rule.style("#hello", { foo: "bar" }),
     h.rule.style("::focus", { foo: "bar" }),
   ];
-  const map = SelectorMap.from([h.sheet(rules)], device, 1);
+  const element = <div class="foo"></div>;
+  const map = SelectorMap.from(
+    [h.sheet(rules)],
+    device,
+    1,
+    h.document([element]),
+  );
 
   const blocks = rules.map((rule, order) => ruleToBlockJSON(rule, order));
-
-  const element = <div class="foo"></div>;
 
   t.deepEqual(
     Array.toJSON([
@@ -588,7 +612,16 @@ test("#get() respects ancestor filter", (t) => {
     h.rule.style("span", { foo: "foo" }),
     h.rule.style("div span", { bar: "bar" }),
   ];
-  const map = SelectorMap.from([h.sheet(rules)], device, 1);
+
+  const target = <span>Hello</span>;
+  const container = <div>{target}</div>;
+
+  const map = SelectorMap.from(
+    [h.sheet(rules)],
+    device,
+    1,
+    h.document([container]),
+  );
   const blocks = rules.map((rule, order) => ruleToBlockJSON(rule, order));
 
   const badFilter = AncestorFilter.empty();
@@ -597,9 +630,6 @@ test("#get() respects ancestor filter", (t) => {
   const goodFilter = AncestorFilter.empty();
   goodFilter.add(<main></main>);
   goodFilter.add(<div></div>);
-
-  const target = <span>Hello</span>;
-  const _ = <div>{target}</div>;
 
   // The filter is incorrect by not having the `<div>` and therefore rejects the `div span` rule.
   t.deepEqual(
@@ -620,9 +650,14 @@ test("#get() does not return shadow rules", (t) => {
     h.rule.style(":host(div)", { hello: "world" }),
   ];
 
-  const map = SelectorMap.from([h.sheet(rules)], device, 1);
-  const blocks = rules.map((rule, order) => ruleToBlockJSON(rule, order));
   const element = <div></div>;
+  const map = SelectorMap.from(
+    [h.sheet(rules)],
+    device,
+    1,
+    h.document([element]),
+  );
+  const blocks = rules.map((rule, order) => ruleToBlockJSON(rule, order));
 
   t.deepEqual(
     Array.toJSON([
@@ -638,7 +673,7 @@ test("#getForHost() only returns shadow rules", (t) => {
     h.rule.style(":host(div)", { hello: "world" }),
   ];
 
-  const map = SelectorMap.from([h.sheet(rules)], device, 1);
+  const map = SelectorMap.from([h.sheet(rules)], device, 1, root);
   const blocks = rules.map((rule, order) => ruleToBlockJSON(rule, order));
   const element = <div></div>;
 

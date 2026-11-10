@@ -66,6 +66,7 @@ export class Cascade implements Serializable {
       [UserAgent, ...root.style],
       device,
       this._depth,
+      root,
     );
 
     // Perform a baseline cascade with an empty context to benefit from ancestor
