@@ -1,0 +1,69 @@
+import { heading } from '../../../libs/markdown/index.js';
+import { ReflectionKind } from 'typedoc';
+export function signature(model, options) {
+    const md = [];
+    if (!options.hideTitle) {
+        md.push(this.partials.signatureTitle(model, {
+            accessor: options.accessor,
+        }));
+    }
+    if (!options.nested &&
+        model.sources &&
+        !this.options.getValue('disableSources')) {
+        md.push(this.partials.sources(model));
+    }
+    const modelComments = options.multipleSignatures
+        ? model.comment
+        : model.comment || model.parent?.comment;
+    if (modelComments) {
+        md.push(this.partials.comment(modelComments, {
+            headingLevel: options.headingLevel,
+            showTags: false,
+            showSummary: true,
+        }));
+    }
+    if (!options.multipleSignatures && model.parent?.documents) {
+        md.push(this.partials.documents(model?.parent, {
+            headingLevel: options.headingLevel,
+        }));
+    }
+    const showParameters = this.options.getValue('parametersFormat') !== 'none';
+    if (model.typeParameters?.length &&
+        model.kind !== ReflectionKind.ConstructorSignature &&
+        showParameters) {
+        md.push(heading(options.headingLevel, ReflectionKind.pluralString(ReflectionKind.TypeParameter)));
+        if (this.helpers.useTableFormat('parameters')) {
+            md.push(this.partials.typeParametersTable(model.typeParameters));
+        }
+        else {
+            md.push(this.partials.typeParametersList(model.typeParameters, {
+                headingLevel: options.headingLevel,
+            }));
+        }
+    }
+    if (model.parameters?.length && showParameters) {
+        md.push(heading(options.headingLevel, ReflectionKind.pluralString(ReflectionKind.Parameter)));
+        if (this.helpers.useTableFormat('parameters')) {
+            md.push(this.partials.parametersTable(model.parameters));
+        }
+        else {
+            md.push(this.partials.parametersList(model.parameters, {
+                headingLevel: options.headingLevel,
+            }));
+        }
+    }
+    if (model.type) {
+        md.push(this.partials.signatureReturns(model, {
+            headingLevel: options.headingLevel,
+        }));
+    }
+    if (modelComments) {
+        md.push(this.partials.comment(modelComments, {
+            headingLevel: options.headingLevel,
+            showTags: true,
+            showSummary: false,
+        }));
+    }
+    md.push(this.partials.inheritance(model, { headingLevel: options.headingLevel }));
+    return md.join('\n\n');
+}

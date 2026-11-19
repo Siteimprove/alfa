@@ -7,10 +7,7 @@ import { getPackages } from "@manypkg/get-packages";
 import * as path from "node:path";
 import { loadJSON } from "../common.ts";
 
-import {
-  hasAPIExtractorConfig,
-  hasTypedocConfig,
-} from "./has-extractor-config.ts";
+import { hasAPIExtractorConfig } from "./has-extractor-config.ts";
 import { isInClusters } from "./is-in-clusters.ts";
 import { validateChangesets } from "./validate-changesets.ts";
 import { validatePackageJson } from "./validate-package-json.ts";
@@ -41,12 +38,6 @@ export async function validate(rootDir: string) {
   if (config["has-api-extractor-config"] ?? false) {
     for (const pkg of packages.packages) {
       errors.push(...hasAPIExtractorConfig(pkg.packageJson.name, pkg.dir));
-    }
-  }
-
-  if (config["has-typedoc-config"] ?? false) {
-    for (const pkg of packages.packages) {
-      errors.push(...hasTypedocConfig(pkg.packageJson.name, pkg.dir));
     }
   }
 
